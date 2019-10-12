@@ -1,0 +1,39 @@
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
+
+# Dependencies
+markdown:         kramdown
+pygments:         true
+highlighter:      rouge
+
+# Permalinks
+permalink:        pretty
+
+baseurl: '/wrench-pedagogic-modules'
+
+# Setup
+title:            'WRENCH PEDAGOGIC MODULES'
+tagline:          'Distributed Computing Courseware'
+description:      'A guided set of educational activities aimed at teaching distributed computing concepts through WRENCH, a workflow management simulation framework.'
+
+author:
+  name:           'WRENCH Team'
+  url:            https://wrench-project.org
+
+paginate:         5
+
+# Custom vars
+version:          2.0.0
+
+github:
+  repo:           https://github.com/poole/lanyon
+
+# include directory for pages
+include: ['_pages']
+
+collections:
+    activities:
+        output: true
+        permalink: /activities/:path/

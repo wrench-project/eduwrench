@@ -1,0 +1,35 @@
+.fluid-container{
+  margin:0 auto;
+  padding:0 auto;
+}
+// cover
+.cover{
+  height:600px;
+  background-image: url('../assets/cover.jpg');
+  background-size: cover;
+  width:100%;
+}
+.title{
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  color:#fff;
+  font-weight: bold;
+  padding-top: 10%;
+  text-transform: uppercase;
+  text-shadow: 0 0 1px #000;
+}
+.jumbotron{
+  background-color: transparent !important;
+  padding-top: 20%;
+  line-height: 10px;
+}
+.desBox{
+  background-color: $dark-back;
+  padding:5%;
+  color:#fff;
+  text-transform: uppercase;
+}
+.desBox h5{
+  line-height: 30px;
+}
+// end of cover

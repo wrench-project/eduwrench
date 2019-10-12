@@ -1,0 +1,16 @@
+<nav class="pl-3 navbar navbar-expand">
+  <div class="iconBox py-3 mx-3">
+    <a href="home"><img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
+  </div>
+  <ul>
+    <li class="py-3"><a class="headerNav p-3" href="{{ "/home" | prepend: site.baseurl}}">{{ "Home" | upcase}}</a></li>
+    {% for page in site.pages %} {% if page.title %}
+    <li class="py-3"><a class="headerNav p-3" href="{{ page.url | prepend: site.baseurl }}">{{ page.title | upcase}}</a></li>
+    {% endif %} {% endfor %}			
+  </ul>
+  <div class="search">
+    <input type="text" class="searchBar px-3" placeholder="Search Glossary">
+    <img src="{{site.baseurl}}/assets/search.svg" alt="search_icon" class="searchIcon">
+  </div>
+</nav>
+
