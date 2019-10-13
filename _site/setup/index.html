@@ -52,20 +52,38 @@
 
 
 <body>
-  <div class="container">
+  <div class="fluid-container">
     <nav class="pl-3 navbar navbar-expand">
   <div class="iconBox py-3 mx-3">
-    <a href="home"><img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
+    <a href="/wrench-pedagogic-modules/home"><img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
   </div>
   <ul>
     <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/home">HOME</a></li>
-       
-    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/courses/">COURSES</a></li>
-      
-    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/glossary/">GLOSSARY</a></li>
-          
-    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/setup/">SETUP</a></li>
-           			
+    <li class="py-3">
+      <div class="dropdown show btn-group">
+        <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/courses">COURSES</a>
+        <div class="dropdown-menu">
+            <div class="dropdown-submenu show btn-group">
+              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Course 1</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 1</a>
+                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 2</a>
+                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 3</a>
+              </div>
+            </div>
+        </div>
+      </div>          
+    </li>
+    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/glossary">GLOSSARY</a></li>
+    <li class="py-3">
+        <div class="dropdown show btn-group">
+          <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/setup">SETUP</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Software Requirement</a>
+              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Introduction</a>
+          </div>
+        </div>
+    </li>			
   </ul>
   <div class="search">
     <input type="text" class="searchBar px-3" placeholder="Search Glossary">

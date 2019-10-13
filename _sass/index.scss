@@ -1,13 +1,13 @@
-.fluid-container{
-  margin:0 auto;
-  padding:0 auto;
+html, body {
+  margin: 0 auto;
 }
 // cover
 .cover{
-  height:600px;
+  height:500px;
   background-image: url('../assets/cover.jpg');
   background-size: cover;
-  width:100%;
+  width:100% !important;
+  margin: 0 auto !important;
 }
 .title{
   font-family: 'Montserrat', sans-serif;
@@ -24,7 +24,7 @@
   line-height: 10px;
 }
 .desBox{
-  background-color: $dark-back;
+  background-color: $main;
   padding:5%;
   color:#fff;
   text-transform: uppercase;
@@ -32,4 +32,27 @@
 .desBox h5{
   line-height: 30px;
 }
+.sideLogo{
+  width:100px;
+  padding-top: 80%;
+  margin-left: 20%;
+}
 // end of cover
+//goal
+.goal{
+  text-align: center;
+  align-items: center;
+}
+.sectTitle{
+  text-transform: uppercase;
+  margin-top: 10px;
+}
+.sectTitle span{
+  width:100px;
+  border-top:3px solid $light-main;   
+} 
+.goal p{
+  line-height: 30px;
+  letter-spacing: 1px;
+}
+// end of goal
