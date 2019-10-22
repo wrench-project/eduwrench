@@ -22,6 +22,14 @@ html, body { margin: 0 auto; }
 
 .goal p { line-height: 30px; letter-spacing: 1px; }
 
+.topBar { text-align: center; justify-content: center; }
+
+.glossary_logo { width: 100px; padding-top: 5%; }
+
+.glossary_container { background-color: #FFFAEA; }
+
+.word { background-color: #D4ECFA; letter-spacing: 1.5px; }
+
 body { margin: 0; color: #262626; font-family: "Open Sans", sans-serif; font-size: 1.1em; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
 h1, h2, h3 { font-weight: 600; color: #425469; font-family: "Muli", sans-serif; line-height: 1.5; }

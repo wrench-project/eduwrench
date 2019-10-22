@@ -92,16 +92,130 @@
 </nav>
 
 
-    <h2>Glossary</h2>
-   
-    <p>About content goes here.</p>
-
-<ul>
-  <li>A list item</li>
-  <li>Another list item</li>
-</ul>
-
-
+    <div class="glossary_container pb-4">
+  <div class="topBar">
+    <img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="glossary_logo">
+    <h4 class="m-4">WRENCH GLOSSARY</h4>
+  </div>
+  <div class="dict">
+    
+    <div class="word m-5 p-4">
+      <h2>Workflow</h2>
+      <h4>An application comprised of individual computational tasks that must execute in some particular sequence to produce a final desired output</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Directed acyclic graph (dag)</h2>
+      <h4>A directed graph containing no cycles, often used to represent a workflow</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Cyber infrastructure</h2>
+      <h4>A set of hardware resources (hardware infrastructure) managed by software services (software infrastructures) that make it possible to execute application workloads, such as workflows</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Workflow management system (wms)</h2>
+      <h4>A software tool that automatically orchestrates the execution of a workflow on a cyber infrastructure</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Bandwidth</h2>
+      <h4>Rate of data transfer across a network link, measured in bytes per second</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Latency</h2>
+      <h4>The time it takes for a single packet to travel from one end of a network path to the other end</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Persistent storage</h2>
+      <h4>A storage device, such as a hard drive, that retains data even after its power source has been shut off</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Storage service</h2>
+      <h4>A software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Compute service</h2>
+      <h4>A software service that manages compute resources and handles requests for executing computational tasks</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Floating point operation (flop)</h2>
+      <h4>A standard unit of "amount of work to do" used for scientific applications (as many of such applications perform mostly floating point arithmetic); computational hardware resources then have speed measured in flop/sec, i.e., how much "work" they can perform per time unit</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Staging (a file)</h2>
+      <h4>The process of storing certain application files (i.e., initial input files) on some persistent storage prior to the application execution</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Makespan</h2>
+      <h4>The overall execution time of an application execution (i.e., the duration of the time internal between the beginning of the execution and the completion of the last task).</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Turnaround-time</h2>
+      <h4>A tasks end time minus the time it had been submitted to be run</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Data locality</h2>
+      <h4>The concept of moving computation closer to where data resides as this can be more efficient than sending large amounts of data to where a compute resource is available</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Join (workflow structure)</h2>
+      <h4>A workflow structure where multiple tasks "join" into a single task</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Cluster compute service</h2>
+      <h4>A compute service that manages multiple machines</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Frontend node</h2>
+      <h4>The entrypoint to a cluster compute service that handles job requests from a wms and dispatches those requests to compute nodes in the cluster</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Compute node</h2>
+      <h4>The worker nodes in a cluster compute service that perform work as requested by the frontend node</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Parallelism</h2>
+      <h4>The ability for multi-core architectures to execute multiple instructions in parallel</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Utilization</h2>
+      <h4>The usage of a core while executing a given workload</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Average core utilization</h2>
+      <h4>The average utilization of all cores on a platform while executing a given workload</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Vertical scaling</h2>
+      <h4>Augmenting a compute service by upgrading it with a faster processor or one with more cores</h4>
+    </div>
+    
+    <div class="word m-5 p-4">
+      <h2>Horizontal scaling</h2>
+      <h4>Augmenting a compute service by upgrading it with more machines</h4>
+    </div>
+    
+  </div>
+</div>
   </div>
 </body>
 

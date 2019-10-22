@@ -1,0 +1,17 @@
+// top bar
+.topBar{
+  text-align: center;
+  justify-content: center;
+}
+.glossary_logo{
+  width:100px;
+  padding-top: 5%;
+}
+.glossary_container{
+  background-color: $light-background;
+}
+// end of top bar
+.word{
+  background-color: $glossary-background;
+  letter-spacing: 1.5px;
+}
