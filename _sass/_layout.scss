@@ -26,16 +26,6 @@ h1 {
 h2 {
   font-size: 2em;
 }
-a,
-a:visited {
-  color: $link-color !important;
-  text-decoration: none !important;
-  font-weight: bold;
-}
-a:hover {
-  color: $link-hover-color;
-  text-decoration: none !important;
-}
 header {
   background: $header;
   padding: 0px 15px;
@@ -75,7 +65,16 @@ main {
 }
 
 /* Header bar area */
-nav {
+.header-nav {
+  a{
+    color: $link-color !important;
+    text-decoration: none !important;
+    font-weight: bold;
+  }
+  a:hover {
+    color: $link-hover-color;
+    text-decoration: none !important;
+  }
   background-color: #fff;
   float: left;
   margin: 0 auto;

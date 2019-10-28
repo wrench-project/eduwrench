@@ -1,0 +1,619 @@
+I"�i<p>The goal of this module is to provide you with knowledge of networking, as
+it relates to the performance of distributed computing applications.  The
+goal is <strong>not</strong> to teach you details of network technologies and protocols,
+which are fascinating topics you can learn about in networking textbooks.</p>
+
+<p>Go through the tabs below in sequence…</p>
+
+<div class="ui pointing secondary menu">
+  <a class="item " data-tab="first">Latency &amp; Bandwidth</a>
+  <a class="item " data-tab="second">Topologies</a>
+  <a class="item " data-tab="third">Contention</a>
+</div>
+
+<div class="ui tab segment active" data-tab="first">
+
+  <h4 id="learning-objectives">Learning objectives:</h4>
+
+  <ul>
+    <li>
+      <p>Understand the concepts of latency and bandwidth</p>
+    </li>
+    <li>
+      <p>Be able to estimate data transfer time through a network link</p>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h4 id="link-latency-and-bandwidth">Link Latency and Bandwidth</h4>
+
+  <p>A network is built from <strong>network links</strong> (in the case of wired
+networks, these links are network cables). 
+Each network link has two important characteristics:</p>
+
+  <ol>
+    <li><strong>Latency</strong>: the time it takes for one bit of data to travel along the length of the link (measured in second)</li>
+    <li><strong>Bandwidth</strong>: the maximum number of bits that can be transferred by the link per time unit (measured in bit/second)</li>
+  </ol>
+
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    One can think of data flowing through a link as water flowing
+through a pipe (click to expand)
+  </div>
+  <div class="ui segment content">
+      <p>A popular analogy is to think of a link as a vertical physical pipe
+that connects a cistern  (on top) to a pool (on the bottom) .  The
+latency is the time for one drop of water to travel from the top-end of
+the pipe to the other. The bandwidth is how many liters of water can
+flow out of the end of the pipe per second.  In this analogy, the
+latency is the <em>length</em> of the pipe, and the bandwidth is its <em>width</em>.</p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p>We assume that links are <strong>bidirectional</strong>, meaning that data can flow in
+both directions at the same time (which is unlike water in pipes).  This
+model of a network link is not completely accurate as it abstracts away
+many of the details of actual network technologies and protocols.  But it
+is sufficient for our purpose.</p>
+
+  <hr />
+
+  <h4 id="data-transfer-time">Data Transfer Time</h4>
+
+  <p>Given a network link with latency $\alpha$ and bandwidth $\beta$, the time
+$T$ to transfer an amount of data $s$ over the link can be estimated as a first
+approximation as follows:</p>
+
+  <script type="math/tex; mode=display">T = \alpha + \frac{m}{\beta} .</script>
+
+  <p>For instance, consider a link with latency 100 microseconds and effective bandwidth
+120 MB/sec (“120 MegaByte per second”), transferring 100KiB (“100 KibiByte per second”) of data takes time:</p>
+
+  <script type="math/tex; mode=display">T = 100 \times 10^{-6} + \frac{100 \times 2^{10}}{120 \times 10^{6}}  \simeq .000953 \; \text{sec}.</script>
+
+  <p>Make sure you know your units and use them in a consistent manner, knowing when units are powers of 10 
+or powers of 2. In these pedagogic modules we typically use power-of-10 units (e.g., KB rather than KiB).</p>
+
+  <p>In some cases the first term above (the latency) can dominate (i.e., with
+small data sizes and/or large bandwidths), or can be negligible (i.e., with
+large data sizes and/or small bandwidths).</p>
+
+  <p>Here we have used the term, <em>effective bandwidth</em>, to denote the maximum
+<em>possible</em> throughput that a network link is able to achieve. Due to
+various network overheads, a network link can have a throughput of at most
+about 97% of its advertised physical bandwidth. Thus, if you purchase a 100
+GB/sec physical link, you will not be able to transfer data at 100 GB/sec.
+From this point forward, when we describe the bandwidth of a network link,
+we will always mean its <em>effective bandwidth</em>.</p>
+
+  <hr />
+
+  <h4 id="practice-questions">Practice Questions</h4>
+
+  <p>To make sure the above is crystal clear, answer the following practice questions:</p>
+
+  <p><strong>[C.p1.1]</strong> How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 microseconds and 20 GB/sec bandwidth?</p>
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p><script type="math/tex">T = 500 / 1000 + 1000 \times (250 \times 10^6) / (20 \times 10^9) = 13 \; \text{ms}.</script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p1.2]</strong> How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 microseconds and 520 MB/sec bandwidth?</p>
+  <div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p><script type="math/tex">T = 100 / (60 \times 10^6) + (1 / 60 ) \times (1 \times 10^9) / (520 \times 10^6) \simeq 0.032 \; \text{min} .</script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p1.3]</strong> You need to transfer 148 MB of data through a network link with latency 1 ms, what bandwidth, in GB/sec, should be link have so that the data transfer takes 2.5 sec?</p>
+  <div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>Let $B$ be the needed bandwidth. We simply need to solve the equation below for $B$:</p>
+      <p>$$ 2.5 = 1/1000  + (148 / 10^3) / B  = 2.5 ,$$</p>
+      <p>which gives:</p>
+      <p>$$ B = (148 / 10^3) / (2.5 - 1/1000) \simeq .059 \; \text{GB/sec} .$$</p>
+
+    </div>
+</div>
+
+  <hr />
+
+  <h4 id="questions">Questions</h4>
+
+  <p>Answer the following questions:</p>
+
+  <p><strong>[C.q1.1]</strong> How long, in seconds, does it take to transfer 12 GB of data
+over a link with latency 10 ms and bandwidth 500 MB/sec?</p>
+
+  <p> </p>
+
+  <p><strong>[C.q1.2]</strong> 3 MB of data was transferred over a link with 18 MB/sec
+bandwidth in 3.03 sec. What is the link’s latency in second?</p>
+
+  <p> </p>
+
+  <p><strong>[C.q1.3]</strong> A data transfer took 14 minutes on a link with 
+latency 100 ms and bandwidth 120 KB/sec. How much data, in MB, was transferred?</p>
+
+  <p> </p>
+
+  <p><strong>[C.q1.4]</strong> Say you are sitting at your computer and need to download a 10
+GB movie file. The file is available at two mirror sites, both of them one
+network link away from your computer.  Mirror <em>A</em> is connected to your
+computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
+<em>B</em> is connected to your computer by a link with latency 300 ms and
+bandwidth 700 MB/sec.  Which mirror should you use and why?</p>
+
+  <p> </p>
+
+  <hr />
+
+</div>
+<div class="ui tab segment" data-tab="second">
+
+  <h4 id="learning-objectives-1">Learning objectives:</h4>
+
+  <ul>
+    <li>
+      <p>Understand the concept of network topology</p>
+    </li>
+    <li>
+      <p>Be able to compute end-to-end latencies and bandwidths</p>
+    </li>
+    <li>
+      <p>Be able to compute end-to-end data transfer times</p>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h4 id="network-topologies">Network Topologies</h4>
+
+  <p>At an abstract level a network topology is a graph.  The edges of the graph
+are network links with various latencies and bandwidths.  The vertices of
+the graph represent either end-points, i.e., computers connected to the
+network, or routers, i.e., devices that are used to connect network links
+together.  We are abstracting away here many interesting details of how
+network technology makes it possible to implement network topologies. For
+instance, we will not discuss how routers work (see a network textbook for all interesting details).</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology.svg">topology</object>
+  <p><b>Figure 2:</b> An example network topology that interconnects 5 hosts.</p>
+
+  <p>The figure above shows an example topology with 5 hosts (the end-points vertices) 4
+routers (internal vertices), and 9 network links (the edges). Data communicated on the
+network flows through links and routers. The <strong>route</strong> between
+two hosts is the sequence of network links (and routers) that the data traverses when 
+being communicated from one of the hosts to another.</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_routes.svg">topology with routes</object>
+  <p><b>Figure 1:</b> Two possible routes between host A and host C.</p>
+
+  <p>As an example, the figure above shows two possible routes between host A
+and host C. The network configuration, the details of which are outside our
+scope, defines which route is to be taken, for instance the blue
+route.  We will always assume that the routes are static, i.e., data
+flowing from one host to another always traverses the same set of links (in the example above, 
+one one of the blue and red routes actually exists).</p>
+
+  <h4 id="end-to-end-network-routes">End-to-end Network Routes</h4>
+
+  <p>Consider two hosts connected via a 3-link route, as depicted in Figure 3 below.</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/scenario_1.svg">A three-link route</object>
+  <p><b>Figure 3:</b> An example 3-link route between two hosts.</p>
+
+  <p>In this example, all network links have the same bandwidth, 100 MB/sec.
+When transferring data from host A to host B, this transfer thus experiences
+a bandwidth of 100 MB/sec but a latency of 50 + 100 + 50 = 200 us, that is,
+the <strong>sum of the link latencies</strong>. Remember that in the
+“water in pipes” analogy, the latency is the length of a pipe. And so it
+makes sense that the length of a sequence of pipes is the sum of the
+individual pipe lengths.</p>
+
+  <p>For the route shown in Figure 3, transferring 100 MB of data from
+host A to host B will take time:</p>
+
+  <script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+T_{100 \text{MB}} & = 200\;\text{us} + \frac{100\;\text{MB}}{100\;\text{MB/sec}} = 1.0002\; \text{sec}
+\end{align} %]]></script>
+
+  <p>Consider now a similar three-link route, but with different link bandwidths:</p>
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/scenario_2.svg">A different three-link route</object>
+  <p><b>Figure 4:</b> Another example 3-link route between two hosts.</p>
+
+  <p>In Figure 4, the middle link has a bandwidth of 10 MB/sec (shown in red).
+In this case, the data flows only as fast as the slowest link. The middle
+link is called the <em>bottleneck</em> link, and the other two links are only
+partially used (i.e., they can transfer data at 100 MB/sec, but they only
+transfer data at 10 MB/sec). This is again consistent with the “water in pipes”
+analogy, since the water flow is limited by the width of the narrowest pipe. 
+In other words, the bandwidth available in a multi-link route is the <strong>minimum
+of the link bandwidths</strong>.</p>
+
+  <p>For the route shown in Figure 4, transferring 100 MB of data from
+host A to host B will take time:</p>
+
+  <script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+T_{100MB} & = 200\;\text{us} + \frac{100\;\text{MB}}{10\;\text{MB/sec}} = 10.0002\; \text{sec}
+\end{align} %]]></script>
+
+  <h4 id="putting-it-all-together">Putting it all together</h4>
+
+  <p>Given a route <em>r</em>, i.e., a set of network links, and a data transfer of <em>size</em> bytes,
+the data transfer time through the route is:</p>
+
+  <script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+T_{size} & = \sum_{link \in r} latency(link) + \frac{size}{\min\limits_{link \in r} bandwidth(link)} \\
+\end{align} %]]></script>
+
+  <p><strong>The latency of the route is the sum of the latencies and the bandwidth of the route
+is the minimum of the bandwidths.</strong></p>
+
+  <hr />
+
+  <h4 id="practice-questions-1">Practice questions</h4>
+
+  <p>To make sure you have understood the above, answer the following practice
+questions, which all pertain to this topology:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_practice.svg">Network topology for practice questions</object>
+  <p><b>Figure 5:</b> Network topology for practice questions.</p>
+
+  <p><strong>[C.p2.1]</strong> What is the latency of the route from host E to host D?</p>
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>The latency is the sum of the link latencies along the route:</p>
+
+      <p><script type="math/tex">\begin{align}
+100\;\text{us} + 50\;\text{us} + 120\;\text{us} = 270\;\text{us}.
+\end{align}</script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p2.2]</strong> What is the bandwidth of the route from host E to host D?</p>
+  <div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>The bandwidth is the minimum of the link bandwidths along the route:</p>
+
+      <p><script type="math/tex">\begin{align}
+\min(20\;\text{MB/sec}, 30\;\text{MB/sec}, 100\;\text{MB/sec}) = 20\;\text{MB/sec}.
+\end{align}</script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p2.3]</strong> I am a user sitting at host E and have to download a large file. That file is on a Web site at host A but also on a mirror Web site at host D.  Which mirror should I select?</p>
+  <div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>I should pick the mirror at host D. This is a large file, so the latency
+   component of the data transfer time is negligible. So it’s all about the
+   bandwidth. The bandwidth of the route from host E to host A is 10
+   MB/sec, while that of the route from host E to host D is higher at 20 MB/sec.</p>
+
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p2.4]</strong> What is the transfer time for sending 1 MB of data from host E to host D?</p>
+  <div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>The data transfer time is:</p>
+
+      <p><script type="math/tex">\begin{align}
+T = 100\;\text{us} + 50\;\text{us} + 120\;\text{us} + \frac{1\;\text{MB}}{20\;\text{MB/sec}} \simeq .05\;\text{sec}\\
+\end{align}</script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <hr />
+
+  <h4 id="questions-1">Questions</h4>
+
+  <p>Answer the following questions, which all pertain to this topology:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_questions.svg">Network topology for questions</object>
+  <p><b>Figure 6:</b> Network topology for questions (lat = “latency”; bw = “bandwidth”).</p>
+
+  <p><strong>[C.q2.1]</strong> What is the latency of the route from host A to host B?</p>
+
+  <p></p>
+  <p><strong>[C.q2.2]</strong> What is the bandwidth of the route from host C to host D?</p>
+
+  <p></p>
+  <p><strong>[C.q2.3]</strong> How long, in seconds, does it take to transfer 100 MB of
+  data from host A to host D?</p>
+
+  <p></p>
+  <p><strong>[C.q2.4]</strong> A lot of users are transferring data from host B to host D,
+thus competing for the bandwidth on that route. Would it help to 
+purchase an upgrade to the link that connects host B to the network?</p>
+
+  <p></p>
+  <p><strong>[C.q2.5]</strong> I am am sitting at host D and want to download a tiny file that’s mirrored at all other hosts. 
+From my perspective, does it matter which mirror I pick, and if yes which one should I pick?</p>
+
+  <p></p>
+  <p><strong>[C.q2.6]</strong> I am am sitting at host D and want to download a huge file
+that’s mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
+and if yes which one should I pick?</p>
+
+  <p></p>
+  <p><strong>[C.q2.7]</strong> Of all the possible routes above, which route has the highest bandwidth?</p>
+
+  <hr />
+
+</div>
+<div class="ui tab segment " data-tab="third">
+
+  <h4 id="learning-objectives-2">Learning objectives:</h4>
+
+  <ul>
+    <li>
+      <p>Understand the concept of contention</p>
+    </li>
+    <li>
+      <p>Be able to estimate data transfer times in the presence of contention</p>
+    </li>
+  </ul>
+
+  <hr />
+
+  <h4 id="networks-are-shared">Networks are shared</h4>
+
+  <p>Typically, several data transfers occur concurrently (i.e., at the same
+time) on a network, and some of these transfers may be using the same
+network links. For instance, two concurrent transfers could be along two
+routes that share a single link. As a result, a data transfer’s performance
+can be impacted by other data transfers. When a data transfer goes slower
+than it would go if alone in the network, it is because of <em>contention</em>
+(i.e., competition) for the bandwidth of at least one network link.</p>
+
+  <h4 id="a-simple-example">A Simple example</h4>
+
+  <p>Consider the following topology with the two depicted data transfers (symbolized by the red and the green arrow), that
+each were started at exactly the same time and transfer 100 MB of data.</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_contention.svg">topology with contention</object>
+  <p><b>Figure 1:</b> A simple example in which two data transfers contend for bandwidth.</p>
+
+  <p>If the green data transfer were by itself, its bandwidth would be 30 MB/sec.
+If the red data transfer were by itself, its bandwidth would be 40
+MB/sec. But when both transfers happen at the same time, they experience
+contention on the link into host C.</p>
+
+  <p>Contention on this link means that the two transfers <em>share the link’s
+bandwidth</em>. If this sharing is fair they both
+receive half of the link’s bandwidth, 20 MB/sec. (It turns out that bandwidth sharing
+is a bit complicated in practice as it also depends on latencies, but in
+this case both transfers have the same end-to-end latencies, which leads to
+fair sharing - see a networking textbook for more details if interested).</p>
+
+  <p>Given the above, both transfers proceed at 20 MB/sec, i.e., half the bandwidth of the link into
+host C, which is their bottleneck link. 
+Thus both transfers complete in time:</p>
+
+  <script type="math/tex; mode=display">T = 200\;\text{us} + \frac{100 \text{MB}}{20 \text{MB/sec}} = 5.0002\;\text{sec}</script>
+
+  <h4 id="a-slightly-more-complex-example">A slightly more complex example</h4>
+
+  <p>Consider now another scenario, with the only difference that the “red” transfer now only transfers 50 MB:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_contention_different_sizes.svg">topology with contention and different transfer sizes</object>
+  <p><b>Figure 2:</b> A slightly more complex example in which one transfer transfers less data than the other.</p>
+
+  <p>In this scenario there are two phases:</p>
+
+  <ol>
+    <li>In the first phase both transfers proceed with a bandwidth of 20 MB/sec due to contention;</li>
+    <li>In the second phase, after the “red” transfer has completed, the “green” transfer proceeds alone with a bandwidth of 30 MB/sec (because its bottleneck link is now the link out of host B!).</li>
+  </ol>
+
+  <p>Therefore, the “red” transfer completes in:</p>
+
+  <script type="math/tex; mode=display">T_{red} = 200\;\text{us} + \frac{50\;\text{MB}}{20\;\text{MB/sec}} = 2.5002\;\text{sec}</script>
+
+  <p>The “green” transfer transfers its first 50 MB of data with a bandwidth of 20 MB/sec and its last 50 MB of data with
+a bandwidth of 30 MB/sec. Therefore, it completes in time:</p>
+
+  <script type="math/tex; mode=display">T_{green} = 200\;\text{us} + \frac{50\;\text{MB}}{20\;\text{MB/sec}} + \frac{50\;\text{MB}}{30\;\text{MB/sec}} = 4.1668\;\text{sec}</script>
+
+  <h4 id="testing-your-understanding-using-simulation">Testing your understanding using simulation</h4>
+
+  <p>So that you can gain hands-on experience, use 
+the simulation Web application
+(see <a href="/wrench-pedagogic-modules/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
+selecting <code class="highlighter-rouge">Networking Fundamentals</code> from its menu.</p>
+
+  <p>This simulation is for the following
+scenario in which an number of transfers occur concurrently on the same
+three-link route:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_contention_simulation.svg">simulation scenario</object>
+  <p><b>Figure 3:</b> Simulation scenario.</p>
+
+  <p>On the simulation Web application tool  you can enter a number a list of file sizes (in MB). Each file size corresponds to
+one data transfer on a three-link route.</p>
+
+  <p>For example, if you enter just number “100” in the text box, the simulation will be for
+a single 100 MB data transfer and produce this output:</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----------------------------------------
+100 MB transfer completed at time 10.5
+----------------------------------------
+</code></pre></div>  </div>
+
+  <p>Note that the transfer’s completion time is a bit higher than what the computations
+we’ve done so far. We would expect the transfer time to be:</p>
+
+  <script type="math/tex; mode=display">T = 30\;\text{us} + \frac{100 \text{MB}}{10 \text{MB/sec}} = 10.00003\;\text{sec}.</script>
+
+  <p>This discrepancy is because the simulator captures some details of
+real-world networks (e.g., the TCP slow-start behavior that you may have read about
+in a Networking textbook) that are 
+not captured by the
+above mathematical expression. Such expressions are
+still useful approximations that we can use to reason about data transfer
+times. However, we should not be surprised that they are a bit “off”.</p>
+
+  <p>Entering “100, 100, 50” in the text box will simulate two 100 MB transfers and one 50 MB transfer, producing this output:</p>
+
+  <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>----------------------------------------
+100 MB transfer completed at time 26.25
+100 MB transfer completed at time 26.25
+50 MB transfer completed at time 15.75
+----------------------------------------
+</code></pre></div>  </div>
+
+  <p>As expected, the 50 MB transfer completes first, and the two 100 MB transfers
+complete at the same time.</p>
+
+  <p>Feel free to run simulations to explore different scenarios and test your 
+computed data transfer time estimates for various combinations of concurrent
+transfers.</p>
+
+  <hr />
+
+  <h4 id="practice-questions-2">Practice questions</h4>
+
+  <p>The following practice questions pertain to this topology:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_contention_practice.svg">simulation scenario for practice questions</object>
+  <p><b>Figure 4:</b> Topology for practice questions.</p>
+
+  <p><strong>[C.p3.1]</strong> A 100 MB transfer from host A to host C, and a 100 MB transfer
+	 from host B to host C start at the same time. Do they finish at
+	 the same time?</p>
+
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>Yes! Both transfers are bottlenecked on the link into host C, sharing its
+   bandwidth, so that both transfers proceed at bandwidth 20 MB/sec.</p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p3.2]</strong> A 100 MB transfer from host D to host B, and a 100 MB transfer
+         from host A to host C start at time 0. At what time
+         does each of them complete?</p>
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>The transfer from D to B proceeds at 30 MB/sec as it is bottlenecked
+   on the link into host B. The transfer from A to C proceeds at 40 MB/sec
+   as it is bottlenecked on the link into host C. These two transfers share
+   one network link, but that network link has bandwidth 100 MB/sec, and so
+   there is no contention on that link.  Consequently, the transfer times
+   as as follows:</p>
+
+      <p><script type="math/tex">% <![CDATA[
+\begin{align}
+  T_{D \rightarrow B} & = 250\;\text{us} + \frac{100\;\text{MB}}{30\;\text{MB/sec}} = 3.3335\;\text{sec}\\
+  T_{A \rightarrow C} & = 250\;\text{us} + \frac{100\;\text{MB}}{40\;\text{MB/sec}} = 2.5002\;\text{sec}
+\end{align} %]]></script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <p><strong>[C.p3.3]</strong> A 100 MB transfer from host B to host C and a 60 MB transfer 
+from host A to host C start at time 0. At white time do they complete?</p>
+  <div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+      <p>Both transfers are bottlenecked on the link into host C, sharing its
+   bandwidth so that both transfers proceed at 20 MB/sec. When the 60 MB
+transfer completes, then the 100 MB transfer still has 40 MB to transfer and
+proceeds at 30 MB/sec (as it is now bottlenecked on the link from host B). Therefore:</p>
+
+      <p><script type="math/tex">% <![CDATA[
+\begin{align}
+  T_{A \rightarrow C} & = 250\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} = 3.0002\;\text{sec}\\
+  T_{B \rightarrow C} & = 250\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} + \frac{40\;\text{MB}}{30\;\text{MB/sec}} = 4.3335\;\text{sec}
+\end{align} %]]></script></p>
+    </div>
+</div>
+
+  <p> </p>
+
+  <hr />
+
+  <h4 id="questions-2">Questions</h4>
+
+  <p>Answer the following questions, which pertain to this topology:</p>
+
+  <object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/networking_fundamentals/topology_contention_questions.svg">simulation scenario for questions</object>
+  <p><b>Figure 5:</b> Topology for questions (lat = “latency”; bw = “bandwidth”).</p>
+
+  <p><strong>[C.q3.1]</strong> At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB transfer starts from host A to host D. Do they finish at the same time?</p>
+
+  <p></p>
+
+  <p><strong>[C.q3.2]</strong> At time 0, a 100 MB transfer starts from host B to host C
+and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?</p>
+
+  <p></p>
+
+  <hr />
+
+</div>
+
+:ET

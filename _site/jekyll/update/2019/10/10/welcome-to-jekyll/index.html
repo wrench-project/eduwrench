@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
   <meta charset="utf-8" />
   <meta http-equiv="x-ua-compatible" content="ie=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -25,6 +25,13 @@
     rel="stylesheet"
     type="text/css"
   />
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/poole.css">
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/lanyon.css">
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/syntax.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
 
   <!-- Bootstrap -->
   <link
@@ -51,26 +58,111 @@
 </head>
 
 
-<body>
-  <div class="fluid-container">
-    <nav class="pl-3 navbar navbar-expand">
+  <body class="theme-base-09">
+    <div class="fluid-container">
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>WRENCH Pedagogic Modules.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/wrench-pedagogic-modules/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/multi_core_computing/">B. Multi-core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/networking_fundamentals/">C. Networking Fundamentals</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/single_core_computing/">A. Single Core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_data_locality/">F. Workflows and Data Locality</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_fundamentals/">E. Workflow Execution Fundamentals</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_parallelism/">G. Workflows and Parallelism</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_resource_provisioning/">H. Workflows and Resource Provisioning</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_fundamentals/">D. Workflow Fundamentals</a>
+        
+      
+    
+
+    
+    <a class="sidebar-nav-item active" href=" /wrench-pedagogic-modules/glossary">Glossary</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+        content to avoid any CSS collisions with our real content. -->
+        <div class="wrap">
+          <div class="masthead">
+            <div class="container">
+              <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+              <nav class="navbar navbar-expand header-nav">
   <div class="iconBox py-3 mx-3">
-    <a href="/wrench-pedagogic-modules/home"><img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
+    <a href="/wrench-pedagogic-modules/"><img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
   </div>
   <ul>
     <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/home">HOME</a></li>
     <li class="py-3">
       <div class="dropdown show btn-group">
         <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/courses">COURSES</a>
-        <div class="dropdown-menu">
-            <div class="dropdown-submenu show btn-group">
-              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Course 1</a>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 1</a>
-                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 2</a>
-                <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Activity 3</a>
-              </div>
-            </div>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="/wrench-pedagogic-modules/single_core_computing">A. Single Core Computing</a>
         </div>
       </div>          
     </li>
@@ -79,20 +171,26 @@
         <div class="dropdown show btn-group">
           <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/setup">SETUP</a>
           <div class="dropdown-menu">
-              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Software Requirement</a>
-              <a class="dropdown-item" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Introduction</a>
+              <a class="dropdown-item" href="#">Software Requirement</a>
+              <a class="dropdown-item" href="#">Introduction</a>
           </div>
         </div>
     </li>			
   </ul>
-  <div class="search">
-    <input type="text" class="searchBar px-3" placeholder="Search Glossary">
-    <img src="/wrench-pedagogic-modules/assets/search.svg" alt="search_icon" class="searchIcon">
-  </div>
 </nav>
 
 
-    <h2>Welcome to Hello!</h2>
+            <h3 class="masthead-title">
+              <a href="/wrench-pedagogic-modules/" title="Home">
+                  WRENCH PEDAGOGIC MODULES
+              </a>
+              <small>Distributed Computing Courseware</small>
+            </h3>
+          </div>
+        </div>
+  
+        <div class="container content">
+          <h2>Welcome to Hello!</h2>
 <time>Oct 10, 2019</time>
 
 <p>You’ll find this post in your <code class="highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
@@ -115,7 +213,8 @@
 
 
 
-  </div>
-</body>
-
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

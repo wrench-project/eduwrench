@@ -16,7 +16,7 @@ baseurl: '/wrench-pedagogic-modules'
 # Setup
 title:            'WRENCH PEDAGOGIC MODULES'
 tagline:          'Distributed Computing Courseware'
-description:      'A guided set of educational activities aimed at teaching distributed computing concepts through WRENCH, a workflow management simulation framework.'
+description:      'WRENCH Pedagogic Modules.'
 
 author:
   name:           'WRENCH Team'
@@ -31,9 +31,9 @@ github:
   repo:           https://github.com/poole/lanyon
 
 # include directory for pages
-include: ['_pages']
+# include: ['_pages']
 
 collections:
-    activities:
-        output: true
-        permalink: /activities/:path/
+  pedagogic_modules:
+      output: true
+      permalink: /pedagogic_modules/:path/

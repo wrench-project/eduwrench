@@ -14,13 +14,12 @@ html, body {
   letter-spacing: 1px;
   color:#fff;
   font-weight: bold;
-  padding-top: 10%;
   text-transform: uppercase;
   text-shadow: 0 0 1px #000;
 }
 .jumbotron{
   background-color: transparent !important;
-  padding-top: 20%;
+  padding-top: 5%;
   line-height: 10px;
 }
 .desBox{
@@ -56,3 +55,13 @@ html, body {
   letter-spacing: 1px;
 }
 // end of goal
+
+// software requirement
+.browser_logo{
+  width: 150px;
+}
+.box{
+  text-align: center;
+  align-content: center;
+}
+// end of requirement

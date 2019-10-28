@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="x-ua-compatible" content="ie=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>
+    I. Input/Output Effects
+  </title>
+
+	<!-- custom stylesheet -->
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/main.css">
+  <link
+    rel="canonical"
+    href="http://localhost:4000/wrench-pedagogic-modules/pedagogic_modules/IO_lesson/"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,700,800,600|Montserrat"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link
+    href="https://fonts.googleapis.com/css?family=Muli:400,300"
+    rel="stylesheet"
+    type="text/css"
+  />
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/poole.css">
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/lanyon.css">
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/syntax.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  <!-- Bootstrap -->
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"
+  ></script>
+</head>
+
+
+  <body class="theme-base-09">
+    <div class="fluid-container">
+      <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>WRENCH Pedagogic Modules.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/wrench-pedagogic-modules/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item active" href=" /wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/multi_core_computing/">B. Multi-core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/networking_fundamentals/">C. Networking Fundamentals</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/single_core_computing/">A. Single Core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_data_locality/">F. Workflows and Data Locality</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_fundamentals/">E. Workflow Execution Fundamentals</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_parallelism/">G. Workflows and Parallelism</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_resource_provisioning/">H. Workflows and Resource Provisioning</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_fundamentals/">D. Workflow Fundamentals</a>
+        
+      
+    
+
+    
+    <a class="sidebar-nav-item active" href=" /wrench-pedagogic-modules/glossary">Glossary</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+      <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+        content to avoid any CSS collisions with our real content. -->
+        <div class="wrap">
+          <div class="masthead">
+            <div class="container">
+              <label for="sidebar-checkbox" class="sidebar-toggle"></label>
+              <nav class="navbar navbar-expand header-nav">
+  <div class="iconBox py-3 mx-3">
+    <a href="/wrench-pedagogic-modules/"><img src="/wrench-pedagogic-modules/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
+  </div>
+  <ul>
+    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/home">HOME</a></li>
+    <li class="py-3">
+      <div class="dropdown show btn-group">
+        <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/courses">COURSES</a>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="/wrench-pedagogic-modules/single_core_computing">A. Single Core Computing</a>
+        </div>
+      </div>          
+    </li>
+    <li class="py-3"><a class="headerNav p-3" href="/wrench-pedagogic-modules/glossary">GLOSSARY</a></li>
+    <li class="py-3">
+        <div class="dropdown show btn-group">
+          <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/setup">SETUP</a>
+          <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Software Requirement</a>
+              <a class="dropdown-item" href="#">Introduction</a>
+          </div>
+        </div>
+    </li>			
+  </ul>
+</nav>
+
+
+            <h3 class="masthead-title">
+              <a href="/wrench-pedagogic-modules/" title="Home">
+                  WRENCH PEDAGOGIC MODULES
+              </a>
+              <small>Distributed Computing Courseware</small>
+            </h3>
+          </div>
+        </div>
+  
+        <div class="container content">
+          <h2 class="mx-auto">I. Input/Output Effects</h2>
+
+<!-- include sidebar -->
+<div>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input type="checkbox" class="sidebar-checkbox" id="sidebar-checkbox">
+
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>WRENCH Pedagogic Modules.</p>
+  </div>
+
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item" href="/wrench-pedagogic-modules/">Home</a>
+
+    
+
+    
+    
+      
+        
+          <a class="sidebar-nav-item active" href=" /wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/multi_core_computing/">B. Multi-core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/networking_fundamentals/">C. Networking Fundamentals</a>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/single_core_computing/">A. Single Core Computing</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_data_locality/">F. Workflows and Data Locality</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_fundamentals/">E. Workflow Execution Fundamentals</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_parallelism/">G. Workflows and Parallelism</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_execution_resource_provisioning/">H. Workflows and Resource Provisioning</a>
+        
+      
+    
+      
+        
+          <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/workflow_fundamentals/">D. Workflow Fundamentals</a>
+        
+      
+    
+
+    
+    <a class="sidebar-nav-item active" href=" /wrench-pedagogic-modules/glossary">Glossary</a>
+  </nav>
+
+  <div class="sidebar-item">
+    <p>
+      &copy; 2019. All rights reserved.
+    </p>
+  </div>
+</div>
+</div>
+<div>
+    <h3 id="learning-objectives">Learning Objectives</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- Understand the impact of IO operations on computing
+- Understand basics of optimizing computation around IO operations
+</code></pre></div></div>
+
+<h3 id="basic-concepts">Basic Concepts</h3>
+
+<p>In computing, the processor will not be able to complete a program start to finish in a vacuum. Programs will often 
+need to wait on input or output, referred to as <em>IO operations</em>. A couple very common IO operations are reading from 
+or writing to disk. As the disk is much slower than the CPU, even small reads or writes will represent a large chunk 
+of time that the CPU is sitting idle.</p>
+
+<p>When it comes to IO operations, not every program is created equal. Some programs will need more IO time than others 
+and can even be categorized in this way. If a program requires a lot of IO time, it can be referred to as IO intensive. 
+If a program has little need for IO compared to its CPU usage, it is referred to as CPU intensive.</p>
+
+<p>As mentioned above, reading from and writing to the disk are slow operations compared to the CPU. What also needs to be 
+taken into account is that there is a difference between read and write speed as well. Reading from the disk is 
+typically faster than writing to the disk by a noticeable margin. On top of this difference, different kinds of memory 
+have various speeds as well. To look at the difference between the two main types of main storage, 
+Hard Disk Drives (HDD) and Solid State Drives (SSD), the table below contains general figures for consumer-grade 
+hardware.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Read</th>
+      <th>Write</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HDD</td>
+      <td>210 MBps</td>
+      <td>200 MBps</td>
+    </tr>
+    <tr>
+      <td>SSD</td>
+      <td>550 MBps</td>
+      <td>520 MBps</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>One generalization we will make in this module is assuming that disk speeds are constant. There are many factors that 
+play into the speed of reading and writing to disk, but for our purposes here we can assume consistent performance.</p>
+
+<h3 id="how-computation-with-io-looks">How Computation With IO Looks</h3>
+
+<p>Let us examine a program that needs to read from disk prior to computation, and then write back to disk afterwards. This
+could be applying the oil painting filter to a photograph. Each task will need to load the photograph from disk, 
+apply the filter, and then save the new image back to disk.</p>
+
+<object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/IO_effects/IO_figure_1.svg">Cyberinfrastructure</object>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+
+  \text{CPU Utilization} & = \frac{T_{Compute}}{T_{Compute} + T_{Idle}} \\
+                         & = \frac{4}{4 + 4} \\
+                         & = 0.5
+
+\end{align} %]]></script>
+
+<p>As can be seen in the figure above, at any given time there is only either CPU computation or IO operations ongoing. 
+This means that the CPU is idle for the entire time that is spent doing IO and ends up with only 50% utilization. 
+This is inefficiency that can be reduced 
+ because IO and CPU actions are capable of being done independently. While the CPU is working on the first image, 
+the second image can be loaded into memory from disk. This will allow the CPU to immediately begin task two upon 
+completion of the first task, and while it is working on task two, the first task is being written to disk.</p>
+
+<object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/IO_effects/IO_figure_2.svg">Cyberinfrastructure</object>
+
+<script type="math/tex; mode=display">% <![CDATA[
+\begin{align}
+
+  \text{CPU Utilization} & = \frac{T_{Compute}}{T_{Compute} + T_{Idle}} \\
+                         & = \frac{4}{4 + 2} \\
+                         & = 0.66
+
+\end{align} %]]></script>
+
+<p>As you can see from the above representation, not only does the overall execution time drop by 25%, but the CPU 
+is also working for a greater percentage of the time. If there were additional tasks added, the idle time would still 
+only occur at the very start and very end of the process.</p>
+
+<p>This is a very neat situation created for our purposes, and it would not always be realistic. Take the cases below for 
+example:</p>
+
+<object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/IO_effects/IO_figure_3.svg">Cyberinfrastructure</object>
+
+<p>In the first case, we now have read and write times that together require a longer amount of time than it takes the CPU
+to process one task. This will make weaving CPU processing and IO together not quite as pretty as we add a third task.</p>
+
+<h4 id="cpu-driven-vs-io-driven-execution-times">CPU Driven vs. IO Driven Execution Times</h4>
+
+<p>Let us return to the first example above:</p>
+
+<object class="figure" type="image/svg+xml" data="/wrench-pedagogic-modules/public/img/IO_effects/IO_figure_1.svg">Cyberinfrastructure</object>
+
+<p>In this case, we can string together as many tasks as we would like and the CPU will be utilized continuously apart from
+the initial read and the last write. With two tasks the IO time is still a significant portion of the execution time, 
+but if we were to have 1000 tasks to complete, suddenly that initial read and last write are a negligible portion of the
+total execution time. This is what we can refer to as <em>CPU Driven</em> execution time and will occur when read and write 
+times are sufficiently short for tasks compared with CPU computation time needed.</p>
+
+<p>As you may guess, the other side of the coin is <em>IO Driven</em> execution times where a task’s time spent on IO is longer than the 
+CPU time needed. In these cases, CPU utilization will be lower due to the need to wait on IO operations to complete.</p>
+
+<h3 id="considerations-for-real-world-io">Considerations for Real World IO</h3>
+
+<p>Prior to this, we have glossed over some assumptions that do not necessarily hold true in practice. The first is that we
+are free to load any number of tasks into memory. As previous modules have touched on, tasks can have significant memory
+requirements and it may not be feasible to pre-load many into memory due to space constraints. It is also important to 
+realize that you may be running different tasks that each have their own requirements for IO where we have been assuming
+identical tasks. Lastly, relating to the concept of workflows, there can be dependencies between tasks that impact 
+execution and what IO is required.</p>
+
+<h3 id="practice-questions">Practice Questions</h3>
+
+<p>For the purposes of these questions you are working at a company that runs the same identical task repeatedly. Currently 
+the hardware available to you can process each task broken down into the following times:</p>
+
+<p>Read: 2 Seconds<br />
+CPU: 3 Seconds<br />
+Write: 2 Seconds</p>
+
+<p><strong>[I.p1.1]</strong> For the same price, you may upgrade your CPU so that it can process each task in 2 seconds, or you may 
+upgrade to a SSD from your current HDD which will halve Read/Write times to 1 second each. Which would improve your 
+execution time per task the most?</p>
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+    <p>Looking at the initial times for each task it should be apparent that these tasks are IO bound and the execution time
+   is IO Driven. In this case it will not help to decrease CPU computation time, so we would choose to upgrade our 
+   storage to an SSD. This will decrease average time per task from four seconds to three seconds, and it will now be 
+   CPU Driven execution time.</p>
+
+  </div>
+</div>
+
+<p><strong>[I.p1.2]</strong> It is decided to purchase the SSD to replace the HDD currently being used, which decreases read/write to 1 
+second each. What is the improvement seen 
+from this change in terms of CPU utilization over 5 consecutive tasks?</p>
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div class="ui segment content">
+    <p>Initially, read/write times are 2 seconds each, adding up to 4 seconds per task, while CPU time needed is 3 seconds 
+    per task. The total execution time for five tasks will be 22 seconds, of which 15 seconds of that is CPU time. This 
+    leads to a CPU utilization of 15/22 = 0.68.</p>
+
+    <p>When read/write times are decreased to 1 second each, now the full execution time will be just 17 seconds. The CPU 
+    time does not change, remaining 15 seconds. This improves our CPU utilization to 15/17 = 0.88.</p>
+
+  </div>
+</div>
+
+<h3 id="questions">Questions</h3>
+
+<p><strong>[I.q1.1]</strong></p>
+
+</div>
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

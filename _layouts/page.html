@@ -2,6 +2,12 @@
 layout: default
 ---
 
-<h2>{{ page.title }}</h2>
-   
+<h2 class="mx-auto">{{ page.title }}</h2>
+
+<!-- include sidebar -->
+<div>
+    {% include sidebar.html %}
+</div>
+<div>
     {{ content }}
+</div>
