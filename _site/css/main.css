@@ -2,6 +2,10 @@
 
 h2 { text-align: center; }
 
+.ui.secondary.pointing.menu { background-color: #FFFAEA !important; }
+
+.ui.secondary.pointing.menu.active.item { border-color: #D28346 !important; color: #D28346 !important; }
+
 html, body { margin: 0 auto; }
 
 .cover { height: 500px; background-image: url("../assets/cover.jpg"); background-size: cover; width: 100% !important; margin: 0 auto !important; }
@@ -28,9 +32,13 @@ html, body { margin: 0 auto; }
 
 .box { text-align: center; align-content: center; }
 
+.dropdown-item.active, .dropdown-item.focus { background-color: #F4BE93 !important; color: #fff !important; }
+
 .topBar { text-align: center; justify-content: center; }
 
-.glossary_logo { width: 100px; }
+.glossary_logo { width: 100px; display: inline; }
+
+.glossary-title { display: inline; }
 
 .glossary_container { background-color: #FFFAEA; padding: 10%; }
 

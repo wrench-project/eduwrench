@@ -8,7 +8,14 @@
       <div class="dropdown show btn-group">
         <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="{{ '/single_core_computing' | prepend: site.baseurl}}">A. Single Core Computing</a>
+          {% assign pedagogic_module_lists = site.pedagogic_modules %}
+          {% for node in pedagogic_module_lists %}
+            {% if node.title != null %}
+              {% if node.layout == "page" %}
+                <a class="dropdown-item {% if page.url == node.url %} active{% endif %}" href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+              {% endif %}
+            {% endif %}
+          {% endfor %}
         </div>
       </div>          
     </li>

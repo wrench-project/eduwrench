@@ -1,15 +1,59 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
   <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="x-ua-compatible" content="ie=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="http://gmpg.org/xfn/11" rel="profile" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1"
+  />
+
+  <!-- Open Graph protocol tags (when sharing this site on another site that uses Open Graph, a nice formatted thumbnail should appear because of these tags) -->
+  <meta property="og:title" content="WRENCH Pedagogic Modules" />
+  <meta property="og:description" content="WRENCH Pedagogic Modules" />
+  <meta
+    property="og:url"
+    content="http://wrench-project.org/wrench-pedagogic-modules/"
+  />
+  <meta
+    property="og:image"
+    content="http://wrench-project.org/wrench-pedagogic-modules/public/img/misc/wrench_logo.png"
+  />
+
+  <!-- Google Analytics -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i["GoogleAnalyticsObject"] = r;
+      (i[r] =
+        i[r] ||
+        function() {
+          (i[r].q = i[r].q || []).push(arguments);
+        }),
+        (i[r].l = 1 * new Date());
+      (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m);
+    })(
+      window,
+      document,
+      "script",
+      "https://www.google-analytics.com/analytics.js",
+      "ga"
+    );
+    ga("create", "UA-18066333-6", "auto");
+    ga("send", "pageview");
+  </script>
 
   <title>
-    G. Workflows and Parallelism
+    
+    G. Workflows and Parallelism &middot; WRENCH PEDAGOGIC MODULES
+    
   </title>
 
-	<!-- custom stylesheet -->
+  <!-- custom stylesheet -->
   <link rel="stylesheet" href="/wrench-pedagogic-modules/css/main.css">
   <link
     rel="canonical"
@@ -28,9 +72,9 @@
 
   <!-- CSS -->
 
-  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/poole.css">
-  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/lanyon.css">
-  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/syntax.css">
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/poole.css" />
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/lanyon.css" />
+  <link rel="stylesheet" href="/wrench-pedagogic-modules/css/syntax.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
 
   <!-- Bootstrap -->
@@ -55,6 +99,67 @@
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"
   ></script>
+  <!-- Icons -->
+  <link
+    rel="apple-touch-icon-precomposed"
+    sizes="144x144"
+    href="/public/apple-touch-icon-144-precomposed.png"
+  />
+  <link rel="shortcut icon" href="/wrench-pedagogic-modules/public/favicon.ico" />
+
+  <!-- RSS -->
+  <link
+    rel="alternate"
+    type="application/rss+xml"
+    title="RSS"
+    href="/atom.xml"
+  />
+
+  <!-- JS -->
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+    });
+  </script>
+
+  <script
+    type="text/javascript"
+    async
+    src="/wrench-pedagogic-modules/public/scripts/MathJax-2.7.5/latest.js?config=TeX-MML-AM_CHTML"
+  ></script>
+  
+
+  <script
+    type="text/javascript"
+    src="/wrench-pedagogic-modules/public/scripts/figure_scaling.js"
+  ></script>
+
+  <!-- SEMANTIC -->
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="/wrench-pedagogic-modules/public/scripts/semantic/semantic.min.css"
+  />
+
+  <script src="/wrench-pedagogic-modules/public/scripts/jquery/jquery.min.js"></script>
+  <script src="/wrench-pedagogic-modules/public/scripts/semantic/components/accordion.js"></script>
+  <script src="/wrench-pedagogic-modules/public/scripts/semantic/components/popup.js"></script>
+  <script src="/wrench-pedagogic-modules/public/scripts/semantic/components/transition.js"></script>
+  <script src="/wrench-pedagogic-modules/public/scripts/semantic/components/tab.js"></script>
+
+  <script language="javascript">
+    $(document).ready(function() {
+      $(".ui.accordion").accordion();
+      $(".popable").popup({
+        position: "right center"
+      });
+      $(".menu .item").tab();
+      $(".paths.example .menu .item").tab({
+        context: ".paths.example"
+      });
+    });
+  </script>
 </head>
 
 
@@ -80,6 +185,10 @@
       
         
           <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+        
+      
+    
+      
         
       
     
@@ -162,7 +271,70 @@
       <div class="dropdown show btn-group">
         <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/wrench-pedagogic-modules/courses">COURSES</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="/wrench-pedagogic-modules/single_core_computing">A. Single Core Computing</a>
+          
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+              
+            
+          
+            
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/multi_core_computing/">B. Multi-core Computing</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/networking_fundamentals/">C. Networking Fundamentals</a>
+              
+            
+          
+            
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/single_core_computing/">A. Single Core Computing</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/workflow_execution_data_locality/">F. Workflows and Data Locality</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/workflow_execution_fundamentals/">E. Workflow Execution Fundamentals</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item  active" href="/wrench-pedagogic-modules/pedagogic_modules/workflow_execution_parallelism/">G. Workflows and Parallelism</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/workflow_execution_resource_provisioning/">H. Workflows and Resource Provisioning</a>
+              
+            
+          
+            
+              
+                <a class="dropdown-item " href="/wrench-pedagogic-modules/pedagogic_modules/workflow_fundamentals/">D. Workflow Fundamentals</a>
+              
+            
+          
         </div>
       </div>          
     </li>
@@ -214,6 +386,10 @@
       
         
           <a class="sidebar-nav-item" href=" /wrench-pedagogic-modules/pedagogic_modules/IO_lesson/">I. Input/Output Effects</a>
+        
+      
+    
+      
         
       
     

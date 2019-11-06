@@ -1,0 +1,44 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "ubuntu/bionic64"
+
+  # expose port 3000 for the visualization
+  config.vm.network "forwarded_port", guest: 3000, host: 3000
+
+  # install docker, and pull wrench-pedagogic-module images
+  config.vm.provision "shell", inline: <<-SHELL
+    apt-get update
+    apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common resolvconf
+
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+
+    apt-get update
+
+    apt-get install -y docker-ce docker-ce-cli containerd.io
+
+    usermod -aG docker vagrant
+
+    echo nameserver 8.8.8.8 >> /etc/resolvconf/resolv.conf.d/head
+    resolvconf --enable-updates
+    resolvconf -u
+
+    docker pull wrenchproject/wrench-pedagogic-modules:activity-0 \
+        && docker pull wrenchproject/wrench-pedagogic-modules:activity-1 \
+        && docker pull wrenchproject/wrench-pedagogic-modules:ics332-activity-visualization \
+        
+    echo ************************
+    echo ****AVAILABLE IMAGES****
+    echo ************************
+    docker image ls
+
+    echo ************************
+    echo ***RUNNING CONTAINERS***
+    echo ************************
+    docker container ps
+
+  SHELL
+end

@@ -65,3 +65,7 @@ html, body {
   align-content: center;
 }
 // end of requirement
+.dropdown-item.active,.dropdown-item.focus{
+  background-color: $light-main !important;
+  color: #fff !important; 
+}

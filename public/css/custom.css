@@ -1,0 +1,28 @@
+/* standalone figure */
+.figure {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* container for WRENCH colored output (ansi colors must already be incuded via ansi_up.js library) */
+.wrench-output {
+  background: #f4f4f4;
+  overflow-x: scroll;
+  white-space: nowrap;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.wrench-output > span {
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+/* the small wrench logo at the top */
+#header-logo {
+    max-height: 1.25rem;
+    display: inline;
+    margin: 0;
+    vertical-align: bottom;
+}
