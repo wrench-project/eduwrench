@@ -43,6 +43,7 @@ html, body {
   align-items: center;
 }
 .sectTitle{
+  text-align: center;
   text-transform: uppercase;
   margin-top: 10px;
 }
@@ -68,4 +69,26 @@ html, body {
 .dropdown-item.active,.dropdown-item.focus{
   background-color: $light-main !important;
   color: #fff !important; 
+}
+// course display box
+.courseBox {
+  text-align: center !important;
+  align-items: center !important;
+}
+.courseImgs {
+  width:300px;
+}
+// end of course display
+// media query
+/* On screens that are 992px or less, move descriptions down */
+@media screen and (max-width: 992px) {
+  .info {
+    margin-top: 60%;
+  }
+  .title {
+    color: $main;
+  }
+  .jumbotron {
+    padding-top: 0;
+  }
 }

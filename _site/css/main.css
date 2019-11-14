@@ -22,7 +22,7 @@ html, body { margin: 0 auto; }
 
 .goal { text-align: center; align-items: center; }
 
-.sectTitle { text-transform: uppercase; margin-top: 10px; }
+.sectTitle { text-align: center; text-transform: uppercase; margin-top: 10px; }
 
 .sectTitle span { width: 100px; border-top: 3px solid #F4BE93; }
 
@@ -33,6 +33,15 @@ html, body { margin: 0 auto; }
 .box { text-align: center; align-content: center; }
 
 .dropdown-item.active, .dropdown-item.focus { background-color: #F4BE93 !important; color: #fff !important; }
+
+.courseBox { text-align: center !important; align-items: center !important; }
+
+.courseImgs { width: 300px; }
+
+/* On screens that are 992px or less, move descriptions down */
+@media screen and (max-width: 992px) { .info { margin-top: 60%; }
+  .title { color: #D28346; }
+  .jumbotron { padding-top: 0; } }
 
 .topBar { text-align: center; justify-content: center; }
 

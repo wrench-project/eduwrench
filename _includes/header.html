@@ -3,7 +3,7 @@
     <a href="{{ "/" | prepend: site.baseurl}}"><img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
   </div>
   <ul>
-    <li class="py-3"><a class="headerNav p-3" href="{{ "/home" | prepend: site.baseurl}}">{{ "Home" | upcase}}</a></li>
+    <li class="py-3"><a class="headerNav p-3" href="{{ "/" | prepend: site.baseurl}}">{{ "Home" | upcase}}</a></li>
     <li class="py-3">
       <div class="dropdown show btn-group">
         <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>
@@ -20,15 +20,6 @@
       </div>          
     </li>
     <li class="py-3"><a class="headerNav p-3" href="{{ "/glossary" | prepend: site.baseurl}}">{{ "Glossary" | upcase}}</a></li>
-    <li class="py-3">
-        <div class="dropdown show btn-group">
-          <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{{ "/setup" | prepend: site.baseurl}}">{{ "Setup" | upcase}}</a>
-          <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Software Requirement</a>
-              <a class="dropdown-item" href="#">Introduction</a>
-          </div>
-        </div>
-    </li>			
   </ul>
 </nav>
 

@@ -37,3 +37,5 @@ collections:
   pedagogic_modules:
       output: true
       permalink: /pedagogic_modules/:path/
+  assets:
+      output: true
