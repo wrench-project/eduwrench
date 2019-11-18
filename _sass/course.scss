@@ -1,10 +1,59 @@
 h2{
   text-align: center;
 }
-.ui.secondary.pointing.menu{
-  background-color: $light-background !important;
+.wrap {
+  background-color: $light-background;
 }
-.ui.secondary.pointing.menu.active.item {
+.masthead {
+  background-color: #fff;
+}
+.content {
+  padding-left: 10%;
+  padding-right: 10%;
+}
+/* style for heading title */
+.content h2 {
+  font-weight: bold;
+}
+/* styles for subtitles */
+.highlight-title {
+  background-color: $main;
+  color:white;
+  padding: 1%;
+  border-radius: 10px;
+  text-align: center;
+}
+/* style for nav bars */
+.content .nav-items a {
+  text-decoration: none !important;
+}
+.content .nav-items {
+  text-align: center;
+  display: inline;
+  background-color: $light-main;
+  border-radius: 5px;
+  a {
+    color: white !important;
+  }
+}
+.content .nav-items:hover {
+  background-color: transparent;
+  a {
+    color: $main !important;
+  }
+}
+/* style for secondary tabs */
+.ui.secondary.pointing.menu {
+  text-align: center !important;
+  align-items: center !important;
+}
+.ui.secondary.pointing.menu .item{
+  color:$main !important;
+}
+.ui.secondary.pointing.menu .item:hover{
+  background-color: $main !important;
+  color:white !important;
+}
+.ui.secondary.pointing.menu .active.item {
   border-color: $main !important;
-  color: $main !important;
 }

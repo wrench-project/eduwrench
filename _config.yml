@@ -11,7 +11,7 @@ highlighter:      rouge
 # Permalinks
 permalink:        pretty
 
-baseurl: '/wrench-pedagogic-modules'
+baseurl: '/eduwrench.github.io'
 
 # Setup
 title:            'WRENCH PEDAGOGIC MODULES'

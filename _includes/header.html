@@ -8,7 +8,7 @@
       <div class="dropdown show btn-group">
         <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          {% assign pedagogic_module_lists = site.pedagogic_modules %}
+          {% assign pedagogic_module_lists = site.pedagogic_modules | sort:"order"%}
           {% for node in pedagogic_module_lists %}
             {% if node.title != null %}
               {% if node.layout == "page" %}
