@@ -1,0 +1,27 @@
+// center sign in button
+.g-signin2{
+  width: 100%;
+}
+
+.g-signin2 > div{
+  margin: 0 auto;
+}
+
+.app-wrapper {
+  width: 80%;
+  margin-left: 5%;
+  text-align: center;
+  background-color: $light;
+}
+
+.app-content p {
+  color:gray;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}

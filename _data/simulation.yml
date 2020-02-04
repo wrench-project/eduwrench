@@ -1,0 +1,20 @@
+# Simulation activities are sorted alphabetically when displayed in the selector page
+# each activity should be entered in the following format:
+# - name: <word>
+# - link: <keyword sent back to backend app>
+
+# section: Simulation instructions
+- name: Multi-Core Machines
+  link: multi-core-machines
+
+- name: Networking Fundamentals
+  link: networking-fundamentals
+
+- name: Workflow Execution in Fundamentals
+  link: workflow-fundamentals
+
+- name: Workflow Execution in Data Locality
+  link: workflow-data-locality
+
+- name: Workflow Execution in Parallelism
+  link: workflow-parallelism
