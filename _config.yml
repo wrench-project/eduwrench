@@ -37,5 +37,8 @@ collections:
   pedagogic_modules:
       output: true
       permalink: /pedagogic_modules/:path/
+  simulations:
+      output: true
+      permalink: /simulations/:path/
   assets:
       output: true

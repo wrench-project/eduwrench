@@ -1,43 +1,43 @@
 <!-- Google Sign In -->
-<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script src="https://apis.google.com/js/platform.js?" async defer></script>
 <!-- Add Google Sign In Oauth Key -->
 <meta name="google-signin-client_id" content="560265658671-es4tecehj7t8lflvpmsbjce9o4sdsm7m.apps.googleusercontent.com">
 
 <!-- simulation app page -->
 
-<!-- <div class="text-center p-3 mt-3 app-wrapper">
+<div class="text-center p-3 mt-3 app-wrapper">
   <div class="row">
     <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="iconImg col-2">
     <h4 class="col-10">Wrench Pedagogic Module Simulators</h4>
   </div>
-  <div class="app-content">
-    
+    <div class="app-content">
+      
     <div class="sign-in-page show">
       <p class="mx-auto">Sign in with Google to get started running interactive simulations. </p>
       <div class="g-signin2 pb-2 signInBut" data-onsuccess="onSignIn"></div>
     </div>
-    
-    <div class="app-select-form hide">
-      <h5 class="user-title">Hello </h5>
-      <form class="form select-form">
-        <select class="custom-select mb-2 mr-sm-2" id="inlineFormCustomSelectPref">
-          <option selected disabled value="">Select a simulation-driven activity below:</option>
-          {% for experiment in site.data.simulation %}
-            <div class="m-5 p-4">
-              <option value="{{experiment.link}}">{{experiment.name}}</option>
-            </div>
+  </div>
+
+  <div class="app-select-form hide">
+    <h5 class="user-title">Hello </h5>
+    <form class="form select-form">
+      <div class="list-group">
+        <a class="list-group-item list-group-item-info">
+          Select a simulation-driven activity below:
+        </a>
+        {% assign simulation_lists = site.simulations | sort:"order"%}
+          {% for sim in simulation_lists %}
+            <a href="{{site.baseurl}}{{sim.url}}" class="list-group-item list-group-item-action">{{sim.title}}</a>
           {% endfor %}
-        </select>
-        <button type="submit" class="btn btn-success m-2">Confirm</button>
-      </form>
-      <a href="#" onclick="signOut();">Sign out</a>
-    </div>
+      </div>
+      <button type="submit" class="btn btn-success m-2">Confirm</button>
+    </form>
+    <a href="#" onclick="signOut();">Sign out</a>
   </div>
 </div>
- -->
 
- <iframe src="http://localhost:3000/" frameborder="0" class="myApp"></iframe>
-<!-- 
+<iframe src="http://localhost:3000/" frameborder="0" class="myApp hide"></iframe>
+
 <script>
   function onSignIn(googleUser) {
     // display user name
@@ -47,7 +47,6 @@
     $('.sign-in-page').removeClass('show').addClass('hide');
     $('.app-select-form').removeClass('hide').addClass('show');
   }
-
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
@@ -56,10 +55,9 @@
       $('.sign-in-page').removeClass('hide').addClass('show');
     });
   }
-
   $('.select-form').submit((event) => {
     let selected = $('.custom-select option:selected').val();
     console.log(selected);
     event.preventDefault();
   });
-</script> -->
+</script>
