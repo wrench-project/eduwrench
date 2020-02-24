@@ -135,7 +135,7 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: '/run/multi_core',
+            url: 'http://localhost:3000/multi_core',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
