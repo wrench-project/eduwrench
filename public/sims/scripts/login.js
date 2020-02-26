@@ -22,8 +22,13 @@ function signOut() {
       .addClass("show");
   });
 }
-$(".select-form").submit(event => {
-  let selected = $(".custom-select option:selected").val();
-  console.log(selected);
-  event.preventDefault();
+
+// replace iframe with chosen simulator
+$('.option').click(function() {
+  $('#myApp').attr('src', $(this).attr('name'));
+  $('#myApp').removeClass('hide').addClass('show');
+  $('.option').removeClass('selected');
+  $(this).toggleClass('selected');
 });
+
+

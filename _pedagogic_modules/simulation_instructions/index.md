@@ -13,7 +13,7 @@ a Web application and there are two cases:
 
 **Case #2: You have not been pointed to a static Web site**: In this case, you must run the Web app on your machine and go to a locally-hosted Web site
     
-<div class="ui accordion fluid">
+<div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
     (see instructions for Case #2)
