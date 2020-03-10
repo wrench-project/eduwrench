@@ -1,0 +1,1 @@
+cmake . && make clean && make 
