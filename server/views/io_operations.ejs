@@ -1,0 +1,82 @@
+<%- include("partials/header", {activity: 'IO OPERATIONS'}); %>
+
+<%- include("partials/input_non_workflow"); %>
+
+<%- include("partials/simulation_parameters_form_start"); %>
+
+
+
+<div class="form-group">
+    <label for="num_tasks">Number of Tasks</label>
+    <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" max="999" step="1" required>
+    <div class="invalid-feedback">
+        Please provide the number of tasks in the range of [1, 999].
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="task_gflop">Task Gflop <br/>(Host capable of 100 GFlops)</label>
+    <input class="form-control" type="number" id="task-gflop" placeholder="100" value="100" min="1" max="999999" step="1" required>
+    <div class="invalid-feedback">
+        Please provide the amount of GFlop per task in the range of [1, 999999].
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="num_cores">Amount of Task Input Data <br/>(Disk reads at 100 MBps)</label>
+    <input class="form-control" type="number" id="task-input" placeholder="1" value="1" min="1" max="999" step="1" required>
+    <div class="invalid-feedback">
+        Please provide the amount of input data per task in the range of [0, 999] MB.
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="task_ram">Amount of Task Output Data <br/>(Disk writes at 100 MBps)</label>
+    <input class="form-control" type="number" id="task-output" placeholder="1" value="1" min="1" max="999" step="1" required>
+    <div class="invalid-feedback">
+        Please provide the amount of output data per task in the range of [0, 999] MB.
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" name="io-overlap" type="checkbox" id="io-overlap" value="1">
+            IO Overlap Allowed (Computation and IO can take place concurrently)
+        </label>
+    </div>
+</div>
+
+<%- include("partials/simulation_parameters_form_end"); %>
+
+<%- include("partials/simulation_output"); %>
+
+<%- include("partials/workflow_execution_graph"); %>
+
+<%- include("partials/host_utilization_graph"); %>
+
+<%- include("partials/workflow_execution_data"); %>
+
+<script src="scripts/io_operations.js" type="text/javascript"></script>
+
+<script>
+    let svg = d3.select("#cyberinfrastructure");
+    let height = svg.attr("height");
+
+    let inner = svg.select("g");
+
+    // Set up zoom support
+    let zoom = d3.zoom().on("zoom", function() {
+        inner.attr("transform", d3.event.transform);
+    });
+    svg.call(zoom);
+
+    // Center the graph
+    let initialScale = 1.5;
+    svg.call(zoom.transform,
+        d3.zoomIdentity.translate(20, 10).scale(initialScale));
+
+    svg.attr('height', height);
+</script>
+
+<%- include("partials/footer"); %>

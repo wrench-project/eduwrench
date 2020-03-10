@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>WRENCH Pedagogic Modules</title>
+
+    <link rel="stylesheet" href="libs/bootstrap.min.css">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <script src="libs/jquery.js" type="text/javascript"></script>
+    <script src="libs/bootstrap.min.js" type="text/javascript"></script>
+  </head>
+  <body>
+      <div class="card" id="home-card">
+        <img id="home-wrench-logo" class="card-img-top" src="img/wrench_logo.svg" alt="Wrench Logo">
+        <div class="card-body">
+          <h4 class="text-center text-dark">WRENCH Pedagogic Modules</h4>
+
+          <% if (user) { %>
+            <p></p>
+            <div class="list-group">
+              <a class="list-group-item list-group-item-info">
+                Select a simulation-driven activity below:
+              </a>
+              <a href="/multi_core" class="list-group-item list-group-item-action">Multi-Core Machines</a>
+              <a href="/networking_fundamentals" class="list-group-item list-group-item-action">Networking Fundamentals</a>
+              <a href="/workflow_execution_fundamentals" class="list-group-item list-group-item-action">Workflow Execution: Fundamentals</a>
+              <a href="/workflow_execution_data_locality" class="list-group-item list-group-item-action">Workflow Execution: Data Locality</a>
+              <a href="/workflow_execution_parallelism" class="list-group-item list-group-item-action">Workflow Execution: Parallelism</a>
+              <a href="/io_operations" class="list-group-item list-group-item-action">IO Operations</a>
+              <a href="/client_server" class="list-group-item list-group-item-action">Client / Server</a>
+            </div>
+
+            <p class="text-right"><a href="/logout">logout</a></p>
+          <% } else { %>
+            <!-- <p class="card-text text-muted"> Log in with your UH_USERNAME@hawaii.edu email to get started.</p> -->
+            <p class="card-text text-muted"> Sign in with Google to get started running
+              interactive simulations.</p>  
+            <a href="/google">
+              <img id="google-button" src="img/google_signin.png">
+            </a>
+
+            <!-- If the user doesn't log in with UH gmail, show alert -->
+            <% if (messages.length == 1) { %>
+            <div class="alert alert-danger" role="alert">
+              <%= messages %>
+            </div>
+            <% } %>
+
+          <% } %>
+
+        </div>
+      </div>
+
+  </body>
+</html>
