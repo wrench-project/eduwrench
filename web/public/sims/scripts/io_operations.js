@@ -145,9 +145,6 @@ $(function() {
 
             success: function(response) {
 
-                console.log("======== GOT RESPONSE =========");
-                console.log(response);
-
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty()
                     .append(response.simulation_output);

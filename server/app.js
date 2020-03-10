@@ -1,16 +1,16 @@
-const express        = require("express"),
-    app            = express(),
-    bodyParser     = require("body-parser"),
+const express = require("express"),
+    app = express(),
+    bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
-    au             = require("ansi_up"),
-    {spawnSync}    = require("child_process"),
-    fs             = require("fs"),
-    passport       = require("passport"),
-    passportSetup  = require("./passport-setup")
-cookieSession  = require("cookie-session"),
-    request        = require("request"),
-    flash          = require("connect-flash"),
-    keys           = require("./keys.js");
+    au = require("ansi_up"),
+    {spawnSync} = require("child_process"),
+    fs = require("fs"),
+    passport = require("passport"),
+    passportSetup = require("./passport-setup")
+cookieSession = require("cookie-session"),
+    request = require("request"),
+    flash = require("connect-flash"),
+    keys = require("./keys.js");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -19,10 +19,10 @@ app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.use(flash());
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
 
 app.use(cookieSession({
@@ -33,14 +33,14 @@ app.use(cookieSession({
 // app.use(passport.session());
 
 // check if authenticated
-const authCheck = function(req, res, next) {
+const authCheck = function (req, res, next) {
     // if (!req.user) {
     //     // if user not already logged in, redirect them to the
     //     // homepage where they can log in
     //     res.redirect("/");
     // } else {
-        // the user is logged in so move on to the next middleware
-        next()
+    // the user is logged in so move on to the next middleware
+    next()
     // }
 }
 
@@ -48,9 +48,11 @@ const authCheck = function(req, res, next) {
 var ansi_up = new au.default;
 
 // main route that will show login/logout and available activities
-app.get("/", function(req, res) {
-    res.render("index", {user: req.user,
-        messages: req.flash("error")});
+app.get("/", function (req, res) {
+    res.render("index", {
+        user: req.user,
+        messages: req.flash("error")
+    });
 });
 
 // login through google
@@ -66,26 +68,25 @@ app.get("/google/redirect", passport.authenticate("google", {
 }));
 
 // logout route
-app.get("/logout", function(req, res) {
+app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
 
 
-
 // display networking fundamentals visualization route
-app.get("/networking_fundamentals", authCheck, function(req, res) {
+app.get("/networking_fundamentals", authCheck, function (req, res) {
     res.render("networking_fundamentals",
         {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/networking_fundamentals_cyber_infrastructure.svg")});
 });
 
 // execute networking fundamentals simulation route
-app.post("/run/networking_fundamentals", authCheck, function(req, res) {
+app.post("/run/networking_fundamentals", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/networking_fundamentals/");
 
     const SIMULATOR = "networking_fundamentals_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-    const FILE_SIZES = req.body.file_sizes.replace(/,/g," ").replace(/ +/g," ").split(" ");
+    const FILE_SIZES = req.body.file_sizes.replace(/,/g, " ").replace(/ +/g, " ").split(" ");
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -129,7 +130,7 @@ app.post("/run/networking_fundamentals", authCheck, function(req, res) {
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (!error && response.statusCode == 201) {
                     console.log("sent POST request to data_server");
                 } else {
@@ -150,7 +151,7 @@ app.post("/run/networking_fundamentals", authCheck, function(req, res) {
         var re = new RegExp(find, "g");
 
         res.json({
-            "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g,"<br>\n") + "</h5>"
+            "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>"
         });
 
 
@@ -158,15 +159,14 @@ app.post("/run/networking_fundamentals", authCheck, function(req, res) {
 });
 
 
-
 // display workflow execution fundamentals visualization route
-app.get("/workflow_execution_fundamentals", authCheck, function(req, res) {
+app.get("/workflow_execution_fundamentals", authCheck, function (req, res) {
     res.render("workflow_execution_fundamentals",
         {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_fundamentals_cyber_infrastructure.svg")});
 });
 
 // execute workflow execution fundamentals simulation route
-app.post("/run/workflow_execution_fundamentals", authCheck, function(req, res) {
+app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_fundamentals/");
 
     const SIMULATOR = "workflow_execution_fundamentals_simulator";
@@ -215,7 +215,7 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function(req, res) {
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (!error && response.statusCode == 201) {
                     console.log("sent POST request to data_server");
                 } else {
@@ -245,15 +245,14 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function(req, res) {
 });
 
 
-
 // display workflow execution data locality visualization route
-app.get("/workflow_execution_data_locality", authCheck, function(req, res) {
+app.get("/workflow_execution_data_locality", authCheck, function (req, res) {
     res.render("workflow_execution_data_locality",
         {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_data_locality_cyber_infrastructure.svg")});
 });
 
 // execute activity 1 simulation route
-app.post("/run/workflow_execution_data_locality", authCheck, function(req, res) {
+app.post("/run/workflow_execution_data_locality", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_data_locality/");
 
     const SIMULATOR = (req.body.simulator_number == 1 ? "workflow_execution_data_locality_simulator_remote_storage" : "workflow_execution_data_locality_simulator_local_storage");
@@ -302,7 +301,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function(req, res) 
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (!error && response.statusCode == 201) {
                     console.log("sent POST request to data_server");
                 } else {
@@ -333,14 +332,14 @@ app.post("/run/workflow_execution_data_locality", authCheck, function(req, res) 
 
 
 // display Workflow Execution and Parallelism visualization route
-app.get("/workflow_execution_parallelism", authCheck, function(req, res) {
+app.get("/workflow_execution_parallelism", authCheck, function (req, res) {
     res.render("workflow_execution_parallelism", {
         cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_parallelism_cyber_infrastructure.svg")
     });
 });
 
 // execute Workflow Execution and Parallelism simulation route
-app.post("/run/workflow_execution_parallelism", authCheck, function(req, res) {
+app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_parallelism/");
 
     const SIMULATOR = "workflow_execution_parallelism_simulator";
@@ -397,7 +396,7 @@ app.post("/run/workflow_execution_parallelism", authCheck, function(req, res) {
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (response.statusCode == 201) {
                     console.log("made POST request to data_server");
                 } else {
@@ -426,16 +425,15 @@ app.post("/run/workflow_execution_parallelism", authCheck, function(req, res) {
 });
 
 
-
 // display activity multi core visualization route
-app.get("/multi_core", authCheck, function(req, res) {
+app.get("/multi_core", authCheck, function (req, res) {
     res.render("multi_core", {
         cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_task.svg")
     });
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core", authCheck, function(req, res) {
+app.post("/run/multi_core", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/multi_core_computing/");
 
     const SIMULATOR = "multi_core_simulator";
@@ -490,7 +488,7 @@ app.post("/run/multi_core", authCheck, function(req, res) {
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (response.statusCode == 201) {
                     console.log("made POST request to data_server");
                 } else {
@@ -519,28 +517,24 @@ app.post("/run/multi_core", authCheck, function(req, res) {
 });
 
 // display activity io operations visualization route
-app.get("/io_operations", authCheck, function(req, res) {
+app.get("/io_operations", authCheck, function (req, res) {
     res.render("io_operations", {
         cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/io_task.svg")
     });
 });
 
 // execute activity io operations simulation route
-app.post("/run/io_operations", authCheck, function(req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/io_operations/");
+app.post("/run/io_operations", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/io_operations/");
 
     const SIMULATOR = "io_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
 
     const NUM_TASKS = req.body.num_tasks;
     const TASK_GFLOP = req.body.task_gflop;
     const TASK_INPUT = req.body.task_input;
     const TASK_OUTPUT = req.body.task_output;
     const IO_OVERLAP = (req.body.io_overlap == 1) ? true : false;
-
-
-
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -570,32 +564,32 @@ app.post("/run/io_operations", authCheck, function(req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        request({
-                method: "POST",
-                uri: keys.dataServer.uri,
-                json: {
-                    "key": keys.dataServer.key,
-                    "data": {
-                        "user": req.user,
-                        "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-                        "activity": "io_operations",
-                        "task_input": TASK_INPUT,
-                        "task_output": TASK_OUTPUT,
-                        "num_tasks": NUM_TASKS,
-                        "task_gflop": TASK_GFLOP,
-                        "io_overlap": IO_OVERLAP
-                    }
-                }
-            },
-            function(error, response, body) {
-                if (response.statusCode == 201) {
-                    console.log("made POST request to data_server");
-                } else {
-                    console.log("error: " + response.statusCode);
-                    console.log(body);
-                }
-            }
-        );
+        // request({
+        //         method: "POST",
+        //         uri: keys.dataServer.uri,
+        //         json: {
+        //             "key": keys.dataServer.key,
+        //             "data": {
+        //                 "user": req.user,
+        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+        //                 "activity": "io_operations",
+        //                 "task_input": TASK_INPUT,
+        //                 "task_output": TASK_OUTPUT,
+        //                 "num_tasks": NUM_TASKS,
+        //                 "task_gflop": TASK_GFLOP,
+        //                 "io_overlap": IO_OVERLAP
+        //             }
+        //         }
+        //     },
+        //     function (error, response, body) {
+        //         if (response.statusCode == 201) {
+        //             console.log("made POST request to data_server");
+        //         } else {
+        //             console.log("error: " + response.statusCode);
+        //             console.log(body);
+        //         }
+        //     }
+        // );
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -616,14 +610,14 @@ app.post("/run/io_operations", authCheck, function(req, res) {
 });
 
 // display activity client server visualization route
-app.get("/client_server", authCheck, function(req, res) {
+app.get("/client_server", authCheck, function (req, res) {
     res.render("client_server", {
         cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server.svg")
     });
 });
 
 // execute activity client server simulation route
-app.post("/run/client_server", authCheck, function(req, res) {
+app.post("/run/client_server", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("visualization", "simulations/client_server/");
 
     const SIMULATOR = "client_server_simulator";
@@ -633,7 +627,6 @@ app.post("/run/client_server", authCheck, function(req, res) {
     const SERVER_2_LINK = req.body.server_2_link;
     const CLIENT_DISK = req.body.client_disk;
     const HOST_SELECT = (req.body.host_select == 1) ? 1 : 2;
-
 
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -682,7 +675,7 @@ app.post("/run/client_server", authCheck, function(req, res) {
                     }
                 }
             },
-            function(error, response, body) {
+            function (error, response, body) {
                 if (response.statusCode == 201) {
                     console.log("made POST request to data_server");
                 } else {
@@ -710,6 +703,6 @@ app.post("/run/client_server", authCheck, function(req, res) {
     }
 });
 
-app.listen(3000, function() {
+app.listen(3000, function () {
     console.log("Visualization server is running on port 3000");
 });

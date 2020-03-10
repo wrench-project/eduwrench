@@ -8,92 +8,92 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations"/>
+				<Option working_dir="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations"/>
+				<Option working_dir="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations"/>
+				<Option working_dir="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="io_simulator">
-				<Option output="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/io_simulator" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations"/>
+				<Option output="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/io_simulator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/src"/>
-					<Add directory="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/include"/>
+					<Add directory="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/src"/>
+					<Add directory="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/local/include/wrench"/>
 					<Add directory="/opt/local/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 io_simulator"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 io_simulator"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="io_simulator/fast">
-				<Option output="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/io_simulator" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations"/>
+				<Option output="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/io_simulator" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/src"/>
-					<Add directory="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/include"/>
+					<Add directory="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/src"/>
+					<Add directory="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/include"/>
 					<Add directory="/usr/local/include"/>
 					<Add directory="/usr/local/include/wrench"/>
 					<Add directory="/opt/local/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 io_simulator/fast"/>
-					<CompileFile command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -f &quot;/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 io_simulator/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/include/ActivityScheduler.h">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/include/ActivityScheduler.h">
 			<Option target="io_simulator"/>
 		</Unit>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/include/ActivityWMS.h">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/include/ActivityWMS.h">
 			<Option target="io_simulator"/>
 		</Unit>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/src/ActivityScheduler.cpp">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/src/ActivityScheduler.cpp">
 			<Option target="io_simulator"/>
 		</Unit>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/src/ActivityWMS.cpp">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/src/ActivityWMS.cpp">
 			<Option target="io_simulator"/>
 		</Unit>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/src/Simulator.cpp">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/src/Simulator.cpp">
 			<Option target="io_simulator"/>
 		</Unit>
-		<Unit filename="/Users/wrench/Documents/wrench-pedagogic-modules/simulations/io_operations/CMakeLists.txt">
+		<Unit filename="/Users/rafsilva/Documents/isi/workspace/wrench/eduwrench/simulators/io_operations/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
