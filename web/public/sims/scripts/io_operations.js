@@ -131,7 +131,7 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen.
         $.ajax({
-            url: '/run/io_operations',
+            url: 'http://localhost:3000/run/io_operations',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
@@ -144,6 +144,9 @@ $(function() {
                 }),
 
             success: function(response) {
+
+                console.log("======== GOT RESPONSE =========");
+                console.log(response);
 
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty()

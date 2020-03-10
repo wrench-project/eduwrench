@@ -1,7 +1,7 @@
 # Build settings
 theme: minima
-plugins:
-  - jekyll-feed
+# plugins:
+  # - jekyll-feed
 
 # Dependencies
 markdown:         kramdown
