@@ -21,22 +21,23 @@ RUN git clone https://github.com/wrench-project/eduwrench.git
 WORKDIR /home/wrench/eduwrench/web
 RUN sudo bundle install
 
+# temporary (will be removed once the backend app will be updated)
 COPY keys.js /home/wrench/eduwrench/server/keys.js
 
 # build binaries for each activity simulator
 WORKDIR /home/wrench/eduwrench/simulators
 
-#RUN cd networking_fundamentals \
-#    && ./build.sh
+RUN cd networking_fundamentals \
+    && ./build.sh
 
-#RUN cd multi_core_computing \
-#    && ./build.sh
+RUN cd multi_core_computing \
+    && ./build.sh
 
-#RUN cd workflow_execution_fundamentals \
-#    && ./build.sh
+RUN cd workflow_execution_fundamentals \
+    && ./build.sh
 
-#RUN cd workflow_execution_data_locality \
-#    && ./build.sh
+RUN cd workflow_execution_data_locality \
+    && ./build.sh
 
 #RUN cd workflow_execution_parallelism \
 #    && ./build.sh
