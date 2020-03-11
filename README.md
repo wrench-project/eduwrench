@@ -18,7 +18,8 @@ $ jekyll serve --port 80
 ### Running with Docker
 
 ```
-$ docker run -p 80:4000 -p 3000:3000 -d wrenchproject/eduwrench
+$ docker build --no-cache -t eduwrench .
+$ docker run -p 80:4000 -p 3000:3000 -d eduwrench
 ```
 
 ## Get in Touch
