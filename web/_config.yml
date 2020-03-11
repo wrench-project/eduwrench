@@ -11,7 +11,7 @@ highlighter:      rouge
 # Permalinks
 permalink:        pretty
 
-baseurl: '/'
+#baseurl: '/'
 
 # Setup
 title:            'eduWRENCH - Pedagogic Modules'
