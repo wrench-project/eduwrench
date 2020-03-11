@@ -5,14 +5,25 @@
 
 ## Running the Application
 
+Compile all simulator codes:
+
+```
+$ cd simulators/io_operations
+$ ./build.sh
+```
+
+Start the backend server:
+
 ```
 $ cd server
 $ node app.js
 ```
 
+Start the frontend application:
+
 ```
 $ cd web
-$ jekyll serve --port 80
+$ bundle exec jekyll serve
 ```
 
 ### Running with Docker
