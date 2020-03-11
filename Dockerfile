@@ -46,4 +46,4 @@ RUN cd io_operations \
 
 # run applications
 WORKDIR /home/wrench/eduwrench/web
-CMD ["sh", "-c", "bundle exec jekyll serve -H 0.0.0.0 -P 4000 -B && node /home/wrench/eduwrench/server/app.js "]
+CMD ["sh", "-c", "bundle exec jekyll serve -H 0.0.0.0 -P 4000 -B && node /home/wrench/eduwrench/server/app.js"]
