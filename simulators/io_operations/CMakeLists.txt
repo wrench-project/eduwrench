@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
-project(ACTIVITY_1)
+project(ACTIVITY_IO_OPERATIONS)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 

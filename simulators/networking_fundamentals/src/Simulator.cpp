@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2019-2020. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>
@@ -13,7 +22,7 @@
   @param file_sizes: the list of file sizes, in MB
  */
 void generateWorkflow(wrench::Workflow *workflow, std::vector<double> &file_sizes) {
-    int id=0;
+    int id = 0;
     for (auto const &size : file_sizes) {
         workflow->addFile(("file_" + std::to_string(id++)), size * 1000.0 * 1000.0);
     }
@@ -39,9 +48,18 @@ void generatePlatform(std::string platform_file_path, unsigned long effective_ba
                              "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                              "<platform version=\"4.1\">\n"
                              "   <zone id=\"AS0\" routing=\"Full\">\n"
-                             "       <host id=\"host1\" speed=\"1000Gf\" core=\"1\"/>\n"
-                             "       <host id=\"host2\" speed=\"1000Gf\" core=\"1\"/>\n"
-
+                             "       <host id=\"host1\" speed=\"1000Gf\" core=\"1\">\n"
+                             "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                             "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                             "                            <prop id=\"mount\" value=\"/\"/>\n"
+                             "           </disk>\n"
+                             "       </host>\n"
+                             "       <host id=\"host2\" speed=\"1000Gf\" core=\"1\">\n"
+                             "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                             "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                             "                            <prop id=\"mount\" value=\"/\"/>\n"
+                             "           </disk>\n"
+                             "       </host>\n"
                              "       <!-- effective bandwidth = 100 MBps -->\n"
                              "       <link id=\"link1\" bandwidth=\"206.185MBps\" latency=\"10us\"/>\n"
                              "       <link id=\"link2\" bandwidth=\"103.092MBps\" latency=\"10us\"/>\n"
@@ -89,7 +107,7 @@ int main(int argc, char **argv) {
             throw std::invalid_argument("bad args");
         }
 
-        if (argc -1 > MAX_NUM_FILES) {
+        if (argc - 1 > MAX_NUM_FILES) {
             std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
             throw std::invalid_argument("invalid number of files");
         }
@@ -97,7 +115,8 @@ int main(int argc, char **argv) {
         for (int i = 1; i < argc; i++) {
             double size = std::stof(std::string(argv[i]));
             if ((size < 1) || (size > MAX_FILE_SIZE)) {
-                std::cerr << "Invalid file size. Enter a file size in the range [1, " + std::to_string(MAX_FILE_SIZE) + "] MB" << std::endl;
+                std::cerr << "Invalid file size. Enter a file size in the range [1, " + std::to_string(MAX_FILE_SIZE) +
+                             "] MB" << std::endl;
                 throw std::invalid_argument("invalid file size");
             } else {
                 file_sizes.push_back(size);
@@ -106,7 +125,8 @@ int main(int argc, char **argv) {
 
     } catch (std::invalid_argument &e) {
         std::cerr << "Usage: " << std::string(argv[0]) << " <file size> [file size]*" << std::endl;
-        std::cerr << "    file size: the size of each file, a value in the range of [1, " + std::to_string(MAX_FILE_SIZE) + "] MB" << std::endl;
+        std::cerr << "    file size: the size of each file, a value in the range of [1, " +
+                     std::to_string(MAX_FILE_SIZE) + "] MB" << std::endl;
         std::cerr << "    (at most " + std::to_string(MAX_FILE_SIZE) + " file sizes can be specified)" << std::endl;
         return 1;
     }
@@ -117,13 +137,9 @@ int main(int argc, char **argv) {
 
     // two storage services, one on each host
     const double STORAGE_CAPACITY = MAX_FILE_SIZE * MAX_NUM_FILES * 1000.0 * 1000.0;
-    auto storage_service_1 = simulation.add(
-            new wrench::SimpleStorageService("host1", STORAGE_CAPACITY)
-            );
+    auto storage_service_1 = simulation.add(new wrench::SimpleStorageService("host1", {"/"}));
 
-    auto storage_service_2 = simulation.add(
-            new wrench::SimpleStorageService("host2", STORAGE_CAPACITY)
-    );
+    auto storage_service_2 = simulation.add(new wrench::SimpleStorageService("host2", {"/"}));
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS({storage_service_1, storage_service_2}, "host1"));
@@ -154,11 +170,11 @@ int main(int argc, char **argv) {
         transfer_completion_times[file_copy->getContent()->getFile()] = duration;
     }
 
-
     std::cout << "----------------------------------------" << std::endl;
     std::cout.precision(4);
     for (const auto &tct : transfer_completion_times) {
-        std::cout << (tct.first->getSize() / (1000.0 * 1000.0)) << " MB transfer completed at time " << tct.second << "\n";
+        std::cout << (tct.first->getSize() / (1000.0 * 1000.0)) << " MB transfer completed at time " << tct.second
+                  << "\n";
     }
     std::cout << "----------------------------------------" << std::endl;
 
