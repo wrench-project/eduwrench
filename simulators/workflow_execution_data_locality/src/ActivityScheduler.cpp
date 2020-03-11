@@ -1,19 +1,24 @@
+/**
+ * Copyright (c) 2019-2020. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
 
 #include "ActivityScheduler.h"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms_scheduler, "Log category for Simple WMS Scheduler");
 
-
 namespace wrench {
-
 
     /**
      * @brief Constructor
      * @param storage_services: a map of hostname key to StorageService pointer
      */
-    ActivityScheduler::ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services) : StandardJobScheduler(), storage_services(storage_services) {
-
-    }
+    ActivityScheduler::ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services)
+            : StandardJobScheduler(), storage_services(storage_services) {}
 
     /**
      * @brief Schedules a single ready task at a time on the compute service.
@@ -46,38 +51,38 @@ namespace wrench {
                     {task_to_submit->getID(), compute_host + ":1"}
             };
 
-            std::map<WorkflowFile *, std::shared_ptr<StorageService>> file_locations;
+            std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
 
             #ifdef REMOTE_STORAGE
             for (auto f : task_to_submit->getInputFiles()) {
-                file_locations.insert(std::make_pair(f, storage_services["storage_db.edu"]));
+                file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
             }
 
             for (auto f : task_to_submit->getOutputFiles()) {
-                file_locations.insert(std::make_pair(f, storage_services["storage_db.edu"]));
+                file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
             }
             #endif
 
             #ifdef LOCAL_STORAGE
             for (auto f : task_to_submit->getInputFiles()) {
                 if (task_to_submit->getNumberOfParents() == 0) { // if im the first task, all my inputs should be read from remote
-                    file_locations.insert(std::make_pair(f, storage_services["storage_db.edu"]));
+                    file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
                 } else {
-                    file_locations.insert(std::make_pair(f, storage_services["hpc.edu"]));
+                    file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
                 }
             }
 
             for (auto f : task_to_submit->getOutputFiles()) {
                 if (task_to_submit->getNumberOfChildren() == 0) { // if im the last task, all my outputs should be written to remote
-                    file_locations.insert(std::make_pair(f, storage_services["storage_db.edu"]));
+                    file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
                 } else {
-                    file_locations.insert(std::make_pair(f, storage_services["hpc.edu"]));
+                    file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
                 }
             }
             #endif
 
-
-            WRENCH_INFO("Submitting %s as a job to compute service on %s", task_to_submit->getID().c_str(), compute_service->getHostname().c_str());
+            WRENCH_INFO("Submitting %s as a job to compute service on %s", task_to_submit->getID().c_str(),
+                        compute_service->getHostname().c_str());
             WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(task_to_submit, file_locations);
             this->getJobManager()->submitJob(job, compute_service, service_specific_args);
         }

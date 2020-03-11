@@ -1,10 +1,15 @@
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
+/**
+ * Copyright (c) 2019-2020. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
 
+#include <iostream>
+#include <string>
 #include <wrench.h>
-#include <nlohmann/json.hpp>
 #include <pugixml.hpp>
 
 #include "ActivityWMS.h"
@@ -17,7 +22,7 @@
 void generateWorkflow(wrench::Workflow *workflow) {
 
     const double TFLOP = 1000.0 * 1000.0 * 1000.0 * 1000.0;
-    const double MB    = 1000.0 * 1000.0;
+    const double MB = 1000.0 * 1000.0;
 
     wrench::WorkflowTask *task0 = workflow->addTask("task0", 100 * TFLOP, 1, 1, 1.0, 0);
     task0->addInputFile(workflow->addFile("task0::0.in", 200 * MB));
@@ -40,34 +45,39 @@ void generatePlatform(std::string platform_file_path, int compute_speed) {
 
     int effective_bandwidth = 10 * 1000 * 1000; // 10 MBps
 
-    if (compute_speed < 1 ) {
+    if (compute_speed < 1) {
         throw std::invalid_argument("generatePlatform() bandwidth must be greater than 1");
     }
 
     std::string xml_string = "<?xml version='1.0'?>\n"
-                      "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
-                      "<platform version=\"4.1\">\n"
-                      "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"my_lab_computer.edu\" speed=\"1000Gf\" core=\"1\"/>\n"
-                      "       <host id=\"hpc.edu\" speed=\"1000Gf\" core=\"1\"/>\n"
-                      "       <host id=\"storage_db.edu\" speed=\"1000Gf\" core=\"1\"/>\n"
+                             "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
+                             "<platform version=\"4.1\">\n"
+                             "   <zone id=\"AS0\" routing=\"Full\">\n"
+                             "       <host id=\"my_lab_computer.edu\" speed=\"1000Gf\" core=\"1\"/>\n"
+                             "       <host id=\"hpc.edu\" speed=\"1000Gf\" core=\"1\"/>\n"
+                             "       <host id=\"storage_db.edu\" speed=\"1000Gf\" core=\"1\">\n"
+                             "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                             "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                             "                            <prop id=\"mount\" value=\"/\"/>\n"
+                             "           </disk>\n"
+                             "       </host>\n"
 
-                      "       <!-- effective bandwidth = 10 MBps-->"
-                      "       <link id=\"1\" bandwidth=\"10.309MBps\" latency=\"10us\"/>\n"
+                             "       <!-- effective bandwidth = 10 MBps-->\n"
+                             "       <link id=\"1\" bandwidth=\"10.309MBps\" latency=\"10us\"/>\n"
 
-                      "       <route src=\"my_lab_computer.edu\" dst=\"hpc.edu\">\n"
-                      "           <link_ctn id=\"1\"/>\n"
-                      "       </route>\n"
+                             "       <route src=\"my_lab_computer.edu\" dst=\"hpc.edu\">\n"
+                             "           <link_ctn id=\"1\"/>\n"
+                             "       </route>\n"
 
-                      "       <route src=\"storage_db.edu\" dst=\"my_lab_computer.edu\">\n"
-                      "           <link_ctn id=\"1\"/>\n"
-                      "       </route>\n"
+                             "       <route src=\"storage_db.edu\" dst=\"my_lab_computer.edu\">\n"
+                             "           <link_ctn id=\"1\"/>\n"
+                             "       </route>\n"
 
-                      "       <route src=\"storage_db.edu\" dst=\"hpc.edu\">\n"
-                      "           <link_ctn id=\"1\"/>\n"
-                      "       </route>\n"
-                      "    </zone>\n"
-                      "</platform>";
+                             "       <route src=\"storage_db.edu\" dst=\"hpc.edu\">\n"
+                             "           <link_ctn id=\"1\"/>\n"
+                             "       </route>\n"
+                             "    </zone>\n"
+                             "</platform>";
 
     pugi::xml_document xml_doc;
 
@@ -90,7 +100,7 @@ void generatePlatform(std::string platform_file_path, int compute_speed) {
  * @param argv
  * @return
  */
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
@@ -108,7 +118,7 @@ int main(int argc, char** argv) {
             std::cerr << "Compute Speed must be greater than 0 GFlop/sec";
             throw std::invalid_argument("invalid compute speed");
         }
-    } catch(std::invalid_argument &e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << "Usage: " << argv[0] << " <compute speed>" << std::endl;
         std::cerr << "    compute speed: measured in GFlop/sec" << std::endl;
         return 1;
@@ -129,22 +139,22 @@ int main(int argc, char** argv) {
     const std::string STORAGE_HOST("storage_db.edu");
 
     // storage service on storage_db_edu
-    auto storage_db_edu_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, 10000000000000.0));
+    auto storage_db_edu_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));
 
     auto compute_service = simulation.add(new wrench::BareMetalComputeService(
-                COMPUTE_HOST,
-                {COMPUTE_HOST},
-                {},
-                {}
-            ));
+            COMPUTE_HOST,
+            {COMPUTE_HOST},
+            {},
+            {}
+    ));
 
     // WMS on my_lab_computer_edu
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler> (
+    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
             new wrench::ActivityScheduler(storage_db_edu_storage_service)),
-            {compute_service},
-            {storage_db_edu_storage_service},
-            WMS_HOST
-            ));
+                                                      {compute_service},
+                                                      {storage_db_edu_storage_service},
+                                                      WMS_HOST
+    ));
 
     wms->addWorkflow(&workflow);
 
@@ -152,12 +162,13 @@ int main(int argc, char** argv) {
     simulation.add(new wrench::FileRegistryService(WMS_HOST));
 
     // stage the input files
-    std::map<std::string, wrench::WorkflowFile *> input_files = workflow.getInputFiles();
-    simulation.stageFiles(input_files, storage_db_edu_storage_service);
+    for (auto file : workflow.getInputFiles()) {
+        simulation.stageFile(file.second, storage_db_edu_storage_service);
+    }
 
     // launch the simulation
     simulation.launch();
 
-    simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json");
+    simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "/tmp/workflow_data.json");
     //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
 }
