@@ -5,10 +5,10 @@ USER root
 RUN apt update \
     && apt install -y curl \
     && curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs ruby-full build-essential zlib1g-dev
 
-RUN apt-get install -y ruby-full build-essential zlib1g-dev
 RUN gem install jekyll bundler
+RUN echo "wrench ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER wrench
 
@@ -16,6 +16,10 @@ WORKDIR /home/wrench/
 
 # download eduWRENCH repository
 RUN git clone https://github.com/wrench-project/eduwrench.git
+
+# bundle install jekyll application
+WORKDIR /home/wrench/eduwrench/web
+RUN sudo bundle install
 
 COPY keys.js /home/wrench/eduwrench/server/keys.js
 
@@ -40,7 +44,6 @@ WORKDIR /home/wrench/eduwrench/simulators
 RUN cd io_operations \
     && ./build.sh
 
-EXPOSE 80
-
-WORKDIR /home/wrench/eduwrench/server
-CMD ["sh", "-c", "node /home/wrench/eduwrench/server/app.js && jekyll serve --source /home/wrench/eduwrench/web --port 80"]
+# run applications
+WORKDIR /home/wrench/eduwrench/web
+CMD ["sh", "-c", "bundle exec jekyll serve -H 0.0.0.0 -P 4000 -B && node /home/wrench/eduwrench/server/app.js "]

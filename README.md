@@ -3,6 +3,24 @@
 
 ## eduWRENCH
 
+## Running the Application
+
+```
+$ cd server
+$ node app.js
+```
+
+```
+$ cd web
+$ jekyll serve --port 80
+```
+
+### Running with Docker
+
+```
+$ docker run -p 80:4000 -t wrenchproject/eduwrench -d
+```
+
 ## Get in Touch
 
 The main channel to reach the eduWRENCH team is via the support email:
