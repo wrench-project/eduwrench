@@ -1,7 +1,7 @@
 # Build settings
 theme: minima
 # plugins:
-  # - jekyll-feed
+# - jekyll-feed
 
 # Dependencies
 markdown:         kramdown
@@ -11,12 +11,12 @@ highlighter:      rouge
 # Permalinks
 permalink:        pretty
 
-baseurl: '/eduwrench.github.io'
+baseurl: '/'
 
 # Setup
-title:            'WRENCH PEDAGOGIC MODULES'
+title:            'eduWRENCH - Pedagogic Modules'
 tagline:          'Distributed Computing Courseware'
-description:      'WRENCH Pedagogic Modules.'
+description:      'eduWRENCH Pedagogic Modules.'
 
 author:
   name:           'WRENCH Team'
@@ -35,10 +35,10 @@ github:
 
 collections:
   pedagogic_modules:
-      output: true
-      permalink: /pedagogic_modules/:path/
+    output: true
+    permalink: /pedagogic_modules/:path/
   simulations:
-      output: true
-      permalink: /simulations/:path/
+    output: true
+    permalink: /simulations/:path/
   assets:
-      output: true
+    output: true
