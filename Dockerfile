@@ -21,9 +21,6 @@ RUN git clone https://github.com/wrench-project/eduwrench.git
 WORKDIR /home/wrench/eduwrench/web
 RUN sudo bundle install
 
-# temporary (will be removed once the backend app will be updated)
-COPY keys.js /home/wrench/eduwrench/server/keys.js
-
 # build binaries for each activity simulator
 WORKDIR /home/wrench/eduwrench/simulators
 
