@@ -22,7 +22,7 @@ author:
   name:           'WRENCH Team'
   url:            https://wrench-project.org
 
-paginate:         5
+#paginate:         5
 
 # Custom vars
 version:          2.0.0
