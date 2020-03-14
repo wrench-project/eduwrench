@@ -144,8 +144,7 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty()
-                    .append(response.simulation_output);
+                $("#simulation-output").empty().append(response.simulation_output);
 
                 generate_host_utilization_graph(response.task_data, 1);
 

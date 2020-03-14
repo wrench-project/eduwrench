@@ -1,11 +1,8 @@
-
-
-$(function() {
-
+$(function () {
 
 
     // Update the label that says how many cores each compute node has
-    $("#num-cores").on("keyup", function() {
+    $("#num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
         let num_cores_label_el = $(".num-cores-label");
@@ -18,7 +15,7 @@ $(function() {
             num_cores_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     num_cores_label_el.css("background-color", "");
                 }
@@ -31,12 +28,12 @@ $(function() {
     });
 
     // Update the label that says how many tasks will be run
-    $("#num-tasks").on("keyup", function() {
+    $("#num-tasks").on("keyup", function () {
         let num_tasks_input_el = $(this);
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
         let num_tasks_label_el = $(".num-tasks-label");
 
-        if (num_tasks_input_value >= 1 && num_tasks_input_value <1000) {
+        if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
 
             num_tasks_label_el.text(num_tasks_input_value + " Task(s)")
                 .css("background-color", "#d3ffe9");
@@ -44,7 +41,7 @@ $(function() {
             num_tasks_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (num_tasks_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     num_tasks_label_el.css("background-color", "");
                 }
@@ -57,12 +54,12 @@ $(function() {
     });
 
     // Update the label that says how much RAM is used by each task
-    $("#task-ram").on("keyup", function() {
+    $("#task-ram").on("keyup", function () {
         let task_ram_input_el = $(this);
         let task_ram_input_value = parseInt(task_ram_input_el.val());
         let task_ram_label_el = $(".task-ram-label");
 
-        if (task_ram_input_value >= 0 && task_ram_input_value<=32) {
+        if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
 
             task_ram_label_el.text(task_ram_input_value + "GB")
                 .css("background-color", "#d3ffe9");
@@ -70,7 +67,7 @@ $(function() {
             task_ram_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (task_ram_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     task_ram_label_el.css("background-color", "");
                 }
@@ -83,12 +80,12 @@ $(function() {
     });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
-    $("#task-gflop").on("keyup", function() {
+    $("#task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
         let task_gflop_label_el = $(".task-gflop-label");
 
-        if (task_gflop_input_value >= 1 && task_gflop_input_value<1000) {
+        if (task_gflop_input_value >= 1 && task_gflop_input_value < 1000) {
 
             task_gflop_label_el.text(task_gflop_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
@@ -96,19 +93,19 @@ $(function() {
             task_gflop_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (task_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     task_gflop_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(task_gflop_input_value>=1000 && task_gflop_input_value<1000000){
-            task_gflop_label_el.text(task_gflop_input_value/1000 + " TFlop")
+        } else if (task_gflop_input_value >= 1000 && task_gflop_input_value < 1000000) {
+            task_gflop_label_el.text(task_gflop_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
             task_gflop_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (task_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     task_gflop_label_el.css("background-color", "");
                 }
@@ -120,7 +117,7 @@ $(function() {
         }
     });
 
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -135,7 +132,7 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: 'http://localhost:3000/multi_core',
+            url: 'http://' + window.location.hostname + ':3000/run/multi_core',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
@@ -146,18 +143,17 @@ $(function() {
                     task_ram: $("#task-ram").val()
                 }),
 
-                success: function(response) {
+            success: function (response) {
 
-                    // Add the new simulation output into the "Simulation Output" section
-                    $("#simulation-output").empty()
-                        .append(response.simulation_output);
+                // Add the new simulation output into the "Simulation Output" section
+                $("#simulation-output").empty().append(response.simulation_output);
 
-                    generate_host_utilization_graph(response.task_data, $("#num-cores").val());
+                generate_host_utilization_graph(response.task_data, $("#num-cores").val());
 
-                    generate_workflow_execution_graph(response.task_data);
+                generate_workflow_execution_graph(response.task_data);
 
-                    populateWorkflowTaskDataTable(response.task_data);
-                }
+                populateWorkflowTaskDataTable(response.task_data);
+            }
         });
     });
 });

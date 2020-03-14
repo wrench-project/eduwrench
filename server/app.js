@@ -12,7 +12,7 @@ cookieSession = require("cookie-session"),
     flash = require("connect-flash"),
     // keys = require("./keys.js");
 
-app.set("view engine", "ejs");
+    app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -26,8 +26,8 @@ app.use(function (req, res, next) {
 });
 
 // app.use(cookieSession({
-    // maxAge: 24 * 60 * 60 * 1000, // a day in milliseconds
-    // keys: [keys.cookieSession.key]
+// maxAge: 24 * 60 * 60 * 1000, // a day in milliseconds
+// keys: [keys.cookieSession.key]
 // }));
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -82,7 +82,7 @@ app.get("/networking_fundamentals", authCheck, function (req, res) {
 
 // execute networking fundamentals simulation route
 app.post("/run/networking_fundamentals", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/networking_fundamentals/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/networking_fundamentals/");
 
     const SIMULATOR = "networking_fundamentals_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -167,7 +167,7 @@ app.get("/workflow_execution_fundamentals", authCheck, function (req, res) {
 
 // execute workflow execution fundamentals simulation route
 app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_fundamentals/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_execution_fundamentals/");
 
     const SIMULATOR = "workflow_execution_fundamentals_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -237,7 +237,7 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) 
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync(__dirname + "/workflow_data.json"))
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
         });
 
 
@@ -253,7 +253,7 @@ app.get("/workflow_execution_data_locality", authCheck, function (req, res) {
 
 // execute activity 1 simulation route
 app.post("/run/workflow_execution_data_locality", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_data_locality/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_execution_data_locality/");
 
     const SIMULATOR = (req.body.simulator_number == 1 ? "workflow_execution_data_locality_simulator_remote_storage" : "workflow_execution_data_locality_simulator_local_storage");
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -323,7 +323,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync(__dirname + "/workflow_data.json"))
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
         });
 
 
@@ -340,7 +340,7 @@ app.get("/workflow_execution_parallelism", authCheck, function (req, res) {
 
 // execute Workflow Execution and Parallelism simulation route
 app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/workflow_execution_parallelism/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_execution_parallelism/");
 
     const SIMULATOR = "workflow_execution_parallelism_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -419,7 +419,7 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync(__dirname + "/workflow_data.json")),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });
@@ -434,7 +434,7 @@ app.get("/multi_core", authCheck, function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/multi_core", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/multi_core_computing/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing/");
 
     const SIMULATOR = "multi_core_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -511,7 +511,7 @@ app.post("/run/multi_core", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync(__dirname + "/workflow_data.json")),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });
@@ -618,7 +618,7 @@ app.get("/client_server", authCheck, function (req, res) {
 
 // execute activity client server simulation route
 app.post("/run/client_server", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("visualization", "simulations/client_server/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
 
     const SIMULATOR = "client_server_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -698,7 +698,7 @@ app.post("/run/client_server", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync(__dirname + "/workflow_data.json")),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });

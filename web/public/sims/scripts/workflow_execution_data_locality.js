@@ -152,7 +152,7 @@ var workflow_dag =
         ]
     };
 
-$(function() {
+$(function () {
 
     // Show the workflow, and update if the user wants to use the Workflow where tasks use RAM
     generate_workflow_dag(workflow_dag);
@@ -161,17 +161,17 @@ $(function() {
     $('.local-storage-service-label').css('display', 'none');
 
     // Hide or display the "Local Storage Service" label
-    $("#remote-storage-service-input").on("click", function() {
+    $("#remote-storage-service-input").on("click", function () {
         $('.local-storage-service-label').css('display', 'none');
     });
 
-    $("#local-storage-service-input").on("click", function() {
+    $("#local-storage-service-input").on("click", function () {
         $('.local-storage-service-label').css('display', 'block');
     });
 
     // Update link bandwidths labels on SVG live as user types into
     // the form
-    $('#link-bandwidth').on('keyup', function() {
+    $('#link-bandwidth').on('keyup', function () {
 
         let link_bandwidth_input_el = $(this)
         let link_bandwidth_input_value = parseInt(link_bandwidth_input_el.val());
@@ -180,20 +180,20 @@ $(function() {
         // highlight the bandwidth label using green on the SVG for half a second
         //to indicate to the user that a valid number has been entered
         if (link_bandwidth_input_value >= 1 && link_bandwidth_input_value <= 999) {
-           link_bandwidth_label_el.text("Bandwidth: " + link_bandwidth_input_value + " MBps")
+            link_bandwidth_label_el.text("Bandwidth: " + link_bandwidth_input_value + " MBps")
                 .css("background-color", "#d3ffe9");
 
             link_bandwidth_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (link_bandwidth_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     link_bandwidth_label_el.css("background-color", "");
                 }
             }, 500);
 
-        // highlight the bandwidth label using red on the SVG to indicate to the user
-        // that an invalid number has been entered
+            // highlight the bandwidth label using red on the SVG to indicate to the user
+            // that an invalid number has been entered
         } else {
             link_bandwidth_label_el.css("background-color", "#ffb7b5");
 
@@ -202,7 +202,7 @@ $(function() {
         }
     });
 
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -218,7 +218,7 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: '/run/workflow_execution_data_locality',
+            url: 'http://' + window.location.hostname + ':3000/run/workflow_execution_data_locality',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
@@ -227,16 +227,15 @@ $(function() {
                     link_bandwidth: $('#link-bandwidth').val()
                 }),
 
-                success: function(response) {
+            success: function (response) {
 
-                    // Add the new simulation output into the "Simulation Output" section
-                    $("#simulation-output").empty()
-                        .append(response.simulation_output);
+                // Add the new simulation output into the "Simulation Output" section
+                $("#simulation-output").empty().append(response.simulation_output);
 
-                    generate_workflow_execution_graph(response.task_data);
+                generate_workflow_execution_graph(response.task_data);
 
-                    populateWorkflowTaskDataTable(response.task_data);
-                }
+                populateWorkflowTaskDataTable(response.task_data);
+            }
         });
     });
 });
