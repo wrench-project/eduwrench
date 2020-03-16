@@ -161,18 +161,13 @@ pick to get the best improvement in overall execution time?
   <div markdown="1" class="ui segment content">
 
 In total, there are 9 tasks so the original computer will spend 90 seconds
-computing. The input file to the first task is read once, which takes 5 seconds. 
+computing. The input file to the first task is read once, which takes 4 seconds. 
 Each of the other 12 files is written once and read once, which takes
-12 * (5 + 5) = 120 seconds. 
+12 * (4 + 4) = 96 seconds.  This is a total of 100 seconds of I/O. 
 
-Overall, the execution spends 90 seconds computing and 125 seconds doing 
+Overall, the execution spends 90 seconds computing and 100 seconds doing 
 file I/O. I should double the disk bandwidth!
 
-This is not a good parallel efficiency (50%). The fact that
-some levels of the workflow has a single task really 
-hurts the speedup because while that task executes 
-two cores are left idle. 
- 
   </div>
 </div>
 
@@ -199,7 +194,7 @@ best parallel speedup one can achieve?  What is the parallel efficiency?
 
 <p></p>
 
-**[D.q1.3]** If each file if 1GB, how many GB in total are **read** from
+**[D.q1.3]** If each file is 1GB, how many GB in total are **read** from
 the storage server where all files must be stored?
 
 <p></p>

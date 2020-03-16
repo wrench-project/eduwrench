@@ -81,13 +81,13 @@ the simulation Web application
 selecting `Networking Fundamentals` from its menu. 
 
 This simulation is for the following
-scenario in which an number of transfers occur concurrently on the same
+scenario in which a number of transfers occur concurrently on the same
 three-link route:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_simulation.svg">simulation scenario</object>
 <b>Figure 3:</b> Simulation scenario.
 
-On the simulation Web application tool  you can enter a number a list of file sizes (in MB). Each file size corresponds to
+On the simulation Web application tool  you can enter a list of file sizes (in MB). Each file size corresponds to
 one data transfer on a three-link route.
 
 For example, if you enter just number "100" in the text box, the simulation will be for
@@ -100,7 +100,7 @@ a single 100 MB data transfer and produce this output:
 ```
 
 Note that the transfer's completion time is a bit higher than what the computations
-we've done so far. We would expect the transfer time to be:
+we've done so far would give. We would expect the transfer time to be:
 
 $$
 T = 30\;\text{us} + \frac{100 \text{MB}}{10 \text{MB/sec}} = 10.00003\;\text{sec}.
@@ -174,7 +174,7 @@ The following practice questions pertain to this topology:
    as it is bottlenecked on the link into host C. These two transfers share
    one network link, but that network link has bandwidth 100 MB/sec, and so
    there is no contention on that link.  Consequently, the transfer times
-   as as follows:
+   as follows:
 
 $$
 \begin{align}
@@ -189,7 +189,7 @@ $$
 
 
 **[C.p3.3]** A 100 MB transfer from host B to host C and a 60 MB transfer 
-from host A to host C start at time 0. At white time do they complete?
+from host A to host C start at time 0. At what time do they complete?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>

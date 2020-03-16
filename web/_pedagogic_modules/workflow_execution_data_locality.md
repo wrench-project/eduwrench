@@ -68,7 +68,7 @@ In the workflow execution above, the CS reads and writes files from and to
 the SS on `storage_db.edu`, which causes a lot of I/O overhead. This
 overhead can be vastly reduced if the storage service were located on the
 same host as the CS (which you can think of as a disk on which data can be
-cached at the SS). The idea would thus be to data *closer* to where the
+cached at the SS). The idea would thus be to move data *closer* to where the
 computation is taking place, or improving **data locality**.
 
 Figure 3 below shows on the left-hand side a depiction of the new

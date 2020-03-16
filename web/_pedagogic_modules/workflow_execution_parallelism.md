@@ -5,10 +5,6 @@ order: 700
 usemathjax: true
 ---
 
-1. [Learning objectives](#learning-objectives)
-2. [Overview](#overview)
-3. [Activity](#activity)
-4. [Conclusion](#conclusion)
 
 # Learning Objectives
 - Gain exposure to cluster platforms;
@@ -17,6 +13,7 @@ usemathjax: true
 - Be able to compare alternative strategies for executing tasks in parallel.
 
 # Overview
+
 ## Workflow and Platform Scenario
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/workflow.svg">Workflow</object>
 
@@ -75,7 +72,7 @@ T_{3000\;MB\;file} & = \sum_{l \in route} Latency(l) + \frac{m}{\min\limits_{l \
 \end{align}
 $$
 
-The front end node has 10 TB of storage, which is called the *scratch storage*. This
+The front end node has 100 TB of storage, which is called the *scratch storage*. This
 is essentially a local storage service. When a compute node reads a file from 
 scratch storage, the file
 travels through the two links separating the compute node and the frontend
@@ -136,55 +133,55 @@ The questions below ask you to run particular simulation scenarios.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_1.svg">Compute Service 1</object>
 
-  **[F.q1.1]** Assuming the cluster has 1 single-core compute node (Figure 5), what do you expect the overall execution time of the workflow to be?
-  To this end, write a simple formula. In the simulation app,  set the cluster to have 1 single-core node. Run the simulation and check your answer. (Note that you might not be able to see file transfer operations in the displayed Gantt charts because these operations could be very short relatively to the overall execution time.)
+  **[G.q1.1]** Assuming the cluster has 1 single-core compute node (Figure 5), what do you expect the overall execution time of the workflow to be?
+  To this end, write a simple formula. In the simulation app,  set the cluster to have 1 single-core node. Run the simulation and check your answer. (Note that you might not be able to see file transfer operations in then displayed Gantt charts because these operations could be very short relatively to the overall execution time.)
   
   
-  **[F.q1.2]** Based on the dependencies present in the workflow, what tasks could we potentially execute in parallel if we had 20 cores instead of 1 core?
+  **[G.q1.2]** Based on the dependencies present in the workflow, what tasks could we potentially execute in parallel if we had 20 cores instead of 1 core?
 
 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_2.svg">Compute Service 2</object>
 
-  **[F.q1.3]** Assuming the cluster has 1 10-core compute node (Figure 6), what do you expect the execution time of the workflow to be?
+  **[G.q1.3]** Assuming the cluster has 1 10-core compute node (Figure 6), what do you expect the execution time of the workflow to be?
   To this end, write a simple formula. In the simulation app, set the cluster to have 1 10-core node.
    Run the simulation and check your answer.
   
-  **[F.q1.4]** By inspecting the Host Utilization Gantt chart in the simulation app, is the parallel efficiency greater than 50%? Explain. 
+  **[G.q1.4]** By inspecting the Host Utilization Gantt chart in the simulation app, is the parallel efficiency greater than 50%? Explain. (Remember that the parallel efficiency is in terms of individual cores.)
        **Important: while I/O is going on, we consider that the cores are idle!**
   
-  **[F.q1.5]** Write a formula for the parallel efficiency and compute the value as a percentage. 
+  **[G.q1.5]** Write a formula for the parallel efficiency and compute the value as a percentage. (Remember that the parallel efficiency is in terms of cores: the parallel speedup is the execution time when using all available cores in the platform, even if some of them don't compute anything, divided by the execution time when using a single core).
 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_3.svg">Compute Service 3</object>
 
-  **[F.q1.6]** Assuming the cluster has 1 15-core compute node (Figure 7), what do you expect the execution time of the workflow to be?
+  **[G.q1.6]** Assuming the cluster has 1 15-core compute node (Figure 7), what do you expect the execution time of the workflow to be?
   To this end, write a simple formula. In the simulation app, set the cluster to have 1 15-core node.
   Run the simulation and check your answer.
   
-  **[F.q1.7]** If parallel efficiency higher or lower than that computed in question F.q1.5?
+  **[G.q1.7]** Is parallel efficiency higher or lower than that computed in question F.q1.5?
   
-  **[F.q1.8]** Overall, was it worth it switching from a 10 core node to a 15 core node?
+  **[G.q1.8]** Overall, was it worth it switching from a 10 core node to a 15 core node?
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_4.svg">Compute Service 4</object>
 
 Assuming the cluster has 1 20-core node:
   
-  **[F.q1.9]** At what time would task T0 start?
+  **[G.q1.9]** At what time would task T0 start?
   
-  **[F.q1.10]** At what time would task T19 start?
+  **[G.q1.10]** At what time would task T18 start?
   
-  **[F.q1.11]** At what time would task T20 start?
+  **[G.q1.11]** At what time would task T19 start?
   
-  **[F.q1.12]** How long can we expect the execution time of this workflow to be? To this end, write a simple formula.
+  **[G.q1.12]** How long can we expect the execution time of this workflow to be? To this end, write a simple formula.
     In the simulation app, set the cluster to have 1 20-core node (Figure 8).
     Run the simulation and check your answer against the results.
   
-  **[F.q1.13]** How much faster did we execute the workflow on this platform compared to the initial platform that had only a single core?
+  **[G.q1.13]** How much faster did we execute the workflow on this platform compared to the initial platform that had only a single core?
   
-  **[F.q1.14]** Would adding one extra core to our machine further decrease the workflow execution time? Explain.
+  **[G.q1.14]** Would adding one extra core to our machine further decrease the workflow execution time? Explain.
   
-  **[F.q1.15]** What is the parallel efficiency as a percentage?
+  **[G.q1.15]** What is the parallel efficiency as a percentage?
 
 ## Step 2: Augment the Cluster to Have Multiple Compute Nodes
 
@@ -202,7 +199,7 @@ As we have learned in the
 [Multi-core Computing module]({{ site.baseurl }}/pedagogic_modules/multi_core_computing),
 if a compute node does not have enough RAM to execute
 a task, the task execution must be deferred. Since our hosts have 80 GB of RAM, 
-this means that at most 5tasks can run concurrently on a host (because 6 times 16 is greater than
+this means that at most 5 tasks can run concurrently on a host (because 6 times 16 is greater than
 80). The following questions reveal how this requirement forces us to find
 another means of utilizing parallelism and increasing workflow execution
 performance.
@@ -222,12 +219,11 @@ performance.
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_5.svg">Compute Service 5</object>
 
   **[F.q1.20]** Assuming the cluster has 4 8-core compute nodes (Figure 10), what can we expect the execution time of the workflow to be?
-    Write a simple formula. Now set the simulator to have 4 compute nodes, each with 8 cores. Check the box that
-    says "Workflow Tasks each require an additional 12 GB of RAM". Run the simulation and check your results against the simulator.
+    Write a simple formula. Now set the simulator to have 4 compute nodes, each with 8 cores. Check the box that says "Workflow Tasks each require an additional 12 GB of RAM".  Run the simulation and check your results against the simulator.
 
   **[F.q1.21]** How much faster did the workflow execute in this execution when compared to the previous one (the answer from F.q1.16)?
 
-  **[F.q1.22]** What about the parallel efficiency? Compute it as a percentage using a simple formula.
+  **[F.q1.22]** What is the parallel efficiency (when we consider the sequential baseline as executing using a single core in total)? Compute it as a percentage using a simple formula.
 
   **[F.q1.23]** Assuming we had been able to purchase 4 5-core compute nodes instead of 4 8-core compute nodes, what would the parallel efficiency have been?
 

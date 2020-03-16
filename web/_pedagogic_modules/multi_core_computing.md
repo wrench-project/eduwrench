@@ -60,16 +60,21 @@ uninterrupted until completion on that same core.
 One motivation for running the tasks of an application on multiple cores is speed.  For
 example, if you have tasks that a single core can complete in one hour, it
 will take four hours to complete four tasks. If you have two of these
-cores in a dual-core processor, now you can complete the same four tasks in
-two hours only. This concept is called **parallelism**: running multiple 
+cores in a dual-core processor, now you can complete the same four tasks in only
+two hours. This concept is called **parallelism**: running multiple 
 tasks at the same time, or *concurrently*, to complete a set of tasks faster.
 
-Unfortunately, most real-world applications do not have the ideal behavior
-above, that is, execute *n* times faster with *n* cores. Instead, they execute
-less than *n* times faster. This may seem surprising, but comes about due to 
-many reasons. In this module, we'll see one of these reasons. 
-
-To explore parallelism, we first have to define two interesting metrics:
+Unfortunately, most real-world applications do not have the ideal
+parallelism behavior above, that is, executing *n* times faster with *n*
+cores. Instead, they execute less than *n* times faster. This may seem
+surprising, but comes about due to many reasons.  For instance, when two
+tasks execute concurrently on two different cores, they still compete for
+the memory hierarchy, e.g., the L3 cache and the memory bus, and we refer
+you to Computer Architecture textbooks for more details. In this module,
+unless specified otherwise, we assume that two tasks on two different cores
+proceed do not compete for the memory hierarchy.  But even so, there  are
+still other reasons why an application cannot achieve ideal parallelism.
+Before we get to these reasons, let us first define two crucial metrics:
 *Parallel Speedup* (or *Speedup*) and *Parallel Efficiency* (or
 *Efficiency*).
 
@@ -131,7 +136,7 @@ At this point, you may be wondering, how is this (less than 100% efficiency) pos
 ## Load Imbalance and Idle Time
 
 A common cause for sub-100% efficiency is **idle time**, i.e., time during
-which one or more cores are no able to work while others are working.
+which one or more cores are not able to work while others are working.
 Assuming that all tasks run for the same amount of time, as in this module,
 idle time will occur when *n*, the number of tasks, is not divisible by *p*,
 the number of cores. For example, if we have 8 tasks that each run  for 1
@@ -142,12 +147,12 @@ In this situation we says that **the load is not well-balanced across
 cores**. With discrete tasks such as these the balance cannot be
 improved.
 
-There is **direct relationship** between idle time and parallel efficiency, assmuming idle time is
+There is **direct relationship** between idle time and parallel efficiency, assumuming idle time is
 the only cause of loss in parallel efficiency. *The parallel efficiency is
 the sum of the core non-idle times divided by the product of the number of cores by the
 overall execution time.*  
 
-The above statement may sound complicated, but it's very intuitive on an example. Consider a dual-core compute that executes an application in 1 hour. 
+The above statement may sound complicated, but it's very intuitive on an example. Consider a dual-core computer that executes an application in 1 hour. 
 The first core computes for 30 min, and then is idle for 30 min.
 The second core is idle for 15 minutes, and then computes for 45 minutes. This execution is depicted in the 
 figure below, where idle time is shown in white and compute time in yellow:
@@ -261,8 +266,8 @@ besides load imbalance, on a multi-core machine is that all of the cores
 share the same amount of RAM.  Therefore, there could be idle cores and
 tasks that need to run, but there is not sufficient RAM. Unfortunately, in
 this case, we cannot execute these tasks, and the idle cores must remain
-idle until more RAM becomes available (i.e., when currently tasks
-complete).  As a result, parallel efficiency falls is below 100%. This is
+idle until more RAM becomes available (i.e., when currently running  tasks
+complete).  As a result, parallel efficiency falls below 100%. This is
 because we simply don't allow ourselves to use more memory than available
 in physical RAM, which would be handled by the Operating Systems (by shuffling data
 back and forth between RAM and disks) but would come with unacceptable performance
@@ -306,7 +311,7 @@ efficiency on the new 5-core processor?
    tasks were executed sequentially (there was never a need for more than 2
    GB of RAM). With 5 cores, running all tasks concurrently would
 require 5x2 = 10 GB of RAM, but only 8GB is available. Therefore, we can only run
-   4 tasks at the same time, and the last take runs by itself, with 4 cores
+   4 tasks at the same time, and the last task runs by itself, with 4 cores
    being idle. The overall execution time is 2 seconds. Therefore:
 
 $$
@@ -405,6 +410,7 @@ each task requires 20 GB of RAM?
 **[B.q1.4]** You are given a 2-core computer with 15 GB of RAM. On this computer 
 you need to execute 6 tasks. The tasks have different RAM requirements (in GB): 
 4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency? 
+
 
 
 ---

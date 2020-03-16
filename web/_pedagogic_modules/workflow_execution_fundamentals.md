@@ -133,9 +133,9 @@ For now, just hit the "Run Simulation" button (without modifying the value in th
 <span style="font-weight:bold;color:rgb(0,0,187)">[0.000475][my_lab_computer.edu:wms__3] Submitting task0 to compute service on hpc.edu<br></span>
 <span style="font-weight:bold;color:rgb(187,0,0)">[163.004555][my_lab_computer.edu:wms__3] Notified that task0 has completed<br></span>
 <span style="font-weight:bold;color:rgb(0,0,187)">[163.005030][my_lab_computer.edu:wms__3] Submitting task1 to compute service on hpc.edu<br></span>
-<span style="font-weight:bold;color:rgb(187,0,0)">[250.508827][my_lab_computer.edu:wms__3] Notified that task0 has completed<br></span>
-<span style="font-weight:bold;color:rgb(187,0,187)">[250.250.508827][my_lab_computer.edu:wms__3] -------------------------------------------------<br></span>
-<span style="font-weight:bold;color:rgb(187,0,187)">[250.250.508827][my_lab_computer.edu:wms__3] Workflow execution completed in 250.508199 seconds!<br></span>
+<span style="font-weight:bold;color:rgb(187,0,0)">[250.508827][my_lab_computer.edu:wms__3] Notified that task1 has completed<br></span>
+<span style="font-weight:bold;color:rgb(187,0,187)">[250.508827][my_lab_computer.edu:wms__3] -------------------------------------------------<br></span>
+<span style="font-weight:bold;color:rgb(187,0,187)">[250.508827][my_lab_computer.edu:wms__3] Workflow execution completed in 250.508199 seconds!<br></span>
 </div>
 
 The first part of each line of output is a (simulated) time stamp. The second part is 
@@ -168,7 +168,8 @@ the approximation we computed above on this page (which was 245 seconds).
   **[E.q1.3]** The compute service runs on a host with a speed of *1000 GFlop/sec*, and *task1*
     must perform *35 TFlop*. About how long should we expect *task1* to compute for?
   
-  **[E.q1.4]** Why does *task1* take longer than what you computed in *question 3*?
+  **[E.q1.4]** Why is the answer for q1.3 above much shorter than the answer for q1.2?
+
   
   **[E.q1.5]** About how long would it take to send all of
     *task1*'s input data from *storage_db.edu* to *hpc.edu* and to send all of *task1*'s output data

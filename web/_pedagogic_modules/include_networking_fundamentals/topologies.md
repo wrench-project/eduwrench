@@ -25,7 +25,7 @@ instance, we will not discuss how routers work (see a network textbook for all i
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology.svg">topology</object>
 <b>Figure 2:</b> An example network topology that interconnects 5 hosts.
 
-The figure above shows an example topology with 5 hosts (the end-points vertices) 4
+The figure above shows an example topology with 5 hosts (the end-point vertices), 4
 routers (internal vertices), and 9 network links (the edges). Data communicated on the
 network flows through links and routers. The **route** between
 two hosts is the sequence of network links (and routers) that the data traverses when 
@@ -39,7 +39,7 @@ and host C. The network configuration, the details of which are outside our
 scope, defines which route is to be taken, for instance the blue
 route.  We will always assume that the routes are static, i.e., data
 flowing from one host to another always traverses the same set of links (in the example above, 
-one one of the blue and red routes actually exists). 
+one of the blue and red routes actually exists). 
 
 #### End-to-end Network Routes
 
@@ -213,11 +213,11 @@ thus competing for the bandwidth on that route. Would it help to
 purchase an upgrade to the link that connects host B to the network?
 
 <p></p>
-**[C.q2.5]** I am am sitting at host D and want to download a tiny file that's mirrored at all other hosts. 
+**[C.q2.5]** I am sitting at host D and want to download a tiny file that's mirrored at all other hosts. 
 From my perspective, does it matter which mirror I pick, and if yes which one should I pick?
 
 <p></p>
-**[C.q2.6]** I am am sitting at host D and want to download a huge file
+**[C.q2.6]** I am sitting at host D and want to download a huge file
 that's mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
 and if yes which one should I pick?
 
