@@ -1,25 +1,47 @@
 <nav class="navbar navbar-expand header-nav">
-  <div class="iconBox py-3 mx-3">
-    <a href="{{ "/" | prepend: site.baseurl}}"><img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"></a>
-  </div>
-  <ul>
-    <li class="py-3"><a class="headerNav p-3" href="{{ "/" | prepend: site.baseurl}}">{{ "Home" | upcase}}</a></li>
-    <li class="py-3">
-      <div class="dropdown show btn-group">
-        <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          {% assign pedagogic_module_lists = site.pedagogic_modules | sort:"order"%}
-          {% for node in pedagogic_module_lists %}
-            {% if node.title != null %}
-              {% if node.layout == "page" %}
-                <a class="dropdown-item {% if page.url == node.url %} active{% endif %}" href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>          
-    </li>
-    <li class="py-3"><a class="headerNav p-3" href="{{ "/glossary" | prepend: site.baseurl}}">{{ "Glossary" | upcase}}</a></li>
-  </ul>
-</nav>
+    <div class="iconBox py-3 mx-3">
+        <a href="{{ "/" | prepend: site.baseurl}}"><img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo"
+                                                        class="iconImg"></a>
+    </div>
+    <ul>
+        <li class="py-3"><a class="headerNav p-3" href="{{ "/" | prepend: site.baseurl}}">{{ "Home" | upcase}}</a></li>
+        <li class="py-3">
+            <div class="dropdown show btn-group">
+                <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
 
+                    <span class="dropdown-item">A. Parallel and Distributed Computing Concepts</span>
+                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}
+                    {% for node in pedagogic_module_lists %}
+                    {% if node.title != null and node.layout == "page" and node.order < 200 %}
+                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"
+                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <span class="dropdown-item">B. Cyberinfrastructure Concepts</span>
+                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}
+                    {% for node in pedagogic_module_lists %}
+                    {% if node.title != null and node.layout == "page" and node.order >= 200 and node.order < 300 %}
+                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"
+                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+                    {% endif %}
+                    {% endfor %}
+
+                    <span class="dropdown-item">C. Cyberinfrastructure Services</span>
+                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}
+                    {% for node in pedagogic_module_lists %}
+                    {% if node.title != null and node.layout == "page" and node.order >= 300 and node.order < 400 %}
+                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"
+                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </li>
+        <li class="py-3">
+            <a class="headerNav p-3" href="{{ "/glossary" | prepend: site.baseurl}}">{{ "Glossary" | upcase}}</a>
+        </li>
+    </ul>
+</nav>

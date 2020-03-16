@@ -162,3 +162,14 @@ footer {
   text-align: center;
   padding: 40px;
 }
+
+.dropdown-menu span {
+  color: #999 !important;
+  padding: 0.5em 1em 0.5em 1em !important;
+  font-family: Muli, SansSerif;
+}
+
+.dropdown-menu a {
+  margin: 0;
+  padding: 0.5em 1em 0.5em 2em !important;
+}
