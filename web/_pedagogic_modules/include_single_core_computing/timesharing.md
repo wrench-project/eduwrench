@@ -20,7 +20,7 @@ In this case, the Operating System makes it so that the programs alternate
 on the core: a program runs for a while, then another, then another, and so
 on until we cycle back and repeat. This is called *time sharing*. The
 process of going from one running program to another is called *context
-switching*.  Hwo this is done is one of the core topics of all Operating System
+switching*.  How this is done is one of the core topics of all Operating System
 textbooks.
 
 In these pedagogic modules we take a very high-level, ideal view: When
@@ -98,7 +98,7 @@ So here are a couple of practice questions:
 
 **[A.q2.2]** Three programs, A, B, and C, were started at the same time on a core
  with speed 600 GFLop/sec. After 10 seconds A and C complete. Then, 2 seconds later, program B
-completes. What is the work (in GFlop) of each of the three program?
+completes. What is the work (in GFlop) of each of the three programs?
 
 
 **[A.q2.3]** A program, A, with work 4 TFlop is started on a core of speed 500 GFlop/sec. 5 seconds later

@@ -24,7 +24,7 @@ that mines a bitcoin.
 The simplest model of performance when executing a non-interactive program
 on a core of a computer is to assume that the computer delivers constant
 *compute speed*, which is measured by the quantity of work performed per
-time unit. For instance, a program with 50 units of work would run in 100
+time unit. For instance, a program with 100 units of work would run in 50
 seconds on a core with a speed of 2 units of work per second.
  This last number is called the program's
 *execution time*.
@@ -60,7 +60,7 @@ seconds than another could actually be prefered for running some program.
 
 It turns out that the question of modeling/predicting how fast a particular
 program will run on a particular core based on a single measure of work and
-speed is fraught with peril (the only way to be sure if to actually run the
+speed is fraught with peril (the only way to be sure is to actually run the
 program!). 
 
 Nevertheless, in these pedagogic modules, unless specified
@@ -82,7 +82,7 @@ program's execution time would then be:
 
 $$
 \begin{align}
- \text{execution time} & = \frac{100 \times 10^{12}\; \text{Flop}}{25 \times 10^{9}\; \text{Flop/sec}}\\
+ \text{execution time} & = \frac{100 \times 10^{12}\; \text{Flop}}{35 \times 10^{9}\; \text{Flop/sec}}\\
    & \simeq 2,857.14\; \text{sec}
 \end{align}
 $$  
@@ -118,15 +118,15 @@ core computes at speed 30 TFlop/sec. How long will the program run for in second
 
 <p> </p>
 
-**[A.p1.2]** A program just ran in 1640 sec on a core with speed 2 TFlop/sec, 
-how many MFlop does the program perform?
+**[A.p1.2]** A program just ran in 0.32 sec on a core with speed 2 TFlop/sec, 
+how many GFlop does the program perform?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   $$ \frac{2000000\; \text{MFlop/sec}}{1640\; \text{sec}} \simeq 1219.5 \;\text{MFlop} $$
+   $$ 2000\; \text{GFlop/sec} \times 0.32\; \text{sec} = 640 \;\text{GFlop} $$
   </div>
 </div>
 
@@ -141,9 +141,8 @@ core computes at speed 450 GFlop/sec. How long will the program run for in minut
 **[A.q1.2]** A program that performs 3000 GFlop just ran in 1.5 minutes on a core. What is the
 core speed in TFlop/sec? 
 
-**[A.q1.3]** On a given core, a program just ran in 14 seconds. By what factor should the core speed
+**[A.q1.3]** On a given core, a program just ran in 14 seconds. By what factor should the core speed be
 increased if I want the program to run in 10 seconds?
-
 
 
 
