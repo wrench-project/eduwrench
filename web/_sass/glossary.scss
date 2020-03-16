@@ -1,21 +1,38 @@
 // top bar
-.topBar{
+.topBar {
   text-align: center;
   justify-content: center;
 }
-.glossary_logo{
-  width:100px;
+
+.glossary_logo {
+  width: 100px;
   display: inline;
 }
+
 .glossary-title {
   display: inline;
 }
-.glossary_container{
+
+.glossary_container {
   background-color: $light-background;
-  padding:10%;
+  //padding: 10%;
 }
+
 // end of top bar
-.word{
+.word {
   background-color: $glossary-background;
   letter-spacing: 1.5px;
+  border: 1px solid #eee;
+}
+
+.word h3 {
+  margin: 0;
+  color: #444;
+}
+
+.word h5 {
+  margin: 0;
+  margin-top: 0.7em;
+  color: #666;
+  font-weight: normal;
 }

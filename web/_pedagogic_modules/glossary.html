@@ -6,11 +6,12 @@ permalink: /glossary/
 
 <div class="glossary_container pb-4">
   <div class="topBar pt-3">
-    <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="glossary_logo">
-    <h4 class="m-4 glossary-title">WRENCH GLOSSARY</h4>
+<!--    <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="glossary_logo">-->
+    <h2 class="mx-auto">eduWRENCH Glossary</h2>
   </div>
   <div class="dict">
-    {% for word in site.data.glossary %}
+    {% assign glossary_items = site.data.glossary | sort:"term" %}
+    {% for word in glossary_items %}
     <div class="word m-5 p-4">
       <h3>{{ word.term | capitalize}}</h3>
       <h5>{{ word.description | capitalize}}</h5>
