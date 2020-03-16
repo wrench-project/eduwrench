@@ -42,6 +42,10 @@ RUN cd workflow_execution_data_locality \
 RUN cd io_operations \
     && ./build.sh
 
+# set volume for data server
+RUN mkdir /home/wrench/eduwrench/data_server
+VOLUME /home/wrench/eduwrench/data_server
+
 # run applications
 WORKDIR /home/wrench/eduwrench/web
 CMD ["sh", "-c", "bundle exec jekyll serve -H 0.0.0.0 -P 4000 -B && node /home/wrench/eduwrench/server/app.js"]

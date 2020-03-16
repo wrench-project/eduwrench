@@ -116,28 +116,13 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "networking_fundamentals",
-        //                 "simulator": SIMULATOR,
-        //                 "file_sizes": FILE_SIZES
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (!error && response.statusCode == 201) {
-        //             console.log("sent POST request to data_server");
-        //         } else {
-        //             console.log(error);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "networking_fundamentals",
+            "simulator": SIMULATOR,
+            "file_sizes": FILE_SIZES
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -201,28 +186,13 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) 
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "workflow_execution_fundamentals",
-        //                 "simulator": SIMULATOR,
-        //                 "compute_speed": COMPUTE_SPEED
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (!error && response.statusCode == 201) {
-        //             console.log("sent POST request to data_server");
-        //         } else {
-        //             console.log(error);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "workflow_execution_fundamentals",
+            "simulator": SIMULATOR,
+            "compute_speed": COMPUTE_SPEED
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -287,28 +257,13 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "workflow_execution_data_locality",
-        //                 "simulator": SIMULATOR,
-        //                 "link_bandwidth": LINK_BANDWIDTH
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (!error && response.statusCode == 201) {
-        //             console.log("sent POST request to data_server");
-        //         } else {
-        //             console.log(error);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "workflow_execution_data_locality",
+            "simulator": SIMULATOR,
+            "link_bandwidth": LINK_BANDWIDTH
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -379,32 +334,16 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "workflow_execution_parallelism",
-        //                 "num_nodes": NUM_NODES,
-        //                 "num_cores_per_node": NUM_CORES_PER_NODE,
-        //                 "num_tasks_to_join": NUM_TASKS_TO_JOIN,
-        //                 "file_size": FILE_SIZE,
-        //                 "ram_required": RAM_REQUIRED
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (response.statusCode == 201) {
-        //             console.log("made POST request to data_server");
-        //         } else {
-        //             console.log("error: " + response.statusCode);
-        //             console.log(body);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "workflow_execution_parallelism",
+            "num_nodes": NUM_NODES,
+            "num_cores_per_node": NUM_CORES_PER_NODE,
+            "num_tasks_to_join": NUM_TASKS_TO_JOIN,
+            "file_size": FILE_SIZE,
+            "ram_required": RAM_REQUIRED
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -472,31 +411,15 @@ app.post("/run/multi_core", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "multi_core_machines",
-        //                 "num_cores": NUM_CORES,
-        //                 "num_tasks": NUM_TASKS,
-        //                 "task_gflop": TASK_GFLOP,
-        //                 "task_ram": TASK_RAM
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (response.statusCode == 201) {
-        //             console.log("made POST request to data_server");
-        //         } else {
-        //             console.log("error: " + response.statusCode);
-        //             console.log(body);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "multi_core_machines",
+            "num_cores": NUM_CORES,
+            "num_tasks": NUM_TASKS,
+            "task_gflop": TASK_GFLOP,
+            "task_ram": TASK_RAM
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -564,32 +487,16 @@ app.post("/run/io_operations", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "io_operations",
-        //                 "task_input": TASK_INPUT,
-        //                 "task_output": TASK_OUTPUT,
-        //                 "num_tasks": NUM_TASKS,
-        //                 "task_gflop": TASK_GFLOP,
-        //                 "io_overlap": IO_OVERLAP
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (response.statusCode == 201) {
-        //             console.log("made POST request to data_server");
-        //         } else {
-        //             console.log("error: " + response.statusCode);
-        //             console.log(body);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "io_operations",
+            "task_input": TASK_INPUT,
+            "task_output": TASK_OUTPUT,
+            "num_tasks": NUM_TASKS,
+            "task_gflop": TASK_GFLOP,
+            "io_overlap": IO_OVERLAP
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -659,31 +566,15 @@ app.post("/run/client_server", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        // request({
-        //         method: "POST",
-        //         uri: keys.dataServer.uri,
-        //         json: {
-        //             "key": keys.dataServer.key,
-        //             "data": {
-        //                 "user": req.user,
-        //                 "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-        //                 "activity": "client_server",
-        //                 "task_input": HOST_SELECT,
-        //                 "server_1_link": SERVER_1_LINK,
-        //                 "server_2_link": SERVER_2_LINK,
-        //                 "client_disk": CLIENT_DISK
-        //             }
-        //         }
-        //     },
-        //     function (error, response, body) {
-        //         if (response.statusCode == 201) {
-        //             console.log("made POST request to data_server");
-        //         } else {
-        //             console.log("error: " + response.statusCode);
-        //             console.log(body);
-        //         }
-        //     }
-        // );
+        logData({
+            "user": req.user,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "client_server",
+            "task_input": HOST_SELECT,
+            "server_1_link": SERVER_1_LINK,
+            "server_2_link": SERVER_2_LINK,
+            "client_disk": CLIENT_DISK
+        });
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -702,6 +593,35 @@ app.post("/run/client_server", authCheck, function (req, res) {
         });
     }
 });
+
+function logData(received_data) {
+    let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
+    console.log(time_now + ": received data");
+    const DATA_FILE = __dirname.replace("server", "data_server") + "/data_file.json";
+    fs.readFile(DATA_FILE, function (err, data) {
+        let current_json_data = [];
+
+        // if the file was able to be read, update the json list with new data
+        if (!err) {
+            current_json_data = JSON.parse(data);
+            current_json_data.push(received_data);
+        } else {
+            // if the file was not able to be read, append the new data to the empty json list
+            current_json_data.push(received_data);
+        }
+
+        // write the resulting json object to the file (overwritting the old file);
+        // cannot simply append since we are writing as json
+        fs.writeFile(DATA_FILE, JSON.stringify(current_json_data), function (err) {
+            if (err) {
+                console.log("app.post('/io_operations') callback: there was a problem writing the json file");
+                console.log(err);
+                return false;
+            }
+        });
+    });
+    return true;
+}
 
 app.listen(3000, function () {
     console.log("Visualization server is running on port 3000");

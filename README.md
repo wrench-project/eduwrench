@@ -30,7 +30,7 @@ $ bundle exec jekyll serve
 
 ```
 $ docker build --no-cache -t eduwrench .
-$ docker run -p 80:4000 -p 3000:3000 -d eduwrench
+$ docker run -p 80:4000 -p 3000:3000 -v <LOCAL_FOLDER_FOR_DATA_SERVER>:/home/wrench/eduwrench/data_server -d eduwrench
 ```
 
 ## Get in Touch
