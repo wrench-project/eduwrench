@@ -10,7 +10,7 @@
 Dependencies:
 - [WRENCH 1.6-dev](https://github.com/wrench-project/wrench)
 
-Run build script:
+Run the build script (compiles all simulators, and configures web application):
 
 ```
 $ ./build.sh
