@@ -13,7 +13,7 @@ function disableRunSimulationButton() {
  * Anything less will make some start times look like 0.00 when it's something
  * like 0.00004
  */
-var toFiveDecimalPlaces = d3.format('.5f');
+// var toFiveDecimalPlaces = d3.format('.5f');
 
 /**
  * Populates the div with id #task-details-table with data obtained from

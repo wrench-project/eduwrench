@@ -3,7 +3,7 @@
  * Anything less will make some start times look like 0.00 when it's something
  * like 0.00004
  */
-var toFiveDecimalPlaces = d3.format('.5f');
+// var toFiveDecimalPlaces = d3.format('.5f');
 
 
 /**
@@ -33,7 +33,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
     var keys = ['read', 'compute', 'write', 'whole_task'];
 
     var final_task_end_time = d3.max(data, function(task) {
-      return task['whole_task'].end;
+        return task['whole_task'].end;
     });
 
     data.forEach(function(task, i) {
@@ -86,7 +86,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
     });
 
     task_ids.sort(function(lhs, rhs) {
-       return parseInt(lhs.slice(4)) - parseInt(rhs.slice(4));
+        return parseInt(lhs.slice(4)) - parseInt(rhs.slice(4));
     });
 
     var y_scale = d3.scaleBand()
@@ -214,49 +214,49 @@ function generate_workflow_execution_graph(workflow_execution_data) {
 
     // add line marking the end of the workflow execution
     var vertical_line = [{'x': x_scale(final_task_end_time), 'y': y_scale.range()[0]},
-                         {'x': x_scale(final_task_end_time), 'y': y_scale.range()[1]}];
+        {'x': x_scale(final_task_end_time), 'y': y_scale.range()[1]}];
 
     var line_func = d3.line()
-      .x(function(d) {
-        return d.x;
-      })
-      .y(function(d) {
-        return d.y;
-      });
+        .x(function(d) {
+            return d.x;
+        })
+        .y(function(d) {
+            return d.y;
+        });
 
     svg.append('path')
-      .attr('d', line_func(vertical_line))
-      .attr('stroke', '#5d80ba')
-      .attr('stroke-width', 2)
-      .attr('fill', 'none')
-      .attr('stroke-dasharray', '4,4')
-      .on('mouseover', function() {
-          tooltip_makespan.style('display', 'inline');
-      })
-      .on('mousemove', function(d) {
-          var offset = getOffset(chart);
-          var x = d3.event.pageX - offset.left + 20;
-          var y = d3.event.pageY - offset.top + 10;
+        .attr('d', line_func(vertical_line))
+        .attr('stroke', '#5d80ba')
+        .attr('stroke-width', 2)
+        .attr('fill', 'none')
+        .attr('stroke-dasharray', '4,4')
+        .on('mouseover', function() {
+            tooltip_makespan.style('display', 'inline');
+        })
+        .on('mousemove', function(d) {
+            var offset = getOffset(chart);
+            var x = d3.event.pageX - offset.left + 20;
+            var y = d3.event.pageY - offset.top + 10;
 
-          tooltip_makespan.style('left', x + 'px')
-              .style('top', y + 'px');
+            tooltip_makespan.style('left', x + 'px')
+                .style('top', y + 'px');
 
-          tooltip_makespan_value.text('Makespan: ' + toFiveDecimalPlaces(final_task_end_time));
-      })
-      .on('mouseout', function(d) {
-          tooltip_makespan.style('display', 'none');
-      });
+            tooltip_makespan_value.text('Makespan: ' + toFiveDecimalPlaces(final_task_end_time));
+        })
+        .on('mouseout', function(d) {
+            tooltip_makespan.style('display', 'none');
+        });
 
-      // add point on bottom marking makespan
-      var symbol_location = {'x': x_scale(final_task_end_time), 'y': y_scale.range()[0]};
+    // add point on bottom marking makespan
+    var symbol_location = {'x': x_scale(final_task_end_time), 'y': y_scale.range()[0]};
 
-      var symbolGenerator = d3.symbol()
-      	.size(50).type(d3.symbolDiamond);
+    var symbolGenerator = d3.symbol()
+        .size(50).type(d3.symbolDiamond);
 
-      svg.append('path')
-      	//.attr('transform', 'translate(10,10)')
+    svg.append('path')
+        //.attr('transform', 'translate(10,10)')
         .attr('transform', 'translate('+ x_scale(final_task_end_time) +','+ y_scale.range()[0] +')')
-      	.attr('d', symbolGenerator())
+        .attr('d', symbolGenerator())
         .attr('stroke', '#5d80ba')
         .attr('fill', '#d5ddea')
         .on('mouseover', function() {
@@ -487,7 +487,7 @@ function generate_workflow_dag(data) {
                 label: "",
                 style: " stroke: #6c757d; fill: none; stroke-width: 1px;",
                 arrowheadStyle: "fill: #6c757d"
-        });
+            });
     });
 
     var container = d3.select("#workflow-dag-chart");
@@ -515,10 +515,10 @@ function generate_workflow_dag(data) {
     // Center the graph
     var initialScale = 0.5;
     svg.call(zoom.transform,
-            d3.zoomIdentity.translate(
-                (svg.attr("width") - graph.graph().width * initialScale) / 2,
-                (svg.attr("height") - graph.graph().height * initialScale) / 2)
-                .scale(initialScale));
+        d3.zoomIdentity.translate(
+            (svg.attr("width") - graph.graph().width * initialScale) / 2,
+            (svg.attr("height") - graph.graph().height * initialScale) / 2)
+            .scale(initialScale));
 
     var chart = document.getElementById("workflow-dag-chart");
     var task_tooltip                         = d3.select('#workflow-dag-chart-task-tooltip');
@@ -607,4 +607,3 @@ function generate_workflow_dag(data) {
             }
         });
 }
-

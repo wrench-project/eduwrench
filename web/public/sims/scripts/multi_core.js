@@ -148,11 +148,12 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                generate_host_utilization_graph(response.task_data, $("#num-cores").val());
+                console.log(response.task_data);
+                generate_host_utilization_graph(response.task_data.workflow_execution.tasks, $("#num-cores").val());
 
-                generate_workflow_execution_graph(response.task_data);
+                generate_workflow_execution_graph(response.task_data.workflow_execution.tasks);
 
-                populateWorkflowTaskDataTable(response.task_data);
+                populateWorkflowTaskDataTable(response.task_data.workflow_execution.tasks);
             }
         });
     });
