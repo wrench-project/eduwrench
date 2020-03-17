@@ -123,6 +123,17 @@ the simulation Web application
 (see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
 selecting `Workflow Execution Fundamentals` from its menu. 
 
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="workflow_execution_fundamentals/" %}
+  </div>
+</div>
+
 #### Interpreting Text Output from Simulated Workflow Execution
 
 For now, just hit the "Run Simulation" button (without modifying the value in the text box and leaving it at 1000).  Running the simulation updates the Web page with content below the button. The first such section shows *text output*, and should look like this:

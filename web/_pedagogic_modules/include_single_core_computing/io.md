@@ -111,8 +111,18 @@ requirements, and it may not be possible to overlap IO and computation due to RA
 
 ### Simulating IO
 
-So that you can gain hands-on experience with the above concepts, use the simulation Web application
+So that you can gain hands-on experience with the above concepts, use the simulation Web application below
 (see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>), selecting `IO Operations` from its menu.
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="io_operations/" %}
+  </div>
+</div>
 
 
 Initially, you can create a series of identical tasks that have a certain input and output. Run the simulation to see

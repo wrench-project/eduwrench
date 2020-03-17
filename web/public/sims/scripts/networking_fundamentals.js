@@ -52,6 +52,12 @@ $(function () {
         event.preventDefault();
         disableRunSimulationButton();
 
+         // get google user information
+         let userName = localStorage.getItem("userName");
+         let email = localStorage.getItem("email");
+         console.log(userName);
+         console.log(email);
+         
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
@@ -62,7 +68,9 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    file_sizes: $('#file-sizes').val()
+                    file_sizes: $('#file-sizes').val(),
+                    userName: userName,
+                    email: email
                 }),
 
             success: function (response) {

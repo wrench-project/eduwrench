@@ -19,11 +19,11 @@
 }
 
 .hide {
-  display: none;
+  display: none !important;
 }
 
 .show {
-  display: block;
+  display: inline !important;
 }
 
 .myApp {
@@ -42,8 +42,7 @@
   display:block;
 }
 
-#myApp {
-  // margin-left: -5%;
+.myAppFrame {
   width:100%;
   height: 1000px;
 }

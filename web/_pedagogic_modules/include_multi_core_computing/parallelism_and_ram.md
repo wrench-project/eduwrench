@@ -28,6 +28,16 @@ So that you can gain hands-on experience, use the simulation Web application (se
 <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
 selecting `Multi-core Machines` from its menu. 
 
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="multi_core/" %}
+  </div>
+</div>
+
 Previously when using the simulation app, you left the "Ram Needed For Each 
 Task" field at zero. This time around, we recognize that tasks may require RAM. 
 The host we are using has 32 GB of RAM available. First try using 4 Cores for 

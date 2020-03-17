@@ -80,6 +80,17 @@ the simulation Web application
 (see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
 selecting `Networking Fundamentals` from its menu. 
 
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="networking_fundamentals/" %}
+  </div>
+</div>
+
+
 This simulation is for the following
 scenario in which a number of transfers occur concurrently on the same
 three-link route:

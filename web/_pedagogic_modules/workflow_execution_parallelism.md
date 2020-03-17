@@ -133,6 +133,17 @@ The questions below ask you to run particular simulation scenarios.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_execution_parallelism/compute_service_1.svg">Compute Service 1</object>
 
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="workflow_execution_parallelism/" %}
+  </div>
+</div>
+
+
   **[G.q1.1]** Assuming the cluster has 1 single-core compute node (Figure 5), what do you expect the overall execution time of the workflow to be?
   To this end, write a simple formula. In the simulation app,  set the cluster to have 1 single-core node. Run the simulation and check your answer. (Note that you might not be able to see file transfer operations in then displayed Gantt charts because these operations could be very short relatively to the overall execution time.)
   

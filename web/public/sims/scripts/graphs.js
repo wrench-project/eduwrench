@@ -36,7 +36,9 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         return task['whole_task'].end;
     });
 
-    data.forEach(function(task, i) {
+    data.forEach(task => {
+    // for(var task in data) {
+        console.log(task);
         task.start = task['whole_task'].start;
         keys.forEach(function(k) {
             task[(k + '_duration')] = task[k].end - task[k].start;

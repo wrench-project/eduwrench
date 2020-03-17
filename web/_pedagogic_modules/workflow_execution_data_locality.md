@@ -43,6 +43,17 @@ the simulation Web application
 (see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
 selecting `Workflow Execution: Data Locality` from its menu. 
 
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="workflow_execution_data_locality/" %}
+  </div>
+</div>
+
+
 In the simulation app, for now, just click on the "Run
 Simulation" button, without changing the content of the text box or clicking
 any radio button. The Web app displays textual and

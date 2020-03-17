@@ -1386,6 +1386,12 @@ $(function() {
         // remove the graphs, since we will append a new ones to the chart
         $('.chart > svg').remove();
 
+        // get google user information
+        let userName = localStorage.getItem("userName");
+        let email = localStorage.getItem("email");
+        console.log(userName);
+        console.log(email);
+
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
@@ -1398,7 +1404,9 @@ $(function() {
                 {
                     num_nodes: $("#num-nodes").val(),
                     num_cores_per_node: $("#num-cores").val(),
-                    ram_required: $('#ram-required').is(':checked') ? 1 : 0
+                    ram_required: $('#ram-required').is(':checked') ? 1 : 0,
+                    userName: userName,
+                    email: email
                 }),
 
                 success: function(response) {

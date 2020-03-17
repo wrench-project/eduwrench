@@ -121,6 +121,12 @@ $(function () {
         // After each submission, remove the "old" chart, because we will generate a new one
         $('#workflow-execution-chart > svg').remove();
 
+        // get google user information
+        let userName = localStorage.getItem("userName");
+        let email = localStorage.getItem("email");
+        console.log(userName);
+        console.log(email);
+
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
@@ -132,7 +138,9 @@ $(function () {
             data: JSON.stringify(
                 {
                     // simulator_number: $('#simulator-form input:radio:checked').val(),
-                    compute_speed: $('#compute-speed').val()
+                    compute_speed: $('#compute-speed').val(),
+                    userName: userName,
+                    email: email
                 }),
 
             success: function (response) {
