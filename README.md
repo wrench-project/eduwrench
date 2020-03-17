@@ -5,6 +5,11 @@
 
 ## Running the Application
 
+### Local installation
+
+Dependencies:
+- [WRENCH 1.6-dev](https://github.com/wrench-project/wrench)
+
 Run build script:
 
 ```
@@ -28,8 +33,10 @@ $ bundle exec jekyll serve
 ### Running with Docker
 
 ```
+$ docker pull wrenchproject/eduwrench:unstable
 $ docker build --no-cache -t eduwrench .
-$ docker run -p 80:4000 -p 3000:3000 -v <LOCAL_FOLDER_FOR_DATA_SERVER>:/home/wrench/eduwrench/data_server -d eduwrench
+$ mkdir data_server
+$ docker run -p 80:4000 -p 3000:3000 -v ${PWD}/data_server:/home/wrench/eduwrench/data_server -d eduwrench
 ```
 
 ## Get in Touch
