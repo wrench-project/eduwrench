@@ -17,34 +17,13 @@ WORKDIR /home/wrench/
 # download eduWRENCH repository
 RUN git clone https://github.com/wrench-project/eduwrench.git
 
-# bundle install jekyll application
-WORKDIR /home/wrench/eduwrench/web
-RUN sudo bundle install
-
-# build binaries for each activity simulator
-WORKDIR /home/wrench/eduwrench/simulators
-
-RUN cd networking_fundamentals \
-    && ./build.sh
-
-RUN cd multi_core_computing \
-    && ./build.sh
-
-RUN cd workflow_execution_fundamentals \
-    && ./build.sh
-
-RUN cd workflow_execution_data_locality \
-    && ./build.sh
-
-#RUN cd workflow_execution_parallelism \
-#    && ./build.sh
-
-RUN cd io_operations \
-    && ./build.sh
-
 # set volume for data server
 RUN mkdir /home/wrench/eduwrench/data_server
 VOLUME /home/wrench/eduwrench/data_server
+
+# run build script
+WORKDIR /home/wrench/eduwrench
+RUN bash build.sh
 
 # run applications
 WORKDIR /home/wrench/eduwrench/web

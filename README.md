@@ -5,10 +5,9 @@
 
 ## Running the Application
 
-Compile all simulator codes:
+Run build script:
 
 ```
-$ cd simulators/io_operations
 $ ./build.sh
 ```
 
