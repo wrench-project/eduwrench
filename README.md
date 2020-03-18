@@ -9,6 +9,10 @@
 
 Dependencies:
 - [WRENCH 1.6-dev](https://github.com/wrench-project/wrench)
+- [Node.js](https://nodejs.org/en/)
+- [Jekyll](https://jekyllrb.com/docs/installation/)
+- [Docker](https://docs.docker.com/install/) (optional)
+- [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
 Run the build script (compiles all simulators, and configures web application):
 
@@ -34,9 +38,9 @@ $ bundle exec jekyll serve
 
 ```
 $ docker pull wrenchproject/eduwrench:unstable
-$ docker build --no-cache -t eduwrench .
 $ mkdir data_server
-$ docker run -p 80:4000 -p 3000:3000 -v ${PWD}/data_server:/home/wrench/eduwrench/data_server -d eduwrench
+$ docker-compose build --no-cache
+$ docker-compose up -d
 ```
 
 ## Get in Touch

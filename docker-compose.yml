@@ -1,0 +1,14 @@
+version: '3'
+services:
+  eduwrench:
+    build: .
+    ports:
+      - "${EDUWRENCH_JEKYLL_PORT}:4000"
+      - "${EDUWRENCH_NODE_PORT}:3000"
+    volumes:
+      - ./data_server:/home/wrench/eduwrench/data_server
+      - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/web/ssl
+    environment:
+      - EDUWRENCH_ENABLE_SSL=${EDUWRENCH_ENABLE_SSL}
+      - EDUWRENCH_SSL_CERTIFICATE=${EDUWRENCH_SSL_CERTIFICATE}
+      - EDUWRENCH_SSL_PRIVATE_KEY=${EDUWRENCH_SSL_PRIVATE_KEY}
