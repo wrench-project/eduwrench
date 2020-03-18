@@ -105,30 +105,40 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
     xml += "   <zone id=\"AS0\" routing=\"Full\">\n";
 
     xml += "    <zone id=\"AS1\" routing=\"Floyd\">\n";
-    // hosts
-    for (int i=0; i < num_nodes; i++) {
+    // The cluster's head-node
+    xml += "        <host id=\"hpc.edu/node_0\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores)  + "\">\n";
+    xml += "              <disk id=\"large_disk\"  read_bw=\"10000MBps\" write_bw=\"10000MBps\">\n";
+    xml += "                     <prop id=\"size\" value=\"5000GiB\"/>\n";
+    xml += "                     <prop id=\"mount\" value=\"/\"/>\n";
+    xml += "              </disk>\n";
+    xml += "         <prop id=\"ram\" value=\"80000000000\"/>\n";
+    xml += "        </host>\n";
+
+    // The cluster's compute nodes
+    for (int i=1; i < num_nodes+1; i++) {
         xml += "        <host id=\"hpc.edu/node_" + std::to_string(i) + "\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores)  + "\">\n";
-        xml += "              <disk id=\"large_disk\"  read_bw=\"10000MBps\" write_bw=\"10000MBps\">\n";
-        xml += "                     <prop id=\"size\" value=\"5000GiB\"/>\n";
-        xml += "                     <prop id=\"mount\" value=\"/\"/>\n";
-        xml += "              </disk>\n";
         xml += "         <prop id=\"ram\" value=\"80000000000\"/>\n";
         xml += "        </host>\n";
     }
+
+    // The cluster's router
     xml += "       <router id=\"hpc.edu/router\"> </router>\n";
-    //links
-    for (int i=0; i < num_nodes; i++) {
+
+    // The cluster's network links
+    for (int i=0; i < num_nodes+1; i++) {
         xml += "        <!-- effective bandwidth = 1250 MBps -->\n";
         xml += "        <link id=\"hpc.edu/link_" + std::to_string(i) + "\" bandwidth=\"1288.6597MBps\" latency=\"10us\"/>\n";
     }
 
-    for (int i=0; i < num_nodes; i++) {
+    // The cluster's routes
+    for (int i=0; i < num_nodes+1; i++) {
         xml += "        <route src=\"hpc.edu/node_" + std::to_string(i) + "\" dst=\"hpc.edu/router\">\n";
         xml += "            <link_ctn id=\"hpc.edu/link_" + std::to_string(i) + "\"/>\n";
         xml += "        </route>\n";
     }
     xml += "      </zone>\n";
 
+    // The rest of the cyberinfrastructure
     xml += "      <zone id=\"AS2\" routing=\"Full\">\n";
     xml += "          <host id=\"storage_db.edu\" speed=\"1000Gf\">\n";
     xml += "                <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n";
@@ -277,7 +287,7 @@ int main(int argc, char **argv) {
                          std::stoi(rhs->get_name().substr(index_of_node_number));
               });
 
-    #ifdef DEBUG
+#ifdef DEBUG
     std::cerr << "\n************** DEBUG INFO **************" << std::endl;
     std::cerr << "\nhpc.edu configuration" << std::endl;
     std::cerr << "-----------------------------" << std::endl;
@@ -324,7 +334,7 @@ int main(int argc, char **argv) {
     std::cerr << "size: " << some_file->getSize() << std::endl;
 
     std::cerr << "\n****************************************\n" << std::endl;
-    #endif
+#endif
 
     const std::string REMOTE_STORAGE_HOST("storage_db.edu");
     const std::string WMS_HOST("my_lab_computer.edu");

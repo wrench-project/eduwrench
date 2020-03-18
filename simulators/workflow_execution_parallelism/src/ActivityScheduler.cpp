@@ -64,7 +64,7 @@ namespace wrench {
         std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
         for (const auto &task : tasks_to_submit) {
 
-            bool taskHasChildren = (task->getNumberOfChildren() != 0) ? true : false;
+            bool taskHasChildren = (task->getNumberOfChildren() != 0);
 
             // initial input files should be read from the remote storage service
             // files "in between" should be read from the local storage service (same host as the baremetal CS)
