@@ -86,6 +86,8 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
 
     const SIMULATOR = "networking_fundamentals_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const FILE_SIZES = req.body.file_sizes.replace(/,/g, " ").replace(/ +/g, " ").split(" ");
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -117,7 +119,8 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "networking_fundamentals",
             "simulator": SIMULATOR,
@@ -156,6 +159,8 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) 
 
     const SIMULATOR = "workflow_execution_fundamentals_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const COMPUTE_SPEED = req.body.compute_speed;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -187,7 +192,8 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) 
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "workflow_execution_fundamentals",
             "simulator": SIMULATOR,
@@ -227,6 +233,8 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
 
     const SIMULATOR = (req.body.simulator_number == 1 ? "workflow_execution_data_locality_simulator_remote_storage" : "workflow_execution_data_locality_simulator_local_storage");
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const LINK_BANDWIDTH = req.body.link_bandwidth;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -258,7 +266,8 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "workflow_execution_data_locality",
             "simulator": SIMULATOR,
@@ -300,6 +309,8 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     const SIMULATOR = "workflow_execution_parallelism_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const NUM_NODES = req.body.num_nodes;
     const NUM_CORES_PER_NODE = req.body.num_cores_per_node;
     const NUM_TASKS_TO_JOIN = 20;
@@ -335,7 +346,8 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "workflow_execution_parallelism",
             "num_nodes": NUM_NODES,
@@ -378,6 +390,8 @@ app.post("/run/multi_core", authCheck, function (req, res) {
     const SIMULATOR = "multi_core_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const NUM_CORES = req.body.num_cores;
     const NUM_TASKS = req.body.num_tasks;
     const TASK_GFLOP = req.body.task_gflop;
@@ -412,7 +426,8 @@ app.post("/run/multi_core", authCheck, function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "multi_core_machines",
             "num_cores": NUM_CORES,
@@ -453,6 +468,8 @@ app.post("/run/io_operations", authCheck, function (req, res) {
     const SIMULATOR = "io_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const NUM_TASKS = req.body.num_tasks;
     const TASK_GFLOP = req.body.task_gflop;
     const TASK_INPUT = req.body.task_input;
@@ -488,7 +505,8 @@ app.post("/run/io_operations", authCheck, function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "io_operations",
             "task_input": TASK_INPUT,
@@ -530,6 +548,8 @@ app.post("/run/client_server", authCheck, function (req, res) {
     const SIMULATOR = "client_server_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
     const SERVER_1_LINK = req.body.server_1_link;
     const SERVER_2_LINK = req.body.server_2_link;
     const CLIENT_DISK = req.body.client_disk;
@@ -567,7 +587,8 @@ app.post("/run/client_server", authCheck, function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            "user": req.user,
+            "user": USERNAME,
+            "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "client_server",
             "task_input": HOST_SELECT,

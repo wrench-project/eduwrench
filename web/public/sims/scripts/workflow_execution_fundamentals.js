@@ -124,15 +124,13 @@ $(function () {
         // get google user information
         let userName = localStorage.getItem("userName");
         let email = localStorage.getItem("email");
-        console.log(userName);
-        console.log(email);
 
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: 'http://' + window.location.hostname + ':3000/run/workflow_execution_fundamentals',
+            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/workflow_execution_fundamentals',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(

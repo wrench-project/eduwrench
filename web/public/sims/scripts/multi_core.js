@@ -1,6 +1,5 @@
 $(function () {
 
-
     // Update the label that says how many cores each compute node has
     $("#num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
@@ -130,15 +129,13 @@ $(function () {
         // get google user information
         let userName = localStorage.getItem("userName");
         let email = localStorage.getItem("email");
-        console.log(userName);
-        console.log(email);
 
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: 'http://' + window.location.hostname + ':3000/run/multi_core',
+            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/multi_core',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(

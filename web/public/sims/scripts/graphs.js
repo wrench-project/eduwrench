@@ -1,12 +1,4 @@
 /**
- * Format a number to Five decimal places. At the moment, 5 seems like a good number.
- * Anything less will make some start times look like 0.00 when it's something
- * like 0.00004
- */
-// var toFiveDecimalPlaces = d3.format('.5f');
-
-
-/**
  * Helper function used to get the position of the mouse within the browser window
  * so that we can have nice moving tooltips. The input is the DOM element we are
  * interested in (in this case the #chart element).
@@ -32,15 +24,13 @@ function generate_workflow_execution_graph(workflow_execution_data) {
     // prepare data for d3 stacked layout
     var keys = ['read', 'compute', 'write', 'whole_task'];
 
-    var final_task_end_time = d3.max(data, function(task) {
+    var final_task_end_time = d3.max(data, function (task) {
         return task['whole_task'].end;
     });
 
     data.forEach(task => {
-    // for(var task in data) {
-        console.log(task);
         task.start = task['whole_task'].start;
-        keys.forEach(function(k) {
+        keys.forEach(function (k) {
             task[(k + '_duration')] = task[k].end - task[k].start;
         });
     });
@@ -51,23 +41,23 @@ function generate_workflow_execution_graph(workflow_execution_data) {
     const CONTAINER_HEIGHT = container.style("height").slice(0, -2);
     const PADDING = 60;
 
-    var read_color    = '#cbb5dd';
+    var read_color = '#cbb5dd';
     var compute_color = '#f7daad';
-    var write_color   = '#abdcf4';
-    var colors        = [read_color, compute_color, write_color];
+    var write_color = '#abdcf4';
+    var colors = [read_color, compute_color, write_color];
 
     // Save Reference to the chart div and tooltip div
     var chart = document.getElementById('workflow-execution-chart');
 
-    var tooltip_task                    = d3.select('#workflow-execution-chart-task-tooltip');
-    var tooltip_task_id                 = d3.select('#tooltip-task-id');
-    var tooltip_task_operation          = d3.select('#tooltip-task-operation');
-    var tooltip_task_operation_start    = d3.select('#tooltip-task-operation-start');
-    var tooltip_task_operation_end      = d3.select('#tooltip-task-operation-end');
+    var tooltip_task = d3.select('#workflow-execution-chart-task-tooltip');
+    var tooltip_task_id = d3.select('#tooltip-task-id');
+    var tooltip_task_operation = d3.select('#tooltip-task-operation');
+    var tooltip_task_operation_start = d3.select('#tooltip-task-operation-start');
+    var tooltip_task_operation_end = d3.select('#tooltip-task-operation-end');
     var tooltip_task_operation_duration = d3.select('#tooltip-task-operation-duration');
 
-    var tooltip_makespan                = d3.select('#workflow-execution-chart-makespan-tooltip');
-    var tooltip_makespan_value          = d3.select('#tooltip-makespan-value');
+    var tooltip_makespan = d3.select('#workflow-execution-chart-makespan-tooltip');
+    var tooltip_makespan_value = d3.select('#tooltip-makespan-value');
 
     // Create the svg element
     var svg = d3.select('#workflow-execution-chart')
@@ -83,11 +73,11 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         .range([PADDING, CONTAINER_WIDTH - PADDING]);
 
     var task_ids = [];
-    data.forEach(function(task) {
+    data.forEach(function (task) {
         task_ids.push(task['task_id']);
     });
 
-    task_ids.sort(function(lhs, rhs) {
+    task_ids.sort(function (lhs, rhs) {
         return parseInt(lhs.slice(4)) - parseInt(rhs.slice(4));
     });
 
@@ -108,40 +98,40 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         .data(stack_data)
         .enter()
         .append('g')
-        .attr('class', function(d) {
+        .attr('class', function (d) {
             return d.key;
         })
-        .style('fill', function(d, i) {
+        .style('fill', function (d, i) {
             return colors[i];
         });
 
     // Add the data
     groups.selectAll('rect')
-        .data(function(d) {
+        .data(function (d) {
             return d;
         })
         .enter()
         .append('rect')
-        .attr('x', function(d) {
+        .attr('x', function (d) {
             return x_scale(d[0] + d['data'].start);
         })
-        .attr('y', function(d) {
+        .attr('y', function (d) {
             return y_scale(d['data'].task_id);
         })
-        .attr('height', function(d) {
+        .attr('height', function (d) {
             return y_scale.bandwidth();
         })
-        .attr('width', function(d) {
+        .attr('width', function (d) {
             return x_scale(d[1]) - x_scale(d[0]);
         })
-        .on('mouseover', function() {
+        .on('mouseover', function () {
             tooltip_task.style('display', 'inline');
 
             d3.select(this)
                 .attr('stroke', 'gray')
                 .style('stroke-width', '1');
         })
-        .on('mousemove', function(d) {
+        .on('mousemove', function (d) {
             var offset = getOffset(chart);
             var x = d3.event.pageX - offset.left + 20;
             var y = d3.event.pageY - offset.top - 60; // 20 seems to account for the padding of the chart-block
@@ -171,7 +161,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
             var duration = toFiveDecimalPlaces(d[1] - d[0]);
             tooltip_task_operation_duration.text('Duration: ' + duration + 's');
         })
-        .on('mouseout', function(d) {
+        .on('mouseout', function (d) {
             tooltip_task.style('display', 'none');
 
             d3.select(this)
@@ -198,7 +188,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         .attr('transform',
             'translate(' + (CONTAINER_WIDTH / 2) + ' ,' + (CONTAINER_HEIGHT - 10) + ')')
         .style('text-anchor', 'middle')
-        .attr('font-size', 12+'px')
+        .attr('font-size', 12 + 'px')
         .attr('fill', 'gray')
         .text('Time (seconds)');
 
@@ -210,7 +200,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         .attr('x', 0 - (CONTAINER_HEIGHT / 2))
         .attr('dy', '1em')
         .attr('text-anchor', 'middle')
-        .attr('font-size', 12+'px')
+        .attr('font-size', 12 + 'px')
         .attr('fill', 'gray')
         .text('Workflow Task');
 
@@ -219,10 +209,10 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         {'x': x_scale(final_task_end_time), 'y': y_scale.range()[1]}];
 
     var line_func = d3.line()
-        .x(function(d) {
+        .x(function (d) {
             return d.x;
         })
-        .y(function(d) {
+        .y(function (d) {
             return d.y;
         });
 
@@ -232,10 +222,10 @@ function generate_workflow_execution_graph(workflow_execution_data) {
         .attr('stroke-width', 2)
         .attr('fill', 'none')
         .attr('stroke-dasharray', '4,4')
-        .on('mouseover', function() {
+        .on('mouseover', function () {
             tooltip_makespan.style('display', 'inline');
         })
-        .on('mousemove', function(d) {
+        .on('mousemove', function (d) {
             var offset = getOffset(chart);
             var x = d3.event.pageX - offset.left + 20;
             var y = d3.event.pageY - offset.top + 10;
@@ -245,7 +235,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
 
             tooltip_makespan_value.text('Makespan: ' + toFiveDecimalPlaces(final_task_end_time));
         })
-        .on('mouseout', function(d) {
+        .on('mouseout', function (d) {
             tooltip_makespan.style('display', 'none');
         });
 
@@ -257,14 +247,14 @@ function generate_workflow_execution_graph(workflow_execution_data) {
 
     svg.append('path')
         //.attr('transform', 'translate(10,10)')
-        .attr('transform', 'translate('+ x_scale(final_task_end_time) +','+ y_scale.range()[0] +')')
+        .attr('transform', 'translate(' + x_scale(final_task_end_time) + ',' + y_scale.range()[0] + ')')
         .attr('d', symbolGenerator())
         .attr('stroke', '#5d80ba')
         .attr('fill', '#d5ddea')
-        .on('mouseover', function() {
+        .on('mouseover', function () {
             tooltip_makespan.style('display', 'inline');
         })
-        .on('mousemove', function(d) {
+        .on('mousemove', function (d) {
             var offset = getOffset(chart);
             var x = d3.event.pageX - offset.left + 20;
             var y = d3.event.pageY - offset.top + 10;
@@ -274,7 +264,7 @@ function generate_workflow_execution_graph(workflow_execution_data) {
 
             tooltip_makespan_value.text('Makespan: ' + toFiveDecimalPlaces(final_task_end_time));
         })
-        .on('mouseout', function(d) {
+        .on('mouseout', function (d) {
             tooltip_makespan.style('display', 'none');
         });
 
@@ -302,26 +292,28 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         svg.remove();
     }
 
-    var tooltip                         = d3.select('#host-utilization-chart-tooltip');
-    var tooltip_task_id                 = d3.select('#host-utilization-chart-tooltip-task-id');
+    var tooltip = d3.select('#host-utilization-chart-tooltip');
+    var tooltip_task_id = d3.select('#host-utilization-chart-tooltip-task-id');
 
     svg = container.append("svg")
         .attr("width", CONTAINER_WIDTH)
         .attr("height", CONTAINER_HEIGHT);
 
     var x_scale = d3.scaleLinear()
-        .domain([0, d3.max(data, function(d) {
+        .domain([0, d3.max(data, function (d) {
             return d.whole_task.end;
         })])
         .range([PADDING, CONTAINER_WIDTH - PADDING]);
 
     var tasks_by_hostname = d3.nest()
-        .key(function(d) { return d.execution_host.hostname; })
+        .key(function (d) {
+            return d.execution_host.hostname;
+        })
         .sortKeys(d3.ascending)
         .entries(data);
 
     var y_hosts = d3.scaleBand()
-        .domain(tasks_by_hostname.map(function(d) {
+        .domain(tasks_by_hostname.map(function (d) {
             return d.key;
         }))
         .range([CONTAINER_HEIGHT - PADDING, 10])
@@ -352,7 +344,7 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         .enter()
         .append("rect")
         .attr("x", PADDING)
-        .attr("y", function(d) {
+        .attr("y", function (d) {
             return y_hosts(d);
         })
         .attr("width", CONTAINER_WIDTH - PADDING - PADDING)
@@ -365,29 +357,29 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         .data(data)
         .enter()
         .append("rect")
-        .attr("x", function(d) {
+        .attr("x", function (d) {
             return x_scale(d.compute.start);
         })
-        .attr("y", function(d) {
+        .attr("y", function (d) {
             var y_scale = y_cores_per_host.get(d.execution_host.hostname);
             return y_scale(d.vertical_position + d.num_cores_allocated);
         })
-        .attr("width", function(d) {
+        .attr("width", function (d) {
             return x_scale(d.compute.end) - x_scale(d.compute.start);
         })
-        .attr("height", function(d) {
+        .attr("height", function (d) {
             var y_scale = y_cores_per_host.get(d.execution_host.hostname);
             return y_scale(0) - y_scale(d.num_cores_allocated);
         })
         .attr("fill", "#f7daad")
         .attr("stroke", "gray")
-        .on('mouseover', function() {
+        .on('mouseover', function () {
             tooltip.style('display', 'inline');
 
             d3.select(this)
                 .attr('fill', '#ffdd7f');
         })
-        .on('mousemove', function(d) {
+        .on('mousemove', function (d) {
             var offset = getOffset(chart);
             var x = d3.event.pageX - offset.left + 30;
             var y = d3.event.pageY - offset.top + 15;
@@ -397,7 +389,7 @@ function generate_host_utilization_graph(data, num_cores = 0) {
 
             tooltip_task_id.text('TaskID: ' + d.task_id);
         })
-        .on('mouseout', function(d) {
+        .on('mouseout', function (d) {
             tooltip.style('display', 'none');
 
             d3.select(this)
@@ -406,7 +398,7 @@ function generate_host_utilization_graph(data, num_cores = 0) {
 
 
     var x_axis = d3.axisBottom(x_scale)
-        .ticks(d3.max(data, function(d) {
+        .ticks(d3.max(data, function (d) {
             return d.end;
         }));
 
@@ -428,10 +420,11 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         .attr("transform", "rotate(-90)")
         .attr("text-anchor", "middle");
 
-    y_cores_per_host.entries().forEach(function(entry) {
+    y_cores_per_host.entries().forEach(function (entry) {
         var axis = d3.axisLeft(entry.value)
             .tickValues(d3.range(0, entry.value.domain()[1] + 1, 1))
-            .tickFormat(d3.format(""));;
+            .tickFormat(d3.format(""));
+        ;
 
         svg.append("g")
             .attr("class", "y-axis2")
@@ -444,7 +437,7 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         .attr("transform",
             "translate(" + (CONTAINER_WIDTH / 2) + " ," + (CONTAINER_HEIGHT - 10) + ")")
         .style("text-anchor", "middle")
-        .attr('font-size', 12+'px')
+        .attr('font-size', 12 + 'px')
         .attr('fill', 'gray')
         .text("Time (seconds)");
 
@@ -455,7 +448,7 @@ function generate_host_utilization_graph(data, num_cores = 0) {
         .attr("x", 0 - (CONTAINER_HEIGHT / 2))
         .attr("dy", "1em")
         .attr("text-anchor", "middle")
-        .attr('font-size', 12+'px')
+        .attr('font-size', 12 + 'px')
         .attr('fill', 'gray')
         .text("Host");
 }
@@ -472,7 +465,7 @@ function generate_workflow_dag(data) {
         .Graph()
         .setGraph({});
 
-    data.vertices.forEach(function(vertex) {
+    data.vertices.forEach(function (vertex) {
         graph.setNode(vertex.id,
             {
                 label: vertex.id,
@@ -483,7 +476,7 @@ function generate_workflow_dag(data) {
             });
     });
 
-    data.edges.forEach(function(edge) {
+    data.edges.forEach(function (edge) {
         graph.setEdge(edge.source, edge.target,
             {
                 label: "",
@@ -496,14 +489,14 @@ function generate_workflow_dag(data) {
     const CONTAINER_WIDTH = container.style("width").slice(0, -2); // returns "XXXXpx" so need to remove "px"
     const CONTAINER_HEIGHT = container.style("height").slice(0, -2);
 
-    var svg =  container.append("svg")
+    var svg = container.append("svg")
         .attr("width", CONTAINER_WIDTH)
         .attr("height", CONTAINER_HEIGHT);
 
     var inner = svg.append("g");
 
     // Set up zoom support
-    var zoom = d3.zoom().on("zoom", function() {
+    var zoom = d3.zoom().on("zoom", function () {
         inner.attr("transform", d3.event.transform);
     });
     svg.call(zoom);
@@ -523,10 +516,10 @@ function generate_workflow_dag(data) {
             .scale(initialScale));
 
     var chart = document.getElementById("workflow-dag-chart");
-    var task_tooltip                         = d3.select('#workflow-dag-chart-task-tooltip');
-    var task_tooltip_id                 = d3.select('#workflow-dag-chart-task-tooltip-id');
-    var task_tooltip_flops                 = d3.select('#workflow-dag-chart-task-tooltip-flops');
-    var task_tooltip_memory                 = d3.select('#workflow-dag-chart-task-tooltip-memory');
+    var task_tooltip = d3.select('#workflow-dag-chart-task-tooltip');
+    var task_tooltip_id = d3.select('#workflow-dag-chart-task-tooltip-id');
+    var task_tooltip_flops = d3.select('#workflow-dag-chart-task-tooltip-flops');
+    var task_tooltip_memory = d3.select('#workflow-dag-chart-task-tooltip-memory');
 
     var file_tooltip = d3.select("#workflow-dag-chart-file-tooltip");
     var file_tooltip_id = d3.select("#workflow-dag-chart-file-tooltip-id");
@@ -537,7 +530,7 @@ function generate_workflow_dag(data) {
     // "nodes" and "node", so they must be selected using those names.
     d3.select(".nodes")
         .selectAll(".node")
-        .on('mouseover', function() {
+        .on('mouseover', function () {
 
             var current_node = d3.select(this);
 
@@ -559,7 +552,7 @@ function generate_workflow_dag(data) {
 
 
         })
-        .on('mousemove', function() {
+        .on('mousemove', function () {
 
             var offset = getOffset(chart);
             var x = d3.event.pageX - offset.left + 30;
@@ -588,7 +581,7 @@ function generate_workflow_dag(data) {
                 file_tooltip_size.text("Size: " + (current_node_data.size / (1000 * 1000)) + " MB");
             }
         })
-        .on('mouseout', function() {
+        .on('mouseout', function () {
 
             var current_node = d3.select(this);
 
