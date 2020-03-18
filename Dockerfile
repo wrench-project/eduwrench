@@ -11,7 +11,6 @@ RUN gem install jekyll bundler
 RUN echo "wrench ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER wrench
-
 WORKDIR /home/wrench/
 
 # download eduWRENCH repository
@@ -27,4 +26,9 @@ RUN bash build.sh
 
 # run applications
 WORKDIR /home/wrench/eduwrench/web
-CMD ["sh", "-c", "bundle exec jekyll serve -H 0.0.0.0 -P 4000 -B && node /home/wrench/eduwrench/server/app.js"]
+USER root
+COPY docker.sh .
+RUN chown wrench:users docker.sh
+USER wrench
+WORKDIR /home/wrench/eduwrench/web
+CMD ./docker.sh
