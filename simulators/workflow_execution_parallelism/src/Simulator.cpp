@@ -10,6 +10,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include <iomanip>
 #include <simgrid/s4u.hpp>
 #include <wrench.h>
 #include <nlohmann/json.hpp>
@@ -106,7 +107,7 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
 
     xml += "    <zone id=\"AS1\" routing=\"Floyd\">\n";
     // The cluster's head-node
-    xml += "        <host id=\"hpc.edu/node_0\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores)  + "\">\n";
+    xml += "        <host id=\"hpc.edu/node_0\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores) + "\">\n";
     xml += "              <disk id=\"large_disk\"  read_bw=\"10000MBps\" write_bw=\"10000MBps\">\n";
     xml += "                     <prop id=\"size\" value=\"5000GiB\"/>\n";
     xml += "                     <prop id=\"mount\" value=\"/\"/>\n";
@@ -115,8 +116,9 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
     xml += "        </host>\n";
 
     // The cluster's compute nodes
-    for (int i=1; i < num_nodes+1; i++) {
-        xml += "        <host id=\"hpc.edu/node_" + std::to_string(i) + "\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores)  + "\">\n";
+    for (int i = 1; i < num_nodes + 1; i++) {
+        xml += "        <host id=\"hpc.edu/node_" + std::to_string(i) + "\" speed=\"1000Gf\" core=\"" +
+               std::to_string(num_cores) + "\">\n";
         xml += "         <prop id=\"ram\" value=\"80000000000\"/>\n";
         xml += "        </host>\n";
     }
@@ -125,13 +127,14 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
     xml += "       <router id=\"hpc.edu/router\"> </router>\n";
 
     // The cluster's network links
-    for (int i=0; i < num_nodes+1; i++) {
+    for (int i = 0; i < num_nodes + 1; i++) {
         xml += "        <!-- effective bandwidth = 1250 MBps -->\n";
-        xml += "        <link id=\"hpc.edu/link_" + std::to_string(i) + "\" bandwidth=\"1288.6597MBps\" latency=\"10us\"/>\n";
+        xml += "        <link id=\"hpc.edu/link_" + std::to_string(i) +
+               "\" bandwidth=\"1288.6597MBps\" latency=\"10us\"/>\n";
     }
 
     // The cluster's routes
-    for (int i=0; i < num_nodes+1; i++) {
+    for (int i = 0; i < num_nodes + 1; i++) {
         xml += "        <route src=\"hpc.edu/node_" + std::to_string(i) + "\" dst=\"hpc.edu/router\">\n";
         xml += "            <link_ctn id=\"hpc.edu/link_" + std::to_string(i) + "\"/>\n";
         xml += "        </route>\n";
