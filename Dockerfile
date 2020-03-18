@@ -30,5 +30,4 @@ USER root
 COPY docker.sh .
 RUN chown wrench:users docker.sh
 USER wrench
-WORKDIR /home/wrench/eduwrench/web
 CMD ./docker.sh
