@@ -8,7 +8,9 @@ services:
     volumes:
       - ./data_server:/home/wrench/eduwrench/data_server
       - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/web/ssl
+      - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/server/ssl
     environment:
+      - EDUWRENCH_NODE_PORT=${EDUWRENCH_NODE_PORT}
       - EDUWRENCH_ENABLE_SSL=${EDUWRENCH_ENABLE_SSL}
       - EDUWRENCH_SSL_CERTIFICATE=${EDUWRENCH_SSL_CERTIFICATE}
       - EDUWRENCH_SSL_PRIVATE_KEY=${EDUWRENCH_SSL_PRIVATE_KEY}

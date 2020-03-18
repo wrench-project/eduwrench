@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2019-2020. The eduWRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
@@ -7,12 +16,15 @@ const express = require("express"),
     fs = require("fs"),
     passport = require("passport"),
     passportSetup = require("./passport-setup")
+
+const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
+
 cookieSession = require("cookie-session"),
     request = require("request"),
-    flash = require("connect-flash"),
-    // keys = require("./keys.js");
+    flash = require("connect-flash");
+// keys = require("./keys.js");
 
-    app.set("view engine", "ejs");
+app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -40,7 +52,7 @@ const authCheck = function (req, res, next) {
     //     res.redirect("/");
     // } else {
     // the user is logged in so move on to the next middleware
-    next()
+    next();
     // }
 }
 
@@ -72,7 +84,6 @@ app.get("/logout", function (req, res) {
     req.logout();
     res.redirect("/");
 });
-
 
 // display networking fundamentals visualization route
 app.get("/networking_fundamentals", authCheck, function (req, res) {
@@ -141,8 +152,6 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
         res.json({
             "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>"
         });
-
-
     }
 });
 
@@ -644,6 +653,21 @@ function logData(received_data) {
     return true;
 }
 
-app.listen(3000, function () {
-    console.log("Visualization server is running on port 3000");
-});
+if (process.env.EDUWRENCH_ENABLE_SSL == "true") {
+    const https = require('https');
+    const fs = require('fs');
+    const options = {
+        key: fs.readFileSync('./ssl/' + process.env.EDUWRENCH_SSL_PRIVATE_KEY),
+        cert: fs.readFileSync('./ssl/' + process.env.EDUWRENCH_SSL_CERTIFICATE)
+    };
+    https.createServer(options, function (req, res) {
+        res.writeHead(200);
+        res.end("hello world\n");
+    }).listen(PORT, function () {
+        console.log("Backend server is running on port " + PORT + ' with SSL-enabled mode');
+    });
+} else {
+    app.listen(PORT, function () {
+        console.log("Backend server is running on port " + PORT);
+    });
+}
