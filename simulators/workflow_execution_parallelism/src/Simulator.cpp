@@ -101,14 +101,34 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
     // Create a the platform file
     std::string xml = "<?xml version='1.0'?>\n"
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
-                      "<platform version=\"4.1\">\n"
-                      "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "     <!-- effective bandwidth = 1250 MBps -->\n"
-                      "     <cluster id=\"hpc.edu\" prefix=\"hpc.edu/node_\" suffix=\"\" radical=\"0-";
-    xml += std::to_string(num_nodes) + "\" core=\"" + std::to_string(num_cores) +
-           "\" speed=\"1000Gf\" bw=\"1288.6597MBps\" lat=\"10us\" router_id=\"hpc_gateway\">\n";
-    xml += "         <prop id=\"ram\" value=\"80000000000\"/>\n";
-    xml += "      </cluster>\n";
+                      "<platform version=\"4.1\">\n";
+    xml += "   <zone id=\"AS0\" routing=\"Full\">\n";
+
+    xml += "    <zone id=\"AS1\" routing=\"Floyd\">\n";
+    // hosts
+    for (int i=0; i < num_nodes; i++) {
+        xml += "        <host id=\"hpc.edu/node_" + std::to_string(i) + "\" speed=\"1000Gf\" core=\"" + std::to_string(num_cores)  + "\">\n";
+        xml += "              <disk id=\"large_disk\"  read_bw=\"10000MBps\" write_bw=\"10000MBps\">\n";
+        xml += "                     <prop id=\"size\" value=\"5000GiB\"/>\n";
+        xml += "                     <prop id=\"mount\" value=\"/\"/>\n";
+        xml += "              </disk>\n";
+        xml += "         <prop id=\"ram\" value=\"80000000000\"/>\n";
+        xml += "        </host>\n";
+    }
+    xml += "       <router id=\"hpc.edu/router\"> </router>\n";
+    //links
+    for (int i=0; i < num_nodes; i++) {
+        xml += "        <!-- effective bandwidth = 1250 MBps -->\n";
+        xml += "        <link id=\"hpc.edu/link_" + std::to_string(i) + "\" bandwidth=\"1288.6597MBps\" latency=\"10us\"/>\n";
+    }
+
+    for (int i=0; i < num_nodes; i++) {
+        xml += "        <route src=\"hpc.edu/node_" + std::to_string(i) + "\" dst=\"hpc.edu/router\">\n";
+        xml += "            <link_ctn id=\"hpc.edu/link_" + std::to_string(i) + "\"/>\n";
+        xml += "        </route>\n";
+    }
+    xml += "      </zone>\n";
+
     xml += "      <zone id=\"AS2\" routing=\"Full\">\n";
     xml += "          <host id=\"storage_db.edu\" speed=\"1000Gf\">\n";
     xml += "                <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n";
@@ -125,12 +145,13 @@ void generatePlatformWithHPCSpecs(std::string platform_file_path, int num_nodes,
     xml += "                </disk>\n";
     xml += "          </host>\n";
     xml += "      </zone>\n";
+
     xml += "      <!-- effective bandwidth = 125 MBps -->\n";
     xml += "      <link id=\"link1\" bandwidth=\"128.8659MBps\" latency=\"100us\"/>\n";
-    xml += "      <zoneRoute src=\"AS2\" dst=\"hpc.edu\" gw_src=\"storage_db.edu\" gw_dst=\"hpc_gateway\">\n";
+    xml += "      <zoneRoute src=\"AS2\" dst=\"AS1\" gw_src=\"storage_db.edu\" gw_dst=\"hpc.edu/router\">\n";
     xml += "        <link_ctn id=\"link1\"/>\n";
     xml += "      </zoneRoute>\n";
-    xml += "      <zoneRoute src=\"AS3\" dst=\"hpc.edu\" gw_src=\"my_lab_computer.edu\" gw_dst=\"hpc_gateway\">\n";
+    xml += "      <zoneRoute src=\"AS3\" dst=\"AS1\" gw_src=\"my_lab_computer.edu\" gw_dst=\"hpc.edu/router\">\n";
     xml += "        <link_ctn id=\"link1\"/>\n";
     xml += "      </zoneRoute>\n";
     xml += "      <zoneRoute src=\"AS3\" dst=\"AS2\" gw_src=\"my_lab_computer.edu\" gw_dst=\"storage_db.edu\">\n";
@@ -243,7 +264,7 @@ int main(int argc, char **argv) {
 
     // get all the hosts in the cluster zone
     simgrid::s4u::Engine *simgrid_engine = simgrid::s4u::Engine::get_instance();
-    simgrid::s4u::NetZone *hpc_net_zone = simgrid_engine->netzone_by_name_or_null("hpc.edu");
+    simgrid::s4u::NetZone *hpc_net_zone = simgrid_engine->netzone_by_name_or_null("AS1");
     std::vector<simgrid::s4u::Host *> hpc_nodes = hpc_net_zone->get_all_hosts();
 
     // order nodes by the number postfixed to its name just so I can print them and use them in order if needed
