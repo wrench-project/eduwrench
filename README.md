@@ -37,7 +37,7 @@ $ bundle exec jekyll serve
 ### Running with Docker
 
 ```
-$ docker pull wrenchproject/eduwrench:unstable
+$ docker pull wrenchproject/wrench:unstable
 $ mkdir data_server
 $ docker-compose build --no-cache
 $ docker-compose up -d
