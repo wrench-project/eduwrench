@@ -335,7 +335,6 @@ int main(int argc, char **argv) {
     auto remote_storage_service = simulation.add(
             new wrench::SimpleStorageService(REMOTE_STORAGE_HOST, {"/"}));
 
-    ///TODO fix mount point for cluster, need to look into this later.
     // this storage service is pretending to be scratch for the baremetal compute service
     auto bare_metal_storage_service = simulation.add(new wrench::SimpleStorageService(COMPUTE_HOST, {"/"}));
 
