@@ -26,6 +26,10 @@
   display: inline !important;
 }
 
+.showTitle {
+  display: block !important;
+}
+
 .myApp {
   width: 100%;
   height: 800px;
@@ -73,4 +77,12 @@
 .signOutBut:hover {
   background-color: $main;
   color: white !important;
+}
+
+.signInText img {
+  display: inline !important;
+}
+
+.signInText h2 {
+  display: inline !important;
 }

@@ -14,7 +14,7 @@ function signOut() {
     $('.myAppFrame').removeClass('show').addClass('hide');
     // clear username
     $('.user-title').html('');
-    $('.signIn-info').removeClass('hide').addClass('show');
+    $('.signInText').removeClass('hide').addClass('showTitle');
   });
 }
 
@@ -66,7 +66,7 @@ var signinChanged = function (val) {
       .removeClass("hide")
       .addClass("show");
     $('.myAppFrame').removeClass('hide').addClass('show');
-    $('.signIn-info').removeClass('show').addClass('hide');
+    $('.signInText').removeClass('showTitle').addClass('hide');
     // store user in session
     if (typeof(Storage) !== "undefined") {
       localStorage.setItem("userName", `${profile.getName()}`);
