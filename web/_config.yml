@@ -1,42 +1,48 @@
-# Build settings
+#####################################################
+#   eduWRENCH Jekyll configuration file             #
+#####################################################
+
+## Common configurations (for customization)
+
+# google services
+google-signin: '1043042177326-hr8cj7m89j8s8i4bopgm9pkkllr4dedf.apps.googleusercontent.com'
+google-analytics: 'UA-18066333-13'
+
+#####################################################
+
+# General options
+title: 'eduWRENCH - Pedagogic Modules'
+tagline: 'Distributed Computing Courseware'
+description: 'eduWRENCH Pedagogic Modules'
+version: '1.0-dev'
+
+#####################################################
+
+## Build settings (less common customizations)
+
 theme: minima
 plugins:
   - jekyll-feed
 
 # Dependencies
-markdown:         kramdown
-pygments:         true
-highlighter:      rouge
+markdown: kramdown
+pygments: true
+highlighter: rouge
 
 # Permalinks
-permalink:        pretty
+permalink: pretty
+
+# author
+author:
+  name: 'WRENCH Team'
+  url: https://wrench-project.org
 
 #baseurl: '/'
-
-# Setup
-title:            'eduWRENCH - Pedagogic Modules'
-tagline:          'Distributed Computing Courseware'
-description:      'eduWRENCH Pedagogic Modules.'
-
-author:
-  name:           'WRENCH Team'
-  url:            https://wrench-project.org
 
 exclude:
   - node_modules
   - .idea
   - .jekyll-cache
-
-#paginate:         5
-
-# Custom vars
-#version:          2.0.0
-
-#github:
-#  repo:           https://github.com/poole/lanyon
-
-# include directory for pages
-# include: ['_pages']
 
 collections:
   pedagogic_modules:
@@ -47,3 +53,11 @@ collections:
     permalink: /simulations/:path/
   assets:
     output: true
+
+#paginate:         5
+
+# Custom vars
+#version:          2.0.0
+
+#github:
+#  repo:           https://github.com/poole/lanyon

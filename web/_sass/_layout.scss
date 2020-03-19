@@ -157,12 +157,6 @@ main {
   top: 38%;
 }
 
-footer {
-  border-top: 1px solid #eee;
-  text-align: center;
-  padding: 40px;
-}
-
 .dropdown-menu span {
   color: #999 !important;
   padding: 0.5em 1em 0.5em 1em !important;
@@ -172,4 +166,52 @@ footer {
 .dropdown-menu a {
   margin: 0;
   padding: 0.5em 1em 0.5em 2em !important;
+}
+
+footer {
+  border-top: 1px solid #eee;
+  text-align: center;
+  padding: 40px;
+}
+
+footer .copyright {
+  color: #999;
+  text-align: left
+}
+
+footer .footer-menu {
+  text-align: left;
+  font-size: 0.9em;
+  padding-left: 0;
+}
+
+footer .footer-menu > ul {
+  list-style: none;
+}
+
+footer .footer-menu > li {
+  margin: 0;
+  padding: 0;
+  display: inline;
+}
+
+footer .footer-menu > li:not(:last-child)::after {
+  content: "|";
+  margin: 0 .25em;
+  color: #999;
+}
+
+footer .footer-menu a {
+  color: #999 !important;
+}
+
+footer .footer-menu a:hover {
+  text-decoration: underline;
+}
+
+footer .version {
+  font-family: Menlo, Monaco, "Courier New", monospace;
+  text-align: left;
+  font-size: 0.8em;
+  color: #BBB;
 }
