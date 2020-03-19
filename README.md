@@ -3,8 +3,6 @@
 
 ## eduWRENCH
 
-----
-
 ## Running the Application
 
 ### Local installation
@@ -71,8 +69,6 @@ running the following command: `$ source .env`. If running with **Docker**
 no additional steps are required, since the `.env` file is automatically
 read by the `docker-compose` command.
 
-----
-
 ## Get in Touch
 
 The main channel to reach the eduWRENCH team is via the support email:
@@ -80,8 +76,6 @@ The main channel to reach the eduWRENCH team is via the support email:
 
 **Bug Report / Feature Request:** our preferred channel to report a bug or request a feature is via
 WRENCH's [Github Issues Track](https://github.com/wrench-project/eduwrench/issues).
-
-----
 
 ## Funding Support
 
