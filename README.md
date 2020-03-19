@@ -13,8 +13,6 @@ Dependencies:
 - [WRENCH 1.6-dev](https://github.com/wrench-project/wrench)
 - [Node.js](https://nodejs.org/en/)
 - [Jekyll](https://jekyllrb.com/docs/installation/)
-- [Docker](https://docs.docker.com/install/) (optional)
-- [Docker Compose](https://docs.docker.com/compose/install/) (optional)
 
 Run the build script (compiles all simulators, and configures web application):
 
@@ -37,6 +35,10 @@ $ bundle exec jekyll serve
 ```
 
 ### Running with Docker
+
+Dependencies:
+- [Docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ```
 $ docker pull wrenchproject/wrench:unstable
