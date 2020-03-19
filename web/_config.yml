@@ -1,7 +1,7 @@
 # Build settings
 theme: minima
-# plugins:
-# - jekyll-feed
+plugins:
+  - jekyll-feed
 
 # Dependencies
 markdown:         kramdown
@@ -22,13 +22,18 @@ author:
   name:           'WRENCH Team'
   url:            https://wrench-project.org
 
+exclude:
+  - node_modules
+  - .idea
+  - .jekyll-cache
+
 #paginate:         5
 
 # Custom vars
-version:          2.0.0
+#version:          2.0.0
 
-github:
-  repo:           https://github.com/poole/lanyon
+#github:
+#  repo:           https://github.com/poole/lanyon
 
 # include directory for pages
 # include: ['_pages']
