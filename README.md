@@ -3,6 +3,8 @@
 
 ## eduWRENCH
 
+----
+
 ## Running the Application
 
 ### Local installation
@@ -43,6 +45,32 @@ $ docker-compose build --no-cache
 $ docker-compose up -d
 ```
 
+### Enabling SSL deployment
+
+By default, eduWRENCH is configured to run with in _SSL disabled_ mode. SSL
+support can be enabled by editing the `.env` file. The following variables
+need to be defined to enable SSL support:
+
+```
+# Port number for Jekyll application (frontend)
+EDUWRENCH_JEKYLL_PORT=443
+# Enable SSL connection (true|false)
+EDUWRENCH_ENABLE_SSL=true
+# Folder where certificates are stored in the local system
+EDUWRENCH_SSL_CERTS_DIR=./ssl
+# Name of the certificate file
+EDUWRENCH_SSL_CERTIFICATE=cert.pem
+# Name of the private key file
+EDUWRENCH_SSL_PRIVATE_KEY=key.pem
+```
+
+If running the **Local installation**, the environment should be set by
+running the following command: `$ source .env`. If running with **Docker**
+no additional steps are required, since the `.env` file is automatically
+read by the `docker-compose` command.
+
+----
+
 ## Get in Touch
 
 The main channel to reach the eduWRENCH team is via the support email:
@@ -50,6 +78,8 @@ The main channel to reach the eduWRENCH team is via the support email:
 
 **Bug Report / Feature Request:** our preferred channel to report a bug or request a feature is via
 WRENCH's [Github Issues Track](https://github.com/wrench-project/eduwrench/issues).
+
+----
 
 ## Funding Support
 
