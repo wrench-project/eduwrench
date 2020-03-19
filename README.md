@@ -47,7 +47,7 @@ $ docker-compose up -d
 
 ### Enabling SSL deployment
 
-By default, eduWRENCH is configured to run with in _SSL disabled_ mode. SSL
+By default, eduWRENCH is configured to run in _SSL disabled_ mode. SSL
 support can be enabled by editing the `.env` file. The following variables
 need to be defined to enable SSL support:
 
