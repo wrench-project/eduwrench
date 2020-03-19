@@ -14,20 +14,20 @@ Dependencies:
 
 Run the build script (compiles all simulators, and configures web application):
 
-```
+```bash
 $ ./build.sh
 ```
 
 Start the backend server:
 
-```
+```bash
 $ cd server
 $ node app.js
 ```
 
 Start the frontend application:
 
-```
+```bash
 $ cd web
 $ bundle exec jekyll serve
 ```
@@ -38,7 +38,7 @@ Dependencies:
 - [Docker](https://docs.docker.com/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-```
+```bash
 $ docker pull wrenchproject/wrench:unstable
 $ mkdir data_server
 $ docker-compose build --no-cache
@@ -51,7 +51,7 @@ By default, eduWRENCH is configured to run in _SSL disabled_ mode. SSL
 support can be enabled by editing the `.env` file. The following variables
 need to be defined to enable SSL support:
 
-```
+```bash
 # Port number for Jekyll application (frontend)
 EDUWRENCH_JEKYLL_PORT=443
 # Enable SSL connection (true|false)
