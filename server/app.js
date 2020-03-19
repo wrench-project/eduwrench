@@ -660,10 +660,7 @@ if (process.env.EDUWRENCH_ENABLE_SSL == "true") {
         key: fs.readFileSync('./ssl/' + process.env.EDUWRENCH_SSL_PRIVATE_KEY),
         cert: fs.readFileSync('./ssl/' + process.env.EDUWRENCH_SSL_CERTIFICATE)
     };
-    https.createServer(options, function (req, res) {
-        res.writeHead(200);
-        res.end("hello world\n");
-    }).listen(PORT, function () {
+    https.createServer(options, app).listen(PORT, function () {
         console.log("Backend server is running on port " + PORT + ' with SSL-enabled mode');
     });
 } else {
