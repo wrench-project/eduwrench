@@ -7,19 +7,19 @@
 
 ---
 
-### Production scenario
+#### Production scenario
 
 You are working for a company that uses single-core computer to run
 computational tasks as part of day-to-day business. The
 specifications of the computer and tasks  are as follows:
 
-#### Machine
+### Machine
 
   - 1 1-Core CPU that computes at 50 Gflop/sec
   - 12 GB of RAM
   - 1 HDD with 1TB capacity and 200 MB/sec R/W bandwidth
 
-#### Tasks
+### Tasks
 
 On this machine, two tasks need to be run back-to-back throughout the day. Each task proceeds in three phases: (i) it reads its input file  fully; (ii) it computes; and (iii) it writes its output file fully. Each task has a
 memory footprint that must be allocated to it throughout its execution (i.e., from the time it begins reading its input file until it finishes writing its output file). 
@@ -36,7 +36,7 @@ memory footprint that must be allocated to it throughout its execution (i.e., fr
     - Input File (Read from disk before computation can start): 2 GB
     - Output File (Written to disk after computation has completed): 4 GB
 
-### Phase #1: Hardware upgrades for the current implementation
+#### Phase #1: Hardware upgrades for the current implementation
 
 In the current implementation of the software that executes the two tasks,
 the first task must run to completion (i.e., its output file must be written to disk) before the next task cant start executing (i.e., start reading its input file from disk). 
@@ -74,10 +74,10 @@ further.
 **[A.q5.4]** What is the optimal way to spend the $250 on upgrades to decrease execution time and what is the corresponding execution time?
 
 **[A.q5.5]** Will the execution be I/O-intensive or CPU-intensive?
-     
-     
-     
-### Phase #2: Hardware upgrades for a better implementation
+
+----
+    
+#### Phase #2: Hardware upgrades for a better implementation
 
 Before you purchase the upgrades you determined in A.q5.4, your manager informs you that a software engineer in the company has just rewritten the software so that the execution can be more efficient: when the first task starts performing its computation, the second task can then start reading its input file from disk. However, only one task can compute at a time, and only one I/O operation can be performed  at a time.  So, for instance, if at time t the first task begins computing, which will last 100 seconds, and the second task begins reading its input file, which will last 200 seconds, then  the first task will only start writing its output file at time t+200 (i.e., it has to wait for the disk to be idle). 
 The above is only feasible if there is **sufficient RAM to accommodate both tasks*. 

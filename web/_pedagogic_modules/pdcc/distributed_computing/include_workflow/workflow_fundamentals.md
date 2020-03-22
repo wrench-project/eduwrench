@@ -8,7 +8,7 @@
 
 ---
 
-## What is a workflow?
+#### What is a workflow?
 
 **Workflows**. A workflow (a.k.a. "scientific workflow") application is comprised of individual computational tasks that must all be executed in some particular sequence to produce a final desired output (e.g., all the steps necessary to perform some complex genomic analysis can be organized as a bioinformatics workflow). In many relevant cases, the tasks, which can be many and computationally intensive, correspond to executables that read in input files and produce output files.  A file produced as output by one task can be required as input for another task, thus creating dependencies between tasks.
 
@@ -38,18 +38,17 @@ a task can only run on a single thread** (i.e., each task is a single-threaded p
 
 Some examples of real-world workflows for scientific applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
 
-## What kind of resources and infrastructures are necessary to execute a workflow?
+### What kind of resources and infrastructures are necessary to execute a workflow?
 
 Workflows are often comprised of many tasks that are computationally intensive and require large amounts of storage. As a result, it is necessary to deploy their executions on multiple compute/storage resources connected via some network, i.e., distributed computing platforms. These hardware resources are managed by software infrastructures, together forming a "*cyberinfrastructure*" (a term you may have encountered before). Examples of such infrastructures include cloud services that rely on virtual machines,  batch-scheduled high performance computing (HPC) clusters (a.k.a. [supercomputers](https://www.top500.org/)), clusters that run [Hadoop](https://hadoop.apache.org/) or [Spark](https://spark.apache.org/), publicly available data stores that provide data access using various network protocols, and compositions of any number of theses over possibly wide-area networks, etc. Communications between these resources are subject to network latency and bandwidth constraints. Therefore the underlying network infrastructure, in conjunction with the specifications of the interconnected storage and compute resources,  constrains the performance of distributed applications, in our case workflow applications. Figure 3 below shows a simple depiction of a cyberinfrastructure with a cloud, and HPC cluster, and a data server. 
 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_fundamentals/infrastructure.svg">Infrastructure</object>
 
-## What is a Workflow Management System?
+### What is a Workflow Management System?
 
 Due to the complexity and diversity of these infrastructures, users are not left to their own devices for executing workflows. Instead, they rely 
 on a *Workflow Management System (WMS)*, i.e., a software system that automatically orchestrates the execution of workflows on cyberinfrastructures. To do so, most WMSs implement decision-making algorithms for optimizing workflow execution performance given available hardware resources. WMSs and the algorithms they employ are the object of extensive research in the field of distributed computing.
-
 
 ---
 
@@ -158,7 +157,6 @@ file I/O. I should double the disk bandwidth!
   </div>
 </div>
 
-
 ---
 
 #### Questions
@@ -185,13 +183,3 @@ best parallel speedup one can achieve?  What is the parallel efficiency?
 the storage server where all files must be stored?
 
 <p></p>
-
-
-
-
-
-
-
-
-<p> </p>
-

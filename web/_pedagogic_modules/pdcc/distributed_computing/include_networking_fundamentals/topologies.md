@@ -9,9 +9,6 @@
 
 ---
 
-
-
-
 #### Network Topologies 
 
 At an abstract level a network topology is a graph.  The edges of the graph
@@ -40,6 +37,8 @@ scope, defines which route is to be taken, for instance the blue
 route.  We will always assume that the routes are static, i.e., data
 flowing from one host to another always traverses the same set of links (in the example above, 
 one of the blue and red routes actually exists). 
+
+----
 
 #### End-to-end Network Routes
 
@@ -88,6 +87,7 @@ T_{100MB} & = 200\;\text{us} + \frac{100\;\text{MB}}{10\;\text{MB/sec}} = 10.000
 \end{align}
 $$
 
+----
 
 #### Putting it all together
 
@@ -103,7 +103,7 @@ $$
 **The latency of the route is the sum of the latencies and the bandwidth of the route
 is the minimum of the bandwidths.** 
 
----
+----
 
 #### Practice questions
 
@@ -223,9 +223,3 @@ and if yes which one should I pick?
 
 <p></p>
 **[C.q2.7]** Of all the possible routes above, which route has the highest bandwidth?
-
-
-
-
-
----

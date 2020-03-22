@@ -8,7 +8,6 @@
 
 ---
 
-
 #### Networks are shared
 
 Typically, several data transfers occur concurrently (i.e., at the same
@@ -19,7 +18,7 @@ can be impacted by other data transfers. When a data transfer goes slower
 than it would go if alone in the network, it is because of *contention*
 (i.e., competition) for the bandwidth of at least one network link.
 
-#### A Simple example
+### A Simple example
 
 Consider the following topology with the two depicted data transfers (symbolized by the red and the green arrow), that
 each were started at exactly the same time and transfer 100 MB of data.
@@ -48,7 +47,7 @@ T = 200\;\text{us} + \frac{100 \text{MB}}{20 \text{MB/sec}} = 5.0002\;\text{sec}
 $$
 
 
-#### A slightly more complex example
+### A slightly more complex example
 
 Consider now another scenario, with the only difference that the "red" transfer now only transfers 50 MB:
 
@@ -72,6 +71,8 @@ a bandwidth of 30 MB/sec. Therefore, it completes in time:
 $$
 T_{green} = 200\;\text{us} + \frac{50\;\text{MB}}{20\;\text{MB/sec}} + \frac{50\;\text{MB}}{30\;\text{MB/sec}} = 4.1668\;\text{sec}
 $$
+
+----
 
 #### Testing your understanding using simulation
 
@@ -238,8 +239,3 @@ Answer the following questions, which pertain to this topology:
 and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
 
 <p></p>
-
-
-
---- 
-

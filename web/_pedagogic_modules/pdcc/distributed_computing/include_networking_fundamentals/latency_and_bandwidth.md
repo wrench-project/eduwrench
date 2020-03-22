@@ -154,5 +154,3 @@ bandwidth 700 MB/sec.  Which mirror should you use and why?
 
 <p> </p>
 
----
-

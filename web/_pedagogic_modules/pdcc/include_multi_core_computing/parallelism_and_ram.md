@@ -5,7 +5,7 @@
 
 ----
 
-### Adding RAM Constraints
+#### Adding RAM Constraints
 
 As we talked about previously in [Single Core
 Computing]({{site.baseurl}}/pedagogic_modules/single_core_computing), when
@@ -46,6 +46,8 @@ simultaneously in this situation.
     {% include simulator.html src="multi_core/" %}
   </div>
 </div>
+
+----
 
 #### Practice Questions 
 

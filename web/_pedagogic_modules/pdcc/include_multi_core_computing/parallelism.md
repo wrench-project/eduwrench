@@ -7,7 +7,7 @@
 
 ---
 
-### Basic Concepts
+#### Basic Concepts
 
 Multi-core processors have become ubiquitous due to well-documented issues
 with further increasing the performance of a single core.  Each core is
@@ -29,6 +29,8 @@ task runs on a core at a given time. Although Operating Systems allow
 time-sharing, we will never start more tasks than cores on the
 machine.  Therefore, a task that begins running on a core will run
 uninterrupted until completion on that same core.
+
+----
 
 #### Parallelism
 
@@ -108,6 +110,8 @@ the application's execution.
 
 At this point, you may be wondering, how is this (less than 100% efficiency) possible?
 
+----
+
 #### Load Imbalance and Idle Time
 
 A common cause for sub-100% efficiency is **idle time**, i.e., time during
@@ -165,6 +169,8 @@ that parallel efficiency is below 100%.
     {% include simulator.html src="multi_core/" %}
   </div>
 </div>
+
+----
 
 #### Practice Questions
 

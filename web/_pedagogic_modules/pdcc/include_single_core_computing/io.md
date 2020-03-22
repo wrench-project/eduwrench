@@ -131,8 +131,9 @@ intensive tasks. Understanding which tasks will benefit from increased R/W or co
   </div>
 </div>
 
+----
 
-### Practice Questions
+#### Practice Questions
 
 **[A.p4.1]** A program reads 2GB of input from disk, performs a 6 TFlop computation on this input, and then writes 1GB  of output to disk. It is executed on a computer that has a CPU that computes at speed 500 GFlop/sec
 and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution IO-intensive or CPU-intensive? If you could update either  the CPU or the HDD, which upgrade would you choose?
@@ -201,7 +202,6 @@ to purchase a SSD to replace the HDD currently being used. The SSD has
 processing 4 consecutive task instances?
 
 
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -222,9 +222,10 @@ By making the IO faster, input for tasks is always ready for the CPU to process.
 
 </div>
 </div>
- 
 
-### Questions
+----
+
+#### Questions
 
 **[A.q4.1]**
 
