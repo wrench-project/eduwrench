@@ -1,14 +1,3 @@
----
-layout: page
-title: 'F. Workflows and Data Locality'
-order: 600
----
-
-1. [Learning objectives](#learning-objectives)
-2. [Overview](#overview)
-3. [Activity](#activity)
-4. [Conclusion](#conclusion)
-
 
 #### Learning Objectives
 

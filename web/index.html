@@ -5,78 +5,114 @@ permalink: /
 
 <!-- cover -->
 <div class="cover">
-  <div class="jumbotron">
-    <div class="row">
-      <div class="col-lg-2">
-        <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="sideLogo">
-      </div>
-      <div class="col-lg-8">
-          <h2 class="display-8 title">Wrench Pedagogic Modules</h2>
-          <hr class="my-4" />
-          <div class="desBox">
-            <h5 class="magic">A guided set of educational activities aimed at teaching 
-                distributed computing concepts through WRENCH, a workflow management simulation framework.</h5>
-          </div>
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-lg-2">
+                <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="sideLogo">
+            </div>
+            <div class="col-lg-8">
+                <h2 class="display-8 title">Wrench Pedagogic Modules</h2>
+                <hr class="my-4"/>
+                <div class="desBox">
+                    <h5 class="magic">A guided set of educational activities aimed at teaching
+                        distributed computing concepts through WRENCH, a workflow management simulation framework.</h5>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+</div>
 </div>
 <div class="info">
-  <div class="mx-5">
-    <h4 class="sectTitle m-3 py-3">
-      <span>Our goals</span>
-    </h4>
-    <p class="px-3 mx-5">
-        The goal of these pedagogic modules is for students to achieve learning objectives in the area of distributed computing, in the context of scientific workflows, via hands-on experiments. This is achieved through a set of “activities” that explore, at first elementary and later sophisticated, concepts and techniques. All these activities entail simulating workflow executions using the <a href="https://wrench-project.org">WRENCH</a> simulation framework.
-    </p>
-  </div>
-  <div class="goal mx-5">
-    <h4 class="sectTitle m-3 py-3">
-      <span>Software Requirement</span>
-    </h4>
-    <p class="px-3 mx-6">
-      You need the latest version of either of the following web browsers:
-    </p>
-    <div class="row">
-      <div class="col-4">
-        <a href="https://www.google.com/chrome/" target="_blank"><img src="{{site.baseurl}}/assets/chrome.png" alt="browser_logo" class="browser_logo mx-auto"></a>
-        <p class="pt-2">Google Chrome</p>
-      </div>
-      <div class="col-4">
-        <a href="https://www.mozilla.org/en-US/firefox/" target="_blank"><img src="{{site.baseurl}}/assets/firefox.png" alt="browser_logo" class="browser_logo mx-auto"></a>
-        <p class="pt-2">Firefox</p>
-      </div>
-      <div class="col-4">
-          <a href="https://www.apple.com/safari/" target="_blank"><img src="{{site.baseurl}}/assets/safari.png" alt="browser_logo" class="browser_logo mx-auto"></a>
-        <p class="pt-2">Safari</p>
-      </div>
-    </div>
     <div class="mx-5">
-      <h4 class="sectTitle m-3 py-3">
-        <span>Run Simulations</span>
-      </h4>
-      <div class="row">
-        <p class="px-3 mx-6">Additional software may be required for running simulations in a Web application. See the <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">Instructions for running simulations</a>.</p>
-      </div>
+        <h4 class="sectTitle m-3 py-3">
+            <span>Our goals</span>
+        </h4>
+        <p class="px-3 mx-5">
+            The goal of these pedagogic modules is for students to achieve learning objectives in the area of
+            distributed computing, in the context of scientific workflows, via hands-on experiments. This is achieved
+            through a set of “activities” that explore, at first elementary and later sophisticated, concepts and
+            techniques. All these activities entail simulating workflow executions using the <a
+                href="https://wrench-project.org">WRENCH</a> simulation framework.
+        </p>
     </div>
-    <div class="mCourses">
-      <h4 class="sectTitle m-3 py-3">
-        <span>Our courses</span>
-      </h4>
-      <div class="row">
-        {% assign pedagogic_module_courseList = site.pedagogic_modules %}
-          {% for node in pedagogic_module_courseList %}
-            {% if node.title != null %}
-              {% if node.layout == "page" %}
-                <div class="courseBox col-4 px-4">
-                  <a href="{{ site.baseurl }}{{ node.url }}"><img class="courseImgs mx-auto mt-3" src="{{site.baseurl}}/assets/course{{forloop.index}}.jpg" alt="placeholder_courses"></a>
-                  <p>{{node.title}}</p>
+
+    <div class="goal mx-5">
+        <!--        <h4 class="sectTitle m-3 py-3">-->
+        <!--            <span>Software Requirement</span>-->
+        <!--        </h4>-->
+        <!--        <p class="px-3 mx-6">-->
+        <!--            You need the latest version of either of the following web browsers:-->
+        <!--        </p>-->
+        <!--        <div class="row">-->
+        <!--            <div class="col-4">-->
+        <!--                <a href="https://www.google.com/chrome/" target="_blank"><img src="{{site.baseurl}}/assets/chrome.png"-->
+        <!--                                                                              alt="browser_logo"-->
+        <!--                                                                              class="browser_logo mx-auto"></a>-->
+        <!--                <p class="pt-2">Google Chrome</p>-->
+        <!--            </div>-->
+        <!--            <div class="col-4">-->
+        <!--                <a href="https://www.mozilla.org/en-US/firefox/" target="_blank"><img-->
+        <!--                        src="{{site.baseurl}}/assets/firefox.png" alt="browser_logo" class="browser_logo mx-auto"></a>-->
+        <!--                <p class="pt-2">Firefox</p>-->
+        <!--            </div>-->
+        <!--            <div class="col-4">-->
+        <!--                <a href="https://www.apple.com/safari/" target="_blank"><img src="{{site.baseurl}}/assets/safari.png"-->
+        <!--                                                                             alt="browser_logo"-->
+        <!--                                                                             class="browser_logo mx-auto"></a>-->
+        <!--                <p class="pt-2">Safari</p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="mx-5">-->
+        <!--            <h4 class="sectTitle m-3 py-3">-->
+        <!--                <span>Run Simulations</span>-->
+        <!--            </h4>-->
+        <!--            <div class="row">-->
+        <!--                <p class="px-3 mx-6">Additional software may be required for running simulations in a Web application.-->
+        <!--                    See the <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">Instructions-->
+        <!--                        for running simulations</a>.</p>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="mCourses">
+            <h4 class="sectTitle m-3 py-3">
+                <span>Our courses</span>
+            </h4>
+            <div class="row">
+                {% assign modules = site.pedagogic_modules | where: "submodule","main" | sort: "order" %}
+                {% for module in modules %}
+                {% if module.title != null and module.layout == "page" %}
+                <div class="courseBox col-4 px-4" style="margin-bottom: 1em">
+                    <div class="ui tab segment active">
+                        <div class="modules">
+                            <h3>{{ module.title }}</h3>
+                            {% assign submodules = site.pedagogic_modules | where: "submodule",module.submodulecat |
+                            sort: "order" %}
+                            <ul>
+                                {% for submodule in submodules %}
+                                {% if submodule.title != null and submodule.layout == "page" %}
+                                <li>
+                                    <a href="{{ site.baseurl }}{{ submodule.url }}">{{ submodule.title }}</a>
+                                    {% assign subsubmodules = site.pedagogic_modules | where:
+                                    "submodule",submodule.submodulecat | sort: "order" %}
+                                    <ul>
+                                        {% for subsubmodule in subsubmodules %}
+                                        {% if subsubmodule.title != null and subsubmodule.layout == "page" %}
+                                        <li>
+                                            <a href="{{ site.baseurl }}{{ subsubmodule.url }}">
+                                                {{ subsubmodule.title }}</a>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                                {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-      </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
     </div>
-  </div>
 </div>

@@ -1,19 +1,10 @@
----
-layout: page
-title: 'H. Workflows and Resource Provisioning'
-order: 800
----
 
-1. [Learning objectives](#learning-objectives)
-2. [Overview](#overview)
-2. [Case Study](#case-study)
-3. [Activity](#activity)
-3. [Conclusion](#conclusion)
-
-# Learning Objectives
+#### Learning Objectives
 
 - Be able to make calculated platform design decisions for optimizing workflow executions;
 - Be able to apply the knowledge acquired in all previous modules in a holistic manner.
+
+----
 
 # Overview
 

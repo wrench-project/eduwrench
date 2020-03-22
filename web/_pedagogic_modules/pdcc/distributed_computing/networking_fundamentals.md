@@ -1,16 +1,15 @@
 ---
 layout: page
-title: 'C. Networking Fundamentals'
-order: 300
+title: 'A.3.1 Networking Fundamentals'
+order: 131
 usemathjax: true
+submodule: 'distributed_computing'
 ---
-
 
 The goal of this module is to provide you with knowledge of networking, as
 it relates to the performance of distributed computing applications.  The
 goal is **not** to teach you details of network technologies and protocols,
 which are fascinating topics you can learn about in networking textbooks.
-
 
 Go through the tabs below in sequence...
 
@@ -29,5 +28,3 @@ Go through the tabs below in sequence...
 <div markdown="1" class="ui tab segment " data-tab="third">
   {% include_relative include_networking_fundamentals/contention.md %}
 </div>
-
-

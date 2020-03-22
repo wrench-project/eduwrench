@@ -16,6 +16,11 @@ h3 {
   line-height: 1.5;
 }
 
+a {
+  color: $link-color !important;
+  text-decoration: none !important;
+}
+
 h1 {
   color: $main;
   font-size: 2.5em;
@@ -157,6 +162,7 @@ main {
   top: 38%;
 }
 
+// Main meny (dropdown)
 .dropdown-menu span {
   color: #999 !important;
   padding: 0.5em 1em 0.5em 1em !important;
@@ -168,6 +174,29 @@ main {
   padding: 0.5em 1em 0.5em 2em !important;
 }
 
+// Modules
+.modules {
+  text-align: left;
+}
+
+.modules ul {
+  list-style: none;
+}
+
+.modules li {
+  margin: 0;
+  padding: 0;
+  margin-top: 0.5em;
+}
+
+.modules .excerpt {
+  color: #999;
+  font-style: italic;
+  padding-left: 1em;
+  padding-bottom: 2em;
+}
+
+// Footer
 footer {
   border-top: 1px solid #eee;
   text-align: center;

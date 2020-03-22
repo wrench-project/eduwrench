@@ -1,8 +1,10 @@
 ---
 layout: page
 title: 'A.1. Single-core Computing'
-order: 100
+order: 110
 usemathjax: true
+submodule: 'pdcc'
+excerpt: 'This module provides basic knowledge about sequential computing (i.e., running a program on a single core).'
 ---
 
 The goal of this module is to provide you with basic knowledge about

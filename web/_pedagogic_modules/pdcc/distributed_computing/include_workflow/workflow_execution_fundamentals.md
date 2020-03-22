@@ -1,19 +1,12 @@
----
-layout: page
-title: 'E. Workflow Execution Fundamentals'
-order: 500
-usemathjax: true
----
 
-### Learning objectives
+#### Learning objectives
 
-
-  - Understand the fundamental steps involved when executing a workflow on a cyberinfrastructure that comprises storage and compute services;
-
-  - Be able to estimate the time it should take to complete a chain workflow on a simple cyberinfrastructure; 
-
-  - Be able to analyze a (simulated) workflow execution timeline based on textual and graphical simulation output;
-      
+  - Understand the fundamental steps involved when executing a workflow on 
+    a cyberinfrastructure that comprises storage and compute services;
+  - Be able to estimate the time it should take to complete a chain workflow 
+    on a simple cyberinfrastructure; 
+  - Be able to analyze a (simulated) workflow execution timeline based on textual 
+    and graphical simulation output;   
   - Understand the concept of I/O-intensive vs. compute-intensive workflows.
 
 ---

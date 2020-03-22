@@ -1,25 +1,12 @@
----
-layout: page
-title: 'D. Workflow Fundamentals'
-order: 400
-usemathjax: true
----
 
 #### Learning objectives:
 
   - Understand the concept of a *workflow*;
-  
   - Understand the structure of cyberinfrastructures on which one can execute
     workflows;
-
   - Understand the concept of a workflow management system (WMS).
 
 ---
-
-
-1. [What is a workflow?](#what-is-a-workflow)
-2. [What kind of resources and infrastructures are necessary to execute a workflow?](#what-kind-of-resources-and-infrastructures-are-necessary-to-execute-a-workflow)
-3. [What is a workflow management system?](#what-is-a-workflow-management-system)
 
 ## What is a workflow?
 

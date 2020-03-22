@@ -1,8 +1,9 @@
 ---
 layout: page
 title: 'A.2. Multi-core Computing'
-order: 110
+order: 120
 usemathjax: true
+submodule: 'pdcc'
 ---
 
 The goal of this module is to introduce you to the basic concepts of running 

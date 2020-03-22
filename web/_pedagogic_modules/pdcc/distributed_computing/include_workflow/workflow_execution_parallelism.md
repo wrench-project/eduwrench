@@ -1,16 +1,12 @@
----
-layout: page
-title: 'G. Workflows and Parallelism'
-order: 700     
-usemathjax: true
----
 
+#### Learning Objectives
 
-# Learning Objectives
 - Gain exposure to cluster platforms;
 - Understand how compute core and compute node parallelism affects workflow execution times;
 - Understand the tradeoffs between parallelism and utilization;
 - Be able to compare alternative strategies for executing tasks in parallel.
+
+----
 
 # Overview
 
