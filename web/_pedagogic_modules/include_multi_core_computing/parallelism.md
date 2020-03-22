@@ -145,9 +145,16 @@ is wasted. You get the idea.
 
 ### Simulating Load Imbalance
 
-So that you can gain hands-on experience, use the simulation Web application (see 
-<a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
-selecting `Multi-core Machines` from its menu. 
+So that you can gain hands-on experience, use the simulation Web application below.
+
+This simulation app allows you to pick the number of cores and tasks to run. 
+Try first with a single core running 5 tasks (ignore the "Ram Needed For Each 
+Task" field, and leave the "Task GFlop" field at 100). Take particular notice 
+of the "Host Utilization" graph. Now try running a number of tasks and cores where 
+the number of tasks does not evenly divide the number of cores. Looking at the 
+host utilization graph again, now you will be able to see idle time for some of 
+the cores represented by pink. Whenever we can see that pink on the graph, we know 
+that parallel efficiency is below 100%. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -158,15 +165,6 @@ selecting `Multi-core Machines` from its menu.
     {% include simulator.html src="multi_core/" %}
   </div>
 </div>
-
-This simulation app allows you to pick the number of cores and tasks to run. 
-Try first with a single core running 5 tasks (ignore the "Ram Needed For Each 
-Task" field, and leave the "Task GFlop" field at 100). Take particular notice 
-of the "Host Utilization" graph. Now try running a number of tasks and cores where 
-the number of tasks does not evenly divide the number of cores. Looking at the 
-host utilization graph again, now you will be able to see idle time for some of 
-the cores represented by pink. Whenever we can see that pink on the graph, we know 
-that parallel efficiency is below 100%. 
 
 #### Practice Questions
 

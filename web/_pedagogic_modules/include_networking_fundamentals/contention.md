@@ -75,31 +75,17 @@ $$
 
 #### Testing your understanding using simulation
 
-So that you can gain hands-on experience, use 
-the simulation Web application
-(see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
-selecting `Networking Fundamentals` from its menu. 
+So that you can gain hands-on experience, use the simulation Web application below.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content">
-    {% include simulator.html src="networking_fundamentals/" %}
-  </div>
-</div>
-
-
-This simulation is for the following
-scenario in which a number of transfers occur concurrently on the same
-three-link route:
+This simulation is for the following scenario in which a number of transfers 
+occur concurrently on the same three-link route:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_simulation.svg">simulation scenario</object>
 <b>Figure 3:</b> Simulation scenario.
 
-On the simulation Web application tool  you can enter a list of file sizes (in MB). Each file size corresponds to
-one data transfer on a three-link route.
+On the simulation Web application tool below you can enter a list of file 
+sizes (in MB). Each file size corresponds to one data transfer on a three-link 
+route.
 
 For example, if you enter just number "100" in the text box, the simulation will be for
 a single 100 MB data transfer and produce this output:
@@ -141,6 +127,16 @@ complete at the same time.
 Feel free to run simulations to explore different scenarios and test your 
 computed data transfer time estimates for various combinations of concurrent
 transfers.
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content">
+    {% include simulator.html src="networking_fundamentals/" %}
+  </div>
+</div>
 
 --- 
 

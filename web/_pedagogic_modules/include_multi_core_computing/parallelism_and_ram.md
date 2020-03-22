@@ -24,9 +24,18 @@ losses.
 
 ### Simulating RAM Constraints
 
-So that you can gain hands-on experience, use the simulation Web application (see 
-<a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
-selecting `Multi-core Machines` from its menu. 
+So that you can gain hands-on experience, use the simulation Web application below.
+
+Previously when using the simulation app, you left the "Ram Needed For Each 
+Task" field at zero. This time around, we recognize that tasks may require RAM. 
+The host we are using has 32 GB of RAM available. First try using 4 Cores for 
+8 tasks, where each task uses 8 GB of RAM. 
+
+As you will see, there is no idle time with the above situation. The number 
+of tasks we can run at a time is 4, both by the amount of cores we have and 
+the amount of ram we have. Now try again, but this time the Task RAM should 
+be set to 16 GB. There will now be idle time, as only 2 cores can be utilized 
+simultaneously in this situation. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -37,17 +46,6 @@ selecting `Multi-core Machines` from its menu.
     {% include simulator.html src="multi_core/" %}
   </div>
 </div>
-
-Previously when using the simulation app, you left the "Ram Needed For Each 
-Task" field at zero. This time around, we recognize that tasks may require RAM. 
-The host we are using has 32 GB of RAM available. First try using 4 Cores for 
-8 tasks, where each task uses 8 GB of RAM. 
- 
-As you will see, there is no idle time with the above situation. The number 
-of tasks we can run at a time is 4, both by the amount of cores we have and 
-the amount of ram we have. Now try again, but this time the Task RAM should 
-be set to 16 GB. There will now be idle time, as only 2 cores can be utilized 
-simultaneously in this situation. 
 
 #### Practice Questions 
 

@@ -111,8 +111,15 @@ requirements, and it may not be possible to overlap IO and computation due to RA
 
 ### Simulating IO
 
-So that you can gain hands-on experience with the above concepts, use the simulation Web application below
-(see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>), selecting `IO Operations` from its menu.
+So that you can gain hands-on experience with the above concepts, use the simulation Web application below.
+
+Initially, you can create a series of identical tasks that have a certain input and output. Run the simulation to see
+the progression of tasks and host utilization without allowing IO to overlap with computation. Once you have observed
+this, try selecting the checkbox to allow overlap.
+
+With IO overlap there should be an improvement in execution time and host utilization. You can view this in the output
+graphs that are generated. You can also try varying the input/output and computation amounts to create IO intensive or CPU
+intensive tasks. Understanding which tasks will benefit from increased R/W or computation speeds will assist you in answering the questions to come.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -123,15 +130,6 @@ So that you can gain hands-on experience with the above concepts, use the simula
     {% include simulator.html src="io_operations/" %}
   </div>
 </div>
-
-
-Initially, you can create a series of identical tasks that have a certain input and output. Run the simulation to see
-the progression of tasks and host utilization without allowing IO to overlap with computation. Once you have observed
-this, try selecting the checkbox to allow overlap.
-
-With IO overlap there should be an improvement in execution time and host utilization. You can view this in the output
-graphs that are generated. You can also try varying the input/output and computation amounts to create IO intensive or CPU
-intensive tasks. Understanding which tasks will benefit from increased R/W or computation speeds will assist you in answering the questions to come.
 
 
 ### Practice Questions
