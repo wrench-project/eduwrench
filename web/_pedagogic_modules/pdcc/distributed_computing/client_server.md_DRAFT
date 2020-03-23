@@ -1,0 +1,146 @@
+---
+layout: page
+title: 'A.3.2 Client/Server'
+order: 132
+usemathjax: true
+submodule: 'distributed_computing'
+---
+
+The goal of this module is to introduce you to the considerations for a client/server setup.
+
+
+#### Learning Objectives:
+
+  - Understand client/server functionality
+
+  - Understand how to optimize a client/server setup
+
+----
+
+## Basics
+
+In a client/server model there is a client which can house data and receive inputs, while one or many servers are
+networked with the client in order to process requests or tasks. This setup allows both client and server hardware some level of
+specialization and autonomy. Many applications and websites are clients, where they receive information from the end
+user and forward their request to a server for actual processing. This can keep the application lightweight and widely
+accessible, while still allowing for resource-intensive activities to be done on the server at client request. There are
+ drawbacks that need to be taken into account for this architecture. If a substantial amount of data needs to be
+ transferred over the network from the client to server or vice versa, this will be constrained by network speeds. As
+ servers can accommodate multiple clients in many cases, there may also be issues with load on the server from trying to
+  handle multiple requests at once. Managing these and other restraints is necessary when running a client/server architecture.
+
+
+### An Example: Photo Processing
+
+XXXX Remove mention of the disk for now XXXX
+
+On your computer, the "client", you have a 100 MB image file stored on your
+HDD, which has a 50 MBps R/W bandwidth. You want to use machine learning
+algorithms to detect particular objects in this image (e.g., cats). But you
+do not have the necessary software installed on your  computer,  perhaps
+because it is proprietary. However, you can access remote computers that
+have that software installed, and that make it possible to use it over the
+network. There are two of these "servers" you can access.  Server 1, which
+you can access via a network link with 10 MBps, but that can analyze the
+image in XXX seconds of computation.  Server 2, which you can access via  a
+100 MBps network link, is able to analyze the image in XXX seconds of
+computation.  Latency for these network links is negligible and can be
+disregarded. We assume that the image is store in RAM  on the client, and that
+the servers receive images from the network directly
+into their RAM (i.e., there is no disk I/O whatsoever).
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Topology</object>
+
+
+### Simulating a Client and Server
+
+XXXX FRONT END DOESN'T SHOW ANYTHIONG ABOUT DISK XXXX
+
+So that you can gain hands-on experience, use
+the simulation Web application
+(see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
+selecting `Client/Server` from its menu.
+
+This simulation app allows you to see the differences in execution time when you trade off between slow and fast networks
+and disks. First, you can try running the simulation using Server 1 or Server 2 (check the checkbox for Server 1, leave
+it unchecked for Server 2). Run with the default values and you will notice a large difference in execution time. Even
+though Server 1 has a better CPU, it is bottlenecked by the speed at which it can receive data over the link. Server 2
+is thus able to finish execution much more quickly than Server 1.
+
+
+### Adding I/O
+
+Turns out there  is I/O on the client, because the image is on disk, 50 GBps R/W bandiwdth (text from earlier paragraph).
+
+XXXX TO MOVE TO LATER PHASE XXXX (DISK CAN BE A BOTTLENECK, AND COULD CHANGE WHICH SEVER IS BEST)
+In this situation, you can see that the disk is slower than the available network speed. As previously observed in the
+IO module of Single-Core Computing, a slow disk is often the bottleneck in computing. In this situation, we could
+accelerate the process by updating the disk of our client machine. An upgrade to link speed would not help as it can
+already transfer data twice as fast as the disk can read.
+XXXX END TO MOVE TO LATER PHASE XXXX
+
+
+IT'S A BAD IDEA TO DO:
+    - READ EVERYTHING FROM DISK
+    - SEND TO NETWORK
+
+TWO REASONS:
+    - SLOW
+    - Client RAMmay be too small! (thinko of a 30GB image instead of100MB!)
+
+
+Buffering is a way to improve performance for large data transfers. Without a buffer you can imagine a constant data
+stream over the network, 1 bit at a time. If we implement a buffer of 4 kilobytes instead, the disk would instead wait
+to read 4K before sending it over the network. These 4K chunks would be sent until the transfer was finished. This
+provides several advantages for efficiency. A larger buffer means that the network link can maintain a consistent transfer
+ for the duration of that chunk. If a tiny stream of data is sent as it is read from disk, there can be gaps where the
+ network is waiting. If, as in most cases, the link is not dedicated to only this traffic, there will also need to be
+ other traffic taking up link capacity at times. Sending data in tiny chunks will also increase overhead at all stages
+ of the process. There is a limit on how large buffer should be, as whether it is buffering in RAM or dedicated memory
+ there will be an upper limit on what it can store at any given time.
+
+
+SIMULATION WITH DIFFERENT FRONT END (THAT SHOWS DISK)
+
+#### Practice Questions
+
+
+**[X.p1.1]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
+transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
+network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
+CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
+assume there is no buffering, as soon as data is read from disk it can be sent on the network link utilizing the full
+bandwidth. How long is the execution time from start to finish?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+    The 400MB will take 2 seconds to be read from disk. The network link is faster than the disk, so the only additional
+     transfer time will be latency which we have been told is negligible. Once the data is on the server, it can complete
+      the task in 5 seconds. Total execution time will be 2+5 = 7 seconds.
+
+  </div>
+</div>
+
+<p></p>
+
+**[X.p1.2]** Consider the previous question's situation, but now the server has moved and the network link has changed
+to 10 GBps capacity. Due to the longer distance, there is now 100 μs latency. Does this change the execution time?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i> (click to see answer)
+  </div> <div markdown="1" class="ui segment content">
+   Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
+   utilized to begin with. Since we are going from negligible latency to 100 μs latency, our answer would be increased
+   by that amount. Transfer time will extend past the time it takes to read from disk by the amount of latency.
+
+  </div>
+</div>
+
+<p></p>
+
+#### Questions

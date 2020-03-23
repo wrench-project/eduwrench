@@ -1,0 +1,43 @@
+---
+layout: page
+title: 'A.3.3 Master/Worker'
+order: 133
+usemathjax: true
+submodule: 'distributed_computing'
+---
+
+
+
+The goal of this module is to introduce you to the basic concepts of running tasks
+on a master/worker system.
+
+
+#### Learning Objectives:
+
+  - Understand master/worker systems
+
+  -
+
+----
+
+
+
+## Basics
+
+When hosts or clusters are referred to as either a master or a worker, the meaning is
+ identical to the meaning of those words in general life. The single master or boss is
+ assigning labor amongst an arbitrary number of workers. This allows the workers to be
+ simple laborers that do the jobs given to them without worrying about the larger picture,
+ and the master is not doing all the work themself so they can keep the larger picture
+ working smoothly. The success of a master/worker system is predicated on the ability of the
+  master to efficiently offload work.
+
+
+### Parallelism through Master/Worker
+
+Master/Worker can allow for parallel computing in much the same ways as we have previously discussed.
+Instead of delegating an entire task to each host or core, the master can evaluate the workload
+and hand off pieces of computation to workers. The worker does the computation as necessary, and returns
+ the output to the master when it is finished, signalling that it has completed the assigned work. Once
+ a worker is free it can be assigned work again.
+

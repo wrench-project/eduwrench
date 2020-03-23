@@ -1,0 +1,95 @@
+
+
+## Adding Task Dependencies
+
+So far, we've always considered *independent* tasks in our applications,
+i.e., tasks that can be executed in any order and concurrently.  However,
+is many, many, real-world applications this is not the case. Instead,
+tasks exhibit *dependencies*. In other words, some tasks cannot execute
+before other tasks are done. As an analogy, consider a chef cooking a meal.
+First, they need to select and procure the ingredients. Second, they need
+to cook these ingredients. Finally, the cooked ingredients must be plated.
+None of these tasks may be completed out of order. Instead, the "cook
+ingredients" task depends on the "procure ingredients", and the "plate
+meal" task depends on the "cook ingredients" task.  A convenient way
+to represent such applications is a *Directed Acyclic Graph (DAG)*, in which
+*vertices are tasks* and *edges are dependencies*. For the "cook a meal" application,
+the DAG representation is straightforward, and depicted in Figure 1 below:
+
+[ Figure 1 ]
+
+Going back to computing, here is a typical example of task dependencies.
+Consider an application that counts the number of car objects in a set
+of compressed street pictures. Each picture needs to be uncompressed,
+pre-processed, (e.g., to remove noise), analyzed (to find and count cars),
+and re-compressed. And then, once this has been done for each picture, the
+car counts need to be aggregated. Say that we have 10 compressed pictures,
+the application can be represented as a DAG as in Figure 2 below:
+
+[ Figure 2 ]
+
+Note that each task above can involve both I/O and computation. For
+instance, the "uncompress" task must read in a picture file from disk, and
+then execute a decompression algorithm.  Then, whether it writes back to
+disk the decompressed image or keeps in in RAM so that the "pre-process"
+task can do its job is up to the application's implementation in software.
+Clearly keeping things in RAM can avoid costly I/O operation, but as we
+know RAM capacity is limited.
+
+
+### Simulating Simple Task Dependencies
+
+For now, to keep things simple, let's assume that tasks take zero RAM and
+that they perform no I/O.
+
+So that you can gain hands-on experience, use the simulation Web
+application (see <a
+href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/"
+target="_blank">instructions</a>), selecting `XXXXXX` from its menu.
+
+**TODO: Develop the simulation:**
+
+  - Out tree, no I/O, no RAM, simple dependencies, uneven tasks, increase number of cores, observe idle time
+
+#### Practice Questions
+
+**[XXX]** XXXXX
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+
+$$
+\begin{align}
+  T(1) & = 4  \times ( 6 / 2 + 100 / 10 )\\
+              & = 52 sec
+\end{align}
+$$
+
+  </div>
+</div>
+
+<p></p>
+
+
+---
+
+## Questions
+
+Answer the following questions:
+
+**[XXXX]**  XXXXXXXXX
+
+
+### More complex task dependencies
+
+
+DAGS that are not just in-tree/out-trees
+    - critical path
+
+
+Conclusion about: if we throw in everything together, things can get preetty complex, but basic principles should guide ytou... type
