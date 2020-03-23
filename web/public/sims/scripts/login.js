@@ -57,12 +57,17 @@ var signinChanged = function (val) {
   if(val) { // user signed in
     var profile = googleUser.getBasicProfile();
     $(".user-title").html('');
+    $(".user-given-name").html('');
+    $(".user-email").html('');
+    $(".user-image").attr("src", `${profile.getImageUrl()}`);
+    $(".user-given-name").append(`<b>${profile.getGivenName()}</b>`);
     $(".user-title").append(`<b>${profile.getName()}</b>`);
+    $(".user-email").append(`<b>${profile.getEmail()}</b>`);
     // hide sign in button and show sign out button
     $(".sign-in-page")
       .removeClass("show")
       .addClass("hide");
-    $(".signOutBut")
+    $(".sing-out-page")
       .removeClass("hide")
       .addClass("show");
     $('.myAppFrame').removeClass('hide').addClass('show');
@@ -78,7 +83,7 @@ var signinChanged = function (val) {
     }
   }
   else { // user signed out
-    $(".signOutBut")
+    $(".sing-out-page")
       .removeClass("show")
       .addClass("hide");
     $(".sign-in-page")
