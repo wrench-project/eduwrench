@@ -560,9 +560,9 @@ app.post("/run/client_server", authCheck, function (req, res) {
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
     const SERVER_1_LINK = req.body.server_1_link;
-    const SERVER_2_LINK = req.body.server_2_link;
-    const CLIENT_DISK = req.body.client_disk;
-    const HOST_SELECT = (req.body.host_select == 1) ? 1 : 2;
+    const BUFFER_SIZE = req.body.buffer_size;
+    const HOST_SELECT = req.body.host_select;
+    const DISK_TOGGLE = (req.body.disk_toggle == 1) ? 0 : 1;
 
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -572,11 +572,11 @@ app.post("/run/client_server", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        //"--log=file_transfer_thread.thresh:debug",
+        "--log=file_transfer_thread.thresh:info",
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK, SERVER_2_LINK, CLIENT_DISK, HOST_SELECT].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -600,10 +600,10 @@ app.post("/run/client_server", authCheck, function (req, res) {
             "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "client_server",
-            "task_input": HOST_SELECT,
             "server_1_link": SERVER_1_LINK,
-            "server_2_link": SERVER_2_LINK,
-            "client_disk": CLIENT_DISK
+            "buffer_size": BUFFER_SIZE,
+            "host_select": HOST_SELECT,
+            "disk_toggle": DISK_TOGGLE
         });
 
         /**
