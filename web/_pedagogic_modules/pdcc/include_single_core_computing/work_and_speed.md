@@ -1,16 +1,13 @@
 
-#### Learning objectives:
+#### Learning Objectives
 
-  - Understand the concepts of *work* and of *compute speed*;
-
-  - Be familiar with Flop as a measure of work and with Flop/sec
-    as a measure of compute speed;
-
-  - Understand the simple relationship between program execution time, 
-    work, and compute speed.
+- Understand the concepts of *work* and of *compute speed*
+- Be familiar with Flop as a measure of work and with Flop/sec
+  as a measure of compute speed
+- Understand the simple relationship between program execution time, 
+  work, and compute speed
 
 ---
-
 
 ### Measures of Work and Compute Speed
 
@@ -18,7 +15,7 @@ In these pedagogic modules we rarely consider programs that are
 interactive, i.e., that react based on real-time user input via the
 keyboard or the mouse. A text editor would fall in this category. Instead,
 we almost always consider programs that have some amount of computation,
-or *work*, to perform and then terminate. An example would be a program
+or **work**, to perform and then terminate. An example would be a program
 that mines a bitcoin.
 
 The simplest model of performance when executing a non-interactive program
@@ -26,8 +23,7 @@ on a core of a computer is to assume that the computer delivers constant
 *compute speed*, which is measured by the quantity of work performed per
 time unit. For instance, a program with 100 units of work would run in 50
 seconds on a core with a speed of 2 units of work per second.
- This last number is called the program's
-*execution time*.
+This last number is called the program's **execution time**.
 
 Generalizing the above example, for a given amount of work to
 perform there is a linear relationship between the program's execution
@@ -55,7 +51,6 @@ instructions are not all equal, and especially across different families of
 processors. Therefore, a processor that delivers fewer instructions per
 seconds than another could actually be prefered for running some program.
 
-
 ### Flop and Flop/sec
 
 It turns out that the question of modeling/predicting how fast a particular
@@ -75,7 +70,6 @@ not all the same).  Fortunately, all the concepts we learn in these
 pedagogic modules are agnostic to the way in which we measure work. And so
 we just pick Flop counts to be consistent throughout.
 
-
 Say a program that performs 100 TFlop ("100 TeraFlop") is executed 
 on a core with speed 35 GFlop/sec ("35 GigaFlop per second"). The
 program's execution time would then be:
@@ -87,7 +81,8 @@ $$
 \end{align}
 $$  
 
-If a program that performs 12 GFlop runs in 5 seconds on a core, then the speed of this core in MFlop/sec ("MegaFlop per second") is:
+If a program that performs 12 GFlop runs in 5 seconds on a core, then the 
+speed of this core in MFlop/sec ("MegaFlop per second") is:
 
 $$
 \begin{align}
@@ -96,14 +91,14 @@ $$
 \end{align}
 $$  
 
-
 ---
 
 #### Practice Questions
 
-To make sure the above is crystal clear (and that you know your units!), try to answer the following questions:
+To make sure the above is crystal clear (and that you know your units!), try 
+to answer the following questions:
 
-**[A.p1.1]** You have to run a program that performs 4000 GFlop, and your
+**[A.1.p1.1]** You have to run a program that performs 4000 GFlop, and your
 core computes at speed 30 TFlop/sec. How long will the program run for in seconds?
 
 <div class="ui accordion fluid">
@@ -112,14 +107,15 @@ core computes at speed 30 TFlop/sec. How long will the program run for in second
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   $$ \frac{4 \;\text{TFlop}}{30\; \text{TFlop/sec}} \simeq 0.13\; \text{sec}   $$
+   $$ \frac{4 \;\text{TFlop}}{30\; \text{TFlop/sec}} \simeq 0.13\; \text{sec} $$
   </div>
 </div>
 
 <p> </p>
 
-**[A.p1.2]** A program just ran in 0.32 sec on a core with speed 2 TFlop/sec, 
+**[A.1.p1.2]** A program just ran in 0.32 sec on a core with speed 2 TFlop/sec, 
 how many GFlop does the program perform?
+
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -134,20 +130,11 @@ how many GFlop does the program perform?
 
 #### Questions
 
-
-**[A.q1.1]** You have to run a program that performs 2000 TFlop, and your
+**[A.1.q1.1]** You have to run a program that performs 2000 TFlop, and your
 core computes at speed 450 GFlop/sec. How long will the program run for in minutes?
 
-**[A.q1.2]** A program that performs 3000 GFlop just ran in 1.5 minutes on a core. What is the
-core speed in TFlop/sec? 
+**[A.1.q1.2]** A program that performs 3000 GFlop just ran in 1.5 minutes on a core. 
+What is the core speed in TFlop/sec? 
 
-**[A.q1.3]** On a given core, a program just ran in 14 seconds. By what factor should the core speed be
-increased if I want the program to run in 10 seconds?
-
-
-
-
-
-
-
-
+**[A.1.q1.3]** On a given core, a program just ran in 14 seconds. By what factor 
+should the core speed be increased if you want the program to run in 10 seconds?
