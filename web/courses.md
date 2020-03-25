@@ -19,16 +19,15 @@ permalink: /courses
                             sort: "order" %}
                             <ul>
                                 {% for submodule in submodules %}
-                                {% if submodule.title != null and submodule.layout == "page" %}
+                                {% if submodule.title != "DRAFT" and submodule.layout == "page" %}
                                 <li>
                                     <strong><a href="{{ site.baseurl }}{{ submodule.url }}">{{ submodule.title }}</a></strong>
                                     <br/>
                                     <div class="excerpt" style="padding-bottom: 1.5em">{{ submodule.excerpt | strip_html | strip_newlines | truncate: 160 }}</div>
-                                    {% assign subsubmodules = site.pedagogic_modules | where:
-                                    "submodule",submodule.submodulecat | sort: "order" %}
+                                    {% assign subsubmodules = site.pedagogic_modules | where: "submodule",submodule.submodulecat | sort: "order" %}
                                     <ul>
                                         {% for subsubmodule in subsubmodules %}
-                                        {% if subsubmodule.title != null and subsubmodule.layout == "page" %}
+                                        {% if subsubmodule.title != "DRAFT" and subsubmodule.layout == "page" %}
                                         <li>
                                             <a href="{{ site.baseurl }}{{ subsubmodule.url }}">
                                                 {{ subsubmodule.title }}</a>
