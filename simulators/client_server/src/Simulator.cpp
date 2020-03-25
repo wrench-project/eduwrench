@@ -26,7 +26,7 @@ void generateWorkflow(wrench::Workflow *workflow, int host_select) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
     }
 
-    if (host_select != 1 && host_select != 2) {
+    if (host_select != 0 && host_select != 1) {
         throw std::invalid_argument("generateWorkflow(): valid host must be selected");
     }
 
@@ -39,12 +39,12 @@ void generateWorkflow(wrench::Workflow *workflow, int host_select) {
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     wrench::WorkflowTask *single_task;
-    if (host_select == 1) {
+    if (host_select == 0) {
         single_task = workflow->addTask("slow_server_task", 10 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
     } else {
         single_task = workflow->addTask("fast_server_task", 10 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
     }
-    single_task->addInputFile(workflow->addFile("file_copy", 1*GB));
+    single_task->addInputFile(workflow->addFile("file_copy", 0.1*GB));
 
 }
 
@@ -54,7 +54,7 @@ void generateWorkflow(wrench::Workflow *workflow, int host_select) {
  *
  * @throws std::invalid_argumemnt
  */
-void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int link_2_bandwidth, int disk_speed) {
+void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int disk_toggle) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -62,12 +62,11 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
     if (link_1_bandwidth < 1 ) {
         throw std::invalid_argument("generatePlatform() bandwidth must be greater than 1");
     }
-    if (link_2_bandwidth < 1 ) {
-        throw std::invalid_argument("generatePlatform() bandwidth must be greater than 1");
+    if (disk_toggle != 0 && disk_toggle != 1 ) {
+        throw std::invalid_argument("generatePlatform() disk_toggle must be 1 or 0");
     }
-    if (disk_speed < 1 ) {
-        throw std::invalid_argument("generatePlatform() disk R/W must be greater than 1");
-    }
+
+
 
 
     // Create a the platform file
@@ -80,7 +79,7 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
                       "       <link id=\"fast_link\" bandwidth=\"103.09MBps\" latency=\"10us\"/>\n"
                       "       <host id=\"client\" speed=\"100Gf\" core=\"1000\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                      "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                      "           <disk id=\"large_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
                       "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                       "                            <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
@@ -114,12 +113,15 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
         // entering (effective_bandwidth / 0.97) as bandwidth into the simulation
         // so that the max bandwidth we can achieve is the effective_bandwidth
         double link_1_real_bandwidth = link_1_bandwidth / 0.97;
-        double link_2_real_bandwidth = link_2_bandwidth / 0.97;
+        //double link_2_real_bandwidth = link_2_bandwidth / 0.97;
 
         link1.attribute("bandwidth").set_value(std::string(std::to_string(link_1_real_bandwidth) + "MBps").c_str());
-        link2.attribute("bandwidth").set_value(std::string(std::to_string(link_2_real_bandwidth) + "MBps").c_str());
-        disk0.attribute("read_bw").set_value(std::string(std::to_string(disk_speed) + "MBps").c_str());
-        disk0.attribute("write_bw").set_value(std::string(std::to_string(disk_speed) + "MBps").c_str());
+        //link2.attribute("bandwidth").set_value(std::string(std::to_string(link_2_real_bandwidth) + "MBps").c_str());
+
+        if (disk_toggle == 0) {
+            disk0.attribute("read_bw").set_value(std::string(std::to_string(999999999999999999) + "MBps").c_str());
+            disk0.attribute("write_bw").set_value(std::string(std::to_string(999999999999999999) + "MBps").c_str());
+        }
 
         xml_doc.save_file(platform_file_path.c_str());
 
@@ -142,8 +144,9 @@ int main(int argc, char** argv) {
     const int MAX_CORES         = 1000;
     int HOST_SELECT;
     int SERVER_1_LINK;
-    int SERVER_2_LINK;
-    int DISK_SPEED;
+    int BUFFER;
+    std::string BUFFER_STRING;
+    int DISK_TOGGLE;
 
 
     try {
@@ -160,34 +163,36 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("invalid link speed");
         }
 
-        SERVER_2_LINK = std::stoi(std::string(argv[2]));
+        BUFFER_STRING = std::string(argv[2]);
+        BUFFER = std::stoi(BUFFER_STRING);
 
-        if (SERVER_2_LINK <  1 || SERVER_2_LINK > 10000) {
-            std::cerr << "Invalid link speed. Speed must be in range [1,10000] MBps" << std::endl;
-            throw std::invalid_argument("invalid link speed");
+        if (BUFFER <  1 || BUFFER > 1000000000) {
+            std::cerr << "Invalid buffer size. Buffer must be in range [1,100000000] bytes" << std::endl;
+            throw std::invalid_argument("invalid buffer size");
         }
 
-        DISK_SPEED = std::stoi(std::string(argv[3]));
 
-        if (DISK_SPEED <  1 || DISK_SPEED > 10000) {
-            std::cerr << "Invalid disk speed. Speed must be in range [1,10000] MBps" << std::endl;
-            throw std::invalid_argument("invalid disk speed");
-        }
+        HOST_SELECT = std::stoi(std::string(argv[3]));
 
-        HOST_SELECT = std::stoi(std::string(argv[4]));
-
-        if (HOST_SELECT !=  1 && HOST_SELECT != 2) {
-            std::cerr << "Invalid host selection. Host must be either 1 or 2" << std::endl;
+        if (HOST_SELECT !=  0 && HOST_SELECT != 1) {
+            std::cerr << "Invalid host selection. Host must be either 0 or 1" << std::endl;
             throw std::invalid_argument("invalid host selection");
+        }
+
+        DISK_TOGGLE = std::stoi(std::string(argv[4]));
+
+        if (DISK_TOGGLE !=  0 && DISK_TOGGLE != 1) {
+            std::cerr << "Invalid disk toggle value, should be binary." << std::endl;
+            throw std::invalid_argument("invalid disk toggle");
         }
 
 
     } catch(std::invalid_argument &e) {
-        std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <server_2_link_speed> <disk_speed> <host_select>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <buffer> <host_select>" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
-        std::cerr << "   server_2_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
-        std::cerr << "   disk_speed: Speed must be in range [1,10000] MBps" << std::endl;
-        std::cerr << "   host_select: host selection should be either 1 or 2" << std::endl;
+        std::cerr << "   buffer: buffer size must be inn range [1,1000000000] bytes" << std::endl;
+        std::cerr << "   host_select: host selection should be either 0 or 1" << std::endl;
+        std::cerr << "   disk_toggle: disk toggle should be either 0 or 1" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
@@ -198,7 +203,7 @@ int main(int argc, char** argv) {
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path, SERVER_1_LINK, SERVER_2_LINK, DISK_SPEED);
+    generatePlatform(platform_file_path, SERVER_1_LINK, DISK_TOGGLE);
     simulation.instantiatePlatform(platform_file_path);
 
 
@@ -208,11 +213,19 @@ int main(int argc, char** argv) {
 
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "524288"}}));
+    std::shared_ptr<wrench::StorageService> client_storage_service;
+
+    if(DISK_TOGGLE == 0) {
+        client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}));
+    } else {
+        client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+    }
+
+
     storage_services.insert(client_storage_service);
 
     std::shared_ptr<wrench::ComputeService> compute_service;
-    if (HOST_SELECT == 1){
+    if (HOST_SELECT == 0){
         compute_service = simulation.add(
                 new wrench::BareMetalComputeService(
                         CLIENT,
@@ -261,8 +274,8 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    //simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", true, true, true, false, false);
-    simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, true, true, false, false);
+    //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
     //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
 
     return 0;
