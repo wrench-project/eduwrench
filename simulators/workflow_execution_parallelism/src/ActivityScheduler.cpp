@@ -32,8 +32,6 @@ namespace wrench {
         auto idle_core_counts = compute_service->getPerHostNumIdleCores();
         auto ram_capacities = compute_service->getMemoryCapacity();
 
-
-
         // combining core counts and ram capacities together
         std::vector<ComputeResource> available_resources;
         for (const auto &host : idle_core_counts) {
