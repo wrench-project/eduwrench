@@ -11,7 +11,7 @@ cd simulators/io_operations && ./build.sh && cd ../..
 
 # copy dashboard scripts into web application
 echo "Copying WRENCH dashboard scripts into web application"
-cp -R /usr/local/wrench/dashboard web/public/sims/scripts/
+ln -s /usr/local/wrench/dashboard web/public/sims/scripts/dashboard
 
 # bundle install jekyll application
 echo "Installing Jekyll application"

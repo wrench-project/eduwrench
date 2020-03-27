@@ -1,7 +1,7 @@
 ---
 layout: page
-title: 'Our Courses'
-permalink: /courses
+title: 'Our Modules'
+permalink: /modules
 ---
 
 <div class="info" style="margin-top: 2em">
