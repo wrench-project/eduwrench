@@ -296,7 +296,8 @@ The execution time it **14 seconds**. (This result can be generalized for *n* ta
 
 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%. 
 
-By making the IO faster, input for tasks is always ready for the CPU to process. 
+By making the IO faster, input for tasks is always ready for the CPU to process. As the number
+of such tasks increases, the CPU utilization tends to 100\%. 
 
   </div>
 </div>
