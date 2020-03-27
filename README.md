@@ -32,6 +32,8 @@ $ cd web
 $ bundle exec jekyll serve
 ```
 
+Open a Web browser and navigate to http://localhost:4000
+
 ### Running with Docker
 
 Dependencies:
