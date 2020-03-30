@@ -163,6 +163,36 @@ html, body {
   color:black;
 }
 
+.search-bar ul {
+  list-style-type: none;
+  margin-left: -25px;
+}
+
 .term {
-  color: white !important;
+  color: $main !important;
+}
+
+.accordion-head {
+  background-color: white !important;
+  color: $main !important;
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+}
+
+.accordion-head .plusminus {
+  float: right;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.accordion-body-hide {
+  display: none !important;
+}
+
+.accordion-body-show {
+  display: block !important;
 }
