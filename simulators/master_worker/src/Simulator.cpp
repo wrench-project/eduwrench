@@ -70,14 +70,33 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"master\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"worker_one\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"worker_zero\" speed=\"100Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"worker_zero_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"worker_two\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"worker_one\" speed=\"100Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"worker_one_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
+                      "       </host>\n"
+                      "       <host id=\"worker_two\" speed=\"100Gf\" core=\"1\">\n"
+                      "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"worker_two_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
                       "       <route src=\"the_host\" dst=\"the_host\">"
@@ -163,13 +182,42 @@ int main(int argc, char** argv) {
     generatePlatform(platform_file_path);
     simulation.instantiatePlatform(platform_file_path);
 
+    const std::string MASTER("master");
+    const std::string WORKER_ZERO("worker_zero");
+    const std::string WORKER_ONE("worker_one");
+    const std::string WORKER_TWO("worker_two");
 
-    const std::string THE_HOST("the_host");
+    ///TODO change compute services to vector
+    auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}));
 
-    auto compute_service = simulation.add(
+
+
+    auto compute_service_zero = simulation.add(
             new wrench::BareMetalComputeService(
-                    THE_HOST,
-                    {{THE_HOST, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    WORKER_ZERO,
+                    {{WORKER_ZERO, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    "",
+                    {
+                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
+                    },
+                    {}
+            )
+    );
+    auto compute_service_one = simulation.add(
+            new wrench::BareMetalComputeService(
+                    WORKER_ONE,
+                    {{WORKER_ONE, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    "",
+                    {
+                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
+                    },
+                    {}
+            )
+    );
+    auto compute_service_two = simulation.add(
+            new wrench::BareMetalComputeService(
+                    WORKER_TWO,
+                    {{WORKER_TWO, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
                             {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
@@ -180,16 +228,15 @@ int main(int argc, char** argv) {
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler()), compute_service, THE_HOST
+            new wrench::ActivityScheduler()), compute_service_zero, compute_service_one, compute_service_two, MASTER
     ));
 
     wms->addWorkflow(&workflow);
 
     simulation.launch();
 
-    //simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", true, true, true, false, false);
-    simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
-    //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", true, true, true, false, false);
+
 
     return 0;
 }

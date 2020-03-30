@@ -14,15 +14,17 @@ namespace wrench {
      * @param hostname
      */
     ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::shared_ptr<ComputeService> &compute_services,
+                             const std::shared_ptr<ComputeService> &compute_service_zero,
+                             const std::shared_ptr<ComputeService> &compute_service_one,
+                             const std::shared_ptr<ComputeService> &compute_service_two,
                              const std::string &hostname) : WMS (
                                      std::move(standard_job_scheduler),
                                      nullptr,
-                                     {compute_services},
+                                     {compute_service_zero, compute_service_one, compute_service_two},
                                      {},
                                      {}, nullptr,
                                      hostname,
-                                     "multicore"
+                                     "master_worker"
                                      ) {}
 
     /**
@@ -44,7 +46,7 @@ namespace wrench {
             // Get the ready tasks and SORT them by taskID
             std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
 
-            // Get the available compute services, in this case only one
+            // Get the available compute services
             const auto compute_services = this->getAvailableComputeServices<ComputeService>();
 
             // Run ready tasks with defined scheduler implementation
