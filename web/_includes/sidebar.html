@@ -31,6 +31,19 @@
     <a class="sidebar-nav-item active" href=" {{ site.baseurl }}/glossary">Glossary</a>
   </nav>
 
+  <div class="search-bar mt-3">
+    <input type="text" id="searchInput" class="mb-1" onkeyup="searchTerm()" placeholder="Search for glossary..">
+    <ul id="wordList" class="invisible">
+      {% assign glossary_items = site.data.glossary | sort:"term" %}
+      {% for word in glossary_items %}
+      <li class="m-2 pr-1 pt-1"><a href="{{ site.baseurl }}/glossary/#{{ word.term | url_encode }}" class="term">
+        <h5>{{ word.term | capitalize}}</h5>
+        <p>{{ word.description | capitalize}}</p>
+      </a></li>
+      {% endfor %}
+    </ul>
+  </div>
+
   <div class="sidebar-item">
     <p>
       &copy; {{ site.time | date: '%Y' }}. All rights reserved.

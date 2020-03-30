@@ -13,6 +13,7 @@ permalink: /glossary/
     {% assign glossary_items = site.data.glossary | sort:"term" %}
     {% for word in glossary_items %}
     <div class="word m-5 p-4">
+      <a name="{{ word.term | url_encode }}"></a>
       <h3>{{ word.term | capitalize}}</h3>
       <h5>{{ word.description | capitalize}}</h5>
     </div>
