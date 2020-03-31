@@ -21,6 +21,9 @@
  *
  * @throws std::invalid_argument
  */
+
+class ComputeService;
+
 void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,double,double>> task_list) {
 
     if (workflow == nullptr) {
@@ -37,7 +40,7 @@ void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,
     const unsigned long    MAX_CORES = 1;
     const double PARALLEL_EFFICIENCY = 1.0;
     const double                  MB = 1000.0 * 1000.0;
-    const int                TASK_ID = 0;
+    int                TASK_ID = 0;
 
     for (auto const &task : task_list) {
         auto current_task = workflow->addTask("task"+std::to_string(TASK_ID), std::get<1>(task), MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
@@ -220,10 +223,8 @@ int main(int argc, char** argv) {
             )
     );
 
-    std::set<auto> compute_services;
-    compute_services.push_back(compute_service_zero);
-    compute_services.push_back(compute_service_one);
-    compute_services.push_back(compute_service_two);
+    std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
+    compute_services.insert({compute_service_zero, compute_service_one, compute_service_two});
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
