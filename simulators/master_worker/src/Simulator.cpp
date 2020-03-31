@@ -21,22 +21,14 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop, int task_ram) {
+void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,double,double>> task_list) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
     }
 
-    if (num_tasks < 1) {
+    if (task_list.size() < 1) {
         throw std::invalid_argument("generateWorkflow(): number of tasks must be at least 1");
-    }
-
-    if (task_gflop < 1) {
-        throw std::invalid_argument("generateWorkflow(): task GFlop must be at least 1");
-    }
-
-    if (task_ram < 0) {
-        throw std::invalid_argument("generateWorkflow(): task GB must be at least 0");
     }
 
     // WorkflowTask specifications
@@ -44,12 +36,14 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
     const double PARALLEL_EFFICIENCY = 1.0;
-    const double                  GB = 1000.0 * 1000.0 * 1000.0;
+    const double                  MB = 1000.0 * 1000.0;
+    const int                TASK_ID = 0;
 
-    // create the tasks
-    for (int i = 0; i < num_tasks; ++i) {
-        std::string task_id("task" + std::to_string(i));
-        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, task_ram * GB);
+    for (auto const &task : task_list) {
+        auto current_task = workflow->addTask("task"+std::to_string(TASK_ID), std::get<1>(task), MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
+        current_task->addInputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.in", std::get<0>(task) * MB));
+        current_task->addOutputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.out", std::get<2>(task) * MB));
+        TASK_ID++;
     }
 }
 
@@ -121,61 +115,64 @@ int main(int argc, char** argv) {
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
 
-    const int MAX_CORES         = 1000;
-    int NUM_CORES;
-    int NUM_TASKS;
-    int TASK_GFLOP;
-    int TASK_MEMORY;
+    const int MAX_NUM_TASKS = 100;
+    const int MAX_TASK_INPUT = 1000;
+    const int MAX_TASK_FLOP = 1000;
+    const int MAX_TASK_OUTPUT = 1000;
+
+    std::vector<std::tuple<double, double, double>> tasks;
 
     try {
-
-        if (argc != 5) {
+        if (argc < 4) {
             throw std::invalid_argument("bad args");
         }
 
-        NUM_CORES = std::stoi(std::string(argv[1]));
-
-        if (NUM_CORES < 1 || NUM_CORES > MAX_CORES) {
-            std::cerr << "Invalid number cores. Enter a value in the range [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
-            throw std::invalid_argument("invalid number of cores");
+        if ((argc-1)%3 != 0) {
+            throw std::invalid_argument("Missing task specifications. Each task must have an input, flops and output specified.");
         }
 
-        NUM_TASKS = std::stoi(std::string(argv[2]));
-
-        if (NUM_TASKS < 1) {
-            std::cerr << "Invalid number tasks. Enter a value greater than 1" << std::endl;
-            throw std::invalid_argument("invalid number of tasks");
+        if ((argc - 1)/3 > MAX_NUM_TASKS) {
+            std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
+            throw std::invalid_argument("invalid number of files");
         }
 
-        TASK_GFLOP = std::stoi(std::string(argv[3]));
+        for (int i = 1; i < argc; i+=3) {
+            double input = std::stof(std::string(argv[i]));
+            double flops = std::stof(std::string(argv[i+1]));
+            double output = std::stof(std::string(argv[i+2]));
 
-        if (TASK_GFLOP < 1) {
-            std::cerr << "Invalid task gflop. Enter a value greater than 1" << std::endl;
-            throw std::invalid_argument("invalid task gflop");
+            if ((input < 1) || (input > MAX_TASK_INPUT)) {
+                std::cerr << "Invalid task input. Enter a task input size in the range [1, " + std::to_string(MAX_TASK_INPUT) +
+                             "] MB" << std::endl;
+                throw std::invalid_argument("invalid task input");
+            } else if ((flops < 1) || (flops > MAX_TASK_FLOP)) {
+                std::cerr << "Invalid task flops. Enter task flops in the range [1, " + std::to_string(MAX_TASK_FLOP) +
+                             "] flops" << std::endl;
+                throw std::invalid_argument("invalid task flops");
+            } else if ((output < 1) || (output > MAX_TASK_OUTPUT)) {
+                std::cerr << "Invalid task output. Enter a task output size in the range [1, " + std::to_string(MAX_TASK_OUTPUT) +
+                             "] MB" << std::endl;
+                throw std::invalid_argument("invalid task output");
+            } else {
+                tasks.push_back(std::make_tuple(input, flops, output));
+            }
         }
 
-        TASK_MEMORY = std::stoi(std::string(argv[4]));
-
-        if (TASK_MEMORY < 0) {
-            std::cerr << "Invalid task memory. Enter a value greater than 0" << std::endl;
-            throw std::invalid_argument("invalid task gflop");
-        }
-
-
-    } catch(std::invalid_argument &e) {
-        std::cerr << "Usage: " << argv[0] << " <num_cores> <num_tasks> <task_gflop> <task_ram>" << std::endl;
-        std::cerr << "   num_cores: number of cores [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
-        std::cerr << "   num_tasks: number of tasks (> 0)" << std::endl;
-        std::cerr << "   task_gflop: task GFlop (> 0)" << std::endl;
-        std::cerr << "   task_ram: task GB (>= 0)" << std::endl;
-        std::cerr << "" << std::endl;
-        std::cerr << "   (Core speed is always 100GFlop/sec, Host RAM capacity is always 32 GB)" << std::endl;
+    } catch (std::invalid_argument &e) {
+        std::cerr << "Usage: " << std::string(argv[0]) << " <task input> <task flops> <task output> [<task input> <task flops> <task outpit>]*" << std::endl;
+        std::cerr << "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
+                     std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
+        std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
+                     std::to_string(MAX_TASK_FLOP) + "] flops" << std::endl;
+        std::cerr << "    task output: the amount of data that must be sent back from worker to master after completion in range of [1, " +
+                     std::to_string(MAX_TASK_OUTPUT) + "] MB" << std::endl;
+        std::cerr << "    (at most " + std::to_string(MAX_NUM_TASKS) + " tasks can be specified)" << std::endl;
         return 1;
     }
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, NUM_TASKS, TASK_GFLOP, TASK_MEMORY);
+    generateWorkflow(&workflow, tasks);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
@@ -187,15 +184,12 @@ int main(int argc, char** argv) {
     const std::string WORKER_ONE("worker_one");
     const std::string WORKER_TWO("worker_two");
 
-    ///TODO change compute services to vector
     auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}));
-
-
 
     auto compute_service_zero = simulation.add(
             new wrench::BareMetalComputeService(
                     WORKER_ZERO,
-                    {{WORKER_ZERO, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    {{WORKER_ZERO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
                             {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
@@ -206,7 +200,7 @@ int main(int argc, char** argv) {
     auto compute_service_one = simulation.add(
             new wrench::BareMetalComputeService(
                     WORKER_ONE,
-                    {{WORKER_ONE, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    {{WORKER_ONE, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
                             {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
@@ -217,7 +211,7 @@ int main(int argc, char** argv) {
     auto compute_service_two = simulation.add(
             new wrench::BareMetalComputeService(
                     WORKER_TWO,
-                    {{WORKER_TWO, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
+                    {{WORKER_TWO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
                             {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
@@ -226,9 +220,14 @@ int main(int argc, char** argv) {
             )
     );
 
+    std::set<auto> compute_services;
+    compute_services.push_back(compute_service_zero);
+    compute_services.push_back(compute_service_one);
+    compute_services.push_back(compute_service_two);
+
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler()), compute_service_zero, compute_service_one, compute_service_two, MASTER
+            new wrench::ActivityScheduler()), compute_services, MASTER
     ));
 
     wms->addWorkflow(&workflow);

@@ -14,13 +14,11 @@ namespace wrench {
      * @param hostname
      */
     ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::shared_ptr<ComputeService> &compute_service_zero,
-                             const std::shared_ptr<ComputeService> &compute_service_one,
-                             const std::shared_ptr<ComputeService> &compute_service_two,
+                             const std::set<std::shared_ptr<ComputeService>> compute_services,
                              const std::string &hostname) : WMS (
                                      std::move(standard_job_scheduler),
                                      nullptr,
-                                     {compute_service_zero, compute_service_one, compute_service_two},
+                                     compute_services,
                                      {},
                                      {}, nullptr,
                                      hostname,
