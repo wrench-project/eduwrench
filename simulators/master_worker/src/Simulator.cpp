@@ -96,8 +96,16 @@ void generatePlatform(std::string platform_file_path) {
                       "           </disk>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"the_host\" dst=\"the_host\">"
+                      "       <link id=\"link1\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
+                      "       <link id=\"link2\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
+                      "       <route src=\"master\" dst=\"worker_zero\">"
                       "           <link_ctn id=\"link\"/>"
+                      "       </route>"
+                      "       <route src=\"master\" dst=\"worker_one\">"
+                      "           <link_ctn id=\"link1\"/>"
+                      "       </route>"
+                      "       <route src=\"master\" dst=\"worker_two\">"
+                      "           <link_ctn id=\"link2\"/>"
                       "       </route>"
                       "   </zone>\n"
                       "</platform>\n";
@@ -120,7 +128,7 @@ int main(int argc, char** argv) {
 
     const int MAX_NUM_TASKS = 100;
     const int MAX_TASK_INPUT = 1000;
-    const int MAX_TASK_FLOP = 1000;
+    const double MAX_TASK_FLOP = 1000000000000;
     const int MAX_TASK_OUTPUT = 1000;
 
     std::vector<std::tuple<double, double, double>> tasks;
@@ -228,15 +236,21 @@ int main(int argc, char** argv) {
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler()), compute_services, MASTER
+            new wrench::ActivityScheduler(master_storage_service)), compute_services, master_storage_service, MASTER
     ));
+
+    // file registry service on storage_db_edu
+    simulation.add(new wrench::FileRegistryService(MASTER));
+
+    // stage the input files
+    for (auto file : workflow.getInputFiles()) {
+        simulation.stageFile(file.second, master_storage_service);
+    }
 
     wms->addWorkflow(&workflow);
 
     simulation.launch();
 
     simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", true, true, true, false, false);
-
-
     return 0;
 }

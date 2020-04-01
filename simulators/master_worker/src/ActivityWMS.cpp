@@ -15,11 +15,12 @@ namespace wrench {
      */
     ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
                              const std::set<std::shared_ptr<ComputeService>> compute_services,
+                             const std::set<std::shared_ptr<StorageService>> &storage_services,
                              const std::string &hostname) : WMS (
                                      std::move(standard_job_scheduler),
                                      nullptr,
                                      compute_services,
-                                     {},
+                                     storage_services,
                                      {}, nullptr,
                                      hostname,
                                      "master_worker"
@@ -41,7 +42,6 @@ namespace wrench {
         this->job_manager = this->createJobManager();
 
         while (true) {
-            // Get the ready tasks and SORT them by taskID
             std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
 
             // Get the available compute services

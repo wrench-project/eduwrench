@@ -6,11 +6,21 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms_scheduler, "Log category for Simple WMS 
 
 namespace wrench {
 
+
     /**
-     * @brief Constructor
-     * @param storage_services: a map of hostname key to StorageService pointer
-     */
-    ActivityScheduler::ActivityScheduler() : StandardJobScheduler() {
+    * @brief A struct representing a "Compute Node"
+    */
+    typedef struct ComputeResource {
+        std::string hostname;
+        unsigned long num_idle_cores;
+        double available_ram;
+    } ComputeResource;
+
+    /**
+   * @brief Constructor
+   * @param storage_services: a map of hostname key to StorageService pointer
+   */
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_services) : StandardJobScheduler(), storage_services(storage_services) {
 
     }
 
@@ -20,23 +30,53 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
 
+        auto idle_core_counts = compute_service->getPerHostNumIdleCores();
+        auto ram_capacities = compute_service->getMemoryCapacity();
 
-        auto idle_core_count = compute_service->getPerHostNumIdleCores()["the_host"];
-        auto ram_capacity = compute_service->getPerHostAvailableMemoryCapacity()["the_host"];
 
-        for (auto const &ready_task : ready_tasks) {
-            auto task_memory = ready_task->getMemoryRequirement();
-            if (idle_core_count == 0) {
-                break;
+        // combining core counts and ram capacities together
+        std::vector<ComputeResource> available_resources;
+        for (const auto &host : idle_core_counts) {
+            if (host.second > 0) {
+                available_resources.push_back({host.first,
+                                               host.second,
+                                               ram_capacities.at(host.first)});
             }
-            if (ram_capacity < task_memory) {
-                break;
-            }
-            auto job = this->getJobManager()->createStandardJob(ready_task, {});
-            this->getJobManager()->submitJob(job, compute_service, {});
-            idle_core_count--;
-            ram_capacity = ram_capacity - task_memory;
         }
+
+        // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
+        std::vector<WorkflowTask *> tasks_to_submit;
+        std::map<std::string, std::string> service_specific_args;
+        for (const auto &task : ready_tasks) {
+            for (auto &resource : available_resources) {
+                if (task->getMaxNumCores() <= resource.num_idle_cores && task->getMemoryRequirement() <= resource.available_ram) {
+                    tasks_to_submit.push_back(task);
+                    service_specific_args[task->getID()] = resource.hostname + ":" + std::to_string(task->getMaxNumCores());
+
+                    resource.num_idle_cores -= task->getMaxNumCores();
+                    resource.available_ram -= task->getMemoryRequirement();
+                    break;
+                }
+            }
+        }
+
+        // specify file locations for tasks that will be submitted
+        std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
+        for (const auto &task : tasks_to_submit) {
+
+            bool taskHasChildren = (task->getNumberOfChildren() != 0);
+
+            for (const auto &file : task->getInputFiles()) {
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_services)));
+            }
+
+            for (const auto &file: task->getOutputFiles()) {
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_services)));
+            }
+        }
+
+        WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
+        this->getJobManager()->submitJob(job, compute_service, service_specific_args);
 
     }
 }
