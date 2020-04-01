@@ -34,13 +34,15 @@
 
   <div class="search-bar mt-3">
     <input type="text" id="searchInput" class="mb-1" onkeyup="searchTerm()" placeholder="Search for glossary..">
-    <ul id="wordList" class="invisible">
+    <ul id="wordList" class="">
       {% assign glossary_items = site.data.glossary | sort:"term" %}
       {% for word in glossary_items %}
       <li class="m-2 pt-2 pb-2">
-        <div class="accordion-head pt-2 pb-2 mr-2"><h4 class="term">{{ word.term | capitalize}}<span class="plusminus pr-2">+</span></h4> </div>
-        <div class="accordion-body mt-2 accordion-body-hide">
-          <h5>{{ word.description | capitalize}}</h5>
+        <div class="termBox mr-4 p-3">
+          <div class="accordion-head pt-2 pb-2 mr-2"><h4 class="term">{{ word.term | capitalize}}<span class="plusminus pr-2">+</span></h4> </div>
+          <div class="accordion-body mt-2">
+            <p>{{ word.description | capitalize}}</p>
+          </div>
         </div>
       </li>
       {% endfor %}

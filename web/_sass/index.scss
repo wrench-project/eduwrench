@@ -173,7 +173,6 @@ html, body {
 }
 
 .accordion-head {
-  background-color: white !important;
   color: $main !important;
   cursor: pointer;
   font-weight: bold;
@@ -195,4 +194,17 @@ html, body {
 
 .accordion-body-show {
   display: block !important;
+}
+
+.termBox {
+  background-color: $light-background;
+  letter-spacing: 1.5px;
+  border: 1px solid #eee;
+  color: black !important;
+  text-align: left !important;
+  font-size: 13px;
+}
+
+#sidebar {
+  width: 200px;
 }
