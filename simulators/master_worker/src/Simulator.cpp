@@ -195,7 +195,9 @@ int main(int argc, char** argv) {
     const std::string WORKER_ONE("worker_one");
     const std::string WORKER_TWO("worker_two");
 
+    std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}));
+    storage_services.insert(master_storage_service);
 
     auto compute_service_zero = simulation.add(
             new wrench::BareMetalComputeService(
@@ -236,7 +238,10 @@ int main(int argc, char** argv) {
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(master_storage_service)), compute_services, master_storage_service, MASTER
+            new wrench::ActivityScheduler(master_storage_service)),
+                    compute_services,
+                    storage_services,
+                    MASTER
     ));
 
     // file registry service on storage_db_edu
@@ -251,6 +256,6 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", true, true, true, false, false);
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, true, false, false, false);
     return 0;
 }

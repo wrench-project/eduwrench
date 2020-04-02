@@ -20,7 +20,7 @@ namespace wrench {
    * @brief Constructor
    * @param storage_services: a map of hostname key to StorageService pointer
    */
-    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_services) : StandardJobScheduler(), storage_services(storage_services) {
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service) : StandardJobScheduler(), storage_service(storage_service) {
 
     }
 
@@ -67,11 +67,11 @@ namespace wrench {
             bool taskHasChildren = (task->getNumberOfChildren() != 0);
 
             for (const auto &file : task->getInputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_services)));
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
 
             for (const auto &file: task->getOutputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_services)));
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
         }
 
