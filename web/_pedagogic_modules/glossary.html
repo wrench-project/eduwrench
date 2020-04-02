@@ -5,18 +5,17 @@ permalink: /glossary/
 ---
 
 <div class="glossary_container pb-4">
-  <div class="topBar pt-3">
-<!--    <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="glossary_logo">-->
-    <h2 class="mx-auto">eduWRENCH Glossary</h2>
-  </div>
-  <div class="dict">
-    {% assign glossary_items = site.data.glossary | sort:"term" %}
-    {% for word in glossary_items %}
-    <div class="word m-5 p-4">
-      <a name="{{ word.term | url_encode }}"></a>
-      <h3>{{ word.term | capitalize}}</h3>
-      <h5>{{ word.description | capitalize}}</h5>
+    <div class="topBar pt-3">
+        <h2 class="mx-auto">Glossary</h2>
     </div>
-    {% endfor %}
-  </div>
+    <div class="dict">
+        {% assign glossary_items = site.data.glossary | sort:"term" %}
+        {% for word in glossary_items %}
+        <div class="word m-5 p-4">
+            <a name="{{ word.term | url_encode }}"></a>
+            <h3>{{ word.term | capitalize}}</h3>
+            <h5>{{ word.description | capitalize}}</h5>
+        </div>
+        {% endfor %}
+    </div>
 </div>

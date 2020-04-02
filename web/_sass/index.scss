@@ -155,15 +155,72 @@ html, body {
 // sidebar search section
 .search-bar {
   text-align: center;
+  position: relative;
+  padding: 0;
+  margin: auto;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  width: 90%;
 }
 
-.search-bar input {
-  width: 80%;
-  height: 30px !important;
-  color:black;
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #FFFAEA;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #FFF;
+  padding: 10px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: transparent;
+  }
+
+  &:placeholder-shown ~ .form__label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 1em;
+  }
 }
 
-.search-bar ul {
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #FFFAEA;
+}
+
+.form__field:focus {
+  ~ .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #fff;
+    font-weight: 700;
+  }
+
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #fff, #FFFAEA);
+  border-image-slice: 1;
+}
+
+/* reset input */
+.form__field {
+  &:required, &:invalid {
+    box-shadow: none;
+  }
+}
+
+.terms ul {
   list-style-type: none;
   margin-left: -25px;
 }
@@ -205,6 +262,6 @@ html, body {
   font-size: 13px;
 }
 
-#sidebar {
-  width: 200px;
+.sidebar {
+  width: 20rem !important;
 }

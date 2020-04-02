@@ -203,6 +203,7 @@ footer {
   border-top: 1px solid #eee;
   text-align: center;
   padding: 40px;
+  background-color: #fff;
 }
 
 footer .copyright {
@@ -253,4 +254,8 @@ table th, table td {
 
 .segment h3 {
   margin-top: 2em;
+}
+
+.sidebar-item h1 {
+  color: rgba(255,255,255,.6);
 }
