@@ -11,3 +11,6 @@ web/vendor/
 # Simulators
 simulators/**/*_simulator
 simulators/**/*_simulator_debug
+
+# JSON output
+**/workflow_data.json

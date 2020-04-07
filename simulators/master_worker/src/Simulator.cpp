@@ -127,9 +127,9 @@ int main(int argc, char** argv) {
     simulation.init(&argc, argv);
 
     const int MAX_NUM_TASKS = 100;
-    const int MAX_TASK_INPUT = 1000;
+    const int MAX_TASK_INPUT = 1000000;
     const double MAX_TASK_FLOP = 1000000000000;
-    const int MAX_TASK_OUTPUT = 1000;
+    const int MAX_TASK_OUTPUT = 1000000;
 
     std::vector<std::tuple<double, double, double>> tasks;
 

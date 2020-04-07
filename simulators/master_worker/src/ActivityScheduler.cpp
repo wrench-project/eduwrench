@@ -16,14 +16,67 @@ namespace wrench {
         double available_ram;
     } ComputeResource;
 
+    typedef struct TaskInformation {
+        WorkflowTask *task;
+        double flops;
+        double bytes;
+        double ratio;
+    } TaskInformation;
+
+
+    bool compareFlops(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.flops < b.flops;
+    }
+    bool compareFlopsDesc(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.flops > b.flops;
+    }
+    bool compareBytes(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.bytes < b.bytes;
+    }
+    bool compareBytesDesc(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.bytes > b.bytes;
+    }
+    bool compareRatio(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.ratio < b.ratio;
+    }
+    bool compareRatioDesc(const TaskInformation &a, const TaskInformation &b)
+    {
+        return a.ratio > b.ratio;
+    }
+
+
     /**
    * @brief Constructor
    * @param storage_services: a map of hostname key to StorageService pointer
+   * @param task_selection - selection for how to pick task
+        *  - 0 random (default)
+        *  - 1 highest flop
+        *  - 2 lowest flop
+        *  - 3 highest bytes
+        *  - 4 lowest bytes
+        *  - 5 highest flops/bytes
+        *  - 6 lowest flops/bytes
+   * @param compute_selection - selection for how to pick worker
+        *  - 0 random (default)
+        *  - 1 fastest worker
+        *  - 2 best connected worker
+        *  - 3 largest compute time/io time ratio
+        *  - 4 earliest completion
    */
-    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service) : StandardJobScheduler(), storage_service(storage_service) {
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service, int task_selection, int compute_selection) :
+    StandardJobScheduler(), storage_service(storage_service), task_selection(task_selection), compute_selection(compute_selection) {
 
     }
-
+    /**
+     *
+     * @param compute_services - set of available compute services
+     * @param ready_tasks - vector of tasks ready to be run
+     */
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                                           const std::vector<WorkflowTask *> &ready_tasks) {
 
@@ -32,6 +85,86 @@ namespace wrench {
 
         auto idle_core_counts = compute_service->getPerHostNumIdleCores();
         auto ram_capacities = compute_service->getMemoryCapacity();
+
+
+
+        /**
+         *
+         * Functionality to be added here:
+         *  Evaluate ready tasks to sort by:
+         * @param task_selection - selection for how to pick task
+        *  - 0 random (default)
+        *  - 1 highest flop
+        *  - 2 lowest flop
+        *  - 3 highest bytes
+        *  - 4 lowest bytes
+        *  - 5 highest flops/bytes
+        *  - 6 lowest flops/bytes
+        * @param compute_selection - selection for how to pick worker
+        *  - 0 random (default)
+        *  - 1 fastest worker
+        *  - 2 best connected worker
+        *  - 3 largest compute time/io time ratio
+        *  - 4 earliest completion
+         */
+
+        /**
+         *
+         * Functionality to be added here:
+         *  Evaluate compute services to pick by:
+         *      - random
+         *      - fastest worker
+         *      - best connected worker
+         *      - largest compute time/io time ratio
+         *      - worker that will complete the task earliest
+         *
+         */
+
+        ///Creating a vector of structs for all ready tasks and their relevant information for scheduling
+        std::vector<TaskInformation> task_information;
+        for (const auto &task : ready_tasks) {
+            double total_bytes = 0;
+            if(task->getInputFiles().size() > 0 || task->getOutputFiles().size() > 0){
+                for (const auto &file : task->getInputFiles()) {
+                    total_bytes+=file->getSize();
+                }
+                for (const auto &file : task->getOutputFiles()) {
+                    total_bytes+=file->getSize();
+                }
+            }
+            task_information.push_back({task,
+                                        task->getFlops(),
+                                        total_bytes,
+                                        ((task->getFlops())/total_bytes)});
+        }
+
+
+        //sorts tasks based on scheduling behavior specified.
+        switch (task_selection) {
+            case 0:
+                break;
+            case 1:
+                std::sort(task_information.begin(), task_information.end(), compareFlopsDesc); //highest flops first
+                break;
+            case 2:
+                std::sort(task_information.begin(), task_information.end(), compareFlops); //lowest flops first
+                break;
+            case 3:
+                std::sort(task_information.begin(), task_information.end(), compareBytesDesc);
+                break;
+            case 4:
+                std::sort(task_information.begin(), task_information.end(), compareBytes);
+                break;
+            case 5:
+                std::sort(task_information.begin(), task_information.end(), compareRatioDesc);
+                break;
+            case 6:
+                std::sort(task_information.begin(), task_information.end(), compareRatio);
+                break;
+        }
+
+
+
 
 
         // combining core counts and ram capacities together
@@ -47,14 +180,14 @@ namespace wrench {
         // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
         std::vector<WorkflowTask *> tasks_to_submit;
         std::map<std::string, std::string> service_specific_args;
-        for (const auto &task : ready_tasks) {
+        for (auto &task_info : task_information) {
             for (auto &resource : available_resources) {
-                if (task->getMaxNumCores() <= resource.num_idle_cores && task->getMemoryRequirement() <= resource.available_ram) {
-                    tasks_to_submit.push_back(task);
-                    service_specific_args[task->getID()] = resource.hostname + ":" + std::to_string(task->getMaxNumCores());
+                if (task_info.task->getMaxNumCores() <= resource.num_idle_cores && task_info.task->getMemoryRequirement() <= resource.available_ram) {
+                    tasks_to_submit.push_back(task_info.task);
+                    service_specific_args[task_info.task->getID()] = resource.hostname + ":" + std::to_string(task_info.task->getMaxNumCores());
 
-                    resource.num_idle_cores -= task->getMaxNumCores();
-                    resource.available_ram -= task->getMemoryRequirement();
+                    resource.num_idle_cores -= task_info.task->getMaxNumCores();
+                    resource.available_ram -= task_info.task->getMemoryRequirement();
                     break;
                 }
             }
