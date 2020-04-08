@@ -12,6 +12,8 @@ namespace wrench {
     */
     typedef struct ComputeResource {
         std::string hostname;
+        double flops;
+        //double connection;
         unsigned long num_idle_cores;
         double available_ram;
     } ComputeResource;
@@ -24,30 +26,32 @@ namespace wrench {
     } TaskInformation;
 
 
-    bool compareFlops(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareFlops (const TaskInformation &a, const TaskInformation &b) {
         return a.flops < b.flops;
     }
-    bool compareFlopsDesc(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareFlopsDesc (const TaskInformation &a, const TaskInformation &b) {
         return a.flops > b.flops;
     }
-    bool compareBytes(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareFlopsDescCompute (const ComputeResource &a, const ComputeResource &b) {
+        return a.flops > b.flops;
+    }
+    bool compareBytes (const TaskInformation &a, const TaskInformation &b) {
         return a.bytes < b.bytes;
     }
-    bool compareBytesDesc(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareBytesDesc (const TaskInformation &a, const TaskInformation &b) {
         return a.bytes > b.bytes;
     }
-    bool compareRatio(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareRatio (const TaskInformation &a, const TaskInformation &b) {
         return a.ratio < b.ratio;
     }
-    bool compareRatioDesc(const TaskInformation &a, const TaskInformation &b)
-    {
+    bool compareRatioDesc (const TaskInformation &a, const TaskInformation &b) {
         return a.ratio > b.ratio;
     }
+    /**
+    compareProximity (const ComputeResource &a, const ComputeResource &b) {
+        return a.connection < b.connection;
+    }
+     */
 
 
     /**
@@ -83,8 +87,6 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
 
-        auto idle_core_counts = compute_service->getPerHostNumIdleCores();
-        auto ram_capacities = compute_service->getMemoryCapacity();
 
 
 
@@ -142,6 +144,7 @@ namespace wrench {
         //sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
+                //TODO implement random
                 break;
             case 1:
                 std::sort(task_information.begin(), task_information.end(), compareFlopsDesc); //highest flops first
@@ -165,51 +168,86 @@ namespace wrench {
 
 
 
+        //TODO replace the compute_services vector with a vector that has struct including the metrics needed
+
+        for (const auto &compute : compute_services){
+            if (task_information.size()>0) {
+                auto idle_core_counts = compute->getPerHostNumIdleCores();
+                auto ram_capacities = compute->getMemoryCapacity();
+
+                // combining core counts and ram capacities together
+                std::vector <ComputeResource> available_resources;
+                for (const auto &host : idle_core_counts) {
+                    if (host.second > 0) {
+                        available_resources.push_back({host.first,
+                                                       ram_capacities.at(host.first),
+                                                              //(*proximity_service.begin()))->getHostPairDistance(std::make_pair("master", host.first)).first,
+                                                       host.second,
+                                                       ram_capacities.at(host.first)});
+                    }
+                }
+
+                switch (compute_selection) {
+                    case 0:
+                        //TODO implement random
+                        break;
+                    case 1:
+                        std::sort(available_resources.begin(), available_resources.end(), compareFlopsDescCompute);
+                        break;
+                    case 2:
+                        //TODO not implemented yet, need network proximity service?
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        break;
+                }
 
 
-        // combining core counts and ram capacities together
-        std::vector<ComputeResource> available_resources;
-        for (const auto &host : idle_core_counts) {
-            if (host.second > 0) {
-                available_resources.push_back({host.first,
-                                               host.second,
-                                               ram_capacities.at(host.first)});
-            }
-        }
 
-        // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
-        std::vector<WorkflowTask *> tasks_to_submit;
-        std::map<std::string, std::string> service_specific_args;
-        for (auto &task_info : task_information) {
-            for (auto &resource : available_resources) {
-                if (task_info.task->getMaxNumCores() <= resource.num_idle_cores && task_info.task->getMemoryRequirement() <= resource.available_ram) {
-                    tasks_to_submit.push_back(task_info.task);
-                    service_specific_args[task_info.task->getID()] = resource.hostname + ":" + std::to_string(task_info.task->getMaxNumCores());
 
-                    resource.num_idle_cores -= task_info.task->getMaxNumCores();
-                    resource.available_ram -= task_info.task->getMemoryRequirement();
-                    break;
+
+
+
+                // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
+                std::vector < WorkflowTask * > tasks_to_submit;
+                std::map <std::string, std::string> service_specific_args;
+                for (auto &task_info : task_information) {
+                    for (auto &resource : available_resources) {
+                        if (task_info.task->getMaxNumCores() <= resource.num_idle_cores &&
+                            task_info.task->getMemoryRequirement() <= resource.available_ram) {
+                            tasks_to_submit.push_back(task_info.task);
+                            service_specific_args[task_info.task->getID()] =
+                                    resource.hostname + ":" + std::to_string(task_info.task->getMaxNumCores());
+
+                            resource.num_idle_cores -= task_info.task->getMaxNumCores();
+                            resource.available_ram -= task_info.task->getMemoryRequirement();
+                            break;
+                        }
+                    }
+                }
+
+                // specify file locations for tasks that will be submitted
+                std::map < WorkflowFile * , std::shared_ptr < FileLocation >> file_locations;
+                for (const auto &task : tasks_to_submit) {
+
+                    bool taskHasChildren = (task->getNumberOfChildren() != 0);
+
+                    for (const auto &file : task->getInputFiles()) {
+                        file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                    }
+
+                    for (const auto &file: task->getOutputFiles()) {
+                        file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                    }
+                }
+
+                if (tasks_to_submit.size()>0) {
+                    WorkflowJob * job = (WorkflowJob * ) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
+                    this->getJobManager()->submitJob(job, compute, service_specific_args);
+                    task_information.erase(task_information.begin(), task_information.begin() + tasks_to_submit.size());
                 }
             }
         }
-
-        // specify file locations for tasks that will be submitted
-        std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
-        for (const auto &task : tasks_to_submit) {
-
-            bool taskHasChildren = (task->getNumberOfChildren() != 0);
-
-            for (const auto &file : task->getInputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
-            }
-
-            for (const auto &file: task->getOutputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
-            }
-        }
-
-        WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
-        this->getJobManager()->submitJob(job, compute_service, service_specific_args);
-
     }
 }

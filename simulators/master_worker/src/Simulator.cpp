@@ -233,6 +233,16 @@ int main(int argc, char** argv) {
             )
     );
 
+
+
+
+    /**
+    auto network_proximity_service = simulation.add(new wrench::NetworkProximityService(MASTER,
+            {MASTER,WORKER_ONE,WORKER_TWO,WORKER_ZERO},
+            {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD,"10"},
+             {wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD_MAX_NOISE,"0"}}));
+    */
+
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
     compute_services.insert({compute_service_zero, compute_service_one, compute_service_two});
 
