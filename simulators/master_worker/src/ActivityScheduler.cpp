@@ -12,11 +12,15 @@ namespace wrench {
     */
     typedef struct ComputeResource {
         std::string hostname;
-        double flops;
-        //double connection;
         unsigned long num_idle_cores;
         double available_ram;
     } ComputeResource;
+
+    typedef struct ComputeServiceMetadata {
+        std::shared_ptr<ComputeService> compute_service;
+        double flops;
+        double connection;
+    } ComputeServiceMetadata;
 
     typedef struct TaskInformation {
         WorkflowTask *task;
@@ -32,9 +36,6 @@ namespace wrench {
     bool compareFlopsDesc (const TaskInformation &a, const TaskInformation &b) {
         return a.flops > b.flops;
     }
-    bool compareFlopsDescCompute (const ComputeResource &a, const ComputeResource &b) {
-        return a.flops > b.flops;
-    }
     bool compareBytes (const TaskInformation &a, const TaskInformation &b) {
         return a.bytes < b.bytes;
     }
@@ -47,11 +48,15 @@ namespace wrench {
     bool compareRatioDesc (const TaskInformation &a, const TaskInformation &b) {
         return a.ratio > b.ratio;
     }
-    /**
-    compareProximity (const ComputeResource &a, const ComputeResource &b) {
-        return a.connection < b.connection;
+
+    bool compareFlopsDescCompute (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
+        return a.flops > b.flops;
     }
-     */
+    bool compareProximity (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
+        return a.connection > b.connection;
+    }
+
+
 
 
     /**
@@ -72,8 +77,15 @@ namespace wrench {
         *  - 3 largest compute time/io time ratio
         *  - 4 earliest completion
    */
-    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service, int task_selection, int compute_selection) :
-    StandardJobScheduler(), storage_service(storage_service), task_selection(task_selection), compute_selection(compute_selection) {
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service,
+            std::set<std::shared_ptr<NetworkProximityService>> network_proximity_service,
+            int task_selection,
+            int compute_selection) :
+                StandardJobScheduler(),
+                storage_service(storage_service),
+                network_proximity_service(network_proximity_service),
+                task_selection(task_selection),
+                compute_selection(compute_selection) {
 
     }
     /**
@@ -86,6 +98,7 @@ namespace wrench {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
+        auto network_proximity_services = *network_proximity_service.begin();
 
 
 
@@ -144,7 +157,7 @@ namespace wrench {
         //sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
-                //TODO implement random
+                std::random_shuffle(task_information.begin(), task_information.end());
                 break;
             case 1:
                 std::sort(task_information.begin(), task_information.end(), compareFlopsDesc); //highest flops first
@@ -166,47 +179,64 @@ namespace wrench {
                 break;
         }
 
+        std::vector<ComputeServiceMetadata> compute_service_information;
+        for (const auto &compute : compute_services) {
+            auto flop_map = compute->getCoreFlopRate();
+            double flops_tally = 0;
+
+            std::map<std::string, double>::iterator it = flop_map.begin();
+
+            while (it != flop_map.end()) {
+                flops_tally += it->second;
+                it++;
+            }
+
+            double connection = 0;
+            auto x = compute->getPerHostNumCores();
+            for (const auto &host : x) {
+                connection += (network_proximity_services->getHostPairDistance(std::make_pair("master", host.first))).first;
+            }
+
+            compute_service_information.push_back({compute,
+                                                   flops_tally,
+                                                   connection});
+
+        }
+
+        switch (compute_selection) {
+            case 0:
+                std::random_shuffle(compute_service_information.begin(), compute_service_information.end());
+                break;
+            case 1:
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsDescCompute);
+                break;
+            case 2:
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareProximity);
+                break;
+            case 3:
+                //TODO largest compute time/io time ratio
+                break;
+            case 4:
+                //TODO worker that will complete the task earliest
+                break;
+        }
 
 
-        //TODO replace the compute_services vector with a vector that has struct including the metrics needed
 
-        for (const auto &compute : compute_services){
+        for (const auto &compute : compute_service_information) {
             if (task_information.size()>0) {
-                auto idle_core_counts = compute->getPerHostNumIdleCores();
-                auto ram_capacities = compute->getMemoryCapacity();
+                auto idle_core_counts = compute.compute_service->getPerHostNumIdleCores();
+                auto ram_capacities = compute.compute_service->getMemoryCapacity();
 
                 // combining core counts and ram capacities together
                 std::vector <ComputeResource> available_resources;
                 for (const auto &host : idle_core_counts) {
                     if (host.second > 0) {
                         available_resources.push_back({host.first,
-                                                       ram_capacities.at(host.first),
-                                                              //(*proximity_service.begin()))->getHostPairDistance(std::make_pair("master", host.first)).first,
                                                        host.second,
                                                        ram_capacities.at(host.first)});
                     }
                 }
-
-                switch (compute_selection) {
-                    case 0:
-                        //TODO implement random
-                        break;
-                    case 1:
-                        std::sort(available_resources.begin(), available_resources.end(), compareFlopsDescCompute);
-                        break;
-                    case 2:
-                        //TODO not implemented yet, need network proximity service?
-                        break;
-                    case 3:
-                        break;
-                    case 4:
-                        break;
-                }
-
-
-
-
-
 
 
                 // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
@@ -244,7 +274,7 @@ namespace wrench {
 
                 if (tasks_to_submit.size()>0) {
                     WorkflowJob * job = (WorkflowJob * ) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
-                    this->getJobManager()->submitJob(job, compute, service_specific_args);
+                    this->getJobManager()->submitJob(job, compute.compute_service, service_specific_args);
                     task_information.erase(task_information.begin(), task_information.begin() + tasks_to_submit.size());
                 }
             }

@@ -74,14 +74,14 @@ void generatePlatform(std::string platform_file_path) {
                       "                            <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"worker_zero\" speed=\"100Gf\" core=\"1\">\n"
+                      "       <host id=\"worker_zero\" speed=\"500Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "           <disk id=\"worker_zero_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
                       "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                       "                            <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"worker_one\" speed=\"100Gf\" core=\"1\">\n"
+                      "       <host id=\"worker_one\" speed=\"1000Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "           <disk id=\"worker_one_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
                       "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -131,26 +131,73 @@ int main(int argc, char** argv) {
     const double MAX_TASK_FLOP = 1000000000000;
     const int MAX_TASK_OUTPUT = 1000000;
 
+    int task_scheduling_selection = 0;
+    bool task_scheduling_flag = false;
+    int compute_scheduling_selection = 0;
+    bool compute_scheduling_flag = false;
+
+    bool flag_already_removed_flag = false;
+
     std::vector<std::tuple<double, double, double>> tasks;
+
+    auto arguments = std::vector<std::string>(argv, argv+argc);
 
     try {
         if (argc < 4) {
             throw std::invalid_argument("bad args");
         }
+        int inc = 0;
+        while(inc < argc) {
+            if (std::string(argv[inc]).compare("--ts") == 0){
+                if (std::stof(std::string(argv[inc+1])) < 0 || std::stof(std::string(argv[inc+1])) > 6) {
+                    std::cerr << "invalid task_scheduling_selection" << std::endl;
+                    throw std::invalid_argument("invalid task_scheduling_selection");
+                }
 
-        if ((argc-1)%3 != 0) {
+                task_scheduling_selection = std::stof(std::string(argv[inc+1]));
+                task_scheduling_flag = true;
+
+                if (flag_already_removed_flag) {
+                    arguments.erase(arguments.begin()+inc-2, arguments.begin()+inc);
+                } else {
+                    arguments.erase(arguments.begin()+inc, arguments.begin()+inc+2);
+                    flag_already_removed_flag = true;
+                }
+                ++inc;
+            }
+            if (std::string(argv[inc]).compare("--cs") == 0 ){
+                if (std::stof(std::string(argv[inc+1])) < 0 || std::stof(std::string(argv[inc+1])) > 4) {
+                    std::cerr << "invalid compute_scheduling_selection" << std::endl;
+                    throw std::invalid_argument("invalid compute_scheduling_selection");
+                }
+                compute_scheduling_selection = std::stof(std::string(argv[inc+1]));
+                compute_scheduling_flag = true;
+                if (flag_already_removed_flag) {
+                    arguments.erase(arguments.begin()+inc-2, arguments.begin()+inc);
+                } else {
+                    arguments.erase(arguments.begin()+inc, arguments.begin()+inc+2);
+                    flag_already_removed_flag = true;
+                }
+                ++inc;
+            }
+            ++inc;
+        }
+
+
+        if ((argc-1-(task_scheduling_flag*2)-(compute_scheduling_flag*2))%3 != 0) {
+            std::cerr << "Missing task specifications. Each task must have an input, flops and output specified." << std::endl;
             throw std::invalid_argument("Missing task specifications. Each task must have an input, flops and output specified.");
         }
 
-        if ((argc - 1)/3 > MAX_NUM_TASKS) {
+        if ((argc-1-(task_scheduling_flag*2)-(compute_scheduling_flag*2))/3 > MAX_NUM_TASKS) {
             std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
             throw std::invalid_argument("invalid number of files");
         }
 
-        for (int i = 1; i < argc; i+=3) {
-            double input = std::stof(std::string(argv[i]));
-            double flops = std::stof(std::string(argv[i+1]));
-            double output = std::stof(std::string(argv[i+2]));
+        for (int i = 1; i < (argc-(task_scheduling_flag*2)-(compute_scheduling_flag*2)); i+=3) {
+            double input = std::stof(std::string(arguments[i]));
+            double flops = std::stof(std::string(arguments[i+1]));
+            double output = std::stof(std::string(arguments[i+2]));
 
             if ((input < 1) || (input > MAX_TASK_INPUT)) {
                 std::cerr << "Invalid task input. Enter a task input size in the range [1, " + std::to_string(MAX_TASK_INPUT) +
@@ -170,7 +217,7 @@ int main(int argc, char** argv) {
         }
 
     } catch (std::invalid_argument &e) {
-        std::cerr << "Usage: " << std::string(argv[0]) << " <task input> <task flops> <task output> [<task input> <task flops> <task outpit>]*" << std::endl;
+        std::cerr << "Usage: " << std::string(argv[0]) << " <task input> <task flops> <task output> [<task input> <task flops> <task output>]*" << std::endl;
         std::cerr << "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
                      std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
         std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
@@ -236,21 +283,22 @@ int main(int argc, char** argv) {
 
 
 
-    /**
+
     auto network_proximity_service = simulation.add(new wrench::NetworkProximityService(MASTER,
             {MASTER,WORKER_ONE,WORKER_TWO,WORKER_ZERO},
             {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD,"10"},
              {wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD_MAX_NOISE,"0"}}));
-    */
+
 
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
     compute_services.insert({compute_service_zero, compute_service_one, compute_service_two});
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(master_storage_service)),
+            new wrench::ActivityScheduler(master_storage_service, {network_proximity_service}, task_scheduling_selection, compute_scheduling_selection)),
                     compute_services,
                     storage_services,
+                    {network_proximity_service},
                     MASTER
     ));
 

@@ -16,12 +16,14 @@ namespace wrench {
     ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
                              const std::set<std::shared_ptr<ComputeService>> compute_services,
                              const std::set<std::shared_ptr<StorageService>> &storage_services,
+                             const std::set<std::shared_ptr<NetworkProximityService>> &network_proximity_services,
                              const std::string &hostname) : WMS (
                                      std::move(standard_job_scheduler),
                                      nullptr,
                                      compute_services,
                                      storage_services,
-                                     {}, nullptr,
+                                     network_proximity_services,
+                                     nullptr,
                                      hostname,
                                      "master_worker"
                                      ) {}
@@ -46,6 +48,7 @@ namespace wrench {
 
             // Get the available compute services
             const auto compute_services = this->getAvailableComputeServices<ComputeService>();
+            const auto network_proximity_services = this->getAvailableNetworkProximityServices();
 
             // Run ready tasks with defined scheduler implementation
             this->getStandardJobScheduler()->scheduleTasks(
