@@ -1,4 +1,6 @@
-
+#include <ctime>
+#include <random>
+#include <algorithm>
 #include "ActivityScheduler.h"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms_scheduler, "Log category for Simple WMS Scheduler");
@@ -52,7 +54,7 @@ namespace wrench {
     bool compareFlopsDescCompute (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
         return a.flops > b.flops;
     }
-    bool compareProximity (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
+    bool compareBandwidth (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
         return a.connection > b.connection;
     }
 
@@ -62,6 +64,7 @@ namespace wrench {
     /**
    * @brief Constructor
    * @param storage_services: a map of hostname key to StorageService pointer
+   * @param link_speed: a map of the link bandwidths specified by user (or defaults)
    * @param task_selection - selection for how to pick task
         *  - 0 random (default)
         *  - 1 highest flop
@@ -78,14 +81,16 @@ namespace wrench {
         *  - 4 earliest completion
    */
     ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service,
-            std::set<std::shared_ptr<NetworkProximityService>> network_proximity_service,
+            std::map<std::string, double> link_speed,
             int task_selection,
-            int compute_selection) :
+            int compute_selection,
+            long seed) :
                 StandardJobScheduler(),
                 storage_service(storage_service),
-                network_proximity_service(network_proximity_service),
+                link_speed(link_speed),
                 task_selection(task_selection),
-                compute_selection(compute_selection) {
+                compute_selection(compute_selection),
+                seed(seed) {
 
     }
     /**
@@ -98,42 +103,14 @@ namespace wrench {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
-        auto network_proximity_services = *network_proximity_service.begin();
 
-
-
-
-        /**
-         *
-         * Functionality to be added here:
-         *  Evaluate ready tasks to sort by:
-         * @param task_selection - selection for how to pick task
-        *  - 0 random (default)
-        *  - 1 highest flop
-        *  - 2 lowest flop
-        *  - 3 highest bytes
-        *  - 4 lowest bytes
-        *  - 5 highest flops/bytes
-        *  - 6 lowest flops/bytes
-        * @param compute_selection - selection for how to pick worker
-        *  - 0 random (default)
-        *  - 1 fastest worker
-        *  - 2 best connected worker
-        *  - 3 largest compute time/io time ratio
-        *  - 4 earliest completion
-         */
-
-        /**
-         *
-         * Functionality to be added here:
-         *  Evaluate compute services to pick by:
-         *      - random
-         *      - fastest worker
-         *      - best connected worker
-         *      - largest compute time/io time ratio
-         *      - worker that will complete the task earliest
-         *
-         */
+        std::random_device rd;
+        std::mt19937 randomizer;
+        if (seed != 0) {
+            mt19937 randomizer(static_cast<uint32_t>(seed));
+        } else {
+            mt19937 randomizer(rd());
+        }
 
         ///Creating a vector of structs for all ready tasks and their relevant information for scheduling
         std::vector<TaskInformation> task_information;
@@ -157,7 +134,7 @@ namespace wrench {
         //sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
-                std::random_shuffle(task_information.begin(), task_information.end());
+                std::shuffle(task_information.begin(), task_information.end(), randomizer);
                 break;
             case 1:
                 std::sort(task_information.begin(), task_information.end(), compareFlopsDesc); //highest flops first
@@ -194,7 +171,7 @@ namespace wrench {
             double connection = 0;
             auto x = compute->getPerHostNumCores();
             for (const auto &host : x) {
-                connection += (network_proximity_services->getHostPairDistance(std::make_pair("master", host.first))).first;
+                connection += link_speed[host.first];
             }
 
             compute_service_information.push_back({compute,
@@ -205,13 +182,13 @@ namespace wrench {
 
         switch (compute_selection) {
             case 0:
-                std::random_shuffle(compute_service_information.begin(), compute_service_information.end());
+                std::shuffle(compute_service_information.begin(), compute_service_information.end(), randomizer);
                 break;
             case 1:
                 std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsDescCompute);
                 break;
             case 2:
-                std::sort(compute_service_information.begin(), compute_service_information.end(), compareProximity);
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareBandwidth);
                 break;
             case 3:
                 //TODO largest compute time/io time ratio

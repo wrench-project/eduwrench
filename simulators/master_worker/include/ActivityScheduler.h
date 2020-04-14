@@ -13,16 +13,18 @@ namespace wrench {
                            const std::vector<WorkflowTask *> &ready_tasks) override;
 
         ActivityScheduler(std::shared_ptr<StorageService> storage_service,
-                std::set<std::shared_ptr<NetworkProximityService>> network_proximity_service,
-                int task_selection = 3,
-                int compute_selection = 1);
+                          std::map<std::string, double> link_speed,
+                          int task_selection = 0,
+                          int compute_selection = 0,
+                          long seed = 0);
 
 
     private:
         std::shared_ptr<StorageService> storage_service;
-        std::set<std::shared_ptr<NetworkProximityService>> network_proximity_service;
+        std::map<std::string, double> link_speed;
         int task_selection;
         int compute_selection;
+        long seed;
 
     };
 }
