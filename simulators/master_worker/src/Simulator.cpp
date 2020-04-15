@@ -138,6 +138,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
 
             pugi::xml_node previous_route;
             ///creating the workers specified by command line arguments.
+            ///Currently, only the flops and link speed to master are set.
             for (const auto &worker : workers) {
 
                 pugi::xml_node host = xml_doc.child("platform").child("zone").prepend_child("host");
@@ -147,6 +148,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                 pugi::xml_node host_prop = host.append_child("prop");
                 host_prop.append_attribute("id") = "ram";
                 host_prop.append_attribute("value") = "32GB";
+                /**
                 pugi::xml_node host_disk = host.append_child("disk");
                 host_disk.append_attribute("id") = (std::get<0>(worker)+"_disk").c_str();
                 host_disk.append_attribute("read_bw") = "50MBps";
@@ -157,6 +159,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                 pugi::xml_node host_disk_prop2 = host_disk.append_child("prop");
                 host_disk_prop2.append_attribute("id") = "mount";
                 host_disk_prop2.append_attribute("value") = "/";
+                */
 
                 pugi::xml_node route = xml_doc.child("platform").child("zone").append_child("route");
                 route.append_attribute("src") = "master";

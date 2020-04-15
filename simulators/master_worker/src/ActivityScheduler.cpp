@@ -18,25 +18,42 @@ namespace wrench {
         double available_ram;
     } ComputeResource;
 
+    /**
+     * @brief A struct to hold metrics for each compute service available.
+     */
     typedef struct ComputeServiceMetadata {
         std::shared_ptr<ComputeService> compute_service;
         double flops;
-        double connection;
+        double bandwidth; //in bytes
+        double flops_connection_ratio;
+        double time_estimate;
     } ComputeServiceMetadata;
 
+    /**
+     * @brief A struct to hold metrics for each ready task.
+     */
     typedef struct TaskInformation {
         WorkflowTask *task;
-        double flops;
+        double flop;
         double bytes;
         double ratio;
     } TaskInformation;
 
+    /**
+     * @brief A struct to hold all pieces of each job to be submitted.
+     */
+    typedef struct JobsAwaitingSubmission {
+        WorkflowJob *job;
+        std::shared_ptr<ComputeService> compute;
+        std::map<std::string, std::string> arguments;
+    } JobsAwaitingSubmission;
 
-    bool compareFlops (const TaskInformation &a, const TaskInformation &b) {
-        return a.flops < b.flops;
+
+    bool compareFlop (const TaskInformation &a, const TaskInformation &b) {
+        return a.flop < b.flop;
     }
-    bool compareFlopsDesc (const TaskInformation &a, const TaskInformation &b) {
-        return a.flops > b.flops;
+    bool compareFlopDesc (const TaskInformation &a, const TaskInformation &b) {
+        return a.flop > b.flop;
     }
     bool compareBytes (const TaskInformation &a, const TaskInformation &b) {
         return a.bytes < b.bytes;
@@ -55,10 +72,14 @@ namespace wrench {
         return a.flops > b.flops;
     }
     bool compareBandwidth (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
-        return a.connection > b.connection;
+        return a.bandwidth > b.bandwidth;
     }
-
-
+    bool compareFlopsConnectionRatio (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
+        return a.flops_connection_ratio > b.flops_connection_ratio;
+    }
+    bool compareTimeEstimate (const ComputeServiceMetadata &a, const ComputeServiceMetadata &b) {
+        return a.time_estimate < b.time_estimate;
+    }
 
 
     /**
@@ -71,8 +92,8 @@ namespace wrench {
         *  - 2 lowest flop
         *  - 3 highest bytes
         *  - 4 lowest bytes
-        *  - 5 highest flops/bytes
-        *  - 6 lowest flops/bytes
+        *  - 5 highest flop/bytes
+        *  - 6 lowest flop/bytes
    * @param compute_selection - selection for how to pick worker
         *  - 0 random (default)
         *  - 1 fastest worker
@@ -131,16 +152,16 @@ namespace wrench {
         }
 
 
-        //sorts tasks based on scheduling behavior specified.
+        ///sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
                 std::shuffle(task_information.begin(), task_information.end(), randomizer);
                 break;
             case 1:
-                std::sort(task_information.begin(), task_information.end(), compareFlopsDesc); //highest flops first
+                std::sort(task_information.begin(), task_information.end(), compareFlopDesc); //highest flop first
                 break;
             case 2:
-                std::sort(task_information.begin(), task_information.end(), compareFlops); //lowest flops first
+                std::sort(task_information.begin(), task_information.end(), compareFlop); //lowest flop first
                 break;
             case 3:
                 std::sort(task_information.begin(), task_information.end(), compareBytesDesc);
@@ -176,7 +197,9 @@ namespace wrench {
 
             compute_service_information.push_back({compute,
                                                    flops_tally,
-                                                   connection});
+                                                   connection*1000.0*1000.0,
+                                                   0,
+                                                   0});
 
         }
 
@@ -191,70 +214,119 @@ namespace wrench {
                 std::sort(compute_service_information.begin(), compute_service_information.end(), compareBandwidth);
                 break;
             case 3:
-                //TODO largest compute time/io time ratio
+                for (const auto &task : task_information) {
+                    for (auto &compute : compute_service_information) {
+                        compute.flops_connection_ratio = (task.flop/compute.flops)/(task.bytes/compute.bandwidth);
+                    }
+                    break;
+                }
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsConnectionRatio);
                 break;
             case 4:
-                //TODO worker that will complete the task earliest
+                for (const auto &task : task_information) {
+                    for (auto &compute : compute_service_information) {
+                        compute.time_estimate = (task.flop/compute.flops)+(task.bytes/compute.bandwidth);
+                    }
+                    break;
+                }
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareTimeEstimate);
                 break;
         }
 
 
+        std::vector<JobsAwaitingSubmission> jobs_awaiting_submission;
+        while(compute_service_information.size()>0 && task_information.size()>0) {
+            for (const auto &compute : compute_service_information) {
+                if (task_information.size()>0) {
+                    auto idle_core_counts = compute.compute_service->getPerHostNumIdleCores();
+                    auto ram_capacities = compute.compute_service->getMemoryCapacity();
 
-        for (const auto &compute : compute_service_information) {
-            if (task_information.size()>0) {
-                auto idle_core_counts = compute.compute_service->getPerHostNumIdleCores();
-                auto ram_capacities = compute.compute_service->getMemoryCapacity();
-
-                // combining core counts and ram capacities together
-                std::vector <ComputeResource> available_resources;
-                for (const auto &host : idle_core_counts) {
-                    if (host.second > 0) {
-                        available_resources.push_back({host.first,
-                                                       host.second,
-                                                       ram_capacities.at(host.first)});
-                    }
-                }
-
-
-                // add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
-                std::vector < WorkflowTask * > tasks_to_submit;
-                std::map <std::string, std::string> service_specific_args;
-                for (auto &task_info : task_information) {
-                    for (auto &resource : available_resources) {
-                        if (task_info.task->getMaxNumCores() <= resource.num_idle_cores &&
-                            task_info.task->getMemoryRequirement() <= resource.available_ram) {
-                            tasks_to_submit.push_back(task_info.task);
-                            service_specific_args[task_info.task->getID()] =
-                                    resource.hostname + ":" + std::to_string(task_info.task->getMaxNumCores());
-
-                            resource.num_idle_cores -= task_info.task->getMaxNumCores();
-                            resource.available_ram -= task_info.task->getMemoryRequirement();
-                            break;
+                    ///Get availability of resources on the current compute service.
+                    std::vector <ComputeResource> available_resources;
+                    for (const auto &host : idle_core_counts) {
+                        if (host.second > 0) {
+                            available_resources.push_back({host.first,
+                                                           host.second,
+                                                           ram_capacities.at(host.first)});
                         }
                     }
-                }
 
-                // specify file locations for tasks that will be submitted
-                std::map < WorkflowFile * , std::shared_ptr < FileLocation >> file_locations;
-                for (const auto &task : tasks_to_submit) {
 
-                    bool taskHasChildren = (task->getNumberOfChildren() != 0);
-
-                    for (const auto &file : task->getInputFiles()) {
-                        file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                    ///If this compute service is busy, remove it from the list and move on to next.
+                    if ( available_resources.size() == 0 ){
+                        compute_service_information.erase(compute_service_information.begin(), compute_service_information.begin()+1);
+                        break;
                     }
 
-                    for (const auto &file: task->getOutputFiles()) {
-                        file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+
+                    /// add tasks to a "tasks_to_submit" vector until core and or ram requirements cannot be met
+                    std::vector < WorkflowTask * > tasks_to_submit;
+                    std::map <std::string, std::string> service_specific_args;
+                    for (auto &task_info : task_information) {
+                        for (auto &resource : available_resources) {
+                            if (task_info.task->getMaxNumCores() <= resource.num_idle_cores &&
+                                task_info.task->getMemoryRequirement() <= resource.available_ram) {
+                                tasks_to_submit.push_back(task_info.task);
+                                service_specific_args[task_info.task->getID()] =
+                                        resource.hostname + ":" + std::to_string(task_info.task->getMaxNumCores());
+
+                                resource.num_idle_cores -= task_info.task->getMaxNumCores();
+                                resource.available_ram -= task_info.task->getMemoryRequirement();
+                                break;
+                            }
+                        }
+                    }
+
+                    /// specify file locations for tasks that will be submitted
+                    std::map < WorkflowFile * , std::shared_ptr < FileLocation >> file_locations;
+                    for (const auto &task : tasks_to_submit) {
+
+                        bool taskHasChildren = (task->getNumberOfChildren() != 0);
+
+                        for (const auto &file : task->getInputFiles()) {
+                            file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                        }
+
+                        for (const auto &file: task->getOutputFiles()) {
+                            file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                        }
+                    }
+
+                    ///create jobs and store them, remove the utilized resources/tasks from corresponding vectors.
+                    if (tasks_to_submit.size()>0) {
+                        WorkflowJob * job = (WorkflowJob * ) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
+                        jobs_awaiting_submission.push_back({job,
+                                                            compute.compute_service,
+                                                            service_specific_args});
+                        task_information.erase(task_information.begin(), task_information.begin() + tasks_to_submit.size());
+                        compute_service_information.erase(compute_service_information.begin(), compute_service_information.begin()+tasks_to_submit.size());
                     }
                 }
-
-                if (tasks_to_submit.size()>0) {
-                    WorkflowJob * job = (WorkflowJob * ) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
-                    this->getJobManager()->submitJob(job, compute.compute_service, service_specific_args);
-                    task_information.erase(task_information.begin(), task_information.begin() + tasks_to_submit.size());
-                }
+                break;
             }
+            ///For the next task in line, reshuffle the compute services if necessary.
+            if (compute_selection == 3 && compute_service_information.size()>0 && task_information.size()>0) {
+                for (const auto &task : task_information) {
+                    for (auto &compute : compute_service_information) {
+                        compute.flops_connection_ratio = (task.flop/compute.flops)/(task.bytes/compute.bandwidth);
+                    }
+                    break;
+                }
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsConnectionRatio);
+            } else if (compute_selection == 4 && compute_service_information.size()>0 && task_information.size()>0) {
+                for (const auto &task : task_information) {
+                    for (auto &compute : compute_service_information) {
+                        compute.time_estimate = (task.flop/compute.flops)+(task.bytes/compute.bandwidth);
+                    }
+                    break;
+                }
+                std::sort(compute_service_information.begin(), compute_service_information.end(), compareTimeEstimate);
+            }
+        }
+
+        ///Submit all of the queued jobs
+        for (const auto &unscheduled_job : jobs_awaiting_submission) {
+            this->getJobManager()->submitJob(unscheduled_job.job, unscheduled_job.compute, unscheduled_job.arguments);
         }
     }
 }
