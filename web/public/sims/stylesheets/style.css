@@ -1,50 +1,51 @@
 body {
-  background-color: white;
+    background-color: white;
 }
 
 .container-fixed {
-  width: 950px;
-  margin: auto;
+    margin: auto;
+    padding: 1em;
+    background-color: #fff;
 }
 
 .border-8 {
-  border-width: 8px !important;
+    border-width: 8px !important;
 }
 
 h6 {
-  padding-left: 5px;
+    padding-left: 5px;
 }
 
 .card {
-  margin-bottom: 3px;
-  background-color: white;
+    margin-bottom: 3px;
+    background-color: white;
 }
 
 #wrench-logo {
-  position: relative;
-  height: 50px;
-  width: 50px;
+    position: relative;
+    height: 50px;
+    width: 50px;
 }
 
 #home-card {
-  width: 25rem;
+    width: 25rem;
 
-  margin-top: 50px;
-  margin-left: auto;
-  margin-right: auto;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #home-wrench-logo {
-  padding: 10px;
-  height: 40%;
-  width: 40%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    padding: 10px;
+    height: 40%;
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #google-button {
-  max-width: 50%;
+    max-width: 50%;
 }
 
 #single-host {
@@ -53,7 +54,7 @@ h6 {
     margin-right: auto;
 }
 
-#workflow-host{
+#workflow-host {
     display: block;
     margin-left: 20%;
     margin-right: 20%;
@@ -61,14 +62,14 @@ h6 {
 
 
 #title-card {
-  background-color: white;
+    background-color: white;
 }
 
 #title-card h6 {
-  margin: auto;
+    margin: auto;
 }
 
-#platform-card-single{
+#platform-card-single {
     display: inline-block;
     width: 100%;
 }
@@ -88,23 +89,23 @@ h6 {
 }
 
 #task-details-card {
-  overflow: auto;
-  white-space: nowrap;
-  font-size: 12px;
+    overflow: auto;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 #task-details-table {
-  display: none;
+    display: none;
 }
 
 #simulation-output {
-  overflow: auto;
-  white-space: nowrap;
-  font-size: 12px;
+    overflow: auto;
+    white-space: nowrap;
+    font-size: 12px;
 }
 
 #simulation-output-card span {
-  margin-left: 15px;
+    margin-left: 15px;
 }
 
 .chart-card {
@@ -112,28 +113,28 @@ h6 {
 }
 
 .chart {
-  height: 600px;
-  width: 800px;
-  margin: auto;
-  display: none;
+    height: 600px;
+    width: 800px;
+    margin: auto;
+    display: none;
 }
 
 .legend small {
-  padding-left: 3px;
-  margin-right: 5px;
-  border-radius: 3px;
+    padding-left: 3px;
+    margin-right: 5px;
+    border-radius: 3px;
 }
 
 #workflow-execution-chart-legend-read-input {
-  border-left: 15px solid #cbb5dd;
+    border-left: 15px solid #cbb5dd;
 }
 
 #workflow-execution-chart-legend-computation {
-  border-left: 15px solid #f7daad;
+    border-left: 15px solid #f7daad;
 }
 
 #workflow-execution-chart-legend-write-output {
-  border-left: 15px solid #abdcf4;
+    border-left: 15px solid #abdcf4;
 }
 
 #host-utilization-chart-legend-compute-time {
@@ -149,27 +150,27 @@ h6 {
 }
 
 .x-axis text {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
 
 .x-axis {
-  color: gray;
+    color: gray;
 }
 
 .y-axis {
-  color: gray;
+    color: gray;
 }
 
 .read-col {
-  background-color: #efe8f4;
+    background-color: #efe8f4;
 }
 
 .compute-col {
-  background-color: #f9eedb;
+    background-color: #f9eedb;
 }
 
 .write-col {
-  background-color: #e2f5ff;
+    background-color: #e2f5ff;
 }
 
 #workflow-execution-chart-task-tooltip {
@@ -238,14 +239,15 @@ h6 {
 }
 
 
+<!--
+remove spinner for number inputs
 
-
-
-<!-- remove spinner for number inputs -->
+-->
 /* For Firefox */
 input[type='number'] {
-    -moz-appearance:textfield;
+    -moz-appearance: textfield;
 }
+
 /* Webkit browsers like Safari and Chrome */
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {

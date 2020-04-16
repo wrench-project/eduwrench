@@ -1,9 +1,9 @@
 // center sign in button
-.g-signin2{
+.g-signin2 {
   width: 100%;
 }
 
-.g-signin2 > div{
+.g-signin2 > div {
   margin: 0 auto;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .app-content p {
-  color:gray;
+  color: gray;
 }
 
 .hide {
@@ -40,14 +40,15 @@
 }
 
 .signInBut a {
-  display:inline-block;
+  display: inline-block;
 }
+
 .signInBut a img {
-  display:block;
+  display: block;
 }
 
 .myAppFrame {
-  width:100%;
+  width: 100%;
   height: 1000px;
 }
 
@@ -64,7 +65,7 @@
 }
 
 .selected {
-  color:white !important;
+  color: white !important;
   background-color: $main !important;
 }
 
@@ -85,4 +86,14 @@
 
 .signInText h2 {
   display: inline !important;
+}
+
+.sim-frame {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.answer-frame {
+  margin: 0 !important;
+  padding: 1em !important;
 }

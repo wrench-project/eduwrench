@@ -2,49 +2,50 @@ var auth2; // The Sign-In object.
 var googleUser; // The current user.
 
 function signOut() {
-  var auth2 = gapi.auth2.getAuthInstance();
-  auth2.signOut().then(function() {
-    // hide sign out button and show sign in button
-    $(".signOutBut")
-      .removeClass("show")
-      .addClass("hide");
-    $(".sign-in-page")
-      .removeClass("hide")
-      .addClass("show");
-    $('.myAppFrame').removeClass('show').addClass('hide');
-    // clear username
-    $('.user-title').html('');
-    $('.signInText').removeClass('hide').addClass('showTitle');
-  });
+    var auth2 = gapi.auth2.getAuthInstance();
+    auth2.signOut().then(function () {
+        // hide sign out button and show sign in button
+        $(".signOutBut")
+            .removeClass("show")
+            .addClass("hide");
+        $(".sign-in-page")
+            .removeClass("hide")
+            .addClass("show");
+        $('.myAppFrame').removeClass('show').addClass('hide');
+        // clear username
+        $('.user-title').html('');
+        $('.signInText').removeClass('hide').addClass('show');
+    });
 }
+
 
 /**
  * Calls startAuth after Sign in V2 finishes setting up.
  */
-function onStart () {
-  gapi.load('auth2', initSigninV2);
+function onStart() {
+    gapi.load('auth2', initSigninV2);
 };
 
 
 /**
  * Initializes Signin v2 and sets up listeners.
  */
-var initSigninV2 = function() {
-  auth2 = gapi.auth2.init();
+var initSigninV2 = function () {
+    auth2 = gapi.auth2.init();
 
-  // Listen for sign-in state changes.
-  auth2.isSignedIn.listen(signinChanged);
+    // Listen for sign-in state changes.
+    auth2.isSignedIn.listen(signinChanged);
 
-  // Listen for changes to current user.
-  auth2.currentUser.listen(userChanged);
+    // Listen for changes to current user.
+    auth2.currentUser.listen(userChanged);
 
-  // Sign in the user if they are currently signed in.
-  if (auth2.isSignedIn.get() == true) {
-    auth2.signIn();
-  }
+    // Sign in the user if they are currently signed in.
+    if (auth2.isSignedIn.get() == true) {
+        auth2.signIn();
+    }
 
-  // Start with the current live values.
-  refreshValues();
+    // Start with the current live values.
+    refreshValues();
 };
 
 
@@ -54,43 +55,42 @@ var initSigninV2 = function() {
  * @param {boolean} val the updated signed out state.
  */
 var signinChanged = function (val) {
-  if(val) { // user signed in
-    var profile = googleUser.getBasicProfile();
-    $(".user-title").html('');
-    $(".user-given-name").html('');
-    $(".user-email").html('');
-    $(".user-image").attr("src", `${profile.getImageUrl()}`);
-    $(".user-given-name").append(`<b>${profile.getGivenName()}</b>`);
-    $(".user-title").append(`<b>${profile.getName()}</b>`);
-    $(".user-email").append(`<b>${profile.getEmail()}</b>`);
-    // hide sign in button and show sign out button
-    $(".sign-in-page")
-      .removeClass("show")
-      .addClass("hide");
-    $(".sing-out-page")
-      .removeClass("hide")
-      .addClass("show");
-    $('.myAppFrame').removeClass('hide').addClass('show');
-    $('.signInText').removeClass('showTitle').addClass('hide');
-    // store user in session
-    if (typeof(Storage) !== "undefined") {
-      localStorage.setItem("userName", `${profile.getName()}`);
-      localStorage.setItem("email", `${profile.getEmail()}`);
-    } else {
-      // Sorry! No Web Storage support..
-      localStorage.setItem("userName", null);
-      localStorage.setItem("email", null);
+    if (val) { // user signed in
+        var profile = googleUser.getBasicProfile();
+        $(".user-title").html('');
+        $(".user-given-name").html('');
+        $(".user-email").html('');
+        $(".user-image").attr("src", `${profile.getImageUrl()}`);
+        $(".user-given-name").append(`<b>${profile.getGivenName()}</b>`);
+        $(".user-title").append(`<b>${profile.getName()}</b>`);
+        $(".user-email").append(`<b>${profile.getEmail()}</b>`);
+        // hide sign in button and show sign out button
+        $(".sign-in-page")
+            .removeClass("show")
+            .addClass("hide");
+        $(".sing-out-page")
+            .removeClass("hide")
+            .addClass("show");
+        $('.myAppFrame').removeClass('hide').addClass('show');
+        $('.signInText').removeClass('show').addClass('hide');
+        // store user in session
+        if (typeof (Storage) !== "undefined") {
+            localStorage.setItem("userName", `${profile.getName()}`);
+            localStorage.setItem("email", `${profile.getEmail()}`);
+        } else {
+            // Sorry! No Web Storage support..
+            localStorage.setItem("userName", null);
+            localStorage.setItem("email", null);
+        }
+    } else { // user signed out
+        $(".sing-out-page")
+            .removeClass("show")
+            .addClass("hide");
+        $(".sign-in-page")
+            .removeClass("hide")
+            .addClass("show");
+        $('.myAppFrame').removeClass('show').addClass('hide');
     }
-  }
-  else { // user signed out
-    $(".sing-out-page")
-      .removeClass("show")
-      .addClass("hide");
-    $(".sign-in-page")
-      .removeClass("hide")
-      .addClass("show");
-    $('.myAppFrame').removeClass('show').addClass('hide');
-  }
 };
 
 
@@ -100,9 +100,9 @@ var signinChanged = function (val) {
  * @param {GoogleUser} user the updated user.
  */
 var userChanged = function (user) {
-  // console.log('User now: ', user);
-  googleUser = user;
-  updateGoogleUser();
+    // console.log('User now: ', user);
+    googleUser = user;
+    updateGoogleUser();
 };
 
 
@@ -110,10 +110,10 @@ var userChanged = function (user) {
  * Updates the properties in the Google User table using the current user.
  */
 var updateGoogleUser = function () {
-  if (googleUser.uc) {
-  } else {
-    $('.myAppFrame').removeClass('show').addClass('hide');
-  }
+    if (googleUser.uc) {
+    } else {
+        $('.myAppFrame').removeClass('show').addClass('hide');
+    }
 };
 
 
@@ -121,9 +121,9 @@ var updateGoogleUser = function () {
  * Retrieves the current user and signed in states from the GoogleAuth
  * object.
  */
-var refreshValues = function() {
-  if (auth2){
-    googleUser = auth2.currentUser.get();
-    updateGoogleUser();
-  }
+var refreshValues = function () {
+    if (auth2) {
+        googleUser = auth2.currentUser.get();
+        updateGoogleUser();
+    }
 }

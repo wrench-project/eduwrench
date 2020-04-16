@@ -200,7 +200,7 @@ assist you in answering the questions to come.
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="io_operations/" %}
   </div>
 </div>
@@ -221,7 +221,7 @@ HDD, which upgrade would you choose?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 The execution time breakdown is as follows:
 
@@ -259,7 +259,7 @@ What is the CPU utilization when processing 4 consecutive task instances?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Here is a depiction of the execution:
 
@@ -286,7 +286,7 @@ processing 4 consecutive task instances?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Here is a depiction of the execution:
 

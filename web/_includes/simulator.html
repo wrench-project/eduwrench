@@ -1,16 +1,14 @@
 <!-- simulation app page -->
 
-<div class="text-center p-3 mt-3 app-wrapper">
-  <div class="row text-center signInText">
-    <img
-    src="{{site.baseurl}}/assets/wrench_logo.png"
-    alt="wrench_logo"
-    class="iconImg col-2"
-    />
-    <h2 class="col-10">Wrench Pedagogic Module Simulator</h2>
-    <h5 class="col-12 signIn-info mb-2">Sign in on the page to access the simulator</h5>
-  </div>
-  <div id="myApp">
-    <iframe class="myAppFrame" src="{{site.baseurl}}/simulations/{{include.src}}" frameborder="0"></iframe>
-  </div>
+<div class="row text-center">
+    <div class="col-12 signInText">
+        <h3 class="mb-2 mt-3" style="font-size: 1.3em; color: #666">
+            <img src="{{site.baseurl}}/assets/wrench_logo.png" alt="wrench_logo" class="iconImg"/>
+            eduWRENCH Pedagogic Module Simulator
+        </h3>
+        <h5 class="mb-3 mt-2">Sign in on the top of the page to access the simulator.</h5>
+    </div>
+    <div class="col-12" id="myApp">
+        <iframe class="myAppFrame" src="{{site.baseurl}}/simulations/{{include.src}}" frameborder="0"></iframe>
+    </div>
 </div>
