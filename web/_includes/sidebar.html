@@ -9,42 +9,22 @@
         <h1>Glossary</h1>
     </div>
 
-    <!-- <nav class="sidebar-nav">
-      <a class="sidebar-nav-item{% if page.title == "Home" %} active{% endif %}" href="{{ site.baseurl }}/">Home</a>
-
-      {% comment %}
-        The code below dynamically generates a sidebar nav of pages with
-        `layout: page` in the front-matter. See readme for usage.
-      {% endcomment %}
-
-      {% assign pedagogic_module_list = site.pedagogic_modules | sort:"order" %}
-      {% for node in pedagogic_module_list %}
-        {% if node.title != null %}
-          {% if node.layout == "page" %}
-            <a class="sidebar-nav-item{% if page.url == node.url %} active{% endif %}" href=" {{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>
-          {% endif %}
-        {% endif %}
-      {% endfor %}
-
-      {% comment %}
-        Add the glossary to the nav bar at the *end* of the list.
-      {% endcomment %}
-      <a class="sidebar-nav-item active" href=" {{ site.baseurl }}/glossary">Glossary</a>
-    </nav> -->
-
     <div class="search-bar mt-3">
         <input type="input" class="form__field" name="searchInput" id="searchInput" onkeyup="searchTerm()"
                placeholder="Search for a term..." required/>
         <label for="searchInput" class="form__label">Search for a term...</label>
     </div>
+
     <div class="terms">
         <ul id="wordList" class="">
             {% assign glossary_items = site.data.glossary | sort:"term" %}
             {% for word in glossary_items %}
             <li class="m-2 pt-2 pb-2">
                 <div class="termBox mr-4 p-3">
-                    <div class="accordion-head pt-2 pb-2 mr-2"><h4 class="term">{{ word.term | capitalize}}<span
-                            class="plusminus pr-2">+</span></h4></div>
+                    <div class="accordion-head">
+                        <h4 class="term">{{ word.term | capitalize}}
+<!--                            <span class="plusminus pr-2">+</span>-->
+                        </h4></div>
                     <div class="accordion-body mt-2">
                         <p>{{ word.description | capitalize}}</p>
                     </div>
