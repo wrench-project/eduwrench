@@ -302,10 +302,20 @@ html, body {
   background: none !important;
 }
 
-#sidebar-checkbox:checked ~ .sidebar,
-#sidebar-checkbox:checked ~ .wrap,
-#sidebar-checkbox:checked ~ .sidebar-toggle {
+#sidebar-checkbox:checked ~ .sidebar {
   -webkit-transform: translateX(20rem) !important;
   -ms-transform: translateX(20rem) !important;
   transform: translateX(20rem) !important;
+}
+
+#sidebar-checkbox:checked ~ .sidebar-toggle {
+  -webkit-transform: translateX(20rem) rotate(-90deg) !important;
+  -ms-transform: translateX(20rem) rotate(-90deg) !important;
+  transform: translateX(20rem) rotate(-90deg) !important;
+}
+
+#sidebar-checkbox:checked ~ .wrap {
+  -webkit-transform: translateX(0rem) !important;
+  -ms-transform: translateX(0rem) !important;
+  transform: translateX(0rem) !important;
 }

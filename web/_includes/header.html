@@ -9,52 +9,15 @@
         <li class="py-3">
             <a class="headerNav p-3" href="{{ "/modules" | prepend: site.baseurl}}">{{ "Modules" | upcase}}</a>
         </li>
-        <!--            <div class="dropdown show btn-group">-->
-        <!--                <a class="headerNav p-3 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"-->
-        <!--                   aria-expanded="false" href="{{ "/courses" | prepend: site.baseurl}}">{{ "Courses" | upcase}}</a>-->
-        <!--                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">-->
-
-        <!--                    <span class="dropdown-item">A. Parallel and Distributed Computing Concepts</span>-->
-        <!--                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}-->
-        <!--                    {% for node in pedagogic_module_lists %}-->
-        <!--                    {% if node.title != null and node.layout == "page" and node.order < 200 %}-->
-        <!--                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"-->
-        <!--                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>-->
-        <!--                    {% endif %}-->
-        <!--                    {% endfor %}-->
-
-        <!--                    <span class="dropdown-item">B. Cyberinfrastructure Concepts</span>-->
-        <!--                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}-->
-        <!--                    {% for node in pedagogic_module_lists %}-->
-        <!--                    {% if node.title != null and node.layout == "page" and node.order >= 200 and node.order < 300 %}-->
-        <!--                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"-->
-        <!--                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>-->
-        <!--                    {% endif %}-->
-        <!--                    {% endfor %}-->
-
-        <!--                    <span class="dropdown-item">C. Cyberinfrastructure Services</span>-->
-        <!--                    {% assign pedagogic_module_lists = site.pedagogic_modules | sort: "order" %}-->
-        <!--                    {% for node in pedagogic_module_lists %}-->
-        <!--                    {% if node.title != null and node.layout == "page" and node.order >= 300 and node.order < 400 %}-->
-        <!--                    <a class="dropdown-item {% if page.url == node.url %} active{% endif %}"-->
-        <!--                       href="{{ site.baseurl }}{{ node.url }}">{{ node.title }}</a>-->
-        <!--                    {% endif %}-->
-        <!--                    {% endfor %}-->
-        <!--                </div>-->
-        <!--            </div>-->
+        <!--        <li class="py-3">-->
+        <!--            <a class="headerNav p-3" href="{{ "/glossary" | prepend: site.baseurl}}">{{ "Glossary" | upcase}}</a>-->
         <!--        </li>-->
-        <li class="py-3">
-            <a class="headerNav p-3" href="{{ "/glossary" | prepend: site.baseurl}}">{{ "Glossary" | upcase}}</a>
-        </li>
     </ul>
     <div class="navbar-collapse collapse order-3 dual-collapse2 mt-3">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
                 <div class="app-content mx-0 right aligned">
                     <div class="sign-in-page show">
-                        <!--                        <p class="mx-auto">-->
-                        <!--                            Sign in to get started running interactive simulations.-->
-                        <!--                        </p>-->
                         <div class="g-signin2 pb-2 signInBut" data-onsuccess="onSignIn"></div>
                     </div>
                     <div class="sing-out-page dropdown hide">
@@ -67,7 +30,7 @@
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <div class="dropdown-item user-mini-profile">
-                                <span class="user-title"></span><br />
+                                <span class="user-title"></span><br/>
                                 <span class="user-email"></span>
                             </div>
                             <div class="dropdown-divider"></div>
