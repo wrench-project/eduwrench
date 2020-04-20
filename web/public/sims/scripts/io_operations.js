@@ -158,8 +158,8 @@ $(function () {
                 generateHostUtilizationGraph(prepared_data, "host-utilization-chart", "host-utilization-chart-tooltip",
                     "host-utilization-chart-tooltip-task-id", "host-utilization-chart-tooltip-compute-time",
                     900, 300);
-
-                // populateWorkflowTaskDataTable(response.task_data.workflow_execution.tasks);
+                populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
+                    "task-details-table-td");
             }
         });
     });
