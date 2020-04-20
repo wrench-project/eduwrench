@@ -66,7 +66,7 @@ images, i.e., so that it performs 2 tasks, then its execution timeline
 is as depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_1.svg">Example execution timeline</object>
-<b>Figure A.1.4.1:</b> Example execution timeline.
+<div class="caption"><strong>Figure A.1.4.1:</strong> Example execution timeline.</div>
 
 As can be seen in the figure, at any given time either the CPU is idle 
 (while IO operations are ongoing) or the disk is idle (while computation 
@@ -99,7 +99,7 @@ image. The 1st image can be written to disk at the same time. This
 execution is depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_2.svg">Example execution timeline with overlap of IO and computation</object>
-<b>Figure A.1.4.2:</b> Example execution timeline with overlap of IO and computation.
+<div class="caption"><strong>Figure A.1.4.2:</strong> Example execution timeline with overlap of IO and computation.</div>
 
 The total execution time has dropped by 2 seconds **and** the CPU 
 utilization is increased:
@@ -128,7 +128,7 @@ down-scaled images) and the program must process 3 images, then the
 execution would be as:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_3.svg">Example execution timeline with overlap of IO and computation</object>
-<b>Figure A.1.4.3:</b> Example execution timeline with overlap of IO and computation.
+<div class="caption"><strong>Figure A.1.4.3:</strong> Example execution timeline with overlap of IO and computation.</div>
 
 As expected, the program first reads 2 images, and then alternates write 
 and read operations while CPU computation is going on. But in this case, 
@@ -142,7 +142,7 @@ volumes (and especially if these volumes vary from task to task!).
 Let us return to the first example execution above: 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_1.svg">Execution timeline</object>
-<b>Figure A.1.4.4:</b> Execution timeline.
+<div class="caption"><strong>Figure A.1.4.4:</strong> Execution timeline.</div>
 
 In this case, we can string together as many tasks as we want and the CPU will be utilized continuously apart from
 the initial read and the final write. With two tasks the IO time is a significant portion of the execution time,

@@ -113,10 +113,10 @@ h6 {
 }
 
 .chart {
-    height: 600px;
     width: 800px;
     margin: auto;
     display: none;
+    margin-bottom: 1em;
 }
 
 .legend small {
@@ -173,7 +173,9 @@ h6 {
     background-color: #e2f5ff;
 }
 
-#workflow-execution-chart-task-tooltip {
+#workflow-execution-chart-task-tooltip,
+#tooltip-container,
+#host-utilization-chart-tooltip {
     position: absolute;
     width: auto;
     padding: 10px;
@@ -184,6 +186,8 @@ h6 {
     pointer-events: none;
     font-family: sans-serif;
     font-size: 12px;
+    left: 0 !important;
+    top: 10em !important;
 }
 
 #workflow-execution-chart-makespan-tooltip {
@@ -199,18 +203,20 @@ h6 {
     font-size: 12px;
 }
 
-#host-utilization-chart-tooltip {
-    position: absolute;
-    width: auto;
-    padding: 10px;
-    background-color: #f2f2f2;
-    border-radius: 2px;
-    border: 0px solid #000;
-    display: none;
-    pointer-events: none;
-    font-family: sans-serif;
-    font-size: 12px;
-}
+/*#host-utilization-chart-tooltip {*/
+/*    position: absolute;*/
+/*    width: auto;*/
+/*    padding: 10px;*/
+/*    background-color: #f2f2f2;*/
+/*    border-radius: 2px;*/
+/*    border: 0px solid #000;*/
+/*    display: none;*/
+/*    pointer-events: none;*/
+/*    font-family: sans-serif;*/
+/*    font-size: 12px;*/
+/*    left: 0 !important;*/
+/*    top: 10em !important;*/
+/*}*/
 
 #workflow-dag-chart-task-tooltip {
     position: absolute;

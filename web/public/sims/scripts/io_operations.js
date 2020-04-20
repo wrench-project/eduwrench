@@ -148,16 +148,18 @@ $(function () {
                 }),
 
             success: function (response) {
-
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                // generate_host_utilization_graph(response.task_data, 1);
-                generateHostUtilizationGraph(response.task_data.workflow_execution.tasks, "host-utilization-chart", "host-utilization-chart-tooltip", "host-utilization-chart-tooltip-task-id", "host-utilization-chart-tooltip-compute-time", 1000, 1000);
+                // console.log(response.task_data.workflow_execution.tasks);
 
-                generate_workflow_execution_graph(response.task_data.workflow_execution.tasks);
+                let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
+                generateGraph(prepared_data, "workflow-execution-chart", "taskView", 900, 500);
+                generateHostUtilizationGraph(prepared_data, "host-utilization-chart", "host-utilization-chart-tooltip",
+                    "host-utilization-chart-tooltip-task-id", "host-utilization-chart-tooltip-compute-time",
+                    900, 300);
 
-                populateWorkflowTaskDataTable(response.task_data.workflow_execution.tasks);
+                // populateWorkflowTaskDataTable(response.task_data.workflow_execution.tasks);
             }
         });
     });

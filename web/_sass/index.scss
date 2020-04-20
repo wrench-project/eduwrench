@@ -319,3 +319,16 @@ html, body {
   -ms-transform: translateX(0rem) !important;
   transform: translateX(0rem) !important;
 }
+
+.figure {
+  margin-top: 2em !important;
+}
+
+.caption {
+  margin-bottom: 2em;
+  color: #666;
+}
+
+.caption strong {
+  color: #D28346;
+}

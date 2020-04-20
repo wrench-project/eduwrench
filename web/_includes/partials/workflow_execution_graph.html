@@ -1,26 +1,13 @@
 <div class="card text-center shadow mb-2" id="workflow-execution-chart-card">
     <div class="card-body" id="chart-block">
         <h6 class="card-title text-left rounded border-left border-warning border-8">Workflow Execution</h6>
-        <div class="chart" id="workflow-execution-chart">
 
-            <div class="container legend" id="workflow-execution-chart-legend">
-                <small class="inline-block" id="workflow-execution-chart-legend-read-input">Reading Input</small>
-                <small class="inline-block" id="workflow-execution-chart-legend-computation">Performing Computation</small>
-                <small class="inline-block" id="workflow-execution-chart-legend-write-output">Writing Output</small>
-            </div>
-
-            <div class="text-left" id="workflow-execution-chart-task-tooltip">
-                <span id="tooltip-task-id"></span><br>
-                <span id="tooltip-task-operation"></span><br>
-                <span id="tooltip-task-operation-start"></span><br>
-                <span id="tooltip-task-operation-end"></span><br>
-                <span id="tooltip-task-operation-duration"></span>
-            </div>
+        <div class="container legend" id="workflow-execution-chart-legend">
+            <small class="inline-block" id="workflow-execution-chart-legend-read-input">Reading Input</small>
+            <small class="inline-block" id="workflow-execution-chart-legend-computation">Performing Computation</small>
+            <small class="inline-block" id="workflow-execution-chart-legend-write-output">Writing Output</small>
         </div>
 
-        <div class="text-left" id="workflow-execution-chart-makespan-tooltip">
-            <span id="tooltip-makespan-value"></span><br>
-        </div>
-        
+        <div class="chart" id="workflow-execution-chart"></div>
     </div>
 </div>
