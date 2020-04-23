@@ -187,12 +187,12 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, storage_db_edu_storage_service);
+        simulation.stageFile(file, storage_db_edu_storage_service);
     }
 
     // launch the simulation
     simulation.launch();
 
-    simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "/tmp/workflow_data.json");
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, true);
     //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
 }

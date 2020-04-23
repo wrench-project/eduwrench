@@ -420,7 +420,7 @@ int main(int argc, char** argv) {
 
     // stage the input files
     for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, master_storage_service);
+        simulation.stageFile(file, master_storage_service);
     }
 
     wms->addWorkflow(&workflow);

@@ -48,6 +48,15 @@ namespace wrench {
         std::map<std::string, std::string> arguments;
     } JobsAwaitingSubmission;
 
+    /**
+     * @brief struct for randomization of task/compute choices, used in random_shuffle
+     */
+    struct RNG {
+        int operator() (int n) {
+            return std::rand() / (1.0 + RAND_MAX) * n;
+        }
+    };
+
 
     bool compareFlop (const TaskInformation &a, const TaskInformation &b) {
         return a.flop < b.flop;
@@ -113,6 +122,13 @@ namespace wrench {
                 compute_selection(compute_selection),
                 seed(seed) {
 
+
+        if (seed != 0) {
+            srand(seed);
+        } else {
+            srand(time(0));
+        }
+
     }
     /**
      *
@@ -125,13 +141,7 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
 
-        std::random_device rd;
-        std::mt19937 randomizer;
-        if (seed != 0) {
-            mt19937 randomizer(static_cast<uint32_t>(seed));
-        } else {
-            mt19937 randomizer(rd());
-        }
+
 
         ///Creating a vector of structs for all ready tasks and their relevant information for scheduling
         std::vector<TaskInformation> task_information;
@@ -155,7 +165,7 @@ namespace wrench {
         ///sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
-                std::shuffle(task_information.begin(), task_information.end(), randomizer);
+                std::random_shuffle(task_information.begin(), task_information.end(), RNG());
                 break;
             case 1:
                 std::sort(task_information.begin(), task_information.end(), compareFlopDesc); //highest flop first
@@ -205,7 +215,7 @@ namespace wrench {
 
         switch (compute_selection) {
             case 0:
-                std::shuffle(compute_service_information.begin(), compute_service_information.end(), randomizer);
+                std::random_shuffle(compute_service_information.begin(), compute_service_information.end(), RNG());
                 break;
             case 1:
                 std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsDescCompute);
