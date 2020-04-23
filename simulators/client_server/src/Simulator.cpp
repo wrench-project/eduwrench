@@ -269,7 +269,7 @@ int main(int argc, char** argv) {
     simulation.add(new wrench::FileRegistryService(CLIENT));
 
     for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, client_storage_service);
+        simulation.stageFile(file, client_storage_service);
     }
 
     simulation.launch();

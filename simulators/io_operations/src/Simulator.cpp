@@ -259,7 +259,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, io_storage_service);
+        simulation.stageFile(file, io_storage_service);
     }
 
     simulation.launch();

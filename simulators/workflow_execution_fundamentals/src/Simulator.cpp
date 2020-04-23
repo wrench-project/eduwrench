@@ -163,7 +163,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, storage_db_edu_storage_service);
+        simulation.stageFile(file, storage_db_edu_storage_service);
     }
 
     // launch the simulation

@@ -378,7 +378,7 @@ int main(int argc, char **argv) {
 
     // stage input files
     for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file.second, remote_storage_service);
+        simulation.stageFile(file, remote_storage_service);
     }
 
     simulation.launch();
