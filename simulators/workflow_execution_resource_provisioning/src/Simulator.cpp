@@ -96,10 +96,18 @@ void generatePlatform(std::string platform_file_path, int num_cores, int ram_in_
                              "       <host id=\"my_work_computer.org\" speed=\"1000Gf\" core=\"1\"/>\n"
 
                              "       <host id=\"infrastructure.org/compute\" speed=\"1000Gf\" core=\"2\">\n"
-                             "           <prop id=\"ram\" value=\"16000000000\"/>\n"
+                             "          <disk id=\"hard_drive1\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                             "            <prop id=\"size\" value=\"50TB\"/>\n"
+                             "            <prop id=\"mount\" value=\"/\"/>\n"
+                             "          </disk>\n"
+                             "          <prop id=\"ram\" value=\"16000000000\"/>\n"
                              "       </host>\n"
-
-                             "       <host id=\"infrastructure.org/storage\" speed=\"1000Gf\" core=\"1\"/>\n"
+                             "       <host id=\"infrastructure.org/storage\" speed=\"1000Gf\" core=\"1\">\n"
+                             "          <disk id=\"hard_drive2\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
+                             "            <prop id=\"size\" value=\"50TB\"/>\n"
+                             "            <prop id=\"mount\" value=\"/\"/>\n"
+                             "          </disk>\n"
+                             "       </host>\n"
                              "       <!-- effective bandwidth 100 MBps -->"
                              "       <link id=\"link1\" bandwidth=\"103.092MBps\" latency=\"100us\"/>\n"
                              "       <link id=\"link2\" bandwidth=\"103.092MBps\" latency=\"100us\"/>\n"
@@ -216,14 +224,13 @@ int main(int argc, char **argv) {
     const std::string WMS_HOST("my_work_computer.org");
 
     // create a remote storage service and a storage service on the same host as the compute service
-    const double STORAGE_CAPACITY = 50.0 * 1000.0 * 1000.0 * 1000.0 * 1000.0;
     auto remote_storage_service = simulation.add(
-            new wrench::SimpleStorageService(STORAGE_HOST, STORAGE_CAPACITY)
+            new wrench::SimpleStorageService(STORAGE_HOST, {"/"})
             );
 
     // this storage service is pretending to be scratch for the baremetal compute service
     auto bare_metal_storage_service = simulation.add(
-            new wrench::SimpleStorageService(COMPUTE_HOST, STORAGE_CAPACITY)
+            new wrench::SimpleStorageService(COMPUTE_HOST, {"/"})
             );
 
     std::map<std::string, std::shared_ptr<wrench::StorageService>> storage_services = {
@@ -246,7 +253,9 @@ int main(int argc, char **argv) {
     generateTaskJoinWorkflow(&workflow, INPUT_FILE_SIZE_IN_MB);
 
     simulation.add(new wrench::FileRegistryService(WMS_HOST));
-    simulation.stageFiles(workflow.getInputFiles(), remote_storage_service);
+    for (auto const &f: workflow.getInputFiles()) {
+        simulation.stageFile(f, remote_storage_service);
+    }
 
     // create wms and add workflow
     auto wms = simulation.add(
