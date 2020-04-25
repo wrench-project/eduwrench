@@ -21,12 +21,10 @@ set(SOURCE_FILES
 find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
-find_library(LEMON_LIBRARY NAMES emon)
 
 add_executable(networking_fundamentals_simulator ${SOURCE_FILES})
 target_link_libraries(networking_fundamentals_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}
         ${PUGIXML_LIBRARY}
-        ${LEMON_LIBRARY}
         )

@@ -23,13 +23,10 @@ set(SOURCE_FILES
 find_library(WRENCH_LIBRARY NAMES libwrench.a wrench)
 find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
-find_library(LEMON_LIBRARY NAMES emon)
 
 add_executable(workflow_execution_resource_provisioning_simulator ${SOURCE_FILES})
 target_link_libraries(workflow_execution_resource_provisioning_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}
         ${PUGIXML_LIBRARY}
-        ${LEMON_LIBRARY}
         )
-
