@@ -48,12 +48,11 @@
   description: the process of storing certain application files (i.e., initial input files) on some persistent storage prior to the application execution
 
 - term: makespan
-  description: the overall execution time of an application execution (i.e., the duration of the
-            time internal between the beginning of the execution and the completion of the last task).
+  description: the overall execution time of an application execution (i.e., the duration of the time between the beginning of the execution and the completion of the last task completion).
 
 # section: activity 1 - running your first simulated workflow execution
 - term: turnaround-time
-  description: a tasks end time minus the time it had been submitted to be run
+  description: the time elapsed between a task is submitted for execution and its  completion
 
 - term: data locality
   description: the concept of moving computation closer to where data resides as this
@@ -63,21 +62,23 @@
 - term: join (Workflow structure)
   description: a workflow structure where multiple tasks "join" into a single task 
 
-- term: cluster compute service
-  description: a compute service that manages multiple machines
+- term: cluster 
+  description: a set of compute nodes connected via a network to be used as a high-capacity compute platform to run jobs
 
 - term: frontend node
-  description: the entrypoint to a cluster compute service that handles job requests from a WMS and dispatches
-                those requests to compute nodes in the cluster
+  description: the entry-point computer to a cluster, which typically is connected to the internet and runs software to handle job requests for the cluster's compute nodes
 
 - term: compute node
-  description: the worker nodes in a cluster compute service that perform work as requested by the frontend node
+  description: one of the a computers in a cluster that is used to run jobs
 
 - term: parallelism
-  description: the ability for multi-core architectures to execute multiple instructions in parallel
+  description: the ability of a program to execute multiple streams of instructions simultaneously on multiple processors 
 
-- term: utilization
-  description: the usage of a core while executing a given workload
+- term: core utilization
+  description: the fraction of time a core computes during application execution 
+
+- term: CPU core (or just core)
+  description: a processing unit, or processor, in a multi-core microprocessor 
 
 - term: average core utilization
   description: the average utilization of all cores on a platform while executing a given workload
@@ -87,4 +88,9 @@
 
 - term: horizontal scaling
   description: augmenting a compute service by upgrading it with more machines
-# section: activity 3 - the right tool for the job
+
+- term: parallel speedup
+  description: the acceleration factor (when compared to a sequential execution) when running an application using multiple processors
+
+- term: parallel efficiency
+  description: the parallel speedup divided by the number of processors, as a percentage
