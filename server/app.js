@@ -394,7 +394,7 @@ app.get("/multi_core", authCheck, function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/multi_core", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_independent_tasks/");
 
     const SIMULATOR = "multi_core_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
