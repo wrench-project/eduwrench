@@ -1,41 +1,43 @@
 
 #### Learning Objectives:
  
-- Understand the impact of RAM constraints on idle time
+- Understand the impact of RAM constraints on parallel performance
 
 ----
 
 #### Adding RAM Constraints
 
-As we talked about previously in [Single Core
-Computing]({{site.baseurl}}/pedagogic_modules/single_core_computing), when
-a core is executing a task, the task may have a sizable amount of data
-that needs to be loaded into RAM. An additional cause for idle time,
-besides load imbalance, on a multi-core machine is that all of the cores
-share the same amount of RAM.  Therefore, there could be idle cores and
-tasks that need to run, but there is not sufficient RAM. Unfortunately, in
-this case, we cannot execute these tasks, and the idle cores must remain
-idle until more RAM becomes available (i.e., when currently running  tasks
-complete).  As a result, parallel efficiency falls below 100%. This is
-because we simply don't allow ourselves to use more memory than available
-in physical RAM, which would be handled by the Operating Systems (by shuffling data
-back and forth between RAM and disks) but would come with unacceptable performance
-losses.  
+As seen in the [Single Core Computing
+module]({{site.baseurl}}/pedagogic_modules/single_core_computing), a task
+may have a sizable amount of data that needs to be loaded into RAM so that
+it can execute. An additional cause for idle time, besides load imbalance,
+on a multi-core machine is that all of the cores share the RAM. Therefore,
+there could be idle cores and tasks that need to run, but not sufficient
+RAM. Unfortunately, in this case, the idle cores must remain idle until
+more RAM becomes available (i.e., when currently running tasks complete).
+As a result, parallel efficiency falls below 100%. This is because we
+simply don't allow ourselves to use more memory than available in physical
+RAM. Doing so is possible and handled by the Operating Systems (by
+shuffling data back and forth between RAM and disks) but comes with
+unacceptable performance penalties. So, as in the [Single Core Computing
+module]({{site.baseurl}}/pedagogic_modules/single_core_computing), we never
+exceed the physical memory capacity of a host.
 
 ### Simulating RAM Constraints
 
 So that you can gain hands-on experience, use the simulation Web application below.
-
-Previously when using the simulation app, you left the "Ram Needed For Each 
-Task" field at zero. This time around, we recognize that tasks may require RAM. 
+This app is similar to that in the previous tab (Parallelism), but now includes
+a field for specifying the "Ram Needed For Each Task". 
+So now we can simulate the fact that tasks require RAM space to run. Note
+that the host we are simulating has 32 GB of RAM available. 
 The host we are using has 32 GB of RAM available. First try using 4 Cores for 
 8 tasks, where each task uses 8 GB of RAM. 
 
 As you will see, there is no idle time with the above situation. The number 
-of tasks we can run at a time is 4, both by the amount of cores we have and 
-the amount of ram we have. Now try again, but this time the Task RAM should 
-be set to 16 GB. There will now be idle time, as only 2 cores can be utilized 
-simultaneously in this situation. 
+of tasks we can run at a time is 4, given the number of cores and 
+the amount of RAM we have. Now try again, but this time set the Task RAM 
+to 16 GB. There will now be idle time, as only 2 cores can be utilized 
+simultaneously due to RAM constraints. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">

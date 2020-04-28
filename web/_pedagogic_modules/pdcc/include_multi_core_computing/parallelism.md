@@ -262,3 +262,22 @@ efficiency?
 </div>
 
 
+#### Questions
+
+**[B.q1.1]** What would be the parallel efficiency of a 10-task program execution
+   on a 4-core machine where each task runs in 10 minutes?
+
+**[B.q1.2]** You are told that a multi-task program runs in 1 hour on a 3-core machine,
+  and that the parallel efficiency is 90%. How long would the program take if executed
+  using a single core. 
+
+**[B.q1.3]** You have a 20-task program where each task's work is 10 GFlop.
+   You currently have a 4-core compute where each core compute at speed 50
+   GFlop/sec. For the same amount of money you can either (1) increase the
+   speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec core. What
+   should you do if you want to run your program as quickly as possible? 
+
+
+   
+
+
