@@ -171,11 +171,50 @@ that parallel efficiency is below 100%.
   </div>
 </div>
 
+
+### More Load Imbalance with Non-Identical Tasks
+
+In all the above, we've only considered "identical" tasks: all tasks run in
+the same amount of time. Therefore, the main question is how the number of
+cores divides the number of tasks (if it divides it perfectly then we can have
+100% efficiency). But in many real-world programs tasks are not identical.
+Some can take longer than the other. This is another possible source of
+load imbalance. 
+
+Consider a 5-task program that runs on a 2-core computer. The tasks take 10s,
+16s, 4s, 5s, and 11s, respectively. How fast can we run this program? For instance, we
+could run the first 3 tasks (10s, 16s, and 4s) on one core, and the last 2
+tasks (5s and 11s) tasks on the other core. The first core would thus work
+for 30s while the second core would work for only 16s. This would lead to a
+parallel efficiency of 46 / (30 * 2) = 76%. Can we do better? If you think
+about it, the problem is to split the set of numbers {10, 16, 4, 5, 11}
+into two parts, so that the sum of the numbers in each part are as close to
+each other as possible. In this case, because we only have 5 numbers, we
+could look at all options. It turns out that the best option is: {10, 11}
+and {16, 4, 5}. That is, we run the first and last tasks on one core, and
+the other on another core. In this case, one core computes for 21s and the
+other for 25s. The parallel efficiency is now 92%.
+
+What if we now have 3 cores? Then we have to split our set of numbers into
+3 parts that are as "equal" as possible. The best we can do is: {10, 5},
+{16}, and {11, 4}. In this case, the program runs in 16 seconds and the
+parallel efficiency on 3 cores is almost 96%. It is not useful to use more
+cores, since no matter what the program cannot run faster than 16
+seconds.
+
+It turns out that splitting sets of numbers into parts with sums as close
+to each other as possible is a difficult problem. We are able to do it for
+small examples like above, but as soon as the number of tasks gets large,
+it's no longer humanly possible. And in fact, it's not computer-ly
+possible either (at least, not quickly). More formally, determining the best split is an NP-complete
+problem (see an Algorithm/Theory textbook!). We will encounter this kind of
+"scheduling problem" (i.e., how to allocate tasks to processors) again in upcoming modules.
+
 ----
 
 #### Practice Questions
 
-**[A.2.p1.1]** You are told that a 10-task program  runs in 1 hour with
+**[A.2.p1.1]** You are told that a 10-task program runs in 1 hour with
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
 What is the execution time of one task?
 
@@ -230,7 +269,7 @@ on a core. What is the parallel efficiency on a 4-core computer?
 
 <p></p>
 
-**[B.p1.4]** You are upgrading your (pre-historic?) single core processor and
+**[A.2.p1.4]** You are upgrading your (pre-historic?) single core processor and
 you have two new multi-core processors to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
@@ -261,6 +300,24 @@ efficiency?
   </div>
 </div>
 
+**[A.2.p1.5]** A 5-task program runs optimally (i.e., it's the best it can
+possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in 
+2s, 4s, 3s, and 5s respectively. Is it possible that Task 5 runs in 7s?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+Nope. If Task 5 runs in 7 seconds, then we'd have to split the set
+{2, 3, 4, 5, 7}  into two parts that each  sum up to  10. One of these
+parts must contain number 7. So we also put number 3  into that part since
+then it exactly sums to 10.  We are left with numbers 2, 4, and 5, which sum up
+to  11.
+  </div>
+</div>
+
 
 #### Questions
 
@@ -282,7 +339,8 @@ increase the speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec
 core. What should you do if you want to run your program as quickly as
 possible?
 
-
-   
-
+**[A.2.q1.5]** Consider a 6-task program to be executed on a 3-core
+computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
+3s.  What is the best possible (i.e., the optimal) program execution time
+on these 3 cores? Could we do better with 4 cores?
 
