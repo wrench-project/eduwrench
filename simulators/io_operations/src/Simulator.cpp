@@ -262,9 +262,10 @@ int main(int argc, char **argv) {
         simulation.stageFile(file, io_storage_service);
     }
 
+    //simulation.getOutput().enableDiskTimestamps(true);
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false);
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, false);
     //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", true);
     return 0;
 }

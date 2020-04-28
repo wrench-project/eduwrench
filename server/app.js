@@ -624,6 +624,184 @@ app.post("/run/client_server", authCheck, function (req, res) {
     }
 });
 
+// display activity client server visualization route
+app.get("/client_server", authCheck, function (req, res) {
+    res.render("client_server", {
+        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server.svg")
+    });
+});
+
+// execute activity client server simulation route
+app.post("/run/client_server", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
+
+    const SIMULATOR = "client_server_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const SERVER_1_LINK = req.body.server_1_link;
+    const BUFFER_SIZE = req.body.buffer_size;
+    const HOST_SELECT = req.body.host_select;
+    const DISK_TOGGLE = (req.body.disk_toggle == 1) ? 0 : 1;
+
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=maestro.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log=file_transfer_thread.thresh:info",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [SERVER_1_LINK, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "client_server",
+            "server_1_link": SERVER_1_LINK,
+            "buffer_size": BUFFER_SIZE,
+            "host_select": HOST_SELECT,
+            "disk_toggle": DISK_TOGGLE
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
+// display activity client server visualization route
+app.get("/master_worker", authCheck, function (req, res) {
+    res.render("master_worker", {
+        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server.svg")
+    });
+});
+
+// execute activity client server simulation route
+app.post("/run/master_worker", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/master_worker/");
+
+    const SIMULATOR = "master_worker_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const HOST_SPECS = req.body.host_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ");
+    const TASK_SPECS = req.body.task_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ");
+    const TASK_SCHEDULING_SELECT = req.body.task_scheduling_select;
+    const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select;
+
+
+    const TASK_SCHED_SELECT = "--ts "+TASK_SCHEDULING_SELECT;
+    const COMPUTE_SCHED_SELECT = "--cs "+COMPUTE_SCHEDULING_SELECT;
+    let WORKERS = [];
+    let iterator = 0;
+    while(iterator+2<HOST_SPECS.length) {
+        WORKERS.push("--worker "+HOST_SPECS[iterator]+" "+HOST_SPECS[iterator+1]+" "+HOST_SPECS[iterator+2]);
+        iterator+=3;
+    }
+
+
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=maestro.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log=file_transfer_thread.thresh:info",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [TASK_SPECS, WORKERS, TASK_SCHED_SELECT, COMPUTE_SCHED_SELECT].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        let WORKERS_STRIPPED = [];
+        for(let i = 0; i<WORKERS.length; i++){
+            WORKERS_STRIPPED.push(WORKERS[i].replace("--worker", ""));
+        }
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "master_worker",
+            "tasks": TASK_SPECS,
+            "workers": WORKERS_STRIPPED,
+            "task_scheduling_selection": TASK_SCHED_SELECT.replace("--ts",""),
+            "compute_scheduling_selection": COMPUTE_SCHED_SELECT.replace("--cs", "")
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
 function logData(received_data) {
     let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
     console.log(time_now + ": received data");
