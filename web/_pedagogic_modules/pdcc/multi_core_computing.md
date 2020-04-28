@@ -14,7 +14,6 @@ Go through the tabs below in sequence...
 <div class="ui pointing secondary menu">
   <a class="item " data-tab="first">Parallelism</a>
   <a class="item " data-tab="second">Parallelism and RAM</a>
-  <a class="item " data-tab="third">Parallelism and I/O</a>
   <a class="item " data-tab="fourth">Task Dependencies </a>
   <a class="item " data-tab="fifth">Parallelization and Amdahl's Law</a>
   <a class="item " data-tab="sixth">Task and Data Parallelism</a>
@@ -29,10 +28,8 @@ Go through the tabs below in sequence...
   {% include_relative include_multi_core_computing/parallelism_and_ram.md %}
 </div>
 
-<div markdown="1" class="ui tab segment" data-tab="third">
-</div>
-
 <div markdown="1" class="ui tab segment" data-tab="fourth">
+  {% include_relative include_multi_core_computing/task_dependencies.md %}
 </div>
 
 <div markdown="1" class="ui tab segment" data-tab="fifth">

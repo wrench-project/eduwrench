@@ -175,7 +175,7 @@ that parallel efficiency is below 100%.
 
 #### Practice Questions
 
-**[B.p1.1]** You are told that a 10-task program  runs in 1 hour with
+**[A.2.p1.1]** You are told that a 10-task program  runs in 1 hour with
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
 What is the execution time of one task?
 
@@ -192,7 +192,7 @@ What is the execution time of one task?
   </div>
 </div>
 
-**[B.p1.2]** Assume you have 24 tasks to execute on a multi-core computer,
+**[A.2.p1.2]** Assume you have 24 tasks to execute on a multi-core computer,
 where each task runs in 1 second on a core. By what factor is the overall
 execution time reduced when going from 4 to 6 cores?
 
@@ -211,7 +211,7 @@ execution time reduced when going from 4 to 6 cores?
 
 <p></p>
 
-**[B.p1.3]** Assume you now have 3 tasks to compute, still each taking 1 second
+**[A.2.p1.3]** Assume you now have 3 tasks to compute, still each taking 1 second
 on a core. What is the parallel efficiency on a 4-core computer? 
 
 <div class="ui accordion fluid">
@@ -264,18 +264,23 @@ efficiency?
 
 #### Questions
 
-**[B.q1.1]** What would be the parallel efficiency of a 10-task program execution
-   on a 4-core machine where each task runs in 10 minutes?
+**[A.2.q1.1]** What speedup will you observe when running 10 identical (in
+terms of execution time) tasks on 1 core versus these same 10 tasks on 3
+cores?
 
-**[B.q1.2]** You are told that a multi-task program runs in 1 hour on a 3-core machine,
-  and that the parallel efficiency is 90%. How long would the program take if executed
-  using a single core. 
+**[A.2.q1.2]** What would be the parallel efficiency of a 10-task program
+execution on a 4-core machine where each task runs in 10 minutes?
 
-**[B.q1.3]** You have a 20-task program where each task's work is 10 GFlop.
-   You currently have a 4-core compute where each core compute at speed 50
-   GFlop/sec. For the same amount of money you can either (1) increase the
-   speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec core. What
-   should you do if you want to run your program as quickly as possible? 
+**[A.2.q1.3]** You are told that a multi-task program runs in 1 hour on a
+3-core machine, and that the parallel efficiency is 90%. How long would the
+program take if executed using a single core.
+
+**[A.2.q1.4]** You have a 20-task program where each task's work is 10
+GFlop.  You currently have a 4-core compute where each core compute at
+speed 50 GFlop/sec. For the same amount of money you can either (1)
+increase the speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec
+core. What should you do if you want to run your program as quickly as
+possible?
 
 
    
