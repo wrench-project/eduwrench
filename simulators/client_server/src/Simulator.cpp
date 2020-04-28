@@ -147,12 +147,13 @@ int main(int argc, char** argv) {
     int BUFFER;
     std::string BUFFER_STRING;
     int DISK_TOGGLE;
+    int DISK_SPEED;
 
 
     try {
 
-        if (argc != 5) {
-            throw std::invalid_argument("bad args");
+        if (argc != 6) {
+            throw std::invalid_argument("invalid number of arguments");
         }
 
         SERVER_1_LINK = std::stoi(std::string(argv[1]));
@@ -186,8 +187,17 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("invalid disk toggle");
         }
 
+        DISK_SPEED = std::stoi(std::string(argv[5]));
+
+        if (DISK_SPEED <  1 || DISK_SPEED > 10000) {
+            std::cerr << "Invalid disk speed. Speed must be in range [1,10000] MBps" << std::endl;
+            throw std::invalid_argument("invalid link speed");
+        }
+
+
 
     } catch(std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
         std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <buffer> <host_select>" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   buffer: buffer size must be inn range [1,1000000000] bytes" << std::endl;

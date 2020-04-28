@@ -77,6 +77,7 @@ whatsoever.
 
 XXXX FRONT END SHOULD NOT SHOW ANYTHING ABOUT DISK, AND OS THAT THE DISK OVER
 THE FAST NETWORK IS BEST XXXX
+XXX Server 2 has fixed bandwidth, the other one can be tweaked XXX
 
 So that you can gain hands-on experience, use
 the simulation Web application
@@ -93,25 +94,26 @@ able to finish execution much more quickly than Server 1.
 
 #### Practice Questions
 
-  -  Add a couple of obvious practice questions here? XXX
-
+  - Is there a bandwidth for  Server 1 that would make it equivalent to Server 2? (analytically  and  with the  simulation)?  (answer should be no)
+  - What if Server 1 were twice as fast? (answer should be yes)
 
 ### Adding I/O, and Buffering
 
-We has assumed no disk I/O to make things simple, but often the input data
-resides on disk. The application then reads it from disk into RAM and sends it over
-to the server. This now adds a third phase to the execution so that it proceeds as:
+We have assumed no disk I/O to make things simple, but often the input data
+does reside on disk. The application then reads it from disk into RAM and
+sends it over to the server. This now adds a third phase to the execution
+so that it proceeds as:
 
   1. Read data from disk into RAM
   2. Send data from RAM to the server
   3. Compute on the server and reply to the client
 
 The above has problems. First, what if the image does not fit in RAM? Now,
-this is unlikely for this application, as even high-res, uncompressed images
-can typically fit in RAM given current RAM sizes. But client-server could be used
-for applications for which data is large. For instance, you can surely upload
-a large file, larger than your RAM, to a server, and the program that does the
-upload thus cannot store that file in RAM!
+this is unlikely for this application, as even high-res, uncompressed
+images can typically fit in RAM given current RAM sizes. But client-server
+could be used for applications for which data is large. For instance, you
+can surely upload a large file, larger than your RAM, to a server, and the
+program that does the upload thus cannot store that file in RAM!
 
 The second problem is poor performance. This is because phase 2 above has
 to wait for phase 1 to complete. So while the disk is doing its job, the
@@ -134,7 +136,7 @@ become a problem.
 XXXX SIMULATION WITH DIFFERENT FRONT END (THAT SHOWS DISK AND MAKES IT POSSIBLE
 TO PICK A BUFFER SIZE of 2MB, 5MB, or 10 MB, AND the DISK speed is fixed to
 be larger than the largest network speed.... i.e., the DISK is NEVER the
-bottleneck and  regardless of  the buffer size one should always pick the
+bottleneck and regardless of  the buffer size one should always pick the
 same server).
 
 #### Practice Questions
