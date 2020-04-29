@@ -220,6 +220,7 @@ int main(int argc, char** argv) {
 
     try {
         if (argc < 4) {
+            std::cerr << "Arguments too short" << std::endl;
             throw std::invalid_argument("bad args");
         }
         int inc = 0;
@@ -233,10 +234,9 @@ int main(int argc, char** argv) {
                 task_scheduling_selection = std::stof(std::string(argv[inc+1]));
                 task_scheduling_flag = true;
 
-                arguments.erase(arguments.begin()+inc-(2*flags_removed),
-                        arguments.begin()+inc+2-(2*flags_removed));
-                flags_removed += 1;
-                ++inc;
+                arguments.erase(arguments.begin()+inc-(flags_removed),
+                        arguments.begin()+inc+2-(flags_removed));
+                flags_removed += 2;
             } else if (std::string(argv[inc]).compare("--cs") == 0 ) {
                 if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 4) {
                     std::cerr << "invalid compute_scheduling_selection" << std::endl;
@@ -246,39 +246,46 @@ int main(int argc, char** argv) {
                 compute_scheduling_selection = std::stof(std::string(argv[inc + 1]));
                 compute_scheduling_flag = true;
 
-                arguments.erase(arguments.begin() + inc - (2 * flags_removed),
-                                arguments.begin() + inc + 2 - (2 * flags_removed));
-                flags_removed += 1;
+                arguments.erase(arguments.begin() + inc - (flags_removed),
+                                arguments.begin() + inc + 2 - (flags_removed));
+                flags_removed += 2;
                 ++inc;
             } else if (std::string(argv[inc]).compare("--worker") == 0 ){
                 worker_specification_flag = true;
                 workers.push_back(std::make_tuple(std::string(argv[inc+1]),
                                   std::stof(std::string(argv[inc+2])),
                                   std::stof(std::string(argv[inc+3]))));
-                arguments.erase(arguments.begin()+inc-(2*flags_removed), arguments.begin()+inc+4-(2*flags_removed));
-                flags_removed += 2;
+                arguments.erase(arguments.begin()+inc-(flags_removed), arguments.begin()+inc+4-(flags_removed));
+                flags_removed += 4;
                 inc+=3;
             } else if (std::string(argv[inc]).compare("--seed") == 0 ){
                 seed = stol(std::string(argv[inc+1]));
-                arguments.erase(arguments.begin() + inc - (2 * flags_removed),
-                                arguments.begin() + inc + 2 - (2 * flags_removed));
-                flags_removed += 1;
+                arguments.erase(arguments.begin() + inc - (flags_removed),
+                                arguments.begin() + inc + 2 - (flags_removed));
+                flags_removed += 2;
                 ++inc;
+            } else if (std::string(argv[inc]).rfind("--log", 0) == 0){
+                arguments.erase(arguments.begin() + inc - (flags_removed),
+                                arguments.begin() + inc + 1 - (flags_removed));
+                flags_removed += 1;
             }
             ++inc;
         }
 
-        if ((argc-1-(flags_removed*2))%3 != 0) {
+
+        if ((argc-1-(flags_removed))%3 != 0) {
             std::cerr << "Missing task specifications. Each task must have an input, flops and output specified." << std::endl;
             throw std::invalid_argument("Missing task specifications. Each task must have an input, flops and output specified.");
         }
 
-        if ((argc-1-(flags_removed*2))/3 > MAX_NUM_TASKS) {
+
+        if ((argc-1-(flags_removed))/3 > MAX_NUM_TASKS) {
             std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
             throw std::invalid_argument("invalid number of files");
         }
 
-        for (int i = 1; i < (argc-(flags_removed*2)); i+=3) {
+
+        for (int i = 1; i < (argc-(flags_removed)); i+=3) {
             double input = std::stof(std::string(arguments[i]));
             double flops = std::stof(std::string(arguments[i+1]));
             double output = std::stof(std::string(arguments[i+2]));
