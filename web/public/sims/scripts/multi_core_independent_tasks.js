@@ -53,41 +53,45 @@ $(function () {
     });
 
     // Update the label that says how much RAM is used by each task
-    $("#task-ram").on("keyup", function () {
-        let task_ram_input_el = $(this);
-        let task_ram_input_value = parseInt(task_ram_input_el.val());
-        let task_ram_label_el = $(".task-ram-label");
-
-        if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
-
-            task_ram_label_el.text(task_ram_input_value + "GB")
-                .css("background-color", "#d3ffe9");
-
-            task_ram_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task_ram_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_ram_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task_ram_label_el.css("background-color", "#ffb7b5");
-            task_ram_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
+    // $("#task-ram").on("keyup", function () {
+    //     let task_ram_input_el = $(this);
+    //     let task_ram_input_value = parseInt(task_ram_input_el.val());
+    //     let task_ram_label_el = $(".task-ram-label");
+    //
+    //     if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
+    //
+    //         task_ram_label_el.text(task_ram_input_value + "GB")
+    //             .css("background-color", "#d3ffe9");
+    //
+    //         task_ram_input_el.removeClass("is-invalid")
+    //             .addClass("is-valid");
+    //
+    //         setTimeout(function () {
+    //             if (task_ram_label_el.css("background-color") == "rgb(211, 255, 233)") {
+    //                 task_ram_label_el.css("background-color", "");
+    //             }
+    //         }, 500);
+    //     } else {
+    //         task_ram_label_el.css("background-color", "#ffb7b5");
+    //         task_ram_input_el.removeClass("is-valid")
+    //             .addClass("is-invalid");
+    //     }
+    // });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
     $("#task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
         let task_gflop_label_el = $(".task-gflop-label");
+        console.log("===>" + task_gflop_label_el);
+        console.log("===>" + JSON.stringify(task_gflop_label_el, null, 4));
 
         if (task_gflop_input_value >= 1 && task_gflop_input_value < 1000) {
 
+        console.log("===> HERE");
             task_gflop_label_el.text(task_gflop_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
+            console.log("====> DONE");
 
             task_gflop_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
@@ -98,6 +102,7 @@ $(function () {
                 }
             }, 500);
         } else if (task_gflop_input_value >= 1000 && task_gflop_input_value < 1000000) {
+        console.log("===> THERE");
             task_gflop_label_el.text(task_gflop_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
@@ -110,6 +115,7 @@ $(function () {
                 }
             }, 500);
         } else {
+        console.log("===> THERE2");
             task_gflop_label_el.css("background-color", "#ffb7b5");
             task_gflop_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
@@ -143,7 +149,7 @@ $(function () {
                     num_cores: $("#num-cores").val(),
                     num_tasks: $("#num-tasks").val(),
                     task_gflop: $("#task-gflop").val(),
-                    task_ram: $("#task-ram").val(),
+                    task_ram: 0,
                     userName: userName,
                     email: email
                 }),
@@ -153,7 +159,7 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                console.log(response.task_data.workflow_execution.tasks);
+                // console.log(response.task_data.workflow_execution.tasks);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 generateGraph(prepared_data, "workflow-execution-chart", "taskView", 900, 500);

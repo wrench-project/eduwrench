@@ -21,8 +21,7 @@ in which tasks do different things altogether. For instance, a 2-task program
 could have one task apply some analysis to a dataset and
 another task uncompress a file on disk. 
 
-As mentioned in the [Single Core Computing]({{ site.baseurl
-}}/pedagogic_modules/single_core_computing) module, we do not consider time
+As mentioned in the [Single Core Computing]({{ site.baseurl}}/pedagogic_modules/single_core_computing) module, we do not consider time
 sharing. That is, **we will only consider executions in which at most one
 task runs on a core at a given time.** Although Operating Systems allow
 time-sharing, we will never start more tasks than cores on the
@@ -41,7 +40,7 @@ time, and ideally in
 two hours. This concept is called **parallelism**: running multiple 
 tasks at the same time, or *concurrently*, to complete a set of tasks faster.
 
-Unfortunately, most real-world applications do not have ideal
+Unfortunately, most real-world programs do not have ideal
 parallelism behavior, that is, executing *n* times faster with *n*
 cores. Instead, they execute less than *n* times faster. This may seem
 surprising, but comes about due to many reasons. For instance, when two
@@ -69,7 +68,7 @@ $$
 \end{align}
 $$
 
-For instance, if an application runs in 3 hours on 1 core but runs in 2 hours on 2 
+For instance, if a program runs in 3 hours on 1 core but runs in 2 hours on 2 
 cores, then its speedup is:
 
 $$
@@ -106,7 +105,7 @@ $$
 In the best case, the efficiency would be 100% (which corresponds to going
 *p* times faster with *p* cores). In the above example, it is only 75%, meaning
 that we are "wasting" some of the available compute capacity of our machine during 
-the application's execution. 
+the program's execution. 
 
 At this point, you may be wondering how getting less than 100% efficiency
 is possible?
@@ -153,13 +152,14 @@ is wasted. You get the idea.
 So that you can gain hands-on experience, use the simulation Web application below.
 
 This app allows you to pick a number of cores and an a number of tasks to run on these cores. 
-Try first with a single core running 5 tasks (ignore the "Ram Needed For Each 
-Task" field, and leave the "Task GFlop" field at 100). Take particular notice 
+Try first with a single core running 5 tasks (you can vary the tasks' amount
+of work by setting the "Task GFlop" field to any value, but it will not change
+the overall execution pattern). Take particular notice 
 of the "Host Utilization" graph. Now try running a number of tasks and cores where 
 the number of tasks does not evenly divide the number of cores. Looking at the 
 host utilization graph again, now you will be able to see idle time for some of 
-the cores (in pink). Whenever we can see that on the graph, we know 
-that parallel efficiency is below 100%. 
+the cores (in pink). Whenever we can see idle time on the graph,
+parallel efficiency is below 100%. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -311,10 +311,10 @@ possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in
   </div>
   <div markdown="1" class="ui segment content">
 Nope. If Task 5 runs in 7 seconds, then we'd have to split the set
-{2, 3, 4, 5, 7}  into two parts that each  sum up to  10. One of these
-parts must contain number 7. So we also put number 3  into that part since
-then it exactly sums to 10.  We are left with numbers 2, 4, and 5, which sum up
-to  11.
+{2, 3, 4, 5, 7} into two parts that each sum up to 10. One of these
+parts must contain number 7. So we also put number 3 into that part since
+then it exactly sums to 10. We are left with numbers 2, 4, and 5, which sum up
+to 11.
   </div>
 </div>
 
@@ -333,7 +333,7 @@ execution on a 4-core machine where each task runs in 10 minutes?
 program take if executed using a single core.
 
 **[A.2.q1.4]** You have a 20-task program where each task's work is 10
-GFlop.  You currently have a 4-core compute where each core compute at
+GFlop. You currently have a 4-core compute where each core compute at
 speed 50 GFlop/sec. For the same amount of money you can either (1)
 increase the speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec
 core. What should you do if you want to run your program as quickly as
@@ -341,6 +341,6 @@ possible?
 
 **[A.2.q1.5]** Consider a 6-task program to be executed on a 3-core
 computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
-3s.  What is the best possible (i.e., the optimal) program execution time
+3s. What is the best possible (i.e., the optimal) program execution time
 on these 3 cores? Could we do better with 4 cores?
 

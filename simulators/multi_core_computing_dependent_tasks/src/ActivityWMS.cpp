@@ -46,7 +46,7 @@ namespace wrench {
             std::sort(ready_tasks.begin(), ready_tasks.end(),
                       [](const WorkflowTask *t1,
                                const WorkflowTask *t2) -> bool {
-                            return (t1->getID() > t2->getID());
+                            return (t1->getID() < t2->getID());
                           }
                       );
 

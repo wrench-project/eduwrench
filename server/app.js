@@ -982,7 +982,7 @@ function logData(received_data) {
         // cannot simply append since we are writing as json
         fs.writeFile(DATA_FILE, JSON.stringify(current_json_data), function (err) {
             if (err) {
-                console.log("app.post('/io_operations') callback: there was a problem writing the json file");
+                console.log("app.post('" + received_data.activity +"') callback: there was a problem writing the json file");
                 console.log(err);
                 return false;
             }

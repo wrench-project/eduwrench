@@ -24,17 +24,17 @@ represent such applications is a *Directed Acyclic Graph (DAG)*, in which
 application, the DAG representation is straightforward, and depicted in
 Figure 1 below:
 
-[ Figure 1 ]
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Chain DAG</object>
 
 Going back to computing, here is a typical example of task dependencies.
 Consider an application that counts the number of car objects in a set of
 compressed street pictures. Each picture needs to be uncompressed,
-pre-processed, (e.g., to remove noise), analyzed (to find and count cars),
-and re-compressed. And then, once this has been done for each picture, the
-car counts need to be aggregated. Say that we have 10 compressed pictures,
+pre-processed, (e.g., to remove noise), analyzed (to find and count cars).  And
+then, once this has been done for each picture, car count statistics need
+to be displayed.  Say that we have 5 compressed pictures,
 the application can be represented as a DAG as in Figure 2 below:
 
-[ Figure 2 ]
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_car_dag.svg">InTree DAG</object>
 
 Note that each task above can involve both I/O and computation. For
 instance, the "uncompress" task must read in a picture file from disk, and
@@ -54,29 +54,32 @@ needs to perform three things: produce some visualization, perform some
 analysis, and compute some statistics. The visualization and the statistics
 are compute in spearate tasks, "viz" and "stats". The analyzes, however, is
 quite expensive. And so the developer of the program has made it possible
-use multipe tasks to do it. Instead of a single massive task, there is
+use multiple tasks to do it. Instead of a single massive task, there is
 first a "split" tasks that partitions the dataset into pieces, and then a
-configurable number of "analysis" tasks, that each work on a piece. The
+configurable number of "analyze" tasks, that each work on a piece. The
 developer did this knowing that the application can be executed on
 multi-core architectures. Finally, once all the above tasks has completed,
 the program performs a "display" task that displays results. The figure below
-shows the DAG for this program when it uses 3 analysis tasks. 
+shows the DAG for this program when it uses 3 analyze tasks, showing the work of
+each task:
 
-The work of each analysis task is 3000 GFlop  divided by the number  of
-these tasks (so in this case 1000 GFLop). This is because the total work
-for performing the analysis is 3000 GFlop, and we split it equally  over
-the different tasks.
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_simulated_dag.svg">Simulated DAG</object>
 
+The total work for analyzing the dataset is 3000 GFlop, which
+is divided as equally as possible across the individual
+"analyze" tasks (which is why in the example above each of them has
+work of 1000 GFlop).
 
-So that you can gain hands-on experience with the task dependency concept, 
-the simulation Web app below can  be used to simulate the execution
+To gain hands-on experience with the task dependency concept, use
+the simulation Web app below to simulate the execution
 of our example program on a 6-core computer, varying the number of analysis
 tasks between 1 and 6 (no point using more than 6 analysis tasks since we have
-only 6 cores).  The execution strategy is very simple: whenever a task can be 
-executed (because all its parent tasks have been executed), if  there is an idle
-core then execute that task immediately. Run the simulation with the
+only 6 cores). The execution strategy used for this execution
+is very simple: whenever a task can be executed (because all its parent 
+tasks have been executed), whenever a host is idle, then execute that task on
+that host immediately. First run the simulation with the
 default number of analysis tasks (3), and make sure that the simulation
-output makes sense to you.
+output makes sense to you  (in particular the order of task executions).
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
