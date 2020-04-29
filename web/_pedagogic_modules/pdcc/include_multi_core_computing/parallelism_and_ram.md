@@ -47,7 +47,7 @@ constraints.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content">
-    {% include simulator.html src="multi_core/" %}
+    {% include simulator.html src="multi_core_independent_tasks_ram/" %}
   </div>
 </div>
 
