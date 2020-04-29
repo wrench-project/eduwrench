@@ -384,16 +384,91 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     }
 });
 
+// display activity multi_core_dependent_tasks visualization route
+app.get("/multi_core_dependent_tasks", authCheck, function (req, res) {
+    res.render("multi_core_dependent_tasks", {
+        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_dependent_task.svg")
+    });
+});
+
+// execute activity multi core dependent tasks simulation route
+app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_dependent_tasks/");
+
+    const SIMULATOR = "multi_core_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_CORES = 6;
+    const NUM_TASKS = req.body.num_tasks;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "multi_core_dependent_tasks",
+            "num_cores": NUM_CORES,
+            "num_tasks": NUM_TASKS,
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
+
 
 // display activity multi core visualization route
-app.get("/multi_core", authCheck, function (req, res) {
-    res.render("multi_core", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_task.svg")
+app.get("/multi_core_independent_tasks", authCheck, function (req, res) {
+    res.render("multi_core_independent_tasks", {
+        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_independent_task.svg")
     });
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core", authCheck, function (req, res) {
+app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_independent_tasks/");
 
     const SIMULATOR = "multi_core_simulator";

@@ -43,6 +43,12 @@ namespace wrench {
         while (true) {
             // Get the ready tasks and SORT them by taskID
             std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
+            std::sort(ready_tasks.begin(), ready_tasks.end(),
+                      [](const WorkflowTask *t1,
+                               const WorkflowTask *t2) -> bool {
+                            return (t1->getID() > t2->getID());
+                          }
+                      );
 
             // Get the available compute services, in this case only one
             const auto compute_services = this->getAvailableComputeServices<ComputeService>();

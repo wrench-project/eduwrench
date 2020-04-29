@@ -13,15 +13,15 @@
 #include "ActivityScheduler.h"
 
 /**
- * @brief Generates an independent-task Workflow
+ * @brief Generates a dependent-task Workflow
  *
  * @param workflow
- * @param num_tasks: number of tasks
+ * @param num_tasks: number of tasks  in bottom level
  * @param task_gflop: Task GFlop rating
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop, int task_ram) {
+void generateWorkflow(wrench::Workflow *workflow, int num_tasks) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -31,14 +31,6 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
         throw std::invalid_argument("generateWorkflow(): number of tasks must be at least 1");
     }
 
-    if (task_gflop < 1) {
-        throw std::invalid_argument("generateWorkflow(): task GFlop must be at least 1");
-    }
-
-    if (task_ram < 0) {
-        throw std::invalid_argument("generateWorkflow(): task GB must be at least 0");
-    }
-
     // WorkflowTask specifications
     const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
     const unsigned long    MIN_CORES = 1;
@@ -46,18 +38,48 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
     const double PARALLEL_EFFICIENCY = 1.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
+    /**
+     *
+     *                    start
+     *              /       |     \
+     *            /         |      \
+     *          /           |       \
+     *      viz           split      stats
+     *                    /  |  \
+     *             analyze1 .... analyze2
+     *
+     *
+     *                   display
+     */
     // create the tasks
+    auto task_start  = workflow->addTask("start", 50*GFLOP, 1, 1, 1.0, 0);
+    auto task_viz = workflow->addTask("viz", 200*GFLOP, 1, 1, 1.0, 0);
+    auto task_stats = workflow->addTask("stats", 400*GFLOP, 1, 1, 1.0, 0);
+    auto task_split = workflow->addTask("split", 50*GFLOP, 1, 1, 1.0, 0);
+    wrench::WorkflowTask *tasks_analyze[num_tasks];
+    double analyze_gflops = 3000*GFLOP;
     for (int i = 0; i < num_tasks; ++i) {
-        std::string task_id("task" + std::to_string(i));
-        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, task_ram * GB);
+        tasks_analyze[i] = workflow->addTask("analyze_" + std::to_string(i), analyze_gflops/num_tasks, 1, 1, 1.0, 0);
     }
+    auto task_display = workflow->addTask("display", 10*GFLOP, 1, 1, 1.0, 0);
+
+    // create the task dependencies
+    workflow->addControlDependency(task_start, task_viz);
+    workflow->addControlDependency(task_start, task_split);
+    workflow->addControlDependency(task_start, task_split);
+    for (int i=0; i < num_tasks; ++i) {
+        workflow->addControlDependency(task_split, tasks_analyze[i]);
+        workflow->addControlDependency(tasks_analyze[i], task_display);
+    }
+    workflow->addControlDependency(task_viz, task_display);
+    workflow->addControlDependency(task_stats, task_display);
 }
 
 /**
  * @brief Generates a platform with a single multi-core host
  * @param platform_file_path: path to write the platform file to
  *
- * @throws std::invalid_argumemnt
+ * @throws std::invalid_argument
  */
 void generatePlatform(std::string platform_file_path) {
 
@@ -70,7 +92,7 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"the_host\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"the_host\" speed=\"10Gf\" core=\"6\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
@@ -104,7 +126,7 @@ int main(int argc, char** argv) {
 
     try {
 
-        if (argc != 5) {
+        if (argc != 3) {
             throw std::invalid_argument("bad args");
         }
 
@@ -122,35 +144,18 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("invalid number of tasks");
         }
 
-        TASK_GFLOP = std::stoi(std::string(argv[3]));
-
-        if (TASK_GFLOP < 1) {
-            std::cerr << "Invalid task gflop. Enter a value greater than 1" << std::endl;
-            throw std::invalid_argument("invalid task gflop");
-        }
-
-        TASK_MEMORY = std::stoi(std::string(argv[4]));
-
-        if (TASK_MEMORY < 0) {
-            std::cerr << "Invalid task memory. Enter a value greater than 0" << std::endl;
-            throw std::invalid_argument("invalid task gflop");
-        }
-
-
     } catch(std::invalid_argument &e) {
-        std::cerr << "Usage: " << argv[0] << " <num_cores> <num_tasks> <task_gflop> <task_ram>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <num_cores> <num_tasks>" << std::endl;
         std::cerr << "   num_cores: number of cores [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
         std::cerr << "   num_tasks: number of tasks (> 0)" << std::endl;
-        std::cerr << "   task_gflop: task GFlop (> 0)" << std::endl;
-        std::cerr << "   task_ram: task GB (>= 0)" << std::endl;
         std::cerr << "" << std::endl;
-        std::cerr << "   (Core speed is always 100GFlop/sec, Host RAM capacity is always 32 GB)" << std::endl;
+        std::cerr << "   (Core speed is always 10GFlop/sec)" << std::endl;
         return 1;
     }
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, NUM_TASKS, TASK_GFLOP, TASK_MEMORY);
+    generateWorkflow(&workflow, NUM_TASKS);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";

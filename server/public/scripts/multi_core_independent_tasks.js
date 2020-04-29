@@ -3,7 +3,6 @@
 $(function() {
 
 
-
     // Update the label that says how many cores each compute node has
     $("#num-cores").on("keyup", function() {
         let num_cores_input_el = $(this);
@@ -135,7 +134,7 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen. 
         $.ajax({
-            url: '/run/multi_core',
+            url: '/run/multi_core_independent_tasks',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(

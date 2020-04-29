@@ -12,12 +12,12 @@ include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /
 
 # source files
 set(SOURCE_FILES
-        include/ActivityWMS.h
-        src/ActivityWMS.cpp
-        include/ActivityScheduler.h
-        src/ActivityScheduler.cpp
-        src/Simulator.cpp
-        )
+include/ActivityWMS.h
+src/ActivityWMS.cpp
+include/ActivityScheduler.h
+src/ActivityScheduler.cpp
+src/Simulator.cpp
+)
 
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
@@ -26,7 +26,7 @@ find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(multi_core_simulator ${SOURCE_FILES})
 target_link_libraries(multi_core_simulator
-        ${WRENCH_LIBRARY}
-        ${SIMGRID_LIBRARY}
-        ${PUGIXML_LIBRARY}
-        )
+${WRENCH_LIBRARY}
+${SIMGRID_LIBRARY}
+${PUGIXML_LIBRARY}
+)
