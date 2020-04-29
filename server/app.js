@@ -751,8 +751,7 @@ function logData(received_data) {
         fs.writeFile(DATA_FILE, JSON.stringify(current_json_data), function (err) {
             if (err) {
 
-                ///TODO should this be /io_operations for everything.
-                console.log("app.post('/io_operations') callback: there was a problem writing the json file");
+                console.log("app.post('" + received_data.activity +"') callback: there was a problem writing the json file");
                 console.log(err);
                 return false;
             }
