@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 'DRAFT'
+title: 'A.3 Master Worker'
 order: 133
 usemathjax: true
 submodule: 'distributed_computing'
