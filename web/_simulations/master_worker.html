@@ -10,74 +10,87 @@ permalink: simulations/master_worker/
 
 <div class="form-group col-md-6">
     <label for="host_specs">List of workers ([GFlops][Bandwidth to Master])</label>
-    <input type="text" class="form-control" id="host-specs" placeholder="100 100, 100 100" value="100 100, 100 100" required>
+    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([GFlops][Bandwidth to Master], ...)
     </div>
 </div>
 
 <div class="form-group col-md-6">
-    <label for="task_specs">List of tasks ([Input MB][Flop][Output MB])</label>
-    <input type="text" class="form-control" id="task-specs" placeholder="100 1000000000 100, 100 1000 100" value="100 1000000000 100, 100 1000 100" required>
+    <label for="task_specs">List of tasks ([Input MB][GFlop][Output MB])</label>
+    <input type="text" class="form-control" id="task-specs" placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required>
     <div class="invalid-feedback">
-        Please provide a comma- or space-separated list of host specifications. ([Input MB][Flop][Output MB], ...)
+        Please provide a comma- or space-separated list of host specifications. ([Input MB][GFlop][Output MB], ...)
     </div>
 </div>
+<grid>
 
-<div class="form-group col-md-6">
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="0" checked>
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Random
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="1">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Highest Flop
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="2">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Lowest Flop
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="3">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Highest Bytes
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="4">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Lowest Bytes
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="5">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Highest Flop/Bytes
-    </label>
-    <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="6">
-    <label class="radio-inline control-label" for="task_scheduling_select">
-        Lowest Flop/Bytes
-    </label>
-</div>
+    <row>
+        <span><b>Task Scheduling</b></span>
+    </row>
+    <row>
+        <div class="form-group radio-form-fix">
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="0" checked>
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Random
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="1">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Highest Flop
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="2">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Lowest Flop
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="3">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Highest Bytes
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="4">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Lowest Bytes
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="5">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Highest Flop/Bytes
+            </label>
+            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="6">
+            <label class="radio-inline control-label" for="task_scheduling_select">
+                Lowest Flop/Bytes
+            </label>
+        </div>
+    </row>
+</grid>
+<grid>
+    <row>
+        <span><b>Worker Scheduling</b></span>
+    </row>
+    <row>
+        <div class="form-group radio-form-fix">
 
-<div class="form-group col-md-6">
-    <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="0" checked>
-    <label class="radio-inline control-label" for="compute_scheduling_select">
-        Random
-    </label>
-    <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="1" >
-    <label class="radio-inline control-label" for="compute_scheduling_select">
-        Fastest Worker
-    </label>
-    <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="2" >
-    <label class="radio-inline control-label" for="compute_scheduling_select">
-        Best-Connected Worker
-    </label>
-    <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="3" >
-    <label class="radio-inline control-label" for="compute_scheduling_select">
-        Largest Compute/IO Time Ratio
-    </label>
-    <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="4" >
-    <label class="radio-inline control-label" for="compute_scheduling_select">
-        Earliest Completion
-    </label>
-</div>
-
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="0" checked>
+            <label class="radio-inline control-label" for="compute_scheduling_select">
+                Random
+            </label>
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="1" >
+            <label class="radio-inline control-label" for="compute_scheduling_select">
+                Fastest Worker
+            </label>
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="2" >
+            <label class="radio-inline control-label" for="compute_scheduling_select">
+                Best-Connected Worker
+            </label>
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="3" >
+            <label class="radio-inline control-label" for="compute_scheduling_select">
+                Largest Compute/IO Time Ratio
+            </label>
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="4" >
+            <label class="radio-inline control-label" for="compute_scheduling_select">
+                Earliest Completion
+            </label>
+        </div>
+    </row>
+</grid>
 
 {% include partials/simulation_parameters_form_end.html %}
 
