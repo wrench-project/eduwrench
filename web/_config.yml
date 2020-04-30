@@ -12,7 +12,7 @@ google-analytics: 'UA-18066333-13'
 
 # General options
 title: 'eduWRENCH - Pedagogic Modules'
-tagline: 'Distributed Computing Courseware'
+tagline: 'Parallel and Distributed Computing Courseware'
 description: 'eduWRENCH Pedagogic Modules'
 version: '1.0-dev'
 
