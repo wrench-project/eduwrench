@@ -8,7 +8,7 @@ $(function () {
 
         if (analyze_work_input_value >= 1 && analyze_work_input_value < 1000) {
 
-            analyze_work_label_el.text(analyze_work_input_value + " Task(s)")
+            analyze_work_label_el.text(analyze_work_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
 
             analyze_work_input_el.removeClass("is-invalid")
@@ -19,9 +19,21 @@ $(function () {
                     analyze_work_label_el.css("background-color", "");
                 }
             }, 500);
+        } else if (analyze_work_input_value >= 1000 && analyze_work_input_value < 1000000) {
+            analyze_work_label_el.text(analyze_work_input_value / 1000 + " TFlop")
+                .css("background-color", "#d3ffe9");
+
+            analyze_work_input_value.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (analyze_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    analyze_work_label_el.css("background-color", "");
+                }
+            }, 500);
         } else {
             analyze_work_label_el.css("background-color", "#ffb7b5");
-            analyze_work_input_el.removeClass("is-valid")
+            analyze_work_input_value.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });

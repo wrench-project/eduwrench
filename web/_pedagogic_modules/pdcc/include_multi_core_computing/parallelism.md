@@ -138,6 +138,12 @@ The second core is idle for 15 minutes, and then computes for 45 minutes. This e
 is depicted in the figure below, where idle time is shown in white and compute time in yellow:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
+<div class="caption"><strong>Figure A.2.1.1:</strong>
+Depiction of an 1-hour execution in which one core computes for 30 minutes 
+and then is idle for 30 minutes, and another core is idle for 15 minutes 
+and then computes for 45 minutes.  The white area is the idle time, 
+the yellow area is the compute time. </div>
+
 
 What the above statement says is that the parallel efficiency is the yellow area 
 divided by the area of the whole rectangle. In other words, the parallel efficiency 
