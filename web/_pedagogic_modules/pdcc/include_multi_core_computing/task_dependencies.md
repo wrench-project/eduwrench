@@ -49,7 +49,7 @@ know RAM capacity is limited.
 For now, to keep things simple, let's assume that tasks take zero RAM and
 that they perform no I/O. Let's consider an example program that is used to
 analyze some dataset. It begins with a "start" task that does some
-preprocessing of the in-RAM dataset. Then, once the preprocessing is done, it
+pre-processing of the in-RAM dataset. Then, once the pre-processing is done, it
 needs to perform three things. Namely, it needs to produce some visualization, perform some
 analysis, and compute some statistics:
 
@@ -301,7 +301,7 @@ problem known as  "DAG scheduling". We explore this advanced topic in later modu
 for now we can get a sense for it via our example. 
 
 Let's say that we now must run
-the probram on a *2-core* computer. Therefore we have a choice after "start" completes: 
+the program on a *2-core* computer. Therefore we have a choice after "start" completes: 
 we have 3 ready tasks 
 and only 2 cores. Say we run "analyze" and "stats". If "analyze" completes before "stats",
 then we have another choice: 
@@ -314,14 +314,13 @@ A good and popular rule of thumb is, whenever there is a choice  to make, **pick
 on  the  critical path.** After all it's critical! 
 
 
-So see the impact of such decisions, the simulation app below allows
+To see the impact of such decisions, the simulation app below allows
 you to simulate application execution while prioritizing some execution paths. For instance,
 if you select "viz/analyze", whenever there is a choice, we always pick a visualization or an analysis task
 over the "stats" task.  
 
 You can experiment  yourself with different settings,  and use the app to
 answer  the practice  questions thereafter.
-
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -335,8 +334,9 @@ answer  the practice  questions thereafter.
 
 #### Practice Questions
 
-**[A.2.p3.6]** For our example program on our 2-core compute  **using 2 "analyze" tasks**, 
-is prioritizing tasks on the critical path a good idea? 
+**[A.2.p3.6]** Setting the "analyze" task's work to 10 GFlop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
+If so, which ones should
+be prioritized? Can you venture an explanation?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -345,7 +345,17 @@ is prioritizing tasks on the critical path a good idea?
   </div>
   <div markdown="1" class="ui segment content">
 
-XXX
+Yes, it does matter! Not prioritizing the statistics path is a mistake. This is because the statistics
+path is the critical path. Not counting the "start" and "display" tasks, the visualization path runs in 30s,
+the analysis path in 11s, and the stats path in 40s. This is **exactly** the scheduling problem that
+we looked at in the first tab of this page: partition a set of numbers into two groups so that their sum is
+as close to each other as possible!  The best choice for this grouping here is clearly {30, 11} and {40}.
+In other words, one one core we should run the visualization and the analysis path, and on the other we should
+run the statistics path. 
+
+So, if we prioritize both the visualization and  analysis paths after task "start"
+completes, they will run on  different cores, which is a bad choice (as the groupings
+will be {30} and {11, 40}).
 
   </div>
 </div>
@@ -353,8 +363,9 @@ XXX
 <p></p>
 
 
-**[A.2.p3.7]** Running our program with XXX "analyze" tasks, is prioritizing tasks
-on the critical path still a good idea? 
+**[A.2.p3.7]** Is it possible that, for some  amount of work of  the "analyze"  task,
+all three different prioritizing options lead to three different execution times  
+(when executing the program on 2 cores)? 
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -362,8 +373,33 @@ on the critical path still a good idea?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
+This is perhaps not an easy question, as it requires to thing about this abstractly
+(if one doesn't want to examine all possible options). The answer is "no". Let's see
+why.
 
-XXX
+
+We can look a this question at a very abstract level: we have 
+three "things" to run, let's call them *A*, *B*, and *C*. (Each of them is one of our
+three paths,  without including the "start" and "display" tasks). 
+Let   *a*, *b*, and *c*  be their execution times. Say, without loss of generality,
+that *a* <= *b* <= *c*. Then, we can see what runs on each core for each option that
+prioritizes two of them:
+
+|-------|--------|--------| 
+|  prioritizing | core  #1 | core #2|
+|  *A* and *B* | *A*, then *C*  |  *B*   |
+|  *A* and *C* | *A*, then *B*  |  *C*   |
+|  *B* and *C* | *B*, then *A*  |  *C*   |
+|---|---|---|
+
+The two prioritized things start first. Then the third thing runs on the core that
+becomes idle first (i.e., the core that  was running the shortest thing). 
+
+We  note that in the table above, the 2nd and 3rd row are identical. That is, the cores
+finish computing at the same time.  The only  thing that changes is the order in which
+things run on core #1 ("*A* then *B*" or  "*B* then *A*"). 
+Therefore, two of the prioritization options always produce the same outcome in  terms
+of overall program execution time! 
 
   </div>
 </div>

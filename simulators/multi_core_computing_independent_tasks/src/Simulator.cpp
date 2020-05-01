@@ -61,7 +61,7 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
  *
  * @throws std::invalid_argumemnt
  */
-void generatePlatform(std::string platform_file_path) {
+void generatePlatform(std::string platform_file_path, int num_cores) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -72,7 +72,7 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"the_host\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"the_host\" speed=\"100Gf\" core=\"" + std::to_string(num_cores)  + "\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
@@ -156,7 +156,7 @@ int main(int argc, char** argv) {
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path);
+    generatePlatform(platform_file_path, NUM_CORES);
     simulation.instantiatePlatform(platform_file_path);
 
 

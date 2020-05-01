@@ -40,9 +40,6 @@ $(function () {
         let userName = localStorage.getItem("userName");
         let email = localStorage.getItem("email");
 
-        console.log("HERE!!");
-        console.log("HERE" + $("#scheduling-scheme-select").val())
-
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
         // Then a response with simulation data is received. The data is parsed, and rendered on the
@@ -55,7 +52,7 @@ $(function () {
                 {
                     num_cores: "2",
                     analyze_work: $("#analyze-work").val(),
-                    scheduling_scheme: $("#scheduling-scheme-select").val(),
+                    scheduling_scheme: $('input[name="scheduling-scheme-select"]:checked').val(),
                     userName: userName,
                     email: email
                 }),
