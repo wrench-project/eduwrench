@@ -809,17 +809,24 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select;
 
 
+
     const TASK_SCHED_SELECT = ["--ts", TASK_SCHEDULING_SELECT];
     const COMPUTE_SCHED_SELECT = ["--cs", COMPUTE_SCHEDULING_SELECT];
     let WORKERS = [];
     let iterator = 0;
     while(iterator+1<HOST_SPECS.length) {
         WORKERS.push("--worker");
-        WORKERS.push("host_"+iterator);
+        WORKERS.push("host_"+Math.floor(iterator/2));
         WORKERS.push(HOST_SPECS[iterator]);
         WORKERS.push(HOST_SPECS[iterator+1]);
         iterator+=2;
-    };
+    }
+
+    iterator = 0;
+    while(iterator+2<TASK_SPECS.length) {
+        TASK_SPECS[iterator+1] = (parseInt(TASK_SPECS[iterator+1])*1000000000).toString(); //converting to flop from Gflop
+        iterator+=3;
+    }
 
 
 
@@ -829,9 +836,9 @@ app.post("/run/master_worker", authCheck, function (req, res) {
         "--log=root.thresh:critical",
         "--log=maestro.thresh:critical",
         "--log=wms.thresh:debug",
+        "--log=wrench_core_workunit_executor.thresh:info",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log=file_transfer_thread.thresh:info",
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
