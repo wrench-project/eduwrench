@@ -400,8 +400,9 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
 
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
-    const NUM_CORES = 6;
-    const NUM_TASKS = req.body.num_tasks;
+    const NUM_CORES = req.body.num_cores;
+    const ANALYZE_WORK = req.body.analyze_work;
+    const SCHEDULING_SCHEME = req.body.scheduling_scheme;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -412,7 +413,7 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS].concat(LOGGING);
+    const SIMULATION_ARGS = [NUM_CORES, ANALYZE_WORK, SCHEDULING_SCHEME].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -437,7 +438,8 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "multi_core_dependent_tasks",
             "num_cores": NUM_CORES,
-            "num_tasks": NUM_TASKS,
+            "analyze_work": ANALYZE_WORK,
+            "scheduling_scheme": SCHEDULING_SCHEME
         });
 
         /**

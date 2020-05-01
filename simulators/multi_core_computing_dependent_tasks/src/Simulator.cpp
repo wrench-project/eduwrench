@@ -21,14 +21,14 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int num_tasks) {
+void generateWorkflow(wrench::Workflow *workflow, double analyze_work) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
     }
 
-    if (num_tasks < 1) {
-        throw std::invalid_argument("generateWorkflow(): number of tasks must be at least 1");
+    if (analyze_work < 1) {
+        throw std::invalid_argument("generateWorkflow(): analyze  work must be at least 1");
     }
 
     // WorkflowTask specifications
@@ -44,34 +44,30 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks) {
      *              /       |     \
      *            /         |      \
      *          /           |       \
-     *      viz           split      stats
-     *                    /  |  \
-     *             analyze1 .... analyze2
+     *      viz           analyze     stats
+     *       |              |
+     *      plot          summarize
      *
      *
      *                   display
      */
     // create the tasks
-    auto task_start  = workflow->addTask("start", 50*GFLOP, 1, 1, 1.0, 0);
-    auto task_viz = workflow->addTask("viz", 200*GFLOP, 1, 1, 1.0, 0);
-    auto task_stats = workflow->addTask("stats", 400*GFLOP, 1, 1, 1.0, 0);
-    auto task_split = workflow->addTask("split", 50*GFLOP, 1, 1, 1.0, 0);
-    wrench::WorkflowTask *tasks_analyze[num_tasks];
-    double analyze_gflops = 3000*GFLOP;
-    for (int i = 0; i < num_tasks; ++i) {
-        tasks_analyze[i] = workflow->addTask("analyze_" + std::to_string(i), analyze_gflops/num_tasks, 1, 1, 1.0, 0);
-    }
-    auto task_display = workflow->addTask("display", 10*GFLOP, 1, 1, 1.0, 0);
+    auto task_start     = workflow->addTask("start", 50*GFLOP, 1, 1, 1.0, 0);
+    auto task_viz       = workflow->addTask("viz", 200*GFLOP, 1, 1, 1.0, 0);
+    auto task_plot      = workflow->addTask("plot", 100*GFLOP, 1, 1, 1.0, 0);
+    auto task_stats     = workflow->addTask("stats", 400*GFLOP, 1, 1, 1.0, 0);
+    auto task_analyze   = workflow->addTask("analyze", analyze_work*GFLOP, 1, 1, 1.0, 0);
+    auto task_summarize = workflow->addTask("summarize", 100*GFLOP, 1, 1, 1.0, 0);
+    auto task_display   = workflow->addTask("display", 10*GFLOP, 1, 1, 1.0, 0);
 
     // create the task dependencies
     workflow->addControlDependency(task_start, task_viz);
-    workflow->addControlDependency(task_start, task_split);
-    workflow->addControlDependency(task_start, task_split);
-    for (int i=0; i < num_tasks; ++i) {
-        workflow->addControlDependency(task_split, tasks_analyze[i]);
-        workflow->addControlDependency(tasks_analyze[i], task_display);
-    }
-    workflow->addControlDependency(task_viz, task_display);
+    workflow->addControlDependency(task_viz, task_plot);
+    workflow->addControlDependency(task_plot, task_display);
+    workflow->addControlDependency(task_start, task_analyze);
+    workflow->addControlDependency(task_analyze, task_summarize);
+    workflow->addControlDependency(task_summarize, task_display);
+    workflow->addControlDependency(task_start, task_stats);
     workflow->addControlDependency(task_stats, task_display);
 }
 
@@ -81,7 +77,7 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks) {
  *
  * @throws std::invalid_argument
  */
-void generatePlatform(std::string platform_file_path) {
+void generatePlatform(std::string platform_file_path, int num_cores) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -92,7 +88,7 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"the_host\" speed=\"10Gf\" core=\"6\">\n"
+                      "       <host id=\"the_host\" speed=\"10Gf\" core=\"" + std::to_string(num_cores) +  "\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
@@ -120,34 +116,41 @@ int main(int argc, char** argv) {
 
     const int MAX_CORES         = 1000;
     int NUM_CORES;
-    int NUM_TASKS;
-    int TASK_GFLOP;
-    int TASK_MEMORY;
+    double ANALYZE;
+    std::string SCHEDULING_SCHEME;
 
     try {
 
-        if (argc != 3) {
+        if (argc != 4) {
             throw std::invalid_argument("bad args");
         }
 
         NUM_CORES = std::stoi(std::string(argv[1]));
 
         if (NUM_CORES < 1 || NUM_CORES > MAX_CORES) {
-            std::cerr << "Invalid number cores. Enter a value in the range [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
-            throw std::invalid_argument("invalid number of cores");
+            throw std::invalid_argument("Invalid number cores. Enter a value in the range [1, " + std::to_string(MAX_CORES) + "]");
         }
 
-        NUM_TASKS = std::stoi(std::string(argv[2]));
+        ANALYZE = std::stof(std::string(argv[2]));
 
-        if (NUM_TASKS < 1) {
-            std::cerr << "Invalid number tasks. Enter a value greater than 1" << std::endl;
-            throw std::invalid_argument("invalid number of tasks");
+        if (ANALYZE < 1) {
+            throw std::invalid_argument("Invalid analyze work. Enter a value greater than 1");
+        }
+
+        SCHEDULING_SCHEME = std::string(argv[3]);
+
+        if ((SCHEDULING_SCHEME != "stats") and
+            (SCHEDULING_SCHEME  != "viz") and
+            (SCHEDULING_SCHEME != "analyze")) {
+            throw std::invalid_argument("Invalid scheduling scheme. Enter 'stats', 'viz', or 'analyze'");
         }
 
     } catch(std::invalid_argument &e) {
-        std::cerr << "Usage: " << argv[0] << " <num_cores> <num_tasks>" << std::endl;
-        std::cerr << "   num_cores: number of cores [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
-        std::cerr << "   num_tasks: number of tasks (> 0)" << std::endl;
+        std::cerr << std::string(e.what()) << "\n";
+        std::cerr << "Usage: " << argv[0] << " <num cores> <analyze work> <scheduling scheme>" << std::endl;
+        std::cerr << "   num cores: number of cores [1, " + std::to_string(MAX_CORES) + "]" << std::endl;
+        std::cerr << "   analyze work: work  of the analyze task in GFlop (> 0)" << std::endl;
+        std::cerr << "   scheduling scheme: 'stats', 'viz', or 'analyze' (the path that's NOT prioritized)" << std::endl;
         std::cerr << "" << std::endl;
         std::cerr << "   (Core speed is always 10GFlop/sec)" << std::endl;
         return 1;
@@ -155,11 +158,11 @@ int main(int argc, char** argv) {
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, NUM_TASKS);
+    generateWorkflow(&workflow, ANALYZE);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path);
+    generatePlatform(platform_file_path, NUM_CORES);
     simulation.instantiatePlatform(platform_file_path);
 
 
@@ -179,8 +182,7 @@ int main(int argc, char** argv) {
 
     // wms
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler()), compute_service, THE_HOST
-    ));
+            new wrench::ActivityScheduler(SCHEDULING_SCHEME)), compute_service, THE_HOST));
 
     wms->addWorkflow(&workflow);
 
@@ -188,5 +190,6 @@ int main(int argc, char** argv) {
 
     simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, false);
 
+    std::cout << simulation.getCurrentSimulatedDate() << "\n";
     return 0;
 }

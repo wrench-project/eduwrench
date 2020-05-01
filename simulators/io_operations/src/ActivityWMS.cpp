@@ -74,9 +74,9 @@ namespace wrench {
 
         WRENCH_INFO("--------------------------------------------------------");
         if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
+            WRENCH_INFO("Execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
         } else {
-            WRENCH_INFO("Workflow execution is incomplete!");
+            WRENCH_INFO("Execution is incomplete!");
         }
 
         this->job_manager.reset();
@@ -91,6 +91,6 @@ namespace wrench {
     void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        WRENCH_INFO("Notified that %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
+        WRENCH_INFO("Task %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
     }
 }

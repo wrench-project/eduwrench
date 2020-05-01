@@ -13,8 +13,10 @@ namespace wrench {
                            const std::vector<WorkflowTask *> &ready_tasks);
 
 
-        ActivityScheduler();
+        ActivityScheduler(const std::string &scheduling_scheme);
 
+    private:
+        std::string scheduling_scheme;
     };
 }
 

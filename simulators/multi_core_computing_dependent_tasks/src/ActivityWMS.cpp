@@ -41,14 +41,8 @@ namespace wrench {
         this->job_manager = this->createJobManager();
 
         while (true) {
-            // Get the ready tasks and SORT them by taskID
+            // Get the ready tasks
             std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-            std::sort(ready_tasks.begin(), ready_tasks.end(),
-                      [](const WorkflowTask *t1,
-                               const WorkflowTask *t2) -> bool {
-                            return (t1->getID() < t2->getID());
-                          }
-                      );
 
             // Get the available compute services, in this case only one
             const auto compute_services = this->getAvailableComputeServices<ComputeService>();
@@ -74,9 +68,9 @@ namespace wrench {
 
         WRENCH_INFO("--------------------------------------------------------");
         if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
+            WRENCH_INFO("Execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
         } else {
-            WRENCH_INFO("Workflow execution is incomplete!");
+            WRENCH_INFO("Execution is incomplete!");
         }
 
         this->job_manager.reset();
@@ -86,11 +80,11 @@ namespace wrench {
 
     /**
      * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
-     * @param event
+     * @param events
      */
     void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        WRENCH_INFO("Notified that %s has completed", standard_job->getTasks().at(0)->getID().c_str());
+        WRENCH_INFO("Task %s has completed", standard_job->getTasks().at(0)->getID().c_str());
     }
 }
