@@ -190,7 +190,7 @@ maximized?
 
 <p></p>
 
-### Levels, Critical Path
+### Levels, Width, Critical Path
 
 In the previous section, and the practice question, we touched upon some fundamental
 concepts without naming them explicitly. Let's do so now.
