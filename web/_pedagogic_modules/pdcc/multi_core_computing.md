@@ -32,6 +32,7 @@ Go through the tabs below in sequence...
 </div>
 
 <div markdown="1" class="ui tab segment" data-tab="fourth">
+  {% include_relative include_multi_core_computing/data_parallelism.md %}
 </div>
 
 <div markdown="1" class="ui tab segment" data-tab="fifth">

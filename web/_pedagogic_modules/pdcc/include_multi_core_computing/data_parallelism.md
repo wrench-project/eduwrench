@@ -94,9 +94,8 @@ your own, and use it to answer the practice questions hereafter.
 
 **[A.2.p4.1]** XXX
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_1.svg">Practice Question DAG</object>
 
-<div class="ui accordion fluid">
+<div class="ui accordion fluid">w
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
