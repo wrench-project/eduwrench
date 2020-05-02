@@ -169,20 +169,31 @@ seeing only a 4.7 speedup with 8 cores seems really bad.
 The graph below shows speedup vs. number of cores  for different
 values of *&alpha;*. 
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Example Image Processing Program</object>
-<div class="caption"><strong>Figure A.2.4.2:</strong>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
+<div class="caption"><strong>Figure A.2.4.3:</strong>
 Speedup vs. #cores for different values of the fraction of the sequential execution time that's parallelizable.
 </div>
 
 
-The graph above shows that even with seemingly very small non-parallelizable portions,
-program speedup drops  well below the number of cores quickly. This is bad news since almost
-every useful program has inherently sequential phases. In our example program these phases
-are I/O phases, but there  are other.  For  instance,  time  spent  to create threads, or time
-spent in critical sections. We refer you to  operating systems and concurrent programming
-textbooks/courses for all details. Bottom line: achieving high speedup on many cores 
-is not easy. The ability to do so for a program is often called *parallel scalability* (i.e., one
-says that the program "scales").
+The main message of Figure A.2.4.3 is  that even with seemingly small
+non-parallelizable portions, program speedup drops well below the number of
+cores quickly. For instance, the data point circled in red shows
+that  if  only 5%  of the  sequential execution time is non-parallelizable,
+running on 20 cores only affords a 10x speedup (i.e., parallel efficiency
+is only 50%). 
+
+This is bad news since almost every program has inherently
+sequential phases. In our example program the sequential phase is the
+"luminence" task. But even without this  task, there many parts 
+of a program that are sequential.  For  instance,  a   program typically
+needs to write produce output using sequential I/O operations. Even
+if these parts are short,  Amdahl's law tells use that  they severely
+limit speedup. 
+
+Bottom line: achieving high speedup on many cores is not easy.  The ability
+of a program to do so is often called *parallel scalability*. If a program
+maintains  relatively  high parallel efficiency as the  number of cores it
+uses increases, we say  that the program "scales".  
 
 #### Practice Questions
 
