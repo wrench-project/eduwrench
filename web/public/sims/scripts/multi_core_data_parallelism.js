@@ -64,9 +64,8 @@ $(function () {
             num_cores_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
-
-        
     });
+
 
     $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
