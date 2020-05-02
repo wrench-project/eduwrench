@@ -8,84 +8,77 @@
 
 #### An Example
 
-In all we've seen so far in this module, we were given a predetermined 
-DAG of tasks, each of them executing on a single core. Many real-world
-applications  are structured in this way, and  this  is called
-**task parallelism**.  Let's consider one such  task,  which performs some
-computation. Perhaps this computation
-can be *parallelized*. That is, one can rewrite the code of this task
-to use multiple cores to do its computation. This is done by writing the task's code
-in  a  way  that is multi-threaded (see any concurrent programming textbook/course). 
+In all we've seen so far in this module, we were given a predetermined DAG
+of tasks, each of them executing on a single core. Many real-world
+applications  are structured in this way, and  this  is called **task
+parallelism**.  Let's consider one such  task,  which performs some
+computation. Perhaps this computation can be *parallelized*. That is, one
+can rewrite the code of this task to use multiple cores to do its
+computation. This is done by writing the task's code so that that code uses
+multiple threads (see any concurrent programming textbook/course).
 
-Consider a transformation of the pixels of an image, for instance, applying
-a filter so that  the image resembles an oil-painting.  This is done by
-replacing each pixel color by some other color determined by looking at the
-surrounding pixels and performing some computation based on the colors of
-those pixels.
+Consider a transformation of the pixels of an image that makes the image
+resemble an oil-painting.  This can be done by update each pixel's color by
+some other color based on the color of neighboring pixels.  The
+oil-painting transformation has a parameter called the *radius*, which is
+the radius of the brush stroke. The larger the radius, the more neighboring
+pixels are used to update the color or a pixel, and  the more work is
+required. In fact, the amount  of work is *quadratic* in the radius,
+meaning that in depends  on the square of the radius.  This is how
+oil-painting "filters" work in many open-source and commercial image
+processing applications.
 
-Consider a program that is a chain of three tasks. A "read" task loads an image file
-from disk into RAM (it thus mostly performs I/O). A "write" task saves the
-processed image from RAM to disk (it thus also mostly performs I/O). The
-"oil" task is the task that does the processing. Let's say that each pixel
-of the image is encoded on 1 byte,  and that oil-painting a pixel
-requires 2000 Flops. We can draw the DAG of the program as follows:
+Consider now a program that is a sequence of two tasks: An "oil" task
+applies an oil-painting filter to an image with a given radius *r*,
+followed by a "luminence" task that computes the a luminence histogram for
+the image (i.e., the statistical distribution of the brightness of its
+pixels). We can draw the program's DAG as follows:
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Example Image Processing Program</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure A.2.4.1:</strong>
 Example image processing program.
 </div>
 
-Say we run this program on a computer that has a disk with 
-read/write bandwidth 400 MB/sec, and with cores that compute
-with speed 100 GFLop/sec. Then the program takes time. 
-
+If we were to run this program on a core that computes at
+speed 100 GFLop/sec, and using *r=3* for the "oil" task, the program would take time:
 
 $$
 \begin{align}
-\text{T} & = \text{read time} + \text{process time} + \text{write time}\\
-         & = \frac{100 \text{MB}}{400 \text{MB/sec}}  +
-             \frac{100 \times  2000 \text{MFlop}}{100 \text{GFlop/sec}}
-             \frac{100 \text{MB}}{400 \text{MB/sec}}\\
-         & = 0.25 + 2  + 0.25 = 2.5s
+\text{T} & = \frac{ 100 \times 3^{2} GFlop}{100  GFlop/sec} +  \frac{100 GFlop}{100 GFlop/sec}\\
+         & = 10 sec
 \end{align}
 $$
 
-So, for a 100MB input, our program runs in 2.5 s. So far  so good.
-
 ### Data-Parallelism
 
-In our example application, the same transformation is applied to each
+In the oil-painting transformation the same computation is used for each
 pixel of the image (with perhaps special cases for the pixels close to the
 borders of the image). You can think of the computation applied to each
-pixel as a "micro-task". All these micro-tasks take the same amount of
-time, and do the same thing (i.e., they run the same code), but on
-different data (the different neighboring pixels of different pixels).
-This is called **data parallelism**. This is a bit of a strange term
-because it's just like *task parallelism*, just with very fine granularity.
-What this means in practice is that it should be easy to perform the
-computation on, say, 4 cores: just give each core a quarter of the pixels
-to process!
+pixel as a "micro-task". All these micro-tasks has the same work and do the
+same thing (i.e., they run the same code), but on different data (the
+different neighboring pixels of different pixels).  This is called **data
+parallelism**. It is a bit of a strange term because it's just like *task
+parallelism*, just with very fine granularity.  Regardless, it should be
+straightforward to perform the transform on, say, 4 cores: just give each
+core a quarter of the pixels to process!
 
-More generally, if the total  work of the "oil" task is *X* and  if we have
-*n* cores, we  could create *n* tasks each with *X/n*  work and go *n*
-times faster! Of course, this breaks down  if *X* is not much  larger than
-*n*.  For instance, if we have 7 pixels to process on 3 cores, we cannot
-have 3 tasks with the same amount of work. There would be some load
-imbalance (e.g., one task would process 3 pixels, and the other two tasks
-would process 2 pixels each).  But let's assume that our image has many,
-many more pixels than cores.  Then each task would have work equal to or very close
-to *X/n*. So, if we configure our application to execute "oil" using  *n*
-tasks, our program's DAG now looks like this:
+More generally, if the total work of the "oil" task is *X* and  if we have
+*n* cores, we could perform the  work using *n* tasks each with *X/n* work.
+This assumes *X* is divisible by *n*. This is likely not quite the case,
+but a close approximation if the number of pixels is much  larger than the
+number of  cores, which will assume here.
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Example Image Processing Program</object>
+The program's DAG now is now as follows:
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure A.2.4.2:</strong>
 Example image processing program with data-parallelism exposed.
 </div>
 
-So now, our program can run faster using multiple cores! How fast? Well, the
-simulation  app below simulates the execution for particular input sizes
-and number of "oil" tasks. You can try it on your own, and use it to answer
-the practice questions hereafter.
+The program can run faster using multiple cores! How fast? The simulation
+app below simulates the execution for particular values of the radius *r*
+and a number of cores (using one "oil" task per core).  You can try it on
+your own, and use it to answer the practice questions hereafter.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -216,45 +209,42 @@ XXX
 ### Back to the example program
 
 For our example program, we can of course compute the speedup analytically.
-We need to compute &alpha;, the  fraction of the sequential execution time
-that is parallelizable. For input size *X* MB, the time spent in the "read"
-and "write" tasks is  X/400 seconds, while the time spent in the "oil"
-computation is *X* * 2000 / 100000  = *X*  /100. Therefore, &alpha; =
-(*X*/100) / (*X*/400 + *X*/100) = .8. So, the speedup when running  on *n*
-cores, *S(n)*, is:
+We need to compute *&alpha;*, the fraction of the sequential execution time
+that is parallelizable. Still for  our 100 GFlop/sec core, for a given a
+radius *r* the time spent in the "oil" task is *r^2* seconds. The time spent
+in the "luminence" task is 1 second.
+Therefore, *&alpha; = (r^2) / (1 + r^2)*. So, the speedup when running on *n*
+cores  with radius *r*, *S(n,r)*, is:
 
 $
 \begin{align}
-S(n)   & = \frac{1}{0.8 / n + 1 -  0.8}
-       & = \frac{1}{0.8/n + 0.2}
+S(n,r)   & = \frac{1}{r^2/(1+r^2) / n + 1 -  r^2/(1+r^2)}
 \end{align}
 $$
 
-You can double check that this formula matches what we observed in
-simulation. In this example, the speedup does not dependent in the input
-size, *X*, because the execution time of all three tasks depends linearly
-on *X*. Things would be different if the "oil" task had, for instance, an
-execution that is quadratic in terms of *X*.  Then the &alpha; parameters
-would depend on *X*. But let's not go there for now.
-
-The parallel  efficiency of our program on *n*  cores  is then:
+You can double-check that this formula matches what we observed in
+simulation. For instance, for *r=2*, *&alpha; = 4/5*. And so
+the speedup using 4 cores  would be:
 
 $
 \begin{align}
-E(n)  & = \frac{1}{0.8 + 0.2\times n}
+S(n,r)   & = \frac{1}{(4/5)/ 4 + 1 - 4/5 }\\
+         & =  2.5
 \end{align}
 $$
 
-And so, for instance, if we're wondering the maximum number of cores we  can use
-before parallel efficiency drops below 50%, we can simply solve:
+We could then ask  questions like: what is the  largest number of cores
+that can be used without  the efficiency dropping below 50%?  We just
+need to solve:
 
-$
+$$
 \begin{align}
-.5  = \frac{1}{0.8 + 0.2\times n}
+\frac{1}{((4/5)/ n + 1 - 4/5)\times n} \geq .50 \\
 \end{align}
 $$
 
-which gives us *n*  = 6. Using 7 (or more) cores will have parallel efficiency below 50%. 
+which gives us *n &le; 5*. So as soon as we use 6 cores or more, parallel efficiency
+drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
 
 
 ---
