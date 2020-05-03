@@ -9,35 +9,36 @@
 
 As seen in the [Single Core Computing
 module]({{site.baseurl}}/pedagogic_modules/single_core_computing), a task
-may have a sizable amount of data that needs to be loaded into RAM so that
-it can execute. An additional cause for idle time, besides load imbalance,
-on a multi-core machine is that all of the cores share the RAM. Therefore,
-there could be idle cores and tasks that need to run, but not sufficient
-RAM. Unfortunately, in this case, the idle cores must remain idle until
-more RAM becomes available (i.e., when currently running tasks complete).
-As a result, parallel efficiency falls below 100%. This is because we
-simply don't allow ourselves to use more memory than available in physical
+may have a sizable amount of data that needs to be loaded and/or generated into RAM so that it can execute. Recall that we do not allow a program to 
+use more memory than available in physical
 RAM. Doing so is possible and handled by the Operating Systems (by
 shuffling data back and forth between RAM and disks) but comes with
 unacceptable performance penalties. So, as in the [Single Core Computing
 module]({{site.baseurl}}/pedagogic_modules/single_core_computing), we never
-exceed the physical memory capacity of a host.
+exceed the physical memory capacity of a host. As a result, if insufficient
+RAM is available for a task, this task must wait for currently running
+tasks to complete and free up enough ram. This can cause cores to remain
+idle. The worst possible case would be running a single task that uses the
+entire RAM, thus leaving all remaining cores idle while it executes. 
+Because RAM constraints can causes idle time, they can also cause
+loss of parallel efficiency.
+
 
 ### Simulating RAM Constraints
 
-So that you can gain hands-on experience, use the simulation Web application below.
-This app is similar to that in the previous tab (Parallelism), but now includes
-a field for specifying the "Ram Needed For Each Task". 
-So now we can simulate the fact that tasks require RAM space to run. Note
-that the host we are simulating has 32 GB of RAM available. 
-The host we are using has 32 GB of RAM available. 
+So that you can gain hands-on experience, use the simulation Web
+application below.  This app is similar to that in the previous tab
+(Parallelism), but now includes a field for specifying the "Ram Needed For
+Each Task".  So now we can simulate the fact that tasks require RAM space
+to run.  The host we are simulating has 32 GB of RAM available.  The host
+we are using has 32 GB of RAM available.
 
 First try using 4 Cores for 8 tasks, where each task uses 8 GB of RAM.  As
 you will see, there is no idle time with the above situation. The number of
 tasks we can run at a time is 4, given the number of cores and the amount
 of RAM we have.
 
-Now try again, but this time set the Task RAM to 16 GB. There will now be
+Now try again, but this time set the tasks' RAM requirement to 16 GB. There will now be
 idle time, as only 2 cores can be utilized simultaneously due to RAM
 constraints.
 
@@ -61,8 +62,6 @@ seconds.  The processor is then upgraded to have 5 cores, each identical in
 processing power to the original single core. If the machine has 8 GB of
 RAM and each task requires 2 GB of RAM to execute, what is the parallel
 efficiency on the new 5-core processor?
-
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -93,7 +92,6 @@ $$
 Each task runs in 1 second on a core. However, the tasks have the following RAM
 requirements in GB: 6, 2, 4, 3, 1, 7.  If your machine has a total of 8 GB of RAM, can
 you achieve 100% parallel efficiency?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -108,7 +106,6 @@ you achieve 100% parallel efficiency?
   - Finally, run the 4 GB and the 3 GB task together
 
 (the order of the three steps above does not matter). 
-
 
   </div>
 </div>
