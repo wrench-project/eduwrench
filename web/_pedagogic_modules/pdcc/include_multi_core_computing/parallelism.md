@@ -7,7 +7,7 @@
 
 ---
 
-#### Basic Concepts
+#### Basic Concept
 
 A multi-core processor provides multiple processing units, or **cores**,
 each of which is capable of executing computer code independently of other
@@ -21,17 +21,17 @@ operating systems and concurrent programming courses/textbooks). Although
 there are a lot of fascinating (and often difficult) aspects of
 multi-threading, conceptually it simply  means that a program comprises a
 set of *tasks*, some of which can run at the same time on the cores of a
-multi-core computer. This is  the  conceptual level at which we  operate in
-this pedagogic module.  We call this kind of programs **parallel programs**.
+multi-core computer. This is  called **parallelism** and we call this kind
+of programs **parallel programs**.
 
 
-We consider programs that needs to perform one or more tasks, where
-each task is a particular computation on some input data (and which
-produces some output data). For instance, we could have a 5-task program
-where each task renders a different frame of a movie. Or we could have a program
-in which tasks do different things altogether. For instance, a 2-task program
-could have one task apply some analysis to a dataset and
-another task uncompress a file on disk. 
+Each task in a parallel program performs some computation on some input
+data,  which  can be in RAM or on disk, and which produces some output
+data. For instance, we could have a 5-task program where each task renders
+a different frame of a movie. Or we could have a program in which tasks do
+different things altogether. For instance, a 2-task program could have one
+task apply some analysis to a dataset and another task uncompress a file on
+disk.
 
 As mentioned in the [Single Core Computing]({{site.baseurl}}/pedagogic_modules/single_core_computing) module, we do not
 consider time sharing. That is, **we will only consider executions in which
@@ -43,7 +43,7 @@ uninterrupted until completion on that same core.
 
 ----
 
-#### Parallelism
+#### Speedup and Efficiency
 
 A common motivation for running the tasks of a program on multiple cores is
 speed. For example, if you have tasks that a single core can complete in
@@ -131,7 +131,6 @@ power of a core.
 **[A.2.p1.1]** Consider a parallel program that runs in 1 hour on a single core of a computer. 
 The program's execution on 6 cores is 80%. What is the program's execution time
 when running on 6 cores?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -145,10 +144,11 @@ we have $S = 6 \times  0.8 = 4.8$. Therefore, the program runs in 60/4.8 = 12.5 
   </div>
 </div>
 
+<p></p>
+
 **[A.2.p1.2]** A parallel program has a speedup of 1.6 when running on 2 cores, and runs
 10 minutes faster when running on 3 cores. Given a formula for $T(1)$ (the execution time
 on one core in minutes) as a  function of $T(3)$ (the execution time on three cores in minutes). 
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -182,62 +182,58 @@ $
 #### Load Imbalance and Idle Time
 
 At this point, you may be wondering why, in practice, parallel efficiency
-can be than 100%. Let's discuss one of them: **idle time**. This is the
+can be less than 100%. Let's discuss one of them: **idle time**. This is the
 time during which one or more cores are not able to work while others are
 working.
 
-Consider a parallel program that consists of $n$  tasks, each of them running
-in the  same amount of time on a core. We run this program on a computer
-with $p$ cores.  If 
-*n* is not divisible by *p*,  then at least one core will be idle
-during program execution. j
-For example, if we have 8 tasks that each run for 1
-hour and 5 cores, all cores will be busy for the first 5 tasks, but once
-this phase of execution is finished, only 3 of the 5 cores will have
-another task to complete. Thus, 2 cores sit idle while 3 work, for 1 hour.
-In this situation we says that **the load is not well-balanced across
-cores**. With discrete tasks such as these the balance cannot be
-improved.
+Consider a parallel program that consists of $n$  tasks, each of them
+running in the  same amount of time on a core. We run this program on a
+computer with $p$ cores.  If $n$ is not divisible by $p$,  then at least
+one core will be idle during program execution.  For example, if we have 8
+tasks, that each run for 1 hour, and 5 cores, all cores will be busy
+running the first 5 tasks in parallel.  But once this phase of execution is
+finished, we only have 3 tasks left and 2 cores will have nothing to do for
+1 hour.  In this situation we says that **the load is not well-balanced
+across cores**. 
 
-There is a **direct relationship** between idle time and parallel efficiency, assuming 
-idle time is the only cause of loss in parallel efficiency. *The parallel efficiency is
-the sum of the core non-idle times divided by the product of the number of cores by the
-overall execution time.*
+There is a **direct relationship** between idle time and parallel
+efficiency, assuming idle time is the only cause of loss in parallel
+efficiency. **The parallel efficiency is the sum of the core non-idle times
+divided by the product of the number of cores by the overall execution
+time.**
 
 The above statement may sound complicated, but it's very intuitive on an example. 
-Consider a 2-core computer that executes a multi-task program in 1 hour. 
-The first core computes for 30 min, and then is idle for 30 min.
-The second core is idle for 15 minutes, and then computes for 45 minutes. This execution 
-is depicted in the figure below, where idle time is shown in white and compute time in yellow:
+Consider a 2-core computer that executes a multi-task program in 35 minutes. 
+One core computes for 
+the full 35 minutes, while the other core computes for 20 minutes
+and then sits idle for 15 minutes.  
+This execution 
+is depicted in the figure below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
 <div class="caption"><strong>Figure A.2.1.1:</strong>
-Depiction of an 35-minute execution on a 2-core computer in which one core computes for 
-the full 35 minutes, while the other core computes for 20 minutes
-and then is idle for 15 minutes.  The white area is the core idle time, 
+Example 35-minute execution on a 2-core computer. 
+The white area is the core idle time, 
 the yellow area is the  core compute time. </div>
 
 What the above statement says is that the parallel efficiency is the yellow
 area divided by the area of the whole rectangle. In other words, the
 parallel efficiency is $(1 \times 35 + 1 \times 20) / (2 \times 35)$ = 78.5%.
-
-The more "white" in the figure, the lower the parallel efficiency. If there
-is as much white as yellow, then the parallel efficiency is 50%, because
-half the compute power is wasted. You get the idea.
+*The more white in the figure, the lower the parallel efficiency.*
 
 ### Simulating Load Imbalance
 
 So that you can gain hands-on experience, use the simulation Web application below.
 
-This app allows you to pick a number of cores and an a number of tasks to run on these cores. 
-Try first with a single core running 5 tasks (you can vary the tasks' amount
-of work by setting the "Task GFlop" field to any value, but it will not change
-the overall execution pattern). Take particular notice 
-of the "Host Utilization" graph. Now try running a number of tasks and cores where 
-the number of tasks does not evenly divide the number of cores. Looking at the 
-host utilization graph again, now you will be able to see idle time for some of 
-the cores (in pink). Whenever we can see idle time on the graph,
-parallel efficiency is below 100%. 
+This app allows you to pick a number of cores and an a number of tasks to
+run on these cores.  Try first with a single core running 5 tasks (you can
+vary the per/task amount of work in GFlop, 
+but this value does not impact the overall execution pattern). Take
+particular notice of the "Host Utilization" graph. Now try running a number
+of tasks and cores where the number of tasks does not evenly divide the
+number of cores. Looking at the host utilization graph again, now you will
+be able to see idle time for some of the cores (in pink). Whenever we can
+see idle time on the graph, parallel efficiency is below 100%.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -254,57 +250,51 @@ parallel efficiency is below 100%.
 **[A.2.p1.1]** You are told that a 10-task program runs in 1 hour with
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
 What is the execution time of one task?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-    The execution proceeds in 4 phases. If each of the first three phases
-   3 tasks are executed in parallel. In the last phase a single task executes. 
-   Therefore, each phase takes 15 minutes, which is the execution time of a task.
-
+The execution proceeds in 4 phases. If each of the first three phases
+3 tasks are executed in parallel. In the last phase a single task executes. 
+Therefore, each phase takes 15 minutes, which is the execution time of a task.
   </div>
 </div>
+<p></p>
 
 **[A.2.p1.2]** Assume you have 20 tasks to execute on a multi-core computer,
 where each task runs in 1 second on a core. By what factor is the overall
 execution time reduced when going from 4 to 8 cores?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   The total execution time when using 4 cores will be 5 seconds, as each
-   core executes 6 tasks. When increasing from 4 cores to 8 cores, now the
-   total execution time is 3 seconds. This is because the best we can do is
-   have 4 of the cores run 2 tasks and the  other 4 run 3 tasks. The
-   overall execution time is reduced by a factor 4/3 = 1.33.
+The total execution time when using 4 cores will be 5 seconds, as each
+core executes 6 tasks. When increasing from 4 cores to 8 cores, now the
+total execution time is 3 seconds. This is because the best we can do is
+have 4 of the cores run 2 tasks and the  other 4 run 3 tasks. The
+overall execution time is reduced by a factor 4/3 = 1.33.
   </div>
 </div>
-
 <p></p>
 
 **[A.2.p1.3]** Assume you now have 3 tasks to compute, still each taking 1 second
 on a core. What is the parallel efficiency on a 4-core computer? 
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i> (click to see answer)
   </div> <div markdown="1" class="ui segment content">
-   When using only a single core, the 3 tasks will take 3 seconds to
-   complete. When increasing the number of cores to 4, the same tasks can
-   now be done in 1 second. Since $p$ the number of cores is greater than
-   $n$ the number of tasks, we know that it will not be 100% efficiency.
-   More precisely, the parallel speedup is 3, and thus the parallel
-   efficiency is 3/4 = 75%. 
-
+When using only a single core, the 3 tasks will take 3 seconds to
+complete. When increasing the number of cores to 4, the same tasks can
+now be done in 1 second. Since $p$ the number of cores is greater than
+$n$ the number of tasks, we know that it will not be 100% efficiency.
+More precisely, the parallel speedup is 3, and thus the parallel
+efficiency is 3/4 = 75%. 
   </div>
 </div>
-
 <p></p>
 
 **[A.2.p1.4]** You are upgrading your (pre-historic?) single-core computer and
@@ -313,30 +303,29 @@ one with 10 cores. *Your only concern is to maximize parallel efficiency.* All o
 the cores are identical. You have 15 tasks to run, each taking 1 second to
 complete on a core. Which multi-core computer will provide the higher
 parallel efficiency?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   When using only a single core, the 15 tasks will take 15 seconds to
-   complete. 
+When using only a single core, the 15 tasks will take 15 seconds to
+complete. 
 
-   When increasing the number of cores to 5, the same tasks can now be completed
-   in 3 seconds, and there is no idle time (since 5 divides 15). Therefore
-   parallel efficiency is 100%.
+When increasing the number of cores to 5, the same tasks can now be completed
+in 3 seconds, and there is no idle time (since 5 divides 15). Therefore
+parallel efficiency is 100%.
 
-   When increasing the number
-   of cores to 10, the tasks take 2 seconds. In this scenario, 
-   for the last second, 5 out of the 10 cores are
-   idle. Therefore, efficiency is less than 100% (it is 75%). 
+When increasing the number
+of cores to 10, the tasks take 2 seconds. In this scenario, 
+for the last second, 5 out of the 10 cores are
+idle. Therefore, efficiency is less than 100% (it is 75%). 
 
-   We conclude that we should go with the 5-core computer (even though the 10-core
-   computer completes the tasks sooner, our concern here is parallel efficiency).
-
+We conclude that we should go with the 5-core computer (even though the 10-core
+computer completes the tasks sooner, our concern here is parallel efficiency).
   </div>
 </div>
+<p></p>
 
 
 ### More Load Imbalance with Non-Identical Tasks
@@ -387,7 +376,6 @@ problem (see an Algorithm/Theory textbook/course). We will encounter this kind o
 **[A.2.p1.5]** A 5-task program runs optimally (i.e., it's the best it can
 possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in 
 2s, 4s, 3s, and 5s respectively. Is it possible that Task 5 runs in 7s?
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -401,12 +389,12 @@ then it exactly sums to 10. We are left with numbers 2, 4, and 5, which sum up
 to 11.
   </div>
 </div>
+<p></p>
 
 **[A.2.p1.6]** Consider a 6-task program. The execution times of 5
 of the tasks are: 6, 8, 7, 12, 9. What should the 6th task's execution
 time so that this program can run with 100% parallel efficiency
 on 3 cores? 
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -423,6 +411,7 @@ finish computing in 15s. So the answer is *3 seconds*.
 
   </div>
 </div>
+<p></p>
 
 
 
@@ -445,7 +434,7 @@ program take if executed using a single core.
 **[A.2.q1.4]** You have a 20-task program where each task's work is 10
 GFlop. You currently have a 4-core compute where each core compute at
 speed 50 GFlop/sec. For the same amount of money you can either (1)
-increase the speeds of all 4 cores by 20%; or (ii) add another 50 GFlop/sec
+increase the speeds of all 4 cores by 20%; or (2) add another 50 GFlop/sec
 core. What should you do if you want to run your program as quickly as
 possible?
 
