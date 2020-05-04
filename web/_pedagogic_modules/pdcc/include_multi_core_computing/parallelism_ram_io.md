@@ -120,8 +120,8 @@ about  this in the [Single Core Computing
 module]({{site.baseurl}}/pedagogic_modules/single_core_computing). In a parallel program this can translate to loss  of parallel efficiency.
 
 Let's consider a simple parallel program: 4 tasks that each read in 10 MB
-of input data and then performs 500GFlop of computation.  The DAG of the
-program, showing input data files, is depicted below:
+of input data and then performs 400GFlop of computation.  The 
+program's tasks, showing input data files, is depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag.svg">I/O parallel program</object>
 <div class="caption"><strong>Figure A.2.3.1:</strong>
@@ -146,14 +146,15 @@ utilization of a single core. But what can we gain by  running on multiple cores
 
 Let's say now that we have 4 cores. One option is for all 4 tasks to start
 at the same time, in which case they all read their input at the same time
-from disk. They split the disk Bandwidth evenly, and thus it takes 4 seconds
-for each task to read its input.  Then each task computes for 4 seconds. So
+from disk. They split the disk bandwidth evenly, and thus it takes 4 seconds
+for each task to read its input.  Then each task computes for 4 seconds on its own core. So
 the program runs for 8 second on the 4 cores. This execution is
 depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_4_cores_1.svg">I/O parallel program execution on 4 core</object>
 <div class="caption"><strong>Figure A.2.3.3:</strong>
 Execution on 4 cores, with simultaneous I/O. </div>
+
 
 One  may wonder whether it may be a  better idea  to stagger the  task
 executions, so that only one file is read from disk at a time. This alternative

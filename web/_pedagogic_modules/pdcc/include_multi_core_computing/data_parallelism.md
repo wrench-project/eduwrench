@@ -6,31 +6,33 @@
 
 ---
 
-#### An Example
+### An Example
 
-In all we've seen so far in this module, we were given a predetermined DAG
-of tasks, each of them executing on a single core. Many real-world
-applications  are structured in this way, and  this  is called **task
-parallelism**.  Let's consider one such  task,  which performs some
-computation. Perhaps this computation can be *parallelized*. That is, one
-can rewrite the code of this task to use multiple cores to do its
-computation. This is done by writing the task's code so that that code uses
-multiple threads (see any concurrent programming textbook/course).
+In all we've seen so far in this module, a parallel program consists of a
+predetermined set of tasks, each of them executing on a single core. Many
+real-world programs are structured in this way, and this is called **task
+parallelism**. 
+
+Let's now consider one task, which performs some computation on a single
+core.  Perhaps, one can rewrite the code of this task to use multiple cores
+to accelerate its computation. This is done by writing the task's code so that it
+uses multiple threads (see concurrent programming textbooks/courses).
+Perhaps this computation can be **parallelized**.
 
 Consider a transformation of the pixels of an image that makes the image
-resemble an oil-painting.  This can be done by update each pixel's color by
-some other color based on the color of neighboring pixels.  The
+resemble an oil-painting. This can be done by updating each pixel's color by
+some other color based on the color of neighboring pixels. The
 oil-painting transformation has a parameter called the *radius*, which is
 the radius of the brush stroke. The larger the radius, the more neighboring
-pixels are used to update the color or a pixel, and  the more work is
-required. In fact, the amount  of work is *quadratic* in the radius,
-meaning that in depends  on the square of the radius.  This is how
-oil-painting "filters" work in many open-source and commercial image
-processing applications.
+pixels are used to update the color or a pixel, and the more work is
+required. In fact, the amount of work is *quadratic* in the radius,
+meaning that it grows with the square of the radius. This is how
+"oil-painting filters" work in many open-source and commercial image
+processing programs.
 
 Consider now a program that is a sequence of two tasks: An "oil" task
-applies an oil-painting filter to an image with a given radius *r*,
-followed by a "luminence" task that computes the a luminence histogram for
+applies an oil-painting filter to an image with a given radius $r$,
+followed by a "luminence" task that computes the luminence histogram for
 the image (i.e., the statistical distribution of the brightness of its
 pixels). We can draw the program's DAG as follows:
 
@@ -40,12 +42,12 @@ Example image processing program.
 </div>
 
 If we were to run this program on a core that computes at
-speed 100 GFLop/sec, and using *r=3* for the "oil" task, the program would take time:
+speed 100 GFLop/sec, and using $r=3$ for the "oil" task, the program would take time:
 
 $$
 \begin{align}
-\text{T} & = \frac{ 100 \times 3^{2} GFlop}{100  GFlop/sec} +  \frac{100 GFlop}{100 GFlop/sec}\\
-         & = 10 sec
+\text{T} & = \frac{ 100 \times 3^{2} \text{GFlop}}{100 \text{GFlop/sec}} + \frac{100 \text{GFlop}}{100 \text{GFlop/sec}}\\
+         & = 10 \text{sec}
 \end{align}
 $$
 
@@ -56,17 +58,17 @@ pixel of the image (with perhaps special cases for the pixels close to the
 borders of the image). You can think of the computation applied to each
 pixel as a "micro-task". All these micro-tasks has the same work and do the
 same thing (i.e., they run the same code), but on different data (the
-different neighboring pixels of different pixels).  This is called **data
+neighboring pixels of different pixels). This is called **data
 parallelism**. It is a bit of a strange term because it's just like *task
-parallelism*, just with very fine granularity.  Regardless, it should be
+parallelism*, but with very fine granularity. Regardless, it should be
 straightforward to perform the transform on, say, 4 cores: just give each
 core a quarter of the pixels to process!
 
-More generally, if the total work of the "oil" task is *X* and  if we have
-*n* cores, we could perform the  work using *n* tasks each with *X/n* work.
-This assumes *X* is divisible by *n*. This is likely not quite the case,
-but a close approximation if the number of pixels is much  larger than the
-number of  cores, which will assume here.
+More generally, if the total work of the "oil" task is $X$ and if we have
+$n$ cores, we could perform the work using $n$ tasks each with $X/n$ work.
+This assumes $X$ is divisible by $n$. This is likely not quite the case,
+but a close approximation if the number of pixels is much larger than the
+number of cores, which we will assume here.
 
 The program's DAG now is now as follows:
 
@@ -76,9 +78,9 @@ Example image processing program with data-parallelism exposed.
 </div>
 
 The program can run faster using multiple cores! How fast? The simulation
-app below simulates the execution for particular values of the radius *r*
-and a number of cores (using one "oil" task per core).  You can try it on
-your own, and use it to answer the practice questions hereafter.
+app below simulates the execution for particular values of the radius $r$
+and a number of cores (using one "oil" task per core). You can use the
+simulation to explore things on your own, but also to answer some of the practice questions below. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -90,24 +92,101 @@ your own, and use it to answer the practice questions hereafter.
   </div>
 </div>
 
+<p></p>
+
+
 #### Practice Questions
 
-**[A.2.p4.1]** XXX
+**[A.2.p4.1]** Analytically estimate the execution time of the oil-painting
+program with radius $r = 3$ when it runs on 6 cores. Then check your
+results with the simulation app.
 
-
-<div class="ui accordion fluid">w
+<div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
 
-XXX
- 
+The execution time  on 6 cores  is: 
+
+$
+T = \frac{100 \times 3^2 / 6}{100} + \frac{100}{100} =  2.50 \text{sec}
+$
+
   </div>
 </div>
 
 <p></p>
+**[A.2.p4.2]** Which execution has the best parallel efficiency: A) $r=2$ on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
+double-check your intuition using analytics and/or the  simulation?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+Intuitively, when going from execution A to execution B the total work
+grows roughly by a factor 9/4 while the number of cores grows by a much
+smaller factor 8/6.  So execution B should be more efficient.
+
+The execution times for execution A on 1 and 6 cores are:
+
+$
+T_A(1) = \frac{100 \times 2^2}{100} + \frac{100}{100} = 5 \text{sec}\\
+$
+
+$
+T_A(6) = \frac{100 \times 2^2 / 6}{100} + \frac{100}{100} = 1.66 \text{sec}\\
+$
+
+You can confirm the above numbers with the simulation. The 
+parallel efficiency is  $E_A = (10/2.5)/6 $ = 52.08%.
+
+Similarly for execution B on 1 and 8 cores:
+$
+T_A(1) = \frac{100 \times 3^2}{100} + \frac{100}{100} = 10 \text{sec}\\
+$
+
+$
+T_A(6) = \frac{100 \times 3^2 / 8}{100} + \frac{100}{100} = 2.125 \text{sec}\\
+$
+
+You can confirm the above numbers with the simulation. The 
+parallel efficiency is  $E_B = (10/2.125)/8 $ = 58.82%. Our intuition
+is confirmed! Execution B has better efficiency!
+
+  </div>
+</div>
+
+<p></p>
+
+
+
+**[A.2.p4.3]** A program consists of two tasks that run in sequence. The first
+runs in 10 sec and the second in 20 seconds, on one core of a 4-core computer. 
+A developer has an idea to expose data-parallelism in the second task and
+rewrite it so that it is replaced by 4 independent tasks each with 1/4-th the
+original task's work. What is the parallel efficiency on 4 cores?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the
+speedup is 30/15 = 2. So the parallel efficiency is 50%. 
+
+  </div>
+</div>
+
+<p></p>
+
+
 
 
 ### Amdahl's law
@@ -118,7 +197,7 @@ that a program that has a sequential and a parallel part is limited by the
 amount of time spent in the sequential part of a program. This is very intuitive,
 since in the extreme a program is purely sequential and the parallel speedup is always
 1 regardless of the number of cores. But the (to some) surprising thing is how
-sever the limit is. Let's derive Amdahl's law int he abstract,  and then apply is
+sever the limit is. Let's derive Amdahl's law int he abstract, and then apply is
 to our example oil painting program. 
 
 Consider a program that runs on 1 core in time *T*. This program consists of two
@@ -128,16 +207,16 @@ thus write the execution time on 1 core, *T(1)*, as:
 
 $$
 \begin{align}
-T(1) & = \alpha T + (1  - \alpha) T\\
+T(1) & = \alpha T + (1 - \alpha) T\\
 \end{align}
 $$
 
-Now,  if we run the program on *n* cores, assuming perfect  parallelization of the parallelizable
-phase, we obtain  the  execution  time on  *n*  cores, *T(n)*, as:
+Now, if we run the program on *n* cores, assuming perfect parallelization of the parallelizable
+phase, we obtain the execution time on *n* cores, *T(n)*, as:
 
 $$
 \begin{align}
-T(n) & = \alpha T / n + (1  - \alpha) T\\
+T(n) & = \alpha T / n + (1 - \alpha) T\\
 \end{align}
 $$
 
@@ -145,12 +224,12 @@ The parallel speedup on *n* cores, *S(n)*, is then:
 
 $$
 \begin{align}
-S(n) & = \frac{\alpha T + (1  - \alpha) T}{\alpha T / n + (1  - \alpha) T}\\
-     & = \frac{1}{ \alpha/n + 1 -  \alpha}
+S(n) & = \frac{\alpha T + (1 - \alpha) T}{\alpha T / n + (1 - \alpha) T}\\
+     & = \frac{1}{ \alpha/n + 1 - \alpha}
 \end{align}
 $$
 
-As *n*, the number  of cores, grows, *S(n)* increases (as expected). Amdahl's law  is
+As *n*, the number of cores, grows, *S(n)* increases (as expected). Amdahl's law is
 the observation that no matter how large *n* gets, the speedup is limited:
 
 $$
@@ -160,46 +239,46 @@ S(n) < \frac{1}{1 - \alpha}
 $$
 
 So, for instance, if 90% of the sequential execution time can be
-parallelized,  then  the speedup will be at most  1/(1-0.9)  = 10.
+parallelized, then the speedup will be at most 1/(1-0.9) = 10.
 Precisely, if running on 8 cores for instance, the speedup would be
 1/(0.9/8 + 1 - 0.9) = 4.7. Meaning that the parallel efficiency is below
-60%.  The "non-intuitiveness" of Amdahl's law, for some people, is that
-having 10% of the execution sequential does  not seem  like a lot, but
+60%. The "non-intuitiveness" of Amdahl's law, for some people, is that
+having 10% of the execution sequential does not seem like a lot, but
 seeing only a 4.7 speedup with 8 cores seems really bad.
-The graph below shows speedup vs. number of cores  for different
+The graph below shows speedup vs. number of cores for different
 values of *&alpha;*. 
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
+<object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
 <div class="caption"><strong>Figure A.2.4.3:</strong>
 Speedup vs. #cores for different values of the fraction of the sequential execution time that's parallelizable.
 </div>
 
 
-The main message of Figure A.2.4.3 is  that even with seemingly small
+The main message of Figure A.2.4.3 is that even with seemingly small
 non-parallelizable portions, program speedup drops well below the number of
 cores quickly. For instance, the data point circled in red shows
-that  if  only 5%  of the  sequential execution time is non-parallelizable,
+that if only 5% of the sequential execution time is non-parallelizable,
 running on 20 cores only affords a 10x speedup (i.e., parallel efficiency
 is only 50%). 
 
 This is bad news since almost every program has inherently
 sequential phases. In our example program the sequential phase is the
-"luminence" task. But even without this  task, there many parts 
-of a program that are sequential.  For  instance,  a   program typically
+"luminence" task. But even without this task, there many parts 
+of a program that are sequential. For instance, a program typically
 needs to write produce output using sequential I/O operations. Even
-if these parts are short,  Amdahl's law tells use that  they severely
+if these parts are short, Amdahl's law tells use that they severely
 limit speedup. 
 
-Bottom line: achieving high speedup on many cores is not easy.  The ability
+Bottom line: achieving high speedup on many cores is not easy. The ability
 of a program to do so is often called *parallel scalability*. If a program
-maintains  relatively  high parallel efficiency as the  number of cores it
-uses increases, we say  that the program "scales".  
+maintains relatively high parallel efficiency as the number of cores it
+uses increases, we say that the program "scales". 
 
 #### Practice Questions
 
-**[A.2.p4.X]** XXX
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_1.svg">Practice Question DAG</object>
+**[A.2.p4.6]** A program that consists of a sequential phase and a data-parallel
+phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  How long
+does  the sequential phase run for?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -208,7 +287,147 @@ uses increases, we say  that the program "scales".
   </div>
   <div markdown="1" class="ui segment content">
 
-XXX
+Let $\alpha$ the fraction of the sequential execution time that
+is parallelizable. Amdahl's law gives us the speedup on 4 cores as:
+
+$
+S(4) = \frac{1}{ \alpha/4 + 1 - \alpha}
+$
+
+Since we know $S(4)$ to be 10/6, we can just solve for $\alpha$. This gives
+us $\alpha = ((6/10) - 1) / (1/4 - 1) =  .53$.
+
+Therefore, the sequential phase lasts for $10 \times (1 - .53)$ = 4.7
+minutes.
+
+  </div>
+</div>
+
+<p></p>
+
+
+**[A.2.p4.7]** A program consists of a sequential phase and a data-parallel
+phase. When executed on 1 core, the data-parallel phase accounts for 92% of
+the execution time.  What fraction of the execution time on 6 cores does
+this phase account for?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+Let $T(1)$ be  the sequential execution time. The 
+execution time on 6 cores, $T(6)$, is:
+
+$
+T(6) = 0.08  \times T(1) + 0.92 \times T(1) / 6
+$
+
+and the fraction of T(6) that corresponds to the data-parallel phase is:
+
+$
+\begin{align}
+T(6) & = \frac{0.92 \times T(1) / 6}{0.08  \times T(1) + 0.92 \times T(1) / 6}\\
+     & = \frac{0.92 / 6} {0.08 + 0.92 / 6}\\
+     & = .65
+\end{align}
+$
+
+So only 65% of the 6-core execution is  spend in the data-parallel phase.
+
+  </div>
+</div>
+
+<p></p>
+
+
+### Amdahl's law and our example
+
+For our example oil-painting program, we can of course compute the speedup analytically.  To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction of the sequential execution time
+that is parallelizable. Still for a 100 GFlop/sec core, for a given a
+radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
+in the "luminence" task is 1 second.
+Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $n$
+cores with radius $r$, $S(n,r)$, is:
+
+$
+\begin{align}
+S(n,r)  & = \frac{1}{r^2/(1+r^2) / n + 1 - r^2/(1+r^2)}
+\end{align}
+$
+
+You can double-check that this formula matches what we observed in
+the  simulation app. For instance, for $r=2$, $\alpha = 4/5$. And so
+the speedup using 4 cores would be:
+
+$
+\begin{align}
+S(4,2)  & = \frac{1}{(4/5)/ 4 + 1 - 4/5 }\\
+        & =  2.5
+\end{align}
+$
+
+We could then ask questions like: what is the largest number of cores
+that can be used without the efficiency dropping below 50%? We just
+need to solve:
+
+$
+\begin{align}
+\frac{1}{((4/5)/ n + 1 - 4/5)\times n} \geq .50 \\
+\end{align}
+$
+
+which gives us $n \leq 5$. So as soon as we use 6 cores or more, parallel efficiency
+drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
+
+
+
+### Overhead of Parallelization
+
+In what  we've seen so  far, the data-parallelization of a task  was
+"perfect". That is, the original work is $X$ and when using $n$ tasks
+each task has work $X/n$.
+
+This is not always the case, as there could be some overhead. This overhead
+could be a sequential portion that remains unparallelized. 
+Or there could be more work to be done by the parallel tasks. We illustrate
+this in the two practice questions below.
+
+#### Practice Questions
+
+
+**[A.2.p4.4]** Consider a program that consists of a single task with work
+10,000 GFlop. The developer of the program has an idea to expose
+data-parallelism. But it is not perfect: the single task is rewritten as a
+first task with work 500 GFlop, and then $n$ tasks with each work $10000/n$
+GFlop. So the total work of the program is larger. What would the speedup
+be if executing the modified code on 4 cores (compared to the original
+1-task program on 1 of these cores)?
+
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+Let $s$ be the core compute speed in GFlop/sec. 
+
+The sequential program runs in time $10000/s$.
+
+The data-parallel program runs in time $500/s + (10000/4)/s$.
+
+Therefore, the speedup is:
+
+$
+\begin{align}
+\text{speedup} & = \frac{10000/s}{500/s + (10000/4)/s}\\
+               & =  \frac{10000}{500 +  2500}\\
+               & = 3.33
+\end{align}
+$
  
   </div>
 </div>
@@ -216,45 +435,46 @@ XXX
 <p></p>
 
 
-### Back to the example program
+**[A.2.p4.5]** Consider a program that consists of a single task with work
+10,000 GFlop. The developer of the program has an idea to expose
+data-parallelism where the code now consists of $n$ tasks, each of them
+with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
+data parallelism). For what value of X would the parallel efficiency be above 90%
+when running on an 8-core computer?
 
-For our example program, we can of course compute the speedup analytically.
-We need to compute *&alpha;*, the fraction of the sequential execution time
-that is parallelizable. Still for  our 100 GFlop/sec core, for a given a
-radius *r* the time spent in the "oil" task is *r^2* seconds. The time spent
-in the "luminence" task is 1 second.
-Therefore, *&alpha; = (r^2) / (1 + r^2)*. So, the speedup when running on *n*
-cores  with radius *r*, *S(n,r)*, is:
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+Let $s$ be the core compute speed in GFlop/sec. The sequential program runs 
+in time $10000/s$, and the 
+data-parallel program runs in time $((10000+X)/8)/s$.
+
+Therefore, the speedup is:
 
 $
 \begin{align}
-S(n,r)   & = \frac{1}{r^2/(1+r^2) / n + 1 -  r^2/(1+r^2)}
+\text{speedup} & = \frac{10000/s}{((10000+X)/8)/s}\\
+               & =  8 \times \frac{10000}{10000+X}
 \end{align}
-$$
-
-You can double-check that this formula matches what we observed in
-simulation. For instance, for *r=2*, *&alpha; = 4/5*. And so
-the speedup using 4 cores  would be:
+$
+ 
+The parallel efficiency is $\frac{10000}{10000+X}$, so we need to solve:
 
 $
-\begin{align}
-S(n,r)   & = \frac{1}{(4/5)/ 4 + 1 - 4/5 }\\
-         & =  2.5
-\end{align}
-$$
+\frac{10000}{10000+X} \geq 0.9
+$
 
-We could then ask  questions like: what is the  largest number of cores
-that can be used without  the efficiency dropping below 50%?  We just
-need to solve:
+which gives $X \leq 1111.11$ GFlop.
 
-$$
-\begin{align}
-\frac{1}{((4/5)/ n + 1 - 4/5)\times n} \geq .50 \\
-\end{align}
-$$
+  </div>
+</div>
 
-which gives us *n &le; 5*. So as soon as we use 6 cores or more, parallel efficiency
-drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
+
+<p></p>
 
 
 ---

@@ -8,20 +8,23 @@
 
 #### Basic concept
 
-So far, we've only considered *independent* tasks in our applications,
+So far, we've only considered *independent* tasks in our parallel programs,
 i.e., tasks that can be executed in any order and concurrently. In other
 words, given a computer with as many cores as tasks and sufficient RAM
-capacity, But in many, many, real-world applications this is not the case.
+capacity, all tasks can run concurrently. 
+But in many, many, real-world programs this is not the case.
 Instead, tasks exhibit *dependencies*. In other words, some tasks cannot
-execute before other tasks are done. As an analogy, consider a chef cooking
+execute before other tasks are done. 
+
+As an analogy, consider a chef cooking
 a meal. First, they need to select and procure the ingredients. Second,
 they need to cook these ingredients. Finally, the cooked ingredients must
 be plated. None of these tasks may be completed out of order. The "cook
 ingredients" task depends on the "procure ingredients", and the "plate
 meal" task depends on the "cook ingredients" task. A convenient way to
-represent such applications is a *Directed Acyclic Graph (DAG)*, in which
+represent such programs is a *Directed Acyclic Graph (DAG)*, in which
 *vertices are tasks* and *edges are dependencies*. For the "cook a meal"
-application, the DAG representation is straightforward, and depicted in
+program, the DAG representation is straightforward, and depicted in
 the figure below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Chain DAG</object>
@@ -30,12 +33,12 @@ DAG for the "chef" example.
 </div>
 
 Going back to computing, here is a typical example of task dependencies.
-Consider an application that counts the number of car objects in a set of
+Consider a program that counts the number of car objects in a set of
 compressed street pictures. Each picture needs to be uncompressed,
 pre-processed, (e.g., to remove noise), analyzed (to find and count cars). And
 then, once this has been done for each picture, car count statistics need
 to be displayed. Say that we have 5 compressed pictures,
-the application can be represented as a DAG as in Figure 2 below:
+the program can be represented as a DAG:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_car_dag.svg">InTree DAG</object>
 <div class="caption"><strong>Figure A.2.3.2:</strong>
@@ -43,12 +46,15 @@ DAG for the "car counting" example.
 </div>
 
 Note that each task above can involve both I/O and computation. For
-instance, the "uncompress" task must read in a picture file from disk, and
+instance, an "uncompress" task must read in a picture file from disk, and
 then execute a decompression algorithm. Then, whether it writes back to
 disk the decompressed image or keeps in in RAM so that the "pre-process"
-task can do its job is up to the application's implementation in software.
+task can do its job is up to the program's implementation in software.
+Given that the DAG above does not show any output file for these tasks,
+the idea is  to keep everything in RAM. 
 Clearly keeping things in RAM can avoid costly I/O operation, but as we
-know RAM capacity is limited.
+know RAM capacity is limited. So, based on what we learned in the previous
+tab, we could lose parallel efficiency due to RAM constraints. 
 
 ### Simulating Simple Task Dependencies
 
@@ -61,10 +67,9 @@ analysis, and compute some statistics:
 
   - The visualization consists of a sequence of two tasks: "viz" (computes what to visualize) and  "plot" (generate a fancy 3-D plot)
   - The analysis consists of a sequence of two tasks :  "analyze" (performs data analysis) and "summarize" (generates summary analysis results). 
-  - The statistics consists of a since task: "stats" (computes some statements)
+  - The statistics consists of a single task: "stats" (computes some statements)
   
-Once all the above is done, then a final task  "display" displays all results.  
-The "analyze" task has an **amount of work that is user-defined**. The more work, the
+Once all the above is done, a final task  "display" displays all results.  The "analyze" task has an **amount of work that is user-defined**. The more work, the
 more in-depth the analysis results. 
 
 The figure below shows the DAG for this program, showing the work of
@@ -97,7 +102,7 @@ simulation.
 
 #### Practice Questions
 
-**[A.2.p3.1]**  Say we run the program with an "analyze" task with 100 GFlop work. What is the parallel efficiency when running the application on the 3-core computer and when using 
+**[A.2.p3.1]**  Say we run the program with an "analyze" task with 100 GFlop work. What is the parallel efficiency when running the program on the 3-core computer and when using 
 a single analysis task? (feel free to use the simulation app)
 
 <div class="ui accordion fluid">
@@ -109,20 +114,19 @@ a single analysis task? (feel free to use the simulation app)
   The sequential program's execution on 1 core, *T(1)*, is simply the sum of individual
   task execution times, 
 
-$$
+$
 \begin{align}
-  T(1) & = 5  + 20  + 10 + 10  + 10  + 40 + 1 \\
-              & = 96 sec
+  T(1) & = 5  + 20  + 10 + 10  + 10  + 40 + 1 = 96 \text{sec}
 \end{align}
-$$
+$
 
 The simulated execution time on our 3-core computer is:
 
-$$
+$
 \begin{align}
-  T(3) & = 46 sec
+  T(3) & = 46 \text{sec}
 \end{align}
-$$
+$
 
   So the parallel efficiency is thus (96/46)/3 = **69.56%**.
   </div>
@@ -130,7 +134,7 @@ $$
 
 <p></p>
 
-**[A.2.p3.2]** What is the number of core idle seconds when running the application with 
+**[A.2.p3.2]** What is the number of core idle seconds when running the program with 
 "analyze" tasks with 300 GFlop work on our 3-core computer?
 
 <div class="ui accordion fluid">
@@ -142,7 +146,8 @@ $$
   
   This is a very similar question as the previous one. The sequential execution time
   is 126 seconds, and the  execution time on 3 cores is still 46  seconds. Therefore,
-  the number of core idle seconds is 46 * 3 - 126 = 12  seconds. 
+  the number of core idle seconds is 
+$46 \times 3 - 126 = 12$  seconds. 
   
   </div>
 </div>
@@ -159,32 +164,36 @@ maximized?
   </div>
   <div markdown="1" class="ui segment content">
 
-  Let *x* be the work of the "analyze" task. The sequential execution time is *x/10 + 86* seconds. The parallel
+  Let $x$ be the work of the "analyze" task. The sequential execution time is $x/10 + 86$ seconds. The parallel
   execution time is a bit trickier. 
   
-  The visualization path takes time *5 + 20 + 10 + 1 = 36*  seconds, which
+  The visualization path takes time $5 + 20 + 10 + 1 = 36$  seconds, which
   is shorter  than  the statistics path, which takes 46 seconds. The analysis path takes time
-  *5 + x/10 + 10 + 1 = 16 + x/10*  seconds. So, we have two cases: If *16 + x/10 <= 46*, or if *x <=300*, 
+  $5 + x/10 + 10 + 1 = 16 + x/10$  seconds. So, we have two cases: If $16 + x/10 \leq 46$, or if $x \leq 300$, 
   the critical path  is the analysis path, otherwise the critical
   path is the statistics path. So let's examine both cases:
   
-  - *x <=  300*: the parallel execution time is 46 seconds, and so the parallel efficiency
-    is equal to  *((x/10 + 86) / 46) / 3*. This is maximized for x = 300, and is then equal
+  - $x \leq 300$: the parallel execution time is 46 seconds, and so the parallel efficiency
+    is equal to  $((x/10 + 86) / 46) / 3$. This is maximized for $x = 300$, and is then equal
     to 84.05%. 
     
-  - *x >= 300*: the parallel execution time is 16 + x/10, and so the parallel efficiency
-     is equal to *((x/10 + 86) / (16 + x/10)) / 3*. This is a decreasing function on the [300, infinity] domain,
-     and so on  that domain it is maximized for  x = 300. 
+  - $x \geq 300$: the parallel execution time is 16 + x/10, and so the parallel efficiency
+     is equal to $((x/10 + 86) / (16 + x/10)) / 3$. This is a decreasing function on the [300, infinity] domain,
+     and so on  that domain it is maximized for  $x = 300$. 
      
-  The final answer is thus 300 GFlop.  The above is quite formal, but intuitively it all makes
-  sense. The parallel efficiency is maximized when all three paths take time as close as possible to 
-  the length of the critical path, so as have cores working as much  as possible. This is achieved when 
-  the analysis path and the statistics path are equal (nothing can
-  be done about the visualization path), that is, when *x = 300*. This program can never
+  The final answer is thus 300 GFlop.  
+
+The above is quite formal, but intuitively it all makes
+  sense. The parallel efficiency is maximized when all three paths take
+  time as close as possible to the length of the critical path, so as have
+  cores working as much  as possible. This is the same  *load balancing*
+idea that we've seen in the first tab. This is achieved when the analysis
+  path and the statistics path are equal (nothing can be done about the
+  visualization path), that is, when $x = 300$. This program can never
   achieve efficiency higher than 84.05%.
-     
-  
-  
+
+
+
   </div>
 </div>
 
@@ -192,16 +201,16 @@ maximized?
 
 ### Levels, Width, Critical Path
 
-In the previous section, and the practice question, we touched upon some fundamental
+In the previous section, and the practice questions, we touched upon some fundamental
 concepts without naming them explicitly. Let's do so now.
 
 A first concept is that of a **DAG level**. A task is
-on level *n* of the DAG  if the longest path from the entry task(s) to the task is of length *n*,
-in number of vertices traversed. By  this definition, an entry task is in level 0. Every child
-task of an entry  task is in level 1, and so on.  Formally, the level of a task is one plus  the maximum of the
-levels of the tasks parents (this is  a recursive definition)
+on level $n$ of the DAG if the longest path from the entry task(s) to the task is of length $n$,
+in number of vertices traversed. By this definition, an entry task is in level 0. Every child
+task of an entry task is in level 1, and so on. Formally, the level of a task is one plus the maximum of the
+levels of its parent tasks (this is a recursive definition)
 
-For our example DAG in Figure 3 above, we can determine level of each task:
+For our example DAG in Figure 3 above, we can determine the level of each task:
 
 | task | level |
 |------|-------|
@@ -214,7 +223,7 @@ For our example DAG in Figure 3 above, we can determine level of each task:
 |display|3|
 |------|-------|
 
-So we say that this graph has four levels. Note that this does not mean
+So we say that this DAG has four levels. Note that this does not mean
 that the DAG tasks must be executed level by level. For instance, we could execute
 task "plot" (level 2) before task "analyze" (level 1).
 
@@ -229,11 +238,11 @@ the longest path in the dag from the entry task(s) to the exit
 task(s), where **the path length is measured in task durations**. 
 No matter how many cores are used, the program cannot execute faster than
 the length of the critical path. For instance, consider our example 
-DAG, assuming the the "analyze" task has work of 250 GFlop. There are three paths
+DAG, assuming the the "analyze" task has work 250 GFlop. There are three paths
 from "start" to "display". The length of the visualization path has length
-5+20+10+1 = 36s. The length of the statistics path has length 5+40+1=46. The
-length o f the analysis path is 5+25+10+1=41. And so the critical path
-is {"start" -> "stats" -> "display"} and has length 46. No matter how many 10GFlop/sec cores
+5+20+10+1 = 36 seconds. The length of the statistics path has length 5+40+1=46 seconds. The
+length o f the analysis path is 5+25+10+1=41 seconds. And so the critical path
+is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10GFlop/sec cores
 are used to execute this program, it can never run in less than 46 seconds!
 
 #### Practice Questions
@@ -290,7 +299,7 @@ Here is  the set of DAG levels:
 It would never be useful to use more than  3 cores  because the width of the DAG is 3  (level 2). The DAG's
 critical path has length 27s,  so yes, the execution (on 3 cores) could be lower than 28s. 
 
-removing the edge from red 1s to blue 2s would make the DAG width 4 (i.e., level 2  would have 4 tasks in it). 
+Removing the edge from red 1s to blue 2s would make the DAG width 4 (i.e., level 2  would have 4 tasks in it). 
   </div>
 </div>
 
@@ -299,7 +308,7 @@ removing the edge from red 1s to blue 2s would make the DAG width 4 (i.e., level
 
 ### Choosing which task to run next
 
-In our example dataset analysis application, there was never a *choice* for deciding which task
+In our example dataset analysis program, there was never a *choice* for deciding which task
 to run next. First we have to run "start". Then, we have three tasks that are
 **ready**, that is, whose parents have all executed. Since we have 3 cores, we run
 all three, each on one core.  In other words, since we have 3 paths in the DAG and
@@ -320,12 +329,12 @@ than others. In this small example the "bad" choices are not terrible, but for l
 DAGs they  could correspond to an enormous performance loss. 
  
 So we need some rule of thumb for picking a task to run. 
-A good and popular rule of thumb is, whenever there is a choice  to make, **pick the task that is 
+A good and popular rule of thumb is: Whenever there is a choice **pick the task that is 
 on  the  critical path.** After all it's critical! 
 
 
 To see the impact of such decisions, the simulation app below allows
-you to simulate application execution while prioritizing some execution paths. For instance,
+you to simulate program execution **on 2 cores** while prioritizing some execution paths. For instance,
 if you select "viz/analyze", whenever there is a choice, we always pick a visualization or an analysis task
 over the "stats" task.  
 
@@ -360,12 +369,14 @@ path is the critical path. Not counting the "start" and "display" tasks, the vis
 the analysis path in 11s, and the stats path in 40s. This is **exactly** the scheduling problem that
 we looked at in the first tab of this page: partition a set of numbers into two groups so that their sum is
 as close to each other as possible!  The best choice for this grouping here is clearly {30, 11} and {40}.
-In other words, one one core we should run the visualization and the analysis path, and on the other we should
+In other words, on one core we should run the visualization and the analysis path, and on the other we should
 run the statistics path. 
 
 So, if we prioritize both the visualization and  analysis paths after task "start"
 completes, they will run on  different cores, which is a bad choice (as the groupings
 will be {30} and {11, 40}).
+
+All this can be seen easily in the simulation app. 
 
   </div>
 </div>
@@ -388,26 +399,27 @@ This is perhaps not an easy question, as it requires to thing about this abstrac
 why.
 
 
-We can look a this question at a very abstract level: we have 
-three "things" to run, let's call them *A*, *B*, and *C*. (Each of them is one of our
-three paths,  without including the "start" and "display" tasks). 
-Let   *a*, *b*, and *c*  be their execution times. Say, without loss of generality,
-that *a* <= *b* <= *c*. Then, we can see what runs on each core for each option that
-prioritizes two of them:
+We can look a this question at a very abstract level: we have three
+"things" to run, let's call them $A$, $B$, and $C$. (Each of them is one of
+our three paths,  without including the "start" and "display" tasks).  Let
+$a$, $b$, and $c$  be their execution times. Say, without loss of
+generality, that $a \leq b \leq c$. Then, we can see what runs on each core
+for each option that prioritizes two of them:
 
 |-------|--------|--------| 
 |  prioritizing | core  #1 | core #2|
-|  *A* and *B* | *A*, then *C*  |  *B*   |
-|  *A* and *C* | *A*, then *B*  |  *C*   |
-|  *B* and *C* | *B*, then *A*  |  *C*   |
-|---|---|---|
+|-------|--------|--------| 
+|  $A$ and $B$ | $A$ then $C$  |  $B$   |
+|  $A$ and $C$ | $A$ then $B$  |  $C$   |
+|  $B$ and $C$ | $B$ then $A$  |  $C$   |
+|-------|--------|--------| 
 
 The two prioritized things start first. Then the third thing runs on the core that
 becomes idle first (i.e., the core that  was running the shortest thing). 
 
 We  note that in the table above, the 2nd and 3rd row are identical. That is, the cores
 finish computing at the same time.  The only  thing that changes is the order in which
-things run on core #1 ("*A* then *B*" or  "*B* then *A*"). 
+things run on core #1 ("$A$ then $B$" or  "$B$ then $A$"). 
 Therefore, two of the prioritization options always produce the same outcome in  terms
 of overall program execution time! 
 
