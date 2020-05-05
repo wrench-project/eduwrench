@@ -224,7 +224,7 @@ parallel efficiency is $(1 \times 35 + 1 \times 20) / (2 \times 35)$ = 78.5%.
 
 ### Simulating Load Imbalance
 
-So that you can gain hands-on experience, use the simulation Web application below.
+So that you can gain hands-on experience, use the simulation app below.
 
 This app allows you to pick a number of cores and an a number of tasks to
 run on these cores.  Try first with a single core running 5 tasks (you can
