@@ -1,28 +1,29 @@
 
 #### Learning Objectives:
 
-- Understand the basics of multi-core computers
-- Understand the concepts of parallel speedup and efficiency
-- Understand the relationship between idle time, speedup and efficiency
+- Understand the need for and the basics of multi-core computers
+- Understand and apply the concepts of parallel speedup and efficiency
+- Understand and quantify the relationship between idle time, speedup and efficiency
 
 ---
 
 #### Basic Concept
 
 A multi-core processor provides multiple processing units, or **cores**,
-each of which is capable of executing computer code independently of other
-cores. Multi-core processors have become ubiquitous. This is because, in
-the early 2000's it became increasingly difficult, and in fact impossible,
-to increase the clock rate of CPUs  (due to well-documented power/heat
+that are capable of executing computer code independently of each other.
+ Multi-core processors have become ubiquitous. This is because starting
+in the early 2000's it became increasingly difficult, and eventually impossible,
+to increase the clock rate of computer microprocessors (due to well-documented power/heat
 issues).  As  a solution to this problem, microprocessor manufacturers
 started producing multi-core processors. For a  program to exploit the
 compute power of a multi-core processor, it must use *multi-threading* (see
 operating systems and concurrent programming courses/textbooks). Although
 there are a lot of fascinating (and often difficult) aspects of
-multi-threading, conceptually it simply  means that a program comprises a
+multi-threading, conceptually it just  means that a program comprises a
 set of *tasks*, some of which can run at the same time on the cores of a
 multi-core computer. This is  called **parallelism** and we call this kind
 of programs **parallel programs**.
+
 
 
 Each task in a parallel program performs some computation on some input
@@ -35,8 +36,8 @@ disk.
 
 As mentioned in the [Single Core Computing]({{site.baseurl}}/pedagogic_modules/single_core_computing) module, we do not
 consider time sharing. That is, **we will only consider executions in which
-at most one task runs on a core at a given time.** Although Operating
-Systems allow time-sharing, we will never start more tasks than cores on
+at most one task runs on a core at a given time.** Although operating
+systems allow time-sharing, we will never start more tasks than cores on
 the machine. This is the typical  approach when aiming for high
 performance.  Therefore, a task that begins executing on a core executes
 uninterrupted until completion on that same core.
@@ -48,19 +49,19 @@ uninterrupted until completion on that same core.
 A common motivation for running the tasks of a program on multiple cores is
 speed. For example, if you have tasks that a single core can complete in
 one hour, it will take four hours to complete four tasks. If you have two
-of these cores in a computer, now you can complete the same four
-tasks in less time, and ideally in two hours. This concept is called
-**parallelism**: running multiple tasks at the same time, or
-*concurrently*, on multiple cores to complete a set of tasks faster.
+cores in a computer, now you can complete the same four
+tasks in less time, and ideally in two hours. *With parallelism we
+can decrease program execution time*. 
 
 Unfortunately, most real-world programs do not have ideal
-parallelism behavior. That is, executing $p$ times faster with $p$
+parallelism behavior. In other words, they don't run $p$ times faster when
+executed on $p$
 cores. Instead, they execute less than $p$ times faster. This may seem
 surprising, but comes about due to many reasons. For instance, when two
 tasks execute concurrently on two different cores, they still compete for
 the memory hierarchy, e.g., the L3 cache and the memory bus. We refer
-you to Computer Architecture courses/textbooks for more details. In this module,
-unless specified otherwise, we assume that two tasks running on two different cores
+you to computer architecture courses/textbooks for more details. In this module,
+we assume that two tasks running on two different cores
 do not compete for the memory hierarchy. But even so, there are
 other reasons why a program cannot achieve ideal parallelism.
 Before we get to these reasons, let us first define two crucial metrics:
@@ -129,7 +130,7 @@ power of a core.
 #### Practice Questions
 
 **[A.2.p1.1]** Consider a parallel program that runs in 1 hour on a single core of a computer. 
-The program's execution on 6 cores is 80%. What is the program's execution time
+The program's execution on 6 cores has 80% parallel efficiency. What is the program's execution time
 when running on 6 cores?
 <div class="ui accordion fluid">
   <div class="title">
@@ -139,7 +140,7 @@ when running on 6 cores?
   <div markdown="1" class="ui segment content">
 
 Let $S$ the speedup on 6 cores for this program. Since the efficiency is equal to $S/6$,
-we have $S = 6 \times  0.8 = 4.8$. Therefore, the program runs in 60/4.8 = 12.5 minutes.
+we have $S/6 = 0.8$, which gives us $S = 4.8$. Therefore, the program runs in 60/4.8 = 12.5 minutes.
 
   </div>
 </div>
@@ -147,7 +148,7 @@ we have $S = 6 \times  0.8 = 4.8$. Therefore, the program runs in 60/4.8 = 12.5 
 <p></p>
 
 **[A.2.p1.2]** A parallel program has a speedup of 1.6 when running on 2 cores, and runs
-10 minutes faster when running on 3 cores. Given a formula for $T(1)$ (the execution time
+10 minutes faster when running on 3 cores. Give a formula for $T(1)$ (the execution time
 on one core in minutes) as a  function of $T(3)$ (the execution time on three cores in minutes). 
 <div class="ui accordion fluid">
   <div class="title">
@@ -182,8 +183,8 @@ $
 #### Load Imbalance and Idle Time
 
 At this point, you may be wondering why, in practice, parallel efficiency
-can be less than 100%. Let's discuss one of them: **idle time**. This is the
-time during which one or more cores are not able to work while others are
+can be less than 100%. One reason is **idle time**. This is the
+time during which one or more cores are not able to work while other cores are
 working.
 
 Consider a parallel program that consists of $n$  tasks, each of them
@@ -192,7 +193,7 @@ computer with $p$ cores.  If $n$ is not divisible by $p$,  then at least
 one core will be idle during program execution.  For example, if we have 8
 tasks, that each run for 1 hour, and 5 cores, all cores will be busy
 running the first 5 tasks in parallel.  But once this phase of execution is
-finished, we only have 3 tasks left and 2 cores will have nothing to do for
+finished, we only have 3 tasks left and  5 available cores. So 2 cores will have nothing to do for
 1 hour.  In this situation we says that **the load is not well-balanced
 across cores**. 
 
@@ -247,9 +248,34 @@ see idle time on the graph, parallel efficiency is below 100%.
 
 #### Practice Questions
 
-**[A.2.p1.1]** You are told that a 10-task program runs in 1 hour with
+**[A.2.p1.3]** You have a 4-core compute where each core computes at speed 1000 GFlop/sec. 
+You are told that a 10-task parallel program has 30 idle core seconds in total when executed
+on that computer. All tasks have the same work. What is this work in  GFlop? (you  can double-check
+your answer with the simulation app above)
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+  Since we have 10 tasks and 4 cores, in the last phase of execution 2 cores are idle
+  while 2 cores compute. Let  $w$ be the work of a task. The duration of this  last
+  phase is $w/100$ seconds. So the total idle core seconds is $2 w/100$. We know this
+  number to be 30 seconds, therefore we simply need to solve:
+
+$
+\frac{2 w}{100} = 30
+$
+
+which gives us $w = $ 1500 GFlop/sec. 
+  </div>
+</div>
+
+**[A.2.p1.4]** You are told that a 10-task program runs in 1 hour with
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
-What is the execution time of one task?
+What is the execution time of one task? (you can double-check
+your answer with the simulation app above)
+
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -258,12 +284,12 @@ What is the execution time of one task?
   <div markdown="1" class="ui segment content">
 The execution proceeds in 4 phases. If each of the first three phases
 3 tasks are executed in parallel. In the last phase a single task executes. 
-Therefore, each phase takes 15 minutes, which is the execution time of a task.
+Therefore, each phase takes 60/4 = 15 minutes, which is the execution time of a task.
   </div>
 </div>
 <p></p>
 
-**[A.2.p1.2]** Assume you have 20 tasks to execute on a multi-core computer,
+**[A.2.p1.5]** Assume you have 20 tasks to execute on a multi-core computer,
 where each task runs in 1 second on a core. By what factor is the overall
 execution time reduced when going from 4 to 8 cores?
 <div class="ui accordion fluid">
@@ -275,13 +301,13 @@ execution time reduced when going from 4 to 8 cores?
 The total execution time when using 4 cores will be 5 seconds, as each
 core executes 6 tasks. When increasing from 4 cores to 8 cores, now the
 total execution time is 3 seconds. This is because the best we can do is
-have 4 of the cores run 2 tasks and the  other 4 run 3 tasks. The
+have 4 of the cores run 2 tasks and the other 4 run 3 tasks. The
 overall execution time is reduced by a factor 4/3 = 1.33.
   </div>
 </div>
 <p></p>
 
-**[A.2.p1.3]** Assume you now have 3 tasks to compute, still each taking 1 second
+**[A.2.p1.6]** Assume you now have 3 tasks to compute, still each taking 1 second
 on a core. What is the parallel efficiency on a 4-core computer? 
 <div class="ui accordion fluid">
   <div class="title">
@@ -297,7 +323,7 @@ efficiency is 3/4 = 75%.
 </div>
 <p></p>
 
-**[A.2.p1.4]** You are upgrading your (pre-historic?) single-core computer and
+**[A.2.p1.7]** You are upgrading your (pre-historic?) single-core computer and
 you have two new multi-core computer to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
@@ -312,17 +338,17 @@ parallel efficiency?
 When using only a single core, the 15 tasks will take 15 seconds to
 complete. 
 
-When increasing the number of cores to 5, the same tasks can now be completed
+When increasing the number of cores to 5, the program runs
 in 3 seconds, and there is no idle time (since 5 divides 15). Therefore
 parallel efficiency is 100%.
 
 When increasing the number
-of cores to 10, the tasks take 2 seconds. In this scenario, 
+of cores to 10, the program runs in 2 seconds. In this scenario, 
 for the last second, 5 out of the 10 cores are
 idle. Therefore, efficiency is less than 100% (it is 75%). 
 
 We conclude that we should go with the 5-core computer (even though the 10-core
-computer completes the tasks sooner, our concern here is parallel efficiency).
+computer completes the program faster, our concern here is parallel efficiency).
   </div>
 </div>
 <p></p>
@@ -359,23 +385,23 @@ What if we now have 3 cores? Then we have to split our set of numbers into
 {16}, and {11, 4}. In this case, the program runs in 16 seconds and the
 parallel efficiency on 3 cores is almost 96%. It is not useful to use more
 cores, since no matter what the program cannot run faster than 16
-seconds.
+seconds  (since we have one task that takes 16 seconds).
 
 It turns out that splitting sets of numbers into parts with sums as close
 to each other as possible is a difficult problem. We are able to do it for
 the small examples like above, but as soon as the number of tasks gets large,
 it's no longer humanly possible. And in fact, it's not computer-ly
 possible either (at least, not quickly). More formally, determining the best split is an NP-complete
-problem (see an Algorithm/Theory textbook/course). We will encounter this kind of
+problem (see algorithm/theory textbooks/courses). We will encounter this kind of
 "scheduling problem" (i.e., how to allocate tasks to processors) again in upcoming modules.
 
 ----
 
 #### Practice Questions
 
-**[A.2.p1.5]** A 5-task program runs optimally (i.e., it's the best it can
+**[A.2.p1.8]** A 5-task program runs optimally (i.e., it's the best it can
 possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in 
-2s, 4s, 3s, and 5s respectively. Is it possible that Task 5 runs in 7s?
+2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5 runs in 7s?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -391,7 +417,7 @@ to 11.
 </div>
 <p></p>
 
-**[A.2.p1.6]** Consider a 6-task program. The execution times of 5
+**[A.2.p1.9]** Consider a 6-task program. The execution times of 5
 of the tasks are: 6, 8, 7, 12, 9. What should the 6th task's execution
 time so that this program can run with 100% parallel efficiency
 on 3 cores? 
@@ -404,7 +430,7 @@ on 3 cores?
 
 If we run the 6s and the 9s tasks on one core, and the
  8s and the 7s tasks on another core, both these cores
-finish computing in 15s. One the third core we run the 12
+finish computing in 15s. On the third core we run the 12
 task. If the 6th task takes 3s, then all 3 cores
 finish computing in 15s. So the answer is *3 seconds*.
 
@@ -420,25 +446,31 @@ finish computing in 15s. So the answer is *3 seconds*.
 
 #### Questions
 
-**[A.2.q1.1]** What speedup will you observe when running 10 identical (in
-terms of execution time) tasks on 1 core versus these same 10 tasks on 3
-cores?
+**[A.2.q1.1]** You are told that a parallel program runs in 1 hour on a
+3-core machine, and that the parallel efficiency is 90%. How long, in
+minutes, would the program take if executed using a single core?
 
-**[A.2.q1.2]** What would be the parallel efficiency of a 10-task program
-execution on a 4-core machine where each task runs in 10 minutes?
+**[A.2.q1.2]**  You are told that a program runs in 10 hours when using the
+4 cores of some computer with parallel efficency 80%. Using 8 cores, the
+program runs in 6 hours. What is the parallel efficiency of this 8-core
+execution?
 
-**[A.2.q1.3]** You are told that a multi-task program runs in 1 hour on a
-3-core machine, and that the parallel efficiency is 90%. How long would the
-program take if executed using a single core.
+**[A.2.q1.3]** What parallel speedup will you observe when running 10
+identical (in terms of execution time) tasks on 3 cores?
 
-**[A.2.q1.4]** You have a 20-task program where each task's work is 10
+
+**[A.2.q1.4]** The parallel efficiency of a parallel program with 12
+identical tasks on a multi-core computer is more than 82%.  You know this
+computer has no more than 8 cores. How many cores does it have?
+
+**[A.2.q1.5]** You have a 20-task program where each task's work is 10
 GFlop. You currently have a 4-core compute where each core compute at
 speed 50 GFlop/sec. For the same amount of money you can either (1)
-increase the speeds of all 4 cores by 20%; or (2) add another 50 GFlop/sec
+increase the speeds of all 4 cores by 20%; or (2) add a 5th 50 GFlop/sec
 core. What should you do if you want to run your program as quickly as
-possible?
+possible?  
 
-**[A.2.q1.5]** Consider a 6-task program to be executed on a 3-core
+**[A.2.q1.6]** Consider a 6-task program to be executed on a 3-core
 computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
 3s. What is the best possible (i.e., the optimal) program execution time
 on these 3 cores? Could we do better with 4 cores?
