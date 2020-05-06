@@ -3,10 +3,11 @@
 
 - Understand the concept of data parallelism
 - Understand and be able to apply Amdahl's law
+- Understand and be able to reason about the performance of data parallelism
 
 ---
 
-### An Example
+### Motivation
 
 In all we've seen so far in this module, a parallel program consists of a
 predetermined set of tasks, each of them executing on a single core. Many
@@ -17,7 +18,9 @@ Let's now consider one task, which performs some computation on a single
 core.  Perhaps, one can rewrite the code of this task to use multiple cores
 to accelerate its computation. This is done by writing the task's code so that it
 uses multiple threads (see concurrent programming textbooks/courses).
-Perhaps this computation can be **parallelized**.
+In other terms, perhaps the task's computation can be **parallelized**.
+
+### An Example
 
 Consider a transformation of the pixels of an image that makes the image
 resemble an oil-painting. This can be done by updating each pixel's color by
@@ -56,7 +59,7 @@ $$
 In the oil-painting transformation the same computation is used for each
 pixel of the image (with perhaps special cases for the pixels close to the
 borders of the image). You can think of the computation applied to each
-pixel as a "micro-task". All these micro-tasks has the same work and do the
+pixel as a "micro-task". All these micro-tasks have the same work and do the
 same thing (i.e., they run the same code), but on different data (the
 neighboring pixels of different pixels). This is called **data
 parallelism**. It is a bit of a strange term because it's just like *task
@@ -64,13 +67,13 @@ parallelism*, but with very fine granularity. Regardless, it should be
 straightforward to perform the transform on, say, 4 cores: just give each
 core a quarter of the pixels to process!
 
-More generally, if the total work of the "oil" task is $X$ and if we have
+A simple general model is: if the total work of the "oil" task is $X$ and if we have
 $n$ cores, we could perform the work using $n$ tasks each with $X/n$ work.
-This assumes $X$ is divisible by $n$. This is likely not quite the case,
-but a close approximation if the number of pixels is much larger than the
+This assumes $X$ is divisible by $n$. This is likely not quite the case in practice,
+but a very good approximation if the number of pixels is much larger than the
 number of cores, which we will assume here.
 
-The program's DAG now is now as follows:
+The program's DAG now is as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure A.2.4.2:</strong>
@@ -119,7 +122,7 @@ $
 
 <p></p>
 **[A.2.p4.2]** Which execution has the best parallel efficiency: A) $r=2$ on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
-double-check your intuition using analytics and/or the  simulation?
+check your intuition using analytics and/or the  simulation?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -194,16 +197,16 @@ speedup is 30/15 = 2. So the parallel efficiency is 50%.
 The simulation and practice questions above highlight a simple phenomenon
 known as **Amdahl's law**. This law says that the overall parallel speedup
 that a program that has a sequential and a parallel part is limited by the
-amount of time spent in the sequential part of a program. This is very intuitive,
+amount of time spent in the sequential part. This is very intuitive,
 since in the extreme a program is purely sequential and the parallel speedup is always
 1 regardless of the number of cores. But the (to some) surprising thing is how
-sever the limit is. Let's derive Amdahl's law int he abstract, and then apply is
+severe the limit is. Let's derive Amdahl's law in the abstract, and then apply is
 to our example oil painting program. 
 
-Consider a program that runs on 1 core in time *T*. This program consists of two
+Consider a program that runs on 1 core in time $T$. This program consists of two
 main phases, one that is inherently sequential and one that can be parallelized. Let
-*&alpha;* be the fraction of the execution time spent in the parallelizable phase. We can
-thus write the execution time on 1 core, *T(1)*, as:
+$\alpha$ be the fraction of the execution time spent in the parallelizable phase. We can
+thus write the execution time on 1 core, $T(1)$, as:
 
 $$
 \begin{align}
@@ -211,8 +214,8 @@ T(1) & = \alpha T + (1 - \alpha) T\\
 \end{align}
 $$
 
-Now, if we run the program on *n* cores, assuming perfect parallelization of the parallelizable
-phase, we obtain the execution time on *n* cores, *T(n)*, as:
+Now, if we run the program on $n$ cores, assuming perfect parallelization of the parallelizable
+phase, we obtain the execution time on $n$ cores, $T(n)$, as:
 
 $$
 \begin{align}
@@ -220,7 +223,7 @@ T(n) & = \alpha T / n + (1 - \alpha) T\\
 \end{align}
 $$
 
-The parallel speedup on *n* cores, *S(n)*, is then:
+The parallel speedup on $n$ cores, $S(n)$, is then:
 
 $$
 \begin{align}
@@ -229,8 +232,8 @@ S(n) & = \frac{\alpha T + (1 - \alpha) T}{\alpha T / n + (1 - \alpha) T}\\
 \end{align}
 $$
 
-As *n*, the number of cores, grows, *S(n)* increases (as expected). Amdahl's law is
-the observation that no matter how large *n* gets, the speedup is limited:
+As $n$, the number of cores, grows, $S(n)$ increases (as expected). Amdahl's law is
+the observation that no matter how large $n$ gets, the speedup is limited by a constant:
 
 $$
 \begin{align}
@@ -246,7 +249,7 @@ Precisely, if running on 8 cores for instance, the speedup would be
 having 10% of the execution sequential does not seem like a lot, but
 seeing only a 4.7 speedup with 8 cores seems really bad.
 The graph below shows speedup vs. number of cores for different
-values of *&alpha;*. 
+values of $\alpha$:
 
 <object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
 <div class="caption"><strong>Figure A.2.4.3:</strong>
@@ -257,7 +260,7 @@ Speedup vs. #cores for different values of the fraction of the sequential execut
 The main message of Figure A.2.4.3 is that even with seemingly small
 non-parallelizable portions, program speedup drops well below the number of
 cores quickly. For instance, the data point circled in red shows
-that if only 5% of the sequential execution time is non-parallelizable,
+that if as little as 5% of the sequential execution time is non-parallelizable,
 running on 20 cores only affords a 10x speedup (i.e., parallel efficiency
 is only 50%). 
 
@@ -276,8 +279,8 @@ uses increases, we say that the program "scales".
 
 #### Practice Questions
 
-**[A.2.p4.6]** A program that consists of a sequential phase and a data-parallel
-phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  How long
+**[A.2.p4.4]** A program that consists of a sequential phase and a perfectly
+parallelizable phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  How long
 does  the sequential phase run for?
 
 <div class="ui accordion fluid">
@@ -306,8 +309,8 @@ minutes.
 <p></p>
 
 
-**[A.2.p4.7]** A program consists of a sequential phase and a data-parallel
-phase. When executed on 1 core, the data-parallel phase accounts for 92% of
+**[A.2.p4.5]** A program consists of a sequential phase and a perfectly parallelizable
+phase. When executed on 1 core, the parallel phase accounts for 92% of
 the execution time.  What fraction of the execution time on 6 cores does
 this phase account for?
 
@@ -324,7 +327,7 @@ $
 T(6) = 0.08  \times T(1) + 0.92 \times T(1) / 6
 $
 
-and the fraction of T(6) that corresponds to the data-parallel phase is:
+and the fraction of T(6) that corresponds to the parallel phase is:
 
 $
 \begin{align}
@@ -334,11 +337,30 @@ T(6) & = \frac{0.92 \times T(1) / 6}{0.08  \times T(1) + 0.92 \times T(1) / 6}\\
 \end{align}
 $
 
-So only 65% of the 6-core execution is  spend in the data-parallel phase.
+So only 65% of the 6-core execution is  spent in the parallel phase.
 
   </div>
 </div>
 
+<p></p>
+
+**[A.2.p4.6]** 40% of the sequential execution time of a program is spent
+in phase that could be perfectly parallelized. What is  the maximum  speedup
+one could achieve if any number of cores  can be used?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+This is  a direct application of Amdahl's law. The upper bound on the 
+speedup is 1/(1 - 0.4) = 1.66.  There  is really no need to remember
+the  formula by heart. The bound is simply what speedup we would achieved
+with  an infinite number of cores, i.e., when the execution time of the
+parallel phase is zero. 
+  </div>
+</div>
 <p></p>
 
 
@@ -358,7 +380,7 @@ S(n,r)  & = \frac{1}{r^2/(1+r^2) / n + 1 - r^2/(1+r^2)}
 $
 
 You can double-check that this formula matches what we observed in
-the  simulation app. For instance, for $r=2$, $\alpha = 4/5$. And so
+the  simulation app. For instance, for $r=2$, the
 the speedup using 4 cores would be:
 
 $
@@ -380,6 +402,8 @@ $
 
 which gives us $n \leq 5$. So as soon as we use 6 cores or more, parallel efficiency
 drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
+We could use more cores effectively for larger $r$  because the application  
+would have more (parallelizable) work to do.
 
 
 
@@ -397,11 +421,11 @@ this in the two practice questions below.
 #### Practice Questions
 
 
-**[A.2.p4.4]** Consider a program that consists of a single task with work
+**[A.2.p4.7]** Consider a program that consists of a single task with work
 10,000 GFlop. The developer of the program has an idea to expose
 data-parallelism. But it is not perfect: the single task is rewritten as a
 first task with work 500 GFlop, and then $n$ tasks with each work $10000/n$
-GFlop. So the total work of the program is larger. What would the speedup
+GFlop. So the total work of the program is larger and there is still a sequential phase. What would the speedup
 be if executing the modified code on 4 cores (compared to the original
 1-task program on 1 of these cores)?
 
@@ -435,11 +459,11 @@ $
 <p></p>
 
 
-**[A.2.p4.5]** Consider a program that consists of a single task with work
+**[A.2.p4.8]** Consider a program that consists of a single task with work
 10,000 GFlop. The developer of the program has an idea to expose
-data-parallelism where the code now consists of $n$ tasks, each of them
+data parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
-data parallelism). For what value of X would the parallel efficiency be above 90%
+data parallelism, but there is no sequential phase). For what value of X would the parallel efficiency be above 90%
 when running on an 8-core computer?
 
 <div class="ui accordion fluid">
@@ -482,3 +506,32 @@ which gives $X \leq 1111.11$ GFlop.
 #### Questions
 
 Answer the following questions:
+
+**[A.2.q4.1]** If the sequential execution of a program spends 30% of its
+time in a phase that could be parallelized perfectly, what would be the
+parallel efficiency of an execution of this program on  6 cores  (assuming
+that phase has been parallelized)?
+
+**[A.2.q4.2]** A program consists of a sequential phase and a
+perfectly parallelizable phase. The program runs on 1 core in 20 minutes and on 3 cores
+in 10 minutes.  How long does the sequential phase run for?
+
+**[A.2.q4.3**] If a parallel program achieves parallel efficiency of 99%
+when running on 64 cores, what fraction of its sequential execution time
+was non-parallelizable?
+
+**[A.2.q4.4]** Consider a program that consists of a single task  with  work  10,000 GFlop. 
+Developer $A$ proposes to replace this task with 5 tasks each with work  2,000 GFlop. 
+Developer  $B$ proposes to replace this task with  4 tasks  each  with  work 3,000 Gflop,
+followed by a sequential task with work  500  GFlop. Which developer's idea  should you use
+when running this program on a 4-core machine?
+
+**[A.2.q4.5]** A program currently consists of two tasks, $A$  and $B$,
+that are independent (i.e., they  can be performed in parallel).  Task $A$
+has work 1000 GFlop, while task $B$ has work 2000 GFlop.  You  can either
+replace task $A$ with two independent tasks each with work 600 GFlop, or
+replace task $B$ with  two independent tasks each with  work 1900 GFlop.
+If running on a 3-core computer,  which replacement would be best in  terms
+of program execution  time?
+
+
