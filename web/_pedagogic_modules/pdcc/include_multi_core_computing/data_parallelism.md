@@ -90,7 +90,7 @@ simulation to explore things on your own, but also to answer some of the practic
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="multi_core_data_parallelism/" %}
   </div>
 </div>
@@ -109,7 +109,7 @@ results with the simulation app.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 The execution time  on 6 cores  is: 
 
@@ -129,7 +129,7 @@ check your intuition using analytics and/or the  simulation?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Intuitively, when going from execution A to execution B the total work
 grows roughly by a factor 9/4 while the number of cores grows by a much
@@ -179,7 +179,7 @@ original task's work. What is the parallel efficiency on 4 cores?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the
 speedup is 30/15 = 2. So the parallel efficiency is 50%. 
@@ -288,7 +288,7 @@ does  the sequential phase run for?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let $\alpha$ the fraction of the sequential execution time that
 is parallelizable. Amdahl's law gives us the speedup on 4 cores as:
@@ -319,7 +319,7 @@ this phase account for?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 Let $T(1)$ be  the sequential execution time. The 
 execution time on 6 cores, $T(6)$, is:
 
@@ -353,7 +353,7 @@ one could achieve if any number of cores  can be used?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 This is  a direct application of Amdahl's law. The upper bound on the 
 speedup is 1/(1 - 0.4) = 1.66.  There  is really no need to remember
 the  formula by heart. The bound is simply what speedup we would achieved
@@ -435,7 +435,7 @@ be if executing the modified code on 4 cores (compared to the original
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let $s$ be the core compute speed in GFlop/sec. 
 
@@ -471,7 +471,7 @@ when running on an 8-core computer?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let $s$ be the core compute speed in GFlop/sec. The sequential program runs 
 in time $10000/s$, and the 

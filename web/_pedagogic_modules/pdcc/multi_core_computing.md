@@ -10,11 +10,11 @@ The goal of this module is to introduce you to multi-core computing.
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item " data-tab="first">Parallelism</a>
-  <a class="item " data-tab="second">RAM and I/O</a>
-  <a class="item " data-tab="third">Task Dependencies </a>
-  <a class="item " data-tab="fourth">Data Parallelism</a>
-  <a class="item " data-tab="fifth">Capstone Exercise</a>
+  <a class="item" data-tab="first">Parallelism</a>
+  <a class="item" data-tab="second">RAM and I/O</a>
+  <a class="item" data-tab="third">Task Dependencies </a>
+  <a class="item" data-tab="fourth">Data Parallelism</a>
+  <a class="item" data-tab="fifth">Capstone Exercise</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first">
@@ -36,4 +36,3 @@ Go through the tabs below in sequence...
 <div markdown="1" class="ui tab segment" data-tab="fifth">
   {% include_relative include_multi_core_computing/capstone.md %}
 </div>
-

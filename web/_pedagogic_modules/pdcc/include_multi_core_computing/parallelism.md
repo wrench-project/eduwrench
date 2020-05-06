@@ -7,7 +7,7 @@
 
 ---
 
-#### Basic Concept
+### Basic Concept
 
 A multi-core processor provides multiple processing units, or **cores**,
 that are capable of executing computer code independently of each other.
@@ -23,8 +23,6 @@ multi-threading, conceptually it just  means that a program comprises a
 set of *tasks*, some of which can run at the same time on the cores of a
 multi-core computer. This is  called **parallelism** and we call this kind
 of programs **parallel programs**.
-
-
 
 Each task in a parallel program performs some computation on some input
 data,  which  can be in RAM or on disk, and which produces some output
@@ -67,7 +65,6 @@ other reasons why a program cannot achieve ideal parallelism.
 Before we get to these reasons, let us first define two crucial metrics:
 *Parallel Speedup* (or *Speedup*) and *Parallel Efficiency* (or
 *Efficiency*).
-
 
 ### Speedup
 
@@ -137,7 +134,7 @@ when running on 6 cores?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let $S$ the speedup on 6 cores for this program. Since the efficiency is equal to $S/6$,
 we have $S/6 = 0.8$, which gives us $S = 4.8$. Therefore, the program runs in 60/4.8 = 12.5 minutes.
@@ -155,7 +152,7 @@ on one core in minutes) as a  function of $T(3)$ (the execution time on three co
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Because the speedup on 2 cores is 1.6, we have: $ T(2) = T(1) / 1.6 $
 
@@ -175,8 +172,6 @@ $
 
   </div>
 </div>
-
-
 
 ----
 
@@ -213,6 +208,7 @@ is depicted in the figure below:
 
 <object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
 <div class="caption"><strong>Figure A.2.1.1:</strong>
+
 Example 35-minute execution on a 2-core computer. 
 The white area is the core idle time, 
 the yellow area is the  core compute time. </div>
@@ -241,7 +237,7 @@ see idle time on the graph, parallel efficiency is below 100%.
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="multi_core_independent_tasks/" %}
   </div>
 </div>
@@ -257,7 +253,7 @@ your answer with the simulation app above)
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   Since we have 10 tasks and 4 cores, in the last phase of execution 2 cores are idle
   while 2 cores compute. Let  $w$ be the work of a task. The duration of this  last
   phase is $w/100$ seconds. So the total idle core seconds is $2 w/100$. We know this
@@ -270,6 +266,7 @@ $
 which gives us $w = $ 1500 GFlop/sec. 
   </div>
 </div>
+<p></p>
 
 **[A.2.p1.4]** You are told that a 10-task program runs in 1 hour with
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
@@ -281,7 +278,7 @@ your answer with the simulation app above)
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The execution proceeds in 4 phases. If each of the first three phases
 3 tasks are executed in parallel. In the last phase a single task executes. 
 Therefore, each phase takes 60/4 = 15 minutes, which is the execution time of a task.
@@ -297,7 +294,7 @@ execution time reduced when going from 4 to 8 cores?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The total execution time when using 4 cores will be 5 seconds, as each
 core executes 6 tasks. When increasing from 4 cores to 8 cores, now the
 total execution time is 3 seconds. This is because the best we can do is
@@ -312,7 +309,7 @@ on a core. What is the parallel efficiency on a 4-core computer?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i> (click to see answer)
-  </div> <div markdown="1" class="ui segment content">
+  </div> <div markdown="1" class="ui segment content answer-frame">
 When using only a single core, the 3 tasks will take 3 seconds to
 complete. When increasing the number of cores to 4, the same tasks can
 now be done in 1 second. Since $p$ the number of cores is greater than
@@ -334,7 +331,7 @@ parallel efficiency?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 When using only a single core, the 15 tasks will take 15 seconds to
 complete. 
 
@@ -352,7 +349,6 @@ computer completes the program faster, our concern here is parallel efficiency).
   </div>
 </div>
 <p></p>
-
 
 ### More Load Imbalance with Non-Identical Tasks
 
@@ -407,7 +403,7 @@ possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 Nope. If Task 5 runs in 7 seconds, then we'd have to split the set
 {2, 3, 4, 5, 7} into two parts that each sum up to 10. One of these
 parts must contain number 7. So we also put number 3 into that part since
@@ -426,7 +422,7 @@ on 3 cores?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 If we run the 6s and the 9s tasks on one core, and the
  8s and the 7s tasks on another core, both these cores
@@ -434,15 +430,11 @@ finish computing in 15s. On the third core we run the 12
 task. If the 6th task takes 3s, then all 3 cores
 finish computing in 15s. So the answer is *3 seconds*.
 
-
   </div>
 </div>
 <p></p>
 
-
-
 ---
-
 
 #### Questions
 
@@ -474,4 +466,3 @@ possible?
 computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
 3s. What is the best possible (i.e., the optimal) program execution time
 on these 3 cores? Could we do better with 4 cores?
-

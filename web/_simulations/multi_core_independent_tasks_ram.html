@@ -8,7 +8,7 @@ permalink: simulations/multi_core_independent_tasks_ram/
 
 {% include partials/simulation_parameters_form_start.html %}
 
-<div class="form-group">
+<div class="form-group col-md-6">
     <label for="num_cores">Number of Cores in Compute Node</label>
     <input class="form-control" type="number" id="num-cores" placeholder="1" value="1" min="1" max="32" step="1" required>
     <div class="invalid-feedback">
@@ -17,7 +17,7 @@ permalink: simulations/multi_core_independent_tasks_ram/
 </div>
 
 
-<div class="form-group">
+<div class="form-group col-md-6">
     <label for="num_tasks">Number of Tasks</label>
     <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" step="1" required>
     <div class="invalid-feedback">
@@ -25,7 +25,7 @@ permalink: simulations/multi_core_independent_tasks_ram/
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group col-md-6">
     <label for="task_ram">Ram Needed For Each Task (GB)</label>
     <input class="form-control" type="number" id="task-ram" placeholder="0" value="0" min="0" max="32" step="1" required>
     <div class="invalid-feedback">
@@ -33,7 +33,7 @@ permalink: simulations/multi_core_independent_tasks_ram/
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group col-md-6">
     <label for="task_gflop">Task Gflop</label>
     <input class="form-control" type="number" id="task-gflop" placeholder="100" value="100" min="1" max="999999" step="1" required>
     <div class="invalid-feedback">

@@ -6,7 +6,7 @@
 
 ----
 
-#### RAM Constraints and Parallelism
+### RAM Constraints and Parallelism
 
 As seen in the [Single Core Computing
 module]({{site.baseurl}}/pedagogic_modules/single_core_computing), a task
@@ -23,7 +23,6 @@ idle. The worst possible case would be running a single task that uses the
 entire RAM, thus leaving all remaining cores idle while it executes. 
 Because RAM constraints can causes idle time, they can also cause
 loss of parallel efficiency.
-
 
 ### Simulating RAM Constraints
 
@@ -47,7 +46,7 @@ constraints.
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="multi_core_independent_tasks_ram/" %}
   </div>
 </div>
@@ -67,7 +66,7 @@ efficiency on the new 5-core processor?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 On the single-core machine the RAM constraint was not a problem as
 tasks were executed sequentially (there was never a need for more than 2
 GB of RAM). With 5 cores, running all tasks concurrently would
@@ -101,7 +100,7 @@ you achieve 100% parallel efficiency?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The question really is: Can you always run two tasks at the same time so that the sum
 of their RAM requirements never exceeds 8 GB?  The answer is "yes":
   
@@ -194,8 +193,7 @@ when running on 2 cores?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
-
+  <div markdown="1" class="ui segment content answer-frame">
 The execution on 1 core is as follows:
 <object class="figure" width="400" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core_practice.svg">I/O parallel program execution on 1 core (practice)</object>
 

@@ -8,7 +8,7 @@ permalink: simulations/multi_core_dependent_tasks_2_cores/
 
 {% include partials/simulation_parameters_form_start.html %}
 
-<div class="form-group">
+<div class="form-group col-md-6">
     <label for="analyze-work">Work of "analyze" task in GFlop</label>
     <input class="form-control" id="analyze-work" placeholder="100" value="100" min="10" max="1000" step="1" required>
     <div class="invalid-feedback">
@@ -17,7 +17,7 @@ permalink: simulations/multi_core_dependent_tasks_2_cores/
 </div>
 <br>
 
-<div class="form-group radio-form-fix">
+<div class="form-group radio-form-fix col-md-6">
     <input type="radio" name="scheduling-scheme-select" id="scheduling-scheme-select-stats" value="stats" checked>
     <label class="radio-inline control-label" for="scheduling-scheme-select-stats">
         Prioritize visualization and analysis

@@ -15,11 +15,11 @@ with a main focus on performance.
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item " data-tab="first">Work and Speed</a>
-  <a class="item " data-tab="second">Time Sharing</a>
-  <a class="item " data-tab="third">Memory</a>
-  <a class="item " data-tab="fourth">IO</a>
-  <a class="item " data-tab="fifth">Capstone Exercise</a>
+  <a class="item" data-tab="first">Work and Speed</a>
+  <a class="item" data-tab="second">Time Sharing</a>
+  <a class="item" data-tab="third">Memory</a>
+  <a class="item" data-tab="fourth">IO</a>
+  <a class="item" data-tab="fifth">Capstone Exercise</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first" >
