@@ -31,7 +31,7 @@ from storage at bandwidth 100 MB/sec.
 ### Saving money?
 
 You've  found that the execution time is longer than 1 minute. (If  not, 
-re-check your work for Questin #1!)
+re-check your work for Question #1!)
 
 This VM is "leased" from some cloud infrastructure that charges 1c for each
 minute of usage. As a result, a program that runs in, say,  61 seconds,
