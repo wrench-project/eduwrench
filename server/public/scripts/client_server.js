@@ -37,75 +37,62 @@ $(function() {
         }
     });
 
+    $("#buffer-size").on("keyup", function() {
+        let buffer_size_input_el = $(this);
+        let buffer_size_input_value = parseInt(buffer_size_input_el.val());
+        let buffer_size_label_el = $(".buffer-size-label");
 
-    $("#server-2-link").on("keyup", function() {
-        let server_2_link_input_el = $(this);
-        let server_2_link_input_value = parseInt(server_2_link_input_el.val());
-        let server_2_link_label_el = $(".server-2-link-label");
-
-        if(server_2_link_input_value>=1 && server_2_link_input_value<1000){
-            server_2_link_label_el.text("Bandwidth: " + server_2_link_input_value + " MBps")
+        if(buffer_size_input_value>=1 && buffer_size_input_value<1000) {
+            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value + " Bytes")
                 .css("background-color", "#d3ffe9");
 
-            server_2_link_input_el.removeClass("is-invalid")
+            buffer_size_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
-                if (server_2_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_2_link_label_el.css("background-color", "");
+            setTimeout(function () {
+                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(server_2_link_input_value>=1000 && server_2_link_input_value<10001){
-            server_2_link_label_el.text("Bandwidth: " + server_2_link_input_value/1000 + " GBps")
+        } else if(buffer_size_input_value>=1000 && buffer_size_input_value<1000000) {
+            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000 + " KB")
                 .css("background-color", "#d3ffe9");
 
-            server_2_link_input_el.removeClass("is-invalid")
+            buffer_size_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
-                if (server_2_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_2_link_label_el.css("background-color", "");
+            setTimeout(function () {
+                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else {
-            server_2_link_label_el.css("background-color", "#ffb7b5");
-            server_2_link_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
-
-    $("#client-disk").on("keyup", function() {
-        let client_disk_input_el = $(this);
-        let client_disk_input_value = parseInt(client_disk_input_el.val());
-        let client_disk_label_el = $(".client-disk-label");
-
-        if(client_disk_input_value>=1 && client_disk_input_value<1000){
-            client_disk_label_el.text("Disk: " + client_disk_input_value + " MBps R/W")
+        } else if(buffer_size_input_value>=1000000 && buffer_size_input_value<1000000000){
+            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000000 + " MB")
                 .css("background-color", "#d3ffe9");
 
-            client_disk_input_el.removeClass("is-invalid")
+            buffer_size_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function() {
-                if (client_disk_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    client_disk_label_el.css("background-color", "");
+                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(client_disk_input_value>=1000 && client_disk_input_value<10001){
-            client_disk_label_el.text("Disk: " + client_disk_input_value/1000 + " GBps R/W")
+        } else if(buffer_size_input_value>=1000000000){
+            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000000000 + " GB")
                 .css("background-color", "#d3ffe9");
 
-            client_disk_input_el.removeClass("is-invalid")
+            buffer_size_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function() {
-                if (client_disk_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    client_disk_label_el.css("background-color", "");
+                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
         } else {
-            client_disk_label_el.css("background-color", "#ffb7b5");
-            client_disk_input_el.removeClass("is-valid")
+            buffer_size_label_el.css("background-color", "#ffb7b5");
+            buffer_size_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });
@@ -133,9 +120,9 @@ $(function() {
             data: JSON.stringify(
                 {
                     server_1_link: $("#server-1-link").val(),
-                    server_2_link: $("#server-2-link").val(),
-                    client_disk: $("#client-disk").val(),
-                    host_select: $('#host-select').is(':checked') ? true : false
+                    buffer_size: $("#buffer-size").val(),
+                    host_select: $('input[name=host-select]:checked').val(),
+                    disk_toggle: $('#disk-toggle').is(':checked') ? true : false
                 }),
 
             success: function(response) {

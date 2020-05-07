@@ -84,10 +84,10 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
                       "                            <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"slow_server\" speed=\"10Gf\" core=\"1000\">\n"
+                      "       <host id=\"slow_server\" speed=\"10Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
-                      "       <host id=\"fast_server\" speed=\"100Gf\" core=\"1000\">\n"
+                      "       <host id=\"fast_server\" speed=\"100Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
 
         DISK_SPEED = std::stoi(std::string(argv[5]));
 
-        if (DISK_SPEED <  1 || DISK_SPEED > 10000) {
+        if (DISK_SPEED <  1 || DISK_SPEED > 100000) {
             std::cerr << "Invalid disk speed. Speed must be in range [1,10000] MBps" << std::endl;
             throw std::invalid_argument("invalid link speed");
         }
@@ -284,7 +284,7 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, true, true, false, false);
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, false);
     //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
     //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
 

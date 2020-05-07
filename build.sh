@@ -23,6 +23,9 @@ cd simulators/workflow_execution_fundamentals && ./build.sh $makedashjarg && cd 
 cd simulators/workflow_execution_data_locality && ./build.sh $makedashjarg && cd ../..
 cd simulators/workflow_execution_parallelism && ./build.sh $makedashjarg && cd ../..
 cd simulators/io_operations && ./build.sh $makedashjarg && cd ../..
+cd simulators/client_server && ./build.sh $makedashjarg && cd ../..
+cd simulators/master_worker && ./build.sh $makedashjarg && cd ../..
+
 
 # copy dashboard scripts into web application
 echo "Copying WRENCH dashboard scripts into web application"

@@ -1,6 +1,6 @@
 ---
 layout: page
-title: 'DRAFT'
+title: 'A.3.2 Client Server'
 order: 132
 usemathjax: true
 submodule: 'distributed_computing'
@@ -64,25 +64,29 @@ seconds of computation. Server 2, which you can access via a 100 MBps
 network link, but that is only able to analyze a 100 MB image in XXX
 seconds of computation. Latency for these network links is negligible and
 can be disregarded because the image is large. Also, the output of the
-algorithm (the number  of cares) is only a few bytes, which is negligible.
+algorithm (the number of cars) is only a few bytes, which is negligible.
 So, from a performance perspective, the task's execution consists of two
-phases: sending the image data over and applying  the algorithm to it.  The
+phases: sending the image data over and applying the algorithm to it. The
 image is sent directly from the RAM on the client to the server program
 which receives and keeps in in RAM. That is, for now, we assume no disk I/O
 whatsoever.
 
+<p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Topology</object>
+</p>
 
 ### Simulating a Client and Server
 
-XXXX FRONT END SHOULD NOT SHOW ANYTHING ABOUT DISK, AND OS THAT THE DISK OVER
-THE FAST NETWORK IS BEST XXXX
-XXX Server 2 has fixed bandwidth, the other one can be tweaked XXX
 
-So that you can gain hands-on experience, use
-the simulation Web application
-(see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
-selecting `Client/Server` from its menu.
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="client_server/" %}
+  </div>
+</div>
 
 This simulation app allows you to see the differences in execution time
 between the two servers. Try to simulate the application execution with
@@ -94,8 +98,35 @@ able to finish execution much more quickly than Server 1.
 
 #### Practice Questions
 
-  - Is there a bandwidth for  Server 1 that would make it equivalent to Server 2? (analytically  and  with the  simulation)?  (answer should be no)
-  - What if Server 1 were twice as fast? (answer should be yes)
+**[A.3.p2.1]** We can see that Server 2 has a faster link than Server 1 by default. Is there a bandwidth for Server 1
+ that would make it equivalent to Server 2?
+ 
+ <div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        (answer should be no)
+   </div>
+ </div>
+ 
+ <p></p>
+
+
+**[A.3.p2.2]** What if Server 1 were twice as fast? 
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        (a)nswer should be yes)
+   </div>
+ </div>
+ 
+ <p></p>
 
 ### Adding I/O, and Buffering
 
@@ -133,18 +164,48 @@ server.  One must just pick a buffer size, making sure  it's not too small
 (the extreme being be a 1-byte buffer), as otherwise network latency would
 become a problem.
 
-XXXX SIMULATION WITH DIFFERENT FRONT END (THAT SHOWS DISK AND MAKES IT POSSIBLE
-TO PICK A BUFFER SIZE of 2MB, 5MB, or 10 MB, AND the DISK speed is fixed to
-be larger than the largest network speed.... i.e., the DISK is NEVER the
-bottleneck and regardless of  the buffer size one should always pick the
-same server).
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="client_server_full/" %}
+  </div>
+</div>
 
 #### Practice Questions
 
-  - One question about observing the 10MB buffer scenario (e.g., at what time does the last disk read occur?)
-  
-  - Estimate exec time with a 20MB buffer (which is  not available in the simulation)
+**[A.3.p2.3]** In this Simulator just above that now includes options for buffer size, please run the default options 
+except select the 10 MB buffer. What time is the last chunk read from disk?
 
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        The last read should begin at approximately 8.60 seconds
+   </div>
+ </div>
+
+<p></p>
+
+**[A.3.p2.4]** Estimate the total execution time if you were to set the buffer size to 20 MB? (This is not an option on 
+the simulator, you will need to calculate it.)
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        The total execution time with a 20 MB buffer should be approximately 11 seconds.
+   </div>
+ </div>
+
+<p></p>
 
 ### When I/O is a bottleneck
 
@@ -152,18 +213,11 @@ In the previous section the disk was much faster than either networks,  but that
 not always the case. As a result, the disk can become a performance bottleneck when
 transferring data from the client to the server. 
 
-XXXX Make a scenario with a  smaller disk Bandwidth, so that the "over the fast network" server  is no longer the best choice! XXXX   XXXX DO A SIMULATION FRONT END FOR IT XXX
+XXXX Make a scenario with a  smaller disk Bandwidth, so that the "over the fast network" server  is no longer the best choice! XXXX
 
 #### Practice Questions
 
-  - Something
-
-  - Something
-
-
-### BELOW ARE PRACTICE QUESTIONS THAT CAN BE USED ABOVE
-
-**[X.p1.1]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
+**[A.3.p2.5]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
 transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
 network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
 CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
@@ -185,7 +239,7 @@ bandwidth. How long is the execution time from start to finish?
 
 <p></p>
 
-**[X.p1.2]** Consider the previous question's situation, but now the server has moved and the network link has changed
+**[A.3.p2.6]** Consider the previous question's situation, but now the server has moved and the network link has changed
 to 10 GBps capacity. Due to the longer distance, there is now 100 μs latency. Does this change the execution time?
 
 <div class="ui accordion fluid">
@@ -201,8 +255,3 @@ to 10 GBps capacity. Due to the longer distance, there is now 100 μs latency. D
 
 <p></p>
 
-#### Questions
-
-  - Something
-
-  - Something

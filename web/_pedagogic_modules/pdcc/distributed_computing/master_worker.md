@@ -99,12 +99,12 @@ Worker Selection:
 
 ### Practice Questions
 
-**[A.3.p1.1]** What is one example of a scenario where scheduling a series of tasks by highest flop required first is 
+**[A.3.p3.1]** What is one example of a scenario where scheduling a series of tasks by highest flop required first is 
 optimal? What would a counter example be where it is not optimal? Do such examples and counter-examples exist for 
 each time of scheduling?
 
 
-**[A.3.p1.2]** Consider that you have 7 identical tasks and 3 identical workers to assign them to. Does it matter how 
+**[A.3.p3.2]** Consider that you have 7 identical tasks and 3 identical workers to assign them to. Does it matter how 
 the tasks are scheduled for improving overall execution time? Check your answer with the simulator. 
 
 **Simulator Input:**
@@ -113,7 +113,7 @@ Workers: 100 100, 100 100, 100 100
 Tasks: 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100
 ```
 
-**[A.3.p1.3]** Now consider that 3 of the tasks have their input/output bytes tripled, and one worker has its bandwidth to the master 
+**[A.3.p3.3]** Now consider that 3 of the tasks have their input/output bytes tripled, and one worker has its bandwidth to the master 
 tripled. If tasks are scheduled such that the highest byte tasks are assigned to the best connected workers first, does 
 this change the execution time? Check your answer with the simulator. 
 
@@ -125,14 +125,14 @@ Task Scheduling: Highest Bytes
 Worker Scheduling: Best-Connected Worker
 ```
 
-**[A.3.p1.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p1.3]?
+**[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p1.3]?
  How could this be achieved?
 
 
 
 ### Questions
 
-**[A.3.q1.1]** Say that you have three workers (Worker #0, Worker #1, Worker #2) with 10 GF/s, 100 GF/s and 1000 GF/s 
+**[A.3.q3.1]** Say that you have three workers (Worker #0, Worker #1, Worker #2) with 10 GF/s, 100 GF/s and 1000 GF/s 
 single-core processors respectively.
 All workers are connected to the master by their own 100 MBps link. You must delegate a workload that consists of four
 independent tasks (they can be executed in any order). The tasks are as follows:
@@ -161,7 +161,7 @@ If the tasks are assigned to workers in the order that both are numbered (Task #
  Task #2 to Worker #2 and Task #3 to the first worker available) what will the total execution time be? What is one
  example of intelligent scheduling that could improve on this execution time? Verify your answer using the simulator.
  
- **[A.3.q1.2]** You have 3 workers. They are all equipped with 100 GF/s single-core processors and have 100 MBps links
+ **[A.3.q3.2]** You have 3 workers. They are all equipped with 100 GF/s single-core processors and have 100 MBps links
  to the master. You have a workload for 4 tasks that is repeatedly run, outlined below:
  
     Task #0  
@@ -197,12 +197,12 @@ Worker Scheduling: Best-Connected Worker
 ```
 
 
-  **[A.3.q1.3]** You have an undisclosed number of tasks and workers of various unknown specifications. On average, 
+  **[A.3.q3.3]** You have an undisclosed number of tasks and workers of various unknown specifications. On average, 
   what is the best method for scheduling given this lack of information? 
   
   
-  **[A.3.q1.4]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
+  **[A.3.q3.4]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
   first.
   
-  **[A.3.q1.5]** TBD
+  **[A.3.q3.5]** TBD
   

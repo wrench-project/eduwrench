@@ -26,6 +26,12 @@
                                 <div>
                                     <span>Hostname: Client</span>
                                 </div>
+                                <div>
+                                    <span>Drive: 500 MBps R/W</span>
+                                </div>
+                                <div>
+                                    <span class="buffer-size-label">Buffer: 2 MB</span>
+                                </div>
                             </div>
                         </div>
                     </div>
