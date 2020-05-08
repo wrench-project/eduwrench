@@ -16,9 +16,10 @@ namespace wrench {
     /**
      * @brief Constructor
      * @param storage_services: a map of hostname key to StorageService pointer
+     * @param storage_option: "local" or "remote"
      */
-    ActivityScheduler::ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services)
-            : StandardJobScheduler(), storage_services(storage_services) {}
+    ActivityScheduler::ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services, std::string storage_option)
+            : StandardJobScheduler(), storage_services(storage_services), storage_option(storage_option) {}
 
     /**
      * @brief Schedules a single ready task at a time on the compute service.
@@ -53,33 +54,34 @@ namespace wrench {
 
             std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
 
-            #ifdef REMOTE_STORAGE
-            for (auto f : task_to_submit->getInputFiles()) {
-                file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
-            }
-
-            for (auto f : task_to_submit->getOutputFiles()) {
-                file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
-            }
-            #endif
-
-            #ifdef LOCAL_STORAGE
-            for (auto f : task_to_submit->getInputFiles()) {
-                if (task_to_submit->getNumberOfParents() == 0) { // if im the first task, all my inputs should be read from remote
+            if (this->storage_option == "remote") {
+                for (auto f : task_to_submit->getInputFiles()) {
                     file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
-                } else {
-                    file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
+                }
+
+                for (auto f : task_to_submit->getOutputFiles()) {
+                    file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
+                }
+            } else {
+
+                for (auto f : task_to_submit->getInputFiles()) {
+                    if (task_to_submit->getNumberOfParents() ==
+                        0) { // if im the first task, all my inputs should be read from remote
+                        file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
+                    } else {
+                        file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
+                    }
+                }
+
+                for (auto f : task_to_submit->getOutputFiles()) {
+                    if (task_to_submit->getNumberOfChildren() ==
+                        0) { // if im the last task, all my outputs should be written to remote
+                        file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
+                    } else {
+                        file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
+                    }
                 }
             }
-
-            for (auto f : task_to_submit->getOutputFiles()) {
-                if (task_to_submit->getNumberOfChildren() == 0) { // if im the last task, all my outputs should be written to remote
-                    file_locations[f] = FileLocation::LOCATION(storage_services["storage_db.edu"]);
-                } else {
-                    file_locations[f] = FileLocation::LOCATION(storage_services["hpc.edu"]);
-                }
-            }
-            #endif
 
             WRENCH_INFO("Submitting %s as a job to compute service on %s", task_to_submit->getID().c_str(),
                         compute_service->getHostname().c_str());

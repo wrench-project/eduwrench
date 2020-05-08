@@ -128,20 +128,28 @@ int main(int argc, char **argv) {
     simulation.init(&argc, argv);
 
     int LINK_BANDWIDTH;
+    std::string STORAGE_OPTION;
 
     try {
-        if (argc != 2) {
+        if (argc != 3) {
             throw std::invalid_argument("bad args");
         }
 
         LINK_BANDWIDTH = std::stoi(std::string(argv[1]));
 
         if (LINK_BANDWIDTH < 1) {
-            std::cerr << "Bandwidth must be greater than 0 MBps";
+            std::cerr << "Bandwidth must be greater than 0 MBps\n";
             throw std::invalid_argument("invalid bandwidth");
         }
+
+        STORAGE_OPTION = std::string(argv[2]);
+        if ((STORAGE_OPTION != "local") and (STORAGE_OPTION != "remote")) {
+            std::cerr << "Last argument should be 'local' or 'remote'  (instead of '" << std::string(STORAGE_OPTION) << "')\n";
+            throw std::invalid_argument("invalid local/remote specification");
+        }
+
     } catch (std::invalid_argument &e) {
-        std::cerr << "Usage: activity_1_simulator <link_bandwidth>" << std::endl;
+        std::cerr << "Usage: activity_1_simulator <link_bandwidth> <local|remote>" << std::endl;
         std::cerr << "    link_bandwidth: measured as MBps" << std::endl;
         return 1;
     }
@@ -177,7 +185,7 @@ int main(int argc, char **argv) {
 
     // WMS on my_lab_computer_edu
     auto wms = simulation.add(new wrench::ActivityWMS(
-            std::unique_ptr<wrench::ActivityScheduler>(new wrench::ActivityScheduler(storage_services)),
+            std::unique_ptr<wrench::ActivityScheduler>(new wrench::ActivityScheduler(storage_services, STORAGE_OPTION)),
             {compute_service}, {storage_db_edu_storage_service}, WMS_HOST));
 
     wms->addWorkflow(&workflow);

@@ -42,11 +42,11 @@ void generateWorkflow(wrench::Workflow *workflow, int num_cores, int radius) {
 
     // create the tasks  and dependencies
     auto task_luminence = workflow->addTask("luminence", 100*GFLOP, 1, 1, 1.0, 0);
-    task_luminence->setColor("#FFF2CC");
+    task_luminence->setColor("#D5E8D4");
     for (int i=0; i < num_cores; i++) {
         double flops = 100 * radius * radius * GFLOP / num_cores;
         auto task = workflow->addTask("oil_" + std::to_string(i), flops, 1, 1, 1.0, 0);
-        task->setColor("#D5E8D4");
+        task->setColor("#FFF2CC");
         workflow->addControlDependency(task, task_luminence);
     }
 }

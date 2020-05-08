@@ -240,11 +240,12 @@ app.get("/workflow_execution_data_locality", authCheck, function (req, res) {
 app.post("/run/workflow_execution_data_locality", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_execution_data_locality/");
 
-    const SIMULATOR = (req.body.simulator_number == 1 ? "workflow_execution_data_locality_simulator_remote_storage" : "workflow_execution_data_locality_simulator_local_storage");
+    const SIMULATOR = "workflow_execution_data_locality_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
     const LINK_BANDWIDTH = req.body.link_bandwidth;
+    const STORAGE_OPTION = (req.body.simulator_number == 1 ? "remote" : "local");
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -255,7 +256,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [LINK_BANDWIDTH].concat(LOGGING);
+    const SIMULATION_ARGS = [LINK_BANDWIDTH, STORAGE_OPTION].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");

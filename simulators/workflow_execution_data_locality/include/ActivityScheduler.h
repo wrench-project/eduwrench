@@ -13,10 +13,11 @@ namespace wrench {
                            const std::vector<WorkflowTask *> &tasks);
 
 
-        ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services);
+        ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services, std::string storage_option);
 
     private:
        std::map<std::string, std::shared_ptr<StorageService>> storage_services;
+       std::string storage_option;
     };
 }
 
