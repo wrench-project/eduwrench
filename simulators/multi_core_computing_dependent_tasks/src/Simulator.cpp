@@ -53,12 +53,19 @@ void generateWorkflow(wrench::Workflow *workflow, double analyze_work) {
      */
     // create the tasks
     auto task_start     = workflow->addTask("start", 50*GFLOP, 1, 1, 1.0, 0);
+    task_start->setColor("#D5E8D4");
     auto task_viz       = workflow->addTask("viz", 200*GFLOP, 1, 1, 1.0, 0);
+    task_viz->setColor("#FFF2CC");
     auto task_plot      = workflow->addTask("plot", 100*GFLOP, 1, 1, 1.0, 0);
+    task_plot->setColor("#FFF2CC");
     auto task_stats     = workflow->addTask("stats", 400*GFLOP, 1, 1, 1.0, 0);
+    task_stats->setColor("#DAE8FC");
     auto task_analyze   = workflow->addTask("analyze", analyze_work*GFLOP, 1, 1, 1.0, 0);
+    task_analyze->setColor("#F8CECC");
     auto task_summarize = workflow->addTask("summarize", 100*GFLOP, 1, 1, 1.0, 0);
+    task_summarize->setColor("#F8CECC");
     auto task_display   = workflow->addTask("display", 10*GFLOP, 1, 1, 1.0, 0);
+    task_display->setColor("#D5E8D4");
 
     // create the task dependencies
     workflow->addControlDependency(task_start, task_viz);
