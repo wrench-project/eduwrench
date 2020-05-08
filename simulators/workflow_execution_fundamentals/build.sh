@@ -1,3 +1,4 @@
 #!/bin/bash
 makearg=$1
-cmake . && make clean && make $makearg 
+cmake -DCMAKE_CXX_FLAGS="-UDEBUG" . && make $makearg
+
