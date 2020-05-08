@@ -10,7 +10,7 @@ namespace wrench {
 
     public:
         void scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                           const std::vector<WorkflowTask *> &tasks);
+                           const std::vector<WorkflowTask *> &tasks) override;
 
 
         ActivityScheduler(std::map<std::string, std::shared_ptr<StorageService>> storage_services, std::string storage_option);
