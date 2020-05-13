@@ -116,9 +116,6 @@ int main(int argc, char **argv) {
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
 
-    // Customize logging
-    xbt_log_control_set("root.fmt:[%.2d][%h]%e%m%n");
-
     int NUM_CORES;
     int DISK_BW;
 

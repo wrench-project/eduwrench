@@ -8,37 +8,57 @@
 
 #### What is a workflow?
 
-**Workflows**. A workflow (a.k.a. "scientific workflow") application is comprised of individual computational tasks that must all be executed in some particular sequence to produce a final desired output (e.g., all the steps necessary to perform some complex genomic analysis can be organized as a bioinformatics workflow). In practice, **the tasks are stand-alone executables that read in input files and produce output files**.  A file produced as output by one task can be required as input for another task. A task cannot start before all its input files have been generated. Also, a task's output files are available only once all of them have been generated. Consequently, a workflow is a *DAG of tasks* where edges are file dependencies (see the [Multi Core Computing]({{site.baseurl}}/pedagogic_modules/multi_core_computing)). **For now, we assume that a task can only run using a single core**. The figure below depicts an example workflow application:
+A **workflow** (a.k.a. "scientific workflow") application is comprised of
+individual computational tasks that must all be executed in some particular
+sequence to produce a final desired output (e.g., all the steps necessary
+to perform some complex genomic analysis can be organized as a
+bioinformatics workflow). In practice, **the tasks are stand-alone
+executable programs that read in input files and produce output files**.  A file
+produced as output by one task can be required as input for another task. *A
+task cannot start before all its input files have been generated. Also, a
+task's output file is available only once all the task's output files have been
+generated.* Consequently, a workflow is a **DAG of tasks** where edges are
+file dependencies (see the [Multi Core
+Computing]({{site.baseurl}}/pedagogic_modules/multi_core_computing)). 
+**For now, we assume that a task can only run using a single core**. 
+
+The figure below depicts an example workflow application:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/example_workflow_1.svg">Dag</object>
-<div class="caption"><strong>Figure A.3.4.1.1:</strong> Example workflow application. Some examples of real-world workflows for scientific applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
+<div class="caption">
+<strong>Figure A.3.4.1.1:</strong> Example workflow
+application. Some examples of real-world workflows for scientific
+applications, along with their DAG representations, can be found
+[here](https://pegasus.isi.edu/application-showcase/).
+</div>
 
 
 
 
 ### Simulating multi-core workflow execution
 
-To make sure that you master relevant content in previous modules, we
-provide you with the simulation app below and accompanying practice
-questions thereafter. **If you find this content too difficult, you may
+To make sure that you master them concepts in the previous modules, we
+provide you with a simulation app below and accompanying practice
+questions thereafter. **If you find this content too difficult or are missing key
+knowledge, you may
 want to review the previous modules.**
 
-The simulation app allows you to simulate the execution of the above
+The  app simulates the execution of the above
 example workflow on a computer with 1 or more 50 GFlop/sec cores and 16 GB
 of RAM.  Attached to this computer is a disk. The app allows you to pick
 the number of cores and the disk read/write bandwidth. 
 
 As these pedagogic modules increase in complexity and sophistication, the
-number of execution options also increases.  This example
-workflow is designed to make its execution relatively constrained in terms
+number of execution options also increases.  The example
+workflow above is designed to make its execution relatively constrained in terms
 of all execution options, but we still need to specify some aspects of the
-execution strategy used by the simulated application:
+execution strategy simulated by the app:
 
-  - When there are multiple ready tasks, they are started on cores in
-    lexicographical order (i.e., "task2" would start before "task3");
   - A core never runs more than one task at time;
   - When there is not enough free RAM on the computer, tasks cannot be
     started;
+  - When there are multiple ready tasks, they are started on cores in
+    lexicographical order (i.e., "task2" would start before "task3");
   - When two ready tasks are started they immediately read their input
     files.  For instance, if task 3 and task 4 are ready and can both run
     simultaneously (enough cores, enough RAM), they do start at the same time
