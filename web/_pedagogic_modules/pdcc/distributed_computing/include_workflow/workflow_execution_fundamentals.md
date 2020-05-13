@@ -11,6 +11,35 @@
 
 ---
 
+XXXXXXXXX MERGE XXXXX
+
+### What kind of resources and infrastructures are necessary to execute a workflow?
+
+Workflows are often comprised of many tasks that are computationally
+intensive and require large amounts of storage. As a result, it is
+necessary to deploy their executions on multiple compute/storage resources
+connected via some network, i.e., distributed computing platforms. These
+hardware resources are managed by software infrastructures, together
+forming a "*cyberinfrastructure*" (a term you may have encountered before).
+Examples of such infrastructures include cloud services that rely on
+virtual machines,  batch-scheduled high performance computing (HPC)
+clusters (a.k.a. [supercomputers](https://www.top500.org/)), clusters that
+run [Hadoop](https://hadoop.apache.org/) or
+[Spark](https://spark.apache.org/), publicly available data stores that
+provide data access using various network protocols, and compositions of
+any number of theses over possibly wide-area networks, etc. Communications
+between these resources are subject to network latency and bandwidth
+constraints. Therefore the underlying network infrastructure, in
+conjunction with the specifications of the interconnected storage and
+compute resources,  constrains the performance of distributed applications,
+in our case workflow applications. Figure 3 below shows a simple depiction
+of a cyberinfrastructure with a cloud, and HPC cluster, and a data server.
+
+XXXXXXXXX END MERGE XXXXX
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_fundamentals/infrastructure.svg">Infrastructure</object>
+
+
 ### Scenario
 
 Now that you have been introduced to *workflows*, *cyberinfrastructure*,

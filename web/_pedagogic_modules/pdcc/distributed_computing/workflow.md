@@ -1,21 +1,22 @@
 ---
 layout: page
-title: 'A.3.5 Workflows'
+title: 'A.3.4 Workflows'
 order: 135
 usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to provide you with knowledge of...
+The goal of this module is to provide you with knowledge of
+and practical experience with concepts behind workflow applications.  
 
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
   <a class="item " data-tab="first">Fundamentals</a>
-  <a class="item " data-tab="second">Workflow Execution</a>
-  <a class="item " data-tab="third">Data Locality</a>
-  <a class="item " data-tab="fourth">Parallelism</a>
-  <a class="item " data-tab="fifth">Resource Provisioning</a>
+  <a class="item " data-tab="second">Over the Network</a>
+  <a class="item " data-tab="third">DataLocality</a>
+  <a class="item " data-tab="fourth">Task- and Data-Parallelism</a>
+  <a class="item " data-tab="fifth">Capstone Exercise</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first" >

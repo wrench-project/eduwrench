@@ -2,53 +2,59 @@
 #### Learning objectives:
 
   - Understand the concept of a *workflow*;
-  - Understand the structure of cyberinfrastructures on which one can execute
-    workflows;
-  - Understand the concept of a workflow management system (WMS).
+  - Be able to reason about the performance of a workflow when run on a single multi-core computer
 
 ---
 
 #### What is a workflow?
 
-**Workflows**. A workflow (a.k.a. "scientific workflow") application is comprised of individual computational tasks that must all be executed in some particular sequence to produce a final desired output (e.g., all the steps necessary to perform some complex genomic analysis can be organized as a bioinformatics workflow). In many relevant cases, the tasks, which can be many and computationally intensive, correspond to executables that read in input files and produce output files.  A file produced as output by one task can be required as input for another task, thus creating dependencies between tasks.
+**Workflows**. A workflow (a.k.a. "scientific workflow") application is comprised of individual computational tasks that must all be executed in some particular sequence to produce a final desired output (e.g., all the steps necessary to perform some complex genomic analysis can be organized as a bioinformatics workflow). In practice, **the tasks are stand-alone executables that read in input files and produce output files**.  A file produced as output by one task can be required as input for another task. A task cannot start before all its input files have been generated. Also, a task's output files are available only once all of them have been generated. Consequently, a workflow is a *DAG of tasks* where edges are file dependencies (see the [Multi Core Computing]({{site.baseurl}}/pedagogic_modules/multi_core_computing)). **For now, we assume that a task can only run using a single core**. The figure below depicts an example workflow application:
 
-**Simple Workflow Analogy**. Consider a chef tasked with cooking a meal. The entire task can be split up into three steps. First, they need to select and procure the ingredients. Second, they need to cook these ingredients. Finally, the cooked ingredients must be plated. None of these tasks may be completed out of order. Now consider a scientist with terabytes of raw data tasked with analyzing that data. First, they need to do some preliminary processing of the raw data to transform it into a workable format. Second, the formatted data must go through a computationally intensive process that outputs a human readable visualization of the formatted data. Finally, the scientist analyzes the data and distills some useful information about the origins of our universe. Again, none of these tasks may be done out of order. Although the two workflows mentioned above come from entirely different domains, they share several characteristics. First, the initial task may be started immediately because it has no dependencies (some workflows may have multiple initial tasks without any dependencies). Second, subsequent tasks can only be started once their "parent" tasks have completed. This leads to a simple representation of workflows as tasks graphs.
-
-**Workflows as DAGs**. Workflows can be represented as graphs in which
-tasks are vertices and task dependencies are edges. In many cases, these
-workflow graphs are Directed Acyclic Graphs (DAGs) because there are no
-circular task dependencies.  Once formalized as DAGs, it is possible to
-reason about workflow structure so as to organize workflow execution as
-best as possible.
-
-The figure below depicts example workflows. Each task is shown as a circle. In a workflow
-some tasks may be executed at the same time (in parallel). For instance, for the workflow
-in Fig. 2 below, tasks 2, 3 and 4 can be executed in parallel if one has 3 cores. These tasks
-are called **independent**, meaning that they are neither successors or predecessors of
-each other. 
-
-In these pedagogic modules we assume that we know the computational cost of
-each task (in number of floating point operations, or FLOPS). Workflow
-files, which are taken as input and produced as output of the tasks, are
-shown as rectangle. In these pedagogic modules we assume that we know all
-file sizes (in bytes). **We also assume, unless specified otherwise, that
-a task can only run on a single thread** (i.e., each task is a single-threaded program). 
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_fundamentals/dag.svg">Dag</object>
-
-Some examples of real-world workflows for scientific applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
-
-### What kind of resources and infrastructures are necessary to execute a workflow?
-
-Workflows are often comprised of many tasks that are computationally intensive and require large amounts of storage. As a result, it is necessary to deploy their executions on multiple compute/storage resources connected via some network, i.e., distributed computing platforms. These hardware resources are managed by software infrastructures, together forming a "*cyberinfrastructure*" (a term you may have encountered before). Examples of such infrastructures include cloud services that rely on virtual machines,  batch-scheduled high performance computing (HPC) clusters (a.k.a. [supercomputers](https://www.top500.org/)), clusters that run [Hadoop](https://hadoop.apache.org/) or [Spark](https://spark.apache.org/), publicly available data stores that provide data access using various network protocols, and compositions of any number of theses over possibly wide-area networks, etc. Communications between these resources are subject to network latency and bandwidth constraints. Therefore the underlying network infrastructure, in conjunction with the specifications of the interconnected storage and compute resources,  constrains the performance of distributed applications, in our case workflow applications. Figure 3 below shows a simple depiction of a cyberinfrastructure with a cloud, and HPC cluster, and a data server. 
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/example_workflow_1.svg">Dag</object>
+<div class="caption"><strong>Figure A.3.4.1.1:</strong> Example workflow application. Some examples of real-world workflows for scientific applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
 
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_fundamentals/infrastructure.svg">Infrastructure</object>
 
-### What is a Workflow Management System?
 
-Due to the complexity and diversity of these infrastructures, users are not left to their own devices for executing workflows. Instead, they rely 
-on a *Workflow Management System (WMS)*, i.e., a software system that automatically orchestrates the execution of workflows on cyberinfrastructures. To do so, most WMSs implement decision-making algorithms for optimizing workflow execution performance given available hardware resources. WMSs and the algorithms they employ are the object of extensive research in the field of distributed computing.
+### Simulating multi-core workflow execution
+
+To make sure that you master relevant content in previous modules, we
+provide you with the simulation app below and accompanying practice
+questions thereafter. **If you find this content too difficult, you may
+want to review the previous modules.**
+
+The simulation app allows you to simulate the execution of the above
+example workflow on a computer with 1 or more 50 GFlop/sec cores and 16 GB
+of RAM.  Attached to this computer is a disk. The app allows you to pick
+the number of cores and the disk read/write bandwidth. 
+
+As these pedagogic modules increase in complexity and sophistication, the
+number of execution options also increases.  This example
+workflow is designed to make its execution relatively constrained in terms
+of all execution options, but we still need to specify some aspects of the
+execution strategy used by the simulated application:
+
+  - When there are multiple ready tasks, they are started on cores in
+    lexicographical order (i.e., "task2" would start before "task3");
+  - A core never runs more than one task at time;
+  - When there is not enough free RAM on the computer, tasks cannot be
+    started;
+  - When two ready tasks are started they immediately read their input
+    files.  For instance, if task 3 and task 4 are ready and can both run
+    simultaneously (enough cores, enough RAM), they do start at the same time
+    and read their input files simultaneously (splitting the disk bandwdith
+    equally).
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="workflow_fundamentals/" %}
+  </div>
+</div>
+
 
 ---
 
