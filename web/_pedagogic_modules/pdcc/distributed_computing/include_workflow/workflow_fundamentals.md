@@ -271,15 +271,15 @@ for parallel execution in general and on our 3-core computer in particular.
 
 There are three clear problems here:
 
-  - Problem #1: only 1 level of the workflow has 3 tasks, and all other levels have
-1 task. So this workflow is mostly sequential, and Amdahl's law tells use this is bad news.
+  - *Problem #1:* only 1 level of the workflow has 3 tasks, and all other levels have
+1 task. So this workflow is mostly sequential, and **Amdahl's law** tells use this is bad news.
 
-  - Problem #2: the only parallel level (the "blue" level) suffers from high
-*load imbalance*. One task runs in 100 seconds, while the other two
+  - *Problem #2:* the only parallel level (the "blue" level) suffers from high
+**load imbalance**. One task runs in 100 seconds, while the other two
 run in 20 seconds. So, when running on 3 cores, assuming no I/O, the parallel efficiency is
 at most (140/100)/3 = 46.6%. 
 
-  - Problem #3: on our particular computer, the RAM constraints make things even worse as the
+  - *Problem #3:* on our particular computer, the **RAM constraints** make things even worse as the
 workflow's width becomes essentially 2 instead of 3. We can never run the
 3 blue tasks in parallel. 
 
@@ -287,8 +287,8 @@ To get a sense of how "bad" this workflow is, let's assume infinite
 disk bandwidth and infinite RAM capacity (which removes Problem #3 above). In this case, on 3 cores,
 the workflow would run in time: 10 + 100 + 40 + 4 = 154 seconds. The
 sequential execution time would be 194 seconds. So the speedup would only
-be 1.26, for a parallel efficiency of only 42%.  Amdahl's law is never 
-good news.
+be 1.26, for a parallel efficiency of only 42%.  *Amdahl's law is never 
+good news.*
 
   </div>
 </div>

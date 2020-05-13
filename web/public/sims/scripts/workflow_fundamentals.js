@@ -1,6 +1,6 @@
 $(function () {
 
-    $("#disk-banwidth").on("keyup", function () {
+    $("#disk-bandwidth").on("keyup", function () {
         let disk_bandwidth_input_el = $(this);
         let disk_bandwidth_input_value = parseInt(disk_bandwidth_input_el.val());
         let disk_bandwidth_label_el = $(".disk-bandwidth-label");
@@ -33,7 +33,7 @@ $(function () {
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 3) {
 
-            num_cores_label_el.text("Cores: " + num_cores_input_value)
+            num_cores_label_el.text(num_cores_input_value.toString())
                 .css("background-color", "#d3ffe9");
 
             num_cores_input_el.removeClass("is-invalid")
