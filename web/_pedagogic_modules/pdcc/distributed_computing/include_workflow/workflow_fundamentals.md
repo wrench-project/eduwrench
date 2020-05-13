@@ -2,7 +2,7 @@
 #### Learning objectives:
 
   - Understand the concept of a *workflow*;
-  - Be able to reason about the performance of a workflow when run on a single multi-core computer
+  - Be able to reason about the performance of a workflow when run on a multi-core computer
 
 ---
 
@@ -14,12 +14,23 @@ sequence to produce a final desired output (e.g., all the steps necessary
 to perform some complex genomic analysis can be organized as a
 bioinformatics workflow). In practice, **the tasks are stand-alone
 executable programs that read in input files and produce output files**.  A file
-produced as output by one task can be required as input for another task. *A
-task cannot start before all its input files have been generated. Also, a
-task's output file is available only once all the task's output files have been
-generated.* Consequently, a workflow is a **DAG of tasks** where edges are
+produced as output by one task can be required as input for another task. Consequently, a workflow is a **DAG of tasks** where edges are
 file dependencies (see the [Multi Core
-Computing]({{site.baseurl}}/pedagogic_modules/multi_core_computing)). 
+Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing)). 
+
+There are two typical "rules of execution" in practice:
+
+  - *A
+task cannot start before all its input files have been generated. 
+  - *A
+task's output file is available only once all of that task's output files have been
+generated.* 
+
+In other words, a task is considered completed only once all its output
+files have been generated. Until then, its output file are "invisible" to
+other tasks. This is because, unless we know the details of a task's 
+implementation, we can never be sure when an output files is finalized before the task's program actually finishes.
+
 **For now, we assume that a task can only run using a single core**. 
 
 The figure below depicts an example workflow application:
@@ -29,7 +40,7 @@ The figure below depicts an example workflow application:
 <strong>Figure A.3.4.1.1:</strong> Example workflow
 application. Some examples of real-world workflows for scientific
 applications, along with their DAG representations, can be found
-[here](https://pegasus.isi.edu/application-showcase/).
+<a href="https://pegasus.isi.edu/application-showcase/">here</a>.
 </div>
 
 
@@ -37,21 +48,23 @@ applications, along with their DAG representations, can be found
 
 ### Simulating multi-core workflow execution
 
-To make sure that you master them concepts in the previous modules, we
-provide you with a simulation app below and accompanying practice
+This module relies heavily on concepts introduced in previous modules. 
+To make sure that you master these concepts, we
+provide you with a simulation app and accompanying practice
 questions thereafter. **If you find this content too difficult or are missing key
 knowledge, you may
-want to review the previous modules.**
+want to review the previous modules, and in particular the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing).**
 
-The  app simulates the execution of the above
+The app below simulates the execution of our
 example workflow on a computer with 1 or more 50 GFlop/sec cores and 16 GB
 of RAM.  Attached to this computer is a disk. The app allows you to pick
 the number of cores and the disk read/write bandwidth. 
 
 As these pedagogic modules increase in complexity and sophistication, the
 number of execution options also increases.  The example
-workflow above is designed to make its execution relatively constrained in terms
-of all execution options, but we still need to specify some aspects of the
+workflow above is designed to have an execution relatively constrained 
+in terms
+of the number of execution options. But we still need to specify some aspects of the
 execution strategy simulated by the app:
 
   - A core never runs more than one task at time;
@@ -60,9 +73,9 @@ execution strategy simulated by the app:
   - When there are multiple ready tasks, they are started on cores in
     lexicographical order (i.e., "task2" would start before "task3");
   - When two ready tasks are started they immediately read their input
-    files.  For instance, if task 3 and task 4 are ready and can both run
+    files.  For instance, if task 2 and task 3 are ready and can both run
     simultaneously (enough cores, enough RAM), they do start at the same time
-    and read their input files simultaneously (splitting the disk bandwdith
+    and read their input files simultaneously (splitting the disk bandwidth
     equally).
 
 <div class="ui accordion fluid app-ins">
@@ -80,13 +93,11 @@ execution strategy simulated by the app:
 
 #### Practice Questions
 
-Here are a few practice questions about the above material:
+Answer these practice questions, using the simulation app and/or using 
+analysis  (and then using
+the app for double-checking you results):
 
-
-**[D.p1.1]** Given the workflow in Figure 1, that is executed on a 
-single computer with a single core, would it help to upgrade
-the computer by adding one core to it?
-
+**[A.3.4.p1.1]** How many MB of data are read and written by the workflow when executed on this computer
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -94,19 +105,36 @@ the computer by adding one core to it?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-No, it wouldn't. This workflow is a "chain" workflow, in which
-each task is done in sequence. Since we assume that each task
-can utilize a single core, then there is no way to use more than
-one core at a time. Upgrading to add more cores to the computer
-won't help.
+This can easily be done analytically. The table below shows for each file the
+total amount of read/write it causes in MB:
+
+|------|-----| ------|-----|------|
+| file | size in MB | times read | times written | total MB read/written | 
+|------|-----| ------|-----|------|
+| data    | 500 | 1 | 0 | 500 |
+|filtered | 400 | 3 | 1 | 1600 |
+|finalA   | 200 | 1 | 1 | 400 |
+|finalB   | 200 | 1 | 1 | 400 |
+|finalC   | 200 | 1 | 1 | 400 |
+|aggBC    | 200 | 1 | 1 | 400 |
+|------|-----| ------|-----|------|
+
+So the total amount of data read/written
+is $500 + 1600 + 4 \times 400$ = 3700 MB.
+
+We can verify this in simulation. Running the app with 1 core and with disk bandwidth
+set to 100, the total execution time is 231 seconds.  The time to perform the computation
+is the sum of the task execution times: 10 + 20 + 100 + 20 + 40 + 4 = 194 seconds.
+
+So the time to perform the I/O is 231 - 194 = 37 seconds. Since the disk bandwidth
+is 100 MB/sec, this means the total data size is: 3700 MB!
+
   </div>
 </div>
+<p></p>
 
-**[D.p1.2]** Given the workflow in Figure 2, assume that each task
-has work 1 GFlop, and that each file is 0-byte (i.e., it takes time zero to
-read/write those files). If I execute this workflow on a dual-core computer
-where each core has speed 0.1 GFlop/sec, what is the parallel speedup? What
-is the parallel efficiency?
+**[A.3.4.p1.2]** What is the parallel efficiency when executing the workflow on 3 cores and when the
+disk bandwidth is 150 MB/sec?
 
 
 <div class="ui accordion fluid">
@@ -115,25 +143,42 @@ is the parallel efficiency?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-A task runs on a core in 10 seconds.  The sequential execution time is thus
-90 seconds, because we have 9 tasks.  On a dual-core machine, 
-the execution time would be 10 + 20 + 10 + 20 + 10 = 70 seconds. 
-This is because the 1st, 3rd, and 5th level of the workflow
-each has a single task, and thus runs in 10 seconds. The 2nd
-and 4th level have three tasks. On two cores, we can run
-two of these tasks in parallel, and then the third task
-by itself. Therefore, these three tasks can run in 20 seconds. 
+  
+The simulation shows that the 1-core execution takes time 218.67 seconds,
+while the 3-core execution takes time 197.33 seconds. So the speedup
+on 3 cores is 218.67 / 197.33 = 1.108.  Meaning that the parallel efficiency
+is 1.108/3 = 36.9%.  This is very low.
+  </div>
+</div>
+<p></p>
 
-The parallel speedup is 90/70 = 1.28. The parallel
-efficiency is thus 1.28/2 = 64.28%. 
+**[A.3.4.p1.3]** Explain why there is never any improvement when going from
+a 2-core execution to a  3-core execution for this workflow? 
+
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+The lack of improvement is easy to see in the simulation. In fact, executions look 
+identical with 2 and 3 cores.
+
+The width of the DAG is 3, so in principle using 3 cores could be useful. 
+The only level of the DAG with 3 tasks is the "blue" level. Unfortunately,
+the 3 tasks in that level cannot run concurrently due to RAM constraints.
+At most 2 of them can run concurrently (task3 and task4) since together
+they use less than 16 GB of RAM. 
  
   </div>
 </div>
+<p></p>
 
-**[D.p1.3]** Given the workflow in Figure 2, assume that each task
-has work 1 GFlop, and that each file is 0-byte (i.e., it takes time zero to
-read/write those files). What is the best parallel speedup
-I can achieve assuming I can use as many cores as I want?
+**[A.2.3.p1.4]**  Consider the execution of this workflow on 2 cores
+with disk bandwidth set to 50 MB/sec. Is the disk ever used concurrently
+by tasks? How can you tell based on the simulation output?
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -141,28 +186,20 @@ I can achieve assuming I can use as many cores as I want?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-
-I can use at most three cores since at any given time there
-are only three tasks that can be executed in parallel. Using
-three cores, each level of the workflow runs in 10 seconds.
-Therefore, the total execution times is 60 seconds, for a 
-speedup of 90/60 = 1.5. 
-
-This is not a good parallel efficiency (50%). The fact that
-some levels of the workflow have a single task really 
-hurts the speedup because while that task executes 
-two cores are left idle. 
+Tasks task3 and task4 use the disk concurrently. This is easily seen in the
+"Workflow Task Data" section of the simulation output. For instance, task3 spends 16
+seconds reading its input file. Give that this file is 400 MB, this means that
+task3 experiences a read bandwidth of 400/16 = 25 MB/sec. This is half  of
+the disk bandwidth, meaning that the disk is used concurrently by another task (task4),
+which also gets half of the disk bandwidth.
  
   </div>
 </div>
+<p></p>
 
-**[D.p1.4]** Given the workflow in Figure 2, let's assume that each task
-has work 10 GFlop, and that each file is 2 GB. We execute this workflow on
-a single-core computer that reads/writes files to/from some storage server.
-The core has speed 1 GFlop/sec, and the bandwidth to the storage server is
-500 MB/sec. If I have a choice of two upgrades, either double the core
-speed or double the bandwidth to the storage server, which one should I
-pick to get the best improvement in overall execution time?
+**[A.2.3.p1.5]** Considering a 1-core execution of the workflow, for which
+disk bandwidth would the execution be perfectly balanced between computation time
+and I/O time? 
 
 
 <div class="ui accordion fluid">
@@ -172,40 +209,89 @@ pick to get the best improvement in overall execution time?
   </div>
   <div markdown="1" class="ui segment content">
 
-In total, there are 9 tasks so the original computer will spend 90 seconds
-computing. The input file to the first task is read once, which takes 4 seconds. 
-Each of the other 12 files is written once and read once, which takes
-12 * (4 + 4) = 96 seconds.  This is a total of 100 seconds of I/O. 
+Let $B$ be the unknown bandwidth. The compute time is, as we
+saw in question A.2.3.p1 above, 194  seconds. The I/O time,
+again based on what we saw in that previous question, is
+3700 / $B$ seconds. So we simply need to solve:
 
-Overall, the execution spends 90 seconds computing and 100 seconds doing 
-file I/O. I should double the disk bandwidth!
+$
+3700 / B = 194
+$
+
+which gives $B$ = 19.07.  We can verify this in simulation by setting
+$B$ to 19. The simulation shows a total execution time of 388.7 seconds,
+which is almost exactly twice 194. 
 
   </div>
 </div>
+<p></p>
+
+**[A.2.3.p1.6]** Considering computation and I/O, what is the length
+of the workflow's critical path (in seconds) if the disk bandwidth
+is 100 MB/sec?
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+In the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing)
+we defined the critical path without any I/O. Extending this notion to I/O is
+ straightforward (one can simply consider an file reads and writes as
+extra tasks to perform). 
+
+We have 3 possible paths in the workflow, and for each one we can compute
+its length (i.e., duration in  seconds), as follows (note that all intermediate files
+are both written and read, and hence are counted "twice"):
+
+  - task1->task2->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 4 = 51 seconds
+  - task1->task3->task5->task6: 5 + 10 + 4 + 4 + 100 + 2 + 2 + 40 + 2 + 2 + 4 = 175 seconds
+  - task1->task4->task5->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 40 + 2 + 2 + 4 = 95 seconds
+
+The critical path (the middle path) has length 175 seconds. No execution can proceed faster
+than 175 seconds no matter how many cores are used. 
+
+
+
+  </div>
+</div>
+<p></p>
+
+
+**[A.2.3.p1.7]** Give your thoughts on why this workflow is poorly suited
+for parallel execution in general and on our 3-core computer in particular. 
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+There are three clear problems here:
+
+  - Problem #1: only 1 level of the workflow has 3 tasks, and all other levels have
+1 task. So this workflow is mostly sequential, and Amdahl's law tells use this is bad news.
+
+  - Problem #2: the only parallel level (the "blue" level) suffers from high
+*load imbalance*. One task runs in 100 seconds, while the other two
+run in 20 seconds. So, when running on 3 cores, assuming no I/O, the parallel efficiency is
+at most (140/100)/3 = 46.6%. 
+
+  - Problem #3: on our particular computer, the RAM constraints make things even worse as the
+workflow's width becomes essentially 2 instead of 3. We can never run the
+3 blue tasks in parallel. 
+
+To get a sense of how "bad" this workflow is, let's assume infinite
+disk bandwidth and infinite RAM capacity (which removes Problem #3 above). In this case, on 3 cores,
+the workflow would run in time: 10 + 100 + 40 + 4 = 154 seconds. The
+sequential execution time would be 194 seconds. So the speedup would only
+be 1.26, for a parallel efficiency of only 42%.  Amdahl's law is never 
+good news.
+
+  </div>
+</div>
+<p></p>
 
 ---
-
-#### Questions
-
-Answer the following questions, all of which pertain to the workflow
-disk below:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflow_fundamentals/dag_questions.svg">Dag</object>
-
-<p></p>
-
-**[D.q1.1]** Given the workflow above, assuming that all files are of
-size zero and all tasks have work 10 GFlop, what is the best possible
-execution time on a dual-core computer where cores have speed 2 GFlop/sec?
-
-<p></p>
-
-**[D.q1.2]** With the same assumption as the question above, what is the
-best parallel speedup one can achieve?  What is the parallel efficiency?
-
-<p></p>
-
-**[D.q1.3]** If each file is 1GB, how many GB in total are **read** from
-the storage server where all files must be stored?
-
-<p></p>

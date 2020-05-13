@@ -75,7 +75,7 @@ namespace wrench {
 
         WRENCH_INFO("--------------------------------------------------------");
         if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
+            WRENCH_INFO("Workflow execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
         } else {
             WRENCH_INFO("Workflow execution is incomplete!");
         }

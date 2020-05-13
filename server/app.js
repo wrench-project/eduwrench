@@ -411,7 +411,7 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, ANALYZE_WORK, SCHEDULING_SCHEME].concat(LOGGING);
@@ -490,7 +490,7 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS, TASK_GFLOP, TASK_RAM].concat(LOGGING);
@@ -570,7 +570,7 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, OIL_RADIUS].concat(LOGGING);
@@ -648,7 +648,7 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (req, res)
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS, TASK_GFLOP, TASK_RAM].concat(LOGGING);
@@ -1096,7 +1096,7 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, DISK_BANDWIDTH].concat(LOGGING);
