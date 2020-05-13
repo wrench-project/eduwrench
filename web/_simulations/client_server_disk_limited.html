@@ -1,10 +1,10 @@
 ---
 layout: simulation
 title: Client Server
-permalink: simulations/client_server_full/
+permalink: simulations/client_server_disk_limited/
 ---
 
-{% include partials/input_non_workflow.html imgSvg="simulation_imgs/client_server_full.svg" %}
+{% include partials/input_non_workflow.html imgSvg="simulation_imgs/client_server_disk_limited.svg" %}
 
 {% include partials/simulation_parameters_form_start.html %}
 <div class="container-fluid">
@@ -61,15 +61,13 @@ permalink: simulations/client_server_full/
     <row>
         <div class="col form-group">
             <div class="form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" name="disk-toggle" type="checkbox" id="disk-toggle" value="0">
-                    Toggle Disk Usage (Checked = Using Disk)
-                </label>
+                    <input class="form-check-input" name="disk-toggle" type="checkbox" id="disk-toggle" value="0" checked hidden>
             </div>
         </div>
     </row>
 
-    <input class="form-control" type="number" id="disk-speed" placeholder="500" value="500" min="1" max="10000" step="1" required hidden>
+    <input class="form-control" type="number" id="disk-speed" placeholder="50" value="50" min="1" max="10000" step="1" required hidden>
+
 
 </div>
 

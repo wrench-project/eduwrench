@@ -54,7 +54,7 @@ void generateWorkflow(wrench::Workflow *workflow, int host_select) {
  *
  * @throws std::invalid_argumemnt
  */
-void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int disk_toggle) {
+void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int disk_toggle, int disk_speed) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -64,6 +64,9 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
     }
     if (disk_toggle != 0 && disk_toggle != 1 ) {
         throw std::invalid_argument("generatePlatform() disk_toggle must be 1 or 0");
+    }
+    if (disk_speed <= 0) {
+        throw std::invalid_argument("generatePlatform() disk_speed must be greater than 0");
     }
 
 
@@ -121,6 +124,9 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
         if (disk_toggle == 0) {
             disk0.attribute("read_bw").set_value(std::string(std::to_string(999999999999999999) + "MBps").c_str());
             disk0.attribute("write_bw").set_value(std::string(std::to_string(999999999999999999) + "MBps").c_str());
+        } else {
+            disk0.attribute("read_bw").set_value(std::string(std::to_string(disk_speed) + "MBps").c_str());
+            disk0.attribute("write_bw").set_value(std::string(std::to_string(disk_speed) + "MBps").c_str());
         }
 
         xml_doc.save_file(platform_file_path.c_str());
@@ -213,7 +219,7 @@ int main(int argc, char** argv) {
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path, SERVER_1_LINK, DISK_TOGGLE);
+    generatePlatform(platform_file_path, SERVER_1_LINK, DISK_TOGGLE, DISK_SPEED);
     simulation.instantiatePlatform(platform_file_path);
 
 
