@@ -128,7 +128,8 @@ $(function() {
                     server_1_link: $("#server-1-link").val(),
                     buffer_size: $('input[name=buffer-size]:checked').val(),
                     host_select: $('input[name=host-select]:checked').val(),
-                    disk_toggle: $('#disk-toggle').is(':checked') ? true : false,
+                    disk_toggle: $('#disk-toggle').is(':checked') ? false : true,
+                    disk_speed: $("#disk-speed").val(),
                     userName: userName,
                     email: email
                 }),

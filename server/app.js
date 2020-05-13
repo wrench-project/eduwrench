@@ -889,10 +889,10 @@ app.post("/run/client_server_full", authCheck, function (req, res) {
     const BUFFER_SIZE = req.body.buffer_size;
     const HOST_SELECT = req.body.host_select;
     const DISK_TOGGLE = (req.body.disk_toggle == 1) ? 0 : 1;
-
+    const DISK_SPEED = req.body.disk_speed;
 
     //Not included in this usage of the simulator
-    const DISK_SPEED = 500;
+    //const DISK_SPEED = 500;
 
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -954,6 +954,8 @@ app.post("/run/client_server_full", authCheck, function (req, res) {
         });
     }
 });
+
+
 
 
 // display activity client server visualization route

@@ -59,9 +59,9 @@ implements the algorithm installed, and that make it possible to use it
 over the network. This is provided by the company that develops the fancy
 algorithm, as an advertising of its capabilities. There are two of these
 "servers" you can access. Server 1, which you can access via a network link
-with only 10 MBps bandwidth, but that can analyze a 100 MB image in XXX
-seconds of computation. Server 2, which you can access via a 100 MBps
-network link, but that is only able to analyze a 100 MB image in XXX
+with only 10 MBps bandwidth, but that can analyze a 100 MB image in 1
+second of computation. Server 2, which you can access via a 100 MBps
+network link, but that is only able to analyze a 100 MB image in 10
 seconds of computation. Latency for these network links is negligible and
 can be disregarded because the image is large. Also, the output of the
 algorithm (the number of cars) is only a few bytes, which is negligible.
@@ -99,7 +99,7 @@ able to finish execution much more quickly than Server 1.
 #### Practice Questions
 
 **[A.3.p2.1]** We can see that Server 2 has a faster link than Server 1 by default. Is there a bandwidth for Server 1
- that would make it equivalent to Server 2?
+ that would make it equivalent to Server 2? You can check your answer using the simulator above.
  
  <div class="ui accordion fluid">
    <div class="title">
@@ -107,14 +107,16 @@ able to finish execution much more quickly than Server 1.
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        (answer should be no)
+        If the speed of the link to Server 1 is improved to approximately 54 MBps or greater it can match Server 2 for 
+        execution time on this workload.
    </div>
  </div>
  
  <p></p>
 
 
-**[A.3.p2.2]** What if Server 1 were twice as fast? 
+**[A.3.p2.2]** What if Server 2 had a CPU that was 20 GF/s, what bandwidth would be necessary for Server 1 to match its 
+execution time on this workload?
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -122,7 +124,8 @@ able to finish execution much more quickly than Server 1.
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        (a)nswer should be yes)
+        If the speed of the link to Server 1 is improved to approximately 72 MBps or greater it can match Server 2 for 
+        execution time on this workload.
    </div>
  </div>
  
@@ -176,8 +179,8 @@ become a problem.
 
 #### Practice Questions
 
-**[A.3.p2.3]** In this Simulator just above that now includes options for buffer size, please run the default options 
-except select the 10 MB buffer. What time is the last chunk read from disk?
+**[A.3.p2.3]** In the Simulator just above that includes options for buffer size, please run the default options 
+except select the 10 MB buffer and mark the checkbox to use the disk. What time is the last chunk read from disk?
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -185,14 +188,15 @@ except select the 10 MB buffer. What time is the last chunk read from disk?
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        The last read should begin at approximately 8.60 seconds
+        The last read should begin at approximately 8.42 seconds
    </div>
  </div>
 
 <p></p>
 
-**[A.3.p2.4]** Estimate the total execution time if you were to set the buffer size to 20 MB? (This is not an option on 
-the simulator, you will need to calculate it.)
+**[A.3.p2.4]** Estimate the total execution time if you were to set the buffer size to 100 MB, would this increase or 
+decrease total execution time? (This is not an option on 
+the simulator, you will need to think about it.)
 
 
 <div class="ui accordion fluid">
@@ -201,7 +205,25 @@ the simulator, you will need to calculate it.)
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        The total execution time with a 20 MB buffer should be approximately 11 seconds.
+        The total execution time with a 100 MB buffer will be longer because the network link will not start transferring 
+        data for a longer period of time. There will be no overlap between disk I/O and network transfer so it is less 
+        efficient.
+   </div>
+ </div>
+
+<p></p>
+
+**[A.3.p2.5]** Compared to the previous answer, will execution time be shorter or longer with a buffer size of 1 GB?
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        The total execution time would be the same for this workload, the data input is 100 MB, whether the buffer is 
+        100 MB or 1 GB it will load the entire amount from disk first and then start the network transfer. 
    </div>
  </div>
 
@@ -213,11 +235,43 @@ In the previous section the disk was much faster than either networks,  but that
 not always the case. As a result, the disk can become a performance bottleneck when
 transferring data from the client to the server. 
 
-XXXX Make a scenario with a  smaller disk Bandwidth, so that the "over the fast network" server  is no longer the best choice! XXXX
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="client_server_disk_limited/" %}
+  </div>
+</div>
+
+Now the disk speed in the above simulator is capped at 50 MBps read/write. You will find this will lead to sharply 
+diminishing returns 
+for any increases to link speed above that level. 
 
 #### Practice Questions
 
-**[A.3.p2.5]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
+**[A.3.p2.6]** Try running the simulator above twice, selecting Server 1 both times and trying with link speeds of 50 MBps 
+and 100 MBps. It was mentioned above that the disk r/w speeds are the bottleneck here, but why does execution time still 
+drop slightly with the faster network?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+    Since we have set a buffer size of 2, 5 or 10 MB, the increased bandwidth of the link still has some impact. The network 
+    must wait for a chunk to be ready from the disk, but once it is ready, the last chunk being transferred more quickly 
+    will still impact overall execution time a tiny bit. 
+
+  </div>
+</div>
+
+<p></p>
+
+
+**[A.3.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
 transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
 network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
 CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
@@ -239,19 +293,80 @@ bandwidth. How long is the execution time from start to finish?
 
 <p></p>
 
-**[A.3.p2.6]** Consider the previous question's situation, but now the server has moved and the network link has changed
-to 10 GBps capacity. Due to the longer distance, there is now 100 μs latency. Does this change the execution time?
+**[A.3.p2.8]** Consider the previous question's situation, but now the server has moved and the network link has changed
+to 10 GBps capacity. Does this change the execution time?
 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i> (click to see answer)
   </div> <div markdown="1" class="ui segment content">
    Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
-   utilized to begin with. Since we are going from negligible latency to 100 μs latency, our answer would be increased
-   by that amount. Transfer time will extend past the time it takes to read from disk by the amount of latency.
+   utilized to begin with. 
 
   </div>
 </div>
 
 <p></p>
+
+
+#### Questions
+
+**[A.3.q2.1]** Your business has a client/server topology for your computing needs. The client is on-site and there are 
+three off-site servers you have access to. The specifications of the client and three servers and their costs are below:
+
+    Client
+    Disk: 100 MBps R/W
+    
+    Server_0
+    Cost: $5/HR 
+    CPU: 100 GF/s
+    Link: 100 MBps
+    
+    Server_1
+    Cost: $10/HR 
+    CPU: 200 GF/s
+    Link: 100 MBps
+    
+    Server_2
+    Cost: $20/HR 
+    CPU: 200 GF/s
+    Link: 1 GBps
+
+Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
+as compute time.
+
+Given a task that has 100 GB input, 100 TFlop computation and 200 GB output, what is the most cost efficient option? What is 
+the most time efficient option?
+
+    XXREMOVE MEXX
+    ANSWER: Server_0: 1000 seconds input, 1000 seconds comp, 2000 seconds output = 4000 seconds, 66.6 minutes, $5.55 
+    Server_1: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $9.72 
+    Server_2: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $19.44
+    
+    Server_0 is the most cost efficient, either Server_1 or Server_2 would be more time efficient. Server_2 would be ever so
+    slightly faster based on buffering.
+
+
+**[A.3.q2.2]** Consider the above scenario again, if a disk upgrade is made to the client, is it possible for Server_2 
+to be the most cost efficient option? How fast would the read/write speed of the new disk have to be?
+
+
+    XXREMOVE MEXX
+    ANSWER:Yes, if we remove the disk bottleneck entirely we can see that the cost is below that of SERVER_0 calculated above.
+    Server_2: 100 seconds input, 500 seconds comp, 200 seconds output = 800 seconds, $4.44
+    
+    Base cost of computation (not changing) = 500/60/60*20 = $2.78
+    SERVER_0 cost $5.55-2.78 = $2.77 of time maximum for data transfer
+    $2.77 = ~500 seconds at $20/hr
+    
+    300 GB/ X = 500 seconds
+    300 = 500x
+    X = 600 MBps  [3/5 GBps]
+    
+    If the client's disk had 600 MBps R/W or better it is a superior option for cost efficiency. 
+    
+    
+
+
+
 
