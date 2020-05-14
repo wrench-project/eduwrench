@@ -25,8 +25,8 @@ $(function () {
                 {
                     host_specs: $("#host-specs").val(),
                     task_specs: $("#task-specs").val(),
-                    task_scheduling_select: $("#task-scheduling-select").val(),
-                    compute_scheduling_select: $('#compute-scheduling-select').val(),
+                    task_scheduling_select: $('input[name=task-scheduling-select]:checked').val(),
+                    compute_scheduling_select: $('input[name=compute-scheduling-select]:checked').val(),
                     userName: userName,
                     email: email
                 }),
