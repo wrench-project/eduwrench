@@ -13,8 +13,8 @@ Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
   <a class="item " data-tab="first">Fundamentals</a>
-  <a class="item " data-tab="second">Over the Network</a>
-  <a class="item " data-tab="third">DataLocality</a>
+  <a class="item " data-tab="second">Distributed Execution</a>
+  <a class="item " data-tab="third">Data Locality</a>
   <a class="item " data-tab="fourth">Task- and Data-Parallelism</a>
   <a class="item " data-tab="fifth">Capstone Exercise</a>
 </div>
@@ -23,7 +23,7 @@ Go through the tabs below in sequence...
   {% include_relative include_workflow/workflow_fundamentals.md %}
 </div>
 <div markdown="1" class="ui tab segment" data-tab="second">
-  {% include_relative include_workflow/workflow_execution_fundamentals.md %}
+  {% include_relative include_workflow/workflow_distributed.md %}
 </div>
 <div markdown="1" class="ui tab segment " data-tab="third">
   {% include_relative include_workflow/workflow_execution_data_locality.md %}
