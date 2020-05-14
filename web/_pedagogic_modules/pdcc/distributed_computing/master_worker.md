@@ -7,7 +7,6 @@ submodule: 'distributed_computing'
 ---
 
 
-
 The goal of this module is to introduce you to the basic concepts of running tasks
 on a master/worker system.
 
@@ -73,7 +72,7 @@ Task Selection:
     - random (default)
     - highest flop
     - lowest flop
-    - highest bytes
+    - highest bytes (i/o)
     - lowest bytes
     - highest flop/bytes
     - lowest flop/bytes
@@ -86,6 +85,9 @@ Worker Selection:
 
 
 ### Simulating Master / Worker
+
+This simulator is built to allow the specification of many different tasks and workers. These are specified through the 
+format indicated in the input form, separated by commas. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -103,6 +105,22 @@ Worker Selection:
 optimal? What would a counter example be where it is not optimal? Do such examples and counter-examples exist for 
 each time of scheduling?
 
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        This type of task scheduling would be great when you have workers of varying power CPUs and are scheduling the 
+        most powerful workers first. This way, the tasks with the largest amount of work are done by the workers with the 
+        most capability to do it. There are many potential counterexamples that can be made, but one such counterexample 
+        would be where you have tasks with varying input/out data that must be transferred and workers with varying bandwidth on their connections. 
+        Scheduling only on the basis of flops could lead to poor performance as a worker with a small bandwidth connection is given a task with large data requirements. 
+   </div>
+ </div>
+ 
+ <p></p>
+
 
 **[A.3.p3.2]** Consider that you have 7 identical tasks and 3 identical workers to assign them to. Does it matter how 
 the tasks are scheduled for improving overall execution time? Check your answer with the simulator. 
@@ -112,6 +130,18 @@ the tasks are scheduled for improving overall execution time? Check your answer 
 Workers: 100 100, 100 100, 100 100
 Tasks: 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100
 ```
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        If everything is identical, scheduling will not make an impact as long as tasks are assigned one task:one worker. 
+   </div>
+ </div>
+ 
+ <p></p>
 
 **[A.3.p3.3]** Now consider that 3 of the tasks have their input/output bytes tripled, and one worker has its bandwidth to the master 
 tripled. If tasks are scheduled such that the highest byte tasks are assigned to the best connected workers first, does 
@@ -125,14 +155,42 @@ Task Scheduling: Highest Bytes
 Worker Scheduling: Best-Connected Worker
 ```
 
-**[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p1.3]?
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        This will increase the execution time. If you could manually schedule these tasks you could optimize the execution 
+        time to be essentially identical by having the worker with increased bandwidth exclusively handling the tasks 
+        with increased data transfer requirements. The scheduling here works on a simple basis however, it looks at 
+        what hosts are available currently and what tasks are ready to run currently, it is not planning ahead.
+   </div>
+ </div>
+ 
+ <p></p>
+
+**[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p3.3]?
  How could this be achieved?
 
-
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        As previously mentioned we would have only the best-connected worker handle the three tasks with increased data
+        transfer requirements. This would result in the same execution time as [A.3.p3.2], approximately 9.3 seconds. 
+        The only way this can be achieved in the simulator is through random task selection (or task selection that is 
+        random in this case, such as sorting by flops which are identical).
+   </div>
+ </div>
+ 
+ <p></p>
 
 ### Questions
 
-**[A.3.q3.1]** Say that you have three workers (Worker #0, Worker #1, Worker #2) with 10 GF/s, 100 GF/s and 1000 GF/s 
+Say that you have three workers (Worker #0, Worker #1, Worker #2) with 10 GF/s, 100 GF/s and 1000 GF/s 
 single-core processors respectively.
 All workers are connected to the master by their own 100 MBps link. You must delegate a workload that consists of four
 independent tasks (they can be executed in any order). The tasks are as follows:
@@ -157,13 +215,20 @@ independent tasks (they can be executed in any order). The tasks are as follows:
     Computation: 1000 GF  
     Output: 1 GB  
 
-If the tasks are assigned to workers in the order that both are numbered (Task #0 goes to Worker #0, Task #1 to Worker #1,
- Task #2 to Worker #2 and Task #3 to the first worker available) what will the total execution time be? What is one
- example of intelligent scheduling that could improve on this execution time? Verify your answer using the simulator.
+ **[A.3.q3.1]** If the tasks are assigned to workers in the order that both are numbered (Task #0 goes to Worker #0, 
+ Task #1 to Worker #1,
+ Task #2 to Worker #2 and Task #3 to the first worker available) what will the total execution time be? 
  
- **[A.3.q3.2]** You have 3 workers. They are all equipped with 100 GF/s single-core processors and have 100 MBps links
- to the master. You have a workload for 4 tasks that is repeatedly run, outlined below:
+ **[A.3.q3.2]** What is one example of scheduling that could improve on the execution time in your previous
+ answer? You can verify your answer using the simulator.
  
+ <p></p>
+ 
+ ---
+ 
+You have 3 workers. They are all equipped with 100 GF/s single-core processors and have 100 MBps links
+to the master. You have a workload for 4 tasks that is repeatedly run, outlined below:
+
     Task #0  
     Input: 1 GB  
     Computation: 500 GF    
@@ -183,26 +248,36 @@ If the tasks are assigned to workers in the order that both are numbered (Task #
     Input: 800 MB  
     Computation: 1 TF  
     Output: 800 MB 
+    
+**Simulator Input:**
+```
+Workers: 100 100, 100 100, 100 100  
+Tasks: 1000 500 1000, 1000 500 1000, 1000 500 1000, 800 1000 800  
+Task Scheduling: Highest Bytes  
+Worker Scheduling: Best-Connected Worker  
+```
       
- You have the option to upgrade the CPUs to double the compute speed on all of the workers, or upgrading the connection on 
- one of the workers to double the bandwidth. Which of these options is best if you are scheduling on the basis of highest 
- bytes task and best-connection worker? What is the execution time? Check your work on the simulator.
+**[A.3.q3.3]** Calculate the execution time for the four tasks. You may verify your answer on the simulator.
+
+**[A.3.q3.4]** You have the option to upgrade the CPUs to double the compute speed on all of the workers, or upgrading the connection on 
+one of the workers to double the bandwidth. Which of these options is best if you are scheduling on the basis of highest 
+bytes task and best-connection worker? 
+
+**[A.3.q3.5]** What is the execution time after implementing the more beneficial upgrade from [A.3.q3.4]? Check your 
+work on the simulator.
+
+---
  
- **Simulator Input:**
-```
-Workers: 100 100, 100 100, 100 100
-Tasks: 1000 500 1000, 1000 500 1000, 1000 500 1000, 800 1000 800
-Task Scheduling: Highest Bytes
-Worker Scheduling: Best-Connected Worker
-```
+**[A.3.q3.6]** You have an undisclosed number of tasks and workers of various unknown specifications. On average, 
+what is the best method for scheduling given this lack of information? 
 
+**[A.3.q3.7]** What is one difference between scheduling in a master/worker topology vs. scheduling within an isolated 
+machine?
 
-  **[A.3.q3.3]** You have an undisclosed number of tasks and workers of various unknown specifications. On average, 
-  what is the best method for scheduling given this lack of information? 
+**[A.3.q3.8]** Why is it generally preferred to assign only a single task to a single worker at a time?
+
+**[A.3.q3.X]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
+or simulator
   
-  
-  **[A.3.q3.4]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
-  first.
-  
-  **[A.3.q3.5]** TBD
+
   
