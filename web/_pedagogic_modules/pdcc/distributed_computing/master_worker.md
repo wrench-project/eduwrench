@@ -20,6 +20,9 @@ on a master/worker system.
 ----
 
 
+<p align="center">
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Topology</object>
+</p>
 
 ## Basics
 
