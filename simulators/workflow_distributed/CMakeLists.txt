@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
-project(ACTIVITY_WORKFLOW_FUNDAMENTALS)
+project(ACTIVITY_WORKFLOW_DISTRIBUTED)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
@@ -24,8 +24,8 @@ find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
-add_executable(workflow_fundamentals_simulator ${SOURCE_FILES})
-target_link_libraries(workflow_fundamentals_simulator
+add_executable(workflow_distributed_simulator ${SOURCE_FILES})
+target_link_libraries(workflow_distributed_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}
         ${PUGIXML_LIBRARY}

@@ -20,7 +20,11 @@ computing (HPC) platforms.
 The goal is to execute a workflow application on these platforms as quickly
 as possible, given the underlying network infrastructure (latencies,
 bandwidths, network topologies) that interconnects storage (disks) and
-compute (multi-core hosts with some RAM) resources.  
+compute (multi-core hosts with some RAM) resources.  This is only possible
+if an appropriate software infrastructure is provided to use
+remote resources. In this module we just assume that this is the
+case, and leave the discussion of more details about the software 
+infrastructure for future modules. 
 
 ### Example Platform
 
@@ -75,115 +79,42 @@ buffer size is 1 MB, the 200 MB input file is done in 200 phases. In each phase,
 first and the last, a 1 MB piece of the file is read from  disk while another 1 MB
 piece is sent over to the network. Furthermore, there are network latencies.  You can
 go back to the IO tab  of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/single_core_computing)
-and the [Netowrking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/networking_fundamentals)  for the full detail.
+and the [Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/networking_fundamentals)  for the full detail.
 But overall, the latencies are small, and the limiting resource in terms of bandwidth is not
 the disk, nor the local-area link, but the 100 MB/sec wide-area link. So as an approximation we
 simply say that the data is transferred at speed 100 MB/sec.  We will see in simulation
-how accurate such back-of-the-envelope estimates are (turns out, they're pretty good).
-
-XXXX HENRI WORKING HERE XXXX
+how accurate such back-of-the-envelope estimates are (turns out, they're often pretty good).
 
 ### Example Workflow
 
-### Scenario
+We consider a simple "in-tree" workflow, depicted in the figure below.
 
-Now that you have been introduced to *workflows*, *cyberinfrastructure*,
-and *workflow management systems (WMS)*, you can start looking at actual
-workflow executions.  Let's do this for a particular scenario. 
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
+<div class="caption"><strong>Figure A.3.4.2.2:</strong> Example workflow.</div>
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/
-workflow_execution_fundamentals/workflow.svg">Workflow</object>
+This workflow has only two levels, with the first level consisting of
+20 parallel tasks and the second level having only one task. The width
+of the workflow DAG is thus 20, and the critical path is relatively
+short. So, unlike the example workflow in the previous tab, this
+workflow should benefit significantly from parallel execution. 
 
-Figure 1 illustrates the DAG representation of the workflow for our
-scenario. *task0* requires the file *task0::0.in* as its input and produces
-the file *task0::0.out* as output. *task1* requires the output of *task0*
-(file *task0::0.out*) as its input and produces the file *task1::0.out* as
-output.  This type of linear workflow is often called a *chain*. In order
-to orchestrate the execution of this workflow, a WMS needs access to two
-types of resources: persistent storage to read/write files to/from and a
-compute resource to perform the computation required by each task.
+### Executing the Workflow on the Platform
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/
-workflow_execution_fundamentals/platform.svg">Workflow</object>
+We wish to execute our workflow  on our distributed platform. The workflow execution
+strategy is very simple, given that our workflow has a simple structure: whenever 
+there are sufficient compute resources at a compute host (an idle core and 8 GB of RAM), start
+the next to-be-executed pre_* task on it. When all pre_* tasks have been
+executed, then the final task can be executed. 
 
-The platform in Figure 2 depicts the cyberinfrastructure on which we wish
-to execute this workflow. The WMS runs on the host
-*my_lab_computer.edu*, and has access to both the Storage Service on host
-*storage_db.edu* and the Compute Service on host *hpc.edu*.
-
-**Storage Service**. A Storage Service (SS) stores files and handles read and write
-requests. For example, if *my_lab_computer.edu* wants to read a file from
-*storage_db.edu*, it will make a read request to the SS, which will then
-send the file content over the network.
-
-**Compute Service**. A Compute Service (CS) can execute workflow tasks submitted to it by the WMS.  Typically, a compute service will have access to powerful computers.
-
-**Workflow Management System**. The WMS in this scenario greedily submits
-tasks to the CS for execution once they become ready. A task is ready to be
-submitted by the WMS when its parent task(s) has completed.  In this
-scenario, tasks are only submitted for execution to the CS, and all file
-read and write operations are to the SS.  The initial input file,
-*task0::0.in*, is assumed to already be "staged" at the SS.
-
-### The Workflow Execution
-
-Figure 3 below illustrates the workflow's execution.
-In order for the CS to complete each task in its entirety, it must read in the
-input file for that task, perform the computation required by that task, and
-finally write the output file for that task.  
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/
-workflow_execution_fundamentals/workflow_execution.svg">Workflow Execution</object>
-
-Notice that in step 3, the CS writes the output file to the SS, then immediately
-reads that file back from the SS in step 4. This happens because the only place in which we can store data (in this scenario) is on the 
-SS at *storage_db.edu*. Obviously, this is not great for performance, but 
-that's what we are stuck with for now.
-
-Using figure 3 as a guide, and things we've learned in previous modules, we can estimate the workflow execution time, or *makespan*! 
-The estimated execution time of *task0* is as follows:
-
-$$
-\begin{align}
-
-  T_{task0} & = T_{step1} + T_{step2} + T_{step3} \\
-            & = (10\;\text{us} + \frac{200\;\text{MB}}{10\;\text{MB/sec}}) + (\frac{100*10^{12}\;\text{flop}}{10^{12}\;\text{flop/sec}}) + (10\;\text{us} + \frac{400\;\text{MB}}{10\;\text{MB/sec}}) \\
-            & = 20.000010 + 100 + 40.000010\;text{sec} \\
-            & = 160.000020\;\text{sec}\\
-            & \simeq 160\;\text{sec}
-
-\end{align}
-$$
-
-Next, the estimated execution time of *task1* is as follows:
-
-$$
-\begin{align}
-
-  T_{task1} & = T_{step4} + T_{step5} + T_{step6} \\
-            & = (10\;\text{us} + \frac{400\;\text{MB}}{10\;\text{MB/sec}}) + (\frac{35*10^{12}\;\text{flop}}{10^{12}\;\text{flop/sec}}) + (10\;\text{us} + \frac{100\;\text{MB}}{10\;\text{MB/sec}}) \\
-            & = 40.000010 + 35 + 10.000010\;text{sec} \\
-            & = 85.000020\;\text{sec}\\
-            & \simeq 85\;\text{sec}
-
-\end{align}
-$$
-
-*task0* and *task1* are executed sequentially, i.e., one after the other, therefore the total estimated
-makespan of our workflow will be:
-
-$$
-\begin{align}
-
-  T_{\text{workflow\;makespan}} & = T_{task0} + T_{task1} \\
-                                & \simeq 160 + 85\;text{sec} \\
-                                & = 245\;\text{sec}
-
-\end{align}
-$$
+Whenever several pre_* tasks start simultaneously, then also read
+their input files simultaneously, thus splitting disk and network bandwidth. And, as
+in the previous tab,  a task does not free up its compute resources until its output files
+have all been fully written to disk.
 
 
-### Running a Workflow Execution Simulation
+#### Simulating Execution
+
+XXXX HENRI WORKS HERE XXXXX
 
 So that you can gain hands-on experience, use 
 the simulation Web application
@@ -201,38 +132,6 @@ selecting `Workflow Execution Fundamentals` from its menu.
   </div>
 </div>
 
-#### Interpreting Text Output from Simulated Workflow Execution
-
-For now, just hit the "Run Simulation" button (without modifying the value in the text box and leaving it at 1000).  Running the simulation updates the Web page with content below the button. The first such section shows *text output*, and should look like this:
-
-<div class="wrench-output">
-<span style="font-weight:bold;color:rgb(187,0,187)">[0.000000][my_lab_computer.edu:wms__3] Starting on host my_lab_computer.edu listening on mailbox_name wms__3<br></span>
-<span style="font-weight:bold;color:rgb(187,0,187)">[0.000000][my_lab_computer.edu:wms__3] About to execute a workflow with 2 tasks<br></span>
-<span style="font-weight:bold;color:rgb(0,0,187)">[0.000475][my_lab_computer.edu:wms__3] Submitting task0 to compute service on hpc.edu<br></span>
-<span style="font-weight:bold;color:rgb(187,0,0)">[163.004555][my_lab_computer.edu:wms__3] Notified that task0 has completed<br></span>
-<span style="font-weight:bold;color:rgb(0,0,187)">[163.005030][my_lab_computer.edu:wms__3] Submitting task1 to compute service on hpc.edu<br></span>
-<span style="font-weight:bold;color:rgb(187,0,0)">[250.508827][my_lab_computer.edu:wms__3] Notified that task1 has completed<br></span>
-<span style="font-weight:bold;color:rgb(187,0,187)">[250.508827][my_lab_computer.edu:wms__3] -------------------------------------------------<br></span>
-<span style="font-weight:bold;color:rgb(187,0,187)">[250.508827][my_lab_computer.edu:wms__3] Workflow execution completed in 250.508199 seconds!<br></span>
-</div>
-
-The first part of each line of output is a (simulated) time stamp. The second part is 
-split into two sections: hostname, and process name. Last, and most importantly, is a message describing what the process is doing. 
-For example, the second line from the output
-above: 
-
-`[0.000000][my_lab_computer.edu:wms__3] About to execute a workflow with 2 tasks` 
-
-tells us
-that at *simulation time 0.00000*, the WMS named *wms__3*, located on the physical host, *my_lab_computer.edu*, is *"About to execute a workflow with 2 tasks"*.
-(The "__3" in the process name is added by the simulator as a unique integer identifier.)
-The output only shows a few messages printed by the WMS. The color scheme is 
-that general messages are <span style="font-weight:bold;color:rgb(187,0,187)">pink</span>, submissions to the CS are 
-<span style="font-weight:bold;color:rgb(0,0,187)">blue</span>, and notifications received from the CS are
-<span style="font-weight:bold;color:rgb(187,0,0)">red</span>.  
-
-The last line of output states that the workflow has completed in a bit more than 250 seconds, which is close to
-the approximation we computed above on this page (which was 245 seconds). 
 
 ---
 

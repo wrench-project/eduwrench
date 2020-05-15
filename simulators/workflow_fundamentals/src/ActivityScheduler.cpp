@@ -54,7 +54,7 @@ namespace wrench {
                 for (auto const &f : t->getOutputFiles()) {
                     file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);;
                 }
-                auto job = this->getJobManager()->createStandardJob({t}, file_locations);
+                auto job = this->getJobManager()->createStandardJob(t, file_locations);
                 this->getJobManager()->submitJob(job, compute_service, {});
 
                 idle_core_count--;
