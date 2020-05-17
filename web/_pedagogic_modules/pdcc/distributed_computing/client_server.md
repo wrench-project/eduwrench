@@ -9,16 +9,16 @@ submodule: 'distributed_computing'
 The goal of this module is to introduce you to the client/server model of
 computation.
 
+<div markdown="1" class="ui active tab segment">
 
-#### Learning Objectives:
+#### Learning Objectives
 
-  - Understand the  client/server model of computation
+- Understand the  client/server model of computation
+- Understand how to reason about the performance of a client/server setup
 
-  - Understand how to reason about the performance of a client/server setup
+---
 
-----
-
-## Basics
+### Basics
 
 In a client/server model a *client*, that is a program  running on some
 computer, wishes to perform some computation, or *task*, but does not want
@@ -45,7 +45,6 @@ hardware. Furthermore, if multiple  clients use the same server,  the
 clients will compete  for the server's hardware. If there are multiple
 servers, then a client can choose which one may deliver the best
 performance, that is, the earliest task completion date.
-
 
 ### An Example: Photo Processing
 
@@ -76,7 +75,6 @@ whatsoever.
 </p>
 
 ### Simulating a Client and Server
-
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -131,7 +129,9 @@ execution time on this workload?
  
  <p></p>
 
-### Adding I/O, and Buffering
+--- 
+
+#### Adding I/O, and Buffering
 
 We have assumed no disk I/O to make things simple, but often the input data
 does reside on disk. The application then reads it from disk into RAM and
@@ -215,7 +215,6 @@ the simulator, you will need to think about it.)
 
 **[A.3.p2.5]** Compared to the previous answer, will execution time be shorter or longer with a buffer size of 1 GB?
 
-
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
@@ -229,7 +228,9 @@ the simulator, you will need to think about it.)
 
 <p></p>
 
-### When I/O is a bottleneck
+---
+
+#### When I/O is a bottleneck
 
 In the previous section the disk was much faster than either networks,  but that's
 not always the case. As a result, the disk can become a performance bottleneck when
@@ -270,7 +271,6 @@ drop slightly with the faster network?
 
 <p></p>
 
-
 **[A.3.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
 transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
 network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
@@ -308,6 +308,7 @@ to 10 GBps capacity. Does this change the execution time?
 
 <p></p>
 
+---
 
 #### Questions
 
@@ -365,8 +366,4 @@ to be the most cost efficient option? How fast would the read/write speed of the
     
     If the client's disk had 600 MBps R/W or better it is a superior option for cost efficiency. 
     
-    
-
-
-
-
+</div>
