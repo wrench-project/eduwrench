@@ -6,51 +6,45 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-
 The goal of this module is to introduce you to the basic concepts of running tasks
 on a master/worker system.
 
+<div markdown="1" class="ui active tab segment">
 
-#### Learning Objectives:
+#### Learning Objectives
 
-  - Understand master/worker systems
-
-  - Encounter and understand different scheduling philosophies
+- Understand master/worker systems
+- Encounter and understand different scheduling philosophies
 
 ----
-
 
 <p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Topology</object>
 </p>
 
-## Basics
+### Basics
 
 When hosts or clusters are referred to as a master or a worker the meaning is reminiscent
 of any other area of life. The single master or boss is
- assigning labor amongst an arbitrary number of workers. This allows the workers to be
- simple laborers that do the jobs given to them without worrying about the larger picture,
- and the master is not doing the actual work so they can focus on the larger picture
- working smoothly and efficiently. The success of a master/worker system is predicated on the ability of the
-  master to efficiently offload work. This distribution of work is known as scheduling, and there are
-  many methodologies to consider when deciding how it should be implemented on the master.
-
+assigning labor amongst an arbitrary number of workers. This allows the workers to be
+simple laborers that do the jobs given to them without worrying about the larger picture,
+and the master is not doing the actual work so they can focus on the larger picture
+working smoothly and efficiently. The success of a master/worker system is predicated on the ability of the
+master to efficiently offload work. This distribution of work is known as scheduling, and there are
+many methodologies to consider when deciding how it should be implemented on the master.
 
 ### Parallelism through Master / Worker
 
 Master/Worker can allow for parallel computing in much the same ways as we have previously discussed.
 Instead of delegating an entire workload to each host or core, the master can evaluate the workload
 and hand off tasks to workers. The worker does the computation as necessary, and returns
- the output to the master when it is finished, signalling that it has completed the assigned work. Once
- a worker is free it can be assigned work again.
+the output to the master when it is finished, signalling that it has completed the assigned work. Once
+a worker is free it can be assigned work again.
 
- How workload is delegated will depend on that workload and dependencies within it. In a real situation,
- there would also be financial and contractual considerations. A single Master/worker cluster may be
- used by multiple companies or researchers, and those parties will be paying for or assigned a certain level of access.
- This can result in making choices for fairness or financial prudence over efficiency and speed.
- 
- 
-
+How workload is delegated will depend on that workload and dependencies within it. In a real situation,
+there would also be financial and contractual considerations. A single Master/worker cluster may be
+used by multiple companies or researchers, and those parties will be paying for or assigned a certain level of access.
+This can result in making choices for fairness or financial prudence over efficiency and speed.
 
 ### Scheduling  Philosophies In Master / Worker
 
@@ -67,7 +61,7 @@ When scheduling you have two major pieces to consider, the workload/task and the
 to. You can have a methodology for choosing which task or tasks get executed first and a separate methodology for
 which worker that task is assigned to.
 
-In the simulation below we have implemented a number of different methodologies for scheduling each of these components. 
+In the simulation below, we have implemented a number of different methodologies for scheduling each of these components. 
 These can be used to explore what the best scheduling philosophy actually is for different situations.
 Specifically they are:
 
@@ -86,7 +80,6 @@ Worker Selection:
     - largest compute time/io time ratio
     - earliest completion
 
-
 ### Simulating Master / Worker
 
 This simulator is built to allow the specification of many different tasks and workers. These are specified through the 
@@ -102,7 +95,7 @@ format indicated in the input form, separated by commas.
   </div>
 </div>
 
-### Practice Questions
+#### Practice Questions
 
 **[A.3.p3.1]** What is one example of a scenario where scheduling a series of tasks by highest flop required first is 
 optimal? What would a counter example be where it is not optimal? Do such examples and counter-examples exist for 
@@ -120,10 +113,9 @@ each time of scheduling?
         would be where you have tasks with varying input/out data that must be transferred and workers with varying bandwidth on their connections. 
         Scheduling only on the basis of flops could lead to poor performance as a worker with a small bandwidth connection is given a task with large data requirements. 
    </div>
- </div>
+</div>
  
- <p></p>
-
+<p></p>
 
 **[A.3.p3.2]** Consider that you have 7 identical tasks and 3 identical workers to assign them to. Does it matter how 
 the tasks are scheduled for improving overall execution time? Check your answer with the simulator. 
@@ -142,9 +134,9 @@ Tasks: 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 
    <div markdown="1" class="ui segment content">
         If everything is identical, scheduling will not make an impact as long as tasks are assigned one task:one worker. 
    </div>
- </div>
+</div>
  
- <p></p>
+<p></p>
 
 **[A.3.p3.3]** Now consider that 3 of the tasks have their input/output bytes tripled, and one worker has its bandwidth to the master 
 tripled. If tasks are scheduled such that the highest byte tasks are assigned to the best connected workers first, does 
@@ -169,9 +161,9 @@ Worker Scheduling: Best-Connected Worker
         with increased data transfer requirements. The scheduling here works on a simple basis however, it looks at 
         what hosts are available currently and what tasks are ready to run currently, it is not planning ahead.
    </div>
- </div>
+</div>
  
- <p></p>
+<p></p>
 
 **[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p3.3]?
  How could this be achieved?
@@ -187,11 +179,13 @@ Worker Scheduling: Best-Connected Worker
         The only way this can be achieved in the simulator is through random task selection (or task selection that is 
         random in this case, such as sorting by flops which are identical).
    </div>
- </div>
+</div>
  
- <p></p>
+<p></p>
 
-### Questions
+---
+
+#### Questions
 
 Say that you have three workers (Worker #0, Worker #1, Worker #2) with 10 GF/s, 100 GF/s and 1000 GF/s 
 single-core processors respectively.
@@ -282,5 +276,5 @@ machine?
 **[A.3.q3.X]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
 or simulator
   
-
+</div>
   
