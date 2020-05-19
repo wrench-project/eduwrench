@@ -1,11 +1,11 @@
 
-#### Learning Objectives:
+#### Learning Objectives
 
   - Understand the basics of the client/server model of computation
 
   - Be able to reason about the performance of a simple client/server setup
 
-----
+---
 
 In a client/server model a **client**, that is a program  running on some
 computer, wishes to perform some *computational task*, but does not want
@@ -29,7 +29,6 @@ Finally, there can be more than one server available, in which
 case the client could choose to use the one that would get
  the job done faster.
 
-
 ### An Example: Client-Server Photo Processing 
 
 On your computer, the "client", you have a **100 MB image** in RAM, 
@@ -43,9 +42,7 @@ over the network. This is provided by the company that develops the fancy
 algorithm, as an advertising of its capabilities.   The fancy algorithm
 performs **100 GFlop** of work on the 100 MB image. 
 
-
-The following pictures
-depicts this setup:
+The following pictures depicts this setup:
  
 <p align="center">
 <object class="figure" width="800" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Topology</object>

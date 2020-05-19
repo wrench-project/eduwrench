@@ -1,9 +1,8 @@
-#### Learning Objectives:
+#### Learning Objectives
 
   - XXXXX
 
-----
-
+---
 
 ### Adding I/O on the Client
 

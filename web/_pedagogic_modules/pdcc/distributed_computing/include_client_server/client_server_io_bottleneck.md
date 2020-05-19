@@ -1,10 +1,10 @@
 
 
-#### Learning Objectives:
+#### Learning Objectives
 
   - XXX
 
-----
+---
 
 ### When I/O is a bottleneck
 
@@ -22,9 +22,9 @@ transferring data from the client to the server.
   </div>
 </div>
 
-Now the disk speed in the above simulator is capped at 50 MBps read/write. You will find this will lead to sharply 
-diminishing returns 
-for any increases to link speed above that level. 
+Now the disk speed in the above simulator is capped at 50 MBps read/write.
+You will find this will lead to sharply diminishing returns for any
+increases to link speed above that level.
 
 #### Practice Questions
 
