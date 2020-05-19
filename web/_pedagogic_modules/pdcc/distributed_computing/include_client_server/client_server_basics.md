@@ -157,3 +157,57 @@ Since the compute time is 10 seconds, the answer is no, it is not possible to ha
  
 <p></p>
 
+
+**[A.3.2.p1.3]** Say you now have **two images** to process, each of them 100 MB and requiring 1000 GFlop of work. Bandwidth
+to Server #1 is set to the original 10 MB/sec
+ 
+ Assuming your
+client application can do two network transfers at the same time, what would be the total execution time?  
+
+What if
+your client application  can only do one network transfer at a time? 
+ 
+ <div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+
+If our client application can do simultaneous network transfers, since the client is connected to the
+servers via two different network links, then the execution time 
+would be $\max(20.71, 17.93) = 20.71\;\text{seconds}$. 
+
+If our client cannot do simultaneous network transfers, we have two options: either
+we first send an image to Server #1 and then send the other image to Server #2, or the other
+way around. Let's examine both options, giving the time line of events for each:
+
+  - **Server #1 first**: 
+    - time 0: start sending an image to Server #1
+    - time 10: image received by Server #1, which starts computing; and start sending image to Server #2
+    - time 11: image received by Server #2, which starts computing
+    - time 10 + 1000/100 = 20: Server #1 finishes computing
+    - time 11 + 1000/60 = 27.66: Server #2 finishes computing
+        
+  - **Server #2 first**:
+    - time 0: start sending an image to Server #2
+    - time 1: image received by Server #2, which starts computing; and start sending image to Server #1
+    - time 11: image received by Server #1, which starts computing
+    - time 1 + 1000/60 = 17.66: Server #2 finishes computing
+    - time 11 + 1000/100 = 21: Server #1 finished computing
+    
+The second option is 6.66 seconds faster than the first option. This example highlights
+a pretty well-known rule of thumb: trying to get computers to compute  as early as possible is a good idea.
+In our case, this works out great because Server #2 can get the image really quickly, and is slower
+than Server #1 for computing. So we achieve  much better overlap of communication and computation
+with the second option than with the first option. This is exactly the same idea ass
+overlapping I/O and computation as see in the I/O tab of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/).
+
+        
+
+
+   </div>
+ </div>
+ 
+<p></p>
+
