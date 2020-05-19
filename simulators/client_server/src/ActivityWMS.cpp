@@ -1,6 +1,7 @@
 
 #include "ActivityWMS.h"
 #include <algorithm>
+#include <memory>
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms, "Log category for Simple WMS");
 
@@ -13,18 +14,18 @@ namespace wrench {
      * @param storage_services
      * @param hostname
      */
-    ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                             const std::set<std::shared_ptr<StorageService>> &storage_services,
-                             const std::string &hostname) : WMS (
-                                    std::move(standard_job_scheduler),
-                                    nullptr,
-                                    compute_services,
-                                    storage_services,
-                                    {}, nullptr,
-                                    hostname,
-                                    "client_server"
-                                    ) {}
+    ActivityWMS::ActivityWMS(
+            const std::set<std::shared_ptr<ComputeService>> &compute_services,
+            const std::set<std::shared_ptr<StorageService>> &storage_services,
+            const std::string &hostname) : WMS (
+            nullptr,
+            nullptr,
+            compute_services,
+            storage_services,
+            {}, nullptr,
+            hostname,
+            "client_server"
+    ) {}
 
 
 
@@ -35,49 +36,46 @@ namespace wrench {
     int ActivityWMS::main() {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
-                    S4U_Simulation::getHostName().c_str(),
-                    this->mailbox_name.c_str());
-        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
-
         // Create a job manager
-        this->job_manager = this->createJobManager();
+        auto job_manager = this->createJobManager();
+        auto data_manager = this->createDataMovementManager();
 
-        while (true) {
+        // Get the compute service
+        const auto compute_service = *(this->getAvailableComputeServices<ComputeService>().begin());
 
-            // Get the ready tasks and SORT them by taskID
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            // Get the available compute services, in this case only one
-            const auto compute_services = this->getAvailableComputeServices<ComputeService>();
-
-            // Run ready tasks with defined scheduler implementation
-            this->getStandardJobScheduler()->scheduleTasks(
-                    compute_services,
-                    ready_tasks);
-
-            // Wait for a workflow execution event, and process it
-            try {
-                this->waitForAndProcessNextEvent();
-            } catch (WorkflowExecutionException &e) {
-                WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
-                            (e.getCause()->toString().c_str()));
-                continue;
-            }
-            if (this->abort || this->getWorkflow()->isDone()) {
-                break;
+        std::shared_ptr<StorageService> client_storage_service, server_storage_service;
+        for (const auto &ss : this->getAvailableStorageServices()) {
+            if (ss->getHostname() == "client") {
+                client_storage_service = ss;
+            } else {
+                server_storage_service = ss;
             }
         }
-        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
-        } else {
-            WRENCH_INFO("Workflow execution is incomplete!");
+        auto task = *(this->getWorkflow()->getTasks().begin());
+        auto file = *(this->getWorkflow()->getFiles().begin());
+
+        //  Copy the file over to the server
+        WRENCH_INFO("Sending the image file over to the server running on host %s", server_storage_service->getHostname().c_str());
+        data_manager->doSynchronousFileCopy(file,
+                                            FileLocation::LOCATION(client_storage_service),
+                                            FileLocation::LOCATION(server_storage_service));
+        WRENCH_INFO("File sent, server can start computing");
+
+        // Run the task
+        std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
+        file_locations[file] = FileLocation::LOCATION(server_storage_service);
+        auto job = job_manager->createStandardJob(task, file_locations);
+        job_manager->submitJob(job, compute_service, {});
+        
+        // Wait for a workflow execution event, and process it
+        try {
+            this->waitForAndProcessNextEvent();
+        } catch (WorkflowExecutionException &e) {
+            WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
+                        (e.getCause()->toString().c_str()));
         }
 
-        this->job_manager.reset();
 
         return 0;
     }
@@ -89,6 +87,6 @@ namespace wrench {
     void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        WRENCH_INFO("Notified that %s has completed", standard_job->getTasks().at(0)->getID().c_str());
+        WRENCH_INFO("Server has completed the task!");
     }
 }

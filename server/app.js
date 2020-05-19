@@ -816,8 +816,7 @@ app.post("/run/client_server", authCheck, function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log=wrench_core_file_transfer_thread.thresh:info",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [SERVER_1_LINK, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);

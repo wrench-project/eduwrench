@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
-project(ACTIVITY_1)
+project(CLIENT_SERVER_SIMULATOR)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
@@ -14,8 +14,6 @@ include_directories(src/ include/  /usr/local/include /usr/local/include/wrench 
 set(SOURCE_FILES
         include/ActivityWMS.h
         src/ActivityWMS.cpp
-        include/ActivityScheduler.h
-        src/ActivityScheduler.cpp
         src/Simulator.cpp
         )
 

@@ -64,7 +64,6 @@ void generatePlatform(std::string platform_file_path, unsigned long effective_ba
                              "       <link id=\"link1\" bandwidth=\"206.185MBps\" latency=\"10us\"/>\n"
                              "       <link id=\"link2\" bandwidth=\"103.092MBps\" latency=\"10us\"/>\n"
                              "       <link id=\"link3\" bandwidth=\"206.185MBps\" latency=\"10us\"/>\n"
-
                              "       <route src=\"host1\" dst=\"host2\">\n"
                              "           <link_ctn id=\"link1\"/>\n"
                              "           <link_ctn id=\"link2\"/>\n"

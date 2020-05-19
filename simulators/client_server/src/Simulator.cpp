@@ -10,7 +10,6 @@
 #include <pugixml.hpp>
 
 #include "ActivityWMS.h"
-#include "ActivityScheduler.h"
 
 /**
  * @brief Generates an independent-task Workflow
@@ -40,9 +39,9 @@ void generateWorkflow(wrench::Workflow *workflow, int host_select) {
 
     wrench::WorkflowTask *single_task;
     if (host_select == 0) {
-        single_task = workflow->addTask("slow_server_task", 10 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
+        single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
     } else {
-        single_task = workflow->addTask("fast_server_task", 10 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
+        single_task = workflow->addTask("fast_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
     }
     single_task->addInputFile(workflow->addFile("file_copy", 0.1*GB));
 
@@ -87,17 +86,25 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
                       "                            <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"slow_server\" speed=\"10Gf\" core=\"1\">\n"
+                      "       <host id=\"server2\" speed=\"60Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"large_disk1\" read_bw=\"1000GBps\" write_bw=\"1000GBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
                       "       </host>\n"
-                      "       <host id=\"fast_server\" speed=\"100Gf\" core=\"1\">\n"
+                      "       <host id=\"server1\" speed=\"100Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                      "           <disk id=\"large_disk2\" read_bw=\"1000GBps\" write_bw=\"1000GBps\">\n"
+                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "                            <prop id=\"mount\" value=\"/\"/>\n"
+                      "           </disk>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"client\" dst=\"fast_server\">"
+                      "       <route src=\"client\" dst=\"server1\">"
                       "           <link_ctn id=\"slow_link\"/>"
                       "       </route>"
-                      "       <route src=\"client\" dst=\"slow_server\">"
+                      "       <route src=\"client\" dst=\"server2\">"
                       "           <link_ctn id=\"fast_link\"/>"
                       "       </route>"
                       "   </zone>\n"
@@ -204,11 +211,12 @@ int main(int argc, char** argv) {
 
     } catch(std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <buffer> <host_select>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <buffer> <host_select> <disk select> <disk speed>" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   buffer: buffer size must be inn range [1,1000000000] bytes" << std::endl;
-        std::cerr << "   host_select: host selection should be either 0 or 1" << std::endl;
-        std::cerr << "   disk_toggle: disk toggle should be either 0 or 1" << std::endl;
+        std::cerr << "   host select: host selection should be either 0 or 1" << std::endl;
+        std::cerr << "   disk toggle: disk toggle should be either 0 or 1" << std::endl;
+        std::cerr << "   disk speed: Speed must be in range [1,100000] MBps" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
@@ -224,8 +232,8 @@ int main(int argc, char** argv) {
 
 
     const std::string CLIENT("client");
-    const std::string SLOW_SERVER("slow_server");
-    const std::string FAST_SERVER("fast_server");
+    const std::string SLOW_SERVER("server2");
+    const std::string FAST_SERVER("server1");
 
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
@@ -253,6 +261,9 @@ int main(int argc, char** argv) {
                         {}
                 )
         );
+
+        auto server_storage_service = simulation.add(new wrench::SimpleStorageService(SLOW_SERVER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}));
+        storage_services.insert(server_storage_service);
     } else {
         compute_service = simulation.add(
                 new wrench::BareMetalComputeService(
@@ -265,13 +276,14 @@ int main(int argc, char** argv) {
                         {}
                 )
         );
+        auto server_storage_service = simulation.add(new wrench::SimpleStorageService(FAST_SERVER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}));
+        storage_services.insert(server_storage_service);
     }
 
 
     // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(client_storage_service)),
-                                                      {compute_service},
+    auto wms = simulation.add(new wrench::ActivityWMS(
+            {compute_service},
                     storage_services,
                     CLIENT
     ));

@@ -8,9 +8,11 @@
  */
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <wrench.h>
 #include <pugixml.hpp>
+#include <sstream>
 
 #include "ActivityWMS.h"
 #include "ActivityScheduler.h"
@@ -29,9 +31,12 @@ void generateWorkflow(wrench::Workflow *workflow) {
 
     auto final_task = workflow->addTask("final", 1000 * GFLOP, 1, 1, 1.0, 2 * GB);
     for (int  i=1; i < num_pre_tasks+1; i++) {
-        auto ifile = workflow->addFile("in_" + std::to_string(i), 50 * MB);
-        auto ofile = workflow->addFile("out_" + std::to_string(i), 50 * MB);
-        auto task = workflow->addTask("pre_" + std::to_string(i), 1000 *  GFLOP, 1, 1, 1.0, 8 *GB);
+        ostringstream os;
+        os<<setfill('0')<<setw(2)<<i;
+        auto  number =  os.str();
+        auto ifile = workflow->addFile("in_" + number, 50 * MB);
+        auto ofile = workflow->addFile("out_" + number, 50 * MB);
+        auto task = workflow->addTask("pre_" + number, 1000 *  GFLOP, 1, 1, 1.0, 8 *GB);
         task->setColor("#D4E8D4");
         task->addInputFile(ifile);
         task->addOutputFile(ofile);

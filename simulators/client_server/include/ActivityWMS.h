@@ -9,8 +9,7 @@ namespace wrench {
 
     class ActivityWMS : public WMS {
     public:
-        ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                    const std::set<std::shared_ptr<ComputeService>> &compute_services,
+        ActivityWMS(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                     const std::set<std::shared_ptr<StorageService>> &storage_services,
                     const std::string &hostname);
 
@@ -18,10 +17,6 @@ namespace wrench {
 
     private:
         int main() override;
-
-        std::shared_ptr<JobManager> job_manager;
-        bool abort = false;
-
     };
 };
 
