@@ -51,9 +51,9 @@ The following pictures depicts this setup:
 <strong>Figure A.3.2.1.1: Example client-server setup with two servers</strong>.
 </div>
  
-The client can use one of two servers: **Server 1,** which you can access via a network link
+The client can use one of two servers: **Server #1,** which you can access via a network link
 with only 10 MB/sec bandwidth, but with a core that computes at speed 100 GFlop/sec; 
-and  **Server 2**, which you can access via a 100 MB/sec
+and  **Server #2**, which you can access via a 100 MB/sec
 network link, but with a core that only computes at speed 60 GFlop/sec. 
 The latency for these network links is negligible and
 can be disregarded because the image is large. Also, the output of the
@@ -61,19 +61,19 @@ algorithm (the number of cars) is only a few bytes, which is negligible.
 *So, from a performance perspective, the task's execution consists of two
 phases: sending the image data over and applying the algorithm to it.* The
 image is sent directly from the RAM on the client to the server program
-which receives and keeps in in RAM. **That is, for now, we assume no disk I/O
+which receives it and keeps in in RAM. **That is, for now, we assume no disk I/O
 whatsoever.**
 
 
 ### Simulating the Client-Server Example
 
-Below is a simulation app that you can use to simulate the
+Below is an app that you can use to simulate the
 above example client-server setup. Try to simulate the application execution with
 each server (use the radio button to select the server to use), leaving
 all values to their default.  You should notice a difference in
-execution time. Even though Server 1 has a better CPU, it it connected
-to the client via a low-bandwidth link. Server 2 is thus
-able to finish execution more quickly than Server 1. Then,
+execution time. Even though Server #1 has a better CPU, it it connected
+to the client via a low-bandwidth link. Server #2 is thus
+able to finish execution more quickly than Server #1. Then,
 answer the practice questions hereafter, using the simulation app 
 to determine answers or to double-check your answers.
 
@@ -91,8 +91,8 @@ to determine answers or to double-check your answers.
 
 #### Practice Questions
 
-**[A.3.2.p1.1]** The client's link to Server 2 is faster than that to Server 1. 
-Is there a bandwidth for Server 1 that would make it equivalent to Server 2 from the client's perspective? 
+**[A.3.2.p1.1]** The client's link to Server #2 is faster than that to Server #1. 
+Is there a bandwidth for Server #1 that would make it equivalent to Server #2 from the client's perspective? 
 You can check your answer using the simulation app.
  
  <div class="ui accordion fluid">
@@ -103,19 +103,19 @@ You can check your answer using the simulation app.
    <div markdown="1" class="ui segment content">
 
 
-The task execution time on Server 2 is:
+The task execution time on Server #2 is:
 
 $
 T_{\text{server 2}} = \frac{100\; \text{MB}}{100\;\text{MB/sec}} + \frac{1000\; \text{GFlop}}{60\; \text{GFlop/sec}} = 17.66\;\text{sec}
 $ 
 
 We can double-check this result in simulation, which gives us an execution time of
-17.72 seconds.  The discrepancy is because the
+17.93 seconds.  The discrepancy is because the
 simulation simulates details that our estimate above does not capture. 
 (See the [Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/networking_fundamentals/)).
 
 
-Let $B$ be the unknown bandwidth  to Server 1, in MB/sec. The task execution time on Server 1
+Let $B$ be the unknown bandwidth  to Server #1, in MB/sec. The task execution time on Server #1
 would then be:
         
 $
@@ -128,9 +128,9 @@ $
 T_{\text{server 1}} = T_{\text{server 2}}
 $
 
-which gives us: $B = 13.04 \text{MB/sec}$.
+which gives us: $B = 13.04 \;\text{MB/sec}$.
 
-We can double-check this result in simulation by setting the bandwidth to Server 1 to 13 MB/sec (close enough). 
+We can double-check this result in simulation by setting the bandwidth to Server #1 to 13 MB/sec (close enough). 
 The simulation shows execution times of 17.72 secs for both servers. 
 
    </div>
@@ -139,21 +139,21 @@ The simulation shows execution times of 17.72 secs for both servers.
 <p></p>
 
 
-**[A.3.2.p1.2]** What if Server 2 had a CPU with compute speed 20 GFlop/sec, what bandwidth would be necessary for Server 1 to match its 
-execution time on this workload?
-
-<div class="ui accordion fluid">
+**[A.3.2.p1.2]** It is possible to set a bandwidth to Server #1 so that the task execution time on that server
+is one third of the execution time with the original 10 MB/sec bandwidth?
+ 
+ <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-   
-If the speed of the link to Server 1 is improved to approximately 72 MBps or greater it can match Server 2 for 
-execution time on this workload.
+
+The original execution time on Server #1, according to the simulation, is 20.71 seconds. So our target is 20.71/3 = 6.9 seconds. 
+Since the compute time is 10 seconds, the answer is no, it is not possible to have a task execution time that low.
 
    </div>
  </div>
  
- <p></p>
+<p></p>
 
