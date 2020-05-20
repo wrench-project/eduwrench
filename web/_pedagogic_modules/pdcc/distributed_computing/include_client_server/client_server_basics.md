@@ -68,7 +68,7 @@ whatsoever.**
 ### Simulating the Client-Server Example
 
 Below is an app that you can use to simulate the
-above example client-server setup. Try to simulate the application execution with
+above example client-server setup. Try to simulate the execution with
 each server (use the radio button to select the server to use), leaving
 all values to their default.  You should notice a difference in
 execution time. Even though Server #1 has a better CPU, it it connected
@@ -162,19 +162,19 @@ Since the compute time is 10 seconds, the answer is no, it is not possible to ha
 to Server #1 is set to the original 10 MB/sec
  
  Assuming your
-client application can do two network transfers at the same time, what would be the total execution time?  
+client program can do two network transfers at the same time, what would be the total execution time?  
 
 What if
-your client application  can only do one network transfer at a time? 
+your client program  can only do one network transfer at a time? 
  
  <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
-     (click to see answer)
+     (click to see answewr)
    </div>
    <div markdown="1" class="ui segment content">
 
-If our client application can do simultaneous network transfers, since the client is connected to the
+If our client program can do simultaneous network transfers, since the client is connected to the
 servers via two different network links, then the execution time 
 would be $\max(20.71, 17.93) = 20.71\;\text{seconds}$. 
 
