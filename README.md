@@ -42,7 +42,7 @@ Dependencies:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ```bash
-$ docker pull wrenchproject/wrench:unstable
+$ docker pull wrenchproject/wrench:1.6
 $ mkdir data_server
 $ docker-compose build --no-cache
 $ docker-compose up -d
