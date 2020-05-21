@@ -977,11 +977,13 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     const TASK_SPECS = req.body.task_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ");
     const TASK_SCHEDULING_SELECT = req.body.task_scheduling_select;
     const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select;
+    const NUM_INVOCATION = req.body.num_invocation;
 
 
 
     const TASK_SCHED_SELECT = ["--ts", TASK_SCHEDULING_SELECT];
     const COMPUTE_SCHED_SELECT = ["--cs", COMPUTE_SCHEDULING_SELECT];
+    const NUM_INV = ["--inv", NUM_INVOCATION];
     let WORKERS = [];
     let iterator = 0;
     while(iterator+1<HOST_SPECS.length) {
@@ -1012,8 +1014,17 @@ app.post("/run/master_worker", authCheck, function (req, res) {
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
-    //const SIMULATION_ARGS = [TASK_SPECS.join(" "), WORKERS.join(" "), TASK_SCHED_SELECT, COMPUTE_SCHED_SELECT].concat(LOGGING);
-    const SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(LOGGING);
+    const ABBREV_LOGGING = [
+        "--log=custom_simulator.thresh:debug",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
+
+    var SIMULATION_ARGS;
+    if (NUM_INVOCATION==1) {
+        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(LOGGING);
+    } else {
+        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(ABBREV_LOGGING);
+    }
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -1048,7 +1059,8 @@ app.post("/run/master_worker", authCheck, function (req, res) {
             "tasks": TASK_SPECS,
             "workers": WORKERS_STRIPPED,
             "task_scheduling_selection": TASK_SCHED_SELECT,
-            "compute_scheduling_selection": COMPUTE_SCHED_SELECT
+            "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
+            "num_invocation": NUM_INVOCATION
         });
 
         /**

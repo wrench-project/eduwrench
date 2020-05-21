@@ -273,8 +273,27 @@ machine?
 
 **[A.3.q3.8]** Why is it generally preferred to assign only a single task to a single worker at a time?
 
-**[A.3.q3.X]** Question involving simulating 100x with random... need to build mass sim functionality into javascript 
-or simulator
+---
+
+You will notice that the simulator above has an option for multiple invocations. Since we are giving a fixed number of 
+workers and tasks with fixed specifications, most scenarios will be deterministic. With randomization used in the 
+scheduling this will not be true. The number of invocations can be increased to provide an estimate of average performance.
+
+**[A.3.q3.9]** Using random scheduling for both tasks and workers, what is the average execution time for the default 
+inputs over 100 invocations?
+
+**Simulator Input:**
+```
+Workers: 10 100, 100 100, 1000 100  
+Tasks: 100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000 
+Task Scheduling: Random
+Worker Scheduling: Random
+```
+
+**[A.3.q3.10]** For the default inputs above, what would be scheduling methods capable of beating the average random 
+performance?
+
+
   
 </div>
   
