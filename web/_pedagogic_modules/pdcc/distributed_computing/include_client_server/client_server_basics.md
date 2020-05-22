@@ -7,6 +7,8 @@
 
 ---
 
+### Client-Server Model
+
 In a client/server model a **client**, that is a program  running on some
 computer, wishes to perform some *computational task*, but does not want
 to or cannot perform it itself (e.g., insufficient hardware resource,
@@ -29,7 +31,7 @@ Finally, there can be more than one server available, in which
 case the client could choose to use the one that would get
  the job done faster.
 
-### An Example: Client-Server Photo Processing 
+### An Example: Photo Processing 
 
 On your computer, the "client", you have a **100 MB image** in RAM, 
 as part of a machine learning program that you want to use to
@@ -40,7 +42,7 @@ software. However, you can access remote servers on which the software that
 implements the algorithm is installed so that you can use it 
 over the network. This is provided by the company that develops the fancy
 algorithm, as an advertising of its capabilities.   The fancy algorithm
-performs **100 GFlop** of work on the 100 MB image. 
+performs **1000 GFlop** of work on the 100 MB image. 
 
 The following pictures depicts this setup:
  

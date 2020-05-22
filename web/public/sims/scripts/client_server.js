@@ -37,65 +37,7 @@ $(function() {
         }
     });
 
-    $("#buffer-size").on("keyup", function() {
-        let buffer_size_input_el = $(this);
-        let buffer_size_input_value = parseInt(buffer_size_input_el.val());
-        let buffer_size_label_el = $(".buffer-size-label");
 
-        if(buffer_size_input_value>=1 && buffer_size_input_value<1000) {
-            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value + " Bytes")
-                .css("background-color", "#d3ffe9");
-
-            buffer_size_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    buffer_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(buffer_size_input_value>=1000 && buffer_size_input_value<1000000) {
-            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000 + " KB")
-                .css("background-color", "#d3ffe9");
-
-            buffer_size_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    buffer_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(buffer_size_input_value>=1000000 && buffer_size_input_value<1000000000){
-            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000000 + " MB")
-                .css("background-color", "#d3ffe9");
-
-            buffer_size_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    buffer_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(buffer_size_input_value>=1000000000){
-            buffer_size_label_el.text("Buffer Size: " + buffer_size_input_value/1000000000 + " GB")
-                .css("background-color", "#d3ffe9");
-
-            buffer_size_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    buffer_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            buffer_size_label_el.css("background-color", "#ffb7b5");
-            buffer_size_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
 
 
 

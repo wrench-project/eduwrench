@@ -1,49 +1,13 @@
 $(function() {
 
 
-    $("#server-1-link").on("keyup", function() {
-        let server_1_link_input_el = $(this);
-        let server_1_link_input_value = parseInt(server_1_link_input_el.val());
-        let server_1_link_label_el = $(".server-1-link-label");
-
-        if(server_1_link_input_value>=1 && server_1_link_input_value<1000){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value + " MBps")
-                .css("background-color", "#d3ffe9");
-
-            server_1_link_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_1_link_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(server_1_link_input_value>=1000 && server_1_link_input_value<10001){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value/1000 + " GBps")
-                .css("background-color", "#d3ffe9");
-
-            server_1_link_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_1_link_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            server_1_link_label_el.css("background-color", "#ffb7b5");
-            server_1_link_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
-
     $('input[name=buffer-size]').on("change", function() {
         let buffer_size_input_el = $(this);
         let buffer_size_input_value = parseInt(buffer_size_input_el.val());
         let buffer_size_label_el = $(".buffer-size-label");
 
         if(buffer_size_input_value>=1 && buffer_size_input_value<1000) {
-            buffer_size_label_el.text("Buffer: " + buffer_size_input_value + " Bytes")
+            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value + " Bytes")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -55,7 +19,7 @@ $(function() {
                 }
             }, 500);
         } else if(buffer_size_input_value>=1000 && buffer_size_input_value<1000000) {
-            buffer_size_label_el.text("Buffer: " + buffer_size_input_value/1000 + " KB")
+            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000 + " KB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -67,7 +31,7 @@ $(function() {
                 }
             }, 500);
         } else if(buffer_size_input_value>=1000000 && buffer_size_input_value<1000000000){
-            buffer_size_label_el.text("Buffer: " + buffer_size_input_value/1000000 + " MB")
+            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000000 + " MB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -79,7 +43,7 @@ $(function() {
                 }
             }, 500);
         } else if(buffer_size_input_value>=1000000000){
-            buffer_size_label_el.text("Buffer: " + buffer_size_input_value/1000000000 + " GB")
+            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000000000 + " GB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -120,16 +84,16 @@ $(function() {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen.
         $.ajax({
-            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/client_server_full',
+            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/client_server_disk',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    server_1_link: $("#server-1-link").val(),
+                    server_1_link: 200,
+                    server_2_link: 600,
                     buffer_size: $('input[name=buffer-size]:checked').val(),
                     host_select: $('input[name=host-select]:checked').val(),
-                    disk_toggle: $('#disk-toggle').is(':checked') ? false : true,
-                    disk_speed: $("#disk-speed").val(),
+                    disk_speed: 400,
                     userName: userName,
                     email: email
                 }),
