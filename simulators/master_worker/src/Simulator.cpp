@@ -12,6 +12,9 @@
 #include "ActivityWMS.h"
 #include "ActivityScheduler.h"
 
+
+WRENCH_LOG_CATEGORY(custom_simulator, "Log category for simulator");
+
 /**
  * @brief Generates an independent-task Workflow
  *
@@ -196,7 +199,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
  * @return
  */
 int main(int argc, char** argv) {
-
+    wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::Color::COLOR_BLUE);
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
 
@@ -212,6 +215,7 @@ int main(int argc, char** argv) {
     bool worker_specification_flag = false;
     int flags_removed = 0;
     long seed = 0;
+    int num_invocation = 1;
 
     std::vector<std::tuple<double, double, double>> tasks;
     std::vector<std::tuple<std::string, double, double>> workers;
@@ -268,6 +272,12 @@ int main(int argc, char** argv) {
                 arguments.erase(arguments.begin() + inc - (flags_removed),
                                 arguments.begin() + inc + 1 - (flags_removed));
                 flags_removed += 1;
+            } else if (std::string(argv[inc]).compare("--inv") == 0){
+                num_invocation = stoi(std::string(argv[inc+1]));
+                arguments.erase(arguments.begin() + inc - (flags_removed),
+                                arguments.begin() + inc + 2 - (flags_removed));
+                flags_removed += 2;
+                ++inc;
             }
             ++inc;
         }
@@ -326,6 +336,7 @@ int main(int argc, char** argv) {
         std::cerr << "               3: Largest Compute Time/IO Time Ratio First" << std::endl;
         std::cerr << "               4: Earliest Completion (Estimate) First" << std::endl;
         std::cerr << "          '--seed' used to specify seed if random scheduling is used. [<flag> <seed>]" << std::endl;
+        std::cerr << "          '--inv' used to indicate the number of invocations of the simulation. [<flag> <int>]" << std::endl;
         std::cerr << "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
                      std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
         std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
@@ -432,8 +443,51 @@ int main(int argc, char** argv) {
 
     wms->addWorkflow(&workflow);
 
-    simulation.launch();
+    if(num_invocation>1) {
+        int pipes[num_invocation][2];
+        pid_t pid[num_invocation];
+        char runtimes[num_invocation][100];
+        for(int i=0; i<num_invocation; i++) {
+            if (pipe(pipes[i]) != 0) {
+                printf("Could not create new pipe %d", i);
+                exit(1);
+            }
+            if ((pid[i] = fork()) == -1) {
+                printf("Could not fork() new process %d\n", i);
+                exit(1);
+            } else if (pid[i] == 0) {
+                close(pipes[i][0]);
+                simulation.launch();
+                auto task_termination_timestamps = simulation.getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
+                if(!task_termination_timestamps.empty()) {
+                    auto last_task = task_termination_timestamps.back()->getContent()->getDate();
+                    auto last_task_string = std::to_string(last_task).c_str();
+                    //printf("Time: %s\n", last_task_string);
+                    write(pipes[i][1], last_task_string, strlen(last_task_string)+1);
+                }
+                close(pipes[i][1]);
+                exit(0);
+            }
+        }
+        wait(NULL);
+        for(int i=0; i<num_invocation; i++) {
+            close(pipes[i][1]);
+            read(pipes[i][0], &runtimes[i], 100);
+            close(pipes[i][0]);
+        }
+        double result = 0;
+        for(int i=0; i<num_invocation; i++) {
+            string str(runtimes[i]);
+            result+=std::stod(str);
+        }
+        result = result/num_invocation;
+        wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::Color::COLOR_BLUE);
+        WRENCH_INFO("Average Execution Time: %s", std::to_string(result).c_str());
+    } else {
+        simulation.launch();
+        simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
+    }
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
+
     return 0;
 }

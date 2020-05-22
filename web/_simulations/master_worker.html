@@ -92,6 +92,14 @@ permalink: simulations/master_worker/
     </row>
 </grid>
 
+<div class="form-group col-md-6">
+    <label for="invocations">List of workers ([GFlops][Bandwidth to Master])</label>
+    <input type="text" class="form-control" id="invocations" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide an integer value in the range [1,100].
+    </div>
+</div>
+
 {% include partials/simulation_parameters_form_end.html %}
 
 {% include partials/simulation_output.html %}
