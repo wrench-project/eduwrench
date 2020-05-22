@@ -110,8 +110,16 @@ last steps of the execution are shorter, and these are (the only) steps during w
 is no overlap. Pushing this reasoning to the extreme, one would conclude that the best choice is
 to use a 1-byte buffer!
 
-If you remember the [Network Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/network_fundamentals),
-you may realize why a 1-byte buffer is a bad idea... it's all about **latency**!  
+If you remember the 
+[Network Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/network_fundamentals),
+you may realize why a 1-byte buffer is a bad idea... it's all about **latency**! 
+
+In the example above, and the figure, we didn't say anything about latency. But in fact, each
+network link (and also the disk) has a latency. Often we have said we could neglect latency because
+the data transferred is large. But now that we split that data into potentially many very small
+"chunks", the latency may play an important role!
+
+
 
 If the buffer size is too small 
 (the extreme being be a 1-byte buffer), in our example the network latency could

@@ -126,7 +126,7 @@ of input data and then performs 400GFlop of computation.  The
 program's tasks, showing input data files, is depicted below:
 
 <object class="figure" width="300" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag.svg">I/O parallel program</object>
-<div class="caption"><strong>Figure A.2.3.1:</strong>
+<div class="caption"><strong>Figure 1:</strong>
 Example 4-task parallel program with I/IO. </div>
 
 For now, let's consider an execution of this program on a 1-core
@@ -139,7 +139,7 @@ should strive to overlap I/O and computation as much as possible.
 For instance, the execution could proceed as follows:
 
 <object class="figure" width="450" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core.svg">I/O parallel program execution on 1 core</object>
-<div class="caption"><strong>Figure A.2.3.2:</strong>
+<div class="caption"><strong>Figure 2:</strong>
 Execution on 1 core. </div>
 
 It takes 1 second to read an input file, and then a task computes for 4
@@ -155,7 +155,7 @@ the program runs for 8 second on the 4 cores. This execution is
 depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_4_cores_1.svg">I/O parallel program execution on 4 core</object>
-<div class="caption"><strong>Figure A.2.3.3:</strong>
+<div class="caption"><strong>Figure 3:</strong>
 Execution on 4 cores, with simultaneous I/O. </div>
 
 
@@ -165,7 +165,7 @@ I/O is overlapped with computation. This alternative
 is depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_4_cores_2.svg">I/O parallel program execution on 4 core with staggered task start times</object>
-<div class="caption"><strong>Figure A.2.3.4:</strong>
+<div class="caption"><strong>Figure 4:</strong>
 Execution on 4 cores, with staggered I/O. </div>
 
 The execution time is still 8s, so, for this example, the two executions are equivalent. 

@@ -50,7 +50,7 @@ The following pictures depicts this setup:
 <object class="figure" width="800" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Topology</object>
 </p>
 <div class="caption">
-<strong>Figure A.3.2.1.1: Example client-server setup with two servers</strong>.
+<strong>Figure 1: Example client-server setup with two servers</strong>.
 </div>
  
 The client can use one of two servers: **Server #1,** which you can access via a network link

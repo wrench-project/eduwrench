@@ -37,7 +37,7 @@ The figure below depicts an example workflow application:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/example_workflow_1.svg">Dag</object>
 <div class="caption">
-<strong>Figure A.3.4.1.1:</strong> Example workflow
+<strong>Figure 1:</strong> Example workflow
 application. Some examples of real-world workflows for scientific
 applications, along with their DAG representations, can be found
 <a href="https://pegasus.isi.edu/application-showcase/">here</a>.

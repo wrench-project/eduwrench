@@ -30,7 +30,7 @@ program, the DAG representation is straightforward, and depicted in
 the figure below:
 
 <object class="figure" width="80" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Chain DAG</object>
-<div class="caption"><strong>Figure A.2.3.1:</strong>
+<div class="caption"><strong>Figure 1:</strong>
 DAG for the "chef" example.
 </div>
 
@@ -43,7 +43,7 @@ to be displayed. If we have 5 compressed pictures,
 the program's DAG is:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_car_dag.svg">InTree DAG</object>
-<div class="caption"><strong>Figure A.2.3.2:</strong>
+<div class="caption"><strong>Figure 2:</strong>
 DAG for the "car counting" example.
 </div>
 
@@ -79,7 +79,7 @@ The program's DAG is shown below, with the work of
 each task (and just *X* for the analysis task):
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_simulated_dag.svg">Simulated DAG</object>
-<div class="caption"><strong>Figure A.2.3.3:</strong>
+<div class="caption"><strong>Figure 3:</strong>
 DAG for the "data set analysis" example.
 </div>
 

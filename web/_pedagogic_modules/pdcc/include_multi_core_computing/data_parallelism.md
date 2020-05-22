@@ -40,7 +40,7 @@ the image (i.e., the statistical distribution of the brightness of its
 pixels). We can draw the program's DAG as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_dag.svg">Example Image Processing Program</object>
-<div class="caption"><strong>Figure A.2.4.1:</strong>
+<div class="caption"><strong>Figure 1:</strong>
 Example image processing program.
 </div>
 
@@ -76,7 +76,7 @@ number of cores, which we will assume here.
 The program's DAG now is as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
-<div class="caption"><strong>Figure A.2.4.2:</strong>
+<div class="caption"><strong>Figure 2:</strong>
 Example image processing program with data-parallelism exposed.
 </div>
 
@@ -252,12 +252,12 @@ The graph below shows speedup vs. number of cores for different
 values of $\alpha$:
 
 <object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
-<div class="caption"><strong>Figure A.2.4.3:</strong>
+<div class="caption"><strong>Figure 3:</strong>
 Speedup vs. #cores for different values of the fraction of the sequential execution time that's parallelizable.
 </div>
 
 
-The main message of Figure A.2.4.3 is that even with seemingly small
+The main message of Figure 3 is that even with seemingly small
 non-parallelizable portions, program speedup drops well below the number of
 cores quickly. For instance, the data point circled in red shows
 that if as little as 5% of the sequential execution time is non-parallelizable,

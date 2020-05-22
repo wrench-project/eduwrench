@@ -31,7 +31,7 @@ infrastructure for future modules.
 We consider the following distributed platform with *three sites* on a wide-are network.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform.svg">Distributed platform</object>
-<div class="caption"><strong>Figure A.3.4.2.1:</strong> Example distributed computing platform.</div>
+<div class="caption"><strong>Figure 1:</strong> Example distributed computing platform.</div>
 
 The site in the bottom-left corner is where the user who wishes to execute the
 workflow. That user has only some personal computing device, like a laptop computer,
@@ -53,7 +53,7 @@ connected to the switch via a high-speed network link. This setup is depicted
 in the figure below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform_zoom.svg">Distributed platform zoom</object>
-<div class="caption"><strong>Figure A.3.4.2.2:</strong>Compute resources at the compute site</div>
+<div class="caption"><strong>Figure 2:</strong>Compute resources at the compute site</div>
 
 Each compute host has 32 GB of RAM, cores that compute at 100  GFlop/sec, and up to 8 cores. All
 compute hosts are connected to the site's switch via a 10 GB/sec network link with 
@@ -90,7 +90,7 @@ how accurate such back-of-the-envelope estimates are (turns out, they're often p
 We consider a simple "in-tree" workflow, depicted in the figure below.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
-<div class="caption"><strong>Figure A.3.4.2.2:</strong> Example workflow.</div>
+<div class="caption"><strong>Figure 2:</strong> Example workflow.</div>
 
 This workflow has only two levels, with the first level consisting of
 20 parallel tasks and the second level having only one task. The width

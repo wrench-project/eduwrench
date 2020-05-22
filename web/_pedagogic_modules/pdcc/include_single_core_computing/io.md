@@ -66,7 +66,7 @@ images, i.e., so that it performs 2 tasks, then its execution timeline
 is as depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_1.svg">Example execution timeline</object>
-<div class="caption"><strong>Figure A.1.4.1:</strong> Example execution timeline.</div>
+<div class="caption"><strong>Figure 1:</strong> Example execution timeline.</div>
 
 As can be seen in the figure, at any given time either the CPU is idle 
 (while IO operations are ongoing) or the disk is idle (while computation 
@@ -99,7 +99,7 @@ image. The 1st image can be written to disk at the same time. This
 execution is depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_2.svg">Example execution timeline with overlap of IO and computation</object>
-<div class="caption"><strong>Figure A.1.4.2:</strong> Example execution timeline with overlap of IO and computation.</div>
+<div class="caption"><strong>Figure 2:</strong> Example execution timeline with overlap of IO and computation.</div>
 
 The total execution time has dropped by 2 seconds **and** the CPU 
 utilization is increased:
@@ -128,7 +128,7 @@ down-scaled images) and the program must process 3 images, then the
 execution would be as:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_3.svg">Example execution timeline with overlap of IO and computation</object>
-<div class="caption"><strong>Figure A.1.4.3:</strong> Example execution timeline with overlap of IO and computation.</div>
+<div class="caption"><strong>Figure 3:</strong> Example execution timeline with overlap of IO and computation.</div>
 
 As expected, the program first reads 2 images, and then alternates write 
 and read operations while CPU computation is going on. But in this case, 
@@ -142,7 +142,7 @@ volumes (and especially if these volumes vary from task to task!).
 Let us return to the first example execution above: 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_1.svg">Execution timeline</object>
-<div class="caption"><strong>Figure A.1.4.4:</strong> Execution timeline.</div>
+<div class="caption"><strong>Figure 4:</strong> Execution timeline.</div>
 
 In this case, we can string together as many tasks as we want and the CPU will be utilized continuously apart from
 the initial read and the final write. With two tasks the IO time is a significant portion of the execution time,
@@ -172,7 +172,7 @@ which relies on specific but commonplace hardware, is called Direct Memory
 Access (DMA). See an Operating Systems course for more details.
 
 Another practical concern is RAM pressure. When going from the example 
-execution in Figure A.1.4.1 to that in Figure A.1.4.2, the peak amount 
+execution in Figure 1 to that in Figure 2, the peak amount 
 of RAM needed by the program is increased because at some point more 
 than one input images are held in RAM. As previous modules have touched 
 on, tasks can have significant memory requirements, and it may not be 
@@ -245,7 +245,7 @@ process a task instance is as follows:
   - Write output: 2 Seconds  
 
 A program was designed to overlap IO and computation when executing
-multiple task instances in sequence. As in Figure A.1.4.3, the program first
+multiple task instances in sequence. As in Figure 3, the program first
 reads the input for the first 2 tasks, and then alternates between writing
 the output for task *i* and reading the input for task *i+2*, until at the
 end it writes the output of the last two tasks one after the other.  The
