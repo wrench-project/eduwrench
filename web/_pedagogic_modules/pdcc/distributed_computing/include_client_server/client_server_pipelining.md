@@ -51,11 +51,11 @@ the server, we read another 4 KB of the image into a second buffer. We wait
 until the first buffer has been sent over to the server, and now we repeat,
 swapping the buffers (that is, we now send the data in the second buffer to
 the server, and load data from disk into the first buffer).  The picture
-below shows an example timeline for sending a 10MB file stored on disk
-to the network using a 2MB buffer:
+below shows an example timeline for sending a 1GB file stored on disk
+to the network using a 200MB buffer:
 
 <p align="center">
-<object class="figure" width="800" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_pipelining.svg">Pipelining example</object>
+<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_pipelining.svg">Pipelining example</object>
 </p>
 <div class="caption">
 <strong>Figure 1: Pipelining example</strong>.
@@ -116,27 +116,39 @@ you may realize why a 1-byte buffer is a bad idea... it's all about **latency**!
 
 In the example above, and the figure, we didn't say anything about latency. But in fact, each
 network link (and also the disk) has a latency. Often we have said we could neglect latency because
-the data transferred is large. But now that we split that data into potentially many very small
-"chunks", the latency may play an important role!
+the data transferred is large. **But now that we split that data into potentially many very small
+"chunks", the latency may play an important role!**
 
+For the above example, say we use  a 1KB buffer size. Then we perform 1 GB / 1 KB = 1,000,000 individual
+file transfers. Say the network latency is a very low 1 microseconds. Then we will incur 1,000,000 of these
+latencies, for a total of 1 second! So instead of the 11 seconds of execution shown in the figure
+we would instead experience 12 seconds. This is still better than with no pilelining. But if the
+network latency was 10 microseconds, then we would be better off with no pipelining!
 
+Conversely, say we make the buffer size 500 MB instead of 200 MB. Then our execution time would be
+500/200 + 500/100 + 500/100 = 12.5 seconds (plus 2 negligible latencies).  This is worse than with a
+200 MB buffer size because we have less pipelining. 
 
-If the buffer size is too small 
-(the extreme being be a 1-byte buffer), in our example the network latency could
-become a problem (and there is also a disk latency). If the buffer size is too big
-(the extreme being the entire image size), there we have Problem #2 above.  
+**Bottom line**: if the buffer size is too small, latencies hurt performance; if the buffer
+size is too large, less pipelining hurts performance. 
 So one must pick a reasonable buffer size so that there is some pipelining but so that 
 the execution does not become latency-bound. 
 
-The pipelining technique is used in many programs. For instance, the <tt>Scp</tt> secure
-file copy program uses pipelining of disk and I/O operation with a buffer size of 16 KiB. 
+Note that pipelining is used in many programs. These program try to use up a "reasonable"
+ buffer size. For instance, the <tt>Scp</tt> secure
+file copy program pipelines disk and I/O operations with a buffer size of 16 KiB. If this
+program were to be used on the disk/network setup above, it would be better off with a bigger buffer
+size. *But of course, the developers of the program do not know in advance in what setup the
+program will be used!*
 
 
 ### Simulating Pipelining
 
-So that you can experiment with how pipelining works, here is an app below that
-allows you to simulate the execution of our client-server example application
-with a disk on the client site and with various buffer sizes for pipelining. 
+So that you can experiment with how pipelining works, below is an app that
+allows you to simulate the execution of a client-server setup where a 1GB file
+is stored on  the  disk at the client  and needs to be set to one of two
+servers, which then each perform 1000 GFlop  of work. You can choose the network
+latency for Server #1, and you can pick the buffer size used by the client program. 
 You can use this app on your own, but then you should use it to answer
 the following practice questions. 
 

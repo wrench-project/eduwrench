@@ -43,7 +43,7 @@ void generateWorkflow(wrench::Workflow *workflow) {
  *
  * @throws std::invalid_argumemnt
  */
-void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int  link_2_bandwidth, int disk_toggle, int disk_speed) {
+void generatePlatform(std::string platform_file_path, int link_1_latency, int link_1_bandwidth, int  link_2_bandwidth, int disk_toggle, int disk_speed) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -57,8 +57,6 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
     if (disk_speed <= 0) {
         throw std::invalid_argument("generatePlatform() disk_speed must be greater than 0");
     }
-
-
 
 
     // Create a the platform file
@@ -122,6 +120,7 @@ void generatePlatform(std::string platform_file_path, int link_1_bandwidth, int 
         double link_2_real_bandwidth = link_2_bandwidth / 0.97;
 
         link1.attribute("bandwidth").set_value(std::string(std::to_string(link_1_real_bandwidth) + "MBps").c_str());
+        link1.attribute("latency").set_value(std::string(std::to_string(link_1_latency) + "us").c_str());
         link2.attribute("bandwidth").set_value(std::string(std::to_string(link_2_real_bandwidth) + "MBps").c_str());
 
         if (disk_toggle == 0) {
@@ -152,34 +151,41 @@ int main(int argc, char** argv) {
 
     const int MAX_CORES         = 1000;
     int HOST_SELECT;
-    int SERVER_1_LINK;
-    int SERVER_2_LINK;
+    int SERVER_1_LINK_BANDWIDTH;
+    int SERVER_2_LINK_BANDWIDTH;
     int BUFFER_SIZE;
     std::string BUFFER_STRING;
     int DISK_TOGGLE;
     int DISK_SPEED;
+    int SERVER_1_LINK_LATENCY;
 
     try {
 
-        if (argc != 7) {
+        if (argc != 8) {
             throw std::invalid_argument("invalid number of arguments");
         }
 
-        SERVER_1_LINK = std::stoi(std::string(argv[1]));
+        SERVER_1_LINK_LATENCY  =  std::stoi(std::string(argv[1]));
+        if (SERVER_1_LINK_LATENCY < 1 || SERVER_1_LINK_LATENCY > 1000000) {
+            std::cerr << "Invalid server1 link latency. latency must be in range [1,1000000] us" << std::endl;
+            throw std::invalid_argument("invalid server1 link latency");
+        }
 
-        if (SERVER_1_LINK <  1 || SERVER_1_LINK > 10000) {
+        SERVER_1_LINK_BANDWIDTH = std::stoi(std::string(argv[2]));
+
+        if (SERVER_1_LINK_BANDWIDTH < 1 || SERVER_1_LINK_BANDWIDTH > 10000) {
             std::cerr << "Invalid server1 link speed. Speed must be in range [1,10000] MBps" << std::endl;
             throw std::invalid_argument("invalid server1 link speed");
         }
 
-        SERVER_2_LINK = std::stoi(std::string(argv[2]));
+        SERVER_2_LINK_BANDWIDTH = std::stoi(std::string(argv[3]));
 
-        if (SERVER_2_LINK <  1 || SERVER_2_LINK > 10000) {
+        if (SERVER_2_LINK_BANDWIDTH < 1 || SERVER_2_LINK_BANDWIDTH > 10000) {
             std::cerr << "Invalid server2 link speed. Speed must be in range [1,10000] MBps" << std::endl;
             throw std::invalid_argument("invalid server2 link speed");
         }
 
-        BUFFER_STRING = std::string(argv[3]);
+        BUFFER_STRING = std::string(argv[4]);
         BUFFER_SIZE = std::stoi(BUFFER_STRING);
 
         if (BUFFER_SIZE < 1 || BUFFER_SIZE > 1000000000) {
@@ -187,14 +193,14 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("invalid buffer size");
         }
 
-        HOST_SELECT = std::stoi(std::string(argv[4]));
+        HOST_SELECT = std::stoi(std::string(argv[5]));
 
         if (HOST_SELECT !=  1 && HOST_SELECT != 2) {
             std::cerr << "Invalid host selection. Host must be either 1 or 2" << std::endl;
             throw std::invalid_argument("invalid host selection");
         }
 
-        DISK_TOGGLE = std::stoi(std::string(argv[5]));
+        DISK_TOGGLE = std::stoi(std::string(argv[6]));
 
         if (DISK_TOGGLE !=  0 && DISK_TOGGLE != 1) {
             std::cerr << "Invalid disk toggle value, should be binary." << std::endl;
@@ -205,7 +211,7 @@ int main(int argc, char** argv) {
             BUFFER_STRING = std::string("infinity");
         }
 
-        DISK_SPEED = std::stoi(std::string(argv[6]));
+        DISK_SPEED = std::stoi(std::string(argv[7]));
 
         if (DISK_SPEED <  1 || DISK_SPEED > 100000) {
             std::cerr << "Invalid disk speed. Speed must be in range [1,10000] MBps" << std::endl;
@@ -216,7 +222,8 @@ int main(int argc, char** argv) {
 
     } catch(std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <server_1_link_speed> <buffer> <host_select> <disk select> <disk speed>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <server_1_link_latency> <server_1_link_speed> <server_2_link_speed> <buffer> <host_select> <disk select> <disk speed>" << std::endl;
+        std::cerr << "   server_1_link_latency: Latency must be in range [1,1000000] us  (microsecs)" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   server_2_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   buffer: buffer size must be inn range [1,1000000000] bytes" << std::endl;
@@ -233,7 +240,7 @@ int main(int argc, char** argv) {
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path, SERVER_1_LINK, SERVER_2_LINK, DISK_TOGGLE, DISK_SPEED);
+    generatePlatform(platform_file_path, SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, DISK_TOGGLE, DISK_SPEED);
     simulation.instantiatePlatform(platform_file_path);
 
 
