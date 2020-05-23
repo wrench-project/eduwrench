@@ -65,7 +65,8 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    server_1_link: $("#server-1-link").val(),
+                    server_1_link_bandwidth: $("#server-1-link").val(),
+                    server_1_link_latency: "10",
                     host_select: $('input[name=host-select]:checked').val(),
                     userName: userName,
                     email: email

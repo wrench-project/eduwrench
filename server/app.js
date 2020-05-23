@@ -798,13 +798,12 @@ app.post("/run/client_server", authCheck, function (req, res) {
 
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
-    const SERVER_1_LINK = req.body.server_1_link;
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
     const HOST_SELECT = req.body.host_select;
 
-
-
     //Not included in this usage of the simulator
-    const SERVER_2_LINK = 100;
+    const SERVER_1_LINK_LATENCY = 10;
+    const SERVER_2_LINK_BANDWIDTH = 100;
     const BUFFER_SIZE = 1000000000;
     const DISK_TOGGLE = 0;
     const DISK_SPEED = 50;
@@ -814,13 +813,13 @@ app.post("/run/client_server", authCheck, function (req, res) {
     const LOGGING = [
         "--log=root.thresh:critical",
         "--log=maestro.thresh:critical",
-        "--log=wms.thresh:debug",
-        "--log=simple_wms.thresh:debug",
-        "--log=simple_wms_scheduler.thresh:debug",
+        "--log=wms.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=simple_wms_scheduler.thresh:info",
         "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK, SERVER_2_LINK, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -844,8 +843,9 @@ app.post("/run/client_server", authCheck, function (req, res) {
             "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "client_server",
-            "server_1_link": SERVER_1_LINK,
-            "server_2_link": SERVER_2_LINK,
+            "server_1_link_latency": SERVER_1_LINK_LATENCY,
+            "server_1_link_bandwidth": SERVER_1_LINK_BANDWIDTH,
+            "server_2_link_bandwidth": SERVER_2_LINK_BANDWIDTH,
             "buffer_size": BUFFER_SIZE,
             "host_select": HOST_SELECT,
             "disk_toggle": DISK_TOGGLE,
@@ -886,8 +886,9 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
 
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
-    const SERVER_1_LINK = req.body.server_1_link;
-    const SERVER_2_LINK = req.body.server_2_link;
+    const SERVER_1_LINK_LATENCY = req.body.server_1_link_latency;
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
+    const SERVER_2_LINK_BANDWIDTH = req.body.server_2_link_bandwidth;
     const BUFFER_SIZE = req.body.buffer_size;
     const HOST_SELECT = req.body.host_select;
     const DISK_TOGGLE = 1;
@@ -900,14 +901,14 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
     const LOGGING = [
         "--log=root.thresh:critical",
         "--log=maestro.thresh:critical",
-        "--log=wms.thresh:debug",
-        "--log=simple_wms.thresh:debug",
-        "--log=simple_wms_scheduler.thresh:debug",
+        "--log=wms.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=simple_wms_scheduler.thresh:info",
         // "--log=wrench_core_file_transfer_thread.thresh:info",
         "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK, SERVER_2_LINK, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -931,8 +932,9 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
             "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
             "activity": "client_server_disk",
-            "server_1_link": SERVER_1_LINK,
-            "server_2_link": SERVER_2_LINK,
+            "server_1_latency": SERVER_1_LINK_LATENCY,
+            "server_1_link": SERVER_1_LINK_BANDWIDTH,
+            "server_2_link": SERVER_2_LINK_BANDWIDTH,
             "buffer_size": BUFFER_SIZE,
             "host_select": HOST_SELECT,
             "disk_toggle": DISK_TOGGLE,

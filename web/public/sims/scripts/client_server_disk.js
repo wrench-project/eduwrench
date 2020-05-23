@@ -89,9 +89,10 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    server_1_link: 200,
-                    server_2_link: 600,
-                    buffer_size: $('input[name=buffer-size]:checked').val(),
+                    server_1_link_latency: $("#server-1-link-latency").val(),
+                    server_1_link_bandwidth: 200,
+                    server_2_link_bandwidth: 600,
+                    buffer_size: 1000 * $("#buffer-size").val(),
                     host_select: $('input[name=host-select]:checked').val(),
                     disk_speed: 400,
                     userName: userName,
@@ -106,10 +107,10 @@ $(function() {
                 // console.log(response.task_data.workflow_execution.tasks);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                generateGraph(prepared_data, "taskView", 900, 500);
+                // generateGraph(prepared_data, "taskView", 900, 500);
                 generateHostUtilizationGraph(prepared_data, 900, 300, 60);
-                populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
-                    "task-details-table-td");
+                // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
+                //     "task-details-table-td");
             }
         });
     });
