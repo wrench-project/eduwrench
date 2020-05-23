@@ -146,8 +146,8 @@ program will be used!*
 
 So that you can experiment with how pipelining works, below is an app that
 allows you to simulate the execution of a client-server setup where a 1GB file
-is stored on  the  disk at the client  and needs to be set to one of two
-servers, which then each perform 1000 GFlop  of work. You can choose the network
+is stored on  the  disk at the client  and needs to be sent to one of two
+servers, which then performs 1000 GFlop of work. You can choose the network
 latency for Server #1, and you can pick the buffer size used by the client program. 
 You can use this app on your own, but then you should use it to answer
 the following practice questions. 
@@ -165,8 +165,8 @@ the following practice questions.
 
 #### Practice Questions
 
-**[A.3.p2.3]** In the Simulator just above that includes options for buffer size, please run the default options 
-except select the 10 MB buffer and mark the checkbox to use the disk. What time is the last chunk read from disk?
+**[A.3.2.p2.1]** When using a 1 GB buffer size (i.e., no pipelining), what would you  expect the execution time
+to be when running on Server #2? Check your answer with the simulation.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -174,32 +174,25 @@ except select the 10 MB buffer and mark the checkbox to use the disk. What time 
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        The last read should begin at approximately 8.42 seconds
+        
+One would expect the execution time to be:
+
+$
+T = \frac{1\;\text{GB}}{400\;\text{MB/sec}} + 10\;\text{us} + \frac{1\;\text{GB}}{600\;\text{MB/sec}} + \frac{1000\;\text{GFlop}}{60\;\text{GFlop/sec}}
+$
+
+which  gives $T = 20.83\;\text{sec}$.
+
+The simulation gives us 20.92. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
+some network behaviors), but it's close. 
+        
+        
    </div>
  </div>
 
 <p></p>
 
-**[A.3.p2.4]** Estimate the total execution time if you were to set the buffer size to 100 MB, would this increase or 
-decrease total execution time? (This is not an option on 
-the simulator, you will need to think about it.)
-
-
-<div class="ui accordion fluid">
-   <div class="title">
-     <i class="dropdown icon"></i>
-     (click to see answer)
-   </div>
-   <div markdown="1" class="ui segment content">
-        The total execution time with a 100 MB buffer will be longer because the network link will not start transferring 
-        data for a longer period of time. There will be no overlap between disk I/O and network transfer so it is less 
-        efficient.
-   </div>
- </div>
-
-<p></p>
-
-**[A.3.p2.5]** Compared to the previous answer, will execution time be shorter or longer with a buffer size of 1 GB?
+**[A.3.2.p2.2]** Still on Server #2, what do you think the execution time would be when setting the buffer size to 500 MB? Check your answer in simulation.
 
 
 <div class="ui accordion fluid">
@@ -208,12 +201,302 @@ the simulator, you will need to think about it.)
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        The total execution time would be the same for this workload, the data input is 100 MB, whether the buffer is 
-        100 MB or 1 GB it will load the entire amount from disk first and then start the network transfer. 
+       
+With a 500 MB buffer, sending the file over to the server consists of three steps. In the first step, 500 GB of data is read
+from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same time, this data is sent to the server and
+another 500 MB is read from the disk. Because the network for Server #2 has higher bandwidth than the disk, the disk is the
+bottleneck, and so this step also takes 1.25 seconds. Finally, in the third step, 500 MB of data is sent over the network,
+which takes time 500/600  = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 +  .83 = 3.33 seconds. The server
+then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. 
+
+The simulation gives us 20.04 seconds. 
+       
+       
+   </div>
+ </div>
+
+<p></p>
+
+**[A.3.2.p2.3]** Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it takes for the
+server to receive the data. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
+pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack?
+
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+   
+The simulation gives these results:
+
+|---|---|
+|buffer size| transfer time|
+|---|---|
+|100 KB  | 3.05 |
+|500 KB  | 2.50 |
+|1 MB    | 2.50 |
+|5 MB    | 2.51 |
+|10 MB   | 2.52 |
+|100 MB  | 2.68 |
+|---|---|   
+
+With a small buffer size, we don't do great, because of latencies. With a large  buffer size, we don't do great
+because of poor pipelining. 
+
+If we had no latencies, we could achieve almost perfect  pipelining (buffer size of 1 byte). The transfer would thus
+proceed at the bottleneck bandwidth,  i.e., that of the disk, and  we would get  a transfer time of 1000/400 = 2.5 seconds. So
+yes, we can achieve this with  1 MB buffer size!
+
+It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best possible time. 
+
    </div>
  </div>
 
 <p></p>
 
 
+**[A.3.2.p2.4]** Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the simulation, determine the
+data transfer time with the original 10 us latency. Say now that the latency is instead 20 us. What is the increase in data
+transfer time? For this new latency, can we lower the data transfer time by using a different buffer size?
+
+
+ 
+<div class="ui accordion fluid">
+<div class="title">
+  <i class="dropdown icon"></i>
+  (click to see answer)
+</div>
+<div markdown="1" class="ui segment content">
+
+With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55 seconds. If we make
+the latency 20 us,  this jumps up to 7.85. This is almost a 20% increase. 
+ 
+It would make sense that using a larger buffer size would make sense, so as to save on latencies. For instance, if we try
+a 200 KB buffer size, the data transfer time  goes from 7.85 to 6.55, back to what it was with the lower latency!
+
+So if a client program is told the latency of the network to the server, it could likely  make a good decision. 
+ 
+    </div>
+  </div>
+ 
+ <p></p>
+ 
+ 
+**[A.3.2.p2.5]** Going more extreme, say now that the latency to Server #1 is 1 millisecond, but that the client program
+has  not been updated and still uses a 100KB buffer. Can  you come up with a rough estimate of how long the data transfer
+will take? Check your answer in simulation. Do the two numbers agree? 
+
+
+<div class="ui accordion fluid">
+<div class="title">
+  <i class="dropdown icon"></i>
+  (click to see answer)
+</div>
+<div markdown="1" class="ui segment content">
+
+We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency, which adds up
+to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55 seconds.
+
+The simulation gives us: 135.40 seconds!!!!
+
+No, the two numbers do not match. Our estimate is way optimistic. Once again, this is because  our estimate fails
+to capture complex network behaviors. In this case, when latencies get really high, the network protocol 
+that we simulate (TCP) suffers drastic performance penalties. This is something you can find out more about
+in advanced networking courses, but for now, let's just remember that  *latency is bad* :)
+
+
+ 
+</div>
+</div>
+ 
+ <p></p>
+ 
+ 
+ **[A.3.2.p2.6]** With the 1 millisecond latency to Server #1, is pipelining still useful?  Answer this question
+ purely experimentally (since from the previous question we see that our estimates are not usefull for such
+ high latencies). 
+ 
+ 
+ <div class="ui accordion fluid">
+ <div class="title">
+   <i class="dropdown icon"></i>
+   (click to see answer)
+ </div>
+ <div markdown="1" class="ui segment content">
+ 
+ If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80 seconds.
+ 
+ If we try a big buffer size of 100 MB, we get a data transfer time of 5.67 seconds! with 80 MB we get 5.66 seconds. This is
+ about the best we can do.
+ 
+ So yes, pipelining is still useful!
+ 
+  
+ </div>
+ </div>
+  
+  <p></p>
+
+
+
+
+**[A.3.2.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
+transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
+network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
+CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
+assume there is no buffering, as soon as data is read from disk it can be sent on the network link utilizing the full
+bandwidth. How long is the execution time from start to finish?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+    The 400MB will take 2 seconds to be read from disk. The network link is faster than the disk, so the only additional
+     transfer time will be latency which we have been told is negligible. Once the data is on the server, it can complete
+      the task in 5 seconds. Total execution time will be 2+5 = 7 seconds.
+
+  </div>
+</div>
+
+<p></p>
+
+**[A.3.2.p2.8]** Consider the previous question's situation, but now the server has moved and the network link has changed
+to 10 GBps capacity. Does this change the execution time?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i> (click to see answer)
+  </div> <div markdown="1" class="ui segment content">
+   Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
+   utilized to begin with. 
+
+  </div>
+</div>
+
+<p></p>
+
+
+
+#### Questions
+
+
+IN CONSTRUCTION
+
+**[A.3.p2.6]** Try running the simulator above twice, selecting Server 1 both times and trying with link speeds of 50 MBps 
+and 100 MBps. It was mentioned above that the disk r/w speeds are the bottleneck here, but why does execution time still 
+drop slightly with the faster network?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+    Since we have set a buffer size of 2, 5 or 10 MB, the increased bandwidth of the link still has some impact. The network 
+    must wait for a chunk to be ready from the disk, but once it is ready, the last chunk being transferred more quickly 
+    will still impact overall execution time a tiny bit. 
+
+  </div>
+</div>
+
+<p></p>
+
+**[A.3.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
+transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
+network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
+CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
+assume there is no buffering, as soon as data is read from disk it can be sent on the network link utilizing the full
+bandwidth. How long is the execution time from start to finish?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+    The 400MB will take 2 seconds to be read from disk. The network link is faster than the disk, so the only additional
+     transfer time will be latency which we have been told is negligible. Once the data is on the server, it can complete
+      the task in 5 seconds. Total execution time will be 2+5 = 7 seconds.
+
+  </div>
+</div>
+
+<p></p>
+
+**[A.3.p2.8]** Consider the previous question's situation, but now the server has moved and the network link has changed
+to 10 GBps capacity. Does this change the execution time?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i> (click to see answer)
+  </div> <div markdown="1" class="ui segment content">
+   Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
+   utilized to begin with. 
+
+  </div>
+</div>
+
+<p></p>
+
+
+**[A.3.q2.1]** Your business has a client/server topology for your computing needs. The client is on-site and there are 
+three off-site servers you have access to. The specifications of the client and three servers and their costs are below:
+
+    Client
+    Disk: 100 MBps R/W
+    
+    Server_0
+    Cost: $5/HR 
+    CPU: 100 GF/s
+    Link: 100 MBps
+    
+    Server_1
+    Cost: $10/HR 
+    CPU: 200 GF/s
+    Link: 100 MBps
+    
+    Server_2
+    Cost: $20/HR 
+    CPU: 200 GF/s
+    Link: 1 GBps
+
+Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
+as compute time.
+
+Given a task that has 100 GB input, 100 TFlop computation and 200 GB output, what is the most cost efficient option? What is 
+the most time efficient option?
+
+    XXREMOVE MEXX
+    ANSWER: Server_0: 1000 seconds input, 1000 seconds comp, 2000 seconds output = 4000 seconds, 66.6 minutes, $5.55 
+    Server_1: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $9.72 
+    Server_2: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $19.44
+    
+    Server_0 is the most cost efficient, either Server_1 or Server_2 would be more time efficient. Server_2 would be ever so
+    slightly faster based on buffering.
+
+
+**[A.3.q2.2]** Consider the above scenario again, if a disk upgrade is made to the client, is it possible for Server_2 
+to be the most cost efficient option? How fast would the read/write speed of the new disk have to be?
+
+
+    XXREMOVE MEXX
+    ANSWER:Yes, if we remove the disk bottleneck entirely we can see that the cost is below that of SERVER_0 calculated above.
+    Server_2: 100 seconds input, 500 seconds comp, 200 seconds output = 800 seconds, $4.44
+    
+    Base cost of computation (not changing) = 500/60/60*20 = $2.78
+    SERVER_0 cost $5.55-2.78 = $2.77 of time maximum for data transfer
+    $2.77 = ~500 seconds at $20/hr
+    
+    300 GB/ X = 500 seconds
+    300 = 500x
+    X = 600 MBps  [3/5 GBps]
+    
+    If the client's disk had 600 MBps R/W or better it is a superior option for cost efficiency. 
+    
+    
 

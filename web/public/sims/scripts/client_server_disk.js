@@ -1,13 +1,38 @@
 $(function() {
 
+    $("#server-1-link-latency").on("keyup", function() {
+        let server_1_link_input_el = $(this);
+        let server_1_link_input_value = parseInt(server_1_link_input_el.val());
+        let server_1_link_label_el = $(".server-1-link-latency-label");
 
-    $('input[name=buffer-size]').on("change", function() {
+        if(server_1_link_input_value>=1 && server_1_link_input_value<10000){
+            server_1_link_label_el.text("Latency: " + server_1_link_input_value + " us")
+                .css("background-color", "#d3ffe9");
+
+            server_1_link_input_el.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function() {
+                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    server_1_link_label_el.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            server_1_link_label_el.css("background-color", "#ffb7b5");
+            server_1_link_input_el.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
+
+
+    $("#buffer-size").on("change", function() {
         let buffer_size_input_el = $(this);
         let buffer_size_input_value = parseInt(buffer_size_input_el.val());
         let buffer_size_label_el = $(".buffer-size-label");
 
+
         if(buffer_size_input_value>=1 && buffer_size_input_value<1000) {
-            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value + " Bytes")
+            buffer_size_label_el.text(buffer_size_input_value + " KB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -19,7 +44,7 @@ $(function() {
                 }
             }, 500);
         } else if(buffer_size_input_value>=1000 && buffer_size_input_value<1000000) {
-            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000 + " KB")
+            buffer_size_label_el.text(buffer_size_input_value/1000 + " MB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -30,20 +55,8 @@ $(function() {
                     buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(buffer_size_input_value>=1000000 && buffer_size_input_value<1000000000){
-            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000000 + " MB")
-                .css("background-color", "#d3ffe9");
-
-            buffer_size_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    buffer_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(buffer_size_input_value>=1000000000){
-            buffer_size_label_el.text("Buffer size: " + buffer_size_input_value/1000000000 + " GB")
+        } else if (buffer_size_input_value == 1000000){
+            buffer_size_label_el.text(buffer_size_input_value/1000000 + " GB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
