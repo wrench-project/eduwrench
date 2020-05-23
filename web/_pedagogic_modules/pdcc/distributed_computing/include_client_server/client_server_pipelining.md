@@ -135,11 +135,12 @@ So one must pick a reasonable buffer size so that there is some pipelining but s
 the execution does not become latency-bound. 
 
 Note that pipelining is used in many programs. These program try to use up a "reasonable"
- buffer size. For instance, the <tt>Scp</tt> secure
+ buffer size. For instance, many versions of the <tt>Scp</tt> secure
 file copy program pipelines disk and I/O operations with a buffer size of 16 KiB. If this
 program were to be used on the disk/network setup above, it would be better off with a bigger buffer
-size. *But of course, the developers of the program do not know in advance in what setup the
-program will be used!*
+size. *But of course, the developers of that program do not know in advance in what setup the
+program will be used!* Other versions of <tt>Scp</tt> allow the user
+to specify a buffer size.
 
 
 ### Simulating Pipelining
@@ -316,7 +317,7 @@ in advanced networking courses, but for now, let's just remember that  *latency 
  
  
  **[A.3.2.p2.6]** With the 1 millisecond latency to Server #1, is pipelining still useful?  Answer this question
- purely experimentally (since from the previous question we see that our estimates are not usefull for such
+ purely experimentally (since from the previous question we see that our estimates are not useful for such
  high latencies). 
  
  
