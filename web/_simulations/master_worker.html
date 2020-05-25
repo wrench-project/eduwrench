@@ -174,7 +174,6 @@ permalink: simulations/master_worker/
 </grid>
 
 <div class="form-group col-md-6">
-    <label for="invocations">Number of Invocations</label>
     <input type="text" class="form-control" id="invocations" placeholder="1" value="1" required hidden>
     <div class="invalid-feedback">
         Please provide an integer value in the range [1,100].
@@ -182,7 +181,6 @@ permalink: simulations/master_worker/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="seed">Seed</label>
     <input type="text" class="form-control" id="seed" placeholder="0" value="0" required hidden>
     <div class="invalid-feedback">
         Please provide a positive integer value.
@@ -190,8 +188,6 @@ permalink: simulations/master_worker/
 </div>
 
 {% include partials/simulation_parameters_form_end.html %}
-
-{% include partials/simulation_output.html %}
 
 {% include partials/workflow_execution_graph.html %}
 
