@@ -72,7 +72,7 @@ $(function () {
                 }),
 
             success: function (response) {
-
+                console.log(response.simulation_output)
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
             }
