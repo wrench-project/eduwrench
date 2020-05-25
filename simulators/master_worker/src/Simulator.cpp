@@ -13,7 +13,6 @@
 #include "ActivityScheduler.h"
 
 
-WRENCH_LOG_CATEGORY(custom_simulator, "Log category for simulator");
 
 /**
  * @brief Generates an independent-task Workflow
@@ -46,7 +45,7 @@ void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,
     int                TASK_ID = 0;
 
     for (auto const &task : task_list) {
-        auto current_task = workflow->addTask("task"+std::to_string(TASK_ID), std::get<1>(task), MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
+        auto current_task = workflow->addTask("task"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
         current_task->addInputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.in", std::get<0>(task) * MB));
         current_task->addOutputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.out", std::get<2>(task) * MB));
         TASK_ID++;
@@ -203,10 +202,15 @@ int main(int argc, char** argv) {
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
 
+    const int MAX_NUM_WORKERS = 50;
     const int MAX_NUM_TASKS = 100;
     const int MAX_TASK_INPUT = 1000000;
-    const double MAX_TASK_FLOP = 1000000000000000;
     const int MAX_TASK_OUTPUT = 1000000;
+    const double MAX_TASK_FLOP = 1000000;
+    const double MAX_WORKER_FLOP = 1000000;
+    const double MAX_WORKER_BANDWIDTH = 1000000;
+
+
 
     int task_scheduling_selection = 0;
     bool task_scheduling_flag = false;
@@ -217,135 +221,312 @@ int main(int argc, char** argv) {
     long seed = 0;
     int num_invocation = 1;
 
+    bool generated_tasks_and_workers = false;
+    double min_flops = 1;
+    double max_flops = 1;
+    double min_band = 1;
+    double max_band = 1;
+    double min_input = 0;
+    double max_input = 0;
+    double min_flop = 1;
+    double max_flop = 1;
+    double min_output = 0;
+    double max_output = 0;
+    int num_workers = 1;
+    int num_tasks = 1;
+
     std::vector<std::tuple<double, double, double>> tasks;
     std::vector<std::tuple<std::string, double, double>> workers;
 
     auto arguments = std::vector<std::string>(argv, argv+argc);
 
-    try {
-        if (argc < 4) {
-            std::cerr << "Arguments too short" << std::endl;
-            throw std::invalid_argument("bad args");
-        }
-        int inc = 0;
-        while(inc < argc) {
-            if (std::string(argv[inc]).compare("--ts") == 0){
-                if (std::stof(std::string(argv[inc+1])) < 0 || std::stof(std::string(argv[inc+1])) > 6) {
-                    std::cerr << "invalid task_scheduling_selection" << std::endl;
-                    throw std::invalid_argument("invalid task_scheduling_selection");
+    if (std::string(argv[1]).compare("--generate") == 0) {
+        generated_tasks_and_workers = true;
+        try {
+            if (argc < 14) {
+                std::cerr << "Arguments too short" << std::endl;
+                throw std::invalid_argument("bad args");
+            }
+            int inc = 0;
+            while (inc < argc) {
+                if (std::string(argv[inc]).compare("--ts") == 0) {
+                    if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 6) {
+                        std::cerr << "invalid task_scheduling_selection" << std::endl;
+                        throw std::invalid_argument("invalid task_scheduling_selection");
+                    }
+
+                    task_scheduling_selection = std::stof(std::string(argv[inc + 1]));
+                    task_scheduling_flag = true;
+
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                } else if (std::string(argv[inc]).compare("--cs") == 0) {
+                    if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 4) {
+                        std::cerr << "invalid compute_scheduling_selection" << std::endl;
+                        throw std::invalid_argument("invalid compute_scheduling_selection");
+                    }
+
+                    compute_scheduling_selection = std::stof(std::string(argv[inc + 1]));
+                    compute_scheduling_flag = true;
+
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
+                } else if (std::string(argv[inc]).compare("--generate") == 0) {
+                    if (std::stof(std::string(argv[inc + 1])) < 0
+                        || std::stof(std::string(argv[inc + 1])) > MAX_NUM_WORKERS
+                        || std::stof(std::string(argv[inc + 2])) < 1
+                        || std::stof(std::string(argv[inc + 2])) > std::stof(std::string(argv[inc + 3]))
+                        || std::stof(std::string(argv[inc + 3])) > MAX_WORKER_FLOP
+                        || std::stof(std::string(argv[inc + 4])) < 1
+                        || std::stof(std::string(argv[inc + 4])) > std::stof(std::string(argv[inc + 5]))
+                        || std::stof(std::string(argv[inc + 5])) > MAX_WORKER_BANDWIDTH
+                        || std::stof(std::string(argv[inc + 6])) > MAX_NUM_TASKS
+                        || std::stof(std::string(argv[inc + 7])) < 0
+                        || std::stof(std::string(argv[inc + 7])) > std::stof(std::string(argv[inc + 8]))
+                        || std::stof(std::string(argv[inc + 8])) > MAX_TASK_INPUT
+                        || std::stof(std::string(argv[inc + 9])) < 1
+                        || std::stof(std::string(argv[inc + 9])) > std::stof(std::string(argv[inc + 10]))
+                        || std::stof(std::string(argv[inc + 10])) > MAX_TASK_FLOP
+                        || std::stof(std::string(argv[inc + 11])) < 0
+                        || std::stof(std::string(argv[inc + 11])) > std::stof(std::string(argv[inc + 12]))
+                        || std::stof(std::string(argv[inc + 12])) > MAX_TASK_OUTPUT) {
+                        std::cerr << "invalid task or worker specifications" << std::endl;
+                        throw std::invalid_argument("invalid generation parameters");
+                    }
+                    worker_specification_flag = true;
+                    num_workers = std::stoi(std::string(argv[inc + 1]));
+                    min_flops = std::stod(std::string(argv[inc + 2]));
+                    max_flops = std::stod(std::string(argv[inc + 3]));
+                    min_band = std::stod(std::string(argv[inc + 4]));
+                    max_band = std::stod(std::string(argv[inc + 5]));
+                    num_tasks = std::stoi(std::string(argv[inc + 6]));
+                    min_input = std::stod(std::string(argv[inc + 7]));
+                    max_input = std::stod(std::string(argv[inc + 8]));
+                    min_flop = std::stod(std::string(argv[inc + 9]));
+                    max_flop = std::stod(std::string(argv[inc + 10]));
+                    min_output = std::stod(std::string(argv[inc + 11]));
+                    max_output = std::stod(std::string(argv[inc + 12]));
+
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 13 - (flags_removed));
+                    flags_removed += 13;
+                    inc += 12;
+                } else if (std::string(argv[inc]).compare("--inv") == 0) {
+                    num_invocation = stoi(std::string(argv[inc + 1]));
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
                 }
-
-                task_scheduling_selection = std::stof(std::string(argv[inc+1]));
-                task_scheduling_flag = true;
-
-                arguments.erase(arguments.begin()+inc-(flags_removed),
-                        arguments.begin()+inc+2-(flags_removed));
-                flags_removed += 2;
-            } else if (std::string(argv[inc]).compare("--cs") == 0 ) {
-                if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 4) {
-                    std::cerr << "invalid compute_scheduling_selection" << std::endl;
-                    throw std::invalid_argument("invalid compute_scheduling_selection");
-                }
-
-                compute_scheduling_selection = std::stof(std::string(argv[inc + 1]));
-                compute_scheduling_flag = true;
-
-                arguments.erase(arguments.begin() + inc - (flags_removed),
-                                arguments.begin() + inc + 2 - (flags_removed));
-                flags_removed += 2;
-                ++inc;
-            } else if (std::string(argv[inc]).compare("--worker") == 0 ){
-                worker_specification_flag = true;
-                workers.push_back(std::make_tuple(std::string(argv[inc+1]),
-                                  std::stof(std::string(argv[inc+2])),
-                                  std::stof(std::string(argv[inc+3]))));
-                arguments.erase(arguments.begin()+inc-(flags_removed), arguments.begin()+inc+4-(flags_removed));
-                flags_removed += 4;
-                inc+=3;
-            } else if (std::string(argv[inc]).compare("--seed") == 0 ){
-                seed = stol(std::string(argv[inc+1]));
-                arguments.erase(arguments.begin() + inc - (flags_removed),
-                                arguments.begin() + inc + 2 - (flags_removed));
-                flags_removed += 2;
-                ++inc;
-            } else if (std::string(argv[inc]).rfind("--log", 0) == 0){
-                arguments.erase(arguments.begin() + inc - (flags_removed),
-                                arguments.begin() + inc + 1 - (flags_removed));
-                flags_removed += 1;
-            } else if (std::string(argv[inc]).compare("--inv") == 0){
-                num_invocation = stoi(std::string(argv[inc+1]));
-                arguments.erase(arguments.begin() + inc - (flags_removed),
-                                arguments.begin() + inc + 2 - (flags_removed));
-                flags_removed += 2;
                 ++inc;
             }
-            ++inc;
+
+        } catch (std::invalid_argument &e) {
+            std::cerr << "Usage: " << std::string(argv[0])
+                      << " [--generate flag][optional flags]* [(if not using generated tasks)<task input> <task flops> <task output>]*"
+                      << std::endl;
+            std::cerr << "    flags: " << std::endl;
+            std::cerr << "          '--generate' used to have workers and tasks randomly generated within parameters."
+                      << std::endl;
+            std::cerr << "              [<num_workers> <min_flops> <max_flops> <min_bandwidth> <max_bandwidth> "
+                      << std::endl;
+            std::cerr << "               <num_tasks> <min_input> <max_input> <min_Gflop> <max_Gflop> <min_output> <max_output>]"
+                      << std::endl;
+            std::cerr << "          '--ts' used to specify task scheduling behavior. [<flag> <selection>]" << std::endl;
+            std::cerr << "               0: Random" << std::endl;
+            std::cerr << "               1: Highest Flop First" << std::endl;
+            std::cerr << "               2: Lowest Flop First" << std::endl;
+            std::cerr << "               3: Highest Bytes First" << std::endl;
+            std::cerr << "               4: Lowest Bytes First" << std::endl;
+            std::cerr << "               5: Highest Flops/Bytes First" << std::endl;
+            std::cerr << "               6: Lowest Flops/Bytes First" << std::endl;
+            std::cerr << "          '--cs' used to specify worker scheduling behavior. [<flag> <selection>]"
+                      << std::endl;
+            std::cerr << "               0: Random" << std::endl;
+            std::cerr << "               1: Faster Worker(Flops) First" << std::endl;
+            std::cerr << "               2: Best Connected Worker(Bandwidth) First" << std::endl;
+            std::cerr << "               3: Largest Compute Time/IO Time Ratio First" << std::endl;
+            std::cerr << "               4: Earliest Completion (Estimate) First" << std::endl;
+            std::cerr << "          '--seed' used to specify seed for random generation and scheduling [<flag> <seed>]"
+                      << std::endl;
+            std::cerr
+                    << "          '--inv' used to indicate the number of invocations of the simulation. [<flag> <int>]"
+                    << std::endl;
+            return 1;
         }
-
-
-        if ((argc-1-(flags_removed))%3 != 0) {
-            std::cerr << "Missing task specifications. Each task must have an input, flops and output specified." << std::endl;
-            throw std::invalid_argument("Missing task specifications. Each task must have an input, flops and output specified.");
-        }
-
-
-        if ((argc-1-(flags_removed))/3 > MAX_NUM_TASKS) {
-            std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
-            throw std::invalid_argument("invalid number of files");
-        }
-
-
-        for (int i = 1; i < (argc-(flags_removed)); i+=3) {
-            double input = std::stof(std::string(arguments[i]));
-            double flops = std::stof(std::string(arguments[i+1]));
-            double output = std::stof(std::string(arguments[i+2]));
-
-            if ((input < 1) || (input > MAX_TASK_INPUT)) {
-                std::cerr << "Invalid task input. Enter a task input size in the range [1, " + std::to_string(MAX_TASK_INPUT) +
-                             "] MB" << std::endl;
-                throw std::invalid_argument("invalid task input");
-            } else if ((flops < 1) || (flops > MAX_TASK_FLOP)) {
-                std::cerr << "Invalid task flops. Enter task flops in the range [1, " + std::to_string(MAX_TASK_FLOP) +
-                             "] flops" << std::endl;
-                throw std::invalid_argument("invalid task flops");
-            } else if ((output < 1) || (output > MAX_TASK_OUTPUT)) {
-                std::cerr << "Invalid task output. Enter a task output size in the range [1, " + std::to_string(MAX_TASK_OUTPUT) +
-                             "] MB" << std::endl;
-                throw std::invalid_argument("invalid task output");
-            } else {
-                tasks.push_back(std::make_tuple(input, flops, output));
+    } else {
+        try {
+            if (argc < 4) {
+                std::cerr << "Arguments too short" << std::endl;
+                throw std::invalid_argument("bad args");
             }
-        }
+            int inc = 0;
+            while (inc < argc) {
+                if (std::string(argv[inc]).compare("--ts") == 0) {
+                    if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 6) {
+                        std::cerr << "invalid task_scheduling_selection" << std::endl;
+                        throw std::invalid_argument("invalid task_scheduling_selection");
+                    }
 
-    } catch (std::invalid_argument &e) {
-        std::cerr << "Usage: " << std::string(argv[0]) << " [optional flags]* <task input> <task flops> <task output> [<task input> <task flops> <task output>]*" << std::endl;
-        std::cerr << "    flags: " << std::endl;
-        std::cerr << "          '--worker' used to specify a worker to be added to simulation. Accompanied by three arguments, [<flag> <id> <flops> <link bandwidth>] " << std::endl;
-        std::cerr << "          '--ts' used to specify task scheduling behavior. [<flag> <selection>]" << std::endl;
-        std::cerr << "               0: Random" << std::endl;
-        std::cerr << "               1: Highest Flop First" << std::endl;
-        std::cerr << "               2: Lowest Flop First" << std::endl;
-        std::cerr << "               3: Highest Bytes First" << std::endl;
-        std::cerr << "               4: Lowest Bytes First" << std::endl;
-        std::cerr << "               5: Highest Flops/Bytes First" << std::endl;
-        std::cerr << "               6: Lowest Flops/Bytes First" << std::endl;
-        std::cerr << "          '--cs' used to specify worker scheduling behavior. [<flag> <selection>]" << std::endl;
-        std::cerr << "               0: Random" << std::endl;
-        std::cerr << "               1: Faster Worker(Flops) First" << std::endl;
-        std::cerr << "               2: Best Connected Worker(Bandwidth) First" << std::endl;
-        std::cerr << "               3: Largest Compute Time/IO Time Ratio First" << std::endl;
-        std::cerr << "               4: Earliest Completion (Estimate) First" << std::endl;
-        std::cerr << "          '--seed' used to specify seed if random scheduling is used. [<flag> <seed>]" << std::endl;
-        std::cerr << "          '--inv' used to indicate the number of invocations of the simulation. [<flag> <int>]" << std::endl;
-        std::cerr << "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
-                     std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
-        std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
-                     std::to_string(MAX_TASK_FLOP) + "] flops" << std::endl;
-        std::cerr << "    task output: the amount of data that must be sent back from worker to master after completion in range of [1, " +
-                     std::to_string(MAX_TASK_OUTPUT) + "] MB" << std::endl;
-        std::cerr << "    (at most " + std::to_string(MAX_NUM_TASKS) + " tasks can be specified)" << std::endl;
-        return 1;
+                    task_scheduling_selection = std::stof(std::string(argv[inc + 1]));
+                    task_scheduling_flag = true;
+
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                } else if (std::string(argv[inc]).compare("--cs") == 0) {
+                    if (std::stof(std::string(argv[inc + 1])) < 0 || std::stof(std::string(argv[inc + 1])) > 4) {
+                        std::cerr << "invalid compute_scheduling_selection" << std::endl;
+                        throw std::invalid_argument("invalid compute_scheduling_selection");
+                    }
+
+                    compute_scheduling_selection = std::stof(std::string(argv[inc + 1]));
+                    compute_scheduling_flag = true;
+
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
+                } else if (std::string(argv[inc]).compare("--worker") == 0) {
+                    worker_specification_flag = true;
+                    workers.push_back(std::make_tuple(std::string(argv[inc + 1]),
+                                                      std::stof(std::string(argv[inc + 2])),
+                                                      std::stof(std::string(argv[inc + 3]))));
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 4 - (flags_removed));
+                    flags_removed += 4;
+                    inc += 3;
+                } else if (std::string(argv[inc]).compare("--seed") == 0) {
+                    seed = stol(std::string(argv[inc + 1]));
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
+                } else if (std::string(argv[inc]).rfind("--log", 0) == 0) {
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 1 - (flags_removed));
+                    flags_removed += 1;
+                } else if (std::string(argv[inc]).compare("--inv") == 0) {
+                    num_invocation = stoi(std::string(argv[inc + 1]));
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
+                }
+                ++inc;
+            }
+
+
+            if ((argc - 1 - (flags_removed)) % 3 != 0) {
+                std::cerr << "Missing task specifications. Each task must have an input, flops and output specified."
+                          << std::endl;
+                throw std::invalid_argument(
+                        "Missing task specifications. Each task must have an input, flops and output specified.");
+            }
+
+
+            if ((argc - 1 - (flags_removed)) / 3 > MAX_NUM_TASKS) {
+                std::cerr << "Too many file sizes specified (maximum 100)" << std::endl;
+                throw std::invalid_argument("invalid number of files");
+            }
+
+
+            for (int i = 1; i < (argc - (flags_removed)); i += 3) {
+                double input = std::stof(std::string(arguments[i]));
+                double flops = std::stof(std::string(arguments[i + 1]));
+                double output = std::stof(std::string(arguments[i + 2]));
+
+                if ((input < 1) || (input > MAX_TASK_INPUT)) {
+                    std::cerr << "Invalid task input. Enter a task input size in the range [1, " +
+                                 std::to_string(MAX_TASK_INPUT) +
+                                 "] MB" << std::endl;
+                    throw std::invalid_argument("invalid task input");
+                } else if ((flops < 1) || (flops > MAX_TASK_FLOP)) {
+                    std::cerr << "Invalid task flop. Enter task flop in the range [1, " +
+                                 std::to_string(MAX_TASK_FLOP) +
+                                 "] flops" << std::endl;
+                    throw std::invalid_argument("invalid task flop");
+                } else if ((output < 1) || (output > MAX_TASK_OUTPUT)) {
+                    std::cerr << "Invalid task output. Enter a task output size in the range [1, " +
+                                 std::to_string(MAX_TASK_OUTPUT) +
+                                 "] MB" << std::endl;
+                    throw std::invalid_argument("invalid task output");
+                } else {
+                    tasks.push_back(std::make_tuple(input, flops, output));
+                }
+            }
+
+        } catch (std::invalid_argument &e) {
+            std::cerr << "Usage: " << std::string(argv[0])
+                      << " [--generate][optional flags]* <task input> <task Gflop> <task output> [<task input> <task Gflop> <task output>]*"
+                      << std::endl;
+            std::cerr << "    flags: " << std::endl;
+            std::cerr
+                    << "          '--worker' used to specify a worker to be added to simulation. Accompanied by three arguments, [<flag> <id> <flops> <link bandwidth>] "
+                    << std::endl;
+            std::cerr << "          '--ts' used to specify task scheduling behavior. [<flag> <selection>]" << std::endl;
+            std::cerr << "               0: Random" << std::endl;
+            std::cerr << "               1: Highest Flop First" << std::endl;
+            std::cerr << "               2: Lowest Flop First" << std::endl;
+            std::cerr << "               3: Highest Bytes First" << std::endl;
+            std::cerr << "               4: Lowest Bytes First" << std::endl;
+            std::cerr << "               5: Highest Flops/Bytes First" << std::endl;
+            std::cerr << "               6: Lowest Flops/Bytes First" << std::endl;
+            std::cerr << "          '--cs' used to specify worker scheduling behavior. [<flag> <selection>]"
+                      << std::endl;
+            std::cerr << "               0: Random" << std::endl;
+            std::cerr << "               1: Faster Worker(Flops) First" << std::endl;
+            std::cerr << "               2: Best Connected Worker(Bandwidth) First" << std::endl;
+            std::cerr << "               3: Largest Compute Time/IO Time Ratio First" << std::endl;
+            std::cerr << "               4: Earliest Completion (Estimate) First" << std::endl;
+            std::cerr << "          '--seed' used to specify seed if random scheduling is used. [<flag> <seed>]"
+                      << std::endl;
+            std::cerr
+                    << "          '--inv' used to indicate the number of invocations of the simulation. [<flag> <int>]"
+                    << std::endl;
+            std::cerr <<
+                      "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
+                      std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
+            std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
+                         std::to_string(MAX_TASK_FLOP) + "] flop" << std::endl;
+            std::cerr <<
+                      "    task output: the amount of data that must be sent back from worker to master after completion in range of [1, " +
+                      std::to_string(MAX_TASK_OUTPUT) + "] MB" << std::endl;
+            std::cerr << "    (at most " + std::to_string(MAX_NUM_TASKS) + " tasks can be specified)" << std::endl;
+            return 1;
+        }
     }
+
+
+    if(generated_tasks_and_workers) {
+        if (seed != 0 ){
+            srand(seed);
+        } else {
+            srand(time(0));
+        }
+        for (int i=0; i<num_workers; i++) {
+            workers.push_back(std::make_tuple("worker_"+std::to_string(i),
+                                              rand() % (int)round(max_flops) + (int)round(min_flops),
+                                              rand() % (int)round(max_band) + (int)round(min_band)));
+        }
+        for (int i=0; i<num_tasks; i++) {
+            tasks.push_back(std::make_tuple(rand() % (int)round(max_input) + (int)round(min_input),
+                    rand() % (int)round(max_flop) + (int)round(min_flop),
+                    rand() % (int)round(max_output) + (int)round(min_output)));
+        }
+    }
+
+
+    /**
+     * testing the random
+     * TODO fix seeding
+    for (int i=0; i<workers.size(); i++) {
+        std::cout << std::to_string(std::get<1>(workers[i])).c_str() <<std::endl;
+    }
+    */
 
     // create workflow
     wrench::Workflow workflow;
@@ -425,14 +606,6 @@ int main(int argc, char** argv) {
     }
 
 
-    // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed)),
-                    compute_services,
-                    storage_services,
-                    MASTER
-    ));
-
     // file registry service on storage_db_edu
     simulation.add(new wrench::FileRegistryService(MASTER));
 
@@ -441,7 +614,8 @@ int main(int argc, char** argv) {
         simulation.stageFile(file, master_storage_service);
     }
 
-    wms->addWorkflow(&workflow);
+
+
 
     if(num_invocation>1) {
         int pipes[num_invocation][2];
@@ -457,6 +631,14 @@ int main(int argc, char** argv) {
                 exit(1);
             } else if (pid[i] == 0) {
                 close(pipes[i][0]);
+                auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
+                        new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed+i)),
+                                                                  compute_services,
+                                                                  storage_services,
+                                                                  MASTER
+                ));
+
+                wms->addWorkflow(&workflow);
                 simulation.launch();
                 auto task_termination_timestamps = simulation.getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
                 if(!task_termination_timestamps.empty()) {
@@ -475,15 +657,33 @@ int main(int argc, char** argv) {
             read(pipes[i][0], &runtimes[i], 100);
             close(pipes[i][0]);
         }
+        std::vector<double> results;
         double result = 0;
         for(int i=0; i<num_invocation; i++) {
             string str(runtimes[i]);
+            results.push_back(std::stod(str));
             result+=std::stod(str);
         }
         result = result/num_invocation;
-        wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::Color::COLOR_BLUE);
-        WRENCH_INFO("Average Execution Time: %s", std::to_string(result).c_str());
+
+        std::cout << "----------------------------------------" << std::endl;
+        std::cout.precision(4);
+        std::cout << "Minimum Execution Time: " << std::to_string(*min_element(results.begin(), results.end())).c_str()
+                  << " seconds\n";
+        std::cout << "Mean Execution Time: " << std::to_string(result).c_str()
+                  << " seconds\n";
+        std::cout << "Maximum Execution Time: " << std::to_string(*max_element(results.begin(), results.end())).c_str()
+                  << " seconds\n";
+        std::cout << "----------------------------------------" << std::endl;
     } else {
+        auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
+                new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed)),
+                                                          compute_services,
+                                                          storage_services,
+                                                          MASTER
+        ));
+
+        wms->addWorkflow(&workflow);
         simulation.launch();
         simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
     }

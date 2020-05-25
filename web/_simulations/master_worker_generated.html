@@ -1,7 +1,7 @@
 ---
 layout: simulation
 title: Master Worker
-permalink: simulations/master_worker/
+permalink: simulations/master_worker_generated/
 ---
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/master_worker.svg" %}
@@ -9,101 +9,113 @@ permalink: simulations/master_worker/
 {% include partials/simulation_parameters_form_start.html %}
 
 <div class="form-group col-md-6">
-    <input type="text" class="form-control" id="num-workers" placeholder="5" value="5" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,50].
-    </div>
-</div>
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="min-worker-flops" placeholder="1" value="1" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
-    </div>
-</div>
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="max-worker-flops" placeholder="100" value="100" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="min-worker-band" placeholder="1" value="1" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and less than or equal to the maximum bandwidth specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="max-worker-band" placeholder="100" value="100" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and more than or equal to the minimum bandwidth specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="num-tasks" placeholder="5" value="5" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,100].
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-
-    <input type="text" class="form-control" id="min-task-input" placeholder="1" value="1" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and less than or equal to the maximum input specified.
-    </div>
-</div>
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="max-task-input" placeholder="100" value="100" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and more than or equal to the minimum input specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="min-task-flop" placeholder="1" value="1" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="max-task-flop" placeholder="100" value="100" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="min-task-output" placeholder="1" value="1" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and less than or equal to the maximum output specified.
-    </div>
-</div>
-<div class="form-group col-md-6">
-    <input type="text" class="form-control" id="max-task-output" placeholder="100" value="100" required hidden>
-    <div class="invalid-feedback">
-        Please provide a number in the range [1,1000000] and more than or equal to the minimum output specified.
-    </div>
-</div>
-
-<div class="form-group col-md-6">
-    <label for="host_specs">List of workers ([GFlops][Bandwidth to Master])</label>
-    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required>
+    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required hidden>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([GFlops][Bandwidth to Master], ...)
     </div>
 </div>
 
 <div class="form-group col-md-6">
-    <label for="task_specs">List of tasks ([Input MB][GFlop][Output MB])</label>
-    <input type="text" class="form-control" id="task-specs" placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required>
+    <input type="text" class="form-control" id="task-specs" placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required hidden>
     <div class="invalid-feedback">
-        Please provide a comma- or spwace-separated list of host specifications. ([Input MB][GFlop][Output MB], ...)
+        Please provide a comma- or space-separated list of host specifications. ([Input MB][GFlop][Output MB], ...)
     </div>
 </div>
+
+<div class="form-group col-md-12">
+    <label for="num_workers">Number of Workers</label>
+    <input type="text" class="form-control" id="num-workers" placeholder="5" value="5" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,50].
+    </div>
+</div>
+<div class="form-group col-md-6">
+    <label for="min_worker_flops">Minimum GFlop Per Worker</label>
+    <input type="text" class="form-control" id="min-worker-flops" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
+    </div>
+</div>
+<div class="form-group col-md-6">
+    <label for="max_worker_flops">Maximum GFlop Per Worker</label>
+    <input type="text" class="form-control" id="max-worker-flops" placeholder="100" value="100" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="min_worker_band">Minimum Bandwidth (MBps) Per Worker</label>
+    <input type="text" class="form-control" id="min-worker-band" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and less than or equal to the maximum bandwidth specified.
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="max_worker_band">Maximum Bandwidth (MBps) Per Worker</label>
+    <input type="text" class="form-control" id="max-worker-band" placeholder="100" value="100" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and more than or equal to the minimum bandwidth specified.
+    </div>
+</div>
+
+
+<div class="form-group col-md-12">
+    <label for="num_tasks">Number of Tasks</label>
+    <input type="text" class="form-control" id="num-tasks" placeholder="5" value="5" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,100].
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="min_task_input">Minimum Input Per Task (MB)</label>
+    <input type="text" class="form-control" id="min-task-input" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and less than or equal to the maximum input specified.
+    </div>
+</div>
+<div class="form-group col-md-6">
+    <label for="max_task_input">Maximum Input Per Task (MB)</label>
+    <input type="text" class="form-control" id="max-task-input" placeholder="100" value="100" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and more than or equal to the minimum input specified.
+    </div>
+</div>
+
+
+<div class="form-group col-md-6">
+    <label for="min_task_flop">Minimum GFlop Per Task</label>
+    <input type="text" class="form-control" id="min-task-flop" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="max_task_flop">Maximum GFlop Per Task</label>
+    <input type="text" class="form-control" id="max-task-flop" placeholder="100" value="100" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
+    </div>
+</div>
+<div class="form-group col-md-6">
+    <label for="min_task_output">Minimum Output Per Task (MB)</label>
+    <input type="text" class="form-control" id="min-task-output" placeholder="1" value="1" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and less than or equal to the maximum output specified.
+    </div>
+</div>
+<div class="form-group col-md-6">
+    <label for="max_task_output">Minimum Output Per Task (MB)</label>
+    <input type="text" class="form-control" id="max-task-output" placeholder="100" value="100" required>
+    <div class="invalid-feedback">
+        Please provide a number in the range [1,1000000] and more than or equal to the minimum output specified.
+    </div>
+</div>
+
+
 <grid>
 
     <row>
@@ -175,9 +187,9 @@ permalink: simulations/master_worker/
 
 <div class="form-group col-md-6">
     <label for="invocations">Number of Invocations</label>
-    <input type="text" class="form-control" id="invocations" placeholder="1" value="1" required hidden>
+    <input type="text" class="form-control" id="invocations" placeholder="10" value="10" required>
     <div class="invalid-feedback">
-        Please provide an integer value in the range [1,100].
+        Please provide an integer value in the range [2,100].
     </div>
 </div>
 
@@ -185,24 +197,5 @@ permalink: simulations/master_worker/
 
 {% include partials/simulation_output.html %}
 
-{% include partials/workflow_execution_graph.html %}
 
-{% include partials/host_utilization_graph.html %}
-
-{% include partials/workflow_execution_data.html %}
-
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/util.js" type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/initialise.js" type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/simulation-graph.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/simulation-graph.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/host-utilization.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/host-utilization.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/simulation-details.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/simulation-details.js"
-        type="text/javascript"></script>
 <script src="{{site.baseurl}}/public/sims/scripts/master_worker.js" type="text/javascript"></script>

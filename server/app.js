@@ -983,9 +983,22 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     const TASK_SCHEDULING_SELECT = req.body.task_scheduling_select;
     const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select;
     const NUM_INVOCATION = req.body.num_invocation;
+    const NUM_WORKERS = req.body.num_workers;
+    const MIN_FLOPS = req.body.min_worker_flops;
+    const MAX_FLOPS = req.body.max_worker_flops;
+    const MIN_BAND = req.body.min_worker_band;
+    const MAX_BAND = req.body.max_worker_band;
+    const NUM_TASKS = req.body.num_tasks;
+    const MIN_INPUT = req.body.min_task_input;
+    const MAX_INPUT = req.body.max_task_input;
+    const MIN_FLOP = req.body.min_task_flop;
+    const MAX_FLOP = req.body.max_task_flop;
+    const MIN_OUTPUT = req.body.min_task_output;
+    const MAX_OUTPUT = req.body.max_task_output;
 
 
 
+    const GENERATION = ["--generate", NUM_WORKERS, MIN_FLOPS, MAX_FLOPS, MIN_BAND, MAX_BAND, NUM_TASKS, MIN_INPUT, MAX_INPUT, MIN_FLOP, MAX_FLOP, MIN_OUTPUT, MAX_OUTPUT];
     const TASK_SCHED_SELECT = ["--ts", TASK_SCHEDULING_SELECT];
     const COMPUTE_SCHED_SELECT = ["--cs", COMPUTE_SCHEDULING_SELECT];
     const NUM_INV = ["--inv", NUM_INVOCATION];
@@ -999,12 +1012,13 @@ app.post("/run/master_worker", authCheck, function (req, res) {
         iterator+=2;
     }
 
+    /**
     iterator = 0;
     while(iterator+2<TASK_SPECS.length) {
         TASK_SPECS[iterator+1] = (parseInt(TASK_SPECS[iterator+1])*1000000000).toString(); //converting to flop from Gflop
         iterator+=3;
     }
-
+    */
 
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
@@ -1020,7 +1034,6 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     ];
 
     const ABBREV_LOGGING = [
-        "--log=custom_simulator.thresh:debug",
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
@@ -1028,7 +1041,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     if (NUM_INVOCATION==1) {
         SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(LOGGING);
     } else {
-        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(ABBREV_LOGGING);
+        SIMULATION_ARGS = GENERATION.concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(ABBREV_LOGGING);
     }
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
@@ -1041,8 +1054,14 @@ app.post("/run/master_worker", authCheck, function (req, res) {
         console.log("Something went wrong with the simulation. Possibly check arguments.");
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
+        if (NUM_INVOCATION==1) {
+            var simulation_output = simulation_process.stderr.toString();
+            console.log(simulation_output);
+        } else {
+            var simulation_output = simulation_process.stdout.toString();
+            console.log(simulation_output);
+        }
+
 
         let WORKERS_STRIPPED = [];
         for(let i = 0; i<WORKERS.length; i++){
@@ -1056,17 +1075,42 @@ app.post("/run/master_worker", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        logData({
-            "user": USERNAME,
-            "email": EMAIL,
-            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-            "activity": "master_worker",
-            "tasks": TASK_SPECS,
-            "workers": WORKERS_STRIPPED,
-            "task_scheduling_selection": TASK_SCHED_SELECT,
-            "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
-            "num_invocation": NUM_INVOCATION
-        });
+        if (NUM_INVOCATION==1) {
+            logData({
+                "user": USERNAME,
+                "email": EMAIL,
+                "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+                "activity": "master_worker",
+                "tasks": TASK_SPECS,
+                "workers": WORKERS_STRIPPED,
+                "task_scheduling_selection": TASK_SCHED_SELECT,
+                "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
+                "num_invocation": NUM_INVOCATION,
+            });
+        } else {
+            logData({
+                "user": USERNAME,
+                "email": EMAIL,
+                "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+                "activity": "master_worker",
+                "task_scheduling_selection": TASK_SCHED_SELECT,
+                "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
+                "num_invocation": NUM_INVOCATION,
+                "generated": true,
+                "num_workers": NUM_WORKERS,
+                "min_worker_flops": MIN_FLOPS,
+                "max_worker_flops": MAX_FLOPS,
+                "min_worker_band": MIN_BAND,
+                "max_worker_band": MAX_BAND,
+                "num_tasks": NUM_TASKS,
+                "min_task_input": MIN_INPUT,
+                "max_task_input": MAX_INPUT,
+                "min_task_flop": MIN_FLOP,
+                "max_task_flop": MAX_FLOP,
+                "min_task_output": MIN_OUTPUT,
+                "max_task_output": MAX_OUTPUT,
+            });
+        }
 
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -1074,15 +1118,24 @@ app.post("/run/master_worker", authCheck, function (req, res) {
          * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
          * each line of output renders on a separate line in the browser.
          *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         * The simulation output and the workflowtask data are sent back to the client
          */
         var find = "</span>";
         var re = new RegExp(find, "g");
 
-        res.json({
-            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        if(NUM_INVOCATION == 1) {
+            res.json({
+                "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+                "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+            });
+        } else {
+            res.json({
+                "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>"
+            });
+        }
+
+
+
     }
 });
 
