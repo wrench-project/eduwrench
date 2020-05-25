@@ -320,6 +320,12 @@ int main(int argc, char** argv) {
                                     arguments.begin() + inc + 2 - (flags_removed));
                     flags_removed += 2;
                     ++inc;
+                } else if (std::string(argv[inc]).compare("--seed") == 0) {
+                    seed = stol(std::string(argv[inc + 1]));
+                    arguments.erase(arguments.begin() + inc - (flags_removed),
+                                    arguments.begin() + inc + 2 - (flags_removed));
+                    flags_removed += 2;
+                    ++inc;
                 }
                 ++inc;
             }
@@ -520,13 +526,7 @@ int main(int argc, char** argv) {
     }
 
 
-    /**
-     * testing the random
-     * TODO fix seeding
-    for (int i=0; i<workers.size(); i++) {
-        std::cout << std::to_string(std::get<1>(workers[i])).c_str() <<std::endl;
-    }
-    */
+
 
     // create workflow
     wrench::Workflow workflow;

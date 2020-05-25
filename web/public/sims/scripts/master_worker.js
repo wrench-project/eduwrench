@@ -43,6 +43,7 @@ $(function () {
                     task_scheduling_select: $('input[name=task-scheduling-select]:checked').val(),
                     compute_scheduling_select: $('input[name=compute-scheduling-select]:checked').val(),
                     num_invocation: $("#invocations").val(),
+                    seed: $("#seed").val(),
                     userName: userName,
                     email: email
                 }),

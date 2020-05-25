@@ -995,10 +995,12 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     const MAX_FLOP = req.body.max_task_flop;
     const MIN_OUTPUT = req.body.min_task_output;
     const MAX_OUTPUT = req.body.max_task_output;
+    const SEED = req.body.seed;
 
 
-
-    const GENERATION = ["--generate", NUM_WORKERS, MIN_FLOPS, MAX_FLOPS, MIN_BAND, MAX_BAND, NUM_TASKS, MIN_INPUT, MAX_INPUT, MIN_FLOP, MAX_FLOP, MIN_OUTPUT, MAX_OUTPUT];
+    const SEED_STATE = ["--seed", SEED];
+    const GENERATION = ["--generate", NUM_WORKERS, MIN_FLOPS, MAX_FLOPS, MIN_BAND, MAX_BAND, NUM_TASKS, MIN_INPUT,
+        MAX_INPUT, MIN_FLOP, MAX_FLOP, MIN_OUTPUT, MAX_OUTPUT];
     const TASK_SCHED_SELECT = ["--ts", TASK_SCHEDULING_SELECT];
     const COMPUTE_SCHED_SELECT = ["--cs", COMPUTE_SCHEDULING_SELECT];
     const NUM_INV = ["--inv", NUM_INVOCATION];
@@ -1039,9 +1041,9 @@ app.post("/run/master_worker", authCheck, function (req, res) {
 
     var SIMULATION_ARGS;
     if (NUM_INVOCATION==1) {
-        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(LOGGING);
+        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(SEED_STATE).concat(LOGGING);
     } else {
-        SIMULATION_ARGS = GENERATION.concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(ABBREV_LOGGING);
+        SIMULATION_ARGS = GENERATION.concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(SEED_STATE).concat(ABBREV_LOGGING);
     }
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
@@ -1086,6 +1088,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
                 "task_scheduling_selection": TASK_SCHED_SELECT,
                 "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
                 "num_invocation": NUM_INVOCATION,
+                "seed": SEED,
             });
         } else {
             logData({
@@ -1096,6 +1099,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
                 "task_scheduling_selection": TASK_SCHED_SELECT,
                 "compute_scheduling_selection": COMPUTE_SCHED_SELECT,
                 "num_invocation": NUM_INVOCATION,
+                "seed": SEED,
                 "generated": true,
                 "num_workers": NUM_WORKERS,
                 "min_worker_flops": MIN_FLOPS,

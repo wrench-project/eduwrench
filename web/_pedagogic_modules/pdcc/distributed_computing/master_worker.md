@@ -297,12 +297,12 @@ This can be helpful in assessing whether a certain method of scheduling is valid
  have random yet deterministic inputs for comparison.
 
 **[A.3.q3.9]** Using random scheduling for both tasks and workers, what is the mean execution time for the default 
-inputs over 100 invocations using seed XXXXXXX?
+inputs over 100 invocations using seed 12345?
 
 **[A.3.q3.10]** If you were to increase the ranges for the attributes of tasks and workers, what would happen to the 
 spread between the minimum and maximum execution time for random scheduling?
 
-**[A.3.q3.11]** For the default inputs above with seed XXXXXXX, how does random scheduling compare to prioritizing 
+**[A.3.q3.11]** For the default inputs above with seed 12345, how does random scheduling compare to prioritizing 
 highest flop task and the fastest worker?
 
 **[A.3.q3.12]** Keep the default inputs the same except for increasing the range of task input/outputs and worker 
