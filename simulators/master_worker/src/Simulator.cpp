@@ -8,6 +8,7 @@
 #include <wrench.h>
 #include <nlohmann/json.hpp>
 #include <pugixml.hpp>
+#include <sys/wait.h>
 
 #include "ActivityWMS.h"
 #include "ActivityScheduler.h"
