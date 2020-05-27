@@ -47,7 +47,7 @@ performs **1000 GFlop** of work on the 100 MB image.
 The following pictures depicts this setup:
  
 <p align="center">
-<object class="figure" width="800" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Topology</object>
+<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Setup</object>
 </p>
 <div class="caption">
 <strong>Figure 1: Example client-server setup with two servers</strong>.
@@ -172,7 +172,7 @@ your client program  can only do one network transfer at a time?
  <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
-     (click to see answewr)
+     (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
 
@@ -213,3 +213,27 @@ overlapping I/O and computation as see in the I/O tab of the [Single Core Comput
  
 <p></p>
 
+#### Questions
+
+Given the client-server setup below (note that servers are multi-core, and that the task to execute
+has both an input and an output file), answer the following questions:
+
+<p align="center">
+<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
+</p>
+<div class="caption">
+<strong>Figure 2: Another example client-server setup with two servers</strong>.
+</div>
+
+
+**[A.3.2.q1.1]** Assuming that the task can use only 1 core, which server should be used?  
+
+
+**[A.3.2.q1.2]** Assuming now that the task can run on any number of cores, always with 100% parallel efficiency, which server would be used?
+
+**[A.3.2.q1.3]** It turns out the parallel efficiency of the task is not 100%. You observe that on Server #1 the task runs in 15 sec. What is the task's parallel efficiency?
+
+**[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%, what should the network bandwidth to Server #1 be for both servers to achieve the exact same task  execution times?
+
+
+ 

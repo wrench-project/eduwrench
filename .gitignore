@@ -4,13 +4,14 @@ _site/
 .jekyll-metadata
 .DS_Store
 .idea
-.cbp
+*.cbp
+*.bak
 web/.bundle/
 web/vendor/
 
 
 # Simulators
-simulators/**/*_simulator
+simulators/**/*_simulator*
 simulators/**/*_simulator_debug
 
 # JSON output
