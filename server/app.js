@@ -800,6 +800,7 @@ app.post("/run/client_server", authCheck, function (req, res) {
     const EMAIL = req.body.email;
     const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
     const HOST_SELECT = req.body.host_select;
+    const FILE_SIZE = req.body.file_size;
 
     //Not included in this usage of the simulator
     const SERVER_1_LINK_LATENCY = 10;
@@ -819,7 +820,7 @@ app.post("/run/client_server", authCheck, function (req, res) {
         "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -849,7 +850,8 @@ app.post("/run/client_server", authCheck, function (req, res) {
             "buffer_size": BUFFER_SIZE,
             "host_select": HOST_SELECT,
             "disk_toggle": DISK_TOGGLE,
-            "disk_speed": DISK_SPEED
+            "disk_speed": DISK_SPEED,
+            "file_size": FILE_SIZE
         });
 
         /**
@@ -893,6 +895,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
     const HOST_SELECT = req.body.host_select;
     const DISK_TOGGLE = 1;
     const DISK_SPEED = req.body.disk_speed;
+    const FILE_SIZE = req.body.file_size;
 
     //Not included in this usage of the simulator
 
@@ -908,7 +911,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
         "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -938,7 +941,8 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
             "buffer_size": BUFFER_SIZE,
             "host_select": HOST_SELECT,
             "disk_toggle": DISK_TOGGLE,
-            "disk_speed": DISK_SPEED
+            "disk_speed": DISK_SPEED,
+            "file_size": FILE_SIZE
         });
 
         /**

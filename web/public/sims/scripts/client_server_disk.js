@@ -105,6 +105,7 @@ $(function() {
                     server_1_link_latency: $("#server-1-link-latency").val(),
                     server_1_link_bandwidth: 200,
                     server_2_link_bandwidth: 600,
+                    file_size: "1000",
                     buffer_size: 1000 * $("#buffer-size").val(),
                     host_select: $('input[name=host-select]:checked').val(),
                     disk_speed: 400,

@@ -15,10 +15,11 @@
  * @brief Generates an independent-task Workflow
  *
  * @param workflow
+ * @param file_size_in_mb
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow) {
+void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -29,11 +30,12 @@ void generateWorkflow(wrench::Workflow *workflow) {
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
     const double PARALLEL_EFFICIENCY = 1.0;
+    const double                  MB = 1000.0 * 1000.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     wrench::WorkflowTask *single_task;
     single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
-    single_task->addInputFile(workflow->addFile("file_copy", 1*GB));
+    single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb*MB));
 
 }
 
@@ -158,10 +160,11 @@ int main(int argc, char** argv) {
     int DISK_TOGGLE;
     int DISK_SPEED;
     int SERVER_1_LINK_LATENCY;
+    int FILE_SIZE;
 
     try {
 
-        if (argc != 8) {
+        if (argc != 9) {
             throw std::invalid_argument("invalid number of arguments");
         }
 
@@ -218,6 +221,12 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("invalid link speed");
         }
 
+        FILE_SIZE = std::stoi(std::string(argv[8]));
+
+        if (FILE_SIZE <  1 || FILE_SIZE > 10000) {
+            std::cerr << "Invalid file size. Speed must be in range [1,10000] MB" << std::endl;
+            throw std::invalid_argument("invalid link speed");
+        }
 
 
     } catch(std::invalid_argument &e) {
@@ -230,13 +239,14 @@ int main(int argc, char** argv) {
         std::cerr << "   host select: host selection should be either 1 or 2" << std::endl;
         std::cerr << "   disk toggle: disk toggle should be either 0 or 1" << std::endl;
         std::cerr << "   disk speed: Speed must be in range [1,100000] MBps" << std::endl;
+        std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow);
+    generateWorkflow(&workflow, FILE_SIZE);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";

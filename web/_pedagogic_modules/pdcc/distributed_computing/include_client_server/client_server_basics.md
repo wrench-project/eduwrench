@@ -41,7 +41,7 @@ the image, say, because it is proprietary while your program is free
 software. However, you can access remote servers on which the software that
 implements the algorithm is installed so that you can use it 
 over the network. This is provided by the company that develops the fancy
-algorithm, as an advertising of its capabilities.   The fancy algorithm
+algorithm, as an advertisement of its capabilities.   The fancy algorithm
 performs **1000 GFlop** of work on the 100 MB image. 
 
 The following pictures depicts this setup:
@@ -112,7 +112,7 @@ T_{\text{server 2}} = \frac{100\; \text{MB}}{100\;\text{MB/sec}} + \frac{1000\; 
 $ 
 
 We can double-check this result in simulation, which gives us an execution time of
-17.93 seconds.  The discrepancy is because the
+17.72 seconds.  The discrepancy is because the
 simulation simulates details that our estimate above does not capture. 
 (See the [Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/networking_fundamentals/)).
 
@@ -130,10 +130,11 @@ $
 T_{\text{server 1}} = T_{\text{server 2}}
 $
 
-which gives us: $B = 13.04 \;\text{MB/sec}$.
+which gives us: $B = 13.05 \;\text{MB/sec}$.
 
 We can double-check this result in simulation by setting the bandwidth to Server #1 to 13 MB/sec (close enough). 
-The simulation shows execution times of 17.72 secs for both servers. 
+The simulation shows execution times of 18.08 secs for Server #1, which is very close
+to that for Server #2. 
 
    </div>
  </div>
@@ -141,7 +142,7 @@ The simulation shows execution times of 17.72 secs for both servers.
 <p></p>
 
 
-**[A.3.2.p1.2]** It is possible to set a bandwidth to Server #1 so that the task execution time on that server
+**[A.3.2.p1.2]** It is possible to set a bandwidth to Server #1 so that the task execution time with that server
 is one third of the execution time with the original 10 MB/sec bandwidth?
  
  <div class="ui accordion fluid">
@@ -151,7 +152,7 @@ is one third of the execution time with the original 10 MB/sec bandwidth?
    </div>
    <div markdown="1" class="ui segment content">
 
-The original execution time on Server #1, according to the simulation, is 20.71 seconds. So our target is 20.71/3 = 6.9 seconds. 
+The original execution time on Server #1, according to the simulation, is 20.50 seconds. So our target is 20.50/3 = 6.83 seconds. 
 Since the compute time is 10 seconds, the answer is no, it is not possible to have a task execution time that low.
 
    </div>
@@ -178,11 +179,11 @@ your client program  can only do one network transfer at a time?
 
 If our client program can do simultaneous network transfers, since the client is connected to the
 servers via two different network links, then the execution time 
-would be $\max(20.71, 17.93) = 20.71\;\text{seconds}$. 
+would be $\max(20.50, 17.72) = 20.50\;\text{seconds}$. 
 
 If our client cannot do simultaneous network transfers, we have two options: either
 we first send an image to Server #1 and then send the other image to Server #2, or the other
-way around. Let's examine both options, giving the time line of events for each:
+way around. Let's examine both options, giving the time line of events for each based on back-of-the-envelope calculations:
 
   - **Server #1 first**: 
     - time 0: start sending an image to Server #1
@@ -198,11 +199,14 @@ way around. Let's examine both options, giving the time line of events for each:
     - time 1 + 1000/60 = 17.66: Server #2 finishes computing
     - time 11 + 1000/100 = 21: Server #1 finished computing
     
-The second option is 6.66 seconds faster than the first option. This example highlights
+The second option is 6.66 seconds faster than the first option. As we've already seen, simulation
+results would be a bit different, but not  to the extent that the first option would be faster!
+
+This example highlights
 a pretty well-known rule of thumb: trying to get computers to compute  as early as possible is a good idea.
 In our case, this works out great because Server #2 can get the image really quickly, and is slower
 than Server #1 for computing. So we achieve  much better overlap of communication and computation
-with the second option than with the first option. This is exactly the same idea ass
+with the second option than with the first option. This is exactly the same idea as
 overlapping I/O and computation as see in the I/O tab of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/).
 
         
@@ -216,7 +220,7 @@ overlapping I/O and computation as see in the I/O tab of the [Single Core Comput
 #### Questions
 
 Given the client-server setup below (note that servers are multi-core, and that the task to execute
-has both an input and an output file), answer the following questions:
+has both an input and an output file), answer the following  **four questions**:
 
 <p align="center">
 <object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
@@ -225,15 +229,15 @@ has both an input and an output file), answer the following questions:
 <strong>Figure 2: Another example client-server setup with two servers</strong>.
 </div>
 
+Once again, you will answer these questions using back-of-the-envelope estimates, even though simulation
+would produce slightly different results. 
 
 **[A.3.2.q1.1]** Assuming that the task can use only 1 core, which server should be used?  
 
-
 **[A.3.2.q1.2]** Assuming now that the task can run on any number of cores, always with 100% parallel efficiency, which server would be used?
 
-**[A.3.2.q1.3]** It turns out the parallel efficiency of the task is not 100%. You observe that on Server #1 the task runs in 15 sec. What is the task's parallel efficiency?
+**[A.3.2.q1.3]** It turns out the parallel efficiency of the task is not 100%. You observe that on Server #1 the entire execution takes 15 sec. What is the task's parallel efficiency?
 
 **[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%, what should the network bandwidth to Server #1 be for both servers to achieve the exact same task  execution times?
 
 
- 

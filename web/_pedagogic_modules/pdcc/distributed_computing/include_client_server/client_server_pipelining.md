@@ -9,9 +9,9 @@
 ### Adding I/O on the Client
 
 In the previous tab we have not considered disk I/O at all, which made
-things simple. But in mare real-world cases, data is stored on disk. So let's
+things simple. But in many real-world cases, data is stored on disk. So let's
 consider a similar client-server setup with a client and two servers,
-but with a *disk on the client*. 
+but with a **disk on the client**. 
 
 The 100 MB image to be processed resides on disk as an image file. 
 The client program then reads it from disk into RAM and
@@ -19,15 +19,15 @@ sends it over to the server, which performs 1000 GFlop of work.
 This now adds a third phase to the execution
 so that it would proceed as:
 
-  1. Read data from disk into RAM
-  2. Send data from RAM to the server
-  3. Compute on the server and reply to the client
+  1. Read data from disk into RAM;
+  2. Send data from RAM to the server; and
+  3. Compute on the server and reply to the client.
 
 Although at first glance this seems fine, there are two problems.
 
 **Problem #1**: What if the image does not fit in RAM? Now,
 this is unlikely for this application, as even high-res, uncompressed
-images can typically fit in RAM given current RAM sizes on, say, laptop computers. But the client-server model
+images can typically fit in RAM given current RAM sizes on personal computers. But the client-server model
 could be used for applications for which input data is large. For instance, you
 can surely upload a large file, larger than your RAM, to a server, and yet the
 program that does the upload  cannot store that file in RAM! So the execution cannot
@@ -50,7 +50,10 @@ size** is 4 KB, as an example. Then while we send the data in the buffer to
 the server, we read another 4 KB of the image into a second buffer. We wait
 until the first buffer has been sent over to the server, and now we repeat,
 swapping the buffers (that is, we now send the data in the second buffer to
-the server, and load data from disk into the first buffer).  The picture
+the server, and load data from disk into the first buffer).   For our 1MB 
+image file, the file transfer would proceed with 250 disk reads, and 250 network sends. 
+
+The picture
 below shows an example timeline for sending a 1GB file stored on disk
 to the network using a 200MB buffer:
 
@@ -68,7 +71,7 @@ The execution proceeds in 6 steps. In the first step there is
 only a disk read. Then there are 4 steps in which there is
 both a disk read and a network send. Finally, in the 6th
 and last step there is only a network send.  This makes sense
-since  we must begin a lone disk read to fill the "first" buffer,
+since  we must begin with a lone disk read to fill the "first" buffer,
 and finish with a lone network send to send the "last" buffer. 
 In all other steps, we  overlap disk and network operations. We can
 compute the saving due to pipelining. If no pipelining were to be
@@ -115,14 +118,14 @@ If you remember the
 you may realize why a 1-byte buffer is a bad idea... it's all about **latency**! 
 
 In the example above, and the figure, we didn't say anything about latency. But in fact, each
-network link (and also the disk) has a latency. Often we have said we could neglect latency because
+network link (and also the disk, but let's forget about this for now) has a latency. Often we have said we could neglect latency because
 the data transferred is large. **But now that we split that data into potentially many very small
 "chunks", the latency may play an important role!**
 
 For the above example, say we use  a 1KB buffer size. Then we perform 1 GB / 1 KB = 1,000,000 individual
 file transfers. Say the network latency is a very low 1 microseconds. Then we will incur 1,000,000 of these
 latencies, for a total of 1 second! So instead of the 11 seconds of execution shown in the figure
-we would instead experience 12 seconds. This is still better than with no pilelining. But if the
+we would instead experience 12 seconds. This is still better than with no pipelining. But if the
 network latency was 10 microseconds, then we would be better off with no pipelining!
 
 Conversely, say we make the buffer size 500 MB instead of 200 MB. Then our execution time would be
@@ -150,7 +153,7 @@ allows you to simulate the execution of a client-server setup where a 1GB file
 is stored on  the  disk at the client  and needs to be sent to one of two
 servers, which then performs 1000 GFlop of work. You can choose the network
 latency for Server #1, and you can pick the buffer size used by the client program. 
-You can use this app on your own, but then you should use it to answer
+You can use this app on your own, and then you should use it to answer
 the following practice questions. 
 
 
@@ -210,7 +213,7 @@ bottleneck, and so this step also takes 1.25 seconds. Finally, in the third step
 which takes time 500/600  = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 +  .83 = 3.33 seconds. The server
 then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. 
 
-The simulation gives us 20.04 seconds. 
+The simulation gives us 20.04 seconds, which again is very close.
        
        
    </div>
@@ -266,22 +269,22 @@ transfer time? For this new latency, can we lower the data transfer time by usin
 
  
 <div class="ui accordion fluid">
-<div class="title">
-  <i class="dropdown icon"></i>
-  (click to see answer)
-</div>
+    <div class="title">
+      <i class="dropdown icon"></i>
+      (click to see answer)
+    </div>
 <div markdown="1" class="ui segment content">
 
 With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55 seconds. If we make
 the latency 20 us,  this jumps up to 7.85. This is almost a 20% increase. 
  
-It would make sense that using a larger buffer size would make sense, so as to save on latencies. For instance, if we try
+It would make sense that using a larger buffer size would be better, so as to save on latencies. For instance, if we try
 a 200 KB buffer size, the data transfer time  goes from 7.85 to 6.55, back to what it was with the lower latency!
 
-So if a client program is told the latency of the network to the server, it could likely  make a good decision. 
+So if a client program is told the latency of the network to the server, it could likely  make a good decision for the buffer size. 
  
-    </div>
-  </div>
+</div>
+</div>
  
  <p></p>
  
@@ -303,9 +306,9 @@ to 10 seconds. So we should go roughly 10 seconds slower, for a total time aroun
 
 The simulation gives us: 135.40 seconds!!!!
 
-No, the two numbers do not match. Our estimate is way optimistic. Once again, this is because  our estimate fails
+No, the two numbers do not match and **our estimate is way optimistic**. Once again, this is because  our estimate fails
 to capture complex network behaviors. In this case, when latencies get really high, the network protocol 
-that we simulate (TCP) suffers drastic performance penalties. This is something you can find out more about
+that we simulate (TCP) leads to a severe performance collapse. This is something you can find out more about
 in advanced networking courses, but for now, let's just remember that  *latency is bad* :)
 
 
@@ -334,170 +337,55 @@ in advanced networking courses, but for now, let's just remember that  *latency 
  about the best we can do.
  
  So yes, pipelining is still useful!
- 
   
  </div>
  </div>
   
-  <p></p>
-
-
-
-
-**[A.3.2.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
-transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
-network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
-CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
-assume there is no buffering, as soon as data is read from disk it can be sent on the network link utilizing the full
-bandwidth. How long is the execution time from start to finish?
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content">
-    The 400MB will take 2 seconds to be read from disk. The network link is faster than the disk, so the only additional
-     transfer time will be latency which we have been told is negligible. Once the data is on the server, it can complete
-      the task in 5 seconds. Total execution time will be 2+5 = 7 seconds.
-
-  </div>
-</div>
-
 <p></p>
-
-**[A.3.2.p2.8]** Consider the previous question's situation, but now the server has moved and the network link has changed
-to 10 GBps capacity. Does this change the execution time?
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i> (click to see answer)
-  </div> <div markdown="1" class="ui segment content">
-   Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
-   utilized to begin with. 
-
-  </div>
-</div>
-
-<p></p>
-
 
 
 #### Questions
 
-
-IN CONSTRUCTION
-
-**[A.3.p2.6]** Try running the simulator above twice, selecting Server 1 both times and trying with link speeds of 50 MBps 
-and 100 MBps. It was mentioned above that the disk r/w speeds are the bottleneck here, but why does execution time still 
-drop slightly with the faster network?
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content">
-    Since we have set a buffer size of 2, 5 or 10 MB, the increased bandwidth of the link still has some impact. The network 
-    must wait for a chunk to be ready from the disk, but once it is ready, the last chunk being transferred more quickly 
-    will still impact overall execution time a tiny bit. 
-
-  </div>
-</div>
-
-<p></p>
-
-**[A.3.p2.7]** You have a task that needs to execute on a server. This task requires 400 MB of input to run, and it must be
-transferred from the client's disk to the server's RAM. The client disk has a R/W speed of 200 MBps and there is a 1 GBps
-network link between the client an server. Latency is negligible and can be disregarded. The task is 1 TFlop and the server's
-CPU is capable of 200 GFlop/second. The task can only begin when all input data is available in RAM. For this question,
-assume there is no buffering, as soon as data is read from disk it can be sent on the network link utilizing the full
-bandwidth. How long is the execution time from start to finish?
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content">
-    The 400MB will take 2 seconds to be read from disk. The network link is faster than the disk, so the only additional
-     transfer time will be latency which we have been told is negligible. Once the data is on the server, it can complete
-      the task in 5 seconds. Total execution time will be 2+5 = 7 seconds.
-
-  </div>
-</div>
-
-<p></p>
-
-**[A.3.p2.8]** Consider the previous question's situation, but now the server has moved and the network link has changed
-to 10 GBps capacity. Does this change the execution time?
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i> (click to see answer)
-  </div> <div markdown="1" class="ui segment content">
-   Compared to the previous answer, upgrading the bandwidth of the network link does nothing as it was never fully
-   utilized to begin with. 
-
-  </div>
-</div>
-
-<p></p>
+**[A.3.2.q2.1]** You have a laundry room with a washer and drier. The washer washes a load in 30 minutes, and the drier 
+dries a load in 45 minutes. You have 4 loads to do. How long until the last load is dried? What fraction of the time was
+the washer used? Could you have gone faster with two driers, and if so by how much?
 
 
-**[A.3.q2.1]** Your business has a client/server topology for your computing needs. The client is on-site and there are 
-three off-site servers you have access to. The specifications of the client and three servers and their costs are below:
+**[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote server over a single network link. The disk's read bandwidth
+is 500 MB/sec. The network link's bandwidth is 250 MB/sec, with a latency below 100 microseconds. How much faster would the transfer
+go using pipelining with a 100 MB buffer compared to no pipelining?  Answer this question with a  back-of-the-envelope estimation, even
+though we saw in the practice questions that simulation results can be different. 
 
-    Client
-    Disk: 100 MBps R/W
+
+**[A.3.2.q2.3]** Your business has a client-server setup for your computing needs. The client is on-site and there are 
+two off-site servers you have access to. The specifications of the client and two servers and their costs are below:
+
+  - **Client**:
+     - Disk: 500 MBps R/W bandwidth
     
-    Server_0
-    Cost: $5/HR 
-    CPU: 100 GF/s
-    Link: 100 MBps
+  - **Server #1**:
+    - Cost: $10/hour 
+    - CPU: 1 core with 200 GFlop/sec speed
+    - Link: 100 MB/sec
     
-    Server_1
-    Cost: $10/HR 
-    CPU: 200 GF/s
-    Link: 100 MBps
-    
-    Server_2
-    Cost: $20/HR 
-    CPU: 200 GF/s
-    Link: 1 GBps
+  - **Server #2**: 
+    - Cost: $20/hour 
+    - CPU: 1 core with 200 GFlop/sec speed
+    - Link: 500 MB/sec
 
 Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
-as compute time.
+as compute time. 
 
-Given a task that has 100 GB input, 100 TFlop computation and 200 GB output, what is the most cost efficient option? What is 
-the most time efficient option?
+On these servers, you need  to run a  task that has 100 GB input and 100 TFlop work. 
 
-    XXREMOVE MEXX
-    ANSWER: Server_0: 1000 seconds input, 1000 seconds comp, 2000 seconds output = 4000 seconds, 66.6 minutes, $5.55 
-    Server_1: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $9.72 
-    Server_2: 1000 seconds input, 500 seconds comp, 2000 seconds output = 3500 seconds, $19.44
-    
-    Server_0 is the most cost efficient, either Server_1 or Server_2 would be more time efficient. Server_2 would be ever so
-    slightly faster based on buffering.
+Assuming no pipelining is used, which of these two servers would lead to the lowest
+execution cost? 
 
 
-**[A.3.q2.2]** Consider the above scenario again, if a disk upgrade is made to the client, is it possible for Server_2 
-to be the most cost efficient option? How fast would the read/write speed of the new disk have to be?
+**[A.3.2.q2.4]** This question is for the same setup as in the previous question and the same task
+to execute. Assume that, for each server, ideal pipelining is used (i.e., assuming that network latency is
+zero). Which of these two servers would lead to the lowest execution cost?
+ 
 
-
-    XXREMOVE MEXX
-    ANSWER:Yes, if we remove the disk bottleneck entirely we can see that the cost is below that of SERVER_0 calculated above.
-    Server_2: 100 seconds input, 500 seconds comp, 200 seconds output = 800 seconds, $4.44
-    
-    Base cost of computation (not changing) = 500/60/60*20 = $2.78
-    SERVER_0 cost $5.55-2.78 = $2.77 of time maximum for data transfer
-    $2.77 = ~500 seconds at $20/hr
-    
-    300 GB/ X = 500 seconds
-    300 = 500x
-    X = 600 MBps  [3/5 GBps]
-    
-    If the client's disk had 600 MBps R/W or better it is a superior option for cost efficiency. 
-    
     
 
