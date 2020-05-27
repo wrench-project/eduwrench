@@ -4,6 +4,7 @@ _site/
 .jekyll-metadata
 .DS_Store
 .idea
+.cpb
 web/.bundle/
 web/vendor/
 
