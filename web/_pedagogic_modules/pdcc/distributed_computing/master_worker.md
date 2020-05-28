@@ -6,48 +6,73 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to introduce you to the basic concepts of running tasks
-on a master/worker system.
+The goal of this module is to introduce you to the basic concepts of the
+master/worker model of computation.
 
 <div markdown="1" class="ui active tab segment">
 
 #### Learning Objectives
 
-- Understand master/worker systems
-- Encounter and understand different scheduling philosophies
+- Understand the principles of master/worker computing
+- Be introduced to the concept of scheduling
+- Experience how different scheduling strategies can affect performance
 
 ----
+
+
+### Basics
+
+The term **master-worker** makes a reference to a typical real-life scenario
+in which a master (or boss) assigns labor amongst an arbitrary number of workers. 
+The workers just do the jobs given to them without knowing or worrying about the larger picture.
+Only the master focuses  on the larger picture. Regardless of the real-life social implications
+of this model, in the context of computing it is commonplace and very useful. The main issue
+is how to design  a master that assigns work to workers as judiciously as possible. More precisely,
+the master must decide which task should be send to which worker and when. These
+are called **scheduling decisions**, and there are many different **scheduling strategies**
+that a master could employ.  The goal of this module is not to teach deep scheduling
+concepts and algorithms, of which there are many, but rather to provide you with an introduction 
+to this complex topic and give
+your a feel for it via hands-on experiments. 
+
+### Parallelism through Master-Worker
 
 <p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Topology</object>
 </p>
+<div class="caption">
+<strong>Figure 1: Master-worker setup</strong>.
+</div>
 
-### Basics
+Figure 1 above shows the typical view of a master-worker setup. **You will note that this is
+very similar to the client-server setup that we studied in the previous module.**  In fact, 
+one can view master-worker as an extension of client-server in which the client (the master)
+uses the servers (the workers) to perform many tasks in parallel. You may recall that in the client-server module,
+practice question *A.3.2.p1.3* touched on the notion that the client could have more than
+on task to perform. This was really a master-worker scenario.  
 
-When hosts or clusters are referred to as a master or a worker the meaning is reminiscent
-of any other area of life. The single master or boss is
-assigning labor amongst an arbitrary number of workers. This allows the workers to be
-simple laborers that do the jobs given to them without worrying about the larger picture,
-and the master is not doing the actual work so they can focus on the larger picture
-working smoothly and efficiently. The success of a master/worker system is predicated on the ability of the
-master to efficiently offload work. This distribution of work is known as scheduling, and there are
-many methodologies to consider when deciding how it should be implemented on the master.
+Note that there are many possible variations on the above setup. For instance, the network could be such
+that all workers are connected to the master via the same shared network link. Or there could be a two-link path
+from the master to each worker, where the first link is shared by  all workers but the second link is
+dedicated  to the worker.     Also, for 
+simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
+this as the master having a fast disk and doing efficient pipelining of disk I/O and network communications --
+see the Pipelining tab of 
+the [Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/)). Our goal
+here is not to consider all possible setups, but instead to consider a simple one that is sufficient to get
+a sense of what scheduling entails. 
 
-### Parallelism through Master / Worker
 
-Master/Worker can allow for parallel computing in much the same ways as we have previously discussed.
-Instead of delegating an entire workload to each host or core, the master can evaluate the workload
-and hand off tasks to workers. The worker does the computation as necessary, and returns
-the output to the master when it is finished, signalling that it has completed the assigned work. Once
-a worker is free it can be assigned work again.
+Given a set of tasks to perform, *whenever there is at least an idle worker* the master decides which task should
+be executed next on which of these idle workers. The input data of the task is sent to the chosen worker,
+which then performs the task's computation. 
+In  this module we consider that the client has a set of **independent tasks**, i.e., tasks can be
+completed in  any order. In the next module we consider distributed computing with *dependent tasks*.
 
-How workload is delegated will depend on that workload and dependencies within it. In a real situation,
-there would also be financial and contractual considerations. A single Master/worker cluster may be
-used by multiple companies or researchers, and those parties will be paying for or assigned a certain level of access.
-This can result in making choices for fairness or financial prudence over efficiency and speed.
 
-### Scheduling  Philosophies In Master / Worker
+### Master-Worker Scheduling Strategies
 
+<!--
 You may be familiar with the concept of scheduling for a single processor. In discussions of scheduling on a single
 machine where decisions must be made very quickly and efficiently, complex scheduling is not realistic. Your time spent
 trying to calculate the most efficient scheduling of tasks takes longer than the gains, or unexpected I/O takes
@@ -56,34 +81,81 @@ with large computational workloads the gains from trying more complex scheduling
 Scheduling efficiently may cut minutes or hours off of the computation time needed. You don't
 have to account for the possibility of unexpected I/O, and workloads can be submitted with an estimate of computation
 time and resources needed. For scheduling, having that additional information and payoff could be a game changer.
+-->
 
-When scheduling you have two major pieces to consider, the workload/task and the worker that will be assigned
-to. You can have a methodology for choosing which task or tasks get executed first and a separate methodology for
-which worker that task is assigned to.
+You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
+At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
+We have briefly encountered the concept of scheduling in the Task Dependencies tab of the
+[Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multicore_computing/)). You may also
+have encountered the term in an Operating Systems course. The OS  constantly makes scheduling decisions
+regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
+as used as possible while making the processes as "happy" as possible. 
+ 
+Here,  we consider the following **scheduling problem**: given a set of tasks each with some input data and a set
+of workers, each connected to the master via a separate network link, how should tasks be sent to the (idle)
+workers so that the last task to complete completes as early as possible?  
 
-In the simulation below, we have implemented a number of different methodologies for scheduling each of these components. 
-These can be used to explore what the best scheduling philosophy actually is for different situations.
-Specifically they are:
+It turns out that, for many scheduling problems, there are many possible **scheduling strategies**. In addition,
+given the specifics of the problem, different strategies can behave very differently. Some of them can be
+very efficient, and some of them can be very inefficient. 
 
-Task Selection:
-    - random (default)
-    - highest flop
-    - lowest flop
-    - highest bytes (i/o)
-    - lowest bytes
-    - highest flop/bytes
-    - lowest flop/bytes
-Worker Selection:
-    - random (default)
-    - fastest worker
-    - best-connected worker
-    - largest compute time/io time ratio
-    - earliest completion
+The **scheduling strategy** used by our master will be as follows:
 
-### Simulating Master / Worker
+```
+  while there is a task to execute:
+    if there is at least one idle worker:
+        a) choose a task to execute
+        b) choose an idle worker
+        c) trigger the execution of the chosen task on the chosen worker
+    else:
+        wait for a worker to be idle
+  }
 
-This simulator is built to allow the specification of many different tasks and workers. These are specified through the 
-format indicated in the input form, separated by commas. 
+```
+
+Step a) and b) are the heart of the strategy and we discuss them hereafter. Step c) requires a bit of explanation.
+We assume that the master can execute tasks on the workers simultaneously, *including the sending/receiving of
+input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
+simultaneously to the workers (recall that each worker is connected to the master by an independent link).  In the
+extreme, say that we have 10 workers that compute at 1 GFlop/sec,  each connected to the master by a 1 GB/sec link,
+and that we have 10 tasks that each have 1 GB of input and 1 GFlop of work. Then, each task
+completes in 2 seconds (a bit more due to network effects that we are overlooking here). Thus, all tasks run
+completely in parallel and all complete at the same time.  Stop step c) above takes zero time (or a very short
+amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
+task execution (see an Operating Systems or Concurrent Programming course).
+
+So, what can we do for steps a) and b) above? It is easy to come up with a bunch of options. Here are "a few": 
+
+  - a) Task selection options:
+    - Pick a random task
+    - Pick the task with the highest work (i.e., highest Flop)
+    - Pick the task with the lowest work (i.e., lowest Flop)
+    - Pick the task with the highest input data size
+    - Pick the task with the lowest input data size
+    - Pick the task with the highest work/data ratio
+    - Pick the task with the lowest work/data ratio
+    
+  - b) Worker selection options:
+    - Pick a random worker
+    - Pick the fastest worker (i.e., highest Flop/sec)
+    - Pick the best-connected worker (i.e., highest link MB/sec)
+    - Pick the best compute/network worker (i.e., highest compute speed to link bandwidth  ratio).
+    - Pick the worker that can complete the task  the earliest (based on back-of-the-envelope estimates)
+
+The above defines $7 \times 5 = 35$ different scheduling strategies, and we could come up with many more!!   The big
+question of course is whether some of these strategies are good. Intuitively, it would seem that doing 
+random task selection and random worker selection would be less effective than, e.g., picking the task with the
+highest work and running it on the worker that can complete it the earliest.  The only way to get a sense
+of whether this intuition holds is to try it out.
+
+
+### Simulating Master-Worker
+
+
+The simulation app below allows use to simulate arbitrary master-worker scenarios. Task and worker specifications
+are entered using the format indicated in the input form, separated by commas. You can also pick 
+which scheduling strategy is used.  You can use this app on your own, but you should use it to answer
+some of the practice questions below. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -96,6 +168,97 @@ format indicated in the input form, separated by commas.
 </div>
 
 #### Practice Questions
+
+**[A.3.3.p1.1]** If all tasks have the same specifications and all the workers have the same specifications,
+does it matter which options are picked for task and worker selection?
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        No, it doesn't matter. Since every task looks like every other task and every worker looks like
+        every other worker, all options will lead to the same schedule. If a task runs on a worker in
+        10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
+        $\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this in the simulation app.
+   </div>
+</div>
+ 
+<p></p>
+
+
+**[A.3.3.p1.2]** Consider a scenario in which we have 5 tasks and 3 workers. 
+Workers have the following specs:
+
+  - Worker #1: 10 MB/sec link; 100  GFlop/sec speed 
+  - Worker #2: 30 MB/sec link; 80  GFlop/sec speed 
+  - Worker #3: 20 MB/sec link; 150  GFlop/sec speed 
+
+and tasks have the following specs:
+
+ - Task #1: 100 MB input; 2000 GFlop work
+ - Task #2: 100 MB input; 1500 GFlop work
+ - Task #3: 200 MB input; 1000 GFlop work
+ - Task #4: 200 MB input; 1500 GFlop work
+ - Task #5: 300 MB input; 2500 GFlop work
+
+So the simulation input for this scenario would be:
+```
+Workers: 10 100, 30 80, 20 150
+Tasks: 100 2000, 100 1500, 200 1000, 200 1500, 300 2500
+```
+
+If we use the "highest work first" task selection strategy and the "fastest host first" host
+selection strategy, what is the total execution time (as given by the simulation)? 
+Can you, based on simulation output, confirm that the scheduling strategy works as expected?
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        The execution completes in 61.50  seconds. Inspecting the task execution timeline
+        we find that the master makes the first three scheduling decisions as:
+            
+   </div>
+</div>
+ 
+<p></p>
+
+
+**[A.3.3.p1.3]** For the same setup as in the previous question,
+
+```
+Workers: 100 100, 100 100, 100 300
+Tasks: 600 100, 600 100, 600 100, 200 100, 200 100, 200 100, 200 100
+Task selection: Highest Bytes
+Worker selection: Best-Connected
+```
+
+What is the total execution time (as given by the simulation)? Can you, based on simulation output,
+confirm that the scheduling strategy works as expected?
+
+
+
+**[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p3.3]?
+ How could this be achieved?
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        As previously mentioned we would have only the best-connected worker handle the three tasks with increased data
+        transfer requirements. This would result in the same execution time as [A.3.p3.2], approximately 9.3 seconds. 
+        The only way this can be achieved in the simulator is through random task selection (or task selection that is 
+        random in this case, such as sorting by flops which are identical).
+   </div>
+</div>
+ 
+<p></p>
 
 **[A.3.p3.1]** What is one example of a scenario where scheduling a series of tasks by highest flop required first is 
 optimal? What would a counter example be where it is not optimal? Do such examples and counter-examples exist for 
@@ -117,71 +280,6 @@ each time of scheduling?
  
 <p></p>
 
-**[A.3.p3.2]** Consider that you have 7 identical tasks and 3 identical workers to assign them to. Does it matter how 
-the tasks are scheduled for improving overall execution time? Check your answer with the simulator. 
-
-**Simulator Input:**
-```
-Workers: 100 100, 100 100, 100 100
-Tasks: 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100, 100 100 100
-```
-
-<div class="ui accordion fluid">
-   <div class="title">
-     <i class="dropdown icon"></i>
-     (click to see answer)
-   </div>
-   <div markdown="1" class="ui segment content">
-        If everything is identical, scheduling will not make an impact as long as tasks are assigned one task:one worker. 
-   </div>
-</div>
- 
-<p></p>
-
-**[A.3.p3.3]** Now consider that 3 of the tasks have their input/output bytes tripled, and one worker has its bandwidth to the master 
-tripled. If tasks are scheduled such that the highest byte tasks are assigned to the best connected workers first, does 
-this change the execution time? Check your answer with the simulator. 
-
-**Simulator Input:**
-```
-Workers: 100 100, 100 100, 100 300
-Tasks: 300 100 300, 300 100 300, 300 100 300, 100 100 100, 100 100 100, 100 100 100, 100 100 100
-Task Scheduling: Highest Bytes
-Worker Scheduling: Best-Connected Worker
-```
-
-<div class="ui accordion fluid">
-   <div class="title">
-     <i class="dropdown icon"></i>
-     (click to see answer)
-   </div>
-   <div markdown="1" class="ui segment content">
-        This will increase the execution time. If you could manually schedule these tasks you could optimize the execution 
-        time to be essentially identical by having the worker with increased bandwidth exclusively handling the tasks 
-        with increased data transfer requirements. The scheduling here works on a simple basis however, it looks at 
-        what hosts are available currently and what tasks are ready to run currently, it is not planning ahead.
-   </div>
-</div>
- 
-<p></p>
-
-**[A.3.p3.4]** What is the best possible execution time given the second version of the scenario described in [A.3.p3.3]?
- How could this be achieved?
-
-<div class="ui accordion fluid">
-   <div class="title">
-     <i class="dropdown icon"></i>
-     (click to see answer)
-   </div>
-   <div markdown="1" class="ui segment content">
-        As previously mentioned we would have only the best-connected worker handle the three tasks with increased data
-        transfer requirements. This would result in the same execution time as [A.3.p3.2], approximately 9.3 seconds. 
-        The only way this can be achieved in the simulator is through random task selection (or task selection that is 
-        random in this case, such as sorting by flops which are identical).
-   </div>
-</div>
- 
-<p></p>
 
 ---
 

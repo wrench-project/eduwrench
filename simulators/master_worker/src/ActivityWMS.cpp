@@ -34,10 +34,10 @@ namespace wrench {
     int ActivityWMS::main() {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
-                    S4U_Simulation::getHostName().c_str(),
-                    this->mailbox_name.c_str());
-        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
+//        WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
+//                    S4U_Simulation::getHostName().c_str(),
+//                    this->mailbox_name.c_str());
+//        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
 
         // Create a job manager
         this->job_manager = this->createJobManager();
@@ -69,9 +69,9 @@ namespace wrench {
 
         WRENCH_INFO("--------------------------------------------------------");
         if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %f seconds!", this->getWorkflow()->getCompletionDate());
+            WRENCH_INFO("Execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
         } else {
-            WRENCH_INFO("Workflow execution is incomplete!");
+            WRENCH_INFO("Execution is incomplete!");
         }
 
         this->job_manager.reset();

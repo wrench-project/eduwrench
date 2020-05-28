@@ -1012,7 +1012,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     let iterator = 0;
     while(iterator+1<HOST_SPECS.length) {
         WORKERS.push("--worker");
-        WORKERS.push("host_"+Math.floor(iterator/2));
+        WORKERS.push("worker #"+Math.floor(iterator/2));
         WORKERS.push(HOST_SPECS[iterator]);
         WORKERS.push(HOST_SPECS[iterator+1]);
         iterator+=2;
@@ -1033,10 +1033,10 @@ app.post("/run/master_worker", authCheck, function (req, res) {
         "--log=root.thresh:critical",
         "--log=maestro.thresh:critical",
         "--log=wms.thresh:debug",
-        "--log=wrench_core_workunit_executor.thresh:info",
-        "--log=simple_wms.thresh:debug",
-        "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        // "--log=wrench_core_workunit_executor.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=simple_wms_scheduler.thresh:info",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const ABBREV_LOGGING = [

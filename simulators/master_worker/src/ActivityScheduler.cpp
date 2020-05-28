@@ -43,7 +43,7 @@ namespace wrench {
      * @brief A struct to hold all pieces of each job to be submitted.
      */
     typedef struct JobsAwaitingSubmission {
-        WorkflowJob *job;
+        StandardJob *job;
         std::shared_ptr<ComputeService> compute;
         std::map<std::string, std::string> arguments;
     } JobsAwaitingSubmission;
@@ -304,7 +304,7 @@ namespace wrench {
 
                     ///create jobs and store them, remove the utilized resources/tasks from corresponding vectors.
                     if (tasks_to_submit.size()>0) {
-                        WorkflowJob * job = (WorkflowJob * ) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
+                        StandardJob * job = this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
                         jobs_awaiting_submission.push_back({job,
                                                             compute.compute_service,
                                                             service_specific_args});
@@ -336,6 +336,9 @@ namespace wrench {
 
         ///Submit all of the queued jobs
         for (const auto &unscheduled_job : jobs_awaiting_submission) {
+            WRENCH_INFO("Launching execution of %s on  %s",
+                        (*(unscheduled_job.job->getTasks().begin()))->getID().c_str(),
+                        unscheduled_job.compute->getHostname().c_str());
             this->getJobManager()->submitJob(unscheduled_job.job, unscheduled_job.compute, unscheduled_job.arguments);
         }
     }

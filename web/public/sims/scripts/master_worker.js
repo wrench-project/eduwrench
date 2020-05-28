@@ -14,7 +14,19 @@ $(function () {
         // get google user information
         let userName = localStorage.getItem("userName");
         let email = localStorage.getItem("email");
-        
+
+        // Fix the task spec so that the output is set to zero
+        // console.log("ORIGINAL TASK SPEC: " + $("#task-specs").val());
+        let fixed_task_specs = "";
+        let tokens =$("#task-specs").val().split(",");
+        for (let i =0; i < tokens.length; i++) {
+            fixed_task_specs += tokens[i] + " 0";
+            if (i < tokens.length - 1) {
+                fixed_task_specs += ",";
+            }
+        }
+        // console.log("NEW TASK SPEC: " + fixed_task_specs);
+
 
         // Upon submission of the form, a POST request containing the user's desired parameters
         // is sent to the node server, where the simulation will be executed with those parameters.
@@ -27,7 +39,7 @@ $(function () {
             data: JSON.stringify(
                 {
                     host_specs: $("#host-specs").val(),
-                    task_specs: $("#task-specs").val(),
+                    task_specs: fixed_task_specs,
                     num_workers: $("#num-workers").val(),
                     min_worker_flops: $("#min-worker-flops").val(),
                     max_worker_flops: $("#max-worker-flops").val(),
@@ -38,8 +50,8 @@ $(function () {
                     max_task_input: $("#max-task-input").val(),
                     min_task_flop: $("#min-task-flop").val(),
                     max_task_flop: $("#max-task-flop").val(),
-                    min_task_output: $("#min-task-output").val(),
-                    max_task_output: $("#max-task-output").val(),
+                    min_task_output: 0,
+                    max_task_output: 0,
                     task_scheduling_select: $('input[name=task-scheduling-select]:checked').val(),
                     compute_scheduling_select: $('input[name=compute-scheduling-select]:checked').val(),
                     num_invocation: $("#invocations").val(),

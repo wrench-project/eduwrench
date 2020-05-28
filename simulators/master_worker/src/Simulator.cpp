@@ -43,12 +43,12 @@ void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,
     const unsigned long    MAX_CORES = 1;
     const double PARALLEL_EFFICIENCY = 1.0;
     const double                  MB = 1000.0 * 1000.0;
-    int                TASK_ID = 0;
+    int                TASK_ID = 1;
 
     for (auto const &task : task_list) {
-        auto current_task = workflow->addTask("task"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
-        current_task->addInputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.in", std::get<0>(task) * MB));
-        current_task->addOutputFile(workflow->addFile("task" + std::to_string(TASK_ID) + "::0.out", std::get<2>(task) * MB));
+        auto current_task = workflow->addTask("task_"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
+        current_task->addInputFile(workflow->addFile("task_" + std::to_string(TASK_ID) + ".in", std::get<0>(task) * MB));
+        current_task->addOutputFile(workflow->addFile("task_" + std::to_string(TASK_ID) + ".out", std::get<2>(task) * MB));
         TASK_ID++;
     }
 }
@@ -146,7 +146,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
 
                 pugi::xml_node host = xml_doc.child("platform").child("zone").prepend_child("host");
                 host.append_attribute("id") = (std::get<0>(worker)).c_str();
-                host.append_attribute("speed") = (std::to_string(std::get<1>(worker))+"Gf").c_str();
+                host.append_attribute("speed") = (std::to_string(std::get<2>(worker))+"Gf").c_str();
                 host.append_attribute("core") = "1";
                 pugi::xml_node host_prop = host.append_child("prop");
                 host_prop.append_attribute("id") = "ram";
@@ -176,7 +176,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
 
                 pugi::xml_node link = xml_doc.child("platform").child("zone").insert_child_before("link", previous_route);
                 link.append_attribute("id") = ("link_"+std::get<0>(worker)).c_str();
-                link.append_attribute("bandwidth") = (std::to_string(std::get<2>(worker)/0.97)+"MBps").c_str();
+                link.append_attribute("bandwidth") = (std::to_string(std::get<1>(worker)/0.97)+"MBps").c_str();
                 link.append_attribute("latency") = "0us";
 
 
@@ -456,8 +456,8 @@ int main(int argc, char** argv) {
                                  std::to_string(MAX_TASK_FLOP) +
                                  "] flops" << std::endl;
                     throw std::invalid_argument("invalid task flop");
-                } else if ((output < 1) || (output > MAX_TASK_OUTPUT)) {
-                    std::cerr << "Invalid task output. Enter a task output size in the range [1, " +
+                } else if ((output < 0) || (output > MAX_TASK_OUTPUT)) {
+                    std::cerr << "Invalid task output. Enter a task output size in the range [0, " +
                                  std::to_string(MAX_TASK_OUTPUT) +
                                  "] MB" << std::endl;
                     throw std::invalid_argument("invalid task output");
@@ -472,7 +472,7 @@ int main(int argc, char** argv) {
                       << std::endl;
             std::cerr << "    flags: " << std::endl;
             std::cerr
-                    << "          '--worker' used to specify a worker to be added to simulation. Accompanied by three arguments, [<flag> <id> <flops> <link bandwidth>] "
+                    << "          '--worker' used to specify a worker to be added to simulation. Accompanied by three arguments, [<flag> <id> <link bandwidth> <flops>] "
                     << std::endl;
             std::cerr << "          '--ts' used to specify task scheduling behavior. [<flag> <selection>]" << std::endl;
             std::cerr << "               0: Random" << std::endl;
