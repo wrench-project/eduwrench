@@ -10,8 +10,8 @@ The goal of this module is to introduce you to the client/server model of
 computation. Go through the following tabs in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item " data-tab="first">Basics</a>
-  <a class="item " data-tab="second">Pipelining I/O and Network</a>
+  <a class="item" data-tab="first">Basics</a>
+  <a class="item" data-tab="second">Pipelining I/O and Network</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first" >
