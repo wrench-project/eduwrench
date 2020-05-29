@@ -46,9 +46,9 @@ void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,
     int                TASK_ID = 1;
 
     for (auto const &task : task_list) {
-        auto current_task = workflow->addTask("task_"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
-        current_task->addInputFile(workflow->addFile("task_" + std::to_string(TASK_ID) + ".in", std::get<0>(task) * MB));
-        current_task->addOutputFile(workflow->addFile("task_" + std::to_string(TASK_ID) + ".out", std::get<2>(task) * MB));
+        auto current_task = workflow->addTask("Task #"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
+        current_task->addInputFile(workflow->addFile("input_" + std::to_string(TASK_ID), std::get<0>(task) * MB));
+        current_task->addOutputFile(workflow->addFile("output_" + std::to_string(TASK_ID), std::get<2>(task) * MB));
         TASK_ID++;
     }
 }
@@ -564,7 +564,7 @@ int main(int argc, char** argv) {
                     )
             );
             compute_services.insert(new_compute_service);
-            link_speed[std::get<0>(worker)] = std::get<2>(worker);
+            link_speed[std::get<0>(worker)] = std::get<1>(worker);
         }
     } else {
         auto compute_service_zero = simulation.add(

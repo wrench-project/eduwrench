@@ -189,6 +189,8 @@ namespace wrench {
 
         std::vector<ComputeServiceMetadata> compute_service_information;
         for (const auto &compute : compute_services) {
+
+
             auto flop_map = compute->getCoreFlopRate();
             double flops_tally = 0;
 

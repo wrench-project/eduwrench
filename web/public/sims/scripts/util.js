@@ -5,5 +5,5 @@ function disableRunSimulationButton() {
     run_simulation_button.attr("disabled", "disabled");
     setTimeout(function() {
         run_simulation_button.removeAttr("disabled");
-    }, 5000);
+    }, 3000);
 }

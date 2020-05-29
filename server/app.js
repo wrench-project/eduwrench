@@ -1012,7 +1012,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     let iterator = 0;
     while(iterator+1<HOST_SPECS.length) {
         WORKERS.push("--worker");
-        WORKERS.push("worker #"+Math.floor(iterator/2));
+        WORKERS.push("Worker #"+(1 + Math.floor(iterator/2)));
         WORKERS.push(HOST_SPECS[iterator]);
         WORKERS.push(HOST_SPECS[iterator+1]);
         iterator+=2;

@@ -70,7 +70,6 @@ $(function () {
                     populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                         "task-details-table-td");
                 } else {
-                    console.log("got here");
                     console.log(response.simulation_output);
                     $("#simulation-output").empty().append(response.simulation_output);
                 }
