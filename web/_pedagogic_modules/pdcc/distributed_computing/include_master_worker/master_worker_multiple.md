@@ -5,9 +5,36 @@
 
 ----
 
+In the previous tab, you were able to simulation particular master-worker setups
+with different scheduling strategies.  But as we noted, it was  difficult to draw general
+conclusions from just a few particular test cases. Instead, what we need to do is
+**compare scheduling strategies on many test cases**. 
 
-#### Questions Featuring Large Sample Size
 
+
+### Simulating may test cases
+
+Below is a simulation app that makes is possible to evaluate a scheduling
+strategy on multiple randomly generated scenarios. The app returns the
+minimum, average, and maximum execution times over all these scenarios. 
+This makes it possible to draw some informed conclusions on the relative merit
+of different strategies. But analysis of experimental data is a complicated matter,
+and we're only scratching the surface here.  
+
+
+The simulation app is a bit more complicated than that in  the previous tab. It allows you to specify:
+
+ - A number of of workers
+ - Ranges of worker link bandwidths and worker speeds, from which actual values are sampled randomly
+ - A number of of tasks
+ - Ranges of task input sizes and works, from which actual values are sampled randomly
+ - Task and worker selection strategies
+ - A number of experiments to run
+ - A seed for the random number generator (changing the seed  to any integer will change the random samplings above)
+ 
+You can  use this application on your own, but below are practice questions that guide you through some
+interesting experiments.
+ 
 <div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -18,16 +45,9 @@
   </div>
 </div>
 
- 
 
-You will notice that the simulator just above is slightly different. Initially you were giving a fixed number of 
-workers and tasks with fixed specifications, so most scenarios would have been deterministic. We have now changed how the 
- simulation is done; instead of specifying specific hosts and tasks, you can just specify ranges. The ranges you specify
-  will be used to randomly generate the number of workers and tasks you specified. 
- 
-This can be helpful in assessing whether a certain method of scheduling is valid under varying conditions or just 
- specific ones. The number of invocations can be increased to provide a larger sample size. Seed is used so that we can 
- have random yet deterministic inputs for comparison.
+**[A.3.3.p2.1]** 
+
 
 **[A.3.q3.9]** Using random scheduling for both tasks and workers, what is the mean execution time for the default 
 inputs over 100 invocations using seed 12345?
@@ -43,5 +63,4 @@ bandwidth to [1,5000]. This simulation may take additional time. How does random
 takes into account task data (highest bytes and best-connected worker first)?
 
   
-</div>
   

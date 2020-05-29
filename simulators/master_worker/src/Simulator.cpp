@@ -27,6 +27,14 @@
 
 class ComputeService;
 
+double generate_random_double_in_range(double min,  double max) {
+    if (min ==  max) {
+        return min;
+    } else {
+        return (int) round(min) + rand() % ((int) round(max) - (int) round(min));
+    }
+}
+
 void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,double,double>> task_list) {
 
     if (workflow == nullptr) {
@@ -515,19 +523,18 @@ int main(int argc, char** argv) {
             srand(time(0));
         }
         for (int i=0; i<num_workers; i++) {
+
             workers.push_back(std::make_tuple("worker_"+std::to_string(i),
-                                              rand() % (int)round(max_flops) + (int)round(min_flops),
-                                              rand() % (int)round(max_band) + (int)round(min_band)));
+                                              generate_random_double_in_range(min_band, max_band),
+                                              generate_random_double_in_range(min_flops, max_flops)));
         }
         for (int i=0; i<num_tasks; i++) {
-            tasks.push_back(std::make_tuple(rand() % (int)round(max_input) + (int)round(min_input),
-                    rand() % (int)round(max_flop) + (int)round(min_flop),
-                    rand() % (int)round(max_output) + (int)round(min_output)));
+            tasks.push_back(std::make_tuple(
+                    generate_random_double_in_range(min_input, max_input),
+                    generate_random_double_in_range(min_flop, max_flop),
+                    generate_random_double_in_range(min_output, max_output)));
         }
     }
-
-
-
 
     // create workflow
     wrench::Workflow workflow;
