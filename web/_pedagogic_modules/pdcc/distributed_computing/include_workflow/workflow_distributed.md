@@ -1,7 +1,8 @@
 
 #### Learning objectives
 
-  - XXX TODO XXX
+  - Be able to reason about workflow execution performance on
+    distributed, multi-core, multi-host platforms
 
 ---
 
@@ -127,68 +128,80 @@ yourself with this application, but you should then use it for the practice ques
   </div>
 </div>
 
+---
+
+####  Practice Questions
+
+**[A.3.4.q2.1]** When executing the workflow with a single 1-core compute host,
+what fraction of the time is spent doing actual computation? 
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+  Running the simulation gives us a total execution time of 299.69 seconds. 
+  In total, we have 21 1000 GFlop tasks that run on a 100 GFlop/sec
+  core. So that's 210 seconds of computation. Therefore, the execution
+  spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
+  of the execution is disk and network I/O.  
+  </div>
+</div>
+<p></p>
+
+
+**[A.3.4.q2.2]** Based on the answer to the previous question, how long would you
+expect the execution time to be if the (single) compute host had 2 cores? Double-check
+your expectation in simulation.
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+  In the previous question, we found out that the computation was
+  210 seconds. On 2 cores, this should be 110 seconds (since the 
+  final task runs by itself). Therefore we'd expect the
+  execution time to be 100 second shorter than in the previous question,
+  that is, 199.69 seconds.  
+  
+  The simulation gives 189.77 seconds. This is faster than expected, which
+  can be due to several reasons. When running  tasks in parallel, 
+  there can be beneficial effects in terms of network bandwidth. In this
+  case, this is happening on the wide-area link due to its high latency. 
+  This is now a recurring theme in these pedagogic modules: the network
+  is complicated.  This is why, as stated earlier, less and less do we rely
+  on back-of-the-envelope estimates. 
+    
+  </div>
+</div>
+<p></p>
+
+**[A.3.4.q2.3]** For running our workflow, is it better to 
+have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+  
+It's better to use 5 4-core hosts because the RAM at each host
+if 32 BG. Therefore, no matter how many  cores a host has
+it cannot run more than 4 of our pre_* tasks in parallel. 
+
+This is seen in simulation:
+
+  - With 4 5-core hosts: 102.67 seconds
+  - With 5 4-core hosts: 91.76 seconds
+  
+  </div>
+</div>
+<p></p>
+
 
 ---
 
-**Answer these questions based on the textual output above:**
-  
-  **[E.q1.1]** At what time did the WMS submit *task1* to the compute service?
-  
-  **[E.q1.2]** From the WMS's perspective, how long did *task1* run for?
-    (this duration is called the task's **turnaround-time**)
-  
-  **[E.q1.3]** The compute service runs on a host with a speed of *1000 GFlop/sec*, and *task1*
-    must perform *35 TFlop*. About how long should we expect *task1* to compute for?
-  
-  **[E.q1.4]** Why is the answer for q1.3 above much shorter than the answer for q1.2?
-
-  
-  **[E.q1.5]** About how long would it take to send all of
-    *task1*'s input data from *storage_db.edu* to *hpc.edu* and to send all of *task1*'s output data
-    from *hpc.edu* to *storage_db.edu*, using the direct link between these two hosts and assuming no other
-    network traffic?
-  
-  **[E.q.6]** Accounting for this I/O *overhead*, does *task1*'s execution time as experienced by the WMS make sense?
-
-##### Interpreting Visual Output from Simulated Workflow Execution
-
-Analyzing the textual simulation output can be tedious, especially when the
-workflow comprises many tasks and/or when there are many simulated
-services. Fortunately, the simulator can produce a visualization of the
-workflow execution as a Gantt chart and show various relevant durations in a table. 
-These are shown on the Web app page below the text output. 
-
----
-
-**Answer these questions based on the visual output:**
-
-  **[E.q1.7]** What fraction of *task0*'s execution time is spent doing I/O?
-
-  **[E.q1.8]** What fraction of *task1*'s execution time is spent doing I/O?
-
-  **[E.q1.9]** Overall, what fraction of the workflow execution is spent doing I/O?
-
-### Data- vs. Compute-intensive Workflow
-
-
-If you answered question [E.q1.9] correctly, you found that the workflow
-execution spends more time computing than doing I/O, overall.  Very broadly
-speaking, we call such a workflow *compute-intensive*. The reverse situation would be an *I/O-intensive*.  However,
-these notions depend on the hardware on which the workflow is executed. The
-faster the network and/or slower to cores, the more compute-intensive the
-workflow, and vice-versa.
-
----
-
-**Answer these questions:**
-
-  **[E.q1.10]** Using analysis (i.e., equations), for what compute speed (in
-          GFlop/sec) of the core at site *hpc.edu* would our workflow
-          execution being perfectly balanced between computation and I/O.
-
-  **[E.q1.11]** Verify your answer to the previous question using the simulation. How far off were you?
-
-  **[E.q1.12]** Your boss is absolutely intent of making the workflow execution as fast as possible by upgrading the machine at *hpc.edu*. The idea is to make the workflow execution three times as fast (compared to the execution with a 1000 GFlop/sec core) with this upgrade. Is this possible? If not, why not?
-
-
----
+### Questions
