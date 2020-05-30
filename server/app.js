@@ -1222,6 +1222,85 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
     }
 });
 
+
+// display activity workflow visualization route
+app.get("/workflow_distributed", authCheck, function (req, res) {
+    res.render("workflow_distributed", {
+        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_distributed.svg")
+    });
+});
+
+// execute activity multi core simulation route
+app.post("/run/workflow_distributed", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_distributed/");
+
+    const SIMULATOR = "workflow_distributed_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_HOSTS = req.body.num_hosts;
+    const NUM_CORES = req.body.num_cores;
+    const LINK_BANDWIDTH = req.body.link_bandwidth;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'",
+        "--cfg=network/TCP-gamma:20000000000"  // TCP Congestion Window Size!
+    ];
+
+    const SIMULATION_ARGS = [NUM_HOSTS, NUM_CORES, LINK_BANDWIDTH].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "workflow_distributed",
+            "num_hosts": NUM_HOSTS,
+            "num_cores": NUM_CORES,
+            "link_bandwidth": LINK_BANDWIDTH
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
+
 function logData(received_data) {
     let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
     console.log(time_now + ": received data");

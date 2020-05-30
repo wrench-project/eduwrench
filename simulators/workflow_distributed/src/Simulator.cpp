@@ -35,7 +35,7 @@ void generateWorkflow(wrench::Workflow *workflow) {
         os<<setfill('0')<<setw(2)<<i;
         auto  number =  os.str();
         auto ifile = workflow->addFile("in_" + number, 50 * MB);
-        auto ofile = workflow->addFile("out_" + number, 50 * MB);
+        auto ofile = workflow->addFile("out_" + number, 100 * MB);
         auto task = workflow->addTask("pre_" + number, 1000 *  GFLOP, 1, 1, 1.0, 8 *GB);
         task->setColor("#D4E8D4");
         task->addInputFile(ifile);
@@ -77,10 +77,14 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
                       "<platform version=\"4.1\">\n";
     xml += "   <zone id=\"AS0\" routing=\"Full\">\n";
 
-    xml += "    <zone id=\"AS1\" routing=\"Floyd\">\n";
+    xml += "    <zone id=\"AS1\" routing=\"Full\">\n";
+
+    // The loopback link
+    xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
+
 
     // The cluster's first compute node
-    xml += "          <host id=\"hpc_0.edu\" speed=\"1000Gf\" core=\"1\">\n";
+    xml += "          <host id=\"hpc_0.edu\" speed=\"100Gf\" core=\"1\">\n";
     xml += "                <disk id=\"hpc_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n";
     xml += "                       <prop id=\"size\" value=\"5000GiB\"/>\n";
     xml += "                       <prop id=\"mount\" value=\"/\"/>\n";
@@ -105,9 +109,16 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
     }
 
     // The cluster's routes
-    for (int i = 0; i < num_hosts + 1; i++) {
+    for (int i = 1; i < num_hosts + 1; i++) {
         xml += "        <route src=\"hpc_" + std::to_string(i) + ".edu\" dst=\"hpc_router\">\n";
         xml += "            <link_ctn id=\"link_" + std::to_string(i) + "\"/>\n";
+        xml += "        </route>\n";
+        xml += "        <route src=\"hpc_" + std::to_string(i) + ".edu\" dst=\"hpc_" + std::to_string(i) + ".edu\">\n";
+        xml += "            <link_ctn id=\"loopback\"/>\n";
+        xml += "        </route>\n";
+        xml += "        <route src=\"hpc_" + std::to_string(i) + ".edu\" dst=\"hpc_" + std::to_string(0) + ".edu\">\n";
+        xml += "            <link_ctn id=\"link_" + std::to_string(i) + "\"/>\n";
+        xml += "            <link_ctn id=\"link_" + std::to_string(0) + "\"/>\n";
         xml += "        </route>\n";
     }
     xml += "      </zone>\n";
@@ -203,8 +214,11 @@ int main(int argc, char **argv) {
     auto storage_service = simulation.add(new wrench::SimpleStorageService(
             "storage.edu", {"/"},
             {
-                    {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "1000000"},
-            }, {}));
+                    {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
+            }, {
+                    {wrench::SimpleStorageServiceMessagePayload::FILE_READ_REQUEST_MESSAGE_PAYLOAD, 0},
+                    {wrench::SimpleStorageServiceMessagePayload::FILE_READ_ANSWER_MESSAGE_PAYLOAD, 0}
+            }));
 
     storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
 

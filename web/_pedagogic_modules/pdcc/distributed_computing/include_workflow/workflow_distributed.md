@@ -41,11 +41,10 @@ all workflow computation is performed on a remove compute site (top right).  **S
 data has to flow back and forth between the storage site and the compute site**. Indeed,
 the compute site has no persistent storage. 
 
-The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and  uses
-a buffer size of 1 MB when being accessed remotely  (see the IO tab of the [Single Core
-Computing module]({{site.baseurl}}/pedagogic_modules/single_core_computing)). It is
+The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and uses a 100 MB
+buffer when being accessed remotely (see the Pipelining tab of the [Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server)). It is
 connected to the compute site via a wire-area network link with 100 MB/sec bandwidth
-and 100 milli-second latency. 
+and 10 millisecond latency. 
 
 Let's now look deeper into the setup of the compute site. This site hosts a number
 of computers, each of them with some RAM capacity and multiple cores, and each of them
@@ -73,17 +72,16 @@ $$
                             & = 12.1 \text{sec}
 \end{align}
 $$
+The above assumes that data is read/written from/to the disk at 100 MB/sec, the smallest of the disk bandwidth (500 MB/sec) and
+of the bottleneck link bandwidth (100 MB/sec). The above equation is only a rough estimate
+because, as we've seen several time already in these 
+modules, the network behavior is more complex than the above equation makes it out to be.
+This is especially true when network latencies are high, which is the case here with a 10ms
+latency on the wide-area link that connects the storage resource to the compute resources.  
+We'll see below how (in)accurate these estimates can be. But as a general note, as we progress
+through these pedagogic modules and platforms become increasingly complex, we will rely more and
+more on simulation results and less and less on back-of-the-envelope estimates. 
 
-The  above is an estimate because, for instance, reading the input is more complicated. Since the
-buffer size is 1 MB, the 200 MB input file is done in 200 phases. In each phase, but for the
-first and the last, a 1 MB piece of the file is read from  disk while another 1 MB
-piece is sent over to the network. Furthermore, there are network latencies.  You can
-go back to the IO tab  of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/single_core_computing)
-and the [Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/networking_fundamentals)  for the full detail.
-But overall, the latencies are small, and the limiting resource in terms of bandwidth is not
-the disk, nor the local-area link, but the 100 MB/sec wide-area link. So as an approximation we
-simply say that the data is transferred at speed 100 MB/sec.  We will see in simulation
-how accurate such back-of-the-envelope estimates are (turns out, they're often pretty good).
 
 ### Example Workflow
 
@@ -101,26 +99,23 @@ workflow should benefit significantly from parallel execution.
 ### Executing the Workflow on the Platform
 
 We wish to execute our workflow  on our distributed platform. The workflow execution
-strategy is very simple, given that our workflow has a simple structure: whenever 
-there are sufficient compute resources at a compute host (an idle core and 8 GB of RAM), start
+strategy is very simple because our workflow has a simple structure: whenever 
+there are sufficient compute resources at a compute host (i.e., at least one idle core and 8 GB of RAM), start
 the next to-be-executed pre_* task on it. When all pre_* tasks have been
 executed, then the final task can be executed. 
 
 Whenever several pre_* tasks start simultaneously, then also read
 their input files simultaneously, thus splitting disk and network bandwidth. And, as
-in the previous tab,  a task does not free up its compute resources until its output files
+in the previous tab, a task does not free up its compute resources until its output files
 have all been fully written to disk.
 
 
 #### Simulating Execution
 
-XXXX HENRI WORKS HERE XXXXX
-
-So that you can gain hands-on experience, use 
-the simulation Web application
-(see <a href="{{site.baseurl}}/pedagogic_modules/simulation_instructions/index/" target="_blank">instructions</a>),
-selecting `Workflow Execution Fundamentals` from its menu. 
-
+The simulation app below simulates the execution of our workflow on our platform, and allows
+you to pick the
+number number hosts at the compute site, and the number of cores on each such host. You can experiment
+yourself with this application, but you should then use it for the practice questions hereafter. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -128,7 +123,7 @@ selecting `Workflow Execution Fundamentals` from its menu.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content">
-    {% include simulator.html src="workflow_execution_fundamentals/" %}
+    {% include simulator.html src="workflow_distributed/" %}
   </div>
 </div>
 
