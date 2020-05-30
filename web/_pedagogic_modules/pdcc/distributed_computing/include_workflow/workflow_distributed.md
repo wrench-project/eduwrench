@@ -31,7 +31,7 @@ infrastructure for future modules.
 
 We consider the following distributed platform with *three sites* on a wide-are network.
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform.svg">Distributed platform</object>
 <div class="caption"><strong>Figure 1:</strong> Example distributed computing platform.</div>
 
 The site in the bottom-left corner is where the user who wishes to execute the
@@ -69,7 +69,7 @@ on one of the compute hosts, assuming that no other task is competing with it, a
 $$
 \begin{align}
 \text{Task execution time}  & = \text{input read time}\; + \;\text{compute time}\; + \;\text{output  write time}\\
-                            & = 200 / 100 + 1000 / 100 + 10 / 100
+                            & = 200 / 100 + 1000 / 100 + 10 / 100\\
                             & = 12.1 \text{sec}
 \end{align}
 $$
@@ -88,7 +88,7 @@ more on simulation results and less and less on back-of-the-envelope estimates.
 
 We consider a simple "in-tree" workflow, depicted in the figure below.
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
 <div class="caption"><strong>Figure 2:</strong> Example workflow.</div>
 
 This workflow has only two levels, with the first level consisting of
@@ -132,7 +132,7 @@ yourself with this application, but you should then use it for the practice ques
 
 ####  Practice Questions
 
-**[A.3.4.q2.1]** When executing the workflow with a single 1-core compute host,
+**[A.3.4.p2.1]** When executing the workflow with a single 1-core compute host,
 what fraction of the time is spent doing actual computation? 
 
 <div class="ui accordion fluid">
@@ -151,7 +151,7 @@ what fraction of the time is spent doing actual computation?
 <p></p>
 
 
-**[A.3.4.q2.2]** Based on the answer to the previous question, how long would you
+**[A.3.4.p2.2]** Based on the answer to the previous question, how long would you
 expect the execution time to be if the (single) compute host had 2 cores? Double-check
 your expectation in simulation.
 
@@ -173,13 +173,12 @@ your expectation in simulation.
   case, this is happening on the wide-area link due to its high latency. 
   This is now a recurring theme in these pedagogic modules: the network
   is complicated.  This is why, as stated earlier, less and less do we rely
-  on back-of-the-envelope estimates. 
-    
+  on back-of-the-envelope estimates.    
   </div>
 </div>
 <p></p>
 
-**[A.3.4.q2.3]** For running our workflow, is it better to 
+**[A.3.4.p2.3]** For running our workflow, is it better to 
 have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
 <div class="ui accordion fluid">
   <div class=" title">
@@ -196,7 +195,55 @@ This is seen in simulation:
 
   - With 4 5-core hosts: 102.67 seconds
   - With 5 4-core hosts: 91.76 seconds
+  </div>
+</div>
+<p></p>
+
+**[A.3.4.p2.4]** What is the parallel efficiency (in terms of cores) of the
+execution when using 5 4-core compute hosts? 
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
   
+The speedup is 299.69 / 91.76 = 3.26.  Since we used 20 cores, our parallel
+efficiency is 3.26/20 = 16.33%.   This is pretty low, but expected since
+we have so much I/O and a level of the workflow has no parallelism
+whatsoever. 
+  </div>
+</div>
+<p></p>
+
+**[A.3.4.p2.5]** What overall I/O bandwidth is achieved by the workflow
+execution when using a single core? What about when using 5 4-core hosts? 
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+  
+In total the execution reads and writes 20*(50 + 100 + 100) + 1 = 5001 MB 
+of data. 
+Using the same reasoning as in question A.3.4.p2.1 above, we can compute the I/O time
+for each execution, and deduce the bandwidth. This is summarized in the table
+below:
+
+|---|---|---|---|
+| execution | total time | compute time | I/O time | I/O bandwidth|
+|---|---|---|---|
+| 1x1 core   | 299.69 s | 210 s | 89.69 s | 55.75 MB/s | 
+| 5x4 cores  | 91.76 s | 20 s  | 71.76 s |  69.69 MB/s |
+|---|---|---|---|
+
+As earlier, we find that doing parallel I/O (over the network) brings
+some benefit. However, due to latency effects, we're pretty
+far from achieving the peak 100 MB/s bandwidth.  It would be 
+pretty difficult to estimate the I/O time of this workflow
+execution without the simulation. 
+ 
   </div>
 </div>
 <p></p>
@@ -205,3 +252,24 @@ This is seen in simulation:
 ---
 
 ### Questions
+
+Consider  the following workflow (all green tasks have identical specs, and so do all  blue tasks):
+
+<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_question.svg">Distributed platform</object>
+
+**[A.3.4.q2.1]**  You can lease three different platforms to execute this workflow:
+
+  - **Platform A:** 2 4-core hosts, each with 8 GB of RAM, and 120 GFlop/sec core compute speed
+  - **Platform B:** 3 6-core hosts, each with 12 GB of RAM, and 50 GFlop/sec core compute speed
+  - **Platform C:** 1 3-core hosts, with 16 GB of RAM, and 120 GFlop/sec core compute speed
+  
+  Assuming the I/O and network times are zero, which of the three platforms above is the better choice?
+
+**[A.3.4.q2.2]**  Because tasks in all levels are identical, at any given time either all 
+                  running tasks compute, or all running tasks perform I/O. Assuming that the 
+                  total I/O time, regardless of the number of hosts/cores is 20
+                  seconds. What is the parallel efficiency for the three platforms in the
+                  previous question?
+                  
+                   
+                  

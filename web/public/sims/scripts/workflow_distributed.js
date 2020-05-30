@@ -7,7 +7,7 @@ $(function () {
 
         if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
 
-            num_hosts_label_el.text("Cores: " + (num_hosts_input_value).toString())
+            num_hosts_label_el.text("N=" + (num_hosts_input_value).toString() + " Hosts")
                 .css("background-color", "#d3ffe9");
 
             num_hosts_input_el.removeClass("is-invalid")
@@ -26,6 +26,7 @@ $(function () {
     });
 
     $("#num-cores").on("keyup", function () {
+        console.log("HERE!");
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
         let num_cores_label_el = $(".num-cores-label");
@@ -33,7 +34,7 @@ $(function () {
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
 
-            num_cores_label_el.text(num_cores_input_value.toString())
+            num_cores_label_el.text("Cores: " + num_cores_input_value.toString())
                 .css("background-color", "#d3ffe9");
 
             num_cores_input_el.removeClass("is-invalid")
