@@ -255,7 +255,7 @@ execution without the simulation.
 
 Consider  the following workflow (all green tasks have identical specs, and so do all  blue tasks):
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_question.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_question.svg">Distributed platform</object>
 
 **[A.3.4.q2.1]**  You can lease three different platforms to execute this workflow:
 

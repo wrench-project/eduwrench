@@ -20,11 +20,8 @@ Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing))
 
 There are two typical "rules of execution" in practice:
 
-  - *A
-task cannot start before all its input files have been generated. 
-  - *A
-task's output file is available only once all of that task's output files have been
-generated.* 
+  - *A task cannot start before all its input files have been generated.*
+  - *A task's output file is available only once all of that task's output files have been generated.* 
 
 In other words, a task is considered completed only once all its output
 files have been generated. Until then, its output file are "invisible" to
@@ -295,3 +292,28 @@ good news.*
 <p></p>
 
 ---
+
+#### Questions
+
+
+Given the workflow below, answer the following questions:
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_fundamental_question.svg">Dag</object>
+<p></p>
+
+**[A.2.3.q1.1]** How many MB of data are read during an execution of this workflow? How many are written?
+<p></p>
+
+**[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 GFlop/sec and the disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
+<p></p>
+
+**[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow execution strategy is to, whenever there is a choice, to start the task with the **highest work**,  what is the execution time? What is the parallel efficiency? 
+<p></p>
+
+**[A.2.3.q1.4]** Would the result be different if we instead picked
+the tasks with the **lowest work** first?
+<p></p>
+
+**[A.2.3.q1.5]** Say we now add 4 cores, explain why there is no way to get the parallel efficiency above 60% even if the disk can be upgraded at will.
+<p></p>
+
