@@ -83,9 +83,9 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
     xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
 
 
-    // The cluster's first compute node
+    // The cluster's storage node)
     xml += "          <host id=\"hpc_0.edu\" speed=\"100Gf\" core=\"1\">\n";
-    xml += "                <disk id=\"hpc_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n";
+    xml += "                <disk id=\"hpc_disk\" read_bw=\"500MBps\" write_bw=\"500MBps\">\n";
     xml += "                       <prop id=\"size\" value=\"5000GiB\"/>\n";
     xml += "                       <prop id=\"mount\" value=\"/\"/>\n";
     xml += "                </disk>\n";
@@ -170,15 +170,17 @@ int main(int argc, char **argv) {
     int NUM_HOSTS;
     int NUM_CORES_PER_HOST;
     int WIDE_AREA_BW;
+    int USE_LOCAL_STORAGE;
 
     try {
-        if (argc != 4) {
+        if (argc != 5) {
             throw std::invalid_argument("bad args");
         }
 
         NUM_HOSTS = std::stoi(std::string(argv[1]));
         NUM_CORES_PER_HOST = std::stoi(std::string(argv[2]));
         WIDE_AREA_BW = std::stoi(std::string(argv[3]));
+        USE_LOCAL_STORAGE = std::stoi(std::string(argv[4]));
 
         if (NUM_HOSTS < 1) {
             std::cerr << "Number of hosts must be at least 1";
@@ -195,9 +197,15 @@ int main(int argc, char **argv) {
             throw std::invalid_argument("invalid network bandwidth");
         }
 
+        if (USE_LOCAL_STORAGE != 0 && USE_LOCAL_STORAGE != 1) {
+            std::cerr << "Use local storage must be 0 or 1";
+            throw std::invalid_argument("invalid local storage spec");
+        }
+
     } catch (std::invalid_argument &e) {
-        std::cerr << "Usage: " << argv[0] << " <num hosts> <num cores per host> <network bandwidth>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <num hosts> <num cores per host> <network bandwidth> <use local storage>" << std::endl;
         std::cerr << "    disk bandwidth: measured in MB/sec" << std::endl;
+        std::cerr << "    use local storage: 0 (false) or 1 (true)" << std::endl;
         return 1;
     }
 
@@ -210,7 +218,7 @@ int main(int argc, char **argv) {
     generatePlatform(platform_file_path, NUM_HOSTS, NUM_CORES_PER_HOST, WIDE_AREA_BW);
     simulation.instantiatePlatform(platform_file_path);
 
-    // storage service
+    // Remote storage service
     auto storage_service = simulation.add(new wrench::SimpleStorageService(
             "storage.edu", {"/"},
             {
@@ -221,6 +229,17 @@ int main(int argc, char **argv) {
             }));
 
     storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
+
+    // Local storage service
+    auto local_storage_service = simulation.add(new wrench::SimpleStorageService(
+            "hpc_0.edu", {"/"},
+            {
+                    {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
+            }, {
+                    {wrench::SimpleStorageServiceMessagePayload::FILE_READ_REQUEST_MESSAGE_PAYLOAD, 0},
+                    {wrench::SimpleStorageServiceMessagePayload::FILE_READ_ANSWER_MESSAGE_PAYLOAD, 0}
+            }));
+    local_storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
 
     std::vector<std::string> compute_hosts;
     for (int i=1; i < NUM_HOSTS + 1; i++) {
@@ -235,9 +254,9 @@ int main(int argc, char **argv) {
 
     // WMS on user.edu
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(storage_service)),
+            new wrench::ActivityScheduler(storage_service, local_storage_service, (USE_LOCAL_STORAGE == 1))),
                                                       {compute_service},
-                                                      {storage_service},
+                                                      {storage_service, local_storage_service},
                                                       "user.edu"
     ));
 

@@ -17,9 +17,15 @@ namespace wrench {
     /**
      * @brief Constructor
      * @param storage_services: storage service
+     * @param local_storage_services: local storage service
+     * @param use_local_storage_services: true/false
      */
-    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service)
-            : StandardJobScheduler(), storage_service(storage_service) {
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service,
+                                         std::shared_ptr<StorageService> local_storage_service,
+                                         bool use_local_storage_service)
+            : StandardJobScheduler(), storage_service(storage_service),
+              local_storage_service(local_storage_service),
+              use_local_storage_service(use_local_storage_service) {
     }
 
     /**
@@ -54,11 +60,24 @@ namespace wrench {
                     WRENCH_INFO("Starting task %s on a core of host %s", t->getID().c_str(), h.first.c_str());
                     std::map<wrench::WorkflowFile *, std::shared_ptr<wrench::FileLocation>> file_locations;
                     for (auto const &f : t->getInputFiles()) {
-                        file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                        if ((t->getTopLevel() != 0) and (this->use_local_storage_service)) {
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service);
+                        } else {
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                        }
                     }
                     for (auto const &f : t->getOutputFiles()) {
-                        file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);;
+                        if ((t->getTopLevel() != t->getWorkflow()->getNumLevels()-1) and (this->use_local_storage_service)) {
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service);
+                        } else {
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                        }
                     }
+//                    std::cerr << "Task" << t->getID() << "\n";
+//                    for (auto const &f : file_locations) {
+//                        std::cerr << "  - " << f.first->getID() << " at " << f.second->getStorageService()->getHostname() << "\n";
+//                    }
+
                     auto job = this->getJobManager()->createStandardJob(t, file_locations);
                     std::map<std::string, std::string> service_specific_arguments;
                     service_specific_arguments[t->getID()] = h.first+":1";

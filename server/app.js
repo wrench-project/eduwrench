@@ -1242,6 +1242,7 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
     const NUM_HOSTS = req.body.num_hosts;
     const NUM_CORES = req.body.num_cores;
     const LINK_BANDWIDTH = req.body.link_bandwidth;
+    const USE_LOCAL_STORAGE = req.body.use_local_storage;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1253,7 +1254,7 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
         "--cfg=network/TCP-gamma:20000000000"  // TCP Congestion Window Size!
     ];
 
-    const SIMULATION_ARGS = [NUM_HOSTS, NUM_CORES, LINK_BANDWIDTH].concat(LOGGING);
+    const SIMULATION_ARGS = [NUM_HOSTS, NUM_CORES, LINK_BANDWIDTH, USE_LOCAL_STORAGE].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -1279,7 +1280,8 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
             "activity": "workflow_distributed",
             "num_hosts": NUM_HOSTS,
             "num_cores": NUM_CORES,
-            "link_bandwidth": LINK_BANDWIDTH
+            "link_bandwidth": LINK_BANDWIDTH,
+            "use_local_storage": USE_LOCAL_STORAGE
         });
 
         /**
@@ -1299,6 +1301,11 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
         });
     }
 });
+
+
+
+
+
 
 
 function logData(received_data) {

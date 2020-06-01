@@ -1,56 +1,30 @@
 $(function () {
 
-    $("#num-hosts").on("keyup", function () {
-        let num_hosts_input_el = $(this);
-        let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".num-hosts-label");
+    $("#link-bandwidth").on("keyup", function () {
+        let link_bandwidth_input_el = $(this);
+        let link_bandwidth_input_value = parseInt(link_bandwidth_input_el.val());
+        let link_bandwidth_label_el = $(".link-bandwidth-label");
 
-        if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
+        if (link_bandwidth_input_value >= 1 && link_bandwidth_input_value <= 20) {
 
-            num_hosts_label_el.text("N=" + (num_hosts_input_value).toString() + " Hosts")
+            link_bandwidth_label_el.text("Bandwidth: " + (link_bandwidth_input_value).toString() + " MB/sec")
                 .css("background-color", "#d3ffe9");
 
-            num_hosts_input_el.removeClass("is-invalid")
+            link_bandwidth_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (num_hosts_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_hosts_label_el.css("background-color", "");
+                if (link_bandwidth_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    link_bandwidth_label_el.css("background-color", "");
                 }
             }, 500);
         } else {
-            num_hosts_label_el.css("background-color", "#ffb7b5");
-            num_hosts_input_el.removeClass("is-valid")
+            link_bandwidth_label_el.css("background-color", "#ffb7b5");
+            link_bandwidth_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });
 
-    $("#num-cores").on("keyup", function () {
-        console.log("HERE!");
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
-
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
-
-            num_cores_label_el.text("Cores: " + num_cores_input_value.toString())
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
 
 
     $('#simulator-form').on('submit', function (event) {
@@ -77,10 +51,10 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_hosts: $("#num-hosts").val(),
-                    num_cores: $("#num-cores").val(),
-                    link_bandwidth: "100",
-                    use_local_storage: "0",
+                    num_hosts: "5",
+                    num_cores: "4",
+                    link_bandwidth: $("#link-bandwidth").val(),
+                    use_local_storage: $('#remote-storage-service-input').is(':checked') ? "1" : "0",
                     userName: userName,
                     email: email
                 }),

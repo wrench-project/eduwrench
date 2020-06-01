@@ -13,12 +13,17 @@ namespace wrench {
                            const std::vector<WorkflowTask *> &tasks);
 
 
-        ActivityScheduler(std::shared_ptr<StorageService> storage_service);
+        ActivityScheduler(std::shared_ptr<StorageService> storage_service,
+                          std::shared_ptr<StorageService> local_storage_service,
+                          bool use_local_storage_service
+                );
 
         void taskCompletedOnHost(std::string hostname, WorkflowTask *task);
 
     private:
        std::shared_ptr<StorageService> storage_service;
+       std::shared_ptr<StorageService> local_storage_service;
+       bool use_local_storage_service;
 
        std::map<std::string, unsigned long> idle_core_counts;
        std::map<std::string, double> available_rams;
