@@ -16,7 +16,7 @@ Go through the tabs below in sequence...
   <a class="item " data-tab="second">Distributed Execution</a>
   <a class="item " data-tab="third">Data Locality</a>
   <a class="item " data-tab="fourth">Task- and Data-Parallelism</a>
-  <a class="item " data-tab="fifth">Capstone Exercise</a>
+  <a class="item " data-tab="fifth">Capstone</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first" >
@@ -26,7 +26,7 @@ Go through the tabs below in sequence...
   {% include_relative include_workflow/workflow_distributed.md %}
 </div>
 <div markdown="1" class="ui tab segment " data-tab="third">
-  {% include_relative include_workflow/workflow_execution_data_locality.md %}
+  {% include_relative include_workflow/workflow_data_locality.md %}
 </div>
 <div markdown="1" class="ui tab segment " data-tab="fourth">
   {% include_relative include_workflow/workflow_execution_parallelism.md %}

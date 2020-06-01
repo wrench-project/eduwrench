@@ -188,7 +188,7 @@ have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
   <div markdown="1" class="ui segment content">
   
 It's better to use 5 4-core hosts because the RAM at each host
-if 32 BG. Therefore, no matter how many  cores a host has
+if 32 GB. Therefore, no matter how many  cores a host has
 it cannot run more than 4 of our pre_* tasks in parallel. 
 
 This is seen in simulation:
