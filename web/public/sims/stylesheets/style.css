@@ -186,8 +186,10 @@ h6 {
     pointer-events: none;
     font-family: sans-serif;
     font-size: 12px;
-    left: 0 !important;
-    top: 10em !important;
+}
+
+.card {
+    position: inherit !important;
 }
 
 #workflow-execution-chart-makespan-tooltip {

@@ -20,9 +20,9 @@ version: '1.0-dev'
 
 ## Build settings (less common customizations)
 
-theme: minima
-plugins:
-  - jekyll-feed
+#theme: minima
+#plugins:
+#  - jekyll-feed
 
 # Dependencies
 markdown: kramdown
