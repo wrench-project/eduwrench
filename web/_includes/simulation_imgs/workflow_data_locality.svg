@@ -436,13 +436,13 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 14px">
-                                    <span style="font-size: 14px">Hostname: hpc_5.edu</span>
+                                    <span style="font-size: 14px">Hostname: hpc_N.edu</span>
                                 </div>
                                 <div style="font-size: 14px">
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b>Cores: 4</b>
+                                    <b><span class="num-cores-label">Cores: 4</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>
@@ -566,15 +566,15 @@
                 <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%"
                                height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                     <div xmlns="http://www.w3.org/1999/xhtml"
-                         style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 59px; height: 1px; padding-top: 471px; margin-left: 614px;">
+                         style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 80px; height: 1px; padding-top: 471px; margin-left: 614px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: left; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <b>5 Hosts</b>
+                                <b><span class="num-hosts-label">N=1 Host</span></b>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
-                <text x="614" y="485" fill="#000000" font-family="Helvetica" font-size="14px">5 Hosts</text>
+                <text x="614" y="485" fill="#000000" font-family="Helvetica" font-size="14px">N Hosts</text>
             </switch>
         </g>
         <rect x="0" y="596" width="165" height="30" rx="4.5" ry="4.5" fill="#000000" stroke="#000000"
@@ -791,7 +791,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b>Cores: 4</b>
+                                    <b><span class="num-cores-label">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>

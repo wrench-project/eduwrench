@@ -26,7 +26,6 @@ $(function () {
     });
 
     $("#num-cores").on("keyup", function () {
-        console.log("HERE!");
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
         let num_cores_label_el = $(".num-cores-label");

@@ -10,6 +10,24 @@ permalink: simulations/workflow_data_locality/
 
 <div class="container-fluid">
     <row>
+        <div class="form-group">
+            <label for="num-hosts">Number of compute hosts</label>
+            <input class="form-control" type="number" id="num-hosts" placeholder="1" value="1" min="1" max="20" step="1" required>
+            <div class="invalid-feedback">
+                Provide a number in the range of [1, 20]
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="num-cores">Number of cores per compute host</label>
+            <input class="form-control" type="number" id="num-cores" placeholder="1" value="1" min="1" max="32" step="1" required>
+            <div class="invalid-feedback">
+                Provide a number in the range of [1, 32]
+            </div>
+        </div>
+
+    </row>
+    <row>
 <div class="form-group">
     <label for="link-bandwidth">Wide-Area Link Bandwidth in MB/sec</label>
     <input type="number" class="form-control" id="link-bandwidth" placeholder="100" value="100" min="1" max="500" step="1" required>
