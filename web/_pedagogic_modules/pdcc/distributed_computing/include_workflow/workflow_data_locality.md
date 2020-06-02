@@ -199,21 +199,21 @@ So with 35.8% we're still pretty fact from the ideal parallel efficiency.
 
 ---
 
-### Questions
+#### Questions
 
 Consider  the following workflow:
 
 <object class="figure" type="image/svg+xml" width="200" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
 
-<p></p>
+<p><br></p>
 
 **[A.3.4.q3.1]** Say we execute this workflow at a compute site with 
 two 100 GFlop/sec cores. All data is read/written from/to a remote
-storage site. How many bytes are read/written in total?
+storage site. How many MB are read/written in total?
 
 **[A.3.4.q3.2]** Say that the read/write data rate for the remote storage
-site is 200 MB/sec (which has we know from
-the simulation above could be well below the actual bandwidth). What is the
+site is 200 MB/sec (which, as we know from
+the simulation above, could be well below the actual bandwidth). What is the
 workflow execution time? hint: be careful about how the two blue tasks split the
 read bandwidth.
 

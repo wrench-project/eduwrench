@@ -251,7 +251,7 @@ execution without the simulation.
 
 ---
 
-### Questions
+#### Questions
 
 Consider  the following workflow (all green tasks have identical specs, and so do all  blue tasks):
 
