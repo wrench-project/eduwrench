@@ -1001,7 +1001,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
     const MAX_OUTPUT = req.body.max_task_output;
     const SEED = req.body.seed;
 
-
+    const INDIVIDUAL = ["individual"];
     const SEED_STATE = ["--seed", SEED];
     const GENERATION = ["--generate", NUM_WORKERS, MIN_FLOPS, MAX_FLOPS, MIN_BAND, MAX_BAND, NUM_TASKS, MIN_INPUT,
         MAX_INPUT, MIN_FLOP, MAX_FLOP, MIN_OUTPUT, MAX_OUTPUT];
@@ -1045,7 +1045,7 @@ app.post("/run/master_worker", authCheck, function (req, res) {
 
     var SIMULATION_ARGS;
     if (NUM_INVOCATION==1) {
-        SIMULATION_ARGS = TASK_SPECS.concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(SEED_STATE).concat(LOGGING);
+        SIMULATION_ARGS = INDIVIDUAL.concat(TASK_SPECS).concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(SEED_STATE).concat(LOGGING);
     } else {
         SIMULATION_ARGS = GENERATION.concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(SEED_STATE).concat(ABBREV_LOGGING);
     }
