@@ -69,8 +69,6 @@ but then also use it to answer the practice questions hereafter.
 
 ---
 
-XXX HENRI WORKING HERE XXX
-
 ####  Practice Questions
 
 **[A.3.4.p3.1]** When executing the workflow with a 100 MB/sec wide-area link
@@ -203,8 +201,27 @@ So with 35.8% we're still pretty fact from the ideal parallel efficiency.
 
 ### Questions
 
-Consider  the following workflow (all green tasks have identical specs, and so do all  blue tasks):
+Consider  the following workflow:
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_question.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" width="200" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
 
-**[A.3.4.q2.1]**  XXXX
+<p></p>
+
+**[A.3.4.q3.1]** Say we execute this workflow at a compute site with 
+two 100 GFlop/sec cores. All data is read/written from/to a remote
+storage site. How many bytes are read/written in total?
+
+**[A.3.4.q3.2]** Say that the read/write data rate for the remote storage
+site is 200 MB/sec (which has we know from
+the simulation above could be well below the actual bandwidth). What is the
+workflow execution time? hint: be careful about how the two blue tasks split the
+read bandwidth.
+
+**[A.3.4.q3.3]** We now have local storage at the compute site, with data
+access rate 500 MB/sec. What is the workflow execution time now? What is the
+parallel efficiency? 
+
+
+
+
+
