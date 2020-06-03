@@ -29,7 +29,7 @@ data-parallelism. This is often called "mixed" parallelism.
 
 Figure 1 above shows an example workflow with both task- and data-parallelism. For simplicity, we completely ignore
 files and I/O.  The green and red tasks are not data-parallel, and can run only on a single core.  The blue, yellow, and
-gree tasks are data-parallel. For each task, in addition to its amount of work, we also indicate the value of $\alpha$,
+green tasks are data-parallel. For each task, in addition to its amount of work, we also indicate the value of $\alpha$,
 the fraction of the sequential execution time that can be parallelized. Based on Amdahl's law, a data-parallel task with
 work $w$ GFlop runs on a $p$-core computer, where core speed is $s$ GFlop/sec, in time:
 
@@ -37,7 +37,7 @@ $$
 T(p) = \frac{\alpha \times \frac{w}{s}}{p} + (1 - \alpha) \times \frac{w}{s})
 $$
 
-The above equation just means that the parallizable portion of the sequential execution time (the left term) is accelerated
+The above equation just means that the parallelizable portion of the sequential execution time (the left term) is accelerated
 by a factor $p$ when executed in parallel on $p$ cores, while the sequential portion (the right term) remains sequential. 
 
 So, say we are running this workflow on a 4-core computer where cores compute at speed 100 GFlop/sec. 
@@ -68,12 +68,12 @@ more of these options has to be the best one. Some are clearly not great. For in
 core would waste 1 core of our 4-core computer.
 
 
-#### Simulating task- and data-parellelism
+#### Simulating task- and data-parallelism
 
 The simulation app below makes it possible to simulate the execution of the above example workflow on
-a platform that hosts two 3-core hosts. Again, remember that in this tab we ignore all I/O. The app
+a platform that comprises **two 3-core hosts**. Again, remember that in this tab we ignore all I/O. The app
 allows you to pick how many cores are used for the blue, yellow, and purple tasks. You can use this
-app on your own, but then you shold use it to answer the following practice questions.
+app on your own, but then you should use it to answer the following practice questions.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -89,7 +89,8 @@ app on your own, but then you shold use it to answer the following practice ques
 
 #### Practice Questions
 
-**[A.3.4.p4.1]**  XXX
+**[A.3.4.p4.1]** Estimate the execution time when all data-parallel tasks use 3 cores. Double-check
+your result in simulation
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -97,7 +98,95 @@ app on your own, but then you shold use it to answer the following practice ques
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-XXX 
+With 3 cores, here are the data-parallel task execution times: 
+
+  - Blue task: $0.90 \times 10 / 3 + 0.10  \times 10 =$ 4.00 seconds
+  - Yellow task: $0.85 \times 20 / 3 + 0.15  \times 20 =$ 8.66 seconds
+  - Purple task: $0.80 \times 12 / 3 + 0.20  \times 12 =$ 5.60 seconds
+  
+The blue and purple tasks run on the same host, for a total time of 9.60 seconds,
+while the yellow task runs on  the other host.
+
+The total execution time is thus 11.60 seconds, which is confirmed by the simulation. 
+ 
+  </div>
+</div>
+<p></p>
+
+**[A.3.4.p4.2]** Say that you must configure two of the data-parallel tasks to use 
+1 core, and the third one to use 3 core.  Which task should use 3 cores to achieve
+the shortest execution time?  Come up with an answer based on your intuition, and then
+ and check your intuition in simulation. 
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+The yellow task has 2000 GFlop work, so, even though its $\alpha$ is not as high as
+that of the blue task, we should give it the  3 cores!
+
+The simulation gives us the following total execution times:
+
+  - blue task with 3 cores: 22  seconds
+  - yellow task with 3 cores:  14 seconds
+  - purple task with 3 cores: 22 seconds
+  
+Our intuition is confirmed. The fact that the other two options have the same
+execution time  is simply because the yellow task is the task that determines
+the execution time. 
+ 
+  </div>
+</div>
+<p></p>
+
+
+**[A.3.4.p4.3]** Say we configure each data-parallel to run on 2 cores. Which of these tasks 
+will run on the same host? Come up with an answer user intuition, or analytically, and then double-check
+it in simulation.
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+When using 2 cores, the yellow task will still be the longest task, so it will be
+place by itself on a host. The blue and purple task will run on the same host.   This is 
+confirmed in the simulation output. 
+
+  </div>
+</div>
+<p></p>
+
+**[A.3.4.p4.4]** Because the yellow task is so expensive,  we decide to always  run
+it on 3 cores. Is it better to given 1 core to the blue task and 2 cores to the
+purple task, or the other way around?
+
+<div class="ui accordion fluid">
+  <div class=" title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+
+All data-parallel tasks run simultaneously.
+
+First, does this matter? That is, if the yellow task runs for, say 13 seconds, it
+doesn't really matter what we do with the blue and purple tasks. Turns out that
+the yellow task runs in time $20 \times 0.85 / 3 + 20 \times 0.15 =$ 8.66 seconds.
+So the yellow task will not determine the execution time anyway. 
+
+If we give 1 core to the blue task, then it runs in 10 seconds, and determines the
+execution time. If instead
+we give 1 core to the purple task, it will run in 12 seconds, and determine the
+execution time. So we should give 2 cores to the purple task and 1 core to the
+blue task. 
+
+
   </div>
 </div>
 <p></p>

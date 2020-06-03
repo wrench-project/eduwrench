@@ -16,19 +16,24 @@ namespace wrench {
     ActivityWMS::ActivityWMS(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                              const std::set<std::shared_ptr<StorageService>> &storage_services,
                              const std::string &hostname) : WMS (
-                                     nullptr,
-                                     nullptr,
-                                     compute_services,
-                                     storage_services,
-                                     {}, nullptr,
-                                     hostname,
-                                     ""
-                                     ) {}
+            nullptr,
+            nullptr,
+            compute_services,
+            storage_services,
+            {}, nullptr,
+            hostname,
+            ""
+    ) {}
 
     void ActivityWMS::submitTask(std::string task_name, std::string host_name) {
         auto cs = *((this->getAvailableComputeServices<ComputeService>()).begin());
         auto job = this->job_manager->createStandardJob(this->getWorkflow()->getTaskByID(task_name), {});
         this->job_manager->submitJob(job, cs, {{task_name, host_name}});
+        WRENCH_INFO("%s task starting on %lu cores on %s",
+                    task_name.c_str(),
+                    this->getWorkflow()->getTaskByID(task_name)->getMinNumCores(),
+                    host_name.c_str()
+        );
     }
 
     /**
@@ -54,6 +59,7 @@ namespace wrench {
         {
             submitTask("green", "host1");
             auto event = this->waitForNextEvent();
+            WRENCH_INFO("green task has completed");
         }
         // Submit blue task on host1
         {
@@ -94,17 +100,21 @@ namespace wrench {
             auto real_event = std::dynamic_pointer_cast<StandardJobCompletedEvent>(event);
             auto num_cores = real_event->standard_job->getTasks().at(0)->getMinNumCores();
             auto hostname = real_event->standard_job->getTasks().at(0)->getExecutionHost();
+            WRENCH_INFO("%s task has completed", real_event->standard_job->getTasks().at(0)->getID().c_str());
             idle_cores[hostname] -= num_cores;
         }
 
         while (num_pending_tasks--) {
-            waitForNextEvent();
+            auto event = waitForNextEvent();
+            auto real_event = std::dynamic_pointer_cast<StandardJobCompletedEvent>(event);
+            WRENCH_INFO("%s task has completed", real_event->standard_job->getTasks().at(0)->getID().c_str());
         }
 
         // Run red task on host1
         {
             submitTask("red", "host1");
             this->waitForNextEvent();
+            WRENCH_INFO("red task has completed");
         }
 
         WRENCH_INFO("--------------------------------------------------------");
