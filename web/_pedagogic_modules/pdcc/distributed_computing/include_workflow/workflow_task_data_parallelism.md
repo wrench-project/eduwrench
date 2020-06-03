@@ -195,4 +195,26 @@ blue task.
 
 #### Questions
 
-**[A.3.4.q4.1]** XXX
+Considering the workflow below, answer the following questions. 
+
+<object class="figure" type="image/svg+xml" width="250" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
+
+**[A.3.4.q4.1]** If we are given two hosts with 100 GFlop/sec hosts, where
+host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
+host1 or on host2 (if our objective is to run the workflow as quickly as
+possible)?
+
+
+**[A.3.4.q4.2]** If, instead, we run the workflow on a a single 4-core computer,
+what is the best approach?
+
+
+**[A.3.4.q4.3]** Say now we are running our workflow on a single 40-core
+host. What is the best way to allocate cores to the blue and purple task? If
+you're really into it, you can do this completely analytically (it requires
+finding roots of degree-2 polynomials).  More easily, you can simply
+write the execution time as a function of the number of cores allocated
+to the blue task, and plot this function to find where it attains 
+its minimum visually.  There are many, many web site that do this
+(search for "graphing calculator"). 
+
