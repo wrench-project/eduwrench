@@ -3,94 +3,93 @@
 # - term: <word>
 #   description: <word's description>
 
-# section: what is this about?
-- term: workflow
-  description: an application comprised of individual computational tasks that
-               must execute in some particular sequence to produce a final desired
-               output
+- term: bandwidth
+  description: peak achievable data transfer rate across a network link/path, measured in bytes per second
+
+- term: cluster
+  description: a set of possibly many computers (or compute nodes) 
+               interconnected via a high-speed network used as a high-capacity compute platform
+
+- term: compute node
+  description: a computer in a compute platform such as a cluster
+
+- term: compute service
+  description: a software service that manages compute resources and handles requests for executing computational tasks
+
+- term: core (or CPU core)
+  description: a processing unit, or processor, in a multi-core microprocessor 
+
+
+- term: cyber infrastructure
+  description: a set of hardware resources (hardware infrastructure) managed by
+               software services (software infrastructures) that make it possible
+               to execute parallel programs
+
+- term: data locality
+  description: the concept of having date  "close" to where the computation takes place. This could be having data in a cache close to the core withing a computer, or data in storage close to a computer  (in terms of network proximity).
 
 - term: directed acyclic graph (DAG)
   description: a directed graph containing no cycles, often used to represent a
                workflow
 
-- term: cyber infrastructure
-  description: a set of hardware resources (hardware infrastructure) managed by
-               software services (software infrastructures) that make it possible
-               to execute application workloads, such as workflows
+- term: execution time
+  description: the time it takes for a task/program to execute from start to finish.
 
-- term: workflow management system (WMS)
-  description: a software tool that automatically orchestrates the execution of a workflow
-               on a cyber infrastructure
-
-# section: primer on file transfer times
-- term: bandwidth
-  description: rate of data transfer across a network link, measured in bytes per second
-
-- term: latency
-  description: the time it takes for a single packet to travel from one end of a network
-               path to the other end
-
-# section: primer on workflow executions
-- term: persistent storage
-  description: a storage device, such as a hard drive, that retains data even after
-               its power source has been shut off
-
-- term: storage service
-  description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
-
-- term: compute service
-  description: a software service that manages compute resources and handles requests for executing computational tasks
+- term: fork-join
+  description: a pattern in a directed acyclic graph (workflow) in which one vertex (source task)
+  is connected to many other vertices (children tasks), and these vertices are then all
+  connected to a single vertex (sink task). 
 
 - term: floating point operation (flop)
   description: a standard unit of "amount of work to do" used for scientific applications (as many of such applications perform mostly floating point arithmetic); computational hardware resources then have speed measured in flop/sec, i.e., how much "work" they can perform per time unit
 
-- term: staging (a file)
-  description: the process of storing certain application files (i.e., initial input files) on some persistent storage prior to the application execution
+- term: frontend node
+  description: the entry-point computer to a cluster, which typically is connected to the internet and runs software to handle requests for the cluster's compute nodes
+
+- term: idle time
+  description: the amount of time that a core/computer does not actually compute during a program execution (typically because of I/O operations taking place)
+
+- term: latency
+  description: the time it takes for a single packet to travel from one end of a network
+               link/path to the other end
 
 - term: makespan
-  description: the overall execution time of an application execution (i.e., the duration of the time between the beginning of the execution and the completion of the last task completion).
+  description: the overall execution time of a program execution (i.e., the wall-clock time between the
+ beginning of the program's first task and the competion of the program's last task). 
 
-# section: activity 1 - running your first simulated workflow execution
-- term: turnaround-time
-  description: the time elapsed between a task is submitted for execution and its  completion
-
-- term: data locality
-  description: the concept of moving computation closer to where data resides as this
-                can be more efficient than sending large amounts of data to where a compute resource is available
-
-# section: activity 2 - parallelism
-- term: join (Workflow structure)
-  description: a workflow structure where multiple tasks "join" into a single task 
-
-- term: cluster 
-  description: a set of compute nodes connected via a network to be used as a high-capacity compute platform to run jobs
-
-- term: frontend node
-  description: the entry-point computer to a cluster, which typically is connected to the internet and runs software to handle job requests for the cluster's compute nodes
-
-- term: compute node
-  description: one of the a computers in a cluster that is used to run jobs
+- term: persistent storage
+  description: a storage device, such as a hard drive, that retains data even after
+               its power source has been shut off
 
 - term: parallelism
   description: the ability of a program to execute multiple streams of instructions simultaneously on multiple processors 
 
-- term: core utilization
-  description: the fraction of time a core computes during application execution 
-
-- term: CPU core (or just core)
-  description: a processing unit, or processor, in a multi-core microprocessor 
-
-- term: average core utilization
-  description: the average utilization of all cores on a platform while executing a given workload
-
-- term: vertical scaling
-  description: augmenting a compute service by upgrading it with a faster processor or one with more cores
-
-- term: horizontal scaling
-  description: augmenting a compute service by upgrading it with more machines
+- term: parallel efficiency
+  description: the parallel speedup divided by the number of processors, as a percentage
 
 - term: parallel speedup
   description: the acceleration factor (when compared to a sequential execution) when running an application using multiple processors
 
-- term: parallel efficiency
-  description: the parallel speedup divided by the number of processors, as a percentage
+- term: RAM (Random Access Memory)
+  description: memory provided by a computer so that running programs can store all the code/data needed for their execution on that computer
+
+- term: storage service
+  description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
+
+- term: time sharing
+  description: the technique by which an operating system runs multiple programs on the same core, rapidly
+  cycling over them throughout time. 
+
+- term: turnaround-time
+  description: the time elapsed between a task is submitted for execution and its completion
+
+- term: work
+  description: the number of operations that a particular task needs to execute when executed on a core that performs some number of such operations per time unit. For instance, a task with 100 GFlop work would run in .5 seconds on a core with 200 GFlop/sec speed. 
+
+- term: workflow
+  description: a program comprised of individual computational tasks, often stand-alone executables, that must execute in some particular sequence to produce a final desired output
+
+- term: workflow management system (WMS)
+  description: a software tool that automatically orchestrates the execution of a workflow on a cyber infrastructure
+
+

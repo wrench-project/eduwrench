@@ -1,8 +1,8 @@
 
 #### Learning Objectives
 
-- Understand the concept of Memory (RAM)
-- Understand how the amount of available Memory limits program executions
+- Understand the concept of memory (RAM)
+- Understand how the amount of available memory limits program executions
 
 ---
 
@@ -20,8 +20,8 @@ When not enough RAM is available (e.g., the program's address space is too
 big), the Operating System keeps part of the address space on disk and
 shuffles content between RAM and disk as necessary. Albeit fascinating,
 this comes with a significant performance hit. Our main focus in these
-pedagogic modules is performance, and *we will only consider executing
-a program if its entire address space fits in RAM*.  
+pedagogic modules is performance, and **we will only consider executing
+a program if its entire address space fits in RAM**.  
 
 For instance, consider a single-core computer with 4 GB of RAM. We have
 three programs *A*, *B*, and *C*, with address spaces of 1 GB, 2 GB, and 3
@@ -34,6 +34,12 @@ to store the Operating System's Kernel (see an OS textbook).
 
 If you have been paying attention you may wonder why we are even talking 
 about running programs at the same time since in the previous tab ("Time
-Sharing") we said we would almost never do it!  To find out, proceed to the
+Sharing") we said we would almost never do it!  We will find out in the 
 [Multicore Computing]({{ site.baseurl }}/pedagogic_modules/pdcc/multi_core_computing) 
 module!
+
+---
+
+#### Suggested activities
+
+**[How much RAM?]** Find out how much RAM you have on your computer  in total, and how much RAM is available for running new programs right now.

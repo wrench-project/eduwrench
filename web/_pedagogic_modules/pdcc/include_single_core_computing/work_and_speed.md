@@ -16,7 +16,7 @@ interactive, i.e., that react based on real-time user input via the
 keyboard or the mouse. A text editor would fall in this category. Instead,
 we almost always consider programs that have some amount of computation,
 or **work**, to perform and then terminate. An example would be a program
-that mines a bitcoin.
+that mines a cryptocurrency.
 
 The simplest model of performance when executing a non-interactive program
 on a core of a computer is to assume that the computer delivers constant
@@ -40,24 +40,21 @@ One possibility is to use a measure that is specific to what the program
 does. For instance, if the program renders movie frames, a good measure of
 work would be the number of frames to render.  One would then want to measure a
 core's speed in terms of the number of frames that can be rendered per second
-(assuming all frames take the same compute time). 
+(assuming all frames require the same amount of computation). 
 
 Another possibility is to use a more generic measure, for instance, the
 number of instructions.  The work of a program would then be measured by
-its number of instructions (e.g., the number of assembly instructions the
+its number of instructions (e.g., the number of hardware instructions the
 program performs) and the speed of a core would be in number of
 instructions per second. This approach is known to have problems, as
 instructions are not all equal, and especially across different families of
 processors. Therefore, a processor that delivers fewer instructions per
-seconds than another could actually be prefered for running some program.
+seconds than another could actually be preferred for running some program.
 
 ### Flop and Flop/sec
 
-It turns out that the question of modeling/predicting how fast a particular
-program will run on a particular core based on a single measure of work and
-speed is fraught with peril (the only way to be sure is to actually run the
-program!). 
-
+It turns out that the question of defining a universal unit of work is
+not possible. 
 Nevertheless, in these pedagogic modules, unless specified
 otherwise, we use a simple measure of work: the number of floating-point
 operations, or **Flop**, that the program performs.  We thus measure the
@@ -91,12 +88,18 @@ $$
 \end{align}
 $$  
 
+Make sure you know your units:
+    - K(ilo): $10^3$
+    - M(ega): $10^6$
+    - G(iga): $10^9$
+    - T(era): $10^12$
+    - P(eta): $10^15$
+    - E(exa): $10^18$
+
 ---
 
 #### Practice Questions
 
-To make sure the above is crystal clear (and that you know your units!), try 
-to answer the following questions:
 
 **[A.1.p1.1]** You have to run a program that performs 4000 GFlop, and your
 core computes at speed 30 TFlop/sec. How long will the program run for in seconds?
@@ -138,3 +141,10 @@ What is the core speed in TFlop/sec?
 
 **[A.1.q1.3]** On a given core, a program just ran in 14 seconds. By what factor 
 should the core speed be increased if you want the program to run in 10 seconds?
+
+---
+#### Suggested activities
+
+**[Benchmarking  #1]**: Find on-line resources that provide benchmark results for currently available cores. What is the fastest currently available core in terms of floating point benchmarked performance?  Are there other kinds of benchmarks? 
+
+**[Benchmarking #2]**: Determine the compute speed of a core of your computer by searching for, downloading, and running a freely available floating point benchmark program.

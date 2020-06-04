@@ -9,9 +9,9 @@
 
 ### Basic Concepts
 
-In computing, the processor typically does not run program start to 
+A computer typically does not run a program start to 
 finish in a vacuum. Programs often need to consume **I**nput and 
-produce **O**utput, referred to as **IO operations**. A couple of 
+produce **O**utput, which  is done by executing **IO operations**. A couple of 
 very common IO operations are reading from disk and writing to disk. 
 As the disk is much slower than the CPU, even small disk reads or 
 writes can represent a large (from the CPU's perspective) chunk of 
@@ -23,7 +23,7 @@ are typically categorized as IO- or CPU-intensive. If a program spends
 more time performing IO operations than CPU operations, it is said to 
 be *IO-intensive*. If the situation is reversed, the program is said 
 to be *CPU-intensive*. For instance, a program that reads a large 
-`jpg` image from disk, reduces the brightness of every pixel (to make 
+jpeg image from disk, reduces the brightness of every pixel (to make 
 the image darker), and writes the modified image to disk is IO-intensive 
 on most standard computers (a lot of data to read/write from/to disk, and 
 very quick computation on this data - in this case perhaps just a simple 
@@ -38,7 +38,7 @@ read and write speeds as well. Reading is typically significantly faster
 than writing. Furthermore, different kinds of disks have different speeds 
 as well. The table below shows advertised read and write speeds for two 
 mass-market SATA disks, a Hard Disk Drive (HDD) and a Solid State Drive 
-(SSD): 
+(SSD), at the time this content is being written: 
 
 | Disk            | Read bandwidth | Write bandwidth |
 |-----------------|----------------|-----------------|

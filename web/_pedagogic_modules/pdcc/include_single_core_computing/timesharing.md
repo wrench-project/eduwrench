@@ -40,18 +40,19 @@ In practice, the programs in the above examples would complete later! This
 is because in real systems the context switching overhead is non-zero and
 because the programs would most likely compete for memory and caches (see 
 Computer Architecture and Operating Systems textbooks for all details). 
-But the above ideal model will be sufficient for our purposes. In fact, we 
-will almost always avoid time sharing altogether by never running two 
+But the above ideal model will be sufficient for our purposes. 
+
+In fact, we will almost always avoid time sharing altogether by never running two 
 programs on a single core. 
+However, the reasoning needed to compute
+how time sharing would impact program execution times is important and 
+applicable to other learning objectives (e.g., networking). This is why we
+include below some questions on this topic.
 
 ---
 
 #### Practice Questions
 
-Even though we will try to avoid time sharing, the reasoning for computing 
-how time sharing would impact program execution times is important and 
-applicable to other learning objectives (e.g., networking). So here are 
-a couple of practice questions:
 
 **[A.1.p2.1]** At time 0 on a core with speed 2 TFlop/sec you start two 
 programs. Program *A*'s work is 200 GFlop, and program *B*'s work is 220 
@@ -67,11 +68,13 @@ GFlop. At what times do the programs complete?
    In a first phase, both programs proceed at speed 1 TFLop/sec. Program 
    *A* completes first at time:
    <br/>
-   $$T_{A} = \frac{0.2 \text{TFlop}}{1\; \text{TFlop/sec}} = 0.2\; \text{sec}\;.$$
+
+   $$T_{A} = \frac{0.2 \text{TFlop}}{1\; \text{TFlop/sec}} = 0.2\; \text{sec}$$
    <br/><br/>
    At that point, program $B$ still has 20 GFlop left to compute, but it now 
    proceeds at speed 2 TFlop/sec. Therefore, it completes at time:
    <br/>
+
    $$ T_{B} = T_{A} + \frac{0.02 \text{TFlop}}{2\; \text{TFlop/sec}} = 0.21 \; \text{sec} $$
 
   </div>
