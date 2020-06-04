@@ -1,7 +1,7 @@
 
 #### Learning objectives
 
-  - Be able to put together the concepts learn in the previous tabs  
+  - Be able to put together the concepts learned in the previous tabs  
 
 ---
 
@@ -14,19 +14,19 @@ depicted in this figure:
 
 The 4-task workflow needs to be executed on a 2-host platform, with all
 workflow data hosted at a remote storage site.  The first task of the
-workflow is a data-parallel task; 20% of its sequential execution time
-cannot be parallelized (i.e., $\alpha = 0.8$).
+workflow is a data-parallel task; 10% of its sequential execution time
+cannot be parallelized (i.e., $\alpha = 0.9$).
 
 Note that in the platform above, we give you the actual data transfer rate
 achieved by the wide-area link (20 MB/sec). As we saw in previous tabs, due
 to high latencies, the achieved data transfer rate can be well below the
 link bandwidth.  We give you the data transfer rate so that it
-is straightforward to estimate data transfer times.
+is straightforward to estimate data transfer times accurately.
 
 ### Possible platform upgrades
 
 The compute resources in the platform are really virtual machines that 
-you have lease from a cloud provider.  With the current configuration
+you have leased from a cloud provider.  With the current configuration
 the workflow executes in 74 seconds, but you really want it to run it 
 as fast as possible since you want to execute this workflow as many times
 as possible per day (with different input data). 

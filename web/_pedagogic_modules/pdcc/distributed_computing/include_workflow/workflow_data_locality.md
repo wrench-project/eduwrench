@@ -1,8 +1,8 @@
 
 #### Learning objectives
 
-  - Gain exposure to the concept of data locality.
-  - Be able to quantify the impact of data locality on workflow execution.
+  - Understand the the concept of data locality in distributed platforms
+  - Be able to quantify the impact of data locality on workflow execution
 
 ---
 
@@ -10,19 +10,22 @@
 ### The need for data locality
 
 In the previous tab, all workflow tasks were reading/writing  data at a
-remote  (from their perspective) storage site. Due to the low wide-area
-bandwidth  (which is lower than the disk bandwidth)  and latency, the
-workflow execution spends a large fraction of its time performing remote
-I/O, which in terms hurts performance and parallel efficiency. This is
-especially damaging from the "intermediate" data files, that is those
+remote  (from their perspective) storage site. The wide-area  link  has lower
+bandwidth than the disk's, and the data transfer rate it achieves
+is negatively impacted by  high latency. 
+As a result, the
+workflow execution spends a large fraction of time performing remote
+I/O, which hurts performance and parallel efficiency. This is
+especially damaging for the "intermediate" data files, that is those
 that are output of one task an input to another.  These  files are
 written  to the remote storage and then immediately read back from it. 
-Keeping these files "close" to the compute hosts would of course be much
+Keeping these files "close" to the compute hosts would be much
 more efficient. 
 
 Trying to keep/move data close to where the computation takes place is
-often called **improving data locality**  (you may have encountered
-this term in Computer Architecture or Operating Systems courses/textbooks). 
+often called **improving data locality**. You may have encountered
+this term in Computer Architecture or Operating Systems courses/textbooks in
+the context of caches. Here we use it in the context of network proximity. 
 
 
 ### Better data locality for our workflow
@@ -35,13 +38,13 @@ data on the compute site. So let's enhance that site with a bit more hardware!
 <div class="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
 Figure 1 above show the compute site for the platform in the previous tab, but
-with a new host that is not used for computation but provides access to a 
+with a new host shown in green.  This host is not used for computation but provides access to a 
 disk with 500 MB/sec read/write bandwidth.
 
 Given the new storage capability, we can now refine the workflow execution
 strategy: unless a task is an exit task of the workflow, it stores its output
 on the disk at the compute site. In this way, whenever possible, tasks
-will read/write data to the local storage rather than the remove storage. The
+will read/write data to the local storage rather than the remote storage. The
 initial input files to the workflow are still stored at the remove storage site, 
 and the output files end up there as well. 
 
@@ -54,7 +57,7 @@ value of bandwidth of the wide-area network link between the storage site
 and the compute site. It also allows you to toggle the use of storage at
 the compute site (if not checked, the simulated execution behaves as in the
 previous tab, with poor data locality). You can use the app on your own,
-but then also use it to answer the practice questions hereafter.
+but then you should  use it to answer the practice questions hereafter.
 
 
 <div class="ui accordion fluid app-ins">
@@ -98,12 +101,13 @@ should take time 4000/500  = 8 seconds.  So we'd  expect a saving of
 $40 - 8 = 32$ seconds. In fact the saving is twice as much. 
 
 This is because
-the wide-area data transfer rate is not 100 MB/sec, due to the high latency.  
+the wide-area data transfer rate is not 100 MB/sec, due to the high network latency.  
+
 We saw this in the previous tab but can re-iterate it here. 
 The application, when not using any local storage, reads/write a total  of
 $20 \times 50 + 2 \times 20 \times 100 + 1 = 5001$ MB of data. Since the
 application computes for 210 seconds, this means that it spends 299.69 - 210 = 89.69 seconds 
-transferring the data. The the data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
+transferring the data. Thus the data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
 from he peak 100 MB/sec!  
 
 So if we re-compute our saving estimate above using this effective data transfer
@@ -203,19 +207,20 @@ So with 35.8% we're still pretty fact from the ideal parallel efficiency.
 
 Consider  the following workflow:
 
-<object class="figure" type="image/svg+xml" width="200" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" width="150" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
 
 <p><br></p>
 
-**[A.3.4.q3.1]** Say we execute this workflow at a compute site with 
-two 100 GFlop/sec cores. All data is read/written from/to a remote
+**[A.3.4.q3.1]** Say we execute this workflow at a compute site that hosts
+a 2-core hosts, with cores computing at 
+100 GFlop/sec. All data is read/written from/to a remote
 storage site. How many MB are read/written in total?
 
 **[A.3.4.q3.2]** Say that the read/write data rate for the remote storage
 site is 200 MB/sec (which, as we know from
 the simulation above, could be well below the actual bandwidth). What is the
 workflow execution time? hint: be careful about how the two blue tasks split the
-read bandwidth.
+bandwidth.
 
 **[A.3.4.q3.3]** We now have local storage at the compute site, with data
 access rate 500 MB/sec. What is the workflow execution time now? What is the

@@ -10,11 +10,11 @@
 ### Basic concept
 
 So far in this module we've only considered sequential tasks. In other words, each task can only use
-a single core.  But in the [Data-Parallelism tab of the Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing), we 
+a single core.  But in the Data-Parallelism tab of the [Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing), we 
 learned about **Data Parallelism**: the notion that a sequential task can be rewritten as a set of
 parallel tasks, with likely a remaining sequential portion of the execution. Then, in that same module,
 we learned about **Amdahl's Law**, which quantifies the data-parallel task's execution time on a given
-number of cores, given what fraction of the execution time has to remain sequential. You may want to 
+number of cores, given what fraction of the task's work has to remain sequential. You may want to 
 review this content before proceeding. 
 
 *Let's consider workflows in which  some tasks are data-parallel*. For this tasks we need to decide
@@ -29,43 +29,42 @@ data-parallelism. This is often called "mixed" parallelism.
 
 Figure 1 above shows an example workflow with both task- and data-parallelism. For simplicity, we completely ignore
 files and I/O.  The green and red tasks are not data-parallel, and can run only on a single core.  The blue, yellow, and
-green tasks are data-parallel. For each task, in addition to its amount of work, we also indicate the value of $\alpha$,
-the fraction of the sequential execution time that can be parallelized. Based on Amdahl's law, a data-parallel task with
+green tasks are data-parallel. For each one of these tasks, in addition to its amount of work, we also indicate the value of $\alpha$,
+the fraction of the work that can be parallelized. Based on Amdahl's law, a data-parallel task with
 work $w$ GFlop runs on a $p$-core computer, where core speed is $s$ GFlop/sec, in time:
 
 $$
-T(p) = \frac{\alpha \times \frac{w}{s}}{p} + (1 - \alpha) \times \frac{w}{s})
+T(p) = \frac{\alpha \times \frac{w}{s}}{p} + (1 - \alpha) \times \frac{w}{s}
 $$
 
 The above equation just means that the parallelizable portion of the sequential execution time (the left term) is accelerated
 by a factor $p$ when executed in parallel on $p$ cores, while the sequential portion (the right term) remains sequential. 
 
-So, say we are running this workflow on a 4-core computer where cores compute at speed 100 GFlop/sec. 
+Say we are running this workflow on a 4-core computer where cores compute at speed 100 GFlop/sec. 
 We could run each of the data-parallel tasks using 4 cores. In this case, here is the execution time of each task:
  
-  - Green: 1.00 sec
-  - Blue: $10 \times 0.9 / 4 + 10 \times 0.1$ = 3.25 sec
-  - Yellow: $20 \times 0.85 / 4 + 20 \times 0.15$ = 7.25 sec
-  - Purple: $12 \times 0.80 / 4 + 12 \times 0.20$ = 4.80 sec
-  - Red: 1.00 sec
+  - Green: $1.00$ sec
+  - Blue: $10 \times 0.9 / 4 + 10 \times 0.1 = 3.25$ sec
+  - Yellow: $20 \times 0.85 / 4 + 20 \times 0.15 = 7.25$ sec
+  - Purple: $12 \times 0.80 / 4 + 12 \times 0.20 = 4.80$ sec
+  - Red: $1.00$ sec
 
 No two tasks can run at the same time. So the total execution time is the sum of the task execution times, i.e., 17.30 seconds. 
 
-There are may other options! For instance, we could run the blue task using 2 cores, the yellow task using 2 cores,
+There are many other options! For instance, we could run the blue task using 2 cores, the yellow task using 2 cores,
 and the purple tasks using 4 cores, for the following task execution times:
 
-  - Green: 1.00 sec
-  - Blue: $10 \times 0.9 / 2 + 10 \times 0.1$ =  5.50 sec
-  - Yellow: $20 \times 0.85 / 2 + 20 \times 0.15$ =  11.5 sec
-  - Purple: $12 \times 0.80 / 4 + 12 \times 0.20$ = 4.80 sec
-  - Red: 1.00 sec
+  - Green: $1.00$ sec
+  - Blue: $10 \times 0.9 / 2 + 10 \times 0.1 =$  5.50 sec
+  - Yellow: $20 \times 0.85 / 2 + 20 \times 0.15 =$  11.5 sec
+  - Purple: $12 \times 0.80 / 4 + 12 \times 0.20 =$ 4.80 sec
+  - Red: $1.00$ sec
 
 But now the blue and yellow tasks can run in parallel! So the execution time is:
 $1 + 11.5 + 4.80 + 1 = $ 18.30 seconds.   This option isn't as good as the previous one. 
 
-How many options are there? Well, for each of the 3 tasks we have 4 options, so that's $4^3 = 64 options!!! One or
-more of these options has to be the best one. Some are clearly not great. For instance, running all tasks on a single
-core would waste 1 core of our 4-core computer.
+How many options are there? Well, for each of the 3 tasks we have 4 options, so that's $4^3 = 64$ options!!! One 
+(or more) of these options has to be the best one, and one (or more) has to be the worst one. For instance, running all tasks on a single core would waste 1 core of our 4-core computer, and is clearly not as good as running of of the tasks on 2 cores. 
 
 
 #### Simulating task- and data-parallelism
@@ -130,9 +129,9 @@ that of the blue task, we should give it the  3 cores!
 
 The simulation gives us the following total execution times:
 
-  - blue task with 3 cores: 22  seconds
-  - yellow task with 3 cores:  14 seconds
-  - purple task with 3 cores: 22 seconds
+  - when giving  3 cores to the blue task: 22  seconds
+  - when giving 3 cores to the yellow task:  14 seconds
+  - when giving 3 cores to the purple task: 22 seconds
   
 Our intuition is confirmed. The fact that the other two options have the same
 execution time  is simply because the yellow task is the task that determines
@@ -144,7 +143,7 @@ the execution time.
 
 
 **[A.3.4.p4.3]** Say we configure each data-parallel to run on 2 cores. Which of these tasks 
-will run on the same host? Come up with an answer user intuition, or analytically, and then double-check
+will run on the same host? Come up with an answer using intuition, or analytically, and then double-check
 it in simulation.
 
 <div class="ui accordion fluid">
@@ -155,7 +154,7 @@ it in simulation.
   <div markdown="1" class="ui segment content">
 
 When using 2 cores, the yellow task will still be the longest task, so it will be
-place by itself on a host. The blue and purple task will run on the same host.   This is 
+placed by itself on a host. The blue and purple task will run on the same host.   This is 
 confirmed in the simulation output. 
 
   </div>
@@ -178,11 +177,11 @@ All data-parallel tasks run simultaneously.
 First, does this matter? That is, if the yellow task runs for, say 13 seconds, it
 doesn't really matter what we do with the blue and purple tasks. Turns out that
 the yellow task runs in time $20 \times 0.85 / 3 + 20 \times 0.15 =$ 8.66 seconds.
-So the yellow task will not determine the execution time anyway. 
+So the yellow task will not determine the execution time, and yes, the choice in the question matters. 
 
 If we give 1 core to the blue task, then it runs in 10 seconds, and determines the
 execution time. If instead
-we give 1 core to the purple task, it will run in 12 seconds, and determine the
+we give 1 core to the purple task, it will run in 12 seconds, and determines the
 execution time. So we should give 2 cores to the purple task and 1 core to the
 blue task. 
 
@@ -197,7 +196,7 @@ blue task.
 
 Considering the workflow below, answer the following questions. 
 
-<object class="figure" type="image/svg+xml" width="250" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
+<object class="figure" type="image/svg+xml" width="200" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
 
 **[A.3.4.q4.1]** If we are given two hosts with 100 GFlop/sec hosts, where
 host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
@@ -205,7 +204,7 @@ host1 or on host2 (if our objective is to run the workflow as quickly as
 possible)?
 
 
-**[A.3.4.q4.2]** If, instead, we run the workflow on a a single 4-core computer,
+**[A.3.4.q4.2]** If, instead, we run the workflow on a single 4-core computer,
 what is the best approach?
 
 
@@ -215,6 +214,6 @@ you're really into it, you can do this completely analytically (it requires
 finding roots of degree-2 polynomials).  More easily, you can simply
 write the execution time as a function of the number of cores allocated
 to the blue task, and plot this function to find where it attains 
-its minimum visually.  There are many, many web site that do this
+its minimum visually.  There are many web site on which you can do this
 (search for "graphing calculator"). 
 

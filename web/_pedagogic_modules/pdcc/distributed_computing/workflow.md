@@ -14,7 +14,7 @@ Go through the tabs below in sequence...
   <a class="item " data-tab="first">Fundamentals</a>
   <a class="item " data-tab="second">Distributed Execution</a>
   <a class="item " data-tab="third">Data Locality</a>
-  <a class="item " data-tab="fourth">Task- and Data-Parallelism</a>
+  <a class="item " data-tab="fourth">Mixed Parallelism</a>
   <a class="item " data-tab="fifth">Capstone</a>
 </div>
 
