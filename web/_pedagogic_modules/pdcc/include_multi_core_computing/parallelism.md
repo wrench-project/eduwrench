@@ -32,7 +32,7 @@ different things altogether. For instance, a 2-task program could have one
 task apply some analysis to a dataset and another task uncompress a file on
 disk.
 
-As mentioned in the [Single Core Computing]({{site.baseurl}}/pedagogic_modules/single_core_computing) module, we do not
+As mentioned in the [Single Core Computing]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing) module, we do not
 consider time sharing. That is, **we will only consider executions in which
 at most one task runs on a core at a given time.** Although operating
 systems allow time-sharing, we will never start more tasks than cores on

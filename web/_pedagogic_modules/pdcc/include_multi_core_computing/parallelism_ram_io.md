@@ -9,7 +9,7 @@
 ### RAM Constraints and Parallelism
 
 As seen in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/single_core_computing), a task
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), a task
 may have a sizable amount of data that needs to be loaded and/or generated into RAM so that it can execute. Recall from that module that we do not allow a program to 
 use more memory than available in physical
 RAM. Doing so is possible and handled by the Operating Systems (by
@@ -119,7 +119,7 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 Another common  cause of idle time is I/O. While a task running on a core performs I/O, the core is (mostly) idle. We learned
 about  this in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/single_core_computing). In a parallel program this can translate to loss  of parallel efficiency.
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing). In a parallel program this can translate to loss  of parallel efficiency.
 
 Let's consider a simple parallel program: 4 tasks that each read in 10 MB
 of input data and then performs 400GFlop of computation.  The 
@@ -134,7 +134,7 @@ computer with a core that computes at 400 GFlop/sec and  a disk with
 read bandwidth 100 MB/sec (on which the input data files are located). 
 What is the execution time? Based on what we learned about I/O 
 in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/single_core_computing), we
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), we
 should strive to overlap I/O and computation as much as possible.
 For instance, the execution could proceed as follows:
 

@@ -75,7 +75,7 @@ time and resources needed. For scheduling, having that additional information an
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
 We have briefly encountered the concept of scheduling in the Task Dependencies tab of the
-[Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multicore_computing/)). You may also
+[Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/)). You may also
 have encountered the term in an Operating Systems course. The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 

@@ -114,7 +114,7 @@ is no overlap. Pushing this reasoning to the extreme, one would conclude that th
 to use a 1-byte buffer!
 
 If you remember the 
-[Network Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/network_fundamentals),
+[Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/networking_fundamentals),
 you may realize why a 1-byte buffer is a bad idea... it's all about **latency**! 
 
 In the example above, and the figure, we didn't say anything about latency. But in fact, each
