@@ -8,7 +8,6 @@ submodule: 'distributed_computing'
 
 The goal of this module is to provide you with knowledge of
 and practical experience with concepts behind workflow applications.  
-
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
