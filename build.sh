@@ -15,19 +15,9 @@ fi
 
 # build simulators
 echo "Compiling simulators"
-cd simulators/networking_fundamentals && ./build.sh $makedashjarg && cd ../..
-cd simulators/multi_core_computing_independent_tasks && ./build.sh $makedashjarg && cd ../..
-cd simulators/multi_core_computing_dependent_tasks && ./build.sh $makedashjarg && cd ../..
-cd simulators/multi_core_computing_data_parallelism && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_execution_fundamentals && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_execution_data_locality && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_execution_parallelism && ./build.sh $makedashjarg && cd ../..
-cd simulators/io_operations && ./build.sh $makedashjarg && cd ../..
-cd simulators/client_server && ./build.sh $makedashjarg && cd ../..
-cd simulators/master_worker && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_fundamentals && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_distributed && ./build.sh $makedashjarg && cd ../..
-cd simulators/workflow_task_data_parallelism && ./build.sh $makedashjarg && cd ../..
+for  dir in `ls simulators/`; do 
+    cd simulators/$dir && ./build.sh $makedashjarg && cd ../..
+done
 
 
 # copy dashboard scripts into web application
