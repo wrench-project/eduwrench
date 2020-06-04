@@ -211,7 +211,7 @@ is depicted in the figure below:
 
 Example 35-minute execution on a 2-core computer. 
 The white area is the core idle time, 
-the yellow area is the  core compute time. </div>
+the yellow area is the  core compute time.
 
 What the above statement says is that the parallel efficiency is the yellow
 area divided by the area of the whole rectangle. In other words, the
@@ -244,7 +244,7 @@ see idle time on the graph, parallel efficiency is below 100%.
 
 #### Practice Questions
 
-**[A.2.p1.3]** You have a 4-core compute where each core computes at speed 1000 GFlop/sec. 
+**[A.2.p1.3]** You have a 4-core computer where each core computes at speed 1000 GFlop/sec. 
 You are told that a 10-task parallel program has 30 idle core seconds in total when executed
 on that computer. All tasks have the same work. What is this work in  GFlop? (you  can double-check
 your answer with the simulation app above)
@@ -321,7 +321,7 @@ efficiency is 3/4 = 75%.
 <p></p>
 
 **[A.2.p1.7]** You are upgrading your (pre-historic?) single-core computer and
-you have two new multi-core computer to choose from, one with 5 cores and
+you have two new multi-core computers to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
 complete on a core. Which multi-core computer will provide the higher
@@ -456,7 +456,7 @@ identical tasks on a multi-core computer is more than 82%.  You know this
 computer has no more than 8 cores. How many cores does it have?
 
 **[A.2.q1.5]** You have a 20-task program where each task's work is 10
-GFlop. You currently have a 4-core compute where each core compute at
+GFlop. You currently have a 4-core computer where each core computes at
 speed 50 GFlop/sec. For the same amount of money you can either (1)
 increase the speeds of all 4 cores by 20%; or (2) add a 5th 50 GFlop/sec
 core. What should you do if you want to run your program as quickly as

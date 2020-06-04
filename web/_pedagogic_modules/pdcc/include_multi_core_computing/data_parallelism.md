@@ -1,9 +1,9 @@
 
 #### Learning Objectives:
 
-- Understand the concept of data parallelism
+- Understand the concept of data-parallelism
 - Understand and be able to apply Amdahl's law
-- Understand and be able to reason about the performance of data parallelism
+- Understand and be able to reason about the performance of data-parallelism
 
 ---
 
@@ -461,9 +461,9 @@ $
 
 **[A.2.p4.8]** Consider a program that consists of a single task with work
 10,000 GFlop. The developer of the program has an idea to expose
-data parallelism where the code now consists of $n$ tasks, each of them
+data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
-data parallelism, but there is no sequential phase). For what value of X would the parallel efficiency be above 90%
+data-parallelism, but there is no sequential phase). For what value of X would the parallel efficiency be above 90%
 when running on an 8-core computer?
 
 <div class="ui accordion fluid">

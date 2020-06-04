@@ -55,7 +55,7 @@ constraints.
 
 #### Practice Questions 
 
-**[A.2.p2.1]** You need to execute 5 tasks that each runs in 1 second on one
+**[A.2.p2.1]** You need to execute 5 tasks that each run in 1 second on one
 core.  Your current single-core processor thus can run these tasks in 5
 seconds.  The processor is then upgraded to have 5 cores, each identical in
 processing power to the original single core. If the machine has 8 GB of

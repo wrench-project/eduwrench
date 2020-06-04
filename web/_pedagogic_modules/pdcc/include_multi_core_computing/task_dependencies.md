@@ -256,9 +256,9 @@ entry and the exit task(s)**.
 No matter how many cores are used, the program cannot execute faster than
 the length of the critical path. For instance, consider our example 
 DAG, assuming that the "analyze" task has work 250 GFlop. There are three paths
-from "start" to "display". The length of the visualization path has length
-5+20+10+1 = 36 seconds. The length of the statistics path has length 5+40+1=46 seconds. The
-length o f the analysis path is 5+25+10+1=41 seconds. And so the critical path
+from "start" to "display". The length of the visualization path is
+5+20+10+1 = 36 seconds. The length of the statistics path is 5+40+1=46 seconds. The
+length of the analysis path is 5+25+10+1=41 seconds. And so the critical path
 is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10GFlop/sec cores
 are used to execute this program, it can never run in less than 46 seconds!
 
