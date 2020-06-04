@@ -19,7 +19,7 @@ Go through the tabs below in sequence...
   <a class="item" data-tab="second">Time Sharing</a>
   <a class="item" data-tab="third">Memory</a>
   <a class="item" data-tab="fourth">IO</a>
-  <a class="item" data-tab="fifth">Capstone Exercise</a>
+  <a class="item" data-tab="fifth">Capstone</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="first" >

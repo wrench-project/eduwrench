@@ -19,6 +19,8 @@
 - term: core (or CPU core)
   description: a processing unit, or processor, in a multi-core microprocessor 
 
+- term: CPU utilization
+  description: the fraction of time that a CPU (core) spends computing during a program execution
 
 - term: cyber infrastructure
   description: a set of hardware resources (hardware infrastructure) managed by

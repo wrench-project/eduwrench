@@ -91,8 +91,8 @@ nor IO-intensive.
 ### Overlapping computation and IO
 
 The execution in the previous section can be improved. This is because 
-the CPU and the disk are two different pieces of hardware, and they can 
-work at the same time. As a result, while the CPU is processing the 1st 
+**the CPU and the disk are two different hardware components, and they can 
+work at the same time.** As a result, while the CPU is processing the 1st 
 image, the 2nd image could be read from disk! The CPU can then start 
 processing the 2nd image right away after it finishes processing the 1st 
 image. The 1st image can be written to disk at the same time. This 
@@ -117,9 +117,9 @@ would continue to drop as it would be idle only at the very beginning and
 at the very end of the execution. 
 
 The above is an ideal situation because IO time for an image is exactly 
-equal to compute time. More precisely, save for the fisrt and last task, 
-*while the program computes task i there is enough time to write the 
-output of task i-1 and to read the input of task i+1.*  
+equal to compute time. More precisely, save for the first and last task, 
+*while the program computes task $i$ there is enough time to write the 
+output of task $i-1$ and to read the input of task $i+1$.*  
 
 If the above condition does not hold, then there is necessarily CPU idle 
 time. For instance, if the time to read an image is instead 2s (for 
@@ -157,7 +157,7 @@ CPU time needed. In these cases, CPU utilization will be lower due to the need t
 
 ----
 
-#### Putting All This in Practice
+### Practical concerns
 
 In practice, one can implement a program that overlaps IO and computation. 
 This can be done by using non-blocking IO operations and/or threads. These 
@@ -174,20 +174,19 @@ Access (DMA). See an Operating Systems course for more details.
 Another practical concern is RAM pressure. When going from the example 
 execution in Figure 1 to that in Figure 2, the peak amount 
 of RAM needed by the program is increased because at some point more 
-than one input images are held in RAM. As previous modules have touched 
-on, tasks can have significant memory requirements, and it may not be 
-possible to overlap IO and computation due to RAM space constraints.  
+than one input images are held in RAM. Since 
+tasks could have significant memory requirements, RAM constrains can prevent
+some overlap of IO and computation.
 
-### Simulating IO
+#### Simulating IO
 
 So that you can gain hands-on experience with the above concepts, use 
-the simulation Web application below.
+the simulation app below.
 
 Initially, you can create a series of identical tasks that have a certain 
 input and output. Run the simulation to see the progression of tasks and 
 host utilization without allowing IO to overlap with computation. Once you 
 have observed this, try selecting the checkbox to allow overlap.
-
 With IO overlap there should be an improvement in execution time and 
 host utilization. You can view this in the output graphs that are 
 generated. You can also try varying the input/output and computation 
@@ -213,7 +212,7 @@ assist you in answering the questions to come.
 computation on this input, and then writes 1GB of output to disk. It is 
 executed on a computer that has a CPU that computes at speed 500 GFlop/sec
 and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution 
-IO-intensive or CPU-intensive? If you could update either the CPU or the 
+IO-intensive or CPU-intensive? If you could upgrade either the CPU or the 
 HDD, which upgrade would you choose?
 
 <div class="ui accordion fluid">
@@ -240,14 +239,14 @@ Therefore the program's execution is IO-intensive. Therefore one should upgrade 
 same task repeatedly. On the currently available hardware, the time to 
 process a task instance is as follows:
 
-  - Read input: 2 Seconds  
-  - CPU computation: 3 Seconds  
-  - Write output: 2 Seconds  
+  - Read input: 2 sec  
+  - CPU computation: 3 sec  
+  - Write output: 2 sec  
 
 A program was designed to overlap IO and computation when executing
 multiple task instances in sequence. As in Figure 3, the program first
 reads the input for the first 2 tasks, and then alternates between writing
-the output for task *i* and reading the input for task *i+2*, until at the
+the output for task $i$ and reading the input for task $i+2$, until at the
 end it writes the output of the last two tasks one after the other.  The
 computation on the CPU for a task is started as soon as its input has been
 read from disk.
@@ -265,8 +264,8 @@ Here is a depiction of the execution:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_4.svg">Execution timeline</object>
 
-The execution time is **18 seconds**.  (This result can be generalized for *n*
-tasks by identifying the repeating pattern: *2 + 3 + (n-1) x (3 + 1) + 1  = 4n + 2*.)
+The execution time is **18 seconds**.  (This result can be generalized for $n$
+tasks by identifying the repeating pattern: $2 + 3 + (n-1) x (3 + 1) + 1  = 4n + 2$.)
 
 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18
 = 66.6%.
@@ -292,12 +291,12 @@ Here is a depiction of the execution:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_5.svg">Execution timeline</object>
 
-The execution time it **14 seconds**. (This result can be generalized for *n* tasks easily: *3n + 2*.)
+The execution time it **14 seconds**. (This result can be generalized for $n$ tasks easily: $3n + 2$.)
 
 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%. 
 
 By making the IO faster, input for tasks is always ready for the CPU to process. As the number
-of such tasks increases, the CPU utilization tends to 100\%. 
+of tasks increases, the CPU utilization tends to 100%. 
 
   </div>
 </div>
@@ -333,8 +332,6 @@ A task requires 100 MB of input data to be loaded from disk, performs 1
 TFlop of computation, and writes some output back to disk. A batch of fifty
 instances of this task is to be run on a computer with a processor capable
 of 250 GFlop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
-computation are overlapped.*
-
-- How large can the task output be so that the CPU is 100\% utilized?
+computation are overlapped.* How large can the task output be so that the CPU is still 100% utilized?
 (ignoring the initial input read and final output write, during which the
 CPU is necessarily idle).
