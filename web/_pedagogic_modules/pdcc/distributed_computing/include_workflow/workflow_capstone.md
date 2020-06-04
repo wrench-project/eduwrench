@@ -12,7 +12,7 @@ depicted in this figure:
 
 <object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_capstone.svg">Capstone scenario</object>
 
-The 4-task worklow needs to be executed on a 2-host platform, with all
+The 4-task workflow needs to be executed on a 2-host platform, with all
 workflow data hosted at a remote storage site.  The first task of the
 workflow is a data-parallel task; 20% of its sequential execution time
 cannot be parallelized (i.e., $\alpha = 0.8$).
