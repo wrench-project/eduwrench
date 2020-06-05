@@ -106,6 +106,8 @@ tasks**.
 In this more complex, but possibly more efficient, implementation, there 
 is now a choice of which task to execute first. 
 
+#### Questions
+
 **[A.1.q5.6]** If you execute A before B, what is the best way to spend 
 the $250 on upgrades?
 
