@@ -112,22 +112,22 @@ namespace wrench {
    */
     ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service,
             std::map<std::string, double> link_speed,
+            std::mt19937 &rng,
             int task_selection,
-            int compute_selection,
-            long seed) :
+            int compute_selection) :
                 StandardJobScheduler(),
                 storage_service(storage_service),
                 link_speed(link_speed),
                 task_selection(task_selection),
                 compute_selection(compute_selection),
-                seed(seed) {
+                rng(rng) {
 
 
-        if (seed != 0) {
-            srand(seed);
-        } else {
-            srand(time(0));
-        }
+//        if (seed != 0) {
+//            srand(seed);
+//        } else {
+//            srand(time(0));
+//        }
 
     }
     /**

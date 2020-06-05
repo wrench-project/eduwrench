@@ -74,7 +74,7 @@ $(function () {
                     num_cores_purple_label_el.css("background-color", "");
                 }
             }, 500);
-        } else {
+        } else {w
             num_cores_purple_label_el.css("background-color", "#ffb7b5");
             num_cores_purple_input_el.removeClass("is-valid")
                 .addClass("is-invalid");

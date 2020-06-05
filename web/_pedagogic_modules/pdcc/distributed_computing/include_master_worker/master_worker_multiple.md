@@ -5,7 +5,7 @@
 
 ----
 
-In the previous tab, you were able to simulation particular master-worker setups
+In the previous tab, you were able to simulate particular master-worker setups
 with different scheduling strategies.  But as we noted, it was  difficult to draw general
 conclusions from just a few particular test cases. Instead, what we need to do is
 **compare scheduling strategies on many test cases**. 
@@ -24,9 +24,9 @@ and we're only scratching the surface here.
 
 The simulation app is a bit more complicated than that in  the previous tab. It allows you to specify:
 
- - A number of of workers
+ - A number of  workers
  - Ranges of worker link bandwidths and worker speeds, from which actual values are sampled randomly
- - A number of of tasks
+ - A number  of tasks
  - Ranges of task input sizes and works, from which actual values are sampled randomly
  - Task and worker selection strategies
  - A number of experiments to run
@@ -47,7 +47,33 @@ interesting experiments.
 
 #### Practice Questions 
 
-**[A.3.3.p2.1]** 
+**[A.3.3.p2.1]** Use the default input to the simulation (reload this page if you've modified). Compare the simulation results 
+of the random / random strategy and of the highest flop / fastest strategy.
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+   
+The results are as follows:
+
+|---|---|---|---|
+| strategy | min | mean | max |
+|---|---|---|---|
+| random / random | 3.44 sec| 19.64 sec| 84.70 sec|
+| highest flop / fastest | 2.65 sec| 7.04 sec| 17.07 sec|
+|---|---|---|---|
+
+The random / random strategy is much worse! Its mean time is higher than the average
+time of the highest flop / fastest strategy. 
+
+   </div>
+</div>
+ 
+<p></p>
+
 
 
 **[A.3.q3.9]** Using random scheduling for both tasks and workers, what is the mean execution time for the default 

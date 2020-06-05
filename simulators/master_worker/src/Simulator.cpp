@@ -27,20 +27,24 @@
 
 class ComputeService;
 
+
 typedef struct retVals {
     std::vector<std::tuple<std::string, double, double>> w_vect;
     std::vector<std::tuple<double, double, double>> t_vect;
     int t_sched;
     int c_sched;
-    long seed;
-    } retVals;
+//    long seed;
+} retVals;
 
 
-double generate_random_double_in_range(double min,  double max) {
+double generate_random_double_in_range(std::mt19937 &rng, double min,  double max) {
+    std::uniform_real_distribution<double> dist(min, max);
+
+
     if (min == max) {
         return min;
     } else {
-        return (int) round(min) + rand() % ((int) round(max) - (int) round(min));
+        return dist(rng);
     }
 }
 
@@ -88,69 +92,69 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
     if (workers.empty()){
         // Create a the platform file
         xml_string = "<?xml version='1.0'?>\n"
-                          "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
-                          "<platform version=\"4.1\">\n"
-                          "   <zone id=\"AS0\" routing=\"Full\">\n"
-                          "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
-                          "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                          "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
-                          "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
-                          "                            <prop id=\"mount\" value=\"/\"/>\n"
-                          "           </disk>\n"
-                          "       </host>\n"
-                          "       <host id=\"worker_zero\" speed=\"500Gf\" core=\"1\">\n"
-                          "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                          "           <disk id=\"worker_zero_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
-                          "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
-                          "                            <prop id=\"mount\" value=\"/\"/>\n"
-                          "           </disk>\n"
-                          "       </host>\n"
-                          "       <host id=\"worker_one\" speed=\"1000Gf\" core=\"1\">\n"
-                          "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                          "           <disk id=\"worker_one_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
-                          "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
-                          "                            <prop id=\"mount\" value=\"/\"/>\n"
-                          "           </disk>\n"
-                          "       </host>\n"
-                          "       <host id=\"worker_two\" speed=\"100Gf\" core=\"1\">\n"
-                          "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                          "           <disk id=\"worker_two_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
-                          "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
-                          "                            <prop id=\"mount\" value=\"/\"/>\n"
-                          "           </disk>\n"
-                          "       </host>\n"
-                          "       <link id=\"link\" bandwidth=\"1000MBps\" latency=\"0us\"/>\n"
-                          "       <link id=\"link1\" bandwidth=\"10000MBps\" latency=\"0us\"/>\n"
-                          "       <link id=\"link2\" bandwidth=\"100000MBps\" latency=\"0us\"/>\n"
-                          "       <route src=\"master\" dst=\"worker_zero\">"
-                          "           <link_ctn id=\"link\"/>"
-                          "       </route>"
-                          "       <route src=\"master\" dst=\"worker_one\">"
-                          "           <link_ctn id=\"link1\"/>"
-                          "       </route>"
-                          "       <route src=\"master\" dst=\"worker_two\">"
-                          "           <link_ctn id=\"link2\"/>"
-                          "       </route>"
-                          "   </zone>\n"
-                          "</platform>\n";
+                     "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
+                     "<platform version=\"4.1\">\n"
+                     "   <zone id=\"AS0\" routing=\"Full\">\n"
+                     "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
+                     "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                     "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
+                     "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                     "                            <prop id=\"mount\" value=\"/\"/>\n"
+                     "           </disk>\n"
+                     "       </host>\n"
+                     "       <host id=\"worker_zero\" speed=\"500Gf\" core=\"1\">\n"
+                     "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                     "           <disk id=\"worker_zero_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                     "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                     "                            <prop id=\"mount\" value=\"/\"/>\n"
+                     "           </disk>\n"
+                     "       </host>\n"
+                     "       <host id=\"worker_one\" speed=\"1000Gf\" core=\"1\">\n"
+                     "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                     "           <disk id=\"worker_one_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                     "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                     "                            <prop id=\"mount\" value=\"/\"/>\n"
+                     "           </disk>\n"
+                     "       </host>\n"
+                     "       <host id=\"worker_two\" speed=\"100Gf\" core=\"1\">\n"
+                     "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                     "           <disk id=\"worker_two_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
+                     "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                     "                            <prop id=\"mount\" value=\"/\"/>\n"
+                     "           </disk>\n"
+                     "       </host>\n"
+                     "       <link id=\"link\" bandwidth=\"1000MBps\" latency=\"0us\"/>\n"
+                     "       <link id=\"link1\" bandwidth=\"10000MBps\" latency=\"0us\"/>\n"
+                     "       <link id=\"link2\" bandwidth=\"100000MBps\" latency=\"0us\"/>\n"
+                     "       <route src=\"master\" dst=\"worker_zero\">"
+                     "           <link_ctn id=\"link\"/>"
+                     "       </route>"
+                     "       <route src=\"master\" dst=\"worker_one\">"
+                     "           <link_ctn id=\"link1\"/>"
+                     "       </route>"
+                     "       <route src=\"master\" dst=\"worker_two\">"
+                     "           <link_ctn id=\"link2\"/>"
+                     "       </route>"
+                     "   </zone>\n"
+                     "</platform>\n";
 
         FILE *platform_file = fopen(platform_file_path.c_str(), "w");
         fprintf(platform_file, "%s", xml_string.c_str());
         fclose(platform_file);
     } else {
         xml_string = "<?xml version='1.0'?>\n"
-                                 "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
-                                 "<platform version=\"4.1\">\n"
-                                 "   <zone id=\"AS0\" routing=\"Full\">\n"
-                                 "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
-                                 "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                                 "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
-                                 "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
-                                 "                            <prop id=\"mount\" value=\"/\"/>\n"
-                                 "           </disk>\n"
-                                 "       </host>\n"
-                                 "   </zone>\n"
-                                 "</platform>\n";
+                     "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
+                     "<platform version=\"4.1\">\n"
+                     "   <zone id=\"AS0\" routing=\"Full\">\n"
+                     "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
+                     "           <prop id=\"ram\" value=\"32GB\"/>\n"
+                     "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
+                     "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
+                     "                            <prop id=\"mount\" value=\"/\"/>\n"
+                     "           </disk>\n"
+                     "       </host>\n"
+                     "   </zone>\n"
+                     "</platform>\n";
 
         pugi::xml_document xml_doc;
 
@@ -206,7 +210,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
     }
 }
 
-retVals parse_arguments_for_individual_run(int argc, char** argv) {
+retVals parse_arguments_for_individual_run(int argc, char** argv, std::mt19937 &rng) {
 
     const int MAX_NUM_WORKERS = 50;
     const int MAX_NUM_TASKS = 100;
@@ -305,7 +309,7 @@ retVals parse_arguments_for_individual_run(int argc, char** argv) {
 
         if ((argc - 1 - (flags_removed)) / 3 > MAX_NUM_TASKS) {
             std::cerr << "Too many file sizes specified (maximum " << std::to_string(MAX_NUM_TASKS) << " )."
-                        << std::endl;
+                      << std::endl;
             throw std::invalid_argument("invalid number of files");
         }
 
@@ -371,11 +375,13 @@ retVals parse_arguments_for_individual_run(int argc, char** argv) {
         std::cerr << "    (at most " + std::to_string(MAX_NUM_TASKS) + " tasks can be specified)" << std::endl;
     }
 
-    return retVals {workers, tasks, task_scheduling_selection, compute_scheduling_selection, seed};
+    rng.seed(seed);
+
+    return retVals {workers, tasks, task_scheduling_selection, compute_scheduling_selection};
 }
 
 
-retVals parse_argument_for_generated_run(int argc, char** argv, int fork_num) {
+retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rng, int xp_id) {
     const int MAX_NUM_WORKERS = 50;
     const int MAX_NUM_TASKS = 100;
     const int MAX_TASK_INPUT = 1000000;
@@ -491,7 +497,7 @@ retVals parse_argument_for_generated_run(int argc, char** argv, int fork_num) {
                 flags_removed += 2;
                 ++inc;
             } else if (std::string(argv[inc]).compare("--seed") == 0) {
-                seed = stol(std::string(argv[inc + 1]))+fork_num;
+                seed = stol(std::string(argv[inc + 1]));
                 arguments.erase(arguments.begin() + inc - (flags_removed),
                                 arguments.begin() + inc + 2 - (flags_removed));
                 flags_removed += 2;
@@ -533,39 +539,37 @@ retVals parse_argument_for_generated_run(int argc, char** argv, int fork_num) {
                 << std::endl;
     }
 
-    if (seed != 0 ){
-        srand(seed);
-    } else {
-        srand(time(0)+fork_num);
-    }
+    rng.seed(seed + xp_id);
+
     for (int i=0; i<num_workers; i++) {
 
         workers.push_back(std::make_tuple("worker_"+std::to_string(i),
-                                          generate_random_double_in_range(min_band, max_band),
-                                          generate_random_double_in_range(min_flops, max_flops)));
+                                          generate_random_double_in_range(rng, min_band, max_band),
+                                          generate_random_double_in_range(rng, min_flops, max_flops)));
     }
     for (int i=0; i<num_tasks; i++) {
         tasks.push_back(std::make_tuple(
-                generate_random_double_in_range(min_input, max_input),
-                generate_random_double_in_range(min_flop, max_flop),
-                generate_random_double_in_range(min_output, max_output)));
+                generate_random_double_in_range(rng, min_input, max_input),
+                generate_random_double_in_range(rng, min_flop, max_flop),
+                generate_random_double_in_range(rng, min_output, max_output)));
     }
 
 
 
 
-    return retVals {workers, tasks, task_scheduling_selection, compute_scheduling_selection, seed};
+//    return retVals {workers, tasks, task_scheduling_selection, compute_scheduling_selection, seed};
+    return retVals {workers, tasks, task_scheduling_selection, compute_scheduling_selection};
 }
 
 
 std::string run_simulation(std::vector<std::tuple<std::string, double, double>> workers,
-                    std::vector<std::tuple<double, double, double>> tasks,
-                    int task_scheduling_selection,
-                    int compute_scheduling_selection,
-                    long seed,
-                    int argc,
-                    char** argv,
-                    bool single = false) {
+                           std::vector<std::tuple<double, double, double>> tasks,
+                           int task_scheduling_selection,
+                           int compute_scheduling_selection,
+                           std::mt19937 &rng,
+                           int argc,
+                           char** argv,
+                           bool single = false) {
     wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::Color::COLOR_BLUE);
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
@@ -658,7 +662,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
     }
 
     auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed)),
+            new wrench::ActivityScheduler(master_storage_service, link_speed, rng, task_scheduling_selection, compute_scheduling_selection)),
                                                       compute_services,
                                                       storage_services,
                                                       MASTER
@@ -685,10 +689,15 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
  * @return
  */
 int main(int argc, char** argv) {
+
+    //Mersenne Twister: Good quality random number generator
+    std::mt19937 rng;
+
     if (std::string(argv[1]).compare("individual") == 0) {
         try {
-            auto [workers, tasks, t_sched, c_sched, seed] = parse_arguments_for_individual_run(argc, argv);
-            auto output = run_simulation(workers, tasks, t_sched, c_sched, seed, argc, argv, true);
+            rng.seed(std::random_device{}());
+            auto [workers, tasks, t_sched, c_sched] = parse_arguments_for_individual_run(argc, argv, rng);
+            auto output = run_simulation(workers, tasks, t_sched, c_sched, rng, argc, argv, true);
         } catch (std::invalid_argument &e) {
             return 1;
         }
@@ -717,17 +726,18 @@ int main(int argc, char** argv) {
             if ((pid[i] = fork()) == -1) {
                 printf("Could not fork() new process %d\n", i);
                 exit(1);
-            } else if (pid[i] == 0) {
+            } else if (pid[i] == 0) { // Child
+                // Initialize with deterministic seed!
                 close(pipes[i][0]);
-                auto [workers, tasks, t_sched, c_sched, temp_seed] = parse_argument_for_generated_run(argc, argv, i);
-                auto last_task_string = run_simulation(workers, tasks, t_sched, c_sched, temp_seed, argc, argv);
-                //printf("Time: %s\n", last_task_string.c_str());
+                auto [workers, tasks, t_sched, c_sched] = parse_argument_for_generated_run(argc, argv, rng, i);
+                auto last_task_string = run_simulation(workers, tasks, t_sched, c_sched, rng, argc, argv);
+//                std::cerr << i << " : " << last_task_string << "\n";
                 write(pipes[i][1], last_task_string.c_str(), strlen(last_task_string.c_str())+1);
                 close(pipes[i][1]);
                 exit(0);
             }
+            wait(NULL);
         }
-        wait(NULL);
         for(int i=0; i<num_invocation; i++) {
             close(pipes[i][1]);
             read(pipes[i][0], &runtimes[i], 100);
