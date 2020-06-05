@@ -7,10 +7,11 @@ submodule: 'pdcc'
 ---
 
 The goal of this module is to provide you with basic knowledge about
-sequential computing (i.e., running a program on a single core). There
-is a lot of complexity under the cover, which belongs in Computer Architecture 
+sequential computing (i.e., running a program on a single core). 
+
+There is a lot of complexity under the cover, which belongs in Computer Architecture 
 and Operating Systems courses/textbooks. Instead, we take a high-level approach,
-with a main focus on performance.
+with a focus on performance.
 
 Go through the tabs below in sequence...
 

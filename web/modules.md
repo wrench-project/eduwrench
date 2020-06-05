@@ -23,7 +23,7 @@ permalink: /modules
                                 <li>
                                     <strong><a href="{{ site.baseurl }}{{ submodule.url }}">{{ submodule.title }}</a></strong>
                                     <br/>
-                                    <div class="excerpt" style="padding-bottom: 1.5em">{{ submodule.excerpt | strip_html | strip_newlines | truncate: 160 }}</div>
+                                    <div class="excerpt" style="padding-bottom: 1.5em">{{ submodule.excerpt | strip_html | strip_newlines | truncate: 160, "" }}</div>
                                     {% assign subsubmodules = site.pedagogic_modules | where: "submodule",submodule.submodulecat | sort: "order" %}
                                     <ul>
                                         {% for subsubmodule in subsubmodules %}
@@ -32,7 +32,7 @@ permalink: /modules
                                             <a href="{{ site.baseurl }}{{ subsubmodule.url }}">
                                                 {{ subsubmodule.title }}</a>
                                                 <br/>
-                                                <div class="excerpt" style="padding-bottom: 1.5em">{{ subsubmodule.excerpt | strip_html | strip_newlines | truncate: 160 }}</div>
+                                                <div class="excerpt" style="padding-bottom: 1.5em">{{ subsubmodule.excerpt | strip_html | strip_newlines }}</div>
                                         </li>
                                         {% endif %}
                                         {% endfor %}

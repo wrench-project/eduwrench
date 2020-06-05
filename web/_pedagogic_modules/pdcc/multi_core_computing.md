@@ -7,6 +7,7 @@ submodule: 'pdcc'
 ---
 
 The goal of this module is to introduce you to multi-core computing.
+
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">

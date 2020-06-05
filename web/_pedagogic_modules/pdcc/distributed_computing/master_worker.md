@@ -7,7 +7,9 @@ submodule: 'distributed_computing'
 ---
 
 The goal of this module is to introduce you to the basic concepts of the
-master/worker model of computation.  Go through the following tabs in sequence...
+master/worker model of computation.  
+
+Go through the following tabs in sequence...
 
 <div class="ui pointing secondary menu">
   <a class="item " data-tab="first">Basics</a>

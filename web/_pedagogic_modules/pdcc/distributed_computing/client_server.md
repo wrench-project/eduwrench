@@ -7,7 +7,9 @@ submodule: 'distributed_computing'
 ---
 
 The goal of this module is to introduce you to the client/server model of
-computation. Go through the following tabs in sequence...
+computation. 
+
+Go through the following tabs in sequence...
 
 <div class="ui pointing secondary menu">
   <a class="item" data-tab="first">Basics</a>
