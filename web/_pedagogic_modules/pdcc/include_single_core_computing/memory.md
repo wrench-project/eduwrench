@@ -35,7 +35,7 @@ to store the Operating System's Kernel (see an OS textbook).
 If you have been paying attention you may wonder why we are even talking 
 about running programs at the same time since in the previous tab ("Time
 Sharing") we said we would almost never do it!  We will find out in the 
-[Multicore Computing]({{ site.baseurl }}/pedagogic_modules/pdcc/multi_core_computing) 
+[Multicore Computing]({{ site.baseurl }}/pedagogic_modules/pdcc/multi_core_computing/#/ram-and-io) 
 module!
 
 ---
