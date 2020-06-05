@@ -14,9 +14,9 @@ namespace wrench {
 
         ActivityScheduler(std::shared_ptr<StorageService> storage_service,
                           std::map<std::string, double> link_speed,
+                          std::mt19937 &rng,
                           int task_selection = 0,
-                          int compute_selection = 0,
-                          long seed = 0);
+                          int compute_selection = 0);
 
 
     private:
@@ -24,7 +24,7 @@ namespace wrench {
         std::map<std::string, double> link_speed;
         int task_selection;
         int compute_selection;
-        long seed;
+        std::mt19937 &rng;
 
     };
 }
