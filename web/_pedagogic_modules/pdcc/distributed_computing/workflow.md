@@ -12,25 +12,25 @@ and practical experience with concepts behind workflow applications.
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item " data-tab="first">Fundamentals</a>
-  <a class="item " data-tab="second">Distributed Execution</a>
-  <a class="item " data-tab="third">Data Locality</a>
-  <a class="item " data-tab="fourth">Mixed Parallelism</a>
-  <a class="item " data-tab="fifth">Capstone</a>
+  <a class="item " data-tab="fundamentals">Fundamentals</a>
+  <a class="item " data-tab="distributed-execution">Distributed Execution</a>
+  <a class="item " data-tab="data-locality">Data Locality</a>
+  <a class="item " data-tab="mixed-parallelism">Mixed Parallelism</a>
+  <a class="item " data-tab="capstone">Capstone</a>
 </div>
 
-<div markdown="1" class="ui tab segment active" data-tab="first" >
+<div markdown="1" class="ui tab segment active" data-tab="fundamentals" >
   {% include_relative include_workflow/workflow_fundamentals.md %}
 </div>
-<div markdown="1" class="ui tab segment" data-tab="second">
+<div markdown="1" class="ui tab segment" data-tab="distributed-execution">
   {% include_relative include_workflow/workflow_distributed.md %}
 </div>
-<div markdown="1" class="ui tab segment " data-tab="third">
+<div markdown="1" class="ui tab segment " data-tab="data-locality">
   {% include_relative include_workflow/workflow_data_locality.md %}
 </div>
-<div markdown="1" class="ui tab segment " data-tab="fourth">
+<div markdown="1" class="ui tab segment " data-tab="mixed-parallelism">
   {% include_relative include_workflow/workflow_task_data_parallelism.md %}
 </div>
-<div markdown="1" class="ui tab segment " data-tab="fifth">
+<div markdown="1" class="ui tab segment " data-tab="capstone">
   {% include_relative include_workflow/workflow_capstone.md %}
 </div>

@@ -12,14 +12,13 @@ master/worker model of computation.
 Go through the following tabs in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item " data-tab="first">Basics</a>
-  <a class="item " data-tab="second">Scheduling Experiments</a>
+  <a class="item " data-tab="basics">Basics</a>
+  <a class="item " data-tab="scheduling">Scheduling Experiments</a>
 </div>
 
-<div markdown="1" class="ui tab segment active" data-tab="first" >
+<div markdown="1" class="ui tab segment active" data-tab="basics" >
   {% include_relative include_master_worker/master_worker_single.md %}
 </div>
-<div markdown="1" class="ui tab segment" data-tab="second">
+<div markdown="1" class="ui tab segment" data-tab="scheduling">
   {% include_relative include_master_worker/master_worker_multiple.md %}
 </div>
-

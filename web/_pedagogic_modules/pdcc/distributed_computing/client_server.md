@@ -12,14 +12,13 @@ computation.
 Go through the following tabs in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item" data-tab="first">Basics</a>
-  <a class="item" data-tab="second">Pipelining I/O and Network</a>
+  <a class="item" data-tab="basics">Basics</a>
+  <a class="item" data-tab="pipelining-io-and-network">Pipelining I/O and Network</a>
 </div>
 
-<div markdown="1" class="ui tab segment active" data-tab="first" >
+<div markdown="1" class="ui tab segment active" data-tab="basics" >
   {% include_relative include_client_server/client_server_basics.md %}
 </div>
-<div markdown="1" class="ui tab segment" data-tab="second">
+<div markdown="1" class="ui tab segment" data-tab="pipelining-io-and-network">
   {% include_relative include_client_server/client_server_pipelining.md %}
 </div>
-
