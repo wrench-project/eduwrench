@@ -11,14 +11,14 @@ permalink: simulations/master_worker_generated/
 <div class="form-group col-md-6">
     <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required hidden>
     <div class="invalid-feedback">
-        Please provide a comma- or space-separated list of host specifications. ([GFlops][Bandwidth to Master], ...)
+        Please provide a comma- or space-separated list of host specifications. ([Gflops][Bandwidth to Master], ...)
     </div>
 </div>
 
 <div class="form-group col-md-6">
     <input type="text" class="form-control" id="task-specs" placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required hidden>
     <div class="invalid-feedback">
-        Please provide a comma- or space-separated list of host specifications. ([Input MB][GFlop][Output MB], ...)
+        Please provide a comma- or space-separated list of host specifications. ([Input MB][Gflop][Output MB], ...)
     </div>
 </div>
 
@@ -30,14 +30,14 @@ permalink: simulations/master_worker_generated/
     </div>
 </div>
 <div class="form-group col-md-6">
-    <label for="min_worker_flops">Minimum GFlop Per Worker</label>
+    <label for="min_worker_flops">Minimum Gflop Per Worker</label>
     <input type="text" class="form-control" id="min-worker-flops" placeholder="1" value="1" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
     </div>
 </div>
 <div class="form-group col-md-6">
-    <label for="max_worker_flops">Maximum GFlop Per Worker</label>
+    <label for="max_worker_flops">Maximum Gflop Per Worker</label>
     <input type="text" class="form-control" id="max-worker-flops" placeholder="100" value="100" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
@@ -86,7 +86,7 @@ permalink: simulations/master_worker_generated/
 
 
 <div class="form-group col-md-6">
-    <label for="min_task_flop">Minimum GFlop Per Task</label>
+    <label for="min_task_flop">Minimum Gflop Per Task</label>
     <input type="text" class="form-control" id="min-task-flop" placeholder="1" value="1" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
@@ -94,7 +94,7 @@ permalink: simulations/master_worker_generated/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="max_task_flop">Maximum GFlop Per Task</label>
+    <label for="max_task_flop">Maximum Gflop Per Task</label>
     <input type="text" class="form-control" id="max-task-flop" placeholder="100" value="100" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.

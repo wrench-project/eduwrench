@@ -1,27 +1,27 @@
 
 #### Learning Objectives
 
-- Be able to apply the concepts learned in this module to reasoning about and
-  optimizing the performance of a scenario that includes computation, I/O, and
-  RAM constraints
+- Be able to apply the concepts learned in this module to reason about
+and optimize the performance of a scenario that includes computation activities,
+I/O activities, and RAM constraints
 
 ---
 
-#### Production Scenario
+### Production Scenario
 
 You are working for a company that uses a single-core computer to run
 computational tasks as part of day-to-day business. The specifications 
 of the computer and tasks are as follows:
 
-### Machine
+##### Machine
 
   - 1 1-Core CPU that computes at 50 Gflop/sec
   - 12 GB of RAM
   - 1 HDD with 1TB capacity and 200 MB/sec R/W bandwidth
 
-### Tasks
+##### Tasks
 
-On this machine, two tasks need to be run back-to-back throughout the day. 
+Two tasks need to be run back-to-back throughout the day. 
 Each task proceeds in three phases: (*i*) it reads its input file fully; 
 (*ii*) it computes; and (*iii*) it writes its output file fully. Each task 
 has a memory footprint that must be allocated to it throughout its execution 
@@ -40,7 +40,7 @@ writing its output file).
     - Input File (Read from disk before computation can start): 2 GB
     - Output File (Written to disk after computation has completed): 4 GB
 
-#### Phase #1: Hardware upgrades for the current implementation
+### Phase #1: Hardware upgrades for the current implementation
 
 In the current implementation of the software that executes the two tasks,
 the first task must run to completion (i.e., its output file must be written 
@@ -50,7 +50,7 @@ input file from disk).
 Your manager has tasked you with decreasing the total execution time for
 executing the two tasks. Ignoring things like hardware wear-and-tear and 
 reliability, you have some decisions to make as far as allocating funds to 
-upgrade the compute used to run the tasks. Here are possible upgrades:
+upgrade the computer used to run the tasks. Here are possible upgrades:
 
 ##### CPU Upgrades
   1. Keep current 50 Gflop/sec CPU for $0
@@ -64,14 +64,14 @@ upgrade the compute used to run the tasks. Here are possible upgrades:
 
 ##### Storage Upgrades
   1. Keep current 200 MB/sec HDD for $0
-  2. Upgrade to 1 TB SSD with 400 MB/sec R/W for $100  
-  3. Upgrade to 1 TB SSD with 500 MB/sec R/W for $250
+  2. Upgrade to SSD with 400 MB/sec R/W for $100  
+  3. Upgrade to SSD with 500 MB/sec R/W for $250
 
 Your manager has allocated $250 to spend for upgrades. Leftover
 money is encouraged if spending it will not decrease execution time
 further.
 
-### Questions
+#### Questions
 
 **[A.1.q5.1]** What is the execution time of this 2-task application on 
 that computer?
@@ -84,13 +84,13 @@ upgrade in the list above would you purchase?
 **[A.1.q5.4]** What is the optimal way to spend the $250 on upgrades to 
 decrease execution time and what is the corresponding execution time?
 
-**[A.1.q5.5]** Will the execution be I/O-intensive or CPU-intensive?
+**[A.1.q5.5]** Will the execution then be I/O-intensive or CPU-intensive?
 
 ----
     
-#### Phase #2: Hardware upgrades for a better implementation
+### Phase #2: Hardware upgrades for a better implementation
 
-Before you purchase the upgrades you determined in A.1.q5.4, your manager 
+Before you purchase the upgrades you determined in question A.1.q5.4 above, your manager 
 informs you that a software engineer in the company has just rewritten 
 the software so that the execution can be more efficient: when the first 
 task starts performing its computation, the second task can then start 
@@ -115,3 +115,5 @@ the $250 on upgrades?
 **[A.1.q5.8]** Considering the best of these two options, compare and 
 contrast to your answers to A.1.q5.4 in terms of money spend and execution 
 time achieved. Is the more complex implementation worthwhile?
+
+---

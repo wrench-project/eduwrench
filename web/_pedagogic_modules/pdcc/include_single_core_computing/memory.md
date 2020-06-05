@@ -42,4 +42,4 @@ module!
 
 #### Suggested activities
 
-**[How much RAM?]** Find out how much RAM you have on your computer  in total, and how much RAM is available for running new programs right now.
+**[How much RAM?]** Find out how much RAM you have on your computer in total, and how much RAM is available for running new programs on your computer right now.

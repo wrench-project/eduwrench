@@ -7,8 +7,7 @@
   description: peak achievable data transfer rate across a network link/path, measured in bytes per second
 
 - term: cluster
-  description: a set of possibly many computers (or compute nodes) 
-               interconnected via a high-speed network used as a high-capacity compute platform
+  description: a set of possibly many computers (or compute nodes) interconnected via a high-speed network used as a high-capacity compute platform
 
 - term: compute node
   description: a computer in a compute platform such as a cluster
@@ -23,24 +22,19 @@
   description: the fraction of time that a CPU (core) spends computing during a program execution
 
 - term: cyber infrastructure
-  description: a set of hardware resources (hardware infrastructure) managed by
-               software services (software infrastructures) that make it possible
-               to execute parallel programs
+  description: a set of hardware resources (hardware infrastructure) managed by software services (software infrastructures) that make it possible to execute parallel programs
 
 - term: data locality
   description: the concept of having date  "close" to where the computation takes place. This could be having data in a cache close to the core withing a computer, or data in storage close to a computer  (in terms of network proximity).
 
 - term: directed acyclic graph (DAG)
-  description: a directed graph containing no cycles, often used to represent a
-               workflow
+  description: a directed graph containing no cycles, often used to represent a workflow
 
 - term: execution time
   description: the time it takes for a task/program to execute from start to finish.
 
 - term: fork-join
-  description: a pattern in a directed acyclic graph (workflow) in which one vertex (source task)
-  is connected to many other vertices (children tasks), and these vertices are then all
-  connected to a single vertex (sink task). 
+  description: a pattern in a directed acyclic graph (workflow) in which one vertex (source task) is connected to many other vertices (children tasks), and these vertices are then all connected to a single vertex (sink task). 
 
 - term: floating point operation (flop)
   description: a standard unit of "amount of work to do" used for scientific applications (as many of such applications perform mostly floating point arithmetic); computational hardware resources then have speed measured in flop/sec, i.e., how much "work" they can perform per time unit
@@ -52,16 +46,13 @@
   description: the amount of time that a core/computer does not actually compute during a program execution (typically because of I/O operations taking place)
 
 - term: latency
-  description: the time it takes for a single packet to travel from one end of a network
-               link/path to the other end
+  description: the time it takes for a single packet to travel from one end of a network link/path to the other end
 
 - term: makespan
-  description: the overall execution time of a program execution (i.e., the wall-clock time between the
- beginning of the program's first task and the competion of the program's last task). 
+  description: the overall execution time of a program execution (i.e., the wall-clock time between the beginning of the program's first task and the competion of the program's last task). 
 
 - term: persistent storage
-  description: a storage device, such as a hard drive, that retains data even after
-               its power source has been shut off
+  description: a storage device, such as a hard drive, that retains data even after its power source has been shut off
 
 - term: parallelism
   description: the ability of a program to execute multiple streams of instructions simultaneously on multiple processors 
@@ -78,9 +69,9 @@
 - term: storage service
   description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
 
+
 - term: time sharing
-  description: the technique by which an operating system runs multiple programs on the same core, rapidly
-  cycling over them throughout time. 
+  description: the technique by which an operating system runs multiple programs on the same core, rapidly cycling over them throughout time. 
 
 - term: turnaround-time
   description: the time elapsed between a task is submitted for execution and its completion
@@ -93,5 +84,3 @@
 
 - term: workflow management system (WMS)
   description: a software tool that automatically orchestrates the execution of a workflow on a cyber infrastructure
-
-

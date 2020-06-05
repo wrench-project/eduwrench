@@ -79,12 +79,12 @@ $$
 $$  
 
 If a program that performs 12 GFlop runs in 5 seconds on a core, then the 
-speed of this core in MFlop/sec ("MegaFlop per second") is:
+speed of this core in Mflop/sec ("MegaFlop per second") is:
 
 $$
 \begin{align}
  \text{speed} & = \frac{12 \times 10^{9}\; \text{Flop}}{5 \; \text{sec}} \times \frac{1}{10^{6}}\\
-       & = 2,400 \; \text{MFlop/sec}
+       & = 2,400 \; \text{Mflop/sec}
 \end{align}
 $$  
 
@@ -148,3 +148,9 @@ should the core speed be increased if you want the program to run in 10 seconds?
 **[Benchmarking  #1]**: Find on-line resources that provide benchmark results for currently available cores. What is the fastest currently available core in terms of floating point benchmarked performance?  Are there other kinds of benchmarks? 
 
 **[Benchmarking #2]**: Determine the compute speed of a core of your computer by searching for, downloading, and running a freely available floating point benchmark program.
+
+**[Programming]**: Implements a program that performs a large, but known,
+number of floating point operations and use it to perform your own
+benchmarking of your machine. Implement this program in different
+languages and observe whether the GFlop/sec measurement varies across
+languages.

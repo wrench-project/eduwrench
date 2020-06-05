@@ -112,3 +112,5 @@ the three programs?
 **[A.1.q2.3]** A program, A, with work 4 TFlop is started on a core of speed 
 500 GFlop/sec. 5 seconds later another program B, is started. Both programs 
 finish at the same time. What is the work of B in TFlop?
+
+---

@@ -208,9 +208,33 @@ assist you in answering the questions to come.
 
 #### Practice Questions
 
-**[A.1.p4.1]** A program reads 2GB of input from disk, performs a 6 TFlop 
+**[A.1.p4.1]** Say you have 10 tasks to execute, where each task reads in 200 MB of input, 
+computes 2500  Gflop,  and writes out  100MB of output. These 10 tasks are to be executed on
+the platform shown in the simulation app above. What is the total execution time when I/O
+and computation can be overlaped? Use the simulation app to check your answer. What is the
+core utilization percentage? 
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content answer-frame">
+Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing
+100 MB takes 1 second. The compute time is much larger than the I/O time. So the
+total execution time will be $2 + 10\times 25 + 1 = 253 $ seconds, which is confirmed
+by the simulation. 
+
+The core is idle for only 3 seconds (at the very beginning and the very of of the execution),
+and so the core utilization is 250/253 = 98.8%. 
+
+</div>
+</div>
+
+
+**[A.1.p4.2]** A program reads 2GB of input from disk, performs a 6 TFlop 
 computation on this input, and then writes 1GB of output to disk. It is 
-executed on a computer that has a CPU that computes at speed 500 GFlop/sec
+executed on a computer that has a CPU that computes at speed 500 Gflop/sec
 and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution 
 IO-intensive or CPU-intensive? If you could upgrade either the CPU or the 
 HDD, which upgrade would you choose?
@@ -225,7 +249,7 @@ HDD, which upgrade would you choose?
 The execution time breakdown is as follows:
 
   - Read input: 2000 MB / 200 MB/sec = 10 sec
-  - Compute: 6000 GFlop / 500 GFlop/sec = 12 sec
+  - Compute: 6000 Gflop / 500 Gflop/sec = 12 sec
   - Write input: 1000 MB / 200 MB/sec = 5 sec
 
 Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD. 
@@ -235,7 +259,7 @@ Therefore the program's execution is IO-intensive. Therefore one should upgrade 
 
 <p> </p>
 
-**[A.1.p4.2]** You are working at a company that runs instances of the 
+**[A.1.p4.3]** You are working at a company that runs instances of the 
 same task repeatedly. On the currently available hardware, the time to 
 process a task instance is as follows:
 
@@ -251,7 +275,11 @@ end it writes the output of the last two tasks one after the other.  The
 computation on the CPU for a task is started as soon as its input has been
 read from disk.
 
-What is the CPU utilization when processing 4 consecutive task instances?
+What is the total execution time when processing 4 consecutive task instances?  You can 
+use the simulation app above to check your answer!
+
+What is the core utilization?
+
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -267,6 +295,10 @@ Here is a depiction of the execution:
 The execution time is **18 seconds**.  (This result can be generalized for $n$
 tasks by identifying the repeating pattern: $2 + 3 + (n-1) x (3 + 1) + 1  = 4n + 2$.)
 
+We can double-check the result in simulation by setting the number of tasks to 4, 
+the amount of input data to 200 MB, the amount of output data to 200 MB, 
+and the task work to 300 Gflop.  
+
 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18
 = 66.6%.
 
@@ -275,7 +307,7 @@ The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18
 
 <p> </p>
 
-**[A.1.p4.3]** In the same setting as in the previous question, it is decided
+**[A.1.p4.4]** In the same setting as in the previous question, it is decided
 to purchase a SSD to replace the HDD currently being used. The SSD has
 **twice the bandwidth** of the HDD.  What is now the CPU utilization when
 processing 4 consecutive task instances?
@@ -320,7 +352,7 @@ IO is possible?
 **[A.1.q4.2]**
 A task requires 50 MB of input data to be loaded from disk before
 computation and writes 50 MB of data to disk once computation has been
-completed. The computation performs 500 GFlop.  Instances of this task are
+completed. The computation performs 500 Gflop.  Instances of this task are
 executed continuously in sequence throughout the day, in a way that
 *overlaps IO and computation*.  The computer on which this is done has a
 disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
@@ -331,7 +363,16 @@ per day. Should we upgrade the processor? Or should we upgrade the disk?
 A task requires 100 MB of input data to be loaded from disk, performs 1
 TFlop of computation, and writes some output back to disk. A batch of fifty
 instances of this task is to be run on a computer with a processor capable
-of 250 GFlop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
+of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
 computation are overlapped.* How large can the task output be so that the CPU is still 100% utilized?
 (ignoring the initial input read and final output write, during which the
 CPU is necessarily idle).
+
+---
+
+#### Suggested activities
+
+**[Programming #1]**: Implement a program that first reads in all the bytes in a file into an array of bytes in RAM. The program then computes and prints out the number of bytes that are equal to 0. The program should also print the time spent reading the file into RAM and the time to  compute the result. Determine experimentally whether this program is compute- or I/O-intensive. You will need to run the program on a sufficiently large file so that you can obtain meaningful results. 
+
+**[Programming #2]**: Modify your program so that it determines which byte value is the most frequent in the file. Is this modified program more or less I/O-intensive? By how much?
+ 
