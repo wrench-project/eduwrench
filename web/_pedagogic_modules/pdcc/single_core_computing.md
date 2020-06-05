@@ -37,5 +37,5 @@ Go through the tabs below in sequence...
 </div>
 
 <div markdown="1" class="ui tab segment" data-tab="fifth">
-  {% include_relative include_single_core_computing/single_core_computing_capstone.md %}
+  {% include_relative include_single_core_computing/capstone.md %}
 </div>
