@@ -1,4 +1,5 @@
 [![Build Status][travis-badge]][travis-link]
+[![CodeFactor][codefactor-badge]][codefactor-link]
 
 <img src="web/assets/wrench_logo.png" width="100" />
 
@@ -89,6 +90,8 @@ eduWRENCH has been funded by the National Science Foundation (NSF).
 
 [travis-badge]:             https://travis-ci.org/wrench-project/eduwrench.svg?branch=master
 [travis-link]:              https://travis-ci.org/wrench-project/eduwrench
+[codefactor-badge]:         https://www.codefactor.io/repository/github/wrench-project/eduwrench/badge
+[codefactor-link]:          https://www.codefactor.io/repository/github/wrench-project/eduwrench
 [nsf-20191-badge]:          https://img.shields.io/badge/NSF-1923539-blue
 [nsf-20191-link]:           https://nsf.gov/awardsearch/showAward?AWD_ID=1923539
 [nsf-20192-badge]:          https://img.shields.io/badge/NSF-1923621-blue
