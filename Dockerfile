@@ -1,4 +1,4 @@
-FROM wrenchproject/wrench:1.6
+FROM wrenchproject/wrench:unstable
 
 # install Node 10.x for the visualization
 USER root
