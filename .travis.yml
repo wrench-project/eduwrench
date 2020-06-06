@@ -13,7 +13,7 @@ services:
   - docker
 
 script:
-  - docker pull wrenchproject/wrench:1.6
+  - docker pull wrenchproject/wrench:unstable
   - mkdir data_server
   - docker-compose build --no-cache
 
