@@ -213,7 +213,7 @@ Consider  the following workflow:
 
 **[A.3.4.q3.1]** Say we execute this workflow at a compute site that hosts
 a 2-core hosts, with cores computing at 
-100 GFlop/sec. All data is read/written from/to a remote
+100 Gflop/sec. All data is read/written from/to a remote
 storage site. How many MB are read/written in total?
 
 **[A.3.4.q3.2]** Say that the read/write data rate for the remote storage

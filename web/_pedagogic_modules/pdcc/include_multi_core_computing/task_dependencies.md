@@ -87,7 +87,7 @@ DAG for the "data set analysis" example.
 To gain hands-on experience with the task dependency concept, use the
 simulation app below to simulate the execution of our example program
 on a 3-core computer, where **each core computes
- at speed 10 GFlop/sec**.  You can pick the amount of work for the
+ at speed 10 Gflop/sec**.  You can pick the amount of work for the
  "analyze" task. The execution strategy used for this execution
 is very simple: whenever a task can be executed (because all its parent
 tasks have been executed) and a core is (or becomes) idle, then execute
@@ -107,7 +107,7 @@ The following practice questions are based on this simulation app.
 
 #### Practice Questions
 
-**[A.2.p3.1]**  Say we run the program with an "analyze" task that has 100 GFlop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
+**[A.2.p3.1]**  Say we run the program with an "analyze" task that has 100 Gflop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -139,7 +139,7 @@ So the parallel efficiency is $E = (96/46)/3 =$ **69.56%**.
 <p></p>
 
 **[A.2.p3.2]** What is the number of core idle seconds when running the
-program with "analyze" tasks with 300 GFlop work on our 3-core computer?
+program with "analyze" tasks with 300 Gflop work on our 3-core computer?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -174,7 +174,7 @@ Using the simulation app to search for the answer would be pretty annoying.
 So let's go purely analytical first, and then see how we could have gotten 
 the correct answer just using common-sense. 
 
-Let $x$ be the work of the "analyze" task in GFlop. The sequential execution 
+Let $x$ be the work of the "analyze" task in Gflop. The sequential execution 
 time is $x/10 + 86$ seconds. 
 
 The parallel execution time is a bit trickier. 
@@ -195,7 +195,7 @@ So, we have two cases: If $16 + x/10 \leq 46$, that is, if $x \leq 300$,
      is equal to $((x/10 + 86) / (16 + x/10)) / 3$. This is a decreasing function on the [300, infinity] domain,
      and so on  that domain it is maximized for  $x = 300$. 
      
-  The final answer is thus 300 GFlop.  
+  The final answer is thus 300 Gflop.  
 
 The above is quite formal, but we could have given a purely
 common-sense answer.
@@ -255,11 +255,11 @@ task(s), where **the path length is measured in task durations, including the
 entry and the exit task(s)**. 
 No matter how many cores are used, the program cannot execute faster than
 the length of the critical path. For instance, consider our example 
-DAG, assuming that the "analyze" task has work 250 GFlop. There are three paths
+DAG, assuming that the "analyze" task has work 250 Gflop. There are three paths
 from "start" to "display". The length of the visualization path is
 5+20+10+1 = 36 seconds. The length of the statistics path is 5+40+1=46 seconds. The
 length of the analysis path is 5+25+10+1=41 seconds. And so the critical path
-is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10GFlop/sec cores
+is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10Gflop/sec cores
 are used to execute this program, it can never run in less than 46 seconds!
 
 #### Practice Questions
@@ -368,7 +368,7 @@ answer  the practice  questions thereafter.
 
 #### Practice Questions
 
-**[A.2.p3.6]** Setting the "analyze" task's work to 10 GFlop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
+**[A.2.p3.6]** Setting the "analyze" task's work to 10 Gflop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
 If so, which ones should
 be prioritized? Can you venture an explanation?
 
@@ -403,7 +403,7 @@ All this can be seen easily in the simulation app.
 <p></p>
 
 **[A.2.p3.7]** Say now  we set the work of the "analyze" task to be 300
-GFlop.  What are the execution times with each of the three path
+Gflop.  What are the execution times with each of the three path
 prioritization options? Can  you explain why the results are as they are?
 
 <div class="ui accordion fluid">
@@ -413,7 +413,7 @@ prioritization options? Can  you explain why the results are as they are?
   </div>
   <div markdown="1" class="ui segment content">
 All three prioritization schemes give a 76 second execution time. In other words,
-path prioritization does not matter. With a 300 GFlop work for the "analyze" task,
+path prioritization does not matter. With a 300 Gflop work for the "analyze" task,
 the visualization path takes 30 seconds, and both the analysis and the statistics
 paths take 40 seconds. (Without counting the "start" and the "display"
 tasks).  No matter what we do, running on two cores three tasks that

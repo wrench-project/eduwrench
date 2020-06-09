@@ -21,7 +21,7 @@ each task is shown.
 
 We have to run this program on a **2-core** Virtual Machine  (VM) with
 20 GB of RAM,
-where each core computes with speed 400 GFlop/sec, and data is read
+where each core computes with speed 400 Gflop/sec, and data is read
 from storage at bandwidth 100 MB/sec.  
 
 ### Question #1
@@ -49,12 +49,12 @@ faster, you have the following options at your disposal:
 
   - **Option #2**: Upgrade your VM so that it has 3 cores and 30 GB of RAM. 
 
-  - **Option #3**: Upgrade your VM so that cores compute at 440 GFlop/sec. 
+  - **Option #3**: Upgrade your VM so that cores compute at 440 Gflop/sec. 
 
   - **Option #4**: Pay a software developer to
     re-implement Task 5 so that it exposes some data parallelism. This is
-    done by replacing the current Task 5 by a 1000  GFlop task followed 
-    $n$ independent tasks, each with work 9000/$n$ GFlop.
+    done by replacing the current Task 5 by a 1000  Gflop task followed 
+    $n$ independent tasks, each with work 9000/$n$ Gflop.
 
 Each option above costs money, but it is worth it *if it makes the program run in under 60s.*
 

@@ -49,7 +49,7 @@ speed 100 GFLop/sec, and using $r=3$ for the "oil" task, the program would take 
 
 $$
 \begin{align}
-\text{T} & = \frac{ 100 \times 3^{2} \text{GFlop}}{100 \text{GFlop/sec}} + \frac{100 \text{GFlop}}{100 \text{GFlop/sec}}\\
+\text{T} & = \frac{ 100 \times 3^{2} \text{Gflop}}{100 \text{Gflop/sec}} + \frac{100 \text{Gflop}}{100 \text{Gflop/sec}}\\
          & = 10 \text{sec}
 \end{align}
 $$
@@ -368,7 +368,7 @@ parallel phase is zero.
 For our example oil-painting program, we can of course compute the speedup analytically.  
 To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction 
 of the sequential execution time
-that is parallelizable. Still for a 100 GFlop/sec core, for a given a
+that is parallelizable. Still for a 100 Gflop/sec core, for a given a
 radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
 in the "luminence" task is 1 second.
 Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $n$
@@ -423,10 +423,10 @@ this in the two practice questions below.
 
 
 **[A.2.p4.7]** Consider a program that consists of a single task with work
-10,000 GFlop. The developer of the program has an idea to expose
+10,000 Gflop. The developer of the program has an idea to expose
 data-parallelism. But it is not perfect: the single task is rewritten as a
-first task with work 500 GFlop, and then $n$ tasks with each work $10000/n$
-GFlop. So the total work of the program is larger and there is still a sequential phase. What would the speedup
+first task with work 500 Gflop, and then $n$ tasks with each work $10000/n$
+Gflop. So the total work of the program is larger and there is still a sequential phase. What would the speedup
 be if executing the modified code on 4 cores (compared to the original
 1-task program on 1 of these cores)?
 
@@ -437,7 +437,7 @@ be if executing the modified code on 4 cores (compared to the original
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $s$ be the core compute speed in GFlop/sec. 
+Let $s$ be the core compute speed in Gflop/sec. 
 
 The sequential program runs in time $10000/s$.
 
@@ -460,7 +460,7 @@ $
 
 
 **[A.2.p4.8]** Consider a program that consists of a single task with work
-10,000 GFlop. The developer of the program has an idea to expose
+10,000 Gflop. The developer of the program has an idea to expose
 data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
 data-parallelism, but there is no sequential phase). For what value of X 
@@ -474,7 +474,7 @@ when running on an 8-core computer?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $s$ be the core compute speed in GFlop/sec. The sequential program runs 
+Let $s$ be the core compute speed in Gflop/sec. The sequential program runs 
 in time $10000/s$, and the 
 data-parallel program runs in time $((10000+X)/8)/s$.
 
@@ -493,7 +493,7 @@ $
 \frac{10000}{10000+X} \geq 0.9
 $
 
-which gives $X \leq 1111.11$ GFlop.
+which gives $X \leq 1111.11$ Gflop.
 
   </div>
 </div>
@@ -521,16 +521,16 @@ in 10 minutes.  How long does the sequential phase run for?
 when running on 64 cores, what fraction of its sequential execution time
 was non-parallelizable?
 
-**[A.2.q4.4]** Consider a program that consists of a single task  with  work  10,000 GFlop. 
-Developer $A$ proposes to replace this task with 5 tasks each with work  2,000 GFlop. 
+**[A.2.q4.4]** Consider a program that consists of a single task  with  work  10,000 Gflop. 
+Developer $A$ proposes to replace this task with 5 tasks each with work  2,000 Gflop. 
 Developer  $B$ proposes to replace this task with  4 tasks  each  with  work 3,000 Gflop,
-followed by a sequential task with work  500  GFlop. Which developer's idea  should you use
+followed by a sequential task with work  500  Gflop. Which developer's idea  should you use
 when running this program on a 4-core machine?
 
 **[A.2.q4.5]** A program currently consists of two tasks, $A$  and $B$,
 that are independent (i.e., they  can be performed in parallel).  Task $A$
-has work 1000 GFlop, while task $B$ has work 2000 GFlop.  You  can either
-replace task $A$ with two independent tasks each with work 600 GFlop, or
-replace task $B$ with  two independent tasks each with  work 1900 GFlop.
+has work 1000 Gflop, while task $B$ has work 2000 Gflop.  You  can either
+replace task $A$ with two independent tasks each with work 600 Gflop, or
+replace task $B$ with  two independent tasks each with  work 1900 Gflop.
 If running on a 3-core computer,  which replacement would be best in  terms
 of program execution  time?

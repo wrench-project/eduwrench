@@ -42,7 +42,7 @@ software. However, you can access remote servers on which the software that
 implements the algorithm is installed so that you can use it 
 over the network. This is provided by the company that develops the fancy
 algorithm, as an advertisement of its capabilities.   The fancy algorithm
-performs **1000 GFlop** of work on the 100 MB image. 
+performs **1000 Gflop** of work on the 100 MB image. 
 
 The following pictures depicts this setup:
  
@@ -52,9 +52,9 @@ The following pictures depicts this setup:
 </div>
  
 The client can use one of two servers: **Server #1,** which you can access via a network link
-with only 10 MB/sec bandwidth, but with a core that computes at speed 100 GFlop/sec; 
+with only 10 MB/sec bandwidth, but with a core that computes at speed 100 Gflop/sec; 
 and  **Server #2**, which you can access via a 100 MB/sec
-network link, but with a core that only computes at speed 60 GFlop/sec. 
+network link, but with a core that only computes at speed 60 Gflop/sec. 
 The latency for these network links is negligible and
 can be disregarded because the image is large. Also, the output of the
 algorithm (the number of cars) is only a few bytes, which is negligible.
@@ -106,7 +106,7 @@ You can check your answer using the simulation app.
 The task execution time on Server #2 is:
 
 $
-T_{\text{server 2}} = \frac{100\; \text{MB}}{100\;\text{MB/sec}} + \frac{1000\; \text{GFlop}}{60\; \text{GFlop/sec}} = 17.66\;\text{sec}
+T_{\text{server 2}} = \frac{100\; \text{MB}}{100\;\text{MB/sec}} + \frac{1000\; \text{Gflop}}{60\; \text{Gflop/sec}} = 17.66\;\text{sec}
 $ 
 
 We can double-check this result in simulation, which gives us an execution time of
@@ -119,7 +119,7 @@ Let $B$ be the unknown bandwidth  to Server #1, in MB/sec. The task execution ti
 would then be:
         
 $
-T_{\text{server 1}} = \frac{100\; \text{MB}}{B} + \frac{1000\; \text{GFlop}}{100\; \text{GFlop/sec}}
+T_{\text{server 1}} = \frac{100\; \text{MB}}{B} + \frac{1000\; \text{Gflop}}{100\; \text{Gflop/sec}}
 $
 
 To determine $B$ we just need to solve: 
@@ -159,7 +159,7 @@ Since the compute time is 10 seconds, the answer is no, it is not possible to ha
 <p></p>
 
 
-**[A.3.2.p1.3]** Say you now have **two images** to process, each of them 100 MB and requiring 1000 GFlop of work. Bandwidth
+**[A.3.2.p1.3]** Say you now have **two images** to process, each of them 100 MB and requiring 1000 Gflop of work. Bandwidth
 to Server #1 is set to the original 10 MB/sec
  
  Assuming your
