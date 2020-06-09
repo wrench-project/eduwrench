@@ -175,7 +175,7 @@ purple task, or the other way around?
 All data-parallel tasks run simultaneously.
 
 First, does this matter? That is, if the yellow task runs for, say 13 seconds, it
-doesn't really matter what we do with the blue and purple tasks. Turns out thats
+doesn't really matter what we do with the blue and purple tasks. Turns out that
 the yellow task runs in time $20 \times 0.85 / 3 + 20 \times 0.15 =$ 8.66 seconds.
 So the yellow task will not determine the execution time, and yes, the choice in the question matters. 
 

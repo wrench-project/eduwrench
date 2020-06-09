@@ -443,7 +443,7 @@ finish computing in 15s. So the answer is *3 seconds*.
 minutes, would the program take if executed using a single core?
 
 **[A.2.q1.2]**  You are told that a program runs in 10 hours when using the
-4 cores of some computer with parallel efficency 80%. Using 8 cores, the
+4 cores of some computer with parallel efficiency 80%. Using 8 cores, the
 program runs in 6 hours. What is the parallel efficiency of this 8-core
 execution?
 
