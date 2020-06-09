@@ -1,9 +1,8 @@
 
-#### Learning objectives:
+#### Learning objectives
 
-  - Understand the concepts of latency and bandwidth
-
-  - Be able to estimate data transfer time through a network link
+- Understand the concepts of latency and bandwidth
+- Be able to estimate data transfer time through a network link
 
 ---
 
@@ -40,9 +39,6 @@ model of a network link is not completely accurate as it abstracts away
 many of the details of actual network technologies and protocols.  But it
 is sufficient for our purpose.
 
-
-
-
 ---
 
 #### Data Transfer Time
@@ -52,7 +48,6 @@ $T$ to transfer an amount of data $s$ over the link can be estimated as a first
 approximation as follows:
 
 $$ T = \alpha + \frac{s}{\beta} .$$
-
 
 For instance, consider a link with latency 100 microseconds and effective bandwidth
 120 MB/sec ("120 MegaByte per second"), transferring 100KiB ("100 KibiByte per second") of data takes time: 
@@ -74,7 +69,6 @@ GB/sec physical link, you will not be able to transfer data at 100 GB/sec.
 From this point forward, when we describe the bandwidth of a network link,
 we will always mean its *effective bandwidth*.
 
-
 ---
 
 #### Practice Questions
@@ -87,7 +81,7 @@ To make sure the above is crystal clear, answer the following practice questions
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    $$ T = 500 / 1000 + 1000 \times (250 \times 10^6) / (20 \times 10^9) = 13 \; \text{ms}.$$
   </div>
 </div>
@@ -100,7 +94,7 @@ To make sure the above is crystal clear, answer the following practice questions
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    $$ T = 100 / (60 \times 10^6) + (1 / 60 ) \times (1 \times 10^9) / (520 \times 10^6) \simeq 0.032 \; \text{min} .$$
   </div>
 </div>
@@ -113,7 +107,7 @@ To make sure the above is crystal clear, answer the following practice questions
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    Let $B$ be the needed bandwidth. We simply need to solve the equation below for $B$:  
 <p>$$ 2.5 = 1/1000  + (148 / 10^3) / B  = 2.5 ,$$</p>
    which gives:
@@ -138,10 +132,8 @@ bandwidth in 3.03 sec. What is the link's latency in seconds?
 
 <p> </p>
 
-
 **[C.q1.3]** A data transfer took 14 minutes on a link with 
 latency 100 ms and bandwidth 120 KB/sec. How much data, in MB, was transferred?
-
 
 <p> </p>
 
@@ -153,4 +145,3 @@ computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
 bandwidth 700 MB/sec.  Which mirror should you use and why?
 
 <p> </p>
-

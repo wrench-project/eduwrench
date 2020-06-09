@@ -1,11 +1,9 @@
 
-#### Learning objectives:
+#### Learning objectives
 
-  - Understand the concept of network topology
-
-  - Be able to compute end-to-end latencies and bandwidths
-  
-  - Be able to compute end-to-end data transfer times
+- Understand the concept of network topology
+- Be able to compute end-to-end latencies and bandwidths
+- Be able to compute end-to-end data transfer times
 
 ---
 
@@ -17,7 +15,8 @@ the graph represent either end-points, i.e., computers connected to the
 network, or routers, i.e., devices that are used to connect network links
 together.  We are abstracting away here many interesting details of how
 network technology makes it possible to implement network topologies. For
-instance, we will not discuss how routers work (see a network textbook for all interesting details).
+instance, we will not discuss how routers work (see a network textbook for 
+all interesting details).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology.svg">topology</object>
 <b>Figure 2:</b> An example network topology that interconnects 5 hosts.
@@ -120,7 +119,7 @@ questions, which all pertain to this topology:
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The latency is the sum of the link latencies along the route:
 
 $$
@@ -139,7 +138,7 @@ $$
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The bandwidth is the minimum of the link bandwidths along the route:
 
 $$
@@ -175,7 +174,7 @@ $$
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The data transfer time is:
 
 $$ 
