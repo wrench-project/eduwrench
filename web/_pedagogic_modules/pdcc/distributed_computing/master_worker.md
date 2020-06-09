@@ -6,8 +6,7 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to introduce you to the basic concepts of the
-master/worker model of computation.  
+The goal of this module is to introduce you to the master/worker model of computation, which in some sense just extends client-server. 
 
 Go through the following tabs in sequence...
 

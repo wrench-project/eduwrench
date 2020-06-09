@@ -14,9 +14,10 @@ sequence to produce a final desired output (e.g., all the steps necessary
 to perform some complex genomic analysis can be organized as a
 bioinformatics workflow). In practice, **the tasks are stand-alone
 executable programs that read in input files and produce output files**.  A file
-produced as output by one task can be required as input for another task. Consequently, a workflow is a **DAG of tasks** where edges are
-file dependencies (see the [Multi Core
-Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing) in which we already discussed dependencies between tasks). 
+produced as output by one task can be required as input for another task. Consequently, a 
+workflow is a **DAG of tasks** where edges are
+file dependencies (see the [Depencies tab of the Multi Core
+Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/dependencies) in which we already discussed dependencies between tasks). 
 
 There are two typical "rules of execution" in practice:
 

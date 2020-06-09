@@ -10,7 +10,7 @@
 ### Basic concept
 
 So far in this module we've only considered sequential tasks. In other words, each task can only use
-a single core.  But in the Data-Parallelism tab of the [Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing), we 
+a single core.  But in the [Data-Parallelism tab  of the Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/data-parallelism), we 
 learned about **Data Parallelism**: the notion that a sequential task can be rewritten as a set of
 parallel tasks, with likely a remaining sequential portion of the execution. Then, in that same module,
 we learned about **Amdahl's Law**, which quantifies the data-parallel task's execution time on a given

@@ -46,8 +46,7 @@ from the master to each worker, where the first link is shared by  all workers b
 dedicated  to the worker.     Also, for 
 simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
 this as the master having a fast disk and doing efficient pipelining of disk I/O and network communications --
-see the Pipelining tab of 
-the [Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/)). Our goal
+see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). Our goal
 here is not to consider all possible setups, but instead to consider a simple one that is sufficient to get
 a sense of what scheduling entails. 
 
@@ -74,8 +73,7 @@ time and resources needed. For scheduling, having that additional information an
 
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
-We have briefly encountered the concept of scheduling in the Task Dependencies tab of the
-[Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/)). You may also
+We have briefly encountered the concept of scheduling in the [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies)). You may also
 have encountered the term in an Operating Systems course. The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 
@@ -128,10 +126,9 @@ So, what can we do for steps a) and b) above? It is easy to come up with a bunch
     - Pick a random worker
     - Pick the fastest worker (i.e., highest Flop/sec)
     - Pick the best-connected worker (i.e., highest link MB/sec)
-    - Pick the best compute/network worker (i.e., highest compute speed to link bandwidth  ratio).
     - Pick the worker that can complete the task  the earliest (based on back-of-the-envelope estimates)
 
-The above defines $7 \times 5 = 35$ different scheduling strategies, and we could come up with many more!!   The big
+The above defines $7 \times 4 = 28 different scheduling strategies, and we could come up with many more!!   The big
 question of course is whether some of these strategies are good. Intuitively, it would seem that doing 
 random task selection and random worker selection would be less effective than, e.g., picking the task with the
 highest work and running it on the worker that can complete it the earliest.  The only way to get a sense
@@ -365,6 +362,30 @@ The simulated execution times are:
 </div>
  
 <p></p>
+
+**[A.3.3.p1.6]** Can you  come up with a simple scenario (e.g., 2 workers and 2 tasks)
+for which none of the strategies above is optimal. In other words, you 
+can easily come up with a solution that is better that that of all the strategies. 
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     (click to see answer)
+   </div>
+   <div markdown="1" class="ui segment content">
+        
+Say we have two identical tasks, with negligible input size. We have two workers,
+one that is very fast and one that is very slow. The best approach is to run both 
+tasks on the very fast worker and completely give up on trying to use the very slow
+worker. But the strategies above always assign  tasks to workers whenever possible (i.e.,
+whenever there is a yet-to-be-executed task and an idle worker). And so, in this simple
+scenario, none of them can produce the optimal execution.
+
+   </div>
+</div>
+ 
+<p></p>
+
 
 ---
 

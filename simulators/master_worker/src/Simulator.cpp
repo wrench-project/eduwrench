@@ -97,7 +97,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                      "   <zone id=\"AS0\" routing=\"Full\">\n"
                      "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
                      "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                     "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
+                     "           <disk id=\"large_disk\" read_bw=\"1000000000000TBps\" write_bw=\"1000000000000TBps\">\n"
                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                      "                            <prop id=\"mount\" value=\"/\"/>\n"
                      "           </disk>\n"
@@ -148,7 +148,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                      "   <zone id=\"AS0\" routing=\"Full\">\n"
                      "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
                      "           <prop id=\"ram\" value=\"32GB\"/>\n"
-                     "           <disk id=\"large_disk\" read_bw=\"1000000000000000000MBps\" write_bw=\"1000000000000000000MBps\">\n"
+                     "           <disk id=\"large_disk\" read_bw=\"1000000000000TBps\" write_bw=\"1000000000000TBps\">\n"
                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                      "                            <prop id=\"mount\" value=\"/\"/>\n"
                      "           </disk>\n"
@@ -590,7 +590,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
     const std::string WORKER_TWO("worker_two");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}));
+    auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE,  "infinity"}}, {}));
     storage_services.insert(master_storage_service);
 
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
@@ -754,12 +754,12 @@ int main(int argc, char** argv) {
 
         std::cout << "----------------------------------------" << std::endl;
         std::cout.precision(4);
-        std::cout << "Minimum Execution Time: " << std::to_string(*min_element(results.begin(), results.end())).c_str()
-                  << " seconds\n";
-        std::cout << "Mean Execution Time: " << std::to_string(result).c_str()
-                  << " seconds\n";
-        std::cout << "Maximum Execution Time: " << std::to_string(*max_element(results.begin(), results.end())).c_str()
-                  << " seconds\n";
+        printf("Minimum Execution Time: %.2lf sec\n", *min_element(results.begin(), results.end()));
+        printf("Mean Execution Time:    %.2lf sec\n", result);
+        printf("Maximum Execution Time: %.2lf sec\n", *max_element(results.begin(), results.end()));
+//        std::cout << "Minimum Execution Time: " << std::to_string(*min_element(results.begin(), results.end())).c_str() << " seconds\n";
+//        std::cout << "Mean Execution Time: " << std::to_string(result).c_str() << " seconds\n";
+//        std::cout << "Maximum Execution Time: " << std::to_string(*max_element(results.begin(), results.end())).c_str() << " seconds\n";
         std::cout << "----------------------------------------" << std::endl;
     }
     return 0;

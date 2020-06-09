@@ -6,8 +6,7 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to provide you with knowledge of
-and practical experience with concepts behind workflow applications.  
+The goal of this module is to introduce you to the workflow model of computation that is used in many real-world scientific applications.  
 
 Go through the tabs below in sequence...
 

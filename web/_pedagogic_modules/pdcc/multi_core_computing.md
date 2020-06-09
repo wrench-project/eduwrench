@@ -6,7 +6,7 @@ usemathjax: true
 submodule: 'pdcc'
 ---
 
-The goal of this module is to introduce you to multi-core computing.
+The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple cores within the same computer).
 
 Go through the tabs below in sequence...
 

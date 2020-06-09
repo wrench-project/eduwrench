@@ -207,7 +207,7 @@ a pretty well-known rule of thumb: trying to get computers to compute  as early 
 In our case, this works out great because Server #2 can get the image really quickly, and is slower
 than Server #1 for computing. So we achieve  much better overlap of communication and computation
 with the second option than with the first option. This is exactly the same idea as
-overlapping I/O and computation as see in the I/O tab of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/).
+overlapping I/O and computation as see in [I/O tab of the Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io).
 
         
 

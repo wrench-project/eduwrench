@@ -6,8 +6,7 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to provide you with knowledge of networking, as
-it relates to the performance of distributed computing applications.  
+The goal of this module is to provide you with knowledge of networking, as it relates to the performance of distributed computing applications.  
 
 The goal is **not** to teach you details of network technologies and protocols,
 which are fascinating topics you can learn about in networking textbooks.

@@ -6,7 +6,7 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to introduce you to the client/server model of
+The goal of this module is to introduce you to the fundamental client/server model of
 computation. 
 
 Go through the following tabs in sequence...

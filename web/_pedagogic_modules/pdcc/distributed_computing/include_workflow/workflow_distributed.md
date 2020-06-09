@@ -43,7 +43,7 @@ data has to flow back and forth between the storage site and the compute site**.
 because, for now, the compute site has no persistent storage. 
 
 The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and uses a 100 MB
-buffer when being accessed remotely (see the Pipelining tab of the [Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server)). It is
+buffer when being accessed remotely (see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). It is
 connected to the compute site via a wire-area network link with 100 MB/sec bandwidth
 and 10 millisecond latency. 
 

@@ -5,9 +5,7 @@
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms_scheduler, "Log category for Simple WMS Scheduler");
 
-
 namespace wrench {
-
 
     /**
     * @brief A struct representing a "Compute Node"
@@ -121,15 +119,8 @@ namespace wrench {
                 task_selection(task_selection),
                 compute_selection(compute_selection),
                 rng(rng) {
-
-
-//        if (seed != 0) {
-//            srand(seed);
-//        } else {
-//            srand(time(0));
-//        }
-
     }
+
     /**
      *
      * @param compute_services - set of available compute services
@@ -140,8 +131,6 @@ namespace wrench {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
-
-
 
         ///Creating a vector of structs for all ready tasks and their relevant information for scheduling
         std::vector<TaskInformation> task_information;
@@ -160,7 +149,6 @@ namespace wrench {
                                         total_bytes,
                                         ((task->getFlops())/total_bytes)});
         }
-
 
         ///sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
