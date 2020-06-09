@@ -58,7 +58,7 @@ below shows an example timeline for sending a 1GB file stored on disk
 to the network using a 200MB buffer:
 
 <p align="center">
-<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_pipelining.svg">Pipelining example</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_pipelining.svg">Pipelining example</object>
 </p>
 <div class="caption">
 <strong>Figure 1: Pipelining example</strong>.

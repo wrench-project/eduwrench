@@ -29,7 +29,7 @@ represent such programs is a *Directed Acyclic Graph (DAG)*, in which
 program, the DAG representation is straightforward, and depicted in
 the figure below:
 
-<object class="figure" width="80" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Chain DAG</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_chain_dag.svg">Chain DAG</object>
 <div class="caption"><strong>Figure 1:</strong>
 DAG for the "chef" example.
 </div>

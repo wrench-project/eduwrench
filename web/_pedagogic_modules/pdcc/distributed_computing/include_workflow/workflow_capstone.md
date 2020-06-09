@@ -10,7 +10,7 @@
 Consider the scenario (i.e., a workflow to be executed on a distributed platform)
 depicted in this figure: 
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_capstone.svg">Capstone scenario</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_capstone.svg">Capstone scenario</object>
 
 The 4-task workflow needs to be executed on a 2-host platform, with all
 workflow data hosted at a remote storage site.  The first task of the

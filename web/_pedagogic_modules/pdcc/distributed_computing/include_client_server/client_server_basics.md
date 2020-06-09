@@ -47,7 +47,7 @@ performs **1000 GFlop** of work on the 100 MB image.
 The following pictures depicts this setup:
  
 <p align="center">
-<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Setup</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Setup</object>
 </p>
 <div class="caption">
 <strong>Figure 1: Example client-server setup with two servers</strong>.
@@ -223,7 +223,7 @@ Given the client-server setup below (note that servers are multi-core, and that 
 has both an input and an output file), answer the following  **four questions**:
 
 <p align="center">
-<object class="figure" width="600" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
 </p>
 <div class="caption">
 <strong>Figure 2: Another example client-server setup with two servers</strong>.

@@ -34,7 +34,7 @@ Going back to the setup in the previous tab, we want to be able to store
 data on the compute site. So let's enhance that site with a bit more hardware!
 
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_platform_zoom.svg">Storage at the compute site</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_platform_zoom.svg">Storage at the compute site</object>
 <div class="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
 Figure 1 above show the compute site for the platform in the previous tab, but
@@ -207,7 +207,7 @@ So with 35.8% we're still pretty fact from the ideal parallel efficiency.
 
 Consider  the following workflow:
 
-<object class="figure" type="image/svg+xml" width="150" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
 
 <p><br></p>
 

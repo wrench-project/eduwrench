@@ -24,7 +24,7 @@ data-parallelism. This is often called "mixed" parallelism.
 ### An example
 
 
-<object class="figure" type="image/svg+xml" width="300" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow.svg">Example workflow with task- and data-parallelism.</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow.svg">Example workflow with task- and data-parallelism.</object>
 <div class="caption"><strong>Figure 1:</strong> A simple workflow with some data-parallel tasks ($\alpha$ is the fraction of the work that is non-parallelizable)</div>
 
 Figure 1 above shows an example workflow with both task- and data-parallelism. For simplicity, we completely ignore
@@ -196,7 +196,7 @@ blue task.
 
 Considering the workflow below, answer the following questions. 
 
-<object class="figure" type="image/svg+xml" width="200" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
 
 **[A.3.4.q4.1]** If we are given two hosts with 100 GFlop/sec hosts, where
 host1 has 20 cores and host2 has 40 cores. Should we run the blue task on

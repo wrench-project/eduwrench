@@ -206,7 +206,7 @@ and then sits idle for 15 minutes.
 This execution 
 is depicted in the figure below:
 
-<object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
 <div class="caption"><strong>Figure 1:</strong></div>
 
 Example 35-minute execution on a 2-core computer. 
