@@ -46,9 +46,7 @@ performs **1000 GFlop** of work on the 100 MB image.
 
 The following pictures depicts this setup:
  
-<p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Setup</object>
-</p>
 <div class="caption">
 <strong>Figure 1: Example client-server setup with two servers</strong>.
 </div>
@@ -208,10 +206,6 @@ In our case, this works out great because Server #2 can get the image really qui
 than Server #1 for computing. So we achieve  much better overlap of communication and computation
 with the second option than with the first option. This is exactly the same idea as
 overlapping I/O and computation as see in the I/O tab of the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/).
-
-        
-
-
    </div>
  </div>
  
@@ -222,9 +216,7 @@ overlapping I/O and computation as see in the I/O tab of the [Single Core Comput
 Given the client-server setup below (note that servers are multi-core, and that the task to execute
 has both an input and an output file), answer the following  **four questions**:
 
-<p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
-</p>
 <div class="caption">
 <strong>Figure 2: Another example client-server setup with two servers</strong>.
 </div>

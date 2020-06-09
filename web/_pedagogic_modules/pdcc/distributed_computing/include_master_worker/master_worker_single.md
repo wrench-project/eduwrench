@@ -26,9 +26,7 @@ your a feel for it via hands-on experiments.
 
 ### Parallelism through Master-Worker
 
-<p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Setup</object>
-</p>
 <div class="caption">
 <strong>Figure 1: Master-worker setup</strong>.
 </div>
@@ -298,9 +296,7 @@ much better than anything we saw above. Here is the set of decisions
 
 with the following task execution timeline:
 
-<p align="center">
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/gantt_screenshot.jpg">Gantt chart</object>
-</p>
 
 This is a particularly good execution as Task #5 and Task #3 finish almost at the same time. There may be even better options. You can double-check
 with the simulation that **none** of the other strategies come up with this execution. 
