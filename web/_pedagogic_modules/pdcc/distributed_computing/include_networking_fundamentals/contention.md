@@ -1,10 +1,8 @@
 
-#### Learning objectives:
+#### Learning objectives
 
-  - Understand the concept of contention
-
-  - Be able to estimate data transfer times in the presence of contention
-  
+- Understand the concept of contention
+- Be able to estimate data transfer times in the presence of contention
 
 ---
 
@@ -20,7 +18,8 @@ than it would go if alone in the network, it is because of *contention*
 
 ### A Simple example
 
-Consider the following topology with the two depicted data transfers (symbolized by the red and the green arrow), that
+Consider the following topology with the two depicted data transfers 
+(symbolized by the red and the green arrow), that
 each were started at exactly the same time and transfer 100 MB of data.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention.svg">topology with contention</object>
@@ -40,7 +39,7 @@ fair sharing - see a networking textbook for more details if interested).
 
 Given the above, both transfers proceed at 20 MB/sec, i.e., half the bandwidth of the link into
 host C, which is their bottleneck link. 
-Thus both transfers complete in time:
+Thus, both transfers complete in time:
 
 $$
 T = 200\;\text{us} + \frac{100 \text{MB}}{20 \text{MB/sec}} = 5.0002\;\text{sec}
@@ -134,7 +133,7 @@ transfers.
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="networking_fundamentals/" %}
   </div>
 </div>
@@ -159,7 +158,7 @@ The following practice questions pertain to this topology:
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    Yes! Both transfers are bottlenecked on the link into host C, sharing its
    bandwidth, so that both transfers proceed at bandwidth 20 MB/sec.
   </div>
@@ -176,7 +175,7 @@ The following practice questions pertain to this topology:
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    The transfer from D to B proceeds at 30 MB/sec as it is bottlenecked
    on the link into host B. The transfer from A to C proceeds at 40 MB/sec
    as it is bottlenecked on the link into host C. These two transfers share
@@ -203,7 +202,7 @@ from host A to host C start at time 0. At what time do they complete?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    Both transfers are bottlenecked on the link into host C, sharing its
    bandwidth so that both transfers proceed at 20 MB/sec. When the 60 MB
 transfer completes, then the 100 MB transfer still has 40 MB to transfer and
