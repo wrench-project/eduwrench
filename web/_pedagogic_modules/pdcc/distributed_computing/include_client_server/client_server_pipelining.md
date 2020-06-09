@@ -1,8 +1,8 @@
 
 #### Learning Objectives
 
-  - Understand the need for and the mechanics of pipelining
-  - Be able to reason about how pipelining impacts performance
+- Understand the need for and the mechanics of pipelining
+- Be able to reason about how pipelining impacts performance
 
 ---
 
@@ -78,7 +78,6 @@ followed by 10 seconds of network send). Instead, with pipelining
 we are able to executed in only 11 seconds, over a 25% reduction in
 execution time. 
 
-
 In this example above, the disk read time is faster than the network
 transfer time. So although the network is  used constantly for the entire
 execution (save for the initial step), the disk isn't. We call this an
@@ -99,9 +98,7 @@ step, both hardware resources are used constantly throughout the
 whole execution.
 
 
-
 ### Buffer size
-
 
 Although the principle of pipelining is simple, one question is that of the **buffer size**. 
 You may have noted in the previous example that there is no downside to making the buffer
@@ -175,7 +172,7 @@ to be when running on Server #2? Check your answer with the simulation.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
         
 One would expect the execution time to be:
 
@@ -202,7 +199,7 @@ some network behaviors), but it's close.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
        
 With a 500 MB buffer, sending the file over to the server consists of three steps. In the first step, 500 GB of data is read
 from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same time, this data is sent to the server and
@@ -223,14 +220,12 @@ The simulation gives us 20.04 seconds, which again is very close.
 server to receive the data. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
 pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack?
 
-
-
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
    
 The simulation gives these results:
 
@@ -263,15 +258,13 @@ It is not difficult to pick a good buffer size as between 500KB and 10MB we get 
 **[A.3.2.p2.4]** Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the simulation, determine the
 data transfer time with the original 10 us latency. Say now that the latency is instead 20 us. What is the increase in data
 transfer time? For this new latency, can we lower the data transfer time by using a different buffer size?
-
-
  
 <div class="ui accordion fluid">
     <div class="title">
       <i class="dropdown icon"></i>
       (click to see answer)
     </div>
-<div markdown="1" class="ui segment content">
+<div markdown="1" class="ui segment content answer-frame">
 
 With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55 seconds. If we make
 the latency 20 us,  this jumps up to 7.85. This is almost a 20% increase. 
@@ -297,7 +290,7 @@ will take? Check your answer in simulation. Do the two numbers agree?
   <i class="dropdown icon"></i>
   (click to see answer)
 </div>
-<div markdown="1" class="ui segment content">
+<div markdown="1" class="ui segment content answer-frame">
 
 We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency, which adds up
 to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55 seconds.
@@ -308,8 +301,6 @@ No, the two numbers do not match and **our estimate is way optimistic**. Once ag
 to capture complex network behaviors. In this case, when latencies get really high, the network protocol 
 that we simulate (TCP) leads to a severe performance collapse. This is something you can find out more about
 in advanced networking courses, but for now, let's just remember that  *latency is bad* :)
-
-
  
 </div>
 </div>
@@ -321,13 +312,12 @@ in advanced networking courses, but for now, let's just remember that  *latency 
  purely experimentally (since from the previous question we see that our estimates are not useful for such
  high latencies). 
  
- 
- <div class="ui accordion fluid">
+  <div class="ui accordion fluid">
  <div class="title">
    <i class="dropdown icon"></i>
    (click to see answer)
  </div>
- <div markdown="1" class="ui segment content">
+ <div markdown="1" class="ui segment content answer-frame">
  
  If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80 seconds.
  
@@ -383,7 +373,3 @@ execution cost?
 **[A.3.2.q2.4]** This question is for the same setup as in the previous question and the same task
 to execute. Assume that, for each server, ideal pipelining is used (i.e., assuming that network latency is
 zero). Which of these two servers would lead to the lowest execution cost?
- 
-
-    
-

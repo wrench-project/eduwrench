@@ -1,9 +1,8 @@
 
 #### Learning Objectives
 
-  - Understand the basics of the client/server model of computation
-
-  - Be able to reason about the performance of a simple client/server setup
+- Understand the basics of the client/server model of computation
+- Be able to reason about the performance of a simple client/server setup
 
 ---
 
@@ -77,7 +76,6 @@ able to finish execution more quickly than Server #1. Then,
 answer the practice questions hereafter, using the simulation app 
 to determine answers or to double-check your answers.
 
-
 <div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -100,7 +98,7 @@ You can check your answer using the simulation app.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 
 The task execution time on Server #2 is:
@@ -148,7 +146,7 @@ is one third of the execution time with the original 10 MB/sec bandwidth?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 The original execution time on Server #1, according to the simulation, is 20.50 seconds. So our target is 20.50/3 = 6.83 seconds. 
 Since the compute time is 10 seconds, the answer is no, it is not possible to have a task execution time that low.
@@ -173,7 +171,7 @@ your client program  can only do one network transfer at a time?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 If our client program can do simultaneous network transfers, since the client is connected to the
 servers via two different network links, then the execution time 
@@ -232,5 +230,3 @@ would produce slightly different results.
 **[A.3.2.q1.3]** It turns out the parallel efficiency of the task is not 100%. You observe that on Server #1 the entire execution takes 15 sec. What is the task's parallel efficiency?
 
 **[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%, what should the network bandwidth to Server #1 be for both servers to achieve the exact same task  execution times?
-
-
