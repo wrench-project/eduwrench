@@ -1,5 +1,5 @@
 
-#### Learning Objectives:
+#### Learning Objectives
  
 - Understand and be able to quantify the impact of RAM constraints on parallel performance
 - Understand and be able to quantify the impact of I/O on parallel performance
@@ -10,7 +10,8 @@
 
 As seen in the [Single Core Computing
 module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), a task
-may have a sizable amount of data that needs to be loaded and/or generated into RAM so that it can execute. Recall from that module that we do not allow a program to 
+may have a sizable amount of data that needs to be loaded and/or generated into 
+RAM so that it can execute. Recall from that module that we do not allow a program to 
 use more memory than available in physical
 RAM. Doing so is possible and handled by the Operating Systems (by
 shuffling data back and forth between RAM and disk) but comes with
@@ -117,9 +118,11 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 #### I/O and Parallelism
 
-Another common  cause of idle time is I/O. While a task running on a core performs I/O, the core is (mostly) idle. We learned
+Another common  cause of idle time is I/O. While a task running on a core performs 
+I/O, the core is (mostly) idle. We learned
 about  this in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing). In a parallel program this can translate to loss  of parallel efficiency.
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing). 
+In a parallel program this can translate to loss  of parallel efficiency.
 
 Let's consider a simple parallel program: 4 tasks that each read in 10 MB
 of input data and then performs 400GFlop of computation.  The 
@@ -158,7 +161,6 @@ depicted below:
 <div class="caption"><strong>Figure 3:</strong>
 Execution on 4 cores, with simultaneous I/O. </div>
 
-
 One  may wonder whether it may be a  better idea  to stagger the  task
 executions, so that only one file is read from disk at a time,  and so that
 I/O is overlapped with computation. This alternative
@@ -171,7 +173,7 @@ Execution on 4 cores, with staggered I/O. </div>
 The execution time is still 8s, so, for this example, the two executions are equivalent. 
 
 Overall, we achieve a parallel speedup of 2 and a parallel efficiency of
-only 50%. And this in in spite of have 4 identical tasks and 4 cores.
+only 50%. And this in spite of have 4 identical tasks and 4 cores.
 Increasing the parallel efficiency would require, for instance,  upgrading to a disk with
 higher read bandwidth.
 
@@ -216,9 +218,9 @@ This execution takes 9s, that is, 1 more second!
 
 You may be wondering what happens if one doesn't stagger the I/O, but instead
 starts reading input files of both tasks at once. In this case, due to
-disk bandwidth sharing, Task #2 starts at time 2 and Task #1 starts at time 3. So here also, the execution takes 9s. You  can try to draw the execution  timeline  as an exercise.
-
-
+disk bandwidth sharing, Task #2 starts at time 2 and Task #1 starts at time 3. 
+So here also, the execution takes 9s. You  can try to draw the execution  
+timeline  as an exercise.
 
   </div>
 </div>
@@ -246,4 +248,3 @@ multiple I/O operations can happen at the same time)?
 
 **[A.2.q2.4]** Same question as above but now the program always overlaps I/O and
 computation.
-

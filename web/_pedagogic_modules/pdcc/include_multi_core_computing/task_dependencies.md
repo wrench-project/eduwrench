@@ -1,5 +1,5 @@
 
-#### Learning Objectives:
+#### Learning Objectives
 
 - Understand the concept of task dependencies
 - Understand and quantify the impact of task dependencies on parallelism
@@ -8,7 +8,7 @@
 
 #### Basic concept
 
-So far, we've only considered *independent* tasks in our parallel programs,
+So far, we have only considered *independent* tasks in our parallel programs,
 i.e., tasks that can be executed in any order and concurrently. In other
 words, given a computer with as many cores as tasks and sufficient RAM
 capacity, all tasks can run at the same time. 
@@ -51,7 +51,7 @@ Note that each task above can involve both I/O and computation. For
 instance, an "uncompress" task must read in an image file from disk to
 uncompress it. 
 Then, whether it writes back to
-disk the uncompressed image or keeps in in RAM so that the "pre-process"
+disk the uncompressed image or keeps in RAM so that the "pre-process"
 task can do its job is up to the program's implementation in software.
 Given that the DAG above does not show any output file for these tasks,
 the idea is  to keep everything in RAM and/or I/O operations. 
@@ -93,8 +93,7 @@ is very simple: whenever a task can be executed (because all its parent
 tasks have been executed) and a core is (or becomes) idle, then execute
 that task on that core immediately. We call  a task whose parents
 have all executed a **ready task**.
-The following practice questions are
-based on this simulation app.
+The following practice questions are based on this simulation app.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -150,7 +149,8 @@ program with "analyze" tasks with 300 GFlop work on our 3-core computer?
   <div markdown="1" class="ui segment content">
   
 This is a very similar question as the previous one. The sequential
-execution time is 126 seconds, and the execution time on 3 cores is still 46 seconds. Therefore, the number of core idle seconds is $46 \times 3 - 126 = 12$ seconds.
+execution time is 126 seconds, and the execution time on 3 cores is still 
+46 seconds. Therefore, the number of core idle seconds is $46 \times 3 - 126 = 12$ seconds.
 
 We can double check this answer by counting the number of idle seconds as
 shown in the Host Utilization graph of the simulation app. 
@@ -170,16 +170,18 @@ parallel efficiency maximized?
   </div>
   <div markdown="1" class="ui segment content">
 
-Using the simulation app to search for the answer would be pretty annoying. So let's go purely analytical first, and then see how we could have gotten the correct answer just using common-sense. 
+Using the simulation app to search for the answer would be pretty annoying. 
+So let's go purely analytical first, and then see how we could have gotten 
+the correct answer just using common-sense. 
 
-
-  Let $x$ be the work of the "analyze" task in GFlop. The sequential execution time is $x/10 + 86$ seconds. 
+Let $x$ be the work of the "analyze" task in GFlop. The sequential execution 
+time is $x/10 + 86$ seconds. 
 
 The parallel execution time is a bit trickier. 
   
 The visualization path takes time $5 + 20 + 10 + 1 = 36$  seconds, which
-  is shorter  than  the statistics path, which takes 46 seconds. The analysis path takes time
-  $5 + x/10 + 10 + 1 = 16 + x/10$  seconds. 
+is shorter  than  the statistics path, which takes 46 seconds. The analysis path takes time
+$5 + x/10 + 10 + 1 = 16 + x/10$  seconds. 
 
 So, we have two cases: If $16 + x/10 \leq 46$, that is, if $x \leq 300$, 
   the critical path  is the analysis path, otherwise the critical
@@ -205,8 +207,6 @@ This is achieved when the analysis
 path and the statistics path are equal (nothing can be done about the
 visualization path), that is, when $x = 300$. This program can never
 achieve efficiency higher than 84.05%.
-
-
 
   </div>
 </div>
@@ -292,7 +292,6 @@ modify on edge's end point to increase the DAG width?
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_2.svg">Practice Question DAG</object>
 
-
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -311,7 +310,6 @@ Here is  the set of DAG levels:
 | 3 | G |
 | 4 | H |
 |---|-----|
-
 
 It would never be useful to use more than  3 cores  because the width of the DAG is 3  (level 2). The DAG's
 critical path is  {A->B->D->G->H}, which has length 28s. So yes, the execution (on 3 cores) could be lower than 29s. 
@@ -349,7 +347,6 @@ There are some rules of thumb for selecting ready tasks.
 A good and popular one is: Whenever there is a choice **pick the task that is 
 on  the  critical path.** After all it's critical. But this is not guaranteed to
 be the best approach for every DAG. It just happens to work well for many DAGs.
-
 
 To see the impact of such decisions, the simulation app below allows
 you to simulate program execution **on 2 cores** while prioritizing some execution paths. For instance,
@@ -450,8 +447,7 @@ This is perhaps not an easy question, as it requires to thing about this abstrac
 (if one doesn't want to examine all possible options). The answer is "no". Let's see
 why.
 
-
-We can look a this question at a very abstract level: we have three
+We can look at this question at a very abstract level: we have three
 "things" to run, let's call them $A$, $B$, and $C$. (Each of them is one of
 our three paths,  without including the "start" and "display" tasks).  Let
 $a$, $b$, and $c$  be their execution times. Say, without loss of
@@ -487,7 +483,8 @@ of overall program execution time!
 Answer the following questions:
 
 **[A.2.q3.1]** For the DAG below, where each task has an execution time in seconds on
-a core of some computer, give the number of levels, the width, and the length of the critical path in seconds.
+a core of some computer, give the number of levels, the width, and the length of the 
+critical path in seconds.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_1.svg">Question DAG</object>
 <p></p>
@@ -495,16 +492,17 @@ a core of some computer, give the number of levels, the width, and the length of
 **[A.2.q3.2]** For the DAG in the previous question, what would be the parallel
 efficiency on 3 cores?
 
-**[A.2.q3.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for picking a ready task for execution, we always pick the ready task with the largest work (this is a "I should do the most time-consuming chores first" approach). What is the execution time?
+**[A.2.q3.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for 
+picking a ready task for execution, we always pick the ready task with the largest work 
+(this is a "I should do the most time-consuming chores first" approach). What is the 
+execution time?
 
 **[A.2.q3.4]** Still for that same DAG on 2 cores, we now pick the ready task with the 
-smallest work first  (this is a "I should do the easiest chores first" approach). What is the execution time?  It is better than the previous approach?
+smallest work first  (this is a "I should do the easiest chores first" approach). What 
+is the execution time?  It is better than the previous approach?
 
-**[A.2.q3.5]** For this new DAG below, what are the execution times of the "pick the ready task with the largest work" and "pick the ready task with the smallest work" approaches? Which approach is better?
+**[A.2.q3.5]** For this new DAG below, what are the execution times of the "pick the 
+ready task with the largest work" and "pick the ready task with the smallest work" 
+approaches? Which approach is better?
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_2.svg">Question DAG</object>
-
-
-
-
-

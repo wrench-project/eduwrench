@@ -1,5 +1,5 @@
 
-#### Learning Objectives:
+#### Learning Objectives
 
 - Understand the need for and the basics of multi-core computers
 - Understand and apply the concepts of parallel speedup and efficiency
@@ -222,7 +222,7 @@ parallel efficiency is $(1 \times 35 + 1 \times 20) / (2 \times 35)$ = 78.5%.
 
 So that you can gain hands-on experience, use the simulation app below.
 
-This app allows you to pick a number of cores and an a number of tasks to
+This app allows you to pick a number of cores and a number of tasks to
 run on these cores.  Try first with a single core running 5 tasks (you can
 vary the per/task amount of work in GFlop, 
 but this value does not impact the overall execution pattern). Take
@@ -336,7 +336,7 @@ When using only a single core, the 15 tasks will take 15 seconds to
 complete. 
 
 When increasing the number of cores to 5, the program runs
-in 3 seconds, and there is no idle time (since 5 divides 15). Therefore
+in 3 seconds, and there is no idle time (since 5 divides 15). Therefore,
 parallel efficiency is 100%.
 
 When increasing the number
@@ -386,7 +386,7 @@ seconds  (since we have one task that takes 16 seconds).
 It turns out that splitting sets of numbers into parts with sums as close
 to each other as possible is a difficult problem. We are able to do it for
 the small examples like above, but as soon as the number of tasks gets large,
-it's no longer humanly possible. And in fact, it's not computer-ly
+it is no longer humanly possible. And in fact, it is not computer-ly
 possible either (at least, not quickly). More formally, determining the best split is an NP-complete
 problem (see algorithm/theory textbooks/courses). We will encounter this kind of
 "scheduling problem" (i.e., how to allocate tasks to processors) again in upcoming modules.
