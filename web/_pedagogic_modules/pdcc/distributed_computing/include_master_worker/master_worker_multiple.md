@@ -74,7 +74,7 @@ Check whether your expectations are confirmed in simulation (by coming up
 with appropriate simulation input).  Using a small number of workers and, 
 say, twice as many tasks should be sufficient. Also, don't forget
 to run a statistically significant number of experiments (e.g., the "number
-of invocation" should be at least 30).  
+of experiments" should be at least 30).  
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -93,13 +93,13 @@ Let's use the following setup: 5 workers, with 100 Gflop/sec
 speed and 100 MB/sec bandwidth  (i.e., speed is in the [100,100] range and
 bandwidth in the [100,100] range).  On these workers we run 10
 tasks, with 1 MB input (i.e., in the [1,1] range) and work in the [100,
-1000] range.  Let's use  the default 12345  seed and 30 invocations.
+1000] range.  Let's use  the default 12345  seed and 30 experiments.
 
-The results are as follows ($[min : mean : max]$): 
+The results are as follows ([min : mean : max]): 
 
-  - "random / fastest": [8.03 sec : 14.90 sec : 18.84 sec]
-  - "highest flop / fastest": [8.03 sec : 11.92 : 16.18 sec]
-  - "lowest flop / fastest": [9.87 sec : 14.30 sec : 17.94 sec]
+  - random / fastest: [8.03 sec : 14.90 sec : 18.84 sec]
+  - highest flop / fastest: [8.03 sec : 11.92 : 16.18 sec]
+  - lowest flop / fastest: [9.87 sec : 14.30 sec : 17.94 sec]
 
 The expectations are confirmed: highest flop is best; random is a bit
 better than lowest flop on average and, as expected, has a wider min-max
@@ -126,9 +126,9 @@ different when comparing the three strategies in the previous question?
 
 Setting worker speeds in the range [100, 1000], we obtain:
 
-  - "random / fastest": [1.42 sec : 3.60 sec : 8.33 sec]
-  - "highest flop / fastest": [1.25 sec : 3.20 sec : 7.12 sec]
-  - "lowest flop / fastest": [1.53 sec : 3.44 sec : 7.03 sec]
+  - random / fastest: [1.42 sec : 3.60 sec : 8.33 sec]
+  - highest flop / fastest: [1.25 sec : 3.20 sec : 7.12 sec]
+  - lowest flop / fastest: [1.53 sec : 3.44 sec : 7.03 sec]
 
 So results are very similar.  It seems that the "highest flop" idea
 is a good one even when workers are heterogeneous, provided we pick the 
@@ -162,14 +162,14 @@ best? Confirm your expectation in simulation
 The "fastest" and "best-connected" strategies only consider one
 aspect of task executions, and thus they could make very wrong decisions.
 Random, as usual, could work well sometimes, but is probably not very
-consistent. ECT, does consider both aspects, and should do the best. 
+consistent. Earliest completion, does consider both aspects, and should do the best. 
 
 Simulation results confirm the above:
 
-  - "highest flop / random": [3.09 sec : 6.89 sec : 10.83 sec]
-  - "highest flop / fastest": [2.09 sec : 4.74 sec : 8.81 sec]
-  - "highest flop / best-connected": [2.13 sec : 4.96 sec : 8.23 sec]
-  - "highest flop / ECT": [1.81 sec : 2.40 sec : 3.92 sec]
+  - highest flop / random: [3.09 sec : 6.89 sec : 10.83 sec]
+  - highest flop / fastest: [2.09 sec : 4.74 sec : 8.81 sec]
+  - highest flop / best-connected: [2.13 sec : 4.96 sec : 8.23 sec]
+  - highest flop / earliest completion: [1.81 sec : 2.40 sec : 3.92 sec]
 
 </div>
 </div>
@@ -178,7 +178,7 @@ Simulation results confirm the above:
 
 
 **[A.3.3.p2.4]** In the previous question, we purposely had more workers
-that tasks.  What if how we were to have, say, 4 times as many tasks as
+that tasks.  What if now we were to have, say, 4 times as many tasks as
 workers. Do you think the different strategies considered in the previous
 question would be closer together or further apart in terms of their
 results?   Verify your expectation experimentally.
@@ -191,19 +191,20 @@ results?   Verify your expectation experimentally.
    <div markdown="1" class="ui segment content">
 
 When there are fewer tasks that workers, it is critical to pick the right
-workers (which ECT does very well). But as we add tasks, all workers are
+workers (which the "earliest completion" strategy does very well). But as we add tasks, all workers are
 used to run the first batch of tasks. Then the fastest workers will become
 idle first, and used again. So as the number of tasks grows, we would
 expect all strategies to behave more similarly. This is confirmed in
 simulation using 80 tasks and 20 workers:
 
-  - "highest flop / random": [9.20 sec : 12.51 sec : 21.11 sec]
-  - "highest flop / fastest": [9.32 sec : 12.85 sec : 17.95 sec]
-  - "highest flop / best-connected": [9.90 sec : 12.79 sec : 18.81 sec]
-  - "highest flop / ECT": [9.50 sec : 13.08 sec : 18.02 sec]
+  - highest flop / random: [9.20 sec : 12.51 sec : 21.11 sec]
+  - highest flop / fastest: [9.32 sec : 12.85 sec : 17.95 sec]
+  - highest flop / best-connected: [9.90 sec : 12.79 sec : 18.81 sec]
+  - highest flop / earliest completion: [9.50 sec : 13.08 sec : 18.02 sec]
 
-And important observation is that random really look as good  as anything
-else now! And in fact, ECT is a bit worse
+The main observation is that random really look as good  as anything
+else now! And in fact, earliest completion is a bit worse!   Welcome
+to the confusing world of scheduling strategies.
 
 </div>
 </div>
@@ -213,7 +214,7 @@ else now! And in fact, ECT is a bit worse
 
 #### Questions 
 
-**[A.3.3.q.2.1]** Create an imbalance platform in which workers have
+**[A.3.3.q.2.1]** Create an imbalanced platform in which workers have
 compute speed in some range $[x, 10\times x]$, but have bandwidths
 in range $[x, 20\times x]$. In other words, the network plays a bigger 
 role than the computation, assuming that tasks have balanced input sizes

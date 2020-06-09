@@ -126,7 +126,7 @@ So, what can we do for steps a) and b) above? It is easy to come up with a bunch
     - Pick the best-connected worker (i.e., highest link MB/sec)
     - Pick the worker that can complete the task  the earliest (based on back-of-the-envelope estimates)
 
-The above defines $7 \times 4 = 28 different scheduling strategies, and we could come up with many more!!   The big
+The above defines $7 \times 4 = 28$ different scheduling strategies, and we could come up with many more!!   The big
 question of course is whether some of these strategies are good. Intuitively, it would seem that doing 
 random task selection and random worker selection would be less effective than, e.g., picking the task with the
 highest work and running it on the worker that can complete it the earliest.  The only way to get a sense
@@ -161,10 +161,10 @@ does it matter which options are picked for task and worker selection?
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content">
-        No, it doesn't matter. Since every task looks like every other task and every worker looks like
-        every other worker, all options will lead to the same schedule. If a task runs on a worker in
-        10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
-        $\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this in the simulation app.
+No, it doesn't matter. Since every task looks like every other task and every worker looks like
+every other worker, all options will lead to the same schedule. If a task runs on a worker in
+10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
+$\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this in the simulation app.
    </div>
 </div>
  
@@ -390,56 +390,67 @@ scenario, none of them can produce the optimal execution.
 
 Say that you have three workers with the following specs:
  
-  - Worker #1: 100 MB/sec link; 10 GFlop/sec speed
+  - Worker #1: 1 GB/sec link; 50 GFlop/sec speed
   - Worker #2: 100 MB/sec link; 100 GFlop/sec speed
   - Worker #3: 100 MB/sec link; 1000 GFlop/sec speed
    
-On  these workers, we need to run the following four tasks:
+On these workers, we need to run the following four tasks:
 
   - Task #1: 100 MB input; 10 GFlop work
-  - Task #2: 100 MB input; 1000 GFlop work
-  - Task #3: 1 GB input; 1000 GFlop work
-  - Task #4: 1 GB input; 1000 GFlop work
+  - Task #2: 100 MB input; 100 GFlop work
+  - Task #3: 1 GB input; 500 GFlop work
+  - Task #4: 1 GB input; 1500 GFlop work
 
 
- **[A.3.3.q1.1]** If the tasks are assigned to workers in the order that both are numbered (Task #1 goes to Worker #1, 
- Task #1 to Worker #1,
- Task #2 to Worker #2 and Task #3 to the first worker that becomes idle). What will the total execution time be? 
- 
- **[A.3.3.q1.2]** What is one scheduling strategy you think could improve on the execution 
- time in the previous
- question? Try to develop an intuition before verifying your answer using the simulator.
- 
+**[A.3.3.q1.1]** If the tasks are assigned to workers in the order that
+both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task
+#3 to Worker #3, and Task #4 to the first worker that becomes idle). What
+will the total execution time be?
+
+**[A.3.3.q1.2]** Find one of the above scheduling strategies (i.e., those
+implemented in the simulation) that improves on the execution
+time in the previous question? Try to develop an intuition before
+verifying your answer using the simulator.
+
  <p></p>
- 
+
  ---
- 
-Say  you have three identical workers, all with 100 MB/sec links and 100 GFlop/sec speed. On these workers
-you need to run  the following workload:
+
+Say  you have three identical workers, all with 100 MB/sec links and 100
+GFlop/sec speed. On these workers you need to run  the following workload:
 
   - Task #1: 2 GB input; 500 GFlop work
   - Task #2: 2 GB input; 500 GFlop work
   - Task #3: 2 GB input; 500 GFlop work
   - Task #4: 1.6 GB input; 1 TFlop work
 
-So the simulator input would be:   
+The master software implements the "highest data / best-connected" scheduling strategy.
+
+So the simulator input would be:
+
 ```
 Workers: 100 100, 100 100, 100 100  
 Tasks: 2000 500, 2000 500, 2000 500, 1600 1000  
-Task Scheduling: Highest Bytes  
-Worker Scheduling: Best-Connected Worker  
+Task Scheduling: Highest data  
+Worker Scheduling: Best-connected worker  
 ```
 
-The master software implements the "highest data / best-connected" scheduling strategy.
- 
+
 **[A.3.3.q1.3]** Estimate the total execution time. Then verify your answer in simulation.
 
-**[A.3.3.q1.4]** You have the option to upgrade the CPUs to double the compute speed on all of the workers, 
-or to upgrade the connection on 
-one of the workers to double the bandwidth.
-Which of these options is best (assuming the master still uses the
-"highest data / best-connected" scheduling strategy).  Come up with an answer just by reasoning first. Then
-check your answer in simulation. 
+**[A.3.3.q1.4]** You have the option to upgrade the CPUs to double the
+compute speed on all of the workers, or to upgrade the connection on one of
+the workers, doubling its bandwidth.  Which of these options is best
+(assuming the master still uses the "highest data / best-connected"
+scheduling strategy).  Come up with an answer just by reasoning first. Then
+check your answer in simulation.
 
  
-
+---
+ 
+<!--
+**[A.3.3.q1.5]** Pick two scheduling strategies (or more exactly to pairs or task/worker selection strategies), ignoring
+the random strategies. Come up with a master-worker setup in which the first strategy does well and for which
+the second strategy does worse. Then come up with another master-worker setup in which the situation is reversed.  
+Alternately, you can try to argue why one of the two strategies is always better than the other. 
+-->

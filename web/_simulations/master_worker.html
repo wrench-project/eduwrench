@@ -81,7 +81,7 @@ permalink: simulations/master_worker/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="host_specs">List of workers ([Bandwidth to Master][Gflop/sec])</label>
+    <label for="host_specs">List of workers ([MB/sec][Gflop/sec])</label>
     <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([Bandwidth to Master][Gflop/sec], ...)
@@ -166,7 +166,7 @@ permalink: simulations/master_worker/
 </grid>
 
 <div class="form-group col-md-6">
-    <input type="text" class="form-control" id="invocations" placeholder="30" value="30" required hidden>
+    <input type="text" class="form-control" id="invocations" placeholder="1" value="1" required hidden>
     <div class="invalid-feedback">
         Please provide an integer value in the range [1,100].
     </div>
