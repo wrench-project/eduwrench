@@ -321,7 +321,11 @@ html, body {
 }
 
 .figure {
+  margin: auto !important;
   margin-top: 2em !important;
+  min-height: 10em !important;
+  max-width: 100% !important;
+  width: auto !important;
 }
 
 .caption {

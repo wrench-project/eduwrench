@@ -31,7 +31,7 @@ infrastructure for future modules.
 
 We consider the following distributed platform with *three sites* on a wide-are network.
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform.svg">Distributed platform</object>
 <div class="caption"><strong>Figure 1:</strong> Example distributed computing platform.</div>
 
 The site in the bottom-left corner is where the user who wishes to execute the
@@ -91,7 +91,7 @@ back-of-the-envelope estimates.
 
 We consider a simple "in-tree" workflow, depicted in the figure below.
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_workflow.svg">Distributed platform</object>
 <div class="caption"><strong>Figure 2:</strong> Example workflow.</div>
 
 This workflow has only two levels, with the first level consisting of
@@ -258,7 +258,7 @@ execution without the simulation.
 
 Consider  the following workflow (all green tasks have identical specs, and so do all  blue tasks):
 
-<object class="figure" type="image/svg+xml" width="500" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_question.svg">Distributed platform</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_question.svg">Distributed platform</object>
 
 <p><br></p>
 

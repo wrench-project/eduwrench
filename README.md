@@ -11,7 +11,7 @@
 ### Local installation
 
 Dependencies:
-- [WRENCH 1.6](https://github.com/wrench-project/wrench/releases/tag/v1.6)
+- [WRENCH 1.7-dev](https://github.com/wrench-project/wrench)
 - [Node.js](https://nodejs.org/en/)
 - [Jekyll](https://jekyllrb.com/docs/installation/)
 

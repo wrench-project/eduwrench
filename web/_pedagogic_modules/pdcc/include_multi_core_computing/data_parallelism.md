@@ -251,7 +251,7 @@ seeing only a 4.7 speedup with 8 cores seems really bad.
 The graph below shows speedup vs. number of cores for different
 values of $\alpha$:
 
-<object class="figure" width="500" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
 <div class="caption"><strong>Figure 3:</strong>
 Speedup vs. #cores for different values of the fraction of the sequential execution time that's parallelizable.
 </div>

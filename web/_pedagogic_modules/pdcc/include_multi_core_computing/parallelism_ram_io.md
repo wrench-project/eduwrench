@@ -125,7 +125,7 @@ Let's consider a simple parallel program: 4 tasks that each read in 10 MB
 of input data and then performs 400GFlop of computation.  The 
 program's tasks, showing input data files, is depicted below:
 
-<object class="figure" width="300" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag.svg">I/O parallel program</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag.svg">I/O parallel program</object>
 <div class="caption"><strong>Figure 1:</strong>
 Example 4-task parallel program with I/IO. </div>
 
@@ -138,7 +138,7 @@ module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), we
 should strive to overlap I/O and computation as much as possible.
 For instance, the execution could proceed as follows:
 
-<object class="figure" width="450" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core.svg">I/O parallel program execution on 1 core</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core.svg">I/O parallel program execution on 1 core</object>
 <div class="caption"><strong>Figure 2:</strong>
 Execution on 1 core. </div>
 
@@ -195,22 +195,22 @@ when running on 2 cores?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 The execution on 1 core is as follows:
-<object class="figure" width="400" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core_practice.svg">I/O parallel program execution on 1 core (practice)</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core_practice.svg">I/O parallel program execution on 1 core (practice)</object>
 
 and takes 11 seconds. 
 
 The execution on 2 cores is as follows:
 
-<object class="figure" width="400" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice.svg">I/O parallel program execution on 2 cores (practice)</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice.svg">I/O parallel program execution on 2 cores (practice)</object>
 
 and takes 8 seconds. So the speedup is only 11/8 = 1.375. 
 
 Note that there are other options for running this program. For instance,
 we could start with reading the input for  Task #2. This is not
-a good idea, be  cause it means that Task #1 (which is much longer  than
+a good idea, because it means that Task #1 (which is much longer  than
 Task #2) will start, and thus finish, later. Here is the execution:
 
-<object class="figure" width="400" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice_no_good.svg">I/O parallel program execution on 2 cores (practice)</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice_no_good.svg">I/O parallel program execution on 2 cores (practice)</object>
 
 This execution takes 9s, that is, 1 more second!
 
