@@ -42,4 +42,14 @@ we said we would almost never do it!  We will find out in the
 
 #### Suggested activities
 
-**[How much RAM?]** Find out how much RAM you have on your computer in total, and how much RAM is available for running new programs on your computer right now.
+**[How much RAM on your computer]** Find out how much RAM you have on your computer in total, and how much RAM is available for running new programs on your computer right now.
+
+**[How much RAM for your browser]** Find out how much RAM your Web browser
+is using right now on your computer (this could be a substantial amount).
+In these pedagogic modules we often assume that programs use a fixed amount
+of memory that is allocated throughout the program's execution. But in
+fact, programs' memory needs typically evolve throughout their execution.
+To see this in action, in your browser open a few tabs to navigate to
+content-heavy Web sites (e.g., news sites, social media sites). How much
+more memory does your browser use now?
+
