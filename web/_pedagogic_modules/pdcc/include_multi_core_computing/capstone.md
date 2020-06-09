@@ -1,5 +1,5 @@
 
-#### Learning Objectives:
+#### Learning Objectives
 
 - Be able to apply (most of) the concepts in this module to a case-study
 
@@ -36,7 +36,7 @@ re-check your work for Question #1!)
 This VM is "leased" from some cloud infrastructure that charges 1c for each
 minute of usage. As a result, a program that runs in, say,  61 seconds,
 will be charged 2c.  If we could run it in under 60 seconds, we could save
-our organization 1c for each  program execution.  This doesn't sound like a
+our organization 1c for each  program execution.  This does not sound like a
 lot, but this program runs thousands times each day on hundreds of similar
 VM instances. So at the end of the year we would have saved a  substantial
 amount of money.
@@ -61,8 +61,5 @@ Each option above costs money, but it is worth it *if it makes the program run i
 ### Question #2
 
 **Which of the options above are worth it?**
-
-
-
 
 ---

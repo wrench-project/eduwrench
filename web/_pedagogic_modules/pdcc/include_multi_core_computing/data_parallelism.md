@@ -1,5 +1,5 @@
 
-#### Learning Objectives:
+#### Learning Objectives
 
 - Understand the concept of data-parallelism
 - Understand and be able to apply Amdahl's law
@@ -62,7 +62,7 @@ borders of the image). You can think of the computation applied to each
 pixel as a "micro-task". All these micro-tasks have the same work and do the
 same thing (i.e., they run the same code), but on different data (the
 neighboring pixels of different pixels). This is called **data
-parallelism**. It is a bit of a strange term because it's just like *task
+parallelism**. It is a bit of a strange term because it is just like *task
 parallelism*, but with very fine granularity. Regardless, it should be
 straightforward to perform the transform on, say, 4 cores: just give each
 core a quarter of the pixels to process!
@@ -83,7 +83,8 @@ Example image processing program with data-parallelism exposed.
 The program can run faster using multiple cores! How fast? The simulation
 app below simulates the execution for particular values of the radius $r$
 and a number of cores (using one "oil" task per core). You can use the
-simulation to explore things on your own, but also to answer some of the practice questions below. 
+simulation to explore things on your own, but also to answer some of the 
+practice questions below. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -121,7 +122,8 @@ $
 </div>
 
 <p></p>
-**[A.2.p4.2]** Which execution has the best parallel efficiency: A) $r=2$ on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
+**[A.2.p4.2]** Which execution has the best parallel efficiency: A) $r=2$ 
+on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
 check your intuition using analytics and/or the  simulation?
 
 <div class="ui accordion fluid">
@@ -167,9 +169,8 @@ is confirmed! Execution B has better efficiency!
 <p></p>
 
 
-
 **[A.2.p4.3]** A program consists of two tasks that run in sequence. The first
-runs in 10 sec and the second in 20 seconds, on one core of a 4-core computer. 
+runs in 10s and the second in 20 seconds, on one core of a 4-core computer. 
 A developer has an idea to expose data-parallelism in the second task and
 rewrite it so that it is replaced by 4 independent tasks each with 1/4-th the
 original task's work. What is the parallel efficiency on 4 cores?
@@ -188,8 +189,6 @@ speedup is 30/15 = 2. So the parallel efficiency is 50%.
 </div>
 
 <p></p>
-
-
 
 
 ### Amdahl's law
@@ -214,8 +213,8 @@ T(1) & = \alpha T + (1 - \alpha) T\\
 \end{align}
 $$
 
-Now, if we run the program on $n$ cores, assuming perfect parallelization of the parallelizable
-phase, we obtain the execution time on $n$ cores, $T(n)$, as:
+Now, if we run the program on $n$ cores, assuming perfect parallelization of the 
+parallelizable phase, we obtain the execution time on $n$ cores, $T(n)$, as:
 
 $$
 \begin{align}
@@ -280,8 +279,8 @@ uses increases, we say that the program "scales".
 #### Practice Questions
 
 **[A.2.p4.4]** A program that consists of a sequential phase and a perfectly
-parallelizable phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  How long
-does  the sequential phase run for?
+parallelizable phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  
+How long does  the sequential phase run for?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -366,7 +365,9 @@ parallel phase is zero.
 
 ### Amdahl's law and our example
 
-For our example oil-painting program, we can of course compute the speedup analytically.  To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction of the sequential execution time
+For our example oil-painting program, we can of course compute the speedup analytically.  
+To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction 
+of the sequential execution time
 that is parallelizable. Still for a 100 GFlop/sec core, for a given a
 radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
 in the "luminence" task is 1 second.
@@ -409,7 +410,7 @@ would have more (parallelizable) work to do.
 
 ### Overhead of Parallelization
 
-In what  we've seen so  far, the data-parallelization of a task  was
+In what  we have seen so far, the data-parallelization of a task  was
 "perfect". That is, the original work is $X$ and when using $n$ tasks
 each task has work $X/n$.
 
@@ -428,7 +429,6 @@ first task with work 500 GFlop, and then $n$ tasks with each work $10000/n$
 GFlop. So the total work of the program is larger and there is still a sequential phase. What would the speedup
 be if executing the modified code on 4 cores (compared to the original
 1-task program on 1 of these cores)?
-
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -463,7 +463,8 @@ $
 10,000 GFlop. The developer of the program has an idea to expose
 data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
-data-parallelism, but there is no sequential phase). For what value of X would the parallel efficiency be above 90%
+data-parallelism, but there is no sequential phase). For what value of X 
+would the parallel efficiency be above 90%
 when running on an 8-core computer?
 
 <div class="ui accordion fluid">
@@ -533,5 +534,3 @@ replace task $A$ with two independent tasks each with work 600 GFlop, or
 replace task $B$ with  two independent tasks each with  work 1900 GFlop.
 If running on a 3-core computer,  which replacement would be best in  terms
 of program execution  time?
-
-
