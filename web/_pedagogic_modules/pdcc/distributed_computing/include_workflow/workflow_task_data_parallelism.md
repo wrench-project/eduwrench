@@ -11,7 +11,7 @@
 So far in this module we have only considered sequential tasks. In other words, each task can only use
 a single core.  But in the [Data-Parallelism tab  of the Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/data-parallelism), we 
 learned about **Data Parallelism**: the notion that a sequential task can be rewritten as a set of
-parallel tasks, with likely a remaining sequential portion of the execution. Then, in that same module,
+parallel tasks, with perhaps a remaining sequential portion of the execution. Then, in that same tab,
 we learned about **Amdahl's Law**, which quantifies the data-parallel task's execution time on a given
 number of cores, given what fraction of the task's work has to remain sequential. You may want to 
 review this content before proceeding. 
@@ -58,19 +58,24 @@ and the purple tasks using 4 cores, for the following task execution times:
   - Purple: $12 \times 0.80 / 4 + 12 \times 0.20 =$ 4.80 sec
   - Red: $1.00$ sec
 
-But now the blue and yellow tasks can run in parallel! So the execution time is:
+But now the blue and yellow tasks can run simultaneously! So the execution time is:
 $1 + 11.5 + 4.80 + 1 = $ 18.30 seconds.   This option isn't as good as the previous one. 
 
 How many options are there? Well, for each of the 3 tasks we have 4 options, so that's $4^3 = 64$ options!!! One 
-(or more) of these options has to be the best one, and one (or more) has to be the worst one. For instance, running all tasks on a single core would waste 1 core of our 4-core computer, and is clearly not as good as running of of the tasks on 2 cores. 
+(or more) of these options has to be the best one, and one (or more) has to be the worst one. For instance, running all tasks on a single core would waste 1 core of our 4-core computer, and is clearly not as good as running some of the tasks on 2 cores. 
 
 
 #### Simulating task- and data-parallelism
 
-The simulation app below makes it possible to simulate the execution of the above example workflow on
-a platform that comprises **two 3-core hosts**. Again, remember that in this tab we ignore all I/O. The app
-allows you to pick how many cores are used for the blue, yellow, and purple tasks. You can use this
-app on your own, but then you should use it to answer the following practice questions.
+The simulation app below makes it possible to simulate the execution of the
+above example workflow on a platform that comprises **two 3-core hosts**.
+Again, remember that in this tab we ignore all I/O. The app allows you to
+pick how many cores are used for the blue, yellow, and purple tasks. The
+execution strategy, when picking tasks to assign to idle cores, always
+picks tasks in the order yellow, blue, purple. But turns out this doesn't
+matter in terms of application performance  (because we have only 3 tasks
+to run on the 2 compute hosts).  You can use this app on your own, but then
+you should use it to answer the following practice questions.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -212,3 +217,5 @@ write the execution time as a function of the number of cores allocated
 to the blue task, and plot this function to find where it attains 
 its minimum visually.  There are many web site on which you can do this
 (search for "graphing calculator"). 
+
+---

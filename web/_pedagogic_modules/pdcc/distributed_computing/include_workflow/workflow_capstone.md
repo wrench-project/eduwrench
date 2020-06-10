@@ -27,7 +27,7 @@ is straightforward to estimate data transfer times accurately.
 
 The compute resources in the platform are really virtual machines that 
 you have leased from a cloud provider.  With the current configuration
-the workflow executes in 74 seconds, but you really want it to run it 
+the workflow executes in 74 seconds, but you want it to run it 
 as fast as possible since you want to execute this workflow as many times
 as possible per day (with different input data). 
 
@@ -38,8 +38,8 @@ figure out you can afford **one** of the following upgrades:
   - **Upgrade #2:** Add 2 cores to each host; or
   - **Upgrade #3:** Add 8 GB of RAM to each host.
 
-### Question
+<p></p>
 
-**Which upgrade should you pick?**
+[**A.3.4.q5.1]** Which upgrade should you pick?
 
 ---

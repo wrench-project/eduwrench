@@ -23,7 +23,7 @@ more efficient.
 
 Trying to keep/move data close to where the computation takes place is
 often called **improving data locality**. You may have encountered
-this term in Computer Architecture or Operating Systems courses/textbooks in
+this term in computer architecture or operating systems courses/textbooks in
 the context of caches. Here we use it in the context of network proximity. 
 
 
@@ -36,15 +36,15 @@ data on the compute site. So let's enhance that site with a bit more hardware!
 <div class="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
 Figure 1 above show the compute site for the platform in the previous tab, but
-with a new host shown in green.  This host is not used for computation but provides access to a 
+with a new host (shown in green).  This host is not used for computation but provides access to a 
 disk with 500 MB/sec read/write bandwidth.
 
 Given the new storage capability, we can now refine the workflow execution
 strategy: unless a task is an exit task of the workflow, it stores its output
-on the disk at the compute site. In this way, whenever possible, tasks
-will read/write data to the local storage rather than the remote storage. The
+on the disk at the compute site. In this way, **whenever possible, tasks
+will read/write data to the local storage rather than the remote storage**. The
 initial input files to the workflow are still stored at the remove storage site, 
-and the output files end up there as well. 
+and the output files must end up there as well. 
 
 #### Simulating better data locality
 
@@ -100,11 +100,11 @@ $40 - 8 = 32$ seconds. In fact the saving is twice as much.
 This is because
 the wide-area data transfer rate is not 100 MB/sec, due to the high network latency.  
 
-We saw this in the previous tab but can re-iterate it here. 
+We saw this in the previous tab but can re-iterate.
 The application, when not using any local storage, reads/write a total  of
 $20 \times 50 + 2 \times 20 \times 100 + 1 = 5001$ MB of data. Since the
 application computes for 210 seconds, this means that it spends 299.69 - 210 = 89.69 seconds 
-transferring the data. Thus, the data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
+transferring the data. Thus, the actual data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
 from the peak 100 MB/sec!  
 
 So if we re-compute our saving estimate above using this effective data transfer
@@ -191,7 +191,7 @@ If I/O took zero time, the sequential (1-core) execution time would be
 (20000 +  1000)/100 = 210 and the parallel execution time would be: 20 seconds. 
 So the efficiency would be (210/20) / 20 = 52%.  
 
-So with 35.8% we're still pretty fact from the ideal parallel efficiency. 
+So with 35.8% we're still pretty far from the ideal parallel efficiency. 
 
   </div>
 </div>
@@ -216,8 +216,8 @@ storage site. How many MB are read/written in total?
 **[A.3.4.q3.2]** Say that the read/write data rate for the remote storage
 site is 200 MB/sec (which, as we know from
 the simulation above, could be well below the actual bandwidth). What is the
-workflow execution time? hint: be careful about how the two blue tasks split the
-bandwidth.
+workflow execution time? *Hint: be careful about how the two blue tasks split the
+bandwidth.*
 
 **[A.3.4.q3.3]** We now have local storage at the compute site, with data
 access rate 500 MB/sec. What is the workflow execution time now? What is the
