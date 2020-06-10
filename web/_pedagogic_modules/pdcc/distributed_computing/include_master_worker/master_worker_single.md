@@ -1,8 +1,8 @@
 
 #### Learning Objectives
 
-- Understand the principles of master/worker computing
-- Understand the basic concepts of scheduling in the context of master-worker
+- Understand the principles of master-worker computing
+- Understand the basic concept of scheduling in the context of master-worker
 - Experience how different scheduling strategies can affect performance
 
 ----
@@ -10,7 +10,7 @@
 ### Basics
 
 The term **master-worker** makes a reference to a typical real-life scenario
-in which a master (or boss) assigns labor amongst an arbitrary number of workers. 
+in which a master (or boss) assigns labor to workers. 
 The workers just do the jobs given to them without knowing or worrying about the larger picture.
 Only the master focuses  on the larger picture. Regardless of the real-life social implications
 of this model, in the context of computing it is commonplace and very useful. The main issue
@@ -37,7 +37,7 @@ practice question *A.3.2.p1.3* touched on the notion that the client could have 
 on task to perform. This was really a master-worker scenario.  
 
 Note that there are many possible variations on the above setup. For instance, the network could be such
-that all workers are connected to the master via the same shared network link. Or there could be a two-link path
+that all workers are connected to the master via the same shared network link. Or there could be a two-link network path
 from the master to each worker, where the first link is shared by  all workers but the second link is
 dedicated  to the worker.     Also, for 
 simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
@@ -48,7 +48,7 @@ a sense of what scheduling entails.
 
 
 Given a set of tasks to perform, *whenever there is at least an idle worker* the master decides which task should
-be executed next on which of these idle workers. The input data of the task is sent to the chosen worker,
+be executed next and on which idle worker. The input data of the task is sent to the chosen worker,
 which then performs the task's computation. 
 In  this module we consider that the client has a set of **independent tasks**, i.e., tasks can be
 completed in  any order. In the next module we consider distributed computing with *dependent tasks*.
@@ -69,12 +69,12 @@ time and resources needed. For scheduling, having that additional information an
 
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
-We have briefly encountered the concept of scheduling in the [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies)). You may also
-have encountered the term in an Operating Systems course. The OS  constantly makes scheduling decisions
+We have briefly encountered the concept of scheduling in the [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
+have encountered the term in an operating systems course or textbook. The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 
  
-Here,  we consider the following **scheduling problem**: given a set of tasks each with some input data and a set
+Here,  we consider the following **scheduling problem**: given a set of tasks, each with some input data, and a set
 of workers, each connected to the master via a separate network link, how should tasks be sent to the (idle)
 workers so that the last task to complete completes as early as possible?  
 
@@ -92,8 +92,6 @@ The **scheduling strategy** used by our master will be as follows:
         c) trigger the execution of the chosen task on the chosen worker
     else:
         wait for a worker to be idle
-  }
-
 ```
 
 Step a) and b) are the heart of the strategy and we discuss them hereafter. Step c) requires a bit of explanation.
@@ -102,10 +100,10 @@ input/output data*. That is,  if we have two idle workers and two tasks, then we
 simultaneously to the workers (recall that each worker is connected to the master by an independent link).  In the
 extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the master by a 1 GB/sec link,
 and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
-completes in 2 seconds (a bit more due to network effects that we are overlooking here). Thus, all tasks run
-completely in parallel and all complete at the same time.  Stop step c) above takes zero time (or a very short
+completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
+completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
 amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
-task execution (see an Operating Systems or Concurrent Programming course).
+task execution (see an operating systems or concurrent programming course).
 
 So, what can we do for steps a) and b) above? It is easy to come up with a bunch of options. Here are "a few": 
 
@@ -122,16 +120,16 @@ So, what can we do for steps a) and b) above? It is easy to come up with a bunch
     - Pick a random worker
     - Pick the fastest worker (i.e., highest Flop/sec)
     - Pick the best-connected worker (i.e., highest link MB/sec)
-    - Pick the worker that can complete the task  the earliest (based on back-of-the-envelope estimates)
+    - Pick the worker that can complete the task  the earliest (based on a back-of-the-envelope estimate)
 
 The above defines $7 \times 4 = 28$ different scheduling strategies, and we could come up with many more!!   The big
 question of course is whether some of these strategies are good. Intuitively, it would seem that doing 
 random task selection and random worker selection would be less effective than, e.g., picking the task with the
-highest work and running it on the worker that can complete it the earliest.  The only way to get a sense
-of whether this intuition holds is to try it out.
+highest work and running it on the worker that can complete it the earliest.  The only way to know 
+whether this intuition holds is to try it out.
 
 
-### Simulating Master-Worker
+#### Simulating Master-Worker
 
 The simulation app below allows use to simulate arbitrary master-worker scenarios. Task and worker specifications
 are entered using the format indicated in the input form, separated by commas. You can also pick 
@@ -161,7 +159,7 @@ does it matter which options are picked for task and worker selection?
 No, it doesn't matter. Since every task looks like every other task and every worker looks like
 every other worker, all options will lead to the same schedule. If a task runs on a worker in
 10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
-$\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this in the simulation app.
+$\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this with the simulation app.
    </div>
 </div>
  
@@ -217,7 +215,7 @@ that is 20.50 seconds slower!  One intuition for this is that if we run first th
 end of the execution one can be left waiting for a long task to finish.  This is exactly what's happening here
 as seen in the task execution time line. We see that Task #5 starts last. Due to bad luck, it starts on Worker #1,
 the only idle host at that time. This is a worker with low bandwidth and not great speed.  Since Task #5 has
-high data and high work, it any scheduled in which it doesn't start early is likely not going to be great.
+high data and high work, any scheduled in which it doesn't start early is not going to be great.
             
    </div>
 </div>
@@ -249,7 +247,7 @@ Just like in the previous question, the "lowest xxx" task selection option is a 
 sense from a load-balancing perspective. We don't want to be  "stuck" with a long task
 at the end of the execution. 
  
-These results could that, **for this setup,** caring about data is more important than
+These results mean that, **for this setup,** caring about data is more important than
 caring about computation. Such statements need to be taken with a grain of salt since they may not be generalizable to other setups. 
 
 
@@ -306,7 +304,7 @@ the needles  in the haystack.
 
 
 
-**[A.3.3.p1.5]** Come up with input to the simulator for 2 workers and 4 tasks, such
+**[A.3.3.p1.5]** Come up with input to the simulation app for 2 workers and 4 tasks, such
 that the "highest work first / fastest"  strategy is not as good as the 
 "highest work first / earliest completion" strategy.
 
@@ -358,7 +356,7 @@ The simulated execution times are:
 
 **[A.3.3.p1.6]** Can you  come up with a simple scenario (e.g., 2 workers and 2 tasks)
 for which none of the strategies above is optimal. In other words, you 
-can easily come up with a solution that is better that that of all the strategies. 
+can easily come up with a solution that is better than that of all the strategies. 
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -407,7 +405,7 @@ will the total execution time be?
 **[A.3.3.q1.2]** Find one of the above scheduling strategies (i.e., those
 implemented in the simulation) that improves on the execution
 time in the previous question? Try to develop an intuition before
-verifying your answer using the simulator.
+verifying your answer using the simulation app.
 
  <p></p>
 
