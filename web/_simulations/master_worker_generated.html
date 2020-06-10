@@ -8,15 +8,21 @@ permalink: simulations/master_worker_generated/
 
 {% include partials/simulation_parameters_form_start.html %}
 
+<div class="col-md-12">
+    <h4 class="ui dividing header">Workers</h4>
+</div>
 <div class="form-group col-md-6">
-    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100" value="10 100, 100 100, 1000 100" required hidden>
+    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100"
+           value="10 100, 100 100, 1000 100" required hidden>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([Gflops][Bandwidth to Master], ...)
     </div>
 </div>
 
 <div class="form-group col-md-6">
-    <input type="text" class="form-control" id="task-specs" placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required hidden>
+    <input type="text" class="form-control" id="task-specs"
+           placeholder="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000"
+           value="100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000" required hidden>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([Input MB][Gflop][Output MB], ...)
     </div>
@@ -29,6 +35,7 @@ permalink: simulations/master_worker_generated/
         Please provide a number in the range [1,50].
     </div>
 </div>
+
 <div class="form-group col-md-6">
     <label for="min_worker_flops">Minimum Gflop Per Worker</label>
     <input type="text" class="form-control" id="min-worker-flops" placeholder="1" value="1" required>
@@ -60,7 +67,9 @@ permalink: simulations/master_worker_generated/
     </div>
 </div>
 
-
+<div class="col-md-12" style="margin-top: 1em">
+    <h4 class="ui dividing header">Tasks</h4>
+</div>
 <div class="form-group col-md-12">
     <label for="num_tasks">Number of Tasks</label>
     <input type="text" class="form-control" id="num-tasks" placeholder="5" value="5" required>
@@ -76,6 +85,7 @@ permalink: simulations/master_worker_generated/
         Please provide a number in the range [1,1000000] and less than or equal to the maximum input specified.
     </div>
 </div>
+
 <div class="form-group col-md-6">
     <label for="max_task_input">Maximum Input Per Task (MB)</label>
     <input type="text" class="form-control" id="max-task-input" placeholder="100" value="100" required>
@@ -83,7 +93,6 @@ permalink: simulations/master_worker_generated/
         Please provide a number in the range [1,1000000] and more than or equal to the minimum input specified.
     </div>
 </div>
-
 
 <div class="form-group col-md-6">
     <label for="min_task_flop">Minimum Gflop Per Task</label>
@@ -101,89 +110,128 @@ permalink: simulations/master_worker_generated/
     </div>
 </div>
 <!--<div class="form-group col-md-6">-->
-    <!--<label for="min_task_output">Minimum Output Per Task (MB)</label>-->
-    <!--<input type="text" class="form-control" id="min-task-output" placeholder="1" value="1" required>-->
-    <!--<div class="invalid-feedback">-->
-        <!--Please provide a number in the range [1,1000000] and less than or equal to the maximum output specified.-->
-    <!--</div>-->
+<!--<label for="min_task_output">Minimum Output Per Task (MB)</label>-->
+<!--<input type="text" class="form-control" id="min-task-output" placeholder="1" value="1" required>-->
+<!--<div class="invalid-feedback">-->
+<!--Please provide a number in the range [1,1000000] and less than or equal to the maximum output specified.-->
+<!--</div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6">-->
-    <!--<label for="max_task_output">Minimum Output Per Task (MB)</label>-->
-    <!--<input type="text" class="form-control" id="max-task-output" placeholder="100" value="100" required>-->
-    <!--<div class="invalid-feedback">-->
-        <!--Please provide a number in the range [1,1000000] and more than or equal to the minimum output specified.-->
-    <!--</div>-->
+<!--<label for="max_task_output">Minimum Output Per Task (MB)</label>-->
+<!--<input type="text" class="form-control" id="max-task-output" placeholder="100" value="100" required>-->
+<!--<div class="invalid-feedback">-->
+<!--Please provide a number in the range [1,1000000] and more than or equal to the minimum output specified.-->
+<!--</div>-->
 <!--</div>-->
 
+<div class="col-md-12" style="margin-top: 1em">
+    <h4 class="ui dividing header">Scheduling</h4>
+</div>
+<div class="grouped fields col-md-6">
+    <label>Task scheduling</label>
 
-<grid>
-
-    <row>
-        <span><b>Task Scheduling</b></span>
-    </row>
-    <row>
-        <div class="form-group radio-form-fix">
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="0" checked>
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Random
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="1">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Highest Flop
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="2">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Lowest Flop
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="3">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Highest Bytes
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="4">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Lowest Bytes
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="5">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Highest Flop/Bytes
             </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="6">
             <label class="radio-inline control-label" for="task_scheduling_select">
                 Lowest Flop/Bytes
             </label>
         </div>
-    </row>
-</grid>
-<grid>
-    <row>
-        <span><b>Worker Scheduling</b></span>
-    </row>
-    <row>
-        <div class="form-group radio-form-fix">
+    </div>
+</div>
 
+<div class="grouped fields col-md-6">
+    <label>Worker scheduling</label>
+
+    <div class="field">
+        <div class="ui radio checkbox">
             <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="0" checked>
             <label class="radio-inline control-label" for="compute_scheduling_select">
                 Random
             </label>
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="1" >
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="1">
             <label class="radio-inline control-label" for="compute_scheduling_select">
                 Fastest Worker
             </label>
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="2" >
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="2">
             <label class="radio-inline control-label" for="compute_scheduling_select">
                 Best-Connected Worker
             </label>
-            <!--<input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="3" >-->
-            <!--<label class="radio-inline control-label" for="compute_scheduling_select">-->
-                <!--Largest Compute/IO Time Ratio-->
-            <!--</label>-->
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="4" >
+        </div>
+    </div>
+    <!--    <div class="field">-->
+    <!--        <div class="ui radio checkbox">-->
+    <!--            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="3" >-->
+    <!--            <label class="radio-inline control-label" for="compute_scheduling_select">-->
+    <!--            Largest Compute/IO Time Ratio-->
+    <!--            </label>-->
+    <!--        </div>-->
+    <!--    </div>-->
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="4">
             <label class="radio-inline control-label" for="compute_scheduling_select">
                 Earliest Completion
             </label>
         </div>
-    </row>
-</grid>
+    </div>
+</div>
 
 <div class="form-group col-md-6">
     <label for="invocations">Number of experiments</label>

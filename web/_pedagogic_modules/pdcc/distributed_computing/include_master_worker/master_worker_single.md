@@ -1,5 +1,4 @@
 
-
 #### Learning Objectives
 
 - Understand the principles of master/worker computing
@@ -7,7 +6,6 @@
 - Experience how different scheduling strategies can affect performance
 
 ----
-
 
 ### Basics
 
@@ -17,7 +15,7 @@ The workers just do the jobs given to them without knowing or worrying about the
 Only the master focuses  on the larger picture. Regardless of the real-life social implications
 of this model, in the context of computing it is commonplace and very useful. The main issue
 is how to design  a master that assigns work to workers as judiciously as possible. More precisely,
-the master must decide which task should be send to which worker and when. These
+the master must decide which task should be sent to which worker and when. These
 are called **scheduling decisions**, and there are many different **scheduling strategies**
 that a master could employ.  The goal of this module is not to teach deep scheduling
 concepts and algorithms, of which there are many, but rather to provide you with an introduction 
@@ -64,7 +62,7 @@ machine where decisions must be made very quickly and efficiently, complex sched
 trying to calculate the most efficient scheduling of tasks takes longer than the gains, or unexpected I/O takes
 precedence and necessitates frequent recalculations. When dealing
 with large computational workloads the gains from trying more complex scheduling can potentially have a larger payoff.
-Scheduling efficiently may cut minutes or hours off of the computation time needed. You don't
+Scheduling efficiently may cut minutes or hours off of the computation time needed. You do not
 have to account for the possibility of unexpected I/O, and workloads can be submitted with an estimate of computation
 time and resources needed. For scheduling, having that additional information and payoff could be a game changer.
 -->
@@ -135,7 +133,6 @@ of whether this intuition holds is to try it out.
 
 ### Simulating Master-Worker
 
-
 The simulation app below allows use to simulate arbitrary master-worker scenarios. Task and worker specifications
 are entered using the format indicated in the input form, separated by commas. You can also pick 
 which scheduling strategy is used.  You can use this app on your own, but you should use it to answer
@@ -160,7 +157,7 @@ does it matter which options are picked for task and worker selection?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 No, it doesn't matter. Since every task looks like every other task and every worker looks like
 every other worker, all options will lead to the same schedule. If a task runs on a worker in
 10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
@@ -205,7 +202,7 @@ any intuition for why the result is at it is?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 The execution completes in **61.51  seconds**. Inspecting the task execution timeline
 we find that the master makes the first three scheduling decisions as follows:
 
@@ -239,7 +236,7 @@ the result change when we switch to the "lowest data" task selection strategy?  
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 Here are the execution time, including those in the previous question:
 
    - highest work / fastest: 61.51 seconds
@@ -272,7 +269,7 @@ sufficiently many times, you should see some good results).
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
    
 Here are times obtained with 10 experiments:  56.50, 82.01, 47.67, 50.76, 61.26, 56.01, 64.00, 61.51, 56.51, 54.26.  Of course you may
 have obtained different results, but if you ran more than 10 experiments you probably saw all of the above numbers at least once, and others. 
@@ -318,7 +315,7 @@ that the "highest work first / fastest"  strategy is not as good as the
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
         
 The trick  here is to deal with data, since the "earliest completion" strategy should take
 the data transfers into account. The way to construct a counter-example is to look
@@ -368,7 +365,7 @@ can easily come up with a solution that is better that that of all the strategie
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
         
 Say we have two identical tasks, with negligible input size. We have two workers,
 one that is very fast and one that is very slow. The best approach is to run both 
@@ -445,7 +442,6 @@ the workers, doubling its bandwidth.  Which of these options is best
 scheduling strategy).  Come up with an answer just by reasoning first. Then
 check your answer in simulation.
 
- 
 ---
  
 <!--
