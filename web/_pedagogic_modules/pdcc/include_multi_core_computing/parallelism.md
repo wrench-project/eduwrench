@@ -232,7 +232,7 @@ on your own and to answer the practice questions hereafter.
 
 This app allows you to pick a number of cores and a number of tasks to run
 on these cores.  Try first with a single core running 5 tasks (you can vary
-the per/task amount of work in GFlop, but this value does not impact the
+the per/task amount of work in Gflop, but this value does not impact the
 overall execution pattern). The "Host
 Utilization" graph displays the execution as  in Figure 1 above. Now try running a number of tasks and cores where the
 number of tasks does not evenly divide the number of cores. Looking at the
@@ -252,9 +252,9 @@ parallel efficiency is below 100%.
 
 #### Practice Questions
 
-**[A.2.p1.3]** You have a 4-core computer where each core computes at speed 1000 GFlop/sec. 
+**[A.2.p1.3]** You have a 4-core computer where each core computes at speed 1000 Gflop/sec. 
 You are told that a 10-task parallel program has 30 idle core seconds in total when executed
-on that computer. All tasks have the same work. What is the task work in  GFlop? (You  can double-check
+on that computer. All tasks have the same work. What is the task work in  Gflop? (You  can double-check
 your answer with the simulation app above.)
 <div class="ui accordion fluid">
   <div class="title">
@@ -271,7 +271,7 @@ $
 \frac{2\times w}{1000} = 30
 $
 
-which gives us $w = $ 15000 GFlop/sec. 
+which gives us $w = $ 15000 Gflop/sec. 
 
 We can use the simulation app to double-check our result. We just need to enter 1500 (instead of 15000)
 as the task work amount in Gflop since in the simulation the core computes 10 times slower than in this
@@ -296,7 +296,7 @@ The execution proceeds in 4 phases. If each of the first three phases
 3 tasks are executed in parallel. In the last phase a single task executes. 
 Therefore, each phase takes 60/4 = 15 minutes, which is the execution time of a task.
 
-You can double-check this in simulation by seatting the task work to $15\times 60 \ times 100 = 90000$, so
+You can double-check this in simulation by setting the task work to $15\times 60 \ times 100 = 90000$, so
 that each task runs in 15 minutes on a core. The simulation clearly shows a 3600-second execution time,
 i.e., 1 hour. 
   </div>
@@ -305,7 +305,8 @@ i.e., 1 hour.
 
 **[A.2.p1.5]** Assume you have 20 tasks to execute on a multi-core computer,
 where each task runs in 1 second on a core. By what factor is the overall
-execution time reduced when going from 4 to 8 cores?
+execution time reduced when going from 4 to 8 cores? (You can double-check
+your answer in simulation). 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -313,10 +314,12 @@ execution time reduced when going from 4 to 8 cores?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 The total execution time when using 4 cores will be 5 seconds, as each
-core executes 6 tasks. When increasing from 4 cores to 8 cores, now the
+core executes 5 tasks. When increasing from 4 cores to 8 cores, now the
 total execution time is 3 seconds. This is because the best we can do is
 have 4 of the cores run 2 tasks and the other 4 run 3 tasks. The
-overall execution time is reduced by a factor 4/3 = 1.33.
+overall execution time is reduced by a factor 5/3 = 1.66.
+
+This is seen easily in simulation (setting the task work to 100 Flop). 
   </div>
 </div>
 <p></p>
@@ -381,7 +384,7 @@ Consider a 5-task program that runs on a 2-core computer. The tasks take 10s,
 could run the first 3 tasks (10s, 16s, and 4s) on one core, and the last 2
 tasks (5s and 11s) tasks on the other core. The first core would thus work
 for 30s while the second core would work for only 16s. The program thus
-runs in 46 seconds, and the parallel efficiency is 
+runs in 30 seconds, and the parallel efficiency is 
 $46 / (30 \times 2)$ = 76%. 
 
 Can we do better? If you think
@@ -406,7 +409,7 @@ the small examples like above, but as soon as the number of tasks gets large,
 it is no longer humanly possible. And in fact, it is not computer-ly
 possible either (at least, not quickly). More formally, determining the best split is an NP-complete
 problem (see algorithm/theory textbooks/courses). We will encounter this kind of
-"scheduling problem" (i.e., how to allocate tasks to processors) again in upcoming modules.
+problem (i.e., how to allocate tasks to compute resources) again in upcoming modules.
 
 ----
 
@@ -443,9 +446,9 @@ on 3 cores?
 
 If we run the 6s and the 9s tasks on one core, and the
  8s and the 7s tasks on another core, both these cores
-finish computing in 15s. On the third core we run the 12
+finish computing in 15s. On the third core we run the 12s
 task. If the 6th task takes 3s, then all 3 cores
-finish computing in 15s. So the answer is *3 seconds*.
+finish computing in 15s. So the answer is 3 seconds.
 
   </div>
 </div>
@@ -469,13 +472,13 @@ identical (in terms of execution time) tasks on 3 cores?
 
 
 **[A.2.q1.4]** The parallel efficiency of a parallel program with 12
-identical tasks on a multi-core computer is more than 82%.  You know this
+identical tasks on a multi-core computer is more than 82% but less than 90%.  You know this
 computer has no more than 8 cores. How many cores does it have?
 
 **[A.2.q1.5]** You have a 20-task program where each task's work is 10
-GFlop. You currently have a 4-core computer where each core computes at
-speed 50 GFlop/sec. For the same amount of money you can either (1)
-increase the speeds of all 4 cores by 20%; or (2) add a 5th 50 GFlop/sec
+Gflop. You currently have a 4-core computer where each core computes at
+speed 50 Gflop/sec. For the same amount of money you can either (1)
+increase the speeds of all 4 cores by 20%; or (2) add a 5th 50 Gflop/sec
 core. What should you do if you want to run your program as quickly as
 possible?  
 

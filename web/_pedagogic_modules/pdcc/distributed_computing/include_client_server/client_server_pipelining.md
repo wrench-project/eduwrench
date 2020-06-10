@@ -15,7 +15,7 @@ but with a **disk on the client**.
 
 The 100 MB image to be processed resides on disk as an image file. 
 The client program then reads it from disk into RAM and
-sends it over to the server, which performs 1000 GFlop of work. 
+sends it over to the server, which performs 1000 Gflop of work. 
 This now adds a third phase to the execution
 so that it would proceed as:
 
@@ -146,7 +146,7 @@ to specify a buffer size.
 So that you can experiment with how pipelining works, below is an app that
 allows you to simulate the execution of a client-server setup where a 1GB file
 is stored on  the  disk at the client  and needs to be sent to one of two
-servers, which then performs 1000 GFlop of work. You can choose the network
+servers, which then performs 1000 Gflop of work. You can choose the network
 latency for Server #1, and you can pick the buffer size used by the client program. 
 You can use this app on your own, and then you should use it to answer
 the following practice questions. 
@@ -177,7 +177,7 @@ to be when running on Server #2? Check your answer with the simulation.
 One would expect the execution time to be:
 
 $
-T = \frac{1\;\text{GB}}{400\;\text{MB/sec}} + 10\;\text{us} + \frac{1\;\text{GB}}{600\;\text{MB/sec}} + \frac{1000\;\text{GFlop}}{60\;\text{GFlop/sec}}
+T = \frac{1\;\text{GB}}{400\;\text{MB/sec}} + 10\;\text{us} + \frac{1\;\text{GB}}{600\;\text{MB/sec}} + \frac{1000\;\text{Gflop}}{60\;\text{Gflop/sec}}
 $
 
 which  gives $T = 20.83\;\text{sec}$.
@@ -353,18 +353,18 @@ two off-site servers you have access to. The specifications of the client and tw
     
   - **Server #1**:
     - Cost: $10/hour 
-    - CPU: 1 core with 200 GFlop/sec speed
+    - CPU: 1 core with 200 Gflop/sec speed
     - Link: 100 MB/sec
     
   - **Server #2**: 
     - Cost: $20/hour 
-    - CPU: 1 core with 200 GFlop/sec speed
+    - CPU: 1 core with 200 Gflop/sec speed
     - Link: 500 MB/sec
 
 Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
 as compute time. 
 
-On these servers, you need  to run a  task that has 100 GB input and 100 TFlop work. 
+On these servers, you need  to run a  task that has 100 GB input and 100 Tflop work. 
 
 Assuming no pipelining is used, which of these two servers would lead to the lowest
 execution cost? 

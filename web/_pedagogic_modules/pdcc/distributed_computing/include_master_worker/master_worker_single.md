@@ -100,8 +100,8 @@ Step a) and b) are the heart of the strategy and we discuss them hereafter. Step
 We assume that the master can execute tasks on the workers simultaneously, *including the sending/receiving of
 input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
 simultaneously to the workers (recall that each worker is connected to the master by an independent link).  In the
-extreme, say that we have 10 workers that compute at 1 GFlop/sec,  each connected to the master by a 1 GB/sec link,
-and that we have 10 tasks that each have 1 GB of input and 1 GFlop of work. Then, each task
+extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the master by a 1 GB/sec link,
+and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
 completes in 2 seconds (a bit more due to network effects that we are overlooking here). Thus, all tasks run
 completely in parallel and all complete at the same time.  Stop step c) above takes zero time (or a very short
 amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
@@ -171,17 +171,17 @@ $\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this
 **[A.3.3.p1.2]** Consider a scenario in which we have 5 tasks and 3 workers. 
 Workers have the following specs:
 
-  - Worker #1: 10 MB/sec link; 100  GFlop/sec speed 
-  - Worker #2: 30 MB/sec link; 80  GFlop/sec speed 
-  - Worker #3: 20 MB/sec link; 150  GFlop/sec speed 
+  - Worker #1: 10 MB/sec link; 100  Gflop/sec speed 
+  - Worker #2: 30 MB/sec link; 80  Gflop/sec speed 
+  - Worker #3: 20 MB/sec link; 150  Gflop/sec speed 
 
 and tasks have the following specs:
 
- - Task #1: 100 MB input; 2000 GFlop work
- - Task #2: 100 MB input; 1500 GFlop work
- - Task #3: 200 MB input; 1000 GFlop work
- - Task #4: 200 MB input; 1500 GFlop work
- - Task #5: 300 MB input; 2500 GFlop work
+ - Task #1: 100 MB input; 2000 Gflop work
+ - Task #2: 100 MB input; 1500 Gflop work
+ - Task #3: 200 MB input; 1000 Gflop work
+ - Task #4: 200 MB input; 1500 Gflop work
+ - Task #5: 300 MB input; 2500 Gflop work
 
 So the simulation input for this scenario would be:
 ```
@@ -206,9 +206,9 @@ any intuition for why the result is at it is?
 The execution completes in **61.51  seconds**. Inspecting the task execution timeline
 we find that the master makes the first three scheduling decisions as follows:
 
-  - Task #5 (2500 GFlop) on worker #3 (150 GFlop/sec)
-  - Task #1 (2000 GFlop) on worker #1 (100 GFlop/sec)
-  - Task #2 (1500 GFlop) on worker #2 (80 GFlop/sec)
+  - Task #5 (2500 Gflop) on worker #3 (150 Gflop/sec)
+  - Task #1 (2000 Gflop) on worker #1 (100 Gflop/sec)
+  - Task #2 (1500 Gflop) on worker #2 (80 Gflop/sec)
   
 These decisions correspond to the "highest work first / highest speed first" strategy. 
 
@@ -323,15 +323,15 @@ at two very different workers and to "force" one of the strategies to make a ver
 wrong decision. Let's consider these two workers:
 
 
-  - Worker #1: 2000 MB/sec link; 500 GFlop/sec speed
-  - Worker #2: 20 MB/sec link; 1000 GFlop/sec speed
+  - Worker #1: 2000 MB/sec link; 500 Gflop/sec speed
+  - Worker #2: 20 MB/sec link; 1000 Gflop/sec speed
   
 Let's use these four tasks:
 
-  - Task #1: 1000 MB input; 310 GFlop work
-  - Task #2: 300 MB input; 300 GFlop work
-  - Task #3: 10 MB input; 10 GFlop work
-  - Task #4: 10 MB input; 10 GFlop work
+  - Task #1: 1000 MB input; 310 Gflop work
+  - Task #2: 300 MB input; 300 Gflop work
+  - Task #3: 10 MB input; 10 Gflop work
+  - Task #4: 10 MB input; 10 Gflop work
         
 Tasks #1 and #2 will be scheduled first (because they have the highest work). The
 "fastest" host selection strategy will put Task #1 on Worker #2 and Task #2
@@ -387,16 +387,16 @@ scenario, none of them can produce the optimal execution.
 
 Say that you have three workers with the following specs:
  
-  - Worker #1: 1 GB/sec link; 50 GFlop/sec speed
-  - Worker #2: 100 MB/sec link; 100 GFlop/sec speed
-  - Worker #3: 100 MB/sec link; 1000 GFlop/sec speed
+  - Worker #1: 1 GB/sec link; 50 Gflop/sec speed
+  - Worker #2: 100 MB/sec link; 100 Gflop/sec speed
+  - Worker #3: 100 MB/sec link; 1000 Gflop/sec speed
    
 On these workers, we need to run the following four tasks:
 
-  - Task #1: 100 MB input; 10 GFlop work
-  - Task #2: 100 MB input; 100 GFlop work
-  - Task #3: 1 GB input; 500 GFlop work
-  - Task #4: 1 GB input; 1500 GFlop work
+  - Task #1: 100 MB input; 10 Gflop work
+  - Task #2: 100 MB input; 100 Gflop work
+  - Task #3: 1 GB input; 500 Gflop work
+  - Task #4: 1 GB input; 1500 Gflop work
 
 
 **[A.3.3.q1.1]** If the tasks are assigned to workers in the order that
@@ -414,12 +414,12 @@ verifying your answer using the simulator.
  ---
 
 Say  you have three identical workers, all with 100 MB/sec links and 100
-GFlop/sec speed. On these workers you need to run  the following workload:
+Gflop/sec speed. On these workers you need to run  the following workload:
 
-  - Task #1: 2 GB input; 500 GFlop work
-  - Task #2: 2 GB input; 500 GFlop work
-  - Task #3: 2 GB input; 500 GFlop work
-  - Task #4: 1.6 GB input; 1 TFlop work
+  - Task #1: 2 GB input; 500 Gflop work
+  - Task #2: 2 GB input; 500 Gflop work
+  - Task #3: 2 GB input; 500 Gflop work
+  - Task #4: 1.6 GB input; 1 Tflop work
 
 The master software implements the "highest data / best-connected" scheduling strategy.
 

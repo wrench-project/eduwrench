@@ -55,7 +55,7 @@ want to review the previous modules**. In particular, many concepts
 come from the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing) and the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing).
 
 The app below simulates the execution of the
-example workflow in Figure 1 on a computer with 50 GFlop/sec cores and 16 GB
+example workflow in Figure 1 on a computer with 50 Gflop/sec cores and 16 GB
 of RAM.  Attached to this computer is a disk. The app allows you to pick
 the number of cores and the disk read/write bandwidth. 
 
@@ -306,7 +306,7 @@ Given the workflow below, answer the following questions:
 **[A.2.3.q1.1]** How many MB of data are read during an execution of this workflow? How many are written?
 <p></p>
 
-**[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 GFlop/sec and the disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
+**[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 Gflop/sec and the disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
 <p></p>
 
 **[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow execution strategy is, whenever there is a choice, to start the task with the **highest work**.  What is the execution time? What is the parallel efficiency? 

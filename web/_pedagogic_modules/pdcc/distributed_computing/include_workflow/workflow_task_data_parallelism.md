@@ -31,7 +31,7 @@ Figure 1 above shows an example workflow with both task- and data-parallelism. F
 files and I/O.  The green and red tasks are not data-parallel, and can run only on a single core.  The blue, yellow, and
 green tasks are data-parallel. For each one of these tasks, in addition to its amount of work, we also indicate the value of $\alpha$,
 the fraction of the work that can be parallelized. Based on Amdahl's law, a data-parallel task with
-work $w$ GFlop runs on a $p$-core computer, where core speed is $s$ GFlop/sec, in time:
+work $w$ Gflop runs on a $p$-core computer, where core speed is $s$ Gflop/sec, in time:
 
 $$
 T(p) = \frac{\alpha \times \frac{w}{s}}{p} + (1 - \alpha) \times \frac{w}{s}
@@ -40,7 +40,7 @@ $$
 The above equation just means that the parallelizable portion of the sequential execution time (the left term) is accelerated
 by a factor $p$ when executed in parallel on $p$ cores, while the sequential portion (the right term) remains sequential. 
 
-Say we are running this workflow on a 4-core computer where cores compute at speed 100 GFlop/sec. 
+Say we are running this workflow on a 4-core computer where cores compute at speed 100 Gflop/sec. 
 We could run each of the data-parallel tasks using 4 cores. In this case, here is the execution time of each task:
  
   - Green: $1.00$ sec
@@ -124,7 +124,7 @@ the shortest execution time?  Come up with an answer based on your intuition, an
   </div>
   <div markdown="1" class="ui segment content">
 
-The yellow task has 2000 GFlop work, so, even though its $\alpha$ is not as high as
+The yellow task has 2000 Gflop work, so, even though its $\alpha$ is not as high as
 that of the blue task, we should give it the  3 cores!
 
 The simulation gives us the following total execution times:
@@ -198,7 +198,7 @@ Considering the workflow below, answer the following questions.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
 
-**[A.3.4.q4.1]** If we are given two hosts with 100 GFlop/sec hosts, where
+**[A.3.4.q4.1]** If we are given two hosts with 100 Gflop/sec hosts, where
 host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
 host1 or on host2 (if our objective is to run the workflow as quickly as
 possible)?

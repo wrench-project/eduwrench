@@ -55,13 +55,13 @@ in the figure below:
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform_zoom.svg">Distributed platform zoom</object>
 <div class="caption"><strong>Figure 2:</strong>Compute resources at the compute site</div>
 
-Each compute host has 32 GB of RAM, cores that compute at 100  GFlop/sec, and up to 8 of these cores. All
+Each compute host has 32 GB of RAM, cores that compute at 100  Gflop/sec, and up to 8 of these cores. All
 compute hosts are connected to the site's switch via a 10 GB/sec network link with 
 10 micro-second latency. This switch is connected to the storage site via the wide-area link. 
 Therefore, **the network path from the storage resource to each compute host has two links: the 100 MB/sec wide-area link
 and the 10 GB/sec local-area link**.
 
-Say that a task needs to perform 1000 GFlop, 
+Say that a task needs to perform 1000 Gflop, 
 requires 10 GB of RAM, reads in a  200 MB input file, and
 writes back a 10 MB input file.  We can compute a rough estimate of this task's execution
 on one of the compute hosts, assuming that no other task is competing with it, as:
@@ -146,7 +146,7 @@ what fraction of the time is spent doing actual computation?
   </div>
   <div markdown="1" class="ui segment content">
   Running the simulation gives us a total execution time of 299.69 seconds. 
-  In total, the computation consists of 21,000 GFlop to be performed on a 100 GFlop/sec
+  In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
   core. So that's 210 seconds of computation. Therefore, the execution
   spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
   of the execution is disk and network I/O.  
@@ -264,9 +264,9 @@ Consider  the following workflow (all green tasks have identical specs, and so d
 
 **[A.3.4.q2.1]**  You can lease three different platforms to execute this workflow:
 
-  - **Platform A:** Two 4-core hosts, each with 8 GB of RAM, and 120 GFlop/sec core compute speed
-  - **Platform B:** Three 6-core hosts, each with 12 GB of RAM, and 50 GFlop/sec core compute speed
-  - **Platform C:** One 3-core hosts, with 16 GB of RAM, and 120 GFlop/sec core compute speed
+  - **Platform A:** Two 4-core hosts, each with 8 GB of RAM, and 120 Gflop/sec core compute speed
+  - **Platform B:** Three 6-core hosts, each with 12 GB of RAM, and 50 Gflop/sec core compute speed
+  - **Platform C:** One 3-core hosts, with 16 GB of RAM, and 120 Gflop/sec core compute speed
   
   Assuming the I/O and network times are zero, which of the three platforms above is the better choice?
 

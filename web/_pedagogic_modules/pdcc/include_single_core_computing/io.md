@@ -232,7 +232,7 @@ and so the core utilization is 250/253 = 98.8%.
 </div>
 
 
-**[A.1.p4.2]** A program reads 2GB of input from disk, performs a 6 TFlop 
+**[A.1.p4.2]** A program reads 2GB of input from disk, performs a 6 Tflop 
 computation on this input, and then writes 1GB of output to disk. It is 
 executed on a computer that has a CPU that computes at speed 500 Gflop/sec
 and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution 
@@ -356,12 +356,12 @@ completed. The computation performs 500 Gflop.  Instances of this task are
 executed continuously in sequence throughout the day, in a way that
 *overlaps IO and computation*.  The computer on which this is done has a
 disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
-TFlop/sec.  We wish to increase the number of task instances we can execute
+Tflop/sec.  We wish to increase the number of task instances we can execute
 per day. Should we upgrade the processor? Or should we upgrade the disk?
 
 **[A.1.q4.3]**
 A task requires 100 MB of input data to be loaded from disk, performs 1
-TFlop of computation, and writes some output back to disk. A batch of fifty
+Tflop of computation, and writes some output back to disk. A batch of fifty
 instances of this task is to be run on a computer with a processor capable
 of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
 computation are overlapped.* How large can the task output be so that the CPU is still 100% utilized?

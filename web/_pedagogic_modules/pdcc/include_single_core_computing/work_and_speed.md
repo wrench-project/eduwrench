@@ -67,8 +67,8 @@ not all the same).  Fortunately, all the concepts we learn in these
 pedagogic modules are agnostic to the way in which we measure work. And so
 we just pick Flop counts to be consistent throughout.
 
-Say a program that performs 100 TFlop ("100 TeraFlop") is executed 
-on a core with speed 35 GFlop/sec ("35 GigaFlop per second"). The
+Say a program that performs 100 Tflop ("100 TeraFlop") is executed 
+on a core with speed 35 Gflop/sec ("35 GigaFlop per second"). The
 program's execution time would then be:
 
 $$
@@ -78,7 +78,7 @@ $$
 \end{align}
 $$  
 
-If a program that performs 12 GFlop runs in 5 seconds on a core, then the 
+If a program that performs 12 Gflop runs in 5 seconds on a core, then the 
 speed of this core in Mflop/sec ("MegaFlop per second") is:
 
 $$
@@ -101,8 +101,8 @@ Make sure you know your units:
 #### Practice Questions
 
 
-**[A.1.p1.1]** You have to run a program that performs 4000 GFlop, and your
-core computes at speed 30 TFlop/sec. How long will the program run for in seconds?
+**[A.1.p1.1]** You have to run a program that performs 4000 Gflop, and your
+core computes at speed 30 Tflop/sec. How long will the program run for in seconds?
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -110,14 +110,14 @@ core computes at speed 30 TFlop/sec. How long will the program run for in second
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   $$ \frac{4 \;\text{TFlop}}{30\; \text{TFlop/sec}} \simeq 0.13\; \text{sec} $$
+   $$ \frac{4 \;\text{Tflop}}{30\; \text{Tflop/sec}} \simeq 0.13\; \text{sec} $$
   </div>
 </div>
 
 <p> </p>
 
-**[A.1.p1.2]** A program just ran in 0.32 sec on a core with speed 2 TFlop/sec, 
-how many GFlop does the program perform?
+**[A.1.p1.2]** A program just ran in 0.32 sec on a core with speed 2 Tflop/sec, 
+how many Gflop does the program perform?
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -125,7 +125,7 @@ how many GFlop does the program perform?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-   $$ 2000\; \text{GFlop/sec} \times 0.32\; \text{sec} = 640 \;\text{GFlop} $$
+   $$ 2000\; \text{Gflop/sec} \times 0.32\; \text{sec} = 640 \;\text{Gflop} $$
   </div>
 </div>
 
@@ -133,11 +133,11 @@ how many GFlop does the program perform?
 
 #### Questions
 
-**[A.1.q1.1]** You have to run a program that performs 2000 TFlop, and your
-core computes at speed 450 GFlop/sec. How long will the program run for in minutes?
+**[A.1.q1.1]** You have to run a program that performs 2000 Tflop, and your
+core computes at speed 450 Gflop/sec. How long will the program run for in minutes?
 
-**[A.1.q1.2]** A program that performs 3000 GFlop just ran in 1.5 minutes on a core. 
-What is the core speed in TFlop/sec? 
+**[A.1.q1.2]** A program that performs 3000 Gflop just ran in 1.5 minutes on a core. 
+What is the core speed in Tflop/sec? 
 
 **[A.1.q1.3]** On a given core, a program just ran in 14 seconds. By what factor 
 should the core speed be increased if you want the program to run in 10 seconds?
@@ -152,5 +152,5 @@ should the core speed be increased if you want the program to run in 10 seconds?
 **[Programming]**: Implements a program that performs a large, but known,
 number of floating point operations and use it to perform your own
 benchmarking of your machine. Implement this program in different
-languages and observe whether the GFlop/sec measurement varies across
+languages and observe whether the Gflop/sec measurement varies across
 languages.

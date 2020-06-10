@@ -12,7 +12,7 @@ So far, we have only considered *independent* tasks in our parallel programs,
 i.e., tasks that can be executed in any order and concurrently. In other
 words, given a computer with as many cores as tasks and sufficient RAM
 capacity, all tasks can run at the same time. 
-But in many, many, real-world programs this is not the case.
+But in many real-world programs this is not the case.
 Instead, tasks exhibit **dependencies**. In other words, some tasks cannot
 execute before other tasks are done. This could be because the output
 of  a task serves as input to another, or more generally because a
@@ -24,7 +24,7 @@ they need to cook these ingredients. Finally, the cooked ingredients must
 be plated. None of these tasks may be completed out of order. The "cook
 ingredients" task depends on the "procure ingredients" task, and the "plate
 meal" task depends on the "cook ingredients" task. A convenient way to
-represent such programs is a *Directed Acyclic Graph (DAG)*, in which
+represent such programs is a **Directed Acyclic Graph (DAG)**, in which
 *vertices are tasks* and *edges are dependencies*. For the "cook a meal"
 program, the DAG representation is straightforward, and depicted in
 the figure below:
@@ -34,7 +34,8 @@ the figure below:
 DAG for the "chef" example.
 </div>
 
-Going back to computing, here is a typical example of task dependencies.
+
+Here is a typical example of task dependencies in a parallel program.
 Consider a program that counts the number of car objects in a set of
 compressed street images. Each image needs to be uncompressed,
 pre-processed, (e.g., to remove noise), analyzed (to find and count cars). 
@@ -59,7 +60,8 @@ Clearly keeping things in RAM can avoid costly I/O operation, but as we
 know RAM capacity is limited. So, based on what we learned in the previous
 tab, we could lose parallel efficiency due to RAM constraints. 
 
-### Simulating Simple Task Dependencies
+
+#### Simulating Simple Task Dependencies
 
 For now, to keep things simple, let's assume that tasks take zero RAM and
 that they perform no I/O. Let's consider an example program that is used to
@@ -68,9 +70,9 @@ pre-processing of the in-RAM dataset. Then, once the pre-processing is done, it
 needs to perform three things. Namely, it needs to produce some visualization, perform some
 analysis, and compute some statistics:
 
-  - The visualization consists of a sequence of two tasks: "viz" (computes what to visualize) and  "plot" (generate a fancy 3-D plot)
-  - The analysis consists of a sequence of two tasks :  "analyze" (performs data analysis) and "summarize" (generates summary analysis results). 
-  - The statistics consists of a single task: "stats" (computes some statements)
+  - The visualization consists of a sequence of two tasks: "viz" (computes what to visualize) and  "plot" (generates a fancy 3-D plot)
+  - The analysis consists of a sequence of two tasks :  "analyze" (performs data analysis) and "summarize" (generates summary analysis results)
+  - The statistics consists of a single task: "stats" (computes some statistics)
   
 Once all the above is done, a "display" task displays all results.  The "analyze" task has an **amount of work that is user-defined**. The more work, the
 more in-depth the analysis results. 
@@ -85,9 +87,9 @@ DAG for the "data set analysis" example.
 
 
 To gain hands-on experience with the task dependency concept, use the
-simulation app below to simulate the execution of our example program
+simulation app below to simulate the execution of the above program
 on a 3-core computer, where **each core computes
- at speed 10 GFlop/sec**.  You can pick the amount of work for the
+ at speed 10 Gflop/sec**.  You can pick the amount of work for the
  "analyze" task. The execution strategy used for this execution
 is very simple: whenever a task can be executed (because all its parent
 tasks have been executed) and a core is (or becomes) idle, then execute
@@ -107,7 +109,7 @@ The following practice questions are based on this simulation app.
 
 #### Practice Questions
 
-**[A.2.p3.1]**  Say we run the program with an "analyze" task that has 100 GFlop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
+**[A.2.p3.1]**  Say we run the program with an "analyze" task that has 100 Gflop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -120,7 +122,7 @@ The following practice questions are based on this simulation app.
 
 $
 \begin{align}
-  T(1) & = 5 + 20 + 10 + 10 + 10 + 40 + 1 = 96 \text{sec}
+  T(1) & = 5 + 20 + 10 + 10 + 10 + 40 + 1 = 96 \;\text{sec}
 \end{align}
 $
 
@@ -128,18 +130,19 @@ The simulated execution time on our 3-core computer is:
 
 $
 \begin{align}
-  T(3) & = 46 \text{sec}
+  T(3) & = 46 \;\text{sec}
 \end{align}
 $
 
-So the parallel efficiency is $E = (96/46)/3 =$ **69.56%**.
+So the parallel efficiency is $E(3) = (96/46)/3 =$ **69.56%**.
   </div>
 </div>
 
 <p></p>
 
-**[A.2.p3.2]** What is the number of core idle seconds when running the
-program with "analyze" tasks with 300 GFlop work on our 3-core computer?
+**[A.2.p3.2]** What is the number of idle core seconds when running the
+program when the "analyze" task has 300 Gflop work on our 3-core computer?
+You can double-check your answer in simulation. 
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -161,7 +164,9 @@ shown in the Host Utilization graph of the simulation app.
 <p></p>
 
 **[A.2.p3.3]** For what amount of work of the "analyze" task is the
-parallel efficiency maximized?
+parallel efficiency maximized? You could use the simulation app to "search" 
+for the right answer, but that would be really tedious. Try using analysis
+and/or intuition first. 
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -170,11 +175,8 @@ parallel efficiency maximized?
   </div>
   <div markdown="1" class="ui segment content">
 
-Using the simulation app to search for the answer would be pretty annoying. 
-So let's go purely analytical first, and then see how we could have gotten 
-the correct answer just using common-sense. 
-
-Let $x$ be the work of the "analyze" task in GFlop. The sequential execution 
+Let's first do a purely analytical solution. 
+Let $x$ be the work of the "analyze" task in Gflop. The sequential execution 
 time is $x/10 + 86$ seconds. 
 
 The parallel execution time is a bit trickier. 
@@ -195,18 +197,21 @@ So, we have two cases: If $16 + x/10 \leq 46$, that is, if $x \leq 300$,
      is equal to $((x/10 + 86) / (16 + x/10)) / 3$. This is a decreasing function on the [300, infinity] domain,
      and so on  that domain it is maximized for  $x = 300$. 
      
-  The final answer is thus 300 GFlop.  
+  The final answer is thus 300 Gflop.  
 
 The above is quite formal, but we could have given a purely
 common-sense answer.
 The parallel efficiency is maximized when all three paths take
 time as close as possible as the longest such path, so as have
   cores working as much  as possible. This is the same  *load balancing*
-idea that we've seen in the first tab for independent tasks! 
+idea that we've seen in the
+[Parallelism tab]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/parallelism)
+for independent tasks!
 This is achieved when the analysis
 path and the statistics path are equal (nothing can be done about the
-visualization path), that is, when $x = 300$. This program can never
-achieve efficiency higher than 84.05%.
+visualization path), that is, when $x = 300$. 
+
+For $x = 300$ the efficiency is 84.05%, which is the best this program can ever achieve.
 
   </div>
 </div>
@@ -255,11 +260,11 @@ task(s), where **the path length is measured in task durations, including the
 entry and the exit task(s)**. 
 No matter how many cores are used, the program cannot execute faster than
 the length of the critical path. For instance, consider our example 
-DAG, assuming that the "analyze" task has work 250 GFlop. There are three paths
+DAG, assuming that the "analyze" task has work 250 Gflop. There are three paths
 from "start" to "display". The length of the visualization path is
 5+20+10+1 = 36 seconds. The length of the statistics path is 5+40+1=46 seconds. The
 length of the analysis path is 5+25+10+1=41 seconds. And so the critical path
-is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10GFlop/sec cores
+is {"start" -> "stats" -> "display"}, of length 46 seconds. No matter how many 10 Gflop/sec cores
 are used to execute this program, it can never run in less than 46 seconds!
 
 #### Practice Questions
@@ -288,7 +293,7 @@ length of the critical path in seconds (name and execution time are shown for ea
 
 **[A.2.p3.5]** For the DAG below, would it be useful to use more than 3
 cores? Can the execution time be ever shorter than 29 seconds? Could you
-modify on edge's end point to increase the DAG width?
+modify one edge's end point to increase the DAG width?
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_2.svg">Practice Question DAG</object>
 
@@ -346,15 +351,18 @@ DAGs they  could lead to an large performance loss.
 There are some rules of thumb for selecting ready tasks. 
 A good and popular one is: Whenever there is a choice **pick the task that is 
 on  the  critical path.** After all it's critical. But this is not guaranteed to
-be the best approach for every DAG. It just happens to work well for many DAGs.
+be always best. It just happens to work well for many DAGs.
 
-To see the impact of such decisions, the simulation app below allows
-you to simulate program execution **on 2 cores** while prioritizing some execution paths. For instance,
-if you select "viz/analyze", whenever there is a choice, we always pick a visualization or an analysis task
-over the "stats" task.  
+#### Simulating Execution on a 2-core Computer
 
-You can experiment  yourself with different settings,  and use the app to
-answer  the practice  questions thereafter.
+To see the impact of task selection decisions, the simulation app below
+allows you to simulate the execution of our dataset analysis program **on 2
+cores** while prioritizing some execution paths. For instance, if you
+select "viz/analyze", whenever there is a choice, we always pick a
+visualization or an analysis task over the "stats" task.
+
+You can experiment yourself with different settings, and use the app to
+answer the practice questions thereafter.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -368,7 +376,7 @@ answer  the practice  questions thereafter.
 
 #### Practice Questions
 
-**[A.2.p3.6]** Setting the "analyze" task's work to 10 GFlop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
+**[A.2.p3.6]** Setting the "analyze" task's work to 10 Gflop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
 If so, which ones should
 be prioritized? Can you venture an explanation?
 
@@ -383,8 +391,9 @@ Yes, it does matter! Not prioritizing the statistics path is a mistake.
 This is because the statistics path is the critical path. Not counting the
 "start" and "display" tasks, the visualization path runs in 30s, the
 analysis path in 11s, and the stats path in 40s. This is **exactly** the
-scheduling problem that we looked at in the first tab of this page:
-partition a set of numbers into two groups so that their sum is as close to
+problem we looked at in the 
+[first tab]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/parallelism):
+partition a set of numbers into two groups so that their sums are as close to
 each other as possible!  The best choice for this grouping here is clearly
 {30, 11} and {40}.  In other words, on one core we should run the
 visualization and the analysis path, and on the other we should run the
@@ -403,7 +412,7 @@ All this can be seen easily in the simulation app.
 <p></p>
 
 **[A.2.p3.7]** Say now  we set the work of the "analyze" task to be 300
-GFlop.  What are the execution times with each of the three path
+Gflop.  What are the execution times with each of the three path
 prioritization options? Can  you explain why the results are as they are?
 
 <div class="ui accordion fluid">
@@ -413,13 +422,13 @@ prioritization options? Can  you explain why the results are as they are?
   </div>
   <div markdown="1" class="ui segment content">
 All three prioritization schemes give a 76 second execution time. In other words,
-path prioritization does not matter. With a 300 GFlop work for the "analyze" task,
+path prioritization does not matter. With a 300 Gflop work for the "analyze" task,
 the visualization path takes 30 seconds, and both the analysis and the statistics
 paths take 40 seconds. (Without counting the "start" and the "display"
 tasks).  No matter what we do, running on two cores three tasks that
 take 30s, 40s, and 40s will take 70s. 
 
-If you really want to spell it out, we can just look at possibilities.  If
+If you really want to spell it out, we can just look at all possibilities.  If
 both 40s paths start first, each on  a core, then the 30s path starts after
 that, for 70s of execution.  If  the 30s path starts with a 40s path, each
 on a core, then the 2nd 40s path will start on the core that ran the 30s
@@ -443,13 +452,13 @@ of whether the answer is yes or no, deriving a convincing argument is not that e
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content">
-This is perhaps not an easy question, as it requires to thing about this abstractly
-(if one doesn't want to examine all possible options). The answer is "no". Let's see
+This is perhaps not an easy question, as it requires to think about this abstractly
+(so as to avoid examining all possibilities). The answer is "no". Let's see
 why.
 
 We can look at this question at a very abstract level: we have three
 "things" to run, let's call them $A$, $B$, and $C$. (Each of them is one of
-our three paths,  without including the "start" and "display" tasks).  Let
+our three paths,  excluding the "start" and "display" tasks).  Let
 $a$, $b$, and $c$  be their execution times. Say, without loss of
 generality, that $a \leq b \leq c$. Then, we can see what runs on each core
 for each option that prioritizes two of them:
@@ -501,7 +510,7 @@ execution time?
 smallest work first  (this is a "I should do the easiest chores first" approach). What 
 is the execution time?  It is better than the previous approach?
 
-**[A.2.q3.5]** For this new DAG below, what are the execution times of the "pick the 
+**[A.2.q3.5]** For this new DAG below, executed on 2 cores, what are the execution times of the "pick the 
 ready task with the largest work" and "pick the ready task with the smallest work" 
 approaches? Which approach is better?
 
