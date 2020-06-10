@@ -157,3 +157,5 @@ two U.S. cities (among those on that site) are the furthest apart in terms of ne
 what would be the network latency between New York and Los Angeles?  How much bigger is it in reality (using the
 same site as in the previous activity)?
 
+**[Bandwidth]** Download a large file from some Web site and measure the (perceived) bandwidth that you achieved. For instance,
+you can download the 100 MB file on [this site](https://speed.hetzner.de/). Note that tools (other than Web browsers) are available to download files from URLs that print out download times and/or data transfer rates (e.g., <tt>wget<tt> on Linux). 
