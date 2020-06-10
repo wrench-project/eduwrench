@@ -77,6 +77,8 @@
 - term: storage service
   description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
 
+- term: network topology
+  description: a graph in which edges are network links and vertices are either end-points (i.e., computers) or routers
 
 - term: time sharing
   description: the technique by which an operating system runs multiple programs on the same core, rapidly cycling over them throughout time. 

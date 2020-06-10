@@ -62,7 +62,7 @@ small data sizes and/or large bandwidths), or can be negligible (i.e., with
 large data sizes and/or small bandwidths).
 
 Here we have used the term, *effective bandwidth*, to denote the maximum
-*possible* throughput that a network link is able to achieve. Due to
+*possible* data transfer rate that a network link is able to achieve. Due to
 various network overheads, a network link can have a throughput of at most
 about 97% of its advertised physical bandwidth. Thus, if you purchase a 100
 GB/sec physical link, you will not be able to transfer data at 100 GB/sec.
@@ -75,7 +75,7 @@ we will always mean its *effective bandwidth*.
 
 To make sure the above is crystal clear, answer the following practice questions:
 
-**[C.p1.1]** How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 microseconds and 20 GB/sec bandwidth?
+**[A.3.1.p1.1]** How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 microseconds and 20 GB/sec bandwidth?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -88,7 +88,7 @@ To make sure the above is crystal clear, answer the following practice questions
 
 <p> </p>
 
-**[C.p1.2]** How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 microseconds and 520 MB/sec bandwidth?
+**[A.3.1.p1.2]** How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 microseconds and 520 MB/sec bandwidth?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -101,7 +101,7 @@ To make sure the above is crystal clear, answer the following practice questions
 
 <p> </p>
 
-**[C.p1.3]** You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth, in GB/sec, should the link have so that the data transfer takes 2.5 sec?
+**[A.3.1.p1.3]** You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth, in GB/sec, should the link have so that the data transfer takes 2.5 sec?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -109,7 +109,7 @@ To make sure the above is crystal clear, answer the following practice questions
   </div>
   <div markdown="1" class="ui segment content answer-frame">
    Let $B$ be the needed bandwidth. We simply need to solve the equation below for $B$:  
-<p>$$ 2.5 = 1/1000  + (148 / 10^3) / B  = 2.5 ,$$</p>
+<p>$$ 1/1000  + (148 / 10^3) / B  = 2.5 ,$$</p>
    which gives:
 <p>$$ B = (148 / 10^3) / (2.5 - 1/1000) \simeq .059 \; \text{GB/sec} .$$</p>
 
@@ -120,24 +120,22 @@ To make sure the above is crystal clear, answer the following practice questions
 
 #### Questions
 
-Answer the following questions:
-
-**[C.q1.1]** How long, in seconds, does it take to transfer 12 GB of data
+**[A.3.1.q1.1]** How long, in seconds, does it take to transfer 12 GB of data
 over a link with latency 10 ms and bandwidth 500 MB/sec?
 
 <p> </p>
 
-**[C.q1.2]** 3 MB of data was transferred over a link with 18 MB/sec
+**[A.3.1.q1.2]** 3 MB of data was transferred over a link with 18 MB/sec
 bandwidth in 3.03 sec. What is the link's latency in seconds?
 
 <p> </p>
 
-**[C.q1.3]** A data transfer took 14 minutes on a link with 
+**[A.3.1.q1.3]** A data transfer took 14 minutes on a link with 
 latency 100 ms and bandwidth 120 KB/sec. How much data, in MB, was transferred?
 
 <p> </p>
 
-**[C.q1.4]** Say you are sitting at your computer and need to download a 10
+**[A.3.1.q1.4]** Say you are sitting at your computer and need to download a 10
 GB movie file. The file is available at two mirror sites, both of them one
 network link away from your computer.  Mirror *A* is connected to your
 computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
@@ -145,3 +143,17 @@ computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
 bandwidth 700 MB/sec.  Which mirror should you use and why?
 
 <p> </p>
+
+---
+
+#### Suggested Activities
+
+**[Latencies]** What do you think the network latency is between major U.S. cities? Go to
+[this site](https://ipnetwork.bgtmo.ip.att.net/pws/network_delay.html) and find out the current network
+latency between Houston and Seattle and the current latency between New York and Philadephia. Which
+two U.S. cities (among those on that site) are the furthest apart in terms of network latencies? 
+
+**[Latencies and speed of light]** Assuming that data travels at the speed of light, in a straight line,
+what would be the network latency between New York and Los Angeles?  How much bigger is it in reality (using the
+same site as in the previous activity)?
+
