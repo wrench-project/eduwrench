@@ -1,12 +1,12 @@
 
 #### Learning Objectives
 
-  - Understand the concept of a *workflow*
-  - Be able to reason about the performance of a workflow when run on a multi-core computer
+  - Understand the concept of a workflow
+  - Be able to reason about the performance of a workflow on a multi-core computer
 
 ---
 
-#### What is a workflow?
+### What is a workflow?
 
 A **workflow** (a.k.a. "scientific workflow") application is comprised of
 individual computational tasks that must all be executed in some particular
@@ -41,7 +41,7 @@ applications, along with their DAG representations, can be found
 <a href="https://pegasus.isi.edu/application-showcase/">here</a>.
 </div>
 
-### Simulating multi-core workflow execution
+#### Simulating multi-core workflow execution
 
 This module relies heavily on concepts introduced in previous modules. 
 To make sure that you master these concepts, we
@@ -71,8 +71,8 @@ execution strategy simulated by the app:
   - When two ready tasks are started they immediately read their input
     files.  For instance, if task2 and task3 are ready and can both run
     simultaneously (enough cores, enough RAM), they do start at the same time
-    and read their input files simultaneously. The important point here is
-    that these tasks then split the disk bandwidth equally.
+    and read their input files simultaneously. Importantly, 
+    these tasks then split the disk bandwidth equally.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -232,7 +232,7 @@ is 100 MB/sec?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content answer-frame">
-In the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing)
+In the [Task Dependencies tab of the Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies)
 we defined the critical path without any I/O. Extending this notion to I/O is
  straightforward (one can simply consider file reads and writes as
 extra tasks to perform). 
@@ -313,3 +313,5 @@ the tasks with the **lowest work** first?
 
 **[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 60% even if the disk can be upgraded at will.
 <p></p>
+
+---
