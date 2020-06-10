@@ -40,6 +40,8 @@ figure out you can afford **one** of the following upgrades:
 
 <p></p>
 
+#### Questions
+
 [**A.3.4.q5.1]** Which upgrade should you pick?
 
 ---

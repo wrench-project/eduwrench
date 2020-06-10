@@ -15,7 +15,7 @@ Go through the tabs below in sequence...
   <a class="item" data-tab="ram-and-io">RAM and I/O</a>
   <a class="item" data-tab="dependencies">Task Dependencies </a>
   <a class="item" data-tab="data-parallelism">Data Parallelism</a>
-  <a class="item" data-tab="capstone">Capstone Exercise</a>
+  <a class="item" data-tab="capstone">Capstone</a>
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="parallelism">

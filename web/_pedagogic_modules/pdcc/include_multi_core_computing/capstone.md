@@ -23,8 +23,11 @@ We have to run this program on a **2-core** Virtual Machine  (VM) with 20
 GB of RAM, where each core computes with speed 400 Gflop/sec, and data is
 read from storage at bandwidth 100 MB/sec.
 
+#### Questions
 
 **[A.2.q5.1]** What is the execution time of this program on  this VM?
+
+---
 
 ### Saving money?
 
@@ -56,6 +59,8 @@ faster, you have the following options at your disposal:
 
 Each option above costs money, and you can afford only one of them. But the money spent is
 worth it *if it makes the program run in under 60s.*
+
+#### Questions
 
 **[A.2.q5.2]** Which of the options above are worth it?
 
