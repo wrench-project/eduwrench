@@ -25,7 +25,7 @@ entire RAM, thus leaving all remaining cores idle while it executes.
 Because RAM constraints can causes idle time, they can also cause
 loss of parallel efficiency.
 
-### Simulating RAM Constraints
+#### Simulating RAM Constraints
 
 So that you can gain hands-on experience, use the simulation 
 app below.  This app is similar to that in the previous tab,

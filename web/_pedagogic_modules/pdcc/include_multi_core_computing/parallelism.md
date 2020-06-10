@@ -225,7 +225,7 @@ You can note that this is exactly the speedup (55/35) divided by the number
 of cores (2). 
 
 
-### Simulating Load Imbalance
+#### Simulating Load Imbalance
 
 So that you can gain hands-on experience, use the simulation app below 
 on your own and to answer the practice questions hereafter. 
