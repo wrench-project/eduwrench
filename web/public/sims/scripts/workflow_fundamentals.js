@@ -5,7 +5,7 @@ $(function () {
         let disk_bandwidth_input_value = parseInt(disk_bandwidth_input_el.val());
         let disk_bandwidth_label_el = $(".disk-bandwidth-label");
 
-        if (disk_bandwidth_input_value >= 10 && disk_bandwidth_input_value <= 1000) {
+        if (disk_bandwidth_input_value >= 10 && disk_bandwidth_input_value <= 500) {
 
             disk_bandwidth_label_el.text((disk_bandwidth_input_value).toString() + " MB/sec")
                 .css("background-color", "#d3ffe9");

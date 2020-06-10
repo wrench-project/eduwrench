@@ -1,5 +1,5 @@
 
-#### Learning objectives:
+#### Learning Objectives
 
   - Understand the concept of a *workflow*
   - Be able to reason about the performance of a workflow when run on a multi-core computer
@@ -40,9 +40,6 @@ application. Some examples of real-world workflows for scientific
 applications, along with their DAG representations, can be found
 <a href="https://pegasus.isi.edu/application-showcase/">here</a>.
 </div>
-
-
-
 
 ### Simulating multi-core workflow execution
 
@@ -103,7 +100,7 @@ the app for double-checking you results):
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 This can easily be done analytically. The table below shows for each file the
 total amount of read/write it causes in MB:
 
@@ -141,7 +138,7 @@ disk bandwidth is 150 MB/sec?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 The simulation shows that the 1-core execution takes time 218.67 seconds,
 while the 3-core execution takes time 197.33 seconds. So the speedup
@@ -160,7 +157,7 @@ a 2-core execution to a  3-core execution for this workflow?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 The lack of improvement is easy to see in the simulation. In fact, executions look 
 identical with 2 and 3 cores.
@@ -184,7 +181,7 @@ by tasks? How can you tell based on the simulation output?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 Tasks task3 and task4 use the disk concurrently. This is easily seen in the
 "Workflow Task Data" section of the simulation output. For instance, task3 spends 16
 seconds reading its input file. Give that this file is 400 MB, this means that
@@ -206,7 +203,7 @@ and I/O time?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let $B$ be the unknown bandwidth. The compute time is, as we
 saw in question A.2.3.p1.1 above, 194  seconds. The I/O time,
@@ -234,7 +231,7 @@ is 100 MB/sec?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 In the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing)
 we defined the critical path without any I/O. Extending this notion to I/O is
  straightforward (one can simply consider file reads and writes as
@@ -251,8 +248,6 @@ are both written and read, and hence are counted "twice"):
 The critical path (the middle path) has length 175 seconds. No execution can proceed faster
 than 175 seconds no matter how many cores are used. 
 
-
-
   </div>
 </div>
 <p></p>
@@ -266,7 +261,7 @@ for parallel execution in general and on our 3-core computer in particular.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 There are three clear problems here:
 
@@ -318,4 +313,3 @@ the tasks with the **lowest work** first?
 
 **[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 60% even if the disk can be upgraded at will.
 <p></p>
-

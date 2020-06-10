@@ -1,11 +1,10 @@
 
-#### Learning objectives
+#### Learning Objectives
 
   - Be able to reason about workflow execution performance on
     distributed multi-host/multi-core platforms
 
 ---
-
 
 ### Executing Workflows on Distributed Platforms
 
@@ -127,7 +126,7 @@ yourself with this application, but you should then use it for the practice ques
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="workflow_distributed/" %}
   </div>
 </div>
@@ -144,7 +143,7 @@ what fraction of the time is spent doing actual computation?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   Running the simulation gives us a total execution time of 299.69 seconds. 
   In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
   core. So that's 210 seconds of computation. Therefore, the execution
@@ -164,7 +163,7 @@ your expectation in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   In the previous question, we found out that the computation in total takes
   210 seconds. On 2 cores, this should be 110 seconds (since the 
   final task runs by itself). Therefore we'd expect the
@@ -188,7 +187,7 @@ have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 It's better to use 5 4-core hosts because the RAM at each host
 if 32 GB. Therefore, no matter how many  cores a host has
@@ -209,7 +208,7 @@ execution when using 5 4-core compute hosts?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 The speedup is 299.69 / 91.76 = 3.26.  Since we used 20 cores, our parallel
 efficiency is 3.26/20 = 16.33%.   This is pretty low, but expected since
@@ -226,7 +225,7 @@ execution when using a single core? What about when using 5 4-core hosts?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 In total the execution reads and writes 20*(50 + 100 + 100) + 1 = 5001 MB 
 of data. 
@@ -275,6 +274,3 @@ Consider  the following workflow (all green tasks have identical specs, and so d
                   total I/O time, regardless of the number of hosts/cores is 20
                   seconds, what is the parallel efficiency for the three platforms in the
                   previous question?
-                  
-                   
-                  

@@ -1,15 +1,14 @@
 
-#### Learning objectives
+#### Learning Objectives
 
   - Understand how task- and data-parallelism can be mixed
   - Be able to reason about the performance of programs that include both task- and data-parallelism
 
 ---
 
-
 ### Basic concept
 
-So far in this module we've only considered sequential tasks. In other words, each task can only use
+So far in this module we have only considered sequential tasks. In other words, each task can only use
 a single core.  But in the [Data-Parallelism tab  of the Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/data-parallelism), we 
 learned about **Data Parallelism**: the notion that a sequential task can be rewritten as a set of
 parallel tasks, with likely a remaining sequential portion of the execution. Then, in that same module,
@@ -22,7 +21,6 @@ how many cores they should use. So our workflow has both task-parallelism (like 
 data-parallelism. This is often called "mixed" parallelism. 
 
 ### An example
-
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow.svg">Example workflow with task- and data-parallelism.</object>
 <div class="caption"><strong>Figure 1:</strong> A simple workflow with some data-parallel tasks ($\alpha$ is the fraction of the work that is non-parallelizable)</div>
@@ -79,7 +77,7 @@ app on your own, but then you should use it to answer the following practice que
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="workflow_task_data_parallelism/" %}
   </div>
 </div>
@@ -96,7 +94,7 @@ your result in simulation
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 With 3 cores, here are the data-parallel task execution times: 
 
   - Blue task: $0.90 \times 10 / 3 + 0.10  \times 10 =$ 4.00 seconds
@@ -122,7 +120,7 @@ the shortest execution time?  Come up with an answer based on your intuition, an
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 The yellow task has 2000 Gflop work, so, even though its $\alpha$ is not as high as
 that of the blue task, we should give it the  3 cores!
@@ -151,7 +149,7 @@ it in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 When using 2 cores, the yellow task will still be the longest task, so it will be
 placed by itself on a host. The blue and purple task will run on the same host.   This is 
@@ -170,7 +168,7 @@ purple task, or the other way around?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 All data-parallel tasks run simultaneously.
 
@@ -203,10 +201,8 @@ host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
 host1 or on host2 (if our objective is to run the workflow as quickly as
 possible)?
 
-
 **[A.3.4.q4.2]** If, instead, we run the workflow on a single 4-core computer,
 what is the best approach?
-
 
 **[A.3.4.q4.3]** Say now we are running our workflow on a single 40-core
 host. What is the best way to allocate cores to the blue and purple task? If
@@ -216,4 +212,3 @@ write the execution time as a function of the number of cores allocated
 to the blue task, and plot this function to find where it attains 
 its minimum visually.  There are many web site on which you can do this
 (search for "graphing calculator"). 
-

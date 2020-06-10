@@ -1,11 +1,10 @@
 
-#### Learning objectives
+#### Learning Objectives
 
-  - Understand the the concept of data locality in distributed platforms
+  - Understand the concept of data locality in distributed platforms
   - Be able to quantify the impact of data locality on workflow execution
 
 ---
-
 
 ### The need for data locality
 
@@ -33,7 +32,6 @@ the context of caches. Here we use it in the context of network proximity.
 Going back to the setup in the previous tab, we want to be able to store
 data on the compute site. So let's enhance that site with a bit more hardware!
 
-
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_platform_zoom.svg">Storage at the compute site</object>
 <div class="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
@@ -59,13 +57,12 @@ the compute site (if not checked, the simulated execution behaves as in the
 previous tab, with poor data locality). You can use the app on your own,
 but then you should  use it to answer the practice questions hereafter.
 
-
 <div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="workflow_data_locality/" %}
   </div>
 </div>
@@ -85,7 +82,7 @@ and bandwidths, do you get the same answer?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 This can be answered by just running the simulation:
 
   - With only remote storage: 299.69 seconds
@@ -107,8 +104,8 @@ We saw this in the previous tab but can re-iterate it here.
 The application, when not using any local storage, reads/write a total  of
 $20 \times 50 + 2 \times 20 \times 100 + 1 = 5001$ MB of data. Since the
 application computes for 210 seconds, this means that it spends 299.69 - 210 = 89.69 seconds 
-transferring the data. Thus the data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
-from he peak 100 MB/sec!  
+transferring the data. Thus, the data transfer rate is 5001/89.69 = 55.75  MB/sec, a far cry
+from the peak 100 MB/sec!  
 
 So if we re-compute our saving estimate above using this effective data transfer
 rate we obtain: 4000/55.75 - 4000/500 = 63.64 seconds. This is much closer to what
@@ -126,7 +123,7 @@ captured by the simulation (which we will mention in upcoming modules).
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 As we saw in the previous question, the sequential (1-core) execution time
 is 239.91 seconds when using local storage. Using the simulation to determine
 the parallel execution time we get: 41.86 seconds. 
@@ -145,7 +142,7 @@ than without using local storage, but still not great.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Using the simulation again, we get: (239.91 / 36.61) / 20 = 32.7%. 
    
@@ -161,7 +158,7 @@ efficiency? What is the effective wide-area data transfer rate? Is it anywhere c
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Using the simulation again, we get: (239.91 / 33.45) / 20 = 35.8%.  This is *not*  a big
 jump at all. 
@@ -183,7 +180,7 @@ is it from the efficiency when assuming that all I/O take zero time.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Instead, of 4.49 seconds, the tasks would take "only" 1000/500 = 2 seconds to read their input.
 So we would shave 2.49 seconds off the execution time. (In fact we'd also save a tiny bit 
@@ -225,8 +222,3 @@ bandwidth.
 **[A.3.4.q3.3]** We now have local storage at the compute site, with data
 access rate 500 MB/sec. What is the workflow execution time now? What is the
 parallel efficiency? 
-
-
-
-
-

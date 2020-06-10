@@ -1,5 +1,5 @@
 
-#### Learning objectives
+#### Learning Objectives
 
   - Be able to put together the concepts learned in the previous tabs  
 
@@ -41,6 +41,5 @@ figure out you can afford **one** of the following upgrades:
 ### Question
 
 **Which upgrade should you pick?**
-
 
 ---
