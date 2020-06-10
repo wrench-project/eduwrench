@@ -3,7 +3,7 @@
 
 - Understand the need for and the basics of multi-core computers
 - Understand and apply the concepts of parallel speedup and efficiency
-- Understand and quantify the relationship between idle time, speedup and efficiency
+- Understand and quantify the relationship between idle time, speedup, and efficiency
 
 ---
 
@@ -54,7 +54,7 @@ tasks in less time, ideally in two hours. **With parallelism we
 can decrease program execution time**. 
 
 Unfortunately, most real-world programs do not have ideal
-parallelism behavior. In other words, they don't run $p$ times faster when
+parallelism behavior. In other words, they do not run $p$ times faster when
 executed on $p$
 cores. Instead, they execute less than $p$ times faster. This may seem
 surprising, but comes about due to many reasons. For instance, when two
@@ -74,7 +74,7 @@ a parallel program due to the use
 of multiple cores. It is calculated by dividing the execution time of
 the program when executed on a single core by the execution time of this same program
 when  executed  on multiple cores. Let $p$ be the number of cores used to
-executed a program. The speedup 
+execute a program. The speedup 
 on $p$ cores is:
 
 $$
@@ -189,10 +189,10 @@ Consider a parallel program that consists of $n$  tasks, each of them
 running in the  same amount of time on a core. We run this program on a
 computer with $p$ cores.  If $n$ is not divisible by $p$,  then at least
 one core will be idle during program execution.  For example, if we have 8
-tasks, that each run for 1 hour, and 5 cores, all cores will be busy
+tasks, that each run for 1 hour; and 5 cores, all cores will be busy
 running the first 5 tasks in parallel.  But once this phase of execution is
 finished, we have 3 tasks left and 5 available cores. So 2 cores will have nothing to do for
-1 hour.  In this situation we says that **the load is not well-balanced
+1 hour.  In this situation, we say that **the load is not well-balanced
 across cores**. Some cores will run two tasks, while others will run only one task.
 
 There is a **direct relationship** between idle time and parallel
@@ -201,13 +201,12 @@ efficiency. **The parallel efficiency is the sum of the core non-idle times
 divided by the product of the number of cores by the overall execution
 time.**
 
-The above statement may sound complicated, but it's very intuitive on an example. 
+The above statement may sound complicated, but it is very intuitive on an example. 
 Consider a 2-core computer that executes a multi-task program in 35 minutes. 
 One core computes for 
 the full 35 minutes, while the other core computes for 20 minutes
 and then sits idle for 15 minutes.  
-This execution 
-is depicted in the figure below:
+This execution is depicted in the figure below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/utilization.svg">Utilization</object>
 <div class="caption"><strong>Figure 1:</strong>
@@ -488,4 +487,3 @@ computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
 on these 3 cores? Could we do better with 4 cores?
 
 ---
-
