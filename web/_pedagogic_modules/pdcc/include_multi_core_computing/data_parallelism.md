@@ -3,7 +3,7 @@
 
 - Understand the concept of data-parallelism
 - Understand and be able to apply Amdahl's law
-- Understand and be able to reason about the performance of data-parallelism
+- Understand and be able to reason about the performance of data-parallel programs
 
 ---
 
@@ -18,7 +18,7 @@ Let's now consider one task, which performs some computation on a single
 core.  Perhaps, one can rewrite the code of this task to use multiple cores
 to accelerate its computation. This is done by writing the task's code so that it
 uses multiple threads (see concurrent programming textbooks/courses).
-In other terms, perhaps the task's computation can be **parallelized**.
+In other terms, perhaps the task's computation itself can be **parallelized**. 
 
 ### An Example
 
@@ -45,12 +45,12 @@ Example image processing program.
 </div>
 
 If we were to run this program on a core that computes at
-speed 100 GFLop/sec, and using $r=3$ for the "oil" task, the program would take time:
+speed 100 Gflop/sec, and using $r=3$ for the "oil" task, the program would take time:
 
 $$
 \begin{align}
-\text{T} & = \frac{ 100 \times 3^{2} \text{Gflop}}{100 \text{Gflop/sec}} + \frac{100 \text{Gflop}}{100 \text{Gflop/sec}}\\
-         & = 10 \text{sec}
+\text{T} & = \frac{ 100 \times 3^{2} \;\text{Gflop}}{100\; \text{Gflop/sec}} + \frac{100\; \text{Gflop}}{100\; \text{Gflop/sec}}\\
+         & = 10\; \text{sec}
 \end{align}
 $$
 
@@ -73,7 +73,10 @@ This assumes $X$ is divisible by $n$. This is likely not quite the case in pract
 but a very good approximation if the number of pixels is much larger than the
 number of cores, which we will assume here.
 
-The program's DAG now is as follows:
+#### Simulation Data-Parallelism
+
+After exposing data-parallelism in our example program (i.e., by rewriting the code of the "oil" task), the 
+program's DAG is as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure 2:</strong>
@@ -83,7 +86,7 @@ Example image processing program with data-parallelism exposed.
 The program can run faster using multiple cores! How fast? The simulation
 app below simulates the execution for particular values of the radius $r$
 and a number of cores (using one "oil" task per core). You can use the
-simulation to explore things on your own, but also to answer some of the 
+simulation to explore data-parallelism on your own, but also to answer some of the 
 practice questions below. 
 
 <div class="ui accordion fluid app-ins">
@@ -213,38 +216,43 @@ T(1) & = \alpha T + (1 - \alpha) T\\
 \end{align}
 $$
 
-Now, if we run the program on $n$ cores, assuming perfect parallelization of the 
-parallelizable phase, we obtain the execution time on $n$ cores, $T(n)$, as:
+Now, if we run the program on $p$ cores, assuming perfect parallelization of the 
+parallelizable phase, we obtain the execution time on $p$ cores, $T(p)$, as:
 
 $$
 \begin{align}
-T(n) & = \alpha T / n + (1 - \alpha) T\\
+T(p) & = \alpha T / p + (1 - \alpha) T\\
+\end{align}
+$$
+The above just says that the parallel part goes $n$ times faster, while the sequential part is unchanged. 
+
+
+The parallel speedup on $p$ cores, $S(p)$, is then:
+
+$$
+\begin{align}
+S(p) & = \frac{\alpha T + (1 - \alpha) T}{\alpha T / p + (1 - \alpha) T}\\
+     & = \frac{1}{ \alpha/p + 1 - \alpha}
 \end{align}
 $$
 
-The parallel speedup on $n$ cores, $S(n)$, is then:
+As $p$, the number of cores, grows, $S(p)$ increases (as expected). Amdahl's law is
+the observation that no matter how large $p$ gets, the speedup is limited by a constant:
 
 $$
 \begin{align}
-S(n) & = \frac{\alpha T + (1 - \alpha) T}{\alpha T / n + (1 - \alpha) T}\\
-     & = \frac{1}{ \alpha/n + 1 - \alpha}
-\end{align}
-$$
-
-As $n$, the number of cores, grows, $S(n)$ increases (as expected). Amdahl's law is
-the observation that no matter how large $n$ gets, the speedup is limited by a constant:
-
-$$
-\begin{align}
-S(n) < \frac{1}{1 - \alpha}
+S(p) < \frac{1}{1 - \alpha}
 \end{align}
 $$
 
 So, for instance, if 90% of the sequential execution time can be
 parallelized, then the speedup will be at most 1/(1-0.9) = 10.
-Precisely, if running on 8 cores for instance, the speedup would be
-1/(0.9/8 + 1 - 0.9) = 4.7. Meaning that the parallel efficiency is below
-60%. The "non-intuitiveness" of Amdahl's law, for some people, is that
+
+For instance, if running on 8 cores for instance, the speedup would be
+1/(0.9/8 + 1 - 0.9) = 4.7, for a parallel efficiency below
+60%. 
+
+The "non-intuitiveness" of Amdahl's law, for some people, is that
 having 10% of the execution sequential does not seem like a lot, but
 seeing only a 4.7 speedup with 8 cores seems really bad.
 The graph below shows speedup vs. number of cores for different
@@ -265,7 +273,7 @@ is only 50%).
 
 This is bad news since almost every program has inherently
 sequential phases. In our example program the sequential phase is the
-"luminence" task. But even without this task, there many parts 
+"luminence" task. But even without this task, there are many parts 
 of a program that are sequential. For instance, a program typically
 needs to write produce output using sequential I/O operations. Even
 if these parts are short, Amdahl's law tells use that they severely
@@ -344,7 +352,7 @@ So only 65% of the 6-core execution is  spent in the parallel phase.
 <p></p>
 
 **[A.2.p4.6]** 40% of the sequential execution time of a program is spent
-in phase that could be perfectly parallelized. What is  the maximum  speedup
+in a phase that could be perfectly parallelized. What is  the maximum  speedup
 one could achieve if any number of cores  can be used?
 
 <div class="ui accordion fluid">
@@ -371,18 +379,18 @@ of the sequential execution time
 that is parallelizable. Still for a 100 Gflop/sec core, for a given a
 radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
 in the "luminence" task is 1 second.
-Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $n$
-cores with radius $r$, $S(n,r)$, is:
+Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $p$
+cores with radius $r$, $S(p,r)$, is:
 
 $
 \begin{align}
-S(n,r)  & = \frac{1}{r^2/(1+r^2) / n + 1 - r^2/(1+r^2)}
+S(p,r)  & = \frac{1}{r^2/(1+r^2) / p + 1 - r^2/(1+r^2)}
 \end{align}
 $
 
 You can double-check that this formula matches what we observed in
-the  simulation app. For instance, for $r=2$, the
-the speedup using 4 cores would be:
+the simulation app. For instance, for $r=2$, the
+speedup using 4 cores would be:
 
 $
 \begin{align}
@@ -403,7 +411,7 @@ $
 
 which gives us $n \leq 5$. So as soon as we use 6 cores or more, parallel efficiency
 drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
-We could use more cores effectively for larger $r$  because the application  
+We could use more cores effectively for larger $r$  because the application 
 would have more (parallelizable) work to do.
 
 
@@ -411,8 +419,8 @@ would have more (parallelizable) work to do.
 ### Overhead of Parallelization
 
 In what  we have seen so far, the data-parallelization of a task  was
-"perfect". That is, the original work is $X$ and when using $n$ tasks
-each task has work $X/n$.
+"perfect". That is, the original work is $X$ and when using $p$ tasks on $p$ cores
+each task has work $X/p$.
 
 This is not always the case, as there could be some overhead. This overhead
 could be a sequential portion that remains unparallelized. 
@@ -463,8 +471,8 @@ $
 10,000 Gflop. The developer of the program has an idea to expose
 data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
-data-parallelism, but there is no sequential phase). For what value of X 
-would the parallel efficiency be above 90%
+data-parallelism, but there is no sequential phase). What is the largest value of X 
+for which the parallel efficiency would be above 90%
 when running on an 8-core computer?
 
 <div class="ui accordion fluid">

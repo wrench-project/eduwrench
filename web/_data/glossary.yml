@@ -21,6 +21,11 @@
 - term: CPU utilization
   description: the fraction of time that a CPU (core) spends computing during a program execution
 
+- term: critical path
+  description: The longest path, in seconds, from an entry task to an exit task in a directed acyclic graph (DAG) of tasks. 
+
+- term: CPU utilization
+
 - term: cyber infrastructure
   description: a set of hardware resources (hardware infrastructure) managed by software services (software infrastructures) that make it possible to execute parallel programs
 
@@ -65,6 +70,9 @@
 
 - term: RAM (Random Access Memory)
   description: memory provided by a computer so that running programs can store all the code/data needed for their execution on that computer
+
+- term: parallel scalability
+  description: the ability of a parallel program to maintain high parallel efficiency as the number of compute nodes / cores increases
 
 - term: storage service
   description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
