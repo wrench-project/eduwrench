@@ -64,17 +64,17 @@ which receives it and keeps in in RAM. **That is, for now, we assume no disk I/O
 whatsoever.**
 
 
-### Simulating the Client-Server Example
+#### Simulating client-server execution
 
 Below is an app that you can use to simulate the
-above example client-server setup. Try to simulate the execution with
+above client-server setup. Try to simulate the execution with
 each server (use the radio button to select the server to use), leaving
 all values to their default.  You should notice a difference in
 execution time. Even though Server #1 has a better CPU, it it connected
 to the client via a low-bandwidth link. Server #2 is thus
 able to finish execution more quickly than Server #1. Then,
 answer the practice questions hereafter, using the simulation app 
-to determine answers or to double-check your answers.
+to come up with or double-check answers.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -86,6 +86,7 @@ to determine answers or to double-check your answers.
   </div>
 </div>
 
+---
 
 #### Practice Questions
 
@@ -161,7 +162,7 @@ Since the compute time is 10 seconds, the answer is no, it is not possible to ha
 to Server #1 is set to the original 10 MB/sec
  
  Assuming your
-client program can do two network transfers at the same time, what would be the total execution time?  
+client program can do two network transfers at the same time, what would be the total execution time (using both servers)?  
 
 What if
 your client program  can only do one network transfer at a time? 
@@ -175,7 +176,9 @@ your client program  can only do one network transfer at a time?
 
 If our client program can do simultaneous network transfers, since the client is connected to the
 servers via two different network links, then the execution time 
-would be $\max(20.50, 17.72) = 20.50\;\text{seconds}$. 
+would be:
+
+$\max(20.50, 17.72) = 20.50\;\text{seconds}$. 
 
 If our client cannot do simultaneous network transfers, we have two options: either
 we first send an image to Server #1 and then send the other image to Server #2, or the other
@@ -210,6 +213,8 @@ overlapping I/O and computation as see in [I/O tab of the Single Core Computing 
  
 <p></p>
 
+---
+
 #### Questions
 
 Given the client-server setup below (note that servers are multi-core, and that the task to execute
@@ -225,8 +230,17 @@ would produce slightly different results.
 
 **[A.3.2.q1.1]** Assuming that the task can use only 1 core, which server should be used?  
 
-**[A.3.2.q1.2]** Assuming now that the task can run on any number of cores, always with 100% parallel efficiency, which server would be used?
+**[A.3.2.q1.2]** Assuming now that the task is data-parallel and can run on
+any number of cores, always with 100% parallel efficiency, which server
+would be used?
 
-**[A.3.2.q1.3]** It turns out the parallel efficiency of the task is not 100%. You observe that on Server #1 the entire execution takes 15 sec. What is the task's parallel efficiency?
+**[A.3.2.q1.3]** It turns out the parallel efficiency of the data-parallel
+task is not 100%. You observe that on Server #1 the execution, using all 4
+cores, takes 15 sec. What is the task's parallel efficiency?
 
-**[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%, what should the network bandwidth to Server #1 be for both servers to achieve the exact same task  execution times?
+**[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%
+regardless of the number of cores, what should the network bandwidth to
+Server #1 be for both servers to complete the task in the  same amount of
+time (including the time to get the task's input data)?
+
+---

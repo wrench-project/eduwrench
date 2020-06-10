@@ -27,10 +27,10 @@ Although at first glance this seems fine, there are two problems.
 
 **Problem #1**: What if the image does not fit in RAM? Now,
 this is unlikely for this application, as even high-res, uncompressed
-images can typically fit in RAM given current RAM sizes on personal computers. But the client-server model
+images can typically fit in RAM on current personal computers. But the client-server model
 could be used for applications for which input data is large. For instance, you
 can surely upload a large file, larger than your RAM, to a server, and yet the
-program that does the upload  cannot store that file in RAM! So the execution cannot
+program that does the upload  cannot store that file in RAM! So, in general, the execution cannot
 proceed with the three phases above. 
 
 **Problem #2**:
@@ -134,14 +134,14 @@ the execution does not become latency-bound.
 
 Note that pipelining is used in many programs. These program try to use up a "reasonable"
  buffer size. For instance, many versions of the <tt>Scp</tt> secure
-file copy program pipelines disk and I/O operations with a buffer size of 16 KiB. If this
+file copy program pipeline disk and I/O operations with a buffer size of 16 KiB. If this
 program were to be used on the disk/network setup above, it would be better off with a bigger buffer
 size. *But of course, the developers of that program do not know in advance in what setup the
 program will be used!* Other versions of <tt>Scp</tt> allow the user
 to specify a buffer size.
 
 
-### Simulating Pipelining
+#### Simulating client-server with pipelining 
 
 So that you can experiment with how pipelining works, below is an app that
 allows you to simulate the execution of a client-server setup where a 1GB file
@@ -206,7 +206,8 @@ from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same
 another 500 MB is read from the disk. Because the network for Server #2 has higher bandwidth than the disk, the disk is the
 bottleneck, and so this step also takes 1.25 seconds. Finally, in the third step, 500 MB of data is sent over the network,
 which takes time 500/600  = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 +  .83 = 3.33 seconds. The server
-then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. 
+then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds.  Note that we neglected
+network  latencies since we incur only three of them.
 
 The simulation gives us 20.04 seconds, which again is very close.
        
@@ -217,7 +218,7 @@ The simulation gives us 20.04 seconds, which again is very close.
 <p></p>
 
 **[A.3.2.p2.3]** Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it takes for the
-server to receive the data. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
+server to *receive the data*. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
 pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack?
 
 <div class="ui accordion fluid">
@@ -247,7 +248,7 @@ If we had no latencies, we could achieve almost perfect  pipelining (buffer size
 proceed at the bottleneck bandwidth,  i.e., that of the disk, and  we would get  a transfer time of 1000/400 = 2.5 seconds. So
 yes, we can achieve this with  1 MB buffer size!
 
-It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best possible time. 
+It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best possible execution time. 
 
    </div>
  </div>
@@ -331,6 +332,7 @@ in advanced networking courses, but for now, let's just remember that  *latency 
   
 <p></p>
 
+---
 
 #### Questions
 
@@ -341,8 +343,9 @@ the washer used? Could you have gone faster with two driers, and if so by how mu
 
 **[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote server over a single network link. The disk's read bandwidth
 is 500 MB/sec. The network link's bandwidth is 250 MB/sec, with a latency below 100 microseconds. How much faster would the transfer
-go using pipelining with a 100 MB buffer compared to no pipelining?  Answer this question with a  back-of-the-envelope estimation, even
-though we saw in the practice questions that simulation results can be different. 
+go using pipelining with a 100 MB buffer compared to no pipelining?  Answer
+this question with a  back-of-the-envelope estimation (even though we saw
+in the practice questions that simulation results can be different).
 
 
 **[A.3.2.q2.3]** Your business has a client-server setup for your computing needs. The client is on-site and there are 
@@ -371,5 +374,7 @@ execution cost?
 
 
 **[A.3.2.q2.4]** This question is for the same setup as in the previous question and the same task
-to execute. Assume that, for each server, ideal pipelining is used (i.e., assuming that network latency is
-zero). Which of these two servers would lead to the lowest execution cost?
+to execute. Assume that, for each server, ideal pipelining is possible used (i.e., assuming that network latency is
+zero and a 1-byte buffer can be used). Which of these two servers would lead to the lowest execution cost?
+
+---
