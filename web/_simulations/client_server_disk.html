@@ -29,11 +29,11 @@ permalink: simulations/client_server_disk/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-link-latency">Link Speed to Server #1 (MBps)</label>
-    <input class="form-control" type="number" id="server-1-link-latency" placeholder="" value="10" min="1" max="10000"
+    <label for="server-1-link-latency">Latency to Server #1 (us)</label>
+    <input class="form-control" type="number" id="server-1-link-latency" placeholder="10" value="10" min="1" max="10000"
            step="1" required>
     <div class="invalid-feedback">
-        Please provide the link speed from the Client to Server #1 in MBps.
+        Please provide the latency from the Client to Server #1 in us between 1 and 10,000.
     </div>
 </div>
 
@@ -46,7 +46,7 @@ permalink: simulations/client_server_disk/
     <input class="form-control" type="number" id="buffer-size" placeholder="Provide a buffer size in KB" value="10000"
            min="100" max="1000000" step="1" required>
     <div class="invalid-feedback">
-        Please provide a buffer size in KB.
+        Please provide a buffer size in KB between 100 and 1,000,000.
     </div>
 </div>
 

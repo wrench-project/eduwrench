@@ -7,7 +7,7 @@ $(function() {
         let server_1_link_label_el = $(".server-1-link-label");
 
         if(server_1_link_input_value>=1 && server_1_link_input_value<1000){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value + " MBps")
+            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value + " MB/sec")
                 .css("background-color", "#d3ffe9");
 
             server_1_link_input_el.removeClass("is-invalid")

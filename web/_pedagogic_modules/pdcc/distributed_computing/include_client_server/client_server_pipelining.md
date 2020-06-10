@@ -182,7 +182,7 @@ $
 
 which  gives $T = 20.83\;\text{sec}$.
 
-The simulation gives us 20.92. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
+The simulation gives us 20.92 sec. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
 some network behaviors), but it's close. 
         
         
