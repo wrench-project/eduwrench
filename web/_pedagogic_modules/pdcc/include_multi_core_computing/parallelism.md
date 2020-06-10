@@ -486,3 +486,6 @@ possible?
 computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
 3s. What is the best possible (i.e., the optimal) program execution time
 on these 3 cores? Could we do better with 4 cores?
+
+---
+
