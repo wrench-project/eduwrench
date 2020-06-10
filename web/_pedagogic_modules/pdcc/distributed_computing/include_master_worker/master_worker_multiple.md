@@ -10,8 +10,6 @@ with different scheduling strategies.  But as we noted, it was  difficult to dra
 conclusions from just a few particular test cases. Instead, what we need to do is
 **compare scheduling strategies on many test cases**. 
 
-
-
 ### Simulating may test cases
 
 Below is a simulation app that makes is possible to evaluate a scheduling
@@ -20,7 +18,6 @@ minimum, average, and maximum execution times over all these scenarios.
 This makes it possible to draw some informed conclusions on the relative merit
 of different strategies. But analysis of experimental data is a complicated matter,
 and we're only scratching the surface here.  
-
 
 The simulation app is a bit more complicated than that in  the previous tab. It allows you to specify:
 
@@ -44,7 +41,6 @@ interesting experiments.
     {% include simulator.html src="master_worker_generated/" %}
   </div>
 </div>
-
 
 ----- 
 
@@ -81,7 +77,7 @@ of experiments" should be at least 30).
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 Based on what was said in previous modules, the highest flop / fastest
 strategy should be best, and  lowest flop / fastest should be worse or
@@ -121,7 +117,7 @@ different when comparing the three strategies in the previous question?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 
 Setting worker speeds in the range [100, 1000], we obtain:
@@ -149,14 +145,14 @@ fastest workers.
 
 Say we still select tasks based on the "highest flop" criterion. Among all
 the available worker selection strategies, which one do you think would work
-best? Confirm your expectation in simulation
+best? Confirm your expectation in simulation:
 
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 
 The "fastest" and "best-connected" strategies only consider one
@@ -188,7 +184,7 @@ results?   Verify your expectation experimentally.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 When there are fewer tasks that workers, it is critical to pick the right
 workers (which the "earliest completion" strategy does very well). But as we add tasks, all workers are
@@ -209,7 +205,6 @@ to the confusing world of scheduling strategies.
 </div>
 </div>
 
-
 ---
 
 #### Questions 
@@ -229,6 +224,3 @@ the "ratio" worker selection strategies (i.e., the "highest flop/byte" and
 "highest byte/flop" strategies).  Come up with experimental campaigns to
 determine whether these strategies are promising and can outperform
 the other strategies.
-
-
-
