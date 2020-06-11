@@ -1,8 +1,8 @@
 
 #### Learning Objectives
 
-  - Understand the need for and the mechanics of pipelining
-  - Be able to reason about how pipelining impacts performance
+- Understand the need for and the mechanics of pipelining
+- Be able to reason about how pipelining impacts performance
 
 ---
 
@@ -15,7 +15,7 @@ but with a **disk on the client**.
 
 The 100 MB image to be processed resides on disk as an image file. 
 The client program then reads it from disk into RAM and
-sends it over to the server, which performs 1000 GFlop of work. 
+sends it over to the server, which performs 1000 Gflop of work. 
 This now adds a third phase to the execution
 so that it would proceed as:
 
@@ -27,10 +27,10 @@ Although at first glance this seems fine, there are two problems.
 
 **Problem #1**: What if the image does not fit in RAM? Now,
 this is unlikely for this application, as even high-res, uncompressed
-images can typically fit in RAM given current RAM sizes on personal computers. But the client-server model
+images can typically fit in RAM on current personal computers. But the client-server model
 could be used for applications for which input data is large. For instance, you
 can surely upload a large file, larger than your RAM, to a server, and yet the
-program that does the upload  cannot store that file in RAM! So the execution cannot
+program that does the upload  cannot store that file in RAM! So, in general, the execution cannot
 proceed with the three phases above. 
 
 **Problem #2**:
@@ -78,7 +78,6 @@ followed by 10 seconds of network send). Instead, with pipelining
 we are able to executed in only 11 seconds, over a 25% reduction in
 execution time. 
 
-
 In this example above, the disk read time is faster than the network
 transfer time. So although the network is  used constantly for the entire
 execution (save for the initial step), the disk isn't. We call this an
@@ -99,9 +98,7 @@ step, both hardware resources are used constantly throughout the
 whole execution.
 
 
-
 ### Buffer size
-
 
 Although the principle of pipelining is simple, one question is that of the **buffer size**. 
 You may have noted in the previous example that there is no downside to making the buffer
@@ -137,19 +134,19 @@ the execution does not become latency-bound.
 
 Note that pipelining is used in many programs. These program try to use up a "reasonable"
  buffer size. For instance, many versions of the <tt>Scp</tt> secure
-file copy program pipelines disk and I/O operations with a buffer size of 16 KiB. If this
+file copy program pipeline disk and I/O operations with a buffer size of 16 KiB. If this
 program were to be used on the disk/network setup above, it would be better off with a bigger buffer
 size. *But of course, the developers of that program do not know in advance in what setup the
 program will be used!* Other versions of <tt>Scp</tt> allow the user
 to specify a buffer size.
 
 
-### Simulating Pipelining
+#### Simulating client-server with pipelining 
 
 So that you can experiment with how pipelining works, below is an app that
 allows you to simulate the execution of a client-server setup where a 1GB file
 is stored on  the  disk at the client  and needs to be sent to one of two
-servers, which then performs 1000 GFlop of work. You can choose the network
+servers, which then performs 1000 Gflop of work. You can choose the network
 latency for Server #1, and you can pick the buffer size used by the client program. 
 You can use this app on your own, and then you should use it to answer
 the following practice questions. 
@@ -175,17 +172,17 @@ to be when running on Server #2? Check your answer with the simulation.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
         
 One would expect the execution time to be:
 
 $
-T = \frac{1\;\text{GB}}{400\;\text{MB/sec}} + 10\;\text{us} + \frac{1\;\text{GB}}{600\;\text{MB/sec}} + \frac{1000\;\text{GFlop}}{60\;\text{GFlop/sec}}
+T = \frac{1\;\text{GB}}{400\;\text{MB/sec}} + 10\;\text{us} + \frac{1\;\text{GB}}{600\;\text{MB/sec}} + \frac{1000\;\text{Gflop}}{60\;\text{Gflop/sec}}
 $
 
 which  gives $T = 20.83\;\text{sec}$.
 
-The simulation gives us 20.92. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
+The simulation gives us 20.92 sec. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
 some network behaviors), but it's close. 
         
         
@@ -202,14 +199,15 @@ some network behaviors), but it's close.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
        
 With a 500 MB buffer, sending the file over to the server consists of three steps. In the first step, 500 GB of data is read
 from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same time, this data is sent to the server and
 another 500 MB is read from the disk. Because the network for Server #2 has higher bandwidth than the disk, the disk is the
 bottleneck, and so this step also takes 1.25 seconds. Finally, in the third step, 500 MB of data is sent over the network,
 which takes time 500/600  = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 +  .83 = 3.33 seconds. The server
-then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. 
+then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds.  Note that we neglected
+network  latencies since we incur only three of them.
 
 The simulation gives us 20.04 seconds, which again is very close.
        
@@ -220,17 +218,15 @@ The simulation gives us 20.04 seconds, which again is very close.
 <p></p>
 
 **[A.3.2.p2.3]** Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it takes for the
-server to receive the data. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
+server to *receive the data*. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
 pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack?
-
-
 
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
    
 The simulation gives these results:
 
@@ -252,7 +248,7 @@ If we had no latencies, we could achieve almost perfect  pipelining (buffer size
 proceed at the bottleneck bandwidth,  i.e., that of the disk, and  we would get  a transfer time of 1000/400 = 2.5 seconds. So
 yes, we can achieve this with  1 MB buffer size!
 
-It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best possible time. 
+It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best possible execution time. 
 
    </div>
  </div>
@@ -263,15 +259,13 @@ It is not difficult to pick a good buffer size as between 500KB and 10MB we get 
 **[A.3.2.p2.4]** Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the simulation, determine the
 data transfer time with the original 10 us latency. Say now that the latency is instead 20 us. What is the increase in data
 transfer time? For this new latency, can we lower the data transfer time by using a different buffer size?
-
-
  
 <div class="ui accordion fluid">
     <div class="title">
       <i class="dropdown icon"></i>
       (click to see answer)
     </div>
-<div markdown="1" class="ui segment content">
+<div markdown="1" class="ui segment content answer-frame">
 
 With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55 seconds. If we make
 the latency 20 us,  this jumps up to 7.85. This is almost a 20% increase. 
@@ -297,7 +291,7 @@ will take? Check your answer in simulation. Do the two numbers agree?
   <i class="dropdown icon"></i>
   (click to see answer)
 </div>
-<div markdown="1" class="ui segment content">
+<div markdown="1" class="ui segment content answer-frame">
 
 We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency, which adds up
 to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55 seconds.
@@ -308,8 +302,6 @@ No, the two numbers do not match and **our estimate is way optimistic**. Once ag
 to capture complex network behaviors. In this case, when latencies get really high, the network protocol 
 that we simulate (TCP) leads to a severe performance collapse. This is something you can find out more about
 in advanced networking courses, but for now, let's just remember that  *latency is bad* :)
-
-
  
 </div>
 </div>
@@ -321,13 +313,12 @@ in advanced networking courses, but for now, let's just remember that  *latency 
  purely experimentally (since from the previous question we see that our estimates are not useful for such
  high latencies). 
  
- 
- <div class="ui accordion fluid">
+  <div class="ui accordion fluid">
  <div class="title">
    <i class="dropdown icon"></i>
    (click to see answer)
  </div>
- <div markdown="1" class="ui segment content">
+ <div markdown="1" class="ui segment content answer-frame">
  
  If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80 seconds.
  
@@ -341,6 +332,7 @@ in advanced networking courses, but for now, let's just remember that  *latency 
   
 <p></p>
 
+---
 
 #### Questions
 
@@ -351,8 +343,9 @@ the washer used? Could you have gone faster with two driers, and if so by how mu
 
 **[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote server over a single network link. The disk's read bandwidth
 is 500 MB/sec. The network link's bandwidth is 250 MB/sec, with a latency below 100 microseconds. How much faster would the transfer
-go using pipelining with a 100 MB buffer compared to no pipelining?  Answer this question with a  back-of-the-envelope estimation, even
-though we saw in the practice questions that simulation results can be different. 
+go using pipelining with a 100 MB buffer compared to no pipelining?  Answer
+this question with a  back-of-the-envelope estimation (even though we saw
+in the practice questions that simulation results can be different).
 
 
 **[A.3.2.q2.3]** Your business has a client-server setup for your computing needs. The client is on-site and there are 
@@ -363,27 +356,25 @@ two off-site servers you have access to. The specifications of the client and tw
     
   - **Server #1**:
     - Cost: $10/hour 
-    - CPU: 1 core with 200 GFlop/sec speed
+    - CPU: 1 core with 200 Gflop/sec speed
     - Link: 100 MB/sec
     
   - **Server #2**: 
     - Cost: $20/hour 
-    - CPU: 1 core with 200 GFlop/sec speed
+    - CPU: 1 core with 200 Gflop/sec speed
     - Link: 500 MB/sec
 
 Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
 as compute time. 
 
-On these servers, you need  to run a  task that has 100 GB input and 100 TFlop work. 
+On these servers, you need  to run a  task that has 100 GB input and 100 Tflop work. 
 
 Assuming no pipelining is used, which of these two servers would lead to the lowest
 execution cost? 
 
 
 **[A.3.2.q2.4]** This question is for the same setup as in the previous question and the same task
-to execute. Assume that, for each server, ideal pipelining is used (i.e., assuming that network latency is
-zero). Which of these two servers would lead to the lowest execution cost?
- 
+to execute. Assume that, for each server, ideal pipelining is possible used (i.e., assuming that network latency is
+zero and a 1-byte buffer can be used). Which of these two servers would lead to the lowest execution cost?
 
-    
-
+---

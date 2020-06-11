@@ -25,13 +25,12 @@ $(function() {
     });
 
 
-    $("#buffer-size").on("change", function() {
+    $("#buffer-size").on("keyup", function() {
         let buffer_size_input_el = $(this);
         let buffer_size_input_value = parseInt(buffer_size_input_el.val());
         let buffer_size_label_el = $(".buffer-size-label");
 
-
-        if(buffer_size_input_value>=1 && buffer_size_input_value<1000) {
+        if(buffer_size_input_value>=100 && buffer_size_input_value<1000) {
             buffer_size_label_el.text(buffer_size_input_value + " KB")
                 .css("background-color", "#d3ffe9");
 

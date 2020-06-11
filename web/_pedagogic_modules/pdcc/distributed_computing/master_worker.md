@@ -6,7 +6,7 @@ usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to introduce you to the master/worker model of computation, which in some sense just extends client-server. 
+The goal of this module is to introduce you to the master/worker model of computation, which in some sense extends client-server. 
 
 Go through the following tabs in sequence...
 
@@ -21,3 +21,4 @@ Go through the following tabs in sequence...
 <div markdown="1" class="ui tab segment" data-tab="scheduling">
   {% include_relative include_master_worker/master_worker_multiple.md %}
 </div>
+

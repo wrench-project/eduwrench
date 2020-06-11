@@ -1,18 +1,17 @@
 
-#### Learning objectives
+#### Learning Objectives
 
   - Understand how task- and data-parallelism can be mixed
   - Be able to reason about the performance of programs that include both task- and data-parallelism
 
 ---
 
-
 ### Basic concept
 
-So far in this module we've only considered sequential tasks. In other words, each task can only use
+So far in this module we have only considered sequential tasks. In other words, each task can only use
 a single core.  But in the [Data-Parallelism tab  of the Multicore Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/data-parallelism), we 
 learned about **Data Parallelism**: the notion that a sequential task can be rewritten as a set of
-parallel tasks, with likely a remaining sequential portion of the execution. Then, in that same module,
+parallel tasks, with perhaps a remaining sequential portion of the execution. Then, in that same tab,
 we learned about **Amdahl's Law**, which quantifies the data-parallel task's execution time on a given
 number of cores, given what fraction of the task's work has to remain sequential. You may want to 
 review this content before proceeding. 
@@ -23,7 +22,6 @@ data-parallelism. This is often called "mixed" parallelism.
 
 ### An example
 
-
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow.svg">Example workflow with task- and data-parallelism.</object>
 <div class="caption"><strong>Figure 1:</strong> A simple workflow with some data-parallel tasks ($\alpha$ is the fraction of the work that is non-parallelizable)</div>
 
@@ -31,7 +29,7 @@ Figure 1 above shows an example workflow with both task- and data-parallelism. F
 files and I/O.  The green and red tasks are not data-parallel, and can run only on a single core.  The blue, yellow, and
 green tasks are data-parallel. For each one of these tasks, in addition to its amount of work, we also indicate the value of $\alpha$,
 the fraction of the work that can be parallelized. Based on Amdahl's law, a data-parallel task with
-work $w$ GFlop runs on a $p$-core computer, where core speed is $s$ GFlop/sec, in time:
+work $w$ Gflop runs on a $p$-core computer, where core speed is $s$ Gflop/sec, in time:
 
 $$
 T(p) = \frac{\alpha \times \frac{w}{s}}{p} + (1 - \alpha) \times \frac{w}{s}
@@ -40,7 +38,7 @@ $$
 The above equation just means that the parallelizable portion of the sequential execution time (the left term) is accelerated
 by a factor $p$ when executed in parallel on $p$ cores, while the sequential portion (the right term) remains sequential. 
 
-Say we are running this workflow on a 4-core computer where cores compute at speed 100 GFlop/sec. 
+Say we are running this workflow on a 4-core computer where cores compute at speed 100 Gflop/sec. 
 We could run each of the data-parallel tasks using 4 cores. In this case, here is the execution time of each task:
  
   - Green: $1.00$ sec
@@ -60,26 +58,31 @@ and the purple tasks using 4 cores, for the following task execution times:
   - Purple: $12 \times 0.80 / 4 + 12 \times 0.20 =$ 4.80 sec
   - Red: $1.00$ sec
 
-But now the blue and yellow tasks can run in parallel! So the execution time is:
+But now the blue and yellow tasks can run simultaneously! So the execution time is:
 $1 + 11.5 + 4.80 + 1 = $ 18.30 seconds.   This option isn't as good as the previous one. 
 
 How many options are there? Well, for each of the 3 tasks we have 4 options, so that's $4^3 = 64$ options!!! One 
-(or more) of these options has to be the best one, and one (or more) has to be the worst one. For instance, running all tasks on a single core would waste 1 core of our 4-core computer, and is clearly not as good as running of of the tasks on 2 cores. 
+(or more) of these options has to be the best one, and one (or more) has to be the worst one. For instance, running all tasks on a single core would waste 1 core of our 4-core computer, and is clearly not as good as running some of the tasks on 2 cores. 
 
 
 #### Simulating task- and data-parallelism
 
-The simulation app below makes it possible to simulate the execution of the above example workflow on
-a platform that comprises **two 3-core hosts**. Again, remember that in this tab we ignore all I/O. The app
-allows you to pick how many cores are used for the blue, yellow, and purple tasks. You can use this
-app on your own, but then you should use it to answer the following practice questions.
+The simulation app below makes it possible to simulate the execution of the
+above example workflow on a platform that comprises **two 3-core hosts**.
+Again, remember that in this tab we ignore all I/O. The app allows you to
+pick how many cores are used for the blue, yellow, and purple tasks. The
+execution strategy, when picking tasks to assign to idle cores, always
+picks tasks in the order yellow, blue, purple. But turns out this doesn't
+matter in terms of application performance  (because we have only 3 tasks
+to run on the 2 compute hosts).  You can use this app on your own, but then
+you should use it to answer the following practice questions.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="workflow_task_data_parallelism/" %}
   </div>
 </div>
@@ -96,7 +99,7 @@ your result in simulation
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 With 3 cores, here are the data-parallel task execution times: 
 
   - Blue task: $0.90 \times 10 / 3 + 0.10  \times 10 =$ 4.00 seconds
@@ -122,9 +125,9 @@ the shortest execution time?  Come up with an answer based on your intuition, an
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
-The yellow task has 2000 GFlop work, so, even though its $\alpha$ is not as high as
+The yellow task has 2000 Gflop work, so, even though its $\alpha$ is not as high as
 that of the blue task, we should give it the  3 cores!
 
 The simulation gives us the following total execution times:
@@ -151,7 +154,7 @@ it in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 When using 2 cores, the yellow task will still be the longest task, so it will be
 placed by itself on a host. The blue and purple task will run on the same host.   This is 
@@ -170,7 +173,7 @@ purple task, or the other way around?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 All data-parallel tasks run simultaneously.
 
@@ -198,15 +201,13 @@ Considering the workflow below, answer the following questions.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_task_data_parallelism_workflow_question.svg">Workflow for question.</object>
 
-**[A.3.4.q4.1]** If we are given two hosts with 100 GFlop/sec hosts, where
+**[A.3.4.q4.1]** If we are given two hosts with 100 Gflop/sec hosts, where
 host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
 host1 or on host2 (if our objective is to run the workflow as quickly as
 possible)?
 
-
 **[A.3.4.q4.2]** If, instead, we run the workflow on a single 4-core computer,
 what is the best approach?
-
 
 **[A.3.4.q4.3]** Say now we are running our workflow on a single 40-core
 host. What is the best way to allocate cores to the blue and purple task? If
@@ -217,3 +218,4 @@ to the blue task, and plot this function to find where it attains
 its minimum visually.  There are many web site on which you can do this
 (search for "graphing calculator"). 
 
+---

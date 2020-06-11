@@ -8,8 +8,8 @@
 
 ### RAM Constraints and Parallelism
 
-As seen in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), a task
+As seen in the [Memory tab of the Single Core Computing
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/memory), a task
 may have a sizable amount of data that needs to be loaded and/or generated into 
 RAM so that it can execute. Recall from that module that we do not allow a program to 
 use more memory than available in physical
@@ -25,7 +25,7 @@ entire RAM, thus leaving all remaining cores idle while it executes.
 Because RAM constraints can causes idle time, they can also cause
 loss of parallel efficiency.
 
-### Simulating RAM Constraints
+#### Simulating RAM Constraints
 
 So that you can gain hands-on experience, use the simulation 
 app below.  This app is similar to that in the previous tab,
@@ -34,7 +34,7 @@ Each Task".  So now we can simulate the fact that tasks require RAM space
 to run.  The host we are simulating has 32 GB of RAM available.
 
 First try using 4 cores for 8 tasks, where each task uses 8 GB of RAM.  As
-you will see, there is no idle time with the above situation. The number of
+you will see, there is no idle time. The number of
 tasks we can run at a time is 4, given the number of cores and the amount
 of RAM we have.
 
@@ -59,9 +59,10 @@ constraints.
 **[A.2.p2.1]** You need to execute 5 tasks that each run in 1 second on one
 core.  Your current single-core processor thus can run these tasks in 5
 seconds.  The processor is then upgraded to have 5 cores, each identical in
-processing power to the original single core. If the machine has 8 GB of
-RAM and each task requires 2 GB of RAM to execute, what is the parallel
-efficiency on the new 5-core processor?
+processing power to the original single core. If the machine has 32 GB of
+RAM and each task requires 8 GB of RAM to execute, what is the execution time
+on the new 5-core processor? (You can double-check your answer in simulation.) What
+is the parallel efficiency?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -71,9 +72,12 @@ efficiency on the new 5-core processor?
 On the single-core machine the RAM constraint was not a problem as
 tasks were executed sequentially (there was never a need for more than 2
 GB of RAM). With 5 cores, running all tasks concurrently would
-require 5x2 = 10 GB of RAM, but only 8GB is available. Therefore, we can only run
+require 5x8 = 40 GB of RAM, but only 32 GB is available. Therefore, we can only run
 4 tasks at the same time. So the last task runs by itself, with 4 cores
-being idle. The overall execution time is 2 seconds. Therefore:
+being idle. The overall execution time is 2 seconds.  This is seen
+easily in simulation.
+
+Therefore:
 
 $
 \text{Speedup}(5)  = \frac{5}{2} = 2.5
@@ -120,12 +124,12 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 Another common  cause of idle time is I/O. While a task running on a core performs 
 I/O, the core is (mostly) idle. We learned
-about  this in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing). 
+about  this in the [I/O tab of the Single Core Computing
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io). 
 In a parallel program this can translate to loss  of parallel efficiency.
 
 Let's consider a simple parallel program: 4 tasks that each read in 10 MB
-of input data and then performs 400GFlop of computation.  The 
+of input data and then performs 400Gflop of computation.  The 
 program's tasks, showing input data files, is depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag.svg">I/O parallel program</object>
@@ -133,11 +137,9 @@ program's tasks, showing input data files, is depicted below:
 Example 4-task parallel program with I/IO. </div>
 
 For now, let's consider an execution of this program on a 1-core
-computer with a core that computes at 400 GFlop/sec and  a disk with
+computer with a core that computes at 400 Gflop/sec and  a disk with
 read bandwidth 100 MB/sec (on which the input data files are located). 
-What is the execution time? Based on what we learned about I/O 
-in the [Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing), we
+What is the execution time? Based on what we learned about I/O, we
 should strive to overlap I/O and computation as much as possible.
 For instance, the execution could proceed as follows:
 
@@ -172,8 +174,9 @@ Execution on 4 cores, with staggered I/O. </div>
 
 The execution time is still 8s, so, for this example, the two executions are equivalent. 
 
-Overall, we achieve a parallel speedup of 2 and a parallel efficiency of
-only 50%. And this in spite of have 4 identical tasks and 4 cores.
+Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel efficiency of
+only about 53%. And this in spite of have 4 identical tasks and 4 cores, which,
+without I/O, would be 100% efficiency.
 Increasing the parallel efficiency would require, for instance,  upgrading to a disk with
 higher read bandwidth.
 
@@ -181,11 +184,11 @@ higher read bandwidth.
 
 **[A.2.p2.3]** A parallel program consists of 2 tasks:
 
-  - Task #1 reads 20 MB of input, computes 500 GFlop, writes back 10 MB of output
-  - Task #2 reads 10 MB of input, computes for 200 GFlop, writes back 20 MB of output
+  - Task #1 reads 20 MB of input, computes 500 Gflop, writes back 10 MB of output
+  - Task #2 reads 10 MB of input, computes for 200 Gflop, writes back 20 MB of output
 
 We execute this program on a computer with cores that compute at 
-100 GFlop/sec and with a disk with 100 MB/sec read and write bandwidth. 
+100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
 What is the best parallel speedup  that can be achieved 
 when running on 2 cores? 
@@ -219,8 +222,7 @@ This execution takes 9s, that is, 1 more second!
 You may be wondering what happens if one doesn't stagger the I/O, but instead
 starts reading input files of both tasks at once. In this case, due to
 disk bandwidth sharing, Task #2 starts at time 2 and Task #1 starts at time 3. 
-So here also, the execution takes 9s. You  can try to draw the execution  
-timeline  as an exercise.
+So here also, the execution takes 9s. You  can try to draw the execution timeline  as an exercise.
 
   </div>
 </div>
@@ -241,8 +243,8 @@ you need to execute 6 tasks. The tasks have different RAM requirements (in GB):
 4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency? 
 
 **[A.2.q2.3]** A program consists of 3 tasks that each take in 2 GB of input and
-have 30000 GFlop work. This program is executed on a 2-core computer with
-1 TFlop/sec cores and equipped with a disk with 250 MB/sec read bandwidth. What is
+have 30000 Gflop work. This program is executed on a 2-core computer with
+1 Tflop/sec cores and equipped with a disk with 250 MB/sec read bandwidth. What is
 the parallel  efficiency if the program can never overlap I/O and computation (but
 multiple I/O operations can happen at the same time)? 
 

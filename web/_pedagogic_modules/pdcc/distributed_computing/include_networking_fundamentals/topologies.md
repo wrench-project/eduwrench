@@ -1,15 +1,13 @@
 
-#### Learning objectives:
+#### Learning objectives
 
-  - Understand the concept of network topology
-
-  - Be able to compute end-to-end latencies and bandwidths
-  
-  - Be able to compute end-to-end data transfer times
+- Understand the concept of network topology
+- Be able to compute end-to-end latencies and bandwidths
+- Be able to compute end-to-end data transfer times
 
 ---
 
-#### Network Topologies 
+### Network Topologies 
 
 At an abstract level a network topology is a graph.  The edges of the graph
 are network links with various latencies and bandwidths.  The vertices of
@@ -17,10 +15,11 @@ the graph represent either end-points, i.e., computers connected to the
 network, or routers, i.e., devices that are used to connect network links
 together.  We are abstracting away here many interesting details of how
 network technology makes it possible to implement network topologies. For
-instance, we will not discuss how routers work (see a network textbook for all interesting details).
+instance, we will not discuss how routers work (see a networking course or textbook for 
+all interesting details).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology.svg">topology</object>
-<b>Figure 2:</b> An example network topology that interconnects 5 hosts.
+<b>Figure 1:</b> An example network topology that interconnects 5 hosts.
 
 The figure above shows an example topology with 5 hosts (the end-point vertices), 4
 routers (internal vertices), and 9 network links (the edges). Data communicated on the
@@ -29,20 +28,19 @@ two hosts is the sequence of network links (and routers) that the data traverses
 being communicated from one of the hosts to another. 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_routes.svg">topology with routes</object>
-<b>Figure 1:</b> Two possible routes between host A and host C.
+<b>Figure 2:</b> Two possible routes between host A and host C.
 
 As an example, the figure above shows two possible routes between host A
 and host C. The network configuration, the details of which are outside our
 scope, defines which route is to be taken, for instance the blue
 route.  We will always assume that the routes are static, i.e., data
-flowing from one host to another always traverses the same set of links (in the example above, 
-one of the blue and red routes actually exists). 
+flowing from one host to another always traverses the same set of links. So in the example above, 
+we assume that either the blue route or the red route exists. 
 
-----
 
-#### End-to-end Network Routes
+### End-to-end Network Routes
 
-Consider two hosts connected via a 3-link route, as depicted in Figure 3 below. 
+Consider two hosts connected via a 3-link route, as depicted in the figure below. 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/scenario_1.svg">A three-link route</object>
 <b>Figure 3:</b> An example 3-link route between two hosts.
@@ -51,7 +49,8 @@ In this example, all network links have the same bandwidth, 100 MB/sec.
 When transferring data from host A to host B, this transfer thus experiences
 a bandwidth of 100 MB/sec but a latency of 50 + 100 + 50 = 200 us, that is,
 the **sum of the link latencies**. Remember that in the
-"water in pipes" analogy, the latency is the length of a pipe. And so it
+"water in pipes" analogy in the [{{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/latency-bandwidth](previous tab),
+the latency is the length of a pipe. And so it
 makes sense that the length of a sequence of pipes is the sum of the
 individual pipe lengths. 
 
@@ -87,11 +86,10 @@ T_{100MB} & = 200\;\text{us} + \frac{100\;\text{MB}}{10\;\text{MB/sec}} = 10.000
 \end{align}
 $$
 
-----
 
-#### Putting it all together
+### Putting it all together
 
-Given a route *r*, i.e., a set of network links, and a data transfer of *size* bytes,
+Given a route *r*, i.e., a sequence of connected network links, and a data transfer of *size* bytes,
 the data transfer time through the route is:
 
 $$
@@ -114,13 +112,13 @@ questions, which all pertain to this topology:
 <b>Figure 5:</b> Network topology for practice questions.
 
 
-**[C.p2.1]** What is the latency of the route from host E to host D?
+**[A.3.1.p2.1]** What is the latency of the route from host E to host D?
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The latency is the sum of the link latencies along the route:
 
 $$
@@ -133,13 +131,13 @@ $$
 
 <p> </p>
 
-**[C.p2.2]** What is the bandwidth of the route from host E to host D?
+**[A.3.1.p2.2]** What is the bandwidth of the route from host E to host D?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The bandwidth is the minimum of the link bandwidths along the route:
 
 $$
@@ -152,7 +150,7 @@ $$
 
 <p> </p>
 
-**[C.p2.3]** I am a user sitting at host E and have to download a large file. That file is on a Web site at host A but also on a mirror Web site at host D.  Which mirror should I select?
+**[A.3.1.p2.3]** I am a user sitting at host E and have to download a large file. That file is on a Web site at host A but also on a mirror Web site at host D.  Which mirror should I select?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -169,13 +167,13 @@ $$
 
 <p> </p>
 
-**[C.p2.4]** What is the transfer time for sending 1 MB of data from host E to host D?
+**[A.3.1.p2.4]** What is the transfer time for sending 1 MB of data from host E to host D?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 The data transfer time is:
 
 $$ 
@@ -198,28 +196,28 @@ Answer the following questions, which all pertain to this topology:
 <b>Figure 6:</b> Network topology for questions (lat = "latency"; bw = "bandwidth").
 
 
-**[C.q2.1]** What is the latency of the route from host A to host B?
+**[A.3.1.q2.1]** What is the latency of the route from host A to host B?
 
 <p></p>
-**[C.q2.2]** What is the bandwidth of the route from host C to host D?
+**[A.3.1.q2.2]** What is the bandwidth of the route from host C to host D?
 
 <p></p>
-**[C.q2.3]** How long, in seconds, does it take to transfer 100 MB of
+**[A.3.1.q2.3]** How long, in seconds, does it take to transfer 100 MB of
   data from host A to host D?
 
 <p></p>
-**[C.q2.4]** A lot of users are transferring data from host B to host D,
+**[A.3.1.q2.4]** A lot of users are transferring data from host B to host D,
 thus competing for the bandwidth on that route. Would it help to 
 purchase an upgrade to the link that connects host B to the network?
 
 <p></p>
-**[C.q2.5]** I am sitting at host D and want to download a tiny file that's mirrored at all other hosts. 
+**[A.3.1.q2.5]** I am sitting at host D and want to download a tiny file that's mirrored at all other hosts. 
 From my perspective, does it matter which mirror I pick, and if yes which one should I pick?
 
 <p></p>
-**[C.q2.6]** I am sitting at host D and want to download a huge file
+**[A.3.1.q2.6]** I am sitting at host D and want to download a huge file
 that's mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
 and if yes which one should I pick?
 
 <p></p>
-**[C.q2.7]** Of all the possible routes above, which route has the highest bandwidth?
+**[A.3.1.q2.7]** Of all the possible routes above, which route has the highest bandwidth?

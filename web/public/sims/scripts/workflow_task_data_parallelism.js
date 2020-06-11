@@ -34,7 +34,6 @@ $(function () {
 
         if (num_cores_yellow_input_value >= 1 && num_cores_yellow_input_value <= 3) {
 
-
             num_cores_yellow_label_el.text((num_cores_yellow_input_value).toString() +
                 (num_cores_yellow_input_value == 1 ? " core" : " cores"))
                 .css("background-color", "#d3ffe9");
@@ -61,7 +60,6 @@ $(function () {
 
         if (num_cores_purple_input_value >= 1 && num_cores_purple_input_value <= 3) {
 
-
             num_cores_purple_label_el.text((num_cores_purple_input_value).toString() +
                 (num_cores_purple_input_value == 1 ? " core" : " cores"))
                 .css("background-color", "#d3ffe9");
@@ -74,7 +72,7 @@ $(function () {
                     num_cores_purple_label_el.css("background-color", "");
                 }
             }, 500);
-        } else {w
+        } else {
             num_cores_purple_label_el.css("background-color", "#ffb7b5");
             num_cores_purple_input_el.removeClass("is-valid")
                 .addClass("is-invalid");

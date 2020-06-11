@@ -1,26 +1,24 @@
 
 #### Learning Objectives
 
-- Being able to use simulation to compare master-worker scheduling strategies meaningfully
+- Be able to use simulation to compare master-worker scheduling strategies meaningfully
 
 ----
 
-In the previous tab, you were able to simulate particular master-worker setups
-with different scheduling strategies.  But as we noted, it was  difficult to draw general
+In the previous tab you were able to simulate particular master-worker setups
+with different scheduling strategies.  But it is difficult to draw general
 conclusions from just a few particular test cases. Instead, what we need to do is
 **compare scheduling strategies on many test cases**. 
 
-
-
-### Simulating may test cases
+#### Simulating may test cases
 
 Below is a simulation app that makes is possible to evaluate a scheduling
 strategy on multiple randomly generated scenarios. The app returns the
 minimum, average, and maximum execution times over all these scenarios. 
 This makes it possible to draw some informed conclusions on the relative merit
 of different strategies. But analysis of experimental data is a complicated matter,
-and we're only scratching the surface here.  
-
+and we're only scratching the surface here. To do actual "research", we would
+need a much more comprehensive experimental framework.
 
 The simulation app is a bit more complicated than that in  the previous tab. It allows you to specify:
 
@@ -45,7 +43,6 @@ interesting experiments.
   </div>
 </div>
 
-
 ----- 
 
 #### Practice Questions
@@ -60,7 +57,7 @@ to strengthen (or weaken!) our claims.
 likely to prioritize long tasks. Consider a master-worker setup in which
 workers are all identical (i.e., they are *homogeneous*) and tasks have
 negligible input size but a wide range of work amounts, so that task
-execution times are  in the [1 sec, 10 sec] range.
+execution times on the workers are in the [1 sec, 10 sec] range.
 
 For this setup, let's consider the following strategies:
     
@@ -81,7 +78,7 @@ of experiments" should be at least 30).
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 Based on what was said in previous modules, the highest flop / fastest
 strategy should be best, and  lowest flop / fastest should be worse or
@@ -121,7 +118,7 @@ different when comparing the three strategies in the previous question?
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 
 Setting worker speeds in the range [100, 1000], we obtain:
@@ -130,7 +127,7 @@ Setting worker speeds in the range [100, 1000], we obtain:
   - highest flop / fastest: [1.25 sec : 3.20 sec : 7.12 sec]
   - lowest flop / fastest: [1.53 sec : 3.44 sec : 7.03 sec]
 
-So results are very similar.  It seems that the "highest flop" idea
+Results are very similar.  It seems that the "highest flop" idea
 is a good one even when workers are heterogeneous, provided we pick the 
 fastest workers. 
 
@@ -149,14 +146,14 @@ fastest workers.
 
 Say we still select tasks based on the "highest flop" criterion. Among all
 the available worker selection strategies, which one do you think would work
-best? Confirm your expectation in simulation
+best? Confirm your expectation in simulation:
 
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 
 The "fastest" and "best-connected" strategies only consider one
@@ -188,11 +185,11 @@ results?   Verify your expectation experimentally.
      <i class="dropdown icon"></i>
      (click to see answer)
    </div>
-   <div markdown="1" class="ui segment content">
+   <div markdown="1" class="ui segment content answer-frame">
 
 When there are fewer tasks that workers, it is critical to pick the right
 workers (which the "earliest completion" strategy does very well). But as we add tasks, all workers are
-used to run the first batch of tasks. Then the fastest workers will become
+used to run the first batch of tasks. Then the faster workers will become
 idle first, and used again. So as the number of tasks grows, we would
 expect all strategies to behave more similarly. This is confirmed in
 simulation using 80 tasks and 20 workers:
@@ -204,18 +201,17 @@ simulation using 80 tasks and 20 workers:
 
 The main observation is that random really look as good  as anything
 else now! And in fact, earliest completion is a bit worse!   Welcome
-to the confusing world of scheduling strategies.
+to the confusing world of scheduling.
 
 </div>
 </div>
-
 
 ---
 
 #### Questions 
 
 **[A.3.3.q.2.1]** Create an imbalanced platform in which workers have
-compute speed in some range $[x, 10\times x]$, but have bandwidths
+compute speed in some range $[x, 10\times x]$ but have bandwidths
 in range $[x, 20\times x]$. In other words, the network plays a bigger 
 role than the computation, assuming that tasks have balanced input sizes
 and amounts of work (e.g., both are in range $[x, 5\times x]$). Verify
@@ -227,8 +223,4 @@ well? Confirm your expectation experimentally.
 **[A.3.3.q.2.2]** In  the practice  questions above we did not consider
 the "ratio" worker selection strategies (i.e., the "highest flop/byte" and
 "highest byte/flop" strategies).  Come up with experimental campaigns to
-determine whether these strategies are promising and can outperform
-the other strategies.
-
-
-
+determine whether these strategies are worthwhile.

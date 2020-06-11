@@ -1,11 +1,10 @@
 
-#### Learning objectives
+#### Learning Objectives
 
   - Be able to reason about workflow execution performance on
     distributed multi-host/multi-core platforms
 
 ---
-
 
 ### Executing Workflows on Distributed Platforms
 
@@ -35,17 +34,20 @@ We consider the following distributed platform with *three sites* on a wide-are 
 <div class="caption"><strong>Figure 1:</strong> Example distributed computing platform.</div>
 
 The site in the bottom-left corner is where the user who wishes to execute the
-workflow resides. That user has only some personal computing device, like a laptop computer,
-on which workflow data is not stored and workflow computation is not performed. 
-Instead, all workflow data is stored on a remote storage site (top center), and
-all workflow computation is performed on a remove compute site (top right).  **So workflow
+workflow resides. That user has only some personal computing device, like a laptop computer. 
+No workflow data is stored and no workflow computation is performed  on this computer; it is
+only used to orchestrate the workflow execution remotely. 
+All workflow data is stored on a remote storage site (top center), and
+all workflow computation is performed on a remote compute site (top right).  **So workflow
 data has to flow back and forth between the storage site and the compute site**. This is
 because, for now, the compute site has no persistent storage. 
 
-The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and uses a 100 MB
+The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and uses a 1 MB
 buffer when being accessed remotely (see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). It is
-connected to the compute site via a wire-area network link with 100 MB/sec bandwidth
-and 10 millisecond latency. 
+connected to the compute site via a wide-area network link (in fact it's
+likely a multi-link network path, but let's keep this simple and assume a single link). This link
+has 100 MB/sec bandwidth and 10
+millisecond latency.
 
 Let's now look deeper into the setup of the compute site. This site hosts several
 computers, each of them with some RAM capacity and multiple cores, and each of them
@@ -53,15 +55,15 @@ connected to a switch via a high-speed network link. This setup is depicted
 in the figure below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_distributed_platform_zoom.svg">Distributed platform zoom</object>
-<div class="caption"><strong>Figure 2:</strong>Compute resources at the compute site</div>
+<div class="caption"><strong>Figure 2:</strong> Compute resources at the compute site</div>
 
-Each compute host has 32 GB of RAM, cores that compute at 100  GFlop/sec, and up to 8 of these cores. All
+Each compute host has 32 GB of RAM, cores that compute at 100  Gflop/sec, and up to 8 of these cores. All
 compute hosts are connected to the site's switch via a 10 GB/sec network link with 
 10 micro-second latency. This switch is connected to the storage site via the wide-area link. 
 Therefore, **the network path from the storage resource to each compute host has two links: the 100 MB/sec wide-area link
 and the 10 GB/sec local-area link**.
 
-Say that a task needs to perform 1000 GFlop, 
+Say that a task needs to perform 1000 Gflop, 
 requires 10 GB of RAM, reads in a  200 MB input file, and
 writes back a 10 MB input file.  We can compute a rough estimate of this task's execution
 on one of the compute hosts, assuming that no other task is competing with it, as:
@@ -73,11 +75,11 @@ $$
                             & = 12.1\; \text{sec}
 \end{align}
 $$
-The above assumes that data is read/written from/to the disk at 100 MB/sec,
+
+The above expression assumes that data is read/written from/to the disk at 100 MB/sec,
 the smallest of the disk bandwidth (500 MB/sec) and of the bottleneck link
-bandwidth (100 MB/sec). The above equation is only a rough estimate
-because, as we've seen several time already in these modules, the network
-behavior is more complex than the above equation makes it out to be.  This
+bandwidth (100 MB/sec). It is only a rough estimate
+because it does not account for pipelining and latency, and because, as we've seen several time already in these modules, the network' data transfer rate is often not simply data size divided by bandwidth. This
 is especially true when network latencies are high, which is the case here
 with a 10ms latency on the wide-area link that connects the storage
 resource to the compute resources.  We'll see below how (in)accurate these
@@ -103,7 +105,7 @@ workflow should benefit significantly from parallel execution.
 ### Executing the workflow on the platform
 
 We wish to execute our workflow on our distributed platform. The workflow
-execution strategy is very simple because our workflow has a simple
+execution strategy is straightforward because our workflow has a simple
 structure: whenever there are sufficient compute resources at a compute
 host (i.e., at least one idle core and 8 GB of RAM), start the next
 to-be-executed pre_* task on it. When all pre_* tasks have been executed,
@@ -115,7 +117,7 @@ in the previous tab, a task does not free up its compute resources until its out
 have all been fully written to disk.
 
 
-#### Simulating Execution
+#### Simulating distributed workflow execution
 
 The simulation app below simulates the execution of our workflow on our platform, and allows
 you to pick the
@@ -127,7 +129,7 @@ yourself with this application, but you should then use it for the practice ques
     <i class="dropdown icon"></i>
     (Open simulator here)
   </div>
-  <div markdown="0" class="ui segment content">
+  <div markdown="0" class="ui segment content sim-frame">
     {% include simulator.html src="workflow_distributed/" %}
   </div>
 </div>
@@ -144,9 +146,9 @@ what fraction of the time is spent doing actual computation?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   Running the simulation gives us a total execution time of 299.69 seconds. 
-  In total, the computation consists of 21,000 GFlop to be performed on a 100 GFlop/sec
+  In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
   core. So that's 210 seconds of computation. Therefore, the execution
   spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
   of the execution is disk and network I/O.  
@@ -164,7 +166,7 @@ your expectation in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   In the previous question, we found out that the computation in total takes
   210 seconds. On 2 cores, this should be 110 seconds (since the 
   final task runs by itself). Therefore we'd expect the
@@ -188,7 +190,7 @@ have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 It's better to use 5 4-core hosts because the RAM at each host
 if 32 GB. Therefore, no matter how many  cores a host has
@@ -209,7 +211,7 @@ execution when using 5 4-core compute hosts?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 The speedup is 299.69 / 91.76 = 3.26.  Since we used 20 cores, our parallel
 efficiency is 3.26/20 = 16.33%.   This is pretty low, but expected since
@@ -226,7 +228,7 @@ execution when using a single core? What about when using 5 4-core hosts?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 In total the execution reads and writes 20*(50 + 100 + 100) + 1 = 5001 MB 
 of data. 
@@ -264,9 +266,9 @@ Consider  the following workflow (all green tasks have identical specs, and so d
 
 **[A.3.4.q2.1]**  You can lease three different platforms to execute this workflow:
 
-  - **Platform A:** Two 4-core hosts, each with 8 GB of RAM, and 120 GFlop/sec core compute speed
-  - **Platform B:** Three 6-core hosts, each with 12 GB of RAM, and 50 GFlop/sec core compute speed
-  - **Platform C:** One 3-core hosts, with 16 GB of RAM, and 120 GFlop/sec core compute speed
+  - **Platform A:** Two 4-core hosts, each with 8 GB of RAM, and 120 Gflop/sec core compute speed
+  - **Platform B:** Three 6-core hosts, each with 12 GB of RAM, and 50 Gflop/sec core compute speed
+  - **Platform C:** One 3-core hosts, with 16 GB of RAM, and 120 Gflop/sec core compute speed
   
   Assuming the I/O and network times are zero, which of the three platforms above is the better choice?
 
@@ -275,6 +277,5 @@ Consider  the following workflow (all green tasks have identical specs, and so d
                   total I/O time, regardless of the number of hosts/cores is 20
                   seconds, what is the parallel efficiency for the three platforms in the
                   previous question?
-                  
-                   
-                  
+
+---
