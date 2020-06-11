@@ -22,7 +22,7 @@ RAM is available for a task, this task must wait for currently running
 tasks to complete and free up enough ram. This can cause cores to remain
 idle. The worst possible case would be running a single task that uses the
 entire RAM, thus leaving all remaining cores idle while it executes. 
-Because RAM constraints can causes idle time, they can also cause
+Because RAM constraints can cause idle time, they can also cause
 loss of parallel efficiency.
 
 #### Simulating RAM Constraints
@@ -30,13 +30,13 @@ loss of parallel efficiency.
 So that you can gain hands-on experience, use the simulation 
 app below.  This app is similar to that in the previous tab,
 but now includes a field for specifying the "Ram Needed For
-Each Task".  So now we can simulate the fact that tasks require RAM space
+Each Task".  So now, we can simulate the fact that tasks require RAM space
 to run.  The host we are simulating has 32 GB of RAM available.
 
 First try using 4 cores for 8 tasks, where each task uses 8 GB of RAM.  As
 you will see, there is no idle time. The number of
 tasks we can run at a time is 4, given the number of cores and the amount
-of RAM we have.
+of RAM available.
 
 Now try again, but this time set the tasks' RAM requirement to 16 GB. There will now be
 idle time, as only 2 cores can be utilized simultaneously due to RAM
@@ -70,7 +70,7 @@ is the parallel efficiency?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 On the single-core machine the RAM constraint was not a problem as
-tasks were executed sequentially (there was never a need for more than 2
+tasks were executed sequentially (there was never a need for more than 8
 GB of RAM). With 5 cores, running all tasks concurrently would
 require 5x8 = 40 GB of RAM, but only 32 GB is available. Therefore, we can only run
 4 tasks at the same time. So the last task runs by itself, with 4 cores
@@ -149,11 +149,11 @@ Execution on 1 core. </div>
 
 It takes 1 second to read an input file, and then a task computes for 4
 seconds.  Using overlap of I/O and computation, the execution time is thus
-17 second (only the first file read is not overlapped with computation). This is a great
+17 seconds (only the first file read is not overlapped with computation). This is a great
 utilization of a single core. But what can we gain by  running on multiple cores?
 
 Let's say now that we have 4 cores. One option is for all 4 tasks to start
-at the same time, in which case they all read their input at the same time
+at the same time, in which case they all read their input data at the same time
 from disk. They split the disk bandwidth evenly, and thus it takes 4 seconds
 for each task to read its input.  Then each task computes for 4 seconds on its own core. So
 the program runs for 8 second on the 4 cores. This execution is
@@ -175,8 +175,8 @@ Execution on 4 cores, with staggered I/O. </div>
 The execution time is still 8s, so, for this example, the two executions are equivalent. 
 
 Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel efficiency of
-only about 53%. And this in spite of have 4 identical tasks and 4 cores, which,
-without I/O, would be 100% efficiency.
+only about 53%. And this is in spite of having 4 identical tasks and 4 cores, which,
+without I/O, would be 100% efficient.
 Increasing the parallel efficiency would require, for instance,  upgrading to a disk with
 higher read bandwidth.
 
@@ -219,7 +219,7 @@ Task #2) will start, and thus finish, later. Here is the execution:
 
 This execution takes 9s, that is, 1 more second!
 
-You may be wondering what happens if one doesn't stagger the I/O, but instead
+You may be wondering what happens if one does not stagger the I/O, but instead
 starts reading input files of both tasks at once. In this case, due to
 disk bandwidth sharing, Task #2 starts at time 2 and Task #1 starts at time 3. 
 So here also, the execution takes 9s. You  can try to draw the execution timeline  as an exercise.
@@ -228,7 +228,6 @@ So here also, the execution takes 9s. You  can try to draw the execution timelin
 </div>
 
 <p></p>
-
 
 ---
 
@@ -242,8 +241,8 @@ each task requires 20 GB of RAM?
 you need to execute 6 tasks. The tasks have different RAM requirements (in GB): 
 4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency? 
 
-**[A.2.q2.3]** A program consists of 3 tasks that each take in 2 GB of input and
-have 30000 Gflop work. This program is executed on a 2-core computer with
+**[A.2.q2.3]** A program consists of 3 tasks that each takes in 2 GB of input data and
+have 30,000 Gflop work. This program is executed on a 2-core computer with
 1 Tflop/sec cores and equipped with a disk with 250 MB/sec read bandwidth. What is
 the parallel  efficiency if the program can never overlap I/O and computation (but
 multiple I/O operations can happen at the same time)? 
