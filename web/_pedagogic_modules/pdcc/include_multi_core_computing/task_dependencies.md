@@ -6,7 +6,7 @@
 
 ---
 
-#### Basic concept
+#### Basic Concept
 
 So far, we have only considered *independent* tasks in our parallel programs,
 i.e., tasks that can be executed in any order and concurrently. In other
@@ -116,7 +116,7 @@ The following practice questions are based on this simulation app.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   The sequential program's execution on 1 core, *T(1)*, is simply the sum
   of individual task execution times,
 
@@ -149,7 +149,7 @@ You can double-check your answer in simulation.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
   
 This is a very similar question as the previous one. The sequential
 execution time is 126 seconds, and the execution time on 3 cores is still 
@@ -173,7 +173,7 @@ and/or intuition first.
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Let's first do a purely analytical solution. 
 Let $x$ be the work of the "analyze" task in Gflop. The sequential execution 
@@ -204,7 +204,7 @@ common-sense answer.
 The parallel efficiency is maximized when all three paths take
 time as close as possible as the longest such path, so as have
   cores working as much  as possible. This is the same  *load balancing*
-idea that we've seen in the
+idea that we have seen in the
 [Parallelism tab]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/parallelism)
 for independent tasks!
 This is achieved when the analysis
@@ -218,7 +218,7 @@ For $x = 300$ the efficiency is 84.05%, which is the best this program can ever 
 
 <p></p>
 
-### Levels, Width, Critical Path
+#### Levels, Width, Critical Path
 
 In the previous section, and the practice questions, we touched upon some
 fundamental concepts without naming them explicitly. Let's do so now.
@@ -279,7 +279,7 @@ length of the critical path in seconds (name and execution time are shown for ea
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
   - Number of levels: 4
   - Width: 3 (level 3 has 3 tasks: G, E, and F)
@@ -302,7 +302,7 @@ modify one edge's end point to increase the DAG width?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Here is  the set of DAG levels:
 
@@ -319,7 +319,7 @@ Here is  the set of DAG levels:
 It would never be useful to use more than  3 cores  because the width of the DAG is 3  (level 2). The DAG's
 critical path is  {A->B->D->G->H}, which has length 28s. So yes, the execution (on 3 cores) could be lower than 29s. 
 
-Replacing the D->G edge by a D->H edge would would make the DAG width 4 (i.e., level 2  would have 4 tasks in it). 
+Replacing the D->G edge by a D->H edge would make the DAG width 4 (i.e., level 2  would have 4 tasks in it). 
   </div>
 </div>
 
@@ -329,7 +329,7 @@ Replacing the D->G edge by a D->H edge would would make the DAG width 4 (i.e., l
 ### Choosing which task to run next
 
 In our example dataset analysis program, there was never a *choice* for deciding which task
-to run next. First we have to run "start". Then, we have three tasks that are
+to run next. First, we have to run "start". Then, we have three tasks that are
 **ready**, that is, whose parents have all executed. Since we have 3 cores, we run
 all three, each on one core.  In other words, since we have 3 paths in the DAG and
 3 cores, we just run each path on its own core. 
@@ -346,11 +346,11 @@ and only 2 cores. Say we run "analyze" and "stats". If "analyze" completes befor
 then we have another choice: 
 should we run "viz" or "summarize"? It turns out that some of these choices are better
 than others. In this small example the "bad" choices are not terrible, but for larger
-DAGs they  could lead to an large performance loss. 
+DAGs they  could lead to a large performance loss. 
  
 There are some rules of thumb for selecting ready tasks. 
 A good and popular one is: Whenever there is a choice **pick the task that is 
-on  the  critical path.** After all it's critical. But this is not guaranteed to
+on  the  critical path.** After all it is critical. But this is not guaranteed to
 be always best. It just happens to work well for many DAGs.
 
 #### Simulating Execution on a 2-core Computer
@@ -385,7 +385,7 @@ be prioritized? Can you venture an explanation?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 
 Yes, it does matter! Not prioritizing the statistics path is a mistake.
 This is because the statistics path is the critical path. Not counting the
@@ -420,7 +420,7 @@ prioritization options? Can  you explain why the results are as they are?
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 All three prioritization schemes give a 76 second execution time. In other words,
 path prioritization does not matter. With a 300 Gflop work for the "analyze" task,
 the visualization path takes 30 seconds, and both the analysis and the statistics
@@ -442,8 +442,8 @@ overall, the execution will always be 5 + 70 + 1 = 76s.
 
 
 **[A.2.p3.8]** Is it possible that, for some  amount of work of  the "analyze"  task,
-all three different prioritizing options lead to three different execution times  
-(when executing the program on 2 cores)?  Although you may have a rapid intuition
+all three different prioritizing options lead to three different execution times (when 
+executing the program on 2 cores)?  Although you may have a rapid intuition
 of whether the answer is yes or no, deriving a convincing argument is not that easy...
 
 <div class="ui accordion fluid">
@@ -451,7 +451,7 @@ of whether the answer is yes or no, deriving a convincing argument is not that e
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 This is perhaps not an easy question, as it requires to think about this abstractly
 (so as to avoid examining all possibilities). The answer is "no". Let's see
 why.
@@ -474,7 +474,7 @@ for each option that prioritizes two of them:
 The two prioritized things start first. Then the third thing runs on the core that
 becomes idle first (i.e., the core that  was running the shortest thing). 
 
-We  note that in the table above, the 2nd and 3rd row are identical. That is, the cores
+We  note that in the table above, the 2nd and 3rd rows are identical. That is, the cores
 finish computing at the same time.  The only  thing that changes is the order in which
 things run on core #1 ("$A$ then $B$" or  "$B$ then $A$"). 
 Therefore, two of the prioritization options always produce the same outcome in  terms
