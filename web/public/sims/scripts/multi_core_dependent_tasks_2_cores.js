@@ -6,7 +6,7 @@ $(function () {
         let analyze_work_input_value = parseInt(analyze_work_input_el.val());
         let analyze_work_label_el = $(".analyze-work-label");
 
-        if (analyze_work_input_value >= 1 && analyze_work_input_value < 1000) {
+        if (analyze_work_input_value >= 10 && analyze_work_input_value < 1000) {
 
             analyze_work_label_el.text(analyze_work_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
@@ -19,7 +19,7 @@ $(function () {
                     analyze_work_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if (analyze_work_input_value >= 1000 && analyze_work_input_value < 1000000) {
+        } else if (analyze_work_input_value < 10000) {
             analyze_work_label_el.text(analyze_work_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
@@ -33,7 +33,7 @@ $(function () {
             }, 500);
         } else {
             analyze_work_label_el.css("background-color", "#ffb7b5");
-            analyze_work_input_value.removeClass("is-valid")
+            analyze_work_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });
