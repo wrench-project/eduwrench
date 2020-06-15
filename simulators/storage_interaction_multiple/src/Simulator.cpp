@@ -219,10 +219,10 @@ int main(int argc, char **argv) {
         auto np_service = simulation.add(new wrench::NetworkProximityService(SERVICES, HOST_LIST,
                 {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD, "1"}}, {}));
         auto wms = simulation.add(
-                new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services, SERVICES));
+                new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services, CLIENT));
         wms->addWorkflow(&workflow);
     } else {
-        auto wms = simulation.add(new wrench::ActivityWMS(file_registry_ptr, {}, storage_services, SERVICES));
+        auto wms = simulation.add(new wrench::ActivityWMS(file_registry_ptr, {}, storage_services, CLIENT));
         wms->addWorkflow(&workflow);
     }
 
