@@ -168,8 +168,11 @@ int main(int argc, char **argv) {
                 throw std::invalid_argument("invalid number of arguments");
             }
 
+            srand(time(0));
+
             for (int i = 1; i <= NUM_SERVER; ++i) {
                 SERVER_LINK_BANDWIDTH[i - 1] = rand() % 50 + 1;
+                std::cerr << SERVER_LINK_BANDWIDTH[i - 1] << std::endl;
                 HOST_LIST.push_back("ServerHost_" + std::to_string(i));
             }
         }
@@ -210,16 +213,19 @@ int main(int argc, char **argv) {
     }
 
     std::cerr << "Instantiating WMS and File Registry..." << std::endl;
-    auto file_registry = new wrench::FileRegistryService(SERVICES);
+    auto file_registry = new wrench::FileRegistryService(SERVICES, {}, {});
     auto file_registry_ptr = simulation.add(file_registry);
 
     if (USE_NPS) {
         std::cerr << "Instantiating network proximity service..." << std::endl;
         HOST_LIST.push_back(CLIENT);
         auto np_service = simulation.add(new wrench::NetworkProximityService(SERVICES, HOST_LIST,
-                {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD, "1"}}, {}));
+                {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD,
+                      "1"},{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_SERVICE_TYPE,
+                        "VIVALDI"}}, {}));
         auto wms = simulation.add(
-                new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services, CLIENT));
+                new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services,
+                                         CLIENT));
         wms->addWorkflow(&workflow);
     } else {
         auto wms = simulation.add(new wrench::ActivityWMS(file_registry_ptr, {}, storage_services, CLIENT));

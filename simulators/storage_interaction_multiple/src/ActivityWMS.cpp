@@ -54,6 +54,19 @@ namespace wrench {
             }
         }
 
+
+
+        for (const auto &storage_service : server_storage_services) {
+            WRENCH_INFO("Sending the file over to the server running on host %s",
+                        storage_service->getHostname().c_str());
+            data_manager->doSynchronousFileCopy(input_file,
+                                                FileLocation::LOCATION(client_storage_service),
+                                                FileLocation::LOCATION(storage_service),
+                                                file_registry);
+        }
+
+        file_registry->removeEntry(input_file, FileLocation::LOCATION(client_storage_service));
+
         if (use_nps) {
             // using network proximity service
             WRENCH_INFO("Using Network Proximity Service to find closest storage unit...");
@@ -62,40 +75,31 @@ namespace wrench {
             double min_distance = DBL_MAX;
 
             for (const auto &storage_service : server_storage_services) {
-                double proximity = np_service->getHostPairDistance(
-                        {"ClientHost", storage_service->getHostname()}).first;
-                if (proximity < min_distance) {
-                    min_distance = proximity;
-                    chosen_storage_service = storage_service;
+                if (storage_service->getHostname() != "ClientHost") {
+                    double proximity = np_service->getHostPairDistance(
+                            {"ClientHost", storage_service->getHostname()}).first;
+                    //std::cerr << proximity <<  std::endl;
+                    if (proximity < min_distance) {
+                        min_distance = proximity;
+                        chosen_storage_service = storage_service;
+                    }
                 }
             }
         }
-
-        WRENCH_INFO("Sending the file over to the server running on host %s",
-                    chosen_storage_service->getHostname().c_str());
-        data_manager->doSynchronousFileCopy(input_file,
-                                            FileLocation::LOCATION(client_storage_service),
-                                            FileLocation::LOCATION(chosen_storage_service),
-                                            file_registry);
 
         //Copy from chosen server storage back to client
         WRENCH_INFO("Sending the file over to the client running on host %s",
                     client_storage_service->getHostname().c_str());
 
-        if (use_nps) {
+        /*if (use_nps) {
             // using network proximity service
             WRENCH_INFO("Using Network Proximity Service to find closest storage unit...");
             auto entries = file_registry->lookupEntry(input_file, "ClientHost", *np_services.begin());
             chosen_storage_service = entries.begin()->second->getStorageService();
+        }*/
 
-//            // WRENCH_INFO("Choosing file from storage running on host %s", *(entries.begin())->getStorageService()->getHostname().c_str());
-//            data_manager->doSynchronousFileCopy(input_file,
-//                                                entries.begin()->second,
-//                                                FileLocation::LOCATION(client_storage_service),
-//                                                file_registry);
-        }
-
-        WRENCH_INFO("Receiving from chosen storage service...");
+        WRENCH_INFO("Receiving from chosen storage service on host %s", chosen_storage_service->getHostname
+        ().c_str());
         data_manager->doSynchronousFileCopy(input_file,
                                             FileLocation::LOCATION(chosen_storage_service),
                                             FileLocation::LOCATION(client_storage_service),
