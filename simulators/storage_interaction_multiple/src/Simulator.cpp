@@ -169,7 +169,7 @@ int main(int argc, char **argv) {
             }
 
             for (int i = 1; i <= NUM_SERVER; ++i) {
-                SERVER_LINK_BANDWIDTH[i] = rand() % 50;
+                SERVER_LINK_BANDWIDTH[i - 1] = rand() % 50 + 1;
                 HOST_LIST.push_back("ServerHost_" + std::to_string(i));
             }
         }
