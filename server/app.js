@@ -1391,7 +1391,8 @@ app.post("/run/storage_service", authCheck, function (req, res) {
 
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
-    // TODO: Add other parameters for the simulator
+    const BANDWIDTH = req.body.bandwidth;
+    const FILE_SIZE = req.body.fileSize;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     // const LOGGING = [
@@ -1405,7 +1406,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
         "--wrench-full-log"
     ]
 
-    const SIMULATION_ARGS = [].concat(LOGGING); // TODO: add simulation parameters
+    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE].concat(LOGGING); // TODO: add simulation parameters
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -1428,7 +1429,9 @@ app.post("/run/storage_service", authCheck, function (req, res) {
             "user": USERNAME,
             "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-            "activity": "storage_service"
+            "activity": "storage_service",
+            "bandwidth": BANDWIDTH,
+            "file_size": FILE_SIZE
         });
 
         /**
@@ -1459,7 +1462,8 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
 
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
-    // TODO: Add other parameters for the simulator
+    const USE_NPS = req.body.useNPS;
+    const NUM_SERVERS = req.body.numServers;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     // const LOGGING = [
@@ -1473,7 +1477,16 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
         "--wrench-full-log"
     ]
 
-    const SIMULATION_ARGS = [].concat(LOGGING); // TODO: add simulation parameters
+    if(USE_NPS == 'f') {
+      const CHOSEN_SERVER = req.body.chosenServer;
+      const BANDWIDTHS = req.body.bandwidths;
+      const SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, CHOSEN_SERVER, BANDWIDTHS].concat(LOGGING);
+    } else {
+      const CHOSEN_SERVER = "";
+      const BANDWIDTHS = "";
+      const SIMULATION_ARGS = [USE_NPS, NUM_SERVERS].concat(LOGGING);
+    }
+
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -1496,7 +1509,11 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
             "user": USERNAME,
             "email": EMAIL,
             "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-            "activity": "storage_service_multiple"
+            "activity": "storage_service_multiple",
+            "use_nps": USE_NPS,
+            "num_servers": NUM_SERVERS,
+            "chosen_server": CHOSEN_SERVER,
+            "bandwidths": BANDWIDTHS
         });
 
         /**

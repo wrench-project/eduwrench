@@ -6,13 +6,78 @@ permalink: simulations/storage_service_multiple/
 
 {% include partials/simulation_parameters_form_start.html %}
 
-<div class="form-group col-md-6">
-    <label for="example-input">Example input text</label>
-    <input class="form-control" type="number" id="example-input" placeholder="" value="10" min="1" max="10000" step="1"
-           required>
-    <div class="invalid-feedback">
-        Error message.
+<div class="grouped fields col-md-6">
+    <label>Use Network Proximity Service?</label>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-select" id="nps-select" value="t" checked>
+            <label class="radio-inline control-label" for="nps-select">
+                Yes
+            </label>
+        </div>
     </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-select" id="nps-select" value="f">
+            <label class="radio-inline control-label" for="nps-select">
+                No
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="grouped fields col-md-6">
+    <label>How many servers?</label>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-num-server" id="nps-num-server" value="1">
+            <label class="radio-inline control-label" for="nps-num-server">
+                1
+            </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-num-server" id="nps-num-server" value="2">
+            <label class="radio-inline control-label" for="nps-num-server">
+                2
+            </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-num-server" id="nps-num-server" value="3">
+            <label class="radio-inline control-label" for="nps-num-server">
+                3
+            </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-num-server" id="nps-num-server" value="4">
+            <label class="radio-inline control-label" for="nps-num-select">
+                4
+            </label>
+        </div>
+    </div>
+    <div class="field">
+        <div class="ui radio checkbox">
+            <input type="radio" name="nps-num-server" id="nps-num-server" value="5">
+            <label class="radio-inline control-label" for="nps-num-server">
+               5
+            </label>
+        </div>
+    </div>
+</div>
+
+<div class="grouped fields col-md-6">
+    <div id="generate-servers">
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+  <div id="generate-servers-input">
+  </div>
 </div>
 
 {% include partials/simulation_parameters_form_end.html %}

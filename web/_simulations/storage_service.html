@@ -7,11 +7,16 @@ permalink: simulations/storage_service/
 {% include partials/simulation_parameters_form_start.html %}
 
 <div class="form-group col-md-6">
-    <label for="example-input">Example input text</label>
-    <input class="form-control" type="number" id="example-input" placeholder="" value="10" min="1" max="10000" step="1"
+    <label for="bandwidth-input">Enter bandwidth</label>
+    <input class="form-control" type="number" id="bandwidth-input" placeholder="" value="10" min="1" max="10000" step="1"
            required>
+</div>
+<div class="form-group col-md-6">
+    <label for="filesize-input">Enter file size</label>
+    <input class="form-control" type="number" id="filesize-input" placeholder="" value="10" min="1" max="10000" step="1"
+    required>
     <div class="invalid-feedback">
-        Error message.
+        Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
 </div>
 

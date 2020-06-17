@@ -24,9 +24,10 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    // TODO: add parameters collected from the web form
                     userName: userName,
-                    email: email
+                    email: email,
+                    bandwidth: $("#bandwidth-input").val(),
+                    fileSize: $("#filesize-input").val()
                 }),
 
             success: function(response) {
