@@ -1384,9 +1384,9 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 
 // execute activity storage service simulation route
 app.post("/run/storage_service", authCheck, function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_multiple/");
+    const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
 
-    const SIMULATOR = "storage_multiple_simulator";
+    const SIMULATOR = "storage_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
     const USERNAME = req.body.userName;
@@ -1447,7 +1447,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+            //"task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });
@@ -1460,10 +1460,15 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
     const SIMULATOR = "storage_multiple_simulator";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
+    var SIMULATION_ARGS;
+    var CHOSEN_SERVER = "";
+    var BANDWIDTHS = [req.body.bandwidth1, req.body.bandwidth2, req.body.bandwidth3, req.body.bandwidth4, req.body.bandwidth5];
+    var USE_VIVALDI = "";
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
     const USE_NPS = req.body.useNPS;
     const NUM_SERVERS = req.body.numServers;
+
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     // const LOGGING = [
@@ -1477,14 +1482,23 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
         "--wrench-full-log"
     ]
 
+
+    console.log(USE_NPS);
+
     if(USE_NPS == 'f') {
       const CHOSEN_SERVER = req.body.chosenServer;
-      const BANDWIDTHS = req.body.bandwidths;
-      const SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, CHOSEN_SERVER, BANDWIDTHS].concat(LOGGING);
+
+      SIMULATION_ARGS  = [USE_NPS, NUM_SERVERS, CHOSEN_SERVER];
+
+      for (var i = 0; i < NUM_SERVERS; ++i) {
+        SIMULATION_ARGS.push(BANDWIDTHS[i]);
+      }
+
+      SIMULATION_ARGS.push(LOGGING);
     } else {
-      const CHOSEN_SERVER = "";
-      const BANDWIDTHS = "";
-      const SIMULATION_ARGS = [USE_NPS, NUM_SERVERS].concat(LOGGING);
+      const USE_VIVALDI = req.body.useVivaldi;
+
+      SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, USE_VIVALDI].concat(LOGGING);
     }
 
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
@@ -1529,7 +1543,6 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });

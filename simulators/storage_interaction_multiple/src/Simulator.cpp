@@ -103,7 +103,7 @@ void generatePlatform(std::string platform_file_path, int num_servers, int link_
 
     if (xml_doc.load_string(xml_string.c_str(), pugi::parse_doctype)) {
         xml_doc.save_file(platform_file_path.c_str());
-        xml_doc.save(std::cerr);
+        //xml_doc.save(std::cerr);
     } else {
         throw std::runtime_error("something went wrong with parsing xml string");
     }
@@ -120,6 +120,8 @@ int main(int argc, char **argv) {
     simulation.init(&argc, argv);
 
     bool USE_NPS;
+    bool USE_VIVALDI;
+    std::string NPS_TYPE = "ALLTOALL";
     int FILE_SIZE = 10000000;
     int NUM_SERVER;
     int SERVER_TO_DOWNLOAD = 0;
@@ -132,7 +134,6 @@ int main(int argc, char **argv) {
 
     try {
         USE_NPS = char(tolower(*argv[1])) == 't';
-//        std::cerr << USE_NPS;
 
         NUM_SERVER = std::stoi(std::string(argv[2]));
         if (NUM_SERVER < 1 || NUM_SERVER > 5) {
@@ -150,7 +151,7 @@ int main(int argc, char **argv) {
                 throw std::invalid_argument("invalid storage service chosen");
             }
 
-            if (argc != NUM_SERVER + 4) {
+            if (argc != NUM_SERVER + 5) {
                 throw std::invalid_argument("invalid number of arguments");
             }
 
@@ -164,22 +165,25 @@ int main(int argc, char **argv) {
                 }
             }
         } else {
-            if (argc != 3) {
+            if (argc != 4) {
                 throw std::invalid_argument("invalid number of arguments");
             }
+
+            USE_VIVALDI = char(tolower(*argv[3])) == 't';
 
             srand(time(0));
 
             for (int i = 1; i <= NUM_SERVER; ++i) {
                 SERVER_LINK_BANDWIDTH[i - 1] = rand() % 50 + 1;
-                std::cerr << SERVER_LINK_BANDWIDTH[i - 1] << std::endl;
                 HOST_LIST.push_back("ServerHost_" + std::to_string(i));
             }
         }
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Usage: " << argv[0]
-                  << " <use_nps? t or f> <number_of_servers> <server_to_download_from> <server_1_bandwidth> <server_2_bandwidth> <server_3_bandwidth> <server_4_bandwidth> <server_5_bandwidth>"
+                  << " <use_nps? t or f>  <number_of_servers> <use_vivaldi? t or f>"
+                     "<server_to_download_from> "
+                     "<server_1_bandwidth> <server_2_bandwidth> <server_3_bandwidth> <server_4_bandwidth> <server_5_bandwidth>"
                   << std::endl;
         std::cerr << "   server_link_bandwidth: Bandwidth must be in range [1,1000000] MBps" << std::endl;
         std::cerr << "" << std::endl;
@@ -189,6 +193,7 @@ int main(int argc, char **argv) {
     // create workflow
     wrench::Workflow workflow;
     workflow.addFile("file_copy", FILE_SIZE);
+
 
     std::cerr << "Instantiating platform..." << std::endl;
     // read and instantiate the platform with the desired HPC specifications
@@ -216,13 +221,17 @@ int main(int argc, char **argv) {
     auto file_registry = new wrench::FileRegistryService(SERVICES, {}, {});
     auto file_registry_ptr = simulation.add(file_registry);
 
+    if (USE_VIVALDI) {
+        NPS_TYPE = "VIVALDI";
+    }
+
     if (USE_NPS) {
         std::cerr << "Instantiating network proximity service..." << std::endl;
         HOST_LIST.push_back(CLIENT);
         auto np_service = simulation.add(new wrench::NetworkProximityService(SERVICES, HOST_LIST,
                 {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD,
                       "1"},{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_SERVICE_TYPE,
-                        "VIVALDI"}}, {}));
+                        NPS_TYPE}}, {}));
         auto wms = simulation.add(
                 new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services,
                                          CLIENT));
@@ -235,7 +244,6 @@ int main(int argc, char **argv) {
     std::cerr << "Staging task input files..." << std::endl;
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
-
     std::cerr << "Launching Simulation..." << std::endl;
     simulation.launch();
 

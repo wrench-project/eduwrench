@@ -1,12 +1,14 @@
 $(document).ready(function() {
   $('input[name="nps-select"]').click(function() {
     if($(this).val() == 'f') {
+        $('#vivaldi-select').hide();
         $('#generate-servers').show();
         $('#generate-servers-input').show();
         generate();
       }
 
     else {
+        $('#vivaldi-select').show();
         $('#generate-servers').hide();
         $('#generate-servers-input').hide();
       }
@@ -29,8 +31,8 @@ $(document).ready(function() {
                       "</div>" +
                     "</div>";
 
-        input += "<label for=\"server-" + i + "-link\">Link Speed to Server #" + i + " (MBps)</label>" +
-                  "<input name=\"bandwidth\" class=\"form-control\" type=\"number\" id=\"server-" + i + "-link\" placeholder=\"\" value=\"10\" min=\"1\" max=\"10000\" step=\"1\" required>" +
+        input += "<label for=\"bandwidth" + i + "\">Link Speed to Server #" + i + " (MBps)</label>" +
+                  "<input name=\"bandwidth" + i + "\" class=\"form-control\" type=\"number\" id=\"bandwidth" + i + "\" placeholder=\"\" value=\"10\" min=\"1\" max=\"10000\" step=\"1\" required>" +
                   "<div class=\"invalid-feedback\">" +
                   "Please provide the link speed from the Client to Server #1 in MBps." +
                   "</div>";
@@ -57,27 +59,19 @@ $(function() {
         let userName = localStorage.getItem("userName");
         let email = localStorage.getItem("email");
 
-        var numServers = $("#nps-num-server").val();
-
         var formInput = {
             userName: userName,
             email: email,
-            useNPS: $("#nps-select").val(),
-            numServers: numServers
+            useVivaldi: $("input[name*='vivaldi-select']:checked").val(),
+            useNPS: $("input[name*='nps-select']:checked").val(),
+            chosenServer: $("input[name*='nps-select-server']:checked").val(),
+            numServers: $("input[name*='nps-num-server']:checked").val(),
+            bandwidth1: $("#bandwidth1").val(),
+            bandwidth2: $("#bandwidth2").val(),
+            bandwidth3: $("#bandwidth3").val(),
+            bandwidth4: $("#bandwidth4").val(),
+            bandwidth5: $("#bandwidth5").val(),
         };
-
-        if($('#nps-select').val() == 'f') {
-          var bandwidthString = "";
-          for (var i = 1; i <= numServers; ++i) {
-            bandwidthString += $("#server-" + i + "-link").val();
-            if (i != numServers) bandwidthString += " ";
-          }
-
-          formInput.push({
-            chosenServer: $("#nps-select-server").val(),
-            bandwidths: bandwidthString
-          });
-        }
 
 
         // Upon submission of the form, a POST request containing the user's desired parameters

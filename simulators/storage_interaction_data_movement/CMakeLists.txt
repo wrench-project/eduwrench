@@ -22,8 +22,8 @@ find_library(WRENCH_LIBRARY NAMES libwrench.a wrench)
 find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
-add_executable(client_server_simulator ${SOURCE_FILES})
-target_link_libraries(client_server_simulator
+add_executable(storage_simulator ${SOURCE_FILES})
+target_link_libraries(storage_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}
         ${PUGIXML_LIBRARY}

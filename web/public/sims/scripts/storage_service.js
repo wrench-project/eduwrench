@@ -36,6 +36,7 @@ $(function() {
                 $("#simulation-output").empty().append(response.simulation_output);
 
                 console.log(response.task_data.workflow_execution.tasks);
+                console.log(formInput);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

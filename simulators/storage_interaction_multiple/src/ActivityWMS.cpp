@@ -41,6 +41,7 @@ namespace wrench {
         std::shared_ptr<StorageService> chosen_storage_service;
         std::vector<std::shared_ptr<StorageService>> server_storage_services;
 
+        //load storage services into the vector
         for (const auto &storage_service : this->getAvailableStorageServices()) {
             if (storage_service->getHostname() == "ClientHost") {
                 client_storage_service = storage_service;
@@ -54,8 +55,6 @@ namespace wrench {
             }
         }
 
-
-
         for (const auto &storage_service : server_storage_services) {
             WRENCH_INFO("Sending the file over to the server running on host %s",
                         storage_service->getHostname().c_str());
@@ -66,19 +65,21 @@ namespace wrench {
         }
 
         file_registry->removeEntry(input_file, FileLocation::LOCATION(client_storage_service));
-
         if (use_nps) {
+            WRENCH_INFO("Sleep for 1 minute so NPS has time to ping and find proximity");
+            Simulation::sleep(60.0);
+
             // using network proximity service
             WRENCH_INFO("Using Network Proximity Service to find closest storage unit...");
             auto np_service = *np_services.begin();
             chosen_storage_service = *server_storage_services.begin();
             double min_distance = DBL_MAX;
 
+            //find minimal distance between the storage service and client host
             for (const auto &storage_service : server_storage_services) {
                 if (storage_service->getHostname() != "ClientHost") {
                     double proximity = np_service->getHostPairDistance(
                             {"ClientHost", storage_service->getHostname()}).first;
-                    //std::cerr << proximity <<  std::endl;
                     if (proximity < min_distance) {
                         min_distance = proximity;
                         chosen_storage_service = storage_service;
