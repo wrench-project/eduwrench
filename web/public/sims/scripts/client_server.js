@@ -81,6 +81,10 @@ $(function() {
 
                 // console.log(response.task_data.workflow_execution.tasks);
 
+                let executionData = response.task_data.workflow_execution;
+                // generateGanttChart(executionData);
+                // generateHostUtilizationChart(executionData);
+
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);

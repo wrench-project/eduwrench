@@ -18,8 +18,8 @@ $(function () {
         // Fix the task spec so that the output is set to zero
         // console.log("ORIGINAL TASK SPEC: " + $("#task-specs").val());
         let fixed_task_specs = "";
-        let tokens =$("#task-specs").val().split(",");
-        for (let i =0; i < tokens.length; i++) {
+        let tokens = $("#task-specs").val().split(",");
+        for (let i = 0; i < tokens.length; i++) {
             fixed_task_specs += tokens[i] + " 0";
             if (i < tokens.length - 1) {
                 fixed_task_specs += ",";
@@ -61,12 +61,16 @@ $(function () {
                 }),
 
             success: function (response) {
-                if(invocation_value==1) {
+                if (invocation_value == 1) {
                     $("#simulation-output").empty().append(response.simulation_output);
 
+                    let executionData = response.task_data.workflow_execution;
+                    generateGanttChart(executionData);
+                    generateHostUtilizationChart(executionData);
+
                     let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                    generateGraph(prepared_data, "taskView", 900, 500);
-                    generateHostUtilizationGraph(prepared_data, 900, 300, 60);
+                    // generateGraph(prepared_data, "taskView", 900, 500);
+                    // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                     populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                         "task-details-table-td");
                 } else {
