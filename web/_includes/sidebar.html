@@ -17,12 +17,12 @@
 
     <div class="terms">
         <ul id="wordList" class="">
-            {% assign glossary_items = site.data.glossary | sort:"term" %}
+            {% assign glossary_items = site.data.glossary | sort_natural: "term" %}
             {% for word in glossary_items %}
             <li class="m-2 pt-2 pb-2">
                 <div class="termBox mr-4 p-3">
                     <div class="accordion-head">
-                        <h4 class="term">{{ word.term | capitalize}}
+                        <h4 class="term">{{ word.term }}
 <!--                            <span class="plusminus pr-2">+</span>-->
                         </h4></div>
                     <div class="accordion-body mt-2">
