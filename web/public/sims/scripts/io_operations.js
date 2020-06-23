@@ -142,7 +142,7 @@ $(function () {
                     task_output: $("#task-output").val(),
                     num_tasks: $("#num-tasks").val(),
                     task_gflop: $("#task-gflop").val(),
-                    io_overlap: $('#io-overlap').is(':checked') ? true : false,
+                    io_overlap: !!$('#io-overlap').is(':checked'),
                     userName: userName,
                     email: email
                 }),
@@ -151,11 +151,13 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                // console.log(response.task_data.workflow_execution.tasks);
+                let executionData = response.task_data.workflow_execution;
+                generateGanttChart(executionData);
+                generateHostUtilizationChart(executionData);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                generateGraph(prepared_data, "taskView", 900, 500);
-                generateHostUtilizationGraph(prepared_data, 900, 300, 60);
+                // generateGraph(prepared_data, "taskView", 900, 500);
+                // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                     "task-details-table-td");
             }
