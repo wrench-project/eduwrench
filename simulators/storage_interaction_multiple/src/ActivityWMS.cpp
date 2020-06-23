@@ -66,9 +66,11 @@ namespace wrench {
 
         file_registry->removeEntry(input_file, FileLocation::LOCATION(client_storage_service));
         if (use_nps) {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
             WRENCH_INFO("Sleep for 1 minute so NPS has time to ping and find proximity");
             Simulation::sleep(60.0);
 
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
             // using network proximity service
             WRENCH_INFO("Using Network Proximity Service to find closest storage unit...");
             auto np_service = *np_services.begin();
@@ -80,6 +82,8 @@ namespace wrench {
                 if (storage_service->getHostname() != "ClientHost") {
                     double proximity = np_service->getHostPairDistance(
                             {"ClientHost", storage_service->getHostname()}).first;
+                    WRENCH_INFO("Proximity between ClientHost and host %s is %d",
+                                storage_service->getHostname().c_str(), proximity);
                     if (proximity < min_distance) {
                         min_distance = proximity;
                         chosen_storage_service = storage_service;
@@ -88,6 +92,7 @@ namespace wrench {
             }
         }
 
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
         //Copy from chosen server storage back to client
         WRENCH_INFO("Sending the file over to the client running on host %s",
                     client_storage_service->getHostname().c_str());
@@ -106,7 +111,12 @@ namespace wrench {
                                             FileLocation::LOCATION(client_storage_service),
                                             file_registry);
 
+
         WRENCH_INFO("File sent!");
+
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
+        WRENCH_INFO("------------------------------------------------");
+        WRENCH_INFO("Simulation Complete!");
         return 0;
     }
 }

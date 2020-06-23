@@ -151,7 +151,7 @@ int main(int argc, char **argv) {
                 throw std::invalid_argument("invalid storage service chosen");
             }
 
-            if (argc != NUM_SERVER + 5) {
+            if (argc != NUM_SERVER + 4) {
                 throw std::invalid_argument("invalid number of arguments");
             }
 
@@ -195,7 +195,6 @@ int main(int argc, char **argv) {
     workflow.addFile("file_copy", FILE_SIZE);
 
 
-    std::cerr << "Instantiating platform..." << std::endl;
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, NUM_SERVER, SERVER_LINK_BANDWIDTH, SERVER_TO_DOWNLOAD, USE_NPS);
@@ -203,7 +202,7 @@ int main(int argc, char **argv) {
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
 
-    std::cerr << "Instantiating storage services..." << std::endl;
+    //instantiate storage services
     auto client_storage_service = simulation.add(new wrench::SimpleStorageService(
             CLIENT, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
@@ -217,7 +216,7 @@ int main(int argc, char **argv) {
         storage_services.insert(server_storage_service);
     }
 
-    std::cerr << "Instantiating WMS and File Registry..." << std::endl;
+    //instantiate wms and file registry
     auto file_registry = new wrench::FileRegistryService(SERVICES, {}, {});
     auto file_registry_ptr = simulation.add(file_registry);
 
@@ -241,7 +240,7 @@ int main(int argc, char **argv) {
         wms->addWorkflow(&workflow);
     }
 
-    std::cerr << "Staging task input files..." << std::endl;
+    //stage file
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
     std::cerr << "Launching Simulation..." << std::endl;

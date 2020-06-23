@@ -12,34 +12,6 @@
 #include "ActivityWMS.h"
 
 /**
- * @brief Generates an independent-task Workflow
- *
- * @param workflow
- * @param file_size_in_mb
- *
- * @throws std::invalid_argument
- */
-void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
-
-    if (workflow == nullptr) {
-        throw std::invalid_argument("generateWorkflow(): invalid workflow");
-    }
-
-    // WorkflowTask specifications
-    /*const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
-    const unsigned long    MIN_CORES = 1;
-    const unsigned long    MAX_CORES = 1;
-    const double PARALLEL_EFFICIENCY = 1.0;*/
-    const double                  MB = 1000.0 * 1000.0;
-    /*const double                  GB = 1000.0 * 1000.0 * 1000.0;
-
-    wrench::WorkflowTask *single_task;
-    single_task = workflow->addTask("task", 0, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);*/
-    workflow->addFile("file_copy", file_size_in_mb*MB);
-
-}
-
-/**
  * @brief Generates a platform with a single multi-core host
  * @param platform_file_path: path to write the platform file to
  *
@@ -117,6 +89,7 @@ int main(int argc, char** argv) {
 
     int SERVER_LINK_BANDWIDTH;
     int FILE_SIZE;
+    const double MB = 1000.0 * 1000.0;
 
     try {
 
@@ -149,9 +122,8 @@ int main(int argc, char** argv) {
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, FILE_SIZE);
+    workflow.addFile("file_copy", FILE_SIZE*MB);
 
-    std::cerr << "Instantiating platform..." << std::endl;
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, SERVER_LINK_BANDWIDTH);
@@ -162,8 +134,6 @@ int main(int argc, char** argv) {
     const std::string WMS("WMSHost");
     const std::string SERVER("ServerHost");
 
-
-    std::cerr << "Instantiating storage services..." << std::endl;
     auto client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
     auto server_storage_service = simulation.add(new wrench::SimpleStorageService(SERVER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
 
@@ -172,23 +142,15 @@ int main(int argc, char** argv) {
     storage_services.insert(server_storage_service);
 
 
-    std::cerr << "Instantiating WMS and File Registry..." << std::endl;
     auto file_registry = new wrench::FileRegistryService(WMS);
-    //std::shared_ptr<wrench::FileRegistryService> file_registry_ptr(file_registry);
     simulation.add(file_registry);
     auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, WMS));
 
     wms->addWorkflow(&workflow);
 
-    //simulation.add(new wrench::FileRegistryService(WMS));
-
-    std::cerr << "Staging task input files..." << std::endl;
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
 
-
-
-    std::cerr << "Launching Simulation..." << std::endl;
     simulation.launch();
 
     simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, true, true, false, false);

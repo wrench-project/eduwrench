@@ -52,16 +52,15 @@ namespace wrench {
         auto input_file = this->getWorkflow()->getFileByID("file_copy");
 
         WRENCH_INFO("Sending the file over to the server running on host %s", server_storage_service->getHostname().c_str());
-        //StorageService::writeFile(input_file, FileLocation::LOCATION(server_storage_service,"/"));
-        //file_registry->addEntry(input_file, FileLocation::LOCATION(server_storage_service));
 
         //  Copy the file over to the server
-
         data_manager->doSynchronousFileCopy(input_file,
                                             FileLocation::LOCATION(client_storage_service),
                                             FileLocation::LOCATION(server_storage_service));
         WRENCH_INFO("File sent!");
 
+
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_CYAN);
         //Copy from server storage back to client
         WRENCH_INFO("Sending the file over to the client running on host %s", client_storage_service->getHostname().c_str());
         data_manager->doSynchronousFileCopy(input_file,
@@ -69,27 +68,11 @@ namespace wrench {
                                             FileLocation::LOCATION(client_storage_service));
         WRENCH_INFO("File sent!");
 
-
-
-        // Wait for a workflow execution event, and process it
-        /*try {
-            this->waitForAndProcessNextEvent();
-        } catch (WorkflowExecutionException &e) {
-            WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
-                        (e.getCause()->toString().c_str()));
-        }*/
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
+        WRENCH_INFO("------------------------------------------------");
+        WRENCH_INFO("Simulation Complete!");
 
 
         return 0;
-    }
-
-    /**
-     * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
-     * @param event
-     */
-    void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
-        auto standard_job = event->standard_job;
-        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        WRENCH_INFO("Server has completed the task!");
     }
 }

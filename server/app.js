@@ -1395,16 +1395,14 @@ app.post("/run/storage_service", authCheck, function (req, res) {
     const FILE_SIZE = req.body.fileSize;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
-    // const LOGGING = [
-    //     "--log=root.thresh:critical",
-    //     "--log=wms.thresh:debug",
-    //     "--log=simple_wms.thresh:debug",
-    //     "--log=simple_wms_scheduler.thresh:debug",
-    //     "--log='root.fmt:[%d][%h:%t]%e%m%n'"
-    // ];
     const LOGGING = [
-        "--wrench-full-log"
-    ]
+        "--log=root.thresh:critical",
+	      "--log=wrench_core_storage_service.thresh:info",
+	      "--log=wrench_core_file_transfer_thread.thresh:info",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
 
     const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE].concat(LOGGING); // TODO: add simulation parameters
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
@@ -1470,17 +1468,14 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
     const NUM_SERVERS = req.body.numServers;
 
 
-    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
-    // const LOGGING = [
-    //     "--log=root.thresh:critical",
-    //     "--log=wms.thresh:debug",
-    //     "--log=simple_wms.thresh:debug",
-    //     "--log=simple_wms_scheduler.thresh:debug",
-    //     "--log='root.fmt:[%d][%h:%t]%e%m%n'"
-    // ];
     const LOGGING = [
-        "--wrench-full-log"
-    ]
+        "--log=root.thresh:critical",
+	      "--log=wrench_core_storage_service.thresh:info",
+	      "--log=wrench_core_file_transfer_thread.thresh:info",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+    ];
 
 
     console.log(USE_NPS);
@@ -1494,7 +1489,7 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
         SIMULATION_ARGS.push(BANDWIDTHS[i]);
       }
 
-      SIMULATION_ARGS.push(LOGGING);
+      SIMULATION_ARGS = SIMULATION_ARGS.concat(LOGGING);
     } else {
       const USE_VIVALDI = req.body.useVivaldi;
 

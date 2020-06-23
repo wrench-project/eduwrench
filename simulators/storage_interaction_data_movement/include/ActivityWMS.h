@@ -12,8 +12,6 @@ namespace wrench {
         ActivityWMS(const std::set<std::shared_ptr<StorageService>> &storage_services,
                     const std::string &hostname);
 
-        void processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent>) override;
-
     private:
         int main() override;
     };
