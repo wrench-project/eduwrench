@@ -14,4 +14,10 @@ _infrastructure_ for supporting breakthrough scientific discoveries.
 In summary, a _cyberinfrastructure_ may be composed of (but not limited to)
 the following elements:  
  
-- 
+- Computational systems (e.g., grids, clouds, clusters, supercomputers, etc.)
+- Data and information management systems (e.g., databases, data repositories, etc.)
+- Advanced instruments (e.g., telescopes, detectors, etc.)
+- Visualization environments (e.g., scientific visualization, data analytics, etc.)
+- Advanced networks (e.g., high-bandwidth networks, collaborative networks, etc.)
+- Software (e.g., resource scheduling and provisioning, monitoring, fault-tolerance, etc.)
+- People (e.g., researchers, developers, etc.)
