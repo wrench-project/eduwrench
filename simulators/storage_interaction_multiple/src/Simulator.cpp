@@ -225,11 +225,9 @@ int main(int argc, char **argv) {
     }
 
     if (USE_NPS) {
-        std::cerr << "Instantiating network proximity service..." << std::endl;
         HOST_LIST.push_back(CLIENT);
         auto np_service = simulation.add(new wrench::NetworkProximityService(SERVICES, HOST_LIST,
-                {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_MEASUREMENT_PERIOD,
-                      "1"},{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_SERVICE_TYPE,
+                {{wrench::NetworkProximityServiceProperty::NETWORK_PROXIMITY_SERVICE_TYPE,
                         NPS_TYPE}}, {}));
         auto wms = simulation.add(
                 new wrench::ActivityWMS(file_registry_ptr, {np_service}, storage_services,
@@ -243,10 +241,8 @@ int main(int argc, char **argv) {
     //stage file
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
-    std::cerr << "Launching Simulation..." << std::endl;
     simulation.launch();
 
-    std::cerr << "Outputting results..." << std::endl;
     simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, false, false, false, false);
     //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
     //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");

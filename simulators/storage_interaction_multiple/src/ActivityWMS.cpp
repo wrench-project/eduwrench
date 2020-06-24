@@ -67,8 +67,9 @@ namespace wrench {
         file_registry->removeEntry(input_file, FileLocation::LOCATION(client_storage_service));
         if (use_nps) {
             TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
-            WRENCH_INFO("Sleep for 1 minute so NPS has time to ping and find proximity");
-            Simulation::sleep(60.0);
+            WRENCH_INFO("Sleep for 30 minutes (1800 seconds) so NPS has time to ping and find "
+                        "proximity");
+            Simulation::sleep(1800.0);
 
             TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
             // using network proximity service
@@ -82,7 +83,7 @@ namespace wrench {
                 if (storage_service->getHostname() != "ClientHost") {
                     double proximity = np_service->getHostPairDistance(
                             {"ClientHost", storage_service->getHostname()}).first;
-                    WRENCH_INFO("Proximity between ClientHost and host %s is %d",
+                    WRENCH_INFO("Proximity between ClientHost and host %s is %e",
                                 storage_service->getHostname().c_str(), proximity);
                     if (proximity < min_distance) {
                         min_distance = proximity;

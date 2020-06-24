@@ -1397,11 +1397,11 @@ app.post("/run/storage_service", authCheck, function (req, res) {
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
         "--log=root.thresh:critical",
-	      "--log=wrench_core_storage_service.thresh:info",
-	      "--log=wrench_core_file_transfer_thread.thresh:info",
+	      "--log=wrench_core_storage_service.thresh:debug",
+	      "--log=wrench_core_file_transfer_thread.thresh:debug",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.5d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE].concat(LOGGING); // TODO: add simulation parameters
@@ -1474,7 +1474,7 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
 	      "--log=wrench_core_file_transfer_thread.thresh:info",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'"
+        "--log='root.fmt:[%.5d][%h]%e%m%n'"
     ];
 
 
