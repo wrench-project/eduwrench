@@ -37,3 +37,8 @@ virtualized platforms, websites, and databases. In this module, we explore
 different approaches and techniques commonly used for building CI services.
 Notice that we do not target a specific CI service implementation, but the
 general concepts related to different service categories. 
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/basics.svg">Cyberinfrastructure Setup</object>
+<div class="caption">
+<strong>Figure 1: Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service.</strong>.
+</div>
