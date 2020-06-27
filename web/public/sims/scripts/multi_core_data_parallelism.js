@@ -9,9 +9,9 @@ $(function () {
 
         if (oil_radius_input_value >= 1 && oil_radius_input_value <= 10) {
 
-            task_1_label_el.text((oil_radius_input_value * oil_radius_input_value *  100).toString() + " GFlop")
+            task_1_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
                 .css("background-color", "#d3ffe9");
-            task_2_label_el.text((oil_radius_input_value * oil_radius_input_value *  100).toString() + " GFlop")
+            task_2_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
                 .css("background-color", "#d3ffe9");
 
 
@@ -29,8 +29,7 @@ $(function () {
         } else {
             task_1_label_el.css("background-color", "#ffb7b5");
             task_2_label_el.css("background-color", "#ffb7b5");
-            oil_radius_input_value.removeClass("is-valid")
-                .addClass("is-invalid");
+            oil_radius_input_el.removeClass("is-valid").addClass("is-invalid");
         }
     });
 
