@@ -102,11 +102,11 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                let executionData = response.task_data.workflow_execution;
+                let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 generateHostUtilizationChart(executionData);
 
-                let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
+                // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
