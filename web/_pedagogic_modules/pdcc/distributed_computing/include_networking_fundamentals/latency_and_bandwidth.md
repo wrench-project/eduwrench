@@ -21,7 +21,7 @@ Each network link has two important characteristics:
     One can think of data flowing through a link as water flowing
 through a pipe (click to expand)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
 A popular analogy is to think of a link as a vertical physical pipe
 that connects a cistern  (on top) to a pool (on the bottom) .  The
 latency is the time for one drop of water to travel from the top-end of
@@ -50,12 +50,14 @@ approximation as follows:
 $$ T = \alpha + \frac{s}{\beta} .$$
 
 For instance, consider a link with latency 100 microseconds and effective bandwidth
-120 MB/sec ("120 MegaByte per second"), transferring 100KiB ("100 KibiByte per second") of data takes time: 
+120 MB/sec ("120 MegaBytes per second"), transferring 100KiB ("100 KibiBytes per 
+second") of data takes time: 
 
 $$ T = 100 \times 10^{-6} + \frac{100 \times 2^{10}}{120 \times 10^{6}}  \simeq .000953 \; \text{sec}.$$
 
-Make sure you know your units and use them in a consistent manner, knowing when units are powers of 10 
-or powers of 2. In these pedagogic modules we typically use power-of-10 units (e.g., KB rather than KiB). 
+Make sure you know your units and use them in a consistent manner, knowing when 
+units are powers of 10 or powers of 2. In these pedagogic modules, we typically 
+use power-of-10 units (e.g., KB rather than KiB). 
 
 In some cases the first term above (the latency) can dominate (i.e., with
 small data sizes and/or large bandwidths), or can be negligible (i.e., with
@@ -149,13 +151,17 @@ bandwidth 700 MB/sec.  Which mirror should you use and why?
 #### Suggested Activities
 
 **[Latencies]** What do you think the network latency is between major U.S. cities? Go to
-[this site](https://ipnetwork.bgtmo.ip.att.net/pws/network_delay.html) and find out the current network
-latency between Houston and Seattle and the current latency between New York and Philadephia. Which
-two U.S. cities (among those on that site) are the furthest apart in terms of network latencies? 
+[this site](https://ipnetwork.bgtmo.ip.att.net/pws/network_delay.html) and find out the 
+current network latency between Houston and Seattle and the current latency between New 
+York and Philadephia. Which two U.S. cities (among those on that site) are the furthest 
+apart in terms of network latencies? 
 
-**[Latencies and speed of light]** Assuming that data travels at the speed of light, in a straight line,
-what would be the network latency between New York and Los Angeles?  How much bigger is it in reality (using the
-same site as in the previous activity)?
+**[Latencies and speed of light]** Assuming that data travels at the speed of light, 
+in a straight line, what would be the network latency between New York and Los Angeles?  
+How much bigger is it in reality (using the same site as in the previous activity)?
 
-**[Bandwidth]** Download a large file from some Web site and measure the (perceived) bandwidth that you achieved. For instance,
-you can download the 100 MB file on [this site](https://speed.hetzner.de/). Note that tools (other than Web browsers) are available to download files from URLs that print out download times and/or data transfer rates (e.g., <tt>wget<tt> on Linux). 
+**[Bandwidth]** Download a large file from some Web site and measure the (perceived) 
+bandwidth that you achieved. For instance, you can download the 100 MB file on 
+[this site](https://speed.hetzner.de/). Note that tools (other than Web browsers) are 
+available to download files from URLs that print out download times and/or data transfer 
+rates (e.g., `wget` on Linux).

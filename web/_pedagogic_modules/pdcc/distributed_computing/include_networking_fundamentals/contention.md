@@ -1,12 +1,12 @@
 
-#### Learning objectives
+#### Learning Objectives
 
 - Understand the concept of network contention
 - Be able to estimate data transfer times in the presence of contention
 
 ---
 
-#### Networks are shared
+#### Networks are Shared
 
 Typically, several data transfers occur concurrently (i.e., at the same
 time) on a network, and some of these transfers may be using the same
@@ -23,10 +23,12 @@ Consider the following topology with the two depicted data transfers
 each were started at exactly the same time and transfer 100 MB of data.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention.svg">topology with contention</object>
-<b>Figure 1:</b> A simple example in which two data transfers contend for bandwidth.
+<div class="caption"><strong>Figure 1:</strong>
+A simple example in which two data transfers contend for bandwidth.
+</div>
 
-If the green data transfer were by itself, its bandwidth would be 30 MB/sec.
-If the red data transfer were by itself, its bandwidth would be 40
+If the green data transfer was by itself, its bandwidth would be 30 MB/sec.
+If the red data transfer was by itself, its bandwidth would be 40
 MB/sec. But when both transfers happen at the same time, they experience
 contention on the link into host C. 
 
@@ -35,7 +37,7 @@ bandwidth**. If this splitting is fair they both
 receive half of the link's bandwidth, 20 MB/sec. (It turns out that bandwidth sharing
 is a bit complicated in practice as it also depends on latencies, but in
 this case both transfers have the same end-to-end latencies, which leads to
-fair sharing - see a networking course/textbook for more details if interested).
+fair sharing (see a networking course/textbook for more details if interested).
 
 Given the above, both transfers proceed at 20 MB/sec, i.e., half the bandwidth of the link into
 host C, which is their bottleneck link. 
@@ -51,7 +53,9 @@ $$
 Consider now another scenario, with the only difference that the "red" transfer now only transfers 50 MB:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_different_sizes.svg">topology with contention and different transfer sizes</object>
-<b>Figure 2:</b> A slightly more complex example in which one transfer transfers less data than the other.
+<div class="caption"><strong>Figure 2:</strong>
+A slightly more complex example in which one transfer operation transfers less data than the other.
+</div>
 
 In this scenario there are two phases:
 
@@ -80,7 +84,9 @@ This simulation is for the following scenario in which a number of transfers
 occur concurrently on the same three-link route:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_simulation.svg">simulation scenario</object>
-<b>Figure 3:</b> Simulation scenario.
+<div class="caption"><strong>Figure 3:</strong>
+Simulation scenario.
+</div>
 
 The simulation app allows you to enter a list of file sizes (in MB). Each
 file size corresponds to one data transfer on the three-link route.
@@ -137,12 +143,14 @@ concurrent transfers.
 
 --- 
 
-#### Practice questions
+#### Practice Questions
 
 The following practice questions pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_practice.svg">simulation scenario for practice questions</object>
-<b>Figure 4:</b> Topology for practice questions.
+<div class="caption"><strong>Figure 4:</strong>
+Topology for practice questions.
+</div>
 
 
 **[A.3.1.p3.1]** A 100 MB transfer from host A to host C, and a 100 MB transfer
@@ -178,7 +186,7 @@ The following practice questions pertain to this topology:
    as it is bottlenecked on the link into host C. These two transfers share
    one network link, but that network link has bandwidth 100 MB/sec, and so
    there is no contention on that link.  Consequently, the transfer times
-   as follows:
+   are as follows:
 
 $$
 \begin{align}
@@ -224,14 +232,16 @@ $$
 Answer the following questions, which pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_questions.svg">simulation scenario for questions</object>
-<b>Figure 5:</b> Topology for questions (lat = "latency"; bw = "bandwidth").
+<div class="caption"><strong>Figure 5:</strong>
+Topology for questions (lat = "latency"; bw = "bandwidth").
+</div>
 
 
 **[A.3.1.q3.1]** At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB transfer starts from host A to host D. Do they finish at the same time?
 
 <p></p>
 
-**[A.3.1.q3.2]** At time 0, a 100 MB transfer starts from host B to host C
+**[A.3.1.q3.2]** At time 0, a 100 MB transfer starts from host B to host C,
 and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
 
 <p></p>

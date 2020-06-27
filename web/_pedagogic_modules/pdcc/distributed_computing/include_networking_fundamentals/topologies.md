@@ -19,7 +19,9 @@ instance, we will not discuss how routers work (see a networking course or textb
 all interesting details).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology.svg">topology</object>
-<b>Figure 1:</b> An example network topology that interconnects 5 hosts.
+<div class="caption"><strong>Figure 1:</strong>
+An example network topology that interconnects 5 hosts.
+</div>
 
 The figure above shows an example topology with 5 hosts (the end-point vertices), 4
 routers (internal vertices), and 9 network links (the edges). Data communicated on the
@@ -28,7 +30,9 @@ two hosts is the sequence of network links (and routers) that the data traverses
 being communicated from one of the hosts to another. 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_routes.svg">topology with routes</object>
-<b>Figure 2:</b> Two possible routes between host A and host C.
+<div class="caption"><strong>Figure 2:</strong> 
+Two possible routes between host A and host C.
+</div>
 
 As an example, the figure above shows two possible routes between host A
 and host C. The network configuration, the details of which are outside our
@@ -43,13 +47,15 @@ we assume that either the blue route or the red route exists.
 Consider two hosts connected via a 3-link route, as depicted in the figure below. 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/scenario_1.svg">A three-link route</object>
-<b>Figure 3:</b> An example 3-link route between two hosts.
+<div class="caption"><strong>Figure 3:</strong> 
+An example 3-link route between two hosts.
+</div>
 
 In this example, all network links have the same bandwidth, 100 MB/sec.
 When transferring data from host A to host B, this transfer thus experiences
 a bandwidth of 100 MB/sec but a latency of 50 + 100 + 50 = 200 us, that is,
-the **sum of the link latencies**. Remember that in the
-"water in pipes" analogy in the [{{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/latency-bandwidth](previous tab),
+the **sum of the link latencies**. Remember that in the "water in pipes" analogy in the 
+[previous tab]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/latency-bandwidth),
 the latency is the length of a pipe. And so it
 makes sense that the length of a sequence of pipes is the sum of the
 individual pipe lengths. 
@@ -66,7 +72,9 @@ $$
 
 Consider now a similar three-link route, but with different link bandwidths:
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/scenario_2.svg">A different three-link route</object>
-<b>Figure 4:</b> Another example 3-link route between two hosts.
+<div class="caption"><strong>Figure 4:</strong>
+Another example 3-link route between two hosts.
+</div>
 
 In Figure 4, the middle link has a bandwidth of 10 MB/sec (shown in red).
 In this case, the data flows only as fast as the slowest link. The middle
@@ -98,18 +106,20 @@ T_{size} & = \sum_{link \in r} latency(link) + \frac{size}{\min\limits_{link \in
 \end{align}
 $$
 
-**The latency of the route is the sum of the latencies and the bandwidth of the route
+**The latency of the route is the sum of the latencies, and the bandwidth of the route
 is the minimum of the bandwidths.** 
 
 ----
 
-#### Practice questions
+#### Practice Questions
 
 To make sure you have understood the above, answer the following practice
 questions, which all pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_practice.svg">Network topology for practice questions</object>
-<b>Figure 5:</b> Network topology for practice questions.
+<div class="caption"><strong>Figure 5:</strong>
+Network topology for practice questions.
+</div>
 
 
 **[A.3.1.p2.1]** What is the latency of the route from host E to host D?
@@ -156,7 +166,7 @@ $$
     <i class="dropdown icon"></i>
     (click to see answer)
   </div>
-  <div markdown="1" class="ui segment content">
+  <div markdown="1" class="ui segment content answer-frame">
    I should pick the mirror at host D. This is a large file, so the latency
    component of the data transfer time is negligible. So it's all about the
    bandwidth. The bandwidth of the route from host E to host A is 10
@@ -193,7 +203,9 @@ $$
 Answer the following questions, which all pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_questions.svg">Network topology for questions</object>
-<b>Figure 6:</b> Network topology for questions (lat = "latency"; bw = "bandwidth").
+<div class="caption"><strong>Figure 6:</strong>
+Network topology for questions (lat = "latency"; bw = "bandwidth").
+</div>
 
 
 **[A.3.1.q2.1]** What is the latency of the route from host A to host B?
@@ -211,12 +223,12 @@ thus competing for the bandwidth on that route. Would it help to
 purchase an upgrade to the link that connects host B to the network?
 
 <p></p>
-**[A.3.1.q2.5]** I am sitting at host D and want to download a tiny file that's mirrored at all other hosts. 
+**[A.3.1.q2.5]** I am sitting at host D and want to download a tiny file that is mirrored at all other hosts. 
 From my perspective, does it matter which mirror I pick, and if yes which one should I pick?
 
 <p></p>
 **[A.3.1.q2.6]** I am sitting at host D and want to download a huge file
-that's mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
+that is mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
 and if yes which one should I pick?
 
 <p></p>
