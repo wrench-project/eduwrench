@@ -16,6 +16,7 @@ fi
 # build simulators
 echo "Compiling simulators"
 for  dir in `ls simulators/`; do 
+    echo "Building in simulator/$dir ..."
     cd simulators/$dir && ./build.sh $makedashjarg && cd ../..
 done
 
