@@ -24,26 +24,30 @@
  * @brief Generate the workflow
  * @description Fork-Join
  */
-void generateWorkflow(wrench::Workflow *workflow) {
+void generateWorkflow(wrench::Workflow *workflow, int num_blue_inputs, int num_yellow_inputs,
+        int num_blue_outputs, int num_yellow_outputs) {
     // Blue task
     auto blue_task = workflow->addTask("blue_task", 1000000, 1, 1, 1, 0);
-    auto blue_output = workflow->addFile("blue_outfile", 100000000);
-    blue_task->addInputFile(workflow->addFile("blue_infile", 100000000));
-    blue_task->addOutputFile(blue_output);
-
-    // Yellow task
     auto yellow_task = workflow->addTask("yellow_task", 1000, 1, 1, 1, 0);
-    auto yellow_output1 = workflow->addFile("yellow_outfile1", 100000000);
-    auto yellow_output2 = workflow->addFile("yellow_outfile2", 100000000);
-    yellow_task->addInputFile(workflow->addFile("yellow_infile", 100000000));
-    yellow_task->addOutputFile(yellow_output1);
-    yellow_task->addOutputFile(yellow_output2);
-
-    // Red task
     auto red_task  = workflow->addTask("red_task", 1000000, 1,  1, 1.0, 0);
-    red_task->addInputFile(blue_output);
-    red_task->addInputFile(yellow_output1);
-    red_task->addInputFile(yellow_output2);
+
+    for (int i = 1; i <= num_blue_inputs; ++i) {
+        blue_task->addInputFile(workflow->addFile("blue_infile" + std::to_string(i), 1000));
+    }
+    for (int i = 1; i <= num_blue_outputs; ++i) {
+        auto blue_output = workflow->addFile("blue_outfile" + std::to_string(i), 1000);
+        blue_task->addOutputFile(blue_output);
+        red_task->addInputFile(blue_output);
+    }
+
+    for (int i = 1; i <= num_yellow_inputs; ++i) {
+        yellow_task->addInputFile(workflow->addFile("yellow_infile" + std::to_string(i), 1000));
+    }
+    for (int i = 1; i <= num_yellow_outputs; ++i) {
+        auto yellow_output = workflow->addFile("yellow_outfile"  + std::to_string(i), 1000);
+        yellow_task->addOutputFile(yellow_output);
+        red_task->addInputFile(yellow_output);
+    }
 
     workflow->addControlDependency(blue_task, red_task);
     workflow->addControlDependency(yellow_task, red_task);
@@ -143,10 +147,31 @@ int main(int argc, char **argv) {
     const std::string STORAGE = "StorageHost";
     const std::string COMPUTE_HOST1 = "ComputeHost1";
     const std::string COMPUTE_HOST2 = "ComputeHost2";
+    int NUM_YELLOW_INPUTS;
+    int NUM_BLUE_INPUTS;
+    int NUM_YELLOW_OUTPUTS;
+    int NUM_BLUE_OUTPUTS;
+
+    try {
+        if (argc != 5) {
+            throw std::invalid_argument("invalid number of arguments");
+        }
+        NUM_BLUE_INPUTS = std::stoi(std::string(argv[1]));
+        NUM_YELLOW_INPUTS = std::stoi(std::string(argv[2]));
+        NUM_BLUE_OUTPUTS = std::stoi(std::string(argv[3]));
+        NUM_YELLOW_OUTPUTS = std::stoi(std::string(argv[4]));
+    } catch (std::invalid_argument &e) {
+        std::cerr << e.what() << std::endl;
+        std::cerr << "Usage: " << argv[0]
+                  << "<num_yellow_inputs> <num_blue_inputs> <num_yellow_outputs> <num_blue_outputs>"
+                  << std::endl;
+        return 1;
+    }
 
     // generate workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow);
+    generateWorkflow(&workflow, NUM_BLUE_INPUTS, NUM_YELLOW_INPUTS, NUM_BLUE_OUTPUTS,
+            NUM_YELLOW_OUTPUTS);
 
     // generate platform
     std::string platform_file_path = "/tmp/platform.xml";
