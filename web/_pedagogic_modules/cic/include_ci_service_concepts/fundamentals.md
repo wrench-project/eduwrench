@@ -38,7 +38,14 @@ different approaches and techniques commonly used for building CI services.
 Notice that we do not target a specific CI service implementation, but the
 general concepts related to different service categories. 
 
+The figure below shows an example of a CI composed of four different services: 
+a _website_, from where users interact with the system to upload/download 
+data and launch computing tasks; a _storage service_, where data is stored
+permanently; a _file registry service_, a catalog that acts as a
+bookkeeper for data location; and a _compute service_, which executes computing
+tasks.    
+
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/basics.svg">Cyberinfrastructure Setup</object>
 <div class="caption">
-<strong>Figure 1: Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service.</strong>.
+<strong>Figure 1: Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service</strong>.
 </div>

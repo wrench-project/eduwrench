@@ -9,9 +9,9 @@ $(function () {
 
         if (oil_radius_input_value >= 1 && oil_radius_input_value <= 10) {
 
-            task_1_label_el.text((oil_radius_input_value * oil_radius_input_value *  100).toString() + " GFlop")
+            task_1_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
                 .css("background-color", "#d3ffe9");
-            task_2_label_el.text((oil_radius_input_value * oil_radius_input_value *  100).toString() + " GFlop")
+            task_2_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
                 .css("background-color", "#d3ffe9");
 
 
@@ -29,8 +29,7 @@ $(function () {
         } else {
             task_1_label_el.css("background-color", "#ffb7b5");
             task_2_label_el.css("background-color", "#ffb7b5");
-            oil_radius_input_value.removeClass("is-valid")
-                .addClass("is-invalid");
+            oil_radius_input_el.removeClass("is-valid").addClass("is-invalid");
         }
     });
 
@@ -102,11 +101,11 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                let executionData = response.task_data.workflow_execution;
+                let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 generateHostUtilizationChart(executionData);
 
-                let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
+                // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",

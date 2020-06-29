@@ -9,7 +9,7 @@
 
 ### Motivation
 
-In all we've seen so far in this module, a parallel program consists of a
+In all we have seen so far in this module, a parallel program consists of a
 predetermined set of tasks, each of them executing on a single core. Many
 real-world programs are structured in this way, and this is called **task
 parallelism**. 
@@ -73,10 +73,10 @@ This assumes $X$ is divisible by $n$. This is likely not quite the case in pract
 but a very good approximation if the number of pixels is much larger than the
 number of cores, which we will assume here.
 
-#### Simulation Data-Parallelism
+#### Simulating Data-Parallelism
 
-After exposing data-parallelism in our example program (i.e., by rewriting the code of the "oil" task), the 
-program's DAG is as follows:
+After exposing data-parallelism in our example program (i.e., by rewriting 
+the code of the "oil" task), the program's DAG is as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure 2:</strong>
@@ -101,6 +101,7 @@ practice questions below.
 
 <p></p>
 
+---
 
 #### Practice Questions
 
@@ -175,7 +176,7 @@ is confirmed! Execution B has better efficiency!
 **[A.2.p4.3]** A program consists of two tasks that run in sequence. The first
 runs in 10s and the second in 20 seconds, on one core of a 4-core computer. 
 A developer has an idea to expose data-parallelism in the second task and
-rewrite it so that it is replaced by 4 independent tasks each with 1/4-th the
+rewrites it so that it is replaced by 4 independent tasks each with 1/4-th of the
 original task's work. What is the parallel efficiency on 4 cores?
 
 <div class="ui accordion fluid">
@@ -186,15 +187,16 @@ original task's work. What is the parallel efficiency on 4 cores?
   <div markdown="1" class="ui segment content answer-frame">
 
 When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the
-speedup is 30/15 = 2. So the parallel efficiency is 50%. 
+speedup is 30/15 = 2. So, the parallel efficiency is 50%. 
 
   </div>
 </div>
 
 <p></p>
 
+---
 
-### Amdahl's law
+#### Amdahl's Law
 
 The simulation and practice questions above highlight a simple phenomenon
 known as **Amdahl's law**. This law says that the overall parallel speedup
@@ -202,7 +204,7 @@ that a program that has a sequential and a parallel part is limited by the
 amount of time spent in the sequential part. This is very intuitive,
 since in the extreme a program is purely sequential and the parallel speedup is always
 1 regardless of the number of cores. But the (to some) surprising thing is how
-severe the limit is. Let's derive Amdahl's law in the abstract, and then apply is
+severe the limit is. Let's derive Amdahl's law in the abstract, and then apply it
 to our example oil painting program. 
 
 Consider a program that runs on 1 core in time $T$. This program consists of two
@@ -224,8 +226,9 @@ $$
 T(p) & = \alpha T / p + (1 - \alpha) T\\
 \end{align}
 $$
-The above just says that the parallel part goes $n$ times faster, while the sequential part is unchanged. 
 
+The above just says that the parallel part goes $n$ times faster, while the 
+sequential part is unchanged. 
 
 The parallel speedup on $p$ cores, $S(p)$, is then:
 
@@ -248,7 +251,7 @@ $$
 So, for instance, if 90% of the sequential execution time can be
 parallelized, then the speedup will be at most 1/(1-0.9) = 10.
 
-For instance, if running on 8 cores for instance, the speedup would be
+For instance, if running on 8 cores, the speedup would be
 1/(0.9/8 + 1 - 0.9) = 4.7, for a parallel efficiency below
 60%. 
 
@@ -260,7 +263,8 @@ values of $\alpha$:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
 <div class="caption"><strong>Figure 3:</strong>
-Speedup vs. #cores for different values of the fraction of the sequential execution time that's parallelizable.
+Speedup vs. number of cores for different values of the fraction of 
+the sequential execution time that is parallelizable.
 </div>
 
 
@@ -275,8 +279,8 @@ This is bad news since almost every program has inherently
 sequential phases. In our example program the sequential phase is the
 "luminence" task. But even without this task, there are many parts 
 of a program that are sequential. For instance, a program typically
-needs to write produce output using sequential I/O operations. Even
-if these parts are short, Amdahl's law tells use that they severely
+needs to write output using sequential I/O operations. Even
+if these parts are short, Amdahl's law tells us that they severely
 limit speedup. 
 
 Bottom line: achieving high speedup on many cores is not easy. The ability
@@ -287,7 +291,7 @@ uses increases, we say that the program "scales".
 #### Practice Questions
 
 **[A.2.p4.4]** A program that consists of a sequential phase and a perfectly
-parallelizable phase runs on 1 core in 10 minutes and on  4 cores in  6 minutes.  
+parallelizable phase runs on 1 core in 10 minutes and on  4 cores in 6 minutes. 
 How long does  the sequential phase run for?
 
 <div class="ui accordion fluid">
@@ -297,7 +301,7 @@ How long does  the sequential phase run for?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $\alpha$ the fraction of the sequential execution time that
+Let $\alpha$ be the fraction of the sequential execution time that
 is parallelizable. Amdahl's law gives us the speedup on 4 cores as:
 
 $
@@ -370,13 +374,14 @@ parallel phase is zero.
 </div>
 <p></p>
 
+---
 
 ### Amdahl's law and our example
 
 For our example oil-painting program, we can of course compute the speedup analytically.  
 To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction 
 of the sequential execution time
-that is parallelizable. Still for a 100 Gflop/sec core, for a given a
+that is parallelizable. Still for a 100 Gflop/sec core, for a given
 radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
 in the "luminence" task is 1 second.
 Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $p$
@@ -498,7 +503,9 @@ $
 The parallel efficiency is $\frac{10000}{10000+X}$, so we need to solve:
 
 $
+\begin{align}
 \frac{10000}{10000+X} \geq 0.9
+\end{align}
 $
 
 which gives $X \leq 1111.11$ Gflop.

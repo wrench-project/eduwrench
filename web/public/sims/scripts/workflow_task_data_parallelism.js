@@ -116,7 +116,7 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
-                let executionData = response.task_data.workflow_execution;
+                let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 generateHostUtilizationChart(executionData);
 
