@@ -12,16 +12,16 @@ permalink: simulations/client_server/
     <label>Host selection</label>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select" value="1" checked>
-            <label class="radio-inline control-label" for="host-select">
+            <input type="radio" name="host-select" id="host-select-1" value="1" checked>
+            <label class="radio-inline control-label" for="host-select-1">
                 Server #1
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select" value="2">
-            <label class="radio-inline control-label" for="host-select">
+            <input type="radio" name="host-select" id="host-select-2" value="2">
+            <label class="radio-inline control-label" for="host-select-2">
                 Server #2
             </label>
         </div>
@@ -29,10 +29,10 @@ permalink: simulations/client_server/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-link">Link Speed to Server #1 (MBps)</label>
+    <label for="server-1-link">Link Speed to Server #1 (MB/sec)</label>
     <input class="form-control" type="number" id="server-1-link" placeholder="" value="10" min="1" max="10000" step="1" required>
     <div class="invalid-feedback">
-        Please provide the link speed from the Client to Server #1 in MBps.
+        Please provide the link speed from the Client to Server #1 in the range of [1, 10000] MB/sec.
     </div>
 </div>
 

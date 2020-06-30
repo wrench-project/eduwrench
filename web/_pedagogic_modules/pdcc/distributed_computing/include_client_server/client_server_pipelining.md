@@ -8,7 +8,7 @@
 
 ### Adding I/O on the Client
 
-In the previous tab we have not considered disk I/O at all, which made
+In the previous tab, we have not considered disk I/O at all, which made
 things simple. But in many real-world cases, data is stored on disk. So let's
 consider a similar client-server setup with a client and two servers,
 but with a **disk on the client**. 
@@ -59,7 +59,7 @@ to the network using a 200MB buffer:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_pipelining.svg">Pipelining example</object>
 <div class="caption">
-<strong>Figure 1: Pipelining example</strong>.
+<strong>Figure 1:</strong> Pipelining example.
 </div>
 
 In the figure we see that, as expected, there are 5 disk reads and 5 network
@@ -75,12 +75,12 @@ In all other steps, we  overlap disk and network operations. We can
 compute the saving due to pipelining. If no pipelining were to be
 used, the total  execution would be 15 seconds (5 seconds of disk read
 followed by 10 seconds of network send). Instead, with pipelining
-we are able to executed in only 11 seconds, over a 25% reduction in
+we are able to execute in only 11 seconds, over a 25% reduction in
 execution time. 
 
 In this example above, the disk read time is faster than the network
 transfer time. So although the network is  used constantly for the entire
-execution (save for the initial step), the disk isn't. We call this an
+execution (save for the initial step), the disk is not. We call this an
 **unbalanced pipeline**. A simple real-world analogy is a washer and a
 dryer. If you have to do multiple loads of laundry, you typically use
 pipelining: while you are drying a load you are washing the next load. This
@@ -89,9 +89,9 @@ washing. As a result, the washer often sits idle with wet clothes in it
 waiting to be dried. This is your clothes buffer that has gone through the
 first stage of the pipeline (the washer), but not through the second stage
 (the dryer). And you allow yourself a single wet cloth buffer 
-(you don't want a mountain of wet clothes to accumulate in your laundry room!). 
+(you do not want a mountain of wet clothes to accumulate in your laundry room!). 
 
-If the disk read time were equal to the network transfer
+If the disk read time was equal to the network transfer
 time  (i.e., if the disk and the network had the same bandwidth), then we would say we
 have a **balanced** pipeline. In this case, save for the first and last
 step, both hardware resources are used constantly throughout the
@@ -110,9 +110,9 @@ to use a 1-byte buffer!
 
 If you remember the 
 [Networking Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/networking_fundamentals),
-you may realize why a 1-byte buffer is a bad idea... it's all about **latency**! 
+you may realize why a 1-byte buffer is a bad idea... it is all about **latency**! 
 
-In the example above, and the figure, we didn't say anything about latency. But in fact, each
+In the example above, and the figure, we did not say anything about latency. But in fact, each
 network link (and also the disk, but let's forget about this for now) has a latency. Often we have said we could neglect latency because
 the data transferred is large. **But now that we split that data into potentially many very small
 "chunks", the latency may play an important role!**
@@ -133,15 +133,15 @@ So one must pick a reasonable buffer size so that there is some pipelining but s
 the execution does not become latency-bound. 
 
 Note that pipelining is used in many programs. These program try to use up a "reasonable"
- buffer size. For instance, many versions of the <tt>Scp</tt> secure
+ buffer size. For instance, many versions of the `scp` secure
 file copy program pipeline disk and I/O operations with a buffer size of 16 KiB. If this
-program were to be used on the disk/network setup above, it would be better off with a bigger buffer
+program was to be used on the disk/network setup above, it would be better off with a bigger buffer
 size. *But of course, the developers of that program do not know in advance in what setup the
-program will be used!* Other versions of <tt>Scp</tt> allow the user
+program will be used!* Other versions of `scp` allow the user
 to specify a buffer size.
 
 
-#### Simulating client-server with pipelining 
+#### Simulating Client-Server with Pipelining 
 
 So that you can experiment with how pipelining works, below is an app that
 allows you to simulate the execution of a client-server setup where a 1GB file
@@ -182,17 +182,15 @@ $
 
 which  gives $T = 20.83\;\text{sec}$.
 
-The simulation gives us 20.92 sec. As usual our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
-some network behaviors), but it's close. 
-        
-        
+The simulation gives us 20.92 sec. As usual, our back-of-the-envelope estimate is  a bit optimistic (because it does not capture 
+some network behaviors), but it is close. 
+  
    </div>
  </div>
 
 <p></p>
 
 **[A.3.2.p2.2]** Still on Server #2, what do you think the execution time would be when setting the buffer size to 500 MB? Check your answer in simulation.
-
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -241,7 +239,7 @@ The simulation gives these results:
 |100 MB  | 2.68 |
 |---|---|   
 
-With a small buffer size, we don't do great, because of latencies. With a large  buffer size, we don't do great
+With a small buffer size, we do not do great, because of latencies. With a large  buffer size, we do not do great
 because of poor pipelining. 
 
 If we had no latencies, we could achieve almost perfect  pipelining (buffer size of 1 byte). The transfer would thus
@@ -268,7 +266,7 @@ transfer time? For this new latency, can we lower the data transfer time by usin
 <div markdown="1" class="ui segment content answer-frame">
 
 With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55 seconds. If we make
-the latency 20 us,  this jumps up to 7.85. This is almost a 20% increase. 
+the latency 20 us,  this jumps up to 7.85 sec. This is almost a 20% increase. 
  
 It would make sense that using a larger buffer size would be better, so as to save on latencies. For instance, if we try
 a 200 KB buffer size, the data transfer time  goes from 7.85 to 6.55, back to what it was with the lower latency!
