@@ -33,7 +33,7 @@ $(function () {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen.
         $.ajax({
-            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/master_worker',
+            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/coordinator_worker',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(

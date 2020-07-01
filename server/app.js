@@ -974,7 +974,7 @@ app.get("/master_worker", authCheck, function (req, res) {
 });
 
 // execute activity client server simulation route
-app.post("/run/master_worker", authCheck, function (req, res) {
+app.post("/run/coordinator_worker", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/master_worker/");
 
     const SIMULATOR = "master_worker_simulator";

@@ -1,60 +1,57 @@
 
 #### Learning Objectives
 
-- Understand the principles of master-worker computing
-- Understand the basic concept of scheduling in the context of master-worker
+- Understand the principles of coordinator-worker computing
+- Understand the basic concept of scheduling in the context of coordinator-worker
 - Experience how different scheduling strategies can affect performance
 
 ----
 
 ### Basics
 
-The term **master-worker** makes a reference to a typical real-life scenario
-in which a master (or boss) assigns labor to workers. 
+The term **coordinator-worker**<sup>1</sup> makes a reference to a typical real-life scenario
+in which a coordinator (or boss) assigns labor to workers. 
 The workers just do the jobs given to them without knowing or worrying about the larger picture.
-Only the master focuses  on the larger picture. Regardless of the real-life social implications
-of this model, in the context of computing it is commonplace and very useful. The main issue
-is how to design  a master that assigns work to workers as judiciously as possible. More precisely,
-the master must decide which task should be sent to which worker and when. These
-are called **scheduling decisions**, and there are many different **scheduling strategies**
-that a master could employ.  The goal of this module is not to teach deep scheduling
+Only the coordinator focuses  on the larger picture. The main issue
+is how to design a coordinator that assigns work to workers as judiciously as possible. More precisely,
+the coordinator must decide which task should be sent to which worker and when. These
+are called **scheduling decisions**, and there are many **scheduling strategies**
+that a coordinator could employ.  The goal of this module is not to teach deep scheduling
 concepts and algorithms, of which there are many, but rather to provide you with an introduction 
-to this complex topic and give
-your a feel for it via hands-on experiments. 
+to this complex topic and give your a feel for it via hands-on experiments. 
 
-### Parallelism through Master-Worker
+### Parallelism through Coordinator-Worker
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Setup</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/coordinator_worker/coordinator_worker_narrative.svg">Coordinator / Worker Setup</object>
 <div class="caption">
-<strong>Figure 1: Master-worker setup</strong>.
+<strong>Figure 1:</strong> Coordinator-worker setup.
 </div>
 
-Figure 1 above shows the typical view of a master-worker setup. **You will note that this is
+Figure 1 above shows the typical view of a coordinator-worker setup. **You will note that this is
 very similar to the client-server setup that we studied in the previous module.**  In fact, 
-one can view master-worker as an extension of client-server in which the client (the master)
+one can view coordinator-worker as an extension of client-server in which the client (the coordinator)
 uses the servers (the workers) to perform many tasks in parallel. You may recall that in the client-server module,
 practice question *A.3.2.p1.3* touched on the notion that the client could have more than
-on task to perform. This was really a master-worker scenario.  
+one task to perform. This was really a coordinator-worker scenario.  
 
 Note that there are many possible variations on the above setup. For instance, the network could be such
-that all workers are connected to the master via the same shared network link. Or there could be a two-link network path
-from the master to each worker, where the first link is shared by  all workers but the second link is
-dedicated  to the worker.     Also, for 
+that all workers are connected to the coordinator via the same shared network link. Or there could be a two-link network path
+from the coordinator to each worker, where the first link is shared by all workers, but the second link is
+dedicated to the worker. Also, for 
 simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
-this as the master having a fast disk and doing efficient pipelining of disk I/O and network communications --
+this as the coordinator having a fast disk and doing efficient pipelining of disk I/O and network communications --
 see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). Our goal
 here is not to consider all possible setups, but instead to consider a simple one that is sufficient to get
 a sense of what scheduling entails. 
 
-
-Given a set of tasks to perform, *whenever there is at least an idle worker* the master decides which task should
+Given a set of tasks to perform, *whenever there is at least an idle worker* the coordinator decides which task should
 be executed next and on which idle worker. The input data of the task is sent to the chosen worker,
 which then performs the task's computation. 
-In  this module we consider that the client has a set of **independent tasks**, i.e., tasks can be
-completed in  any order. In the next module we consider distributed computing with *dependent tasks*.
+In  this module, we consider that the client has a set of **independent tasks**, i.e., tasks can be
+completed in  any order. In the next module, we consider distributed computing with *dependent tasks*.
 
 
-### Master-Worker Scheduling Strategies
+### Coordinator-Worker Scheduling Strategies
 
 <!--
 You may be familiar with the concept of scheduling for a single processor. In discussions of scheduling on a single
@@ -69,20 +66,21 @@ time and resources needed. For scheduling, having that additional information an
 
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
-We have briefly encountered the concept of scheduling in the [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
+We have briefly encountered the concept of scheduling in the 
+[Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
 have encountered the term in an operating systems course or textbook. The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 
  
 Here,  we consider the following **scheduling problem**: given a set of tasks, each with some input data, and a set
-of workers, each connected to the master via a separate network link, how should tasks be sent to the (idle)
-workers so that the last task to complete completes as early as possible?  
+of workers, each connected to the coordinator via a separate network link, how should tasks be sent to the (idle)
+workers so that the last task to complete finishes as early as possible?  
 
 It turns out that, for many scheduling problems, there are many possible **scheduling strategies**. In addition,
 given the specifics of the problem, different strategies can behave very differently. Some of them can be
 very efficient, and some of them can be very inefficient. 
 
-The **scheduling strategy** used by our master will be as follows:
+The **scheduling strategy** used by our coordinator will be as follows:
 
 ```
   while there is a task to execute:
@@ -94,11 +92,11 @@ The **scheduling strategy** used by our master will be as follows:
         wait for a worker to be idle
 ```
 
-Step a) and b) are the heart of the strategy and we discuss them hereafter. Step c) requires a bit of explanation.
-We assume that the master can execute tasks on the workers simultaneously, *including the sending/receiving of
+Step a) and b) are the heart of the strategy, and we discuss them hereafter. Step c) requires a bit of explanation.
+We assume that the coordinator can execute tasks on the workers simultaneously, *including the sending/receiving of
 input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
-simultaneously to the workers (recall that each worker is connected to the master by an independent link).  In the
-extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the master by a 1 GB/sec link,
+simultaneously to the workers (recall that each worker is connected to the coordinator by an independent link).  In the
+extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the coordinator by a 1 GB/sec link,
 and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
 completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
 completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
@@ -129,9 +127,9 @@ highest work and running it on the worker that can complete it the earliest.  Th
 whether this intuition holds is to try it out.
 
 
-#### Simulating Master-Worker
+#### Simulating Coordinator-Worker
 
-The simulation app below allows use to simulate arbitrary master-worker scenarios. Task and worker specifications
+The simulation app below allows you to simulate arbitrary coordinator-worker scenarios. Task and worker specifications
 are entered using the format indicated in the input form, separated by commas. You can also pick 
 which scheduling strategy is used.  You can use this app on your own, but you should use it to answer
 some of the practice questions below. 
@@ -142,7 +140,7 @@ some of the practice questions below.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="master_worker/" %}
+    {% include simulator.html src="coordinator_worker/" %}
   </div>
 </div>
 
@@ -436,15 +434,22 @@ Worker Scheduling: Best-connected worker
 **[A.3.3.q1.4]** You have the option to upgrade the CPUs to double the
 compute speed on all of the workers, or to upgrade the connection on one of
 the workers, doubling its bandwidth.  Which of these options is best
-(assuming the master still uses the "highest data / best-connected"
+(assuming the coordinator still uses the "highest data / best-connected"
 scheduling strategy).  Come up with an answer just by reasoning first. Then
 check your answer in simulation.
 
----
- 
 <!--
 **[A.3.3.q1.5]** Pick two scheduling strategies (or more exactly to pairs or task/worker selection strategies), ignoring
-the random strategies. Come up with a master-worker setup in which the first strategy does well and for which
-the second strategy does worse. Then come up with another master-worker setup in which the situation is reversed.  
+the random strategies. Come up with a coordinator-worker setup in which the first strategy does well and for which
+the second strategy does worse. Then come up with another coordinator-worker setup in which the situation is reversed.  
 Alternately, you can try to argue why one of the two strategies is always better than the other. 
 -->
+
+---
+
+<div class="footnote">
+<sup>1</sup>In an attempt to suppress oppressive language, we have renamed the 
+commonly used <i>master-worker</i> term by <i>coordinator-worker</i> as suggested in 
+<a href="https://tools.ietf.org/id/draft-knodel-terminology-00.html#rfc.section.1.1" 
+target="_blank">this article</a>.
+</div>

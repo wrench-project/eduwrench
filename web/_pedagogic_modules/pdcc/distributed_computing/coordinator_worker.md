@@ -1,12 +1,13 @@
 ---
 layout: page
-title: 'A.3.3 Master Worker'
+title: 'A.3.3 Coordinator-Worker'
 order: 133
 usemathjax: true
 submodule: 'distributed_computing'
 ---
 
-The goal of this module is to introduce you to the master/worker model of computation, which in some sense extends client-server. 
+The goal of this module is to introduce you to the coordinator/worker model of 
+computation, which in some sense extends client-server. 
 
 Go through the following tabs in sequence...
 
@@ -16,9 +17,8 @@ Go through the following tabs in sequence...
 </div>
 
 <div markdown="1" class="ui tab segment active" data-tab="basics" >
-  {% include_relative include_master_worker/master_worker_single.md %}
+  {% include_relative include_coordinator_worker/coordinator_worker_single.md %}
 </div>
 <div markdown="1" class="ui tab segment" data-tab="scheduling">
-  {% include_relative include_master_worker/master_worker_multiple.md %}
+  {% include_relative include_coordinator_worker/coordinator_worker_multiple.md %}
 </div>
-
