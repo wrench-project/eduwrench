@@ -35,7 +35,7 @@ case the client could choose to use the one that would get
 On your computer, the "client", you have a **100 MB image** in RAM, 
 as part of a machine learning program that you want to use to
 detect particular objects in images (e.g., count the numbers of cars). But
-this program does not implement the fancy algorithm you'd like to apply to
+this program does not implement the fancy algorithm you would like to apply to
 the image, say, because it is proprietary while your program is free
 software. However, you can access remote servers on which the software that
 implements the algorithm is installed so that you can use it 
@@ -43,11 +43,11 @@ over the network. This is provided by the company that develops the fancy
 algorithm, as an advertisement of its capabilities.   The fancy algorithm
 performs **1000 Gflop** of work on the 100 MB image. 
 
-The following pictures depicts this setup:
+The following picture depicts this setup:
  
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server.svg">Client / Server Setup</object>
 <div class="caption">
-<strong>Figure 1: Example client-server setup with two servers</strong>.
+<strong>Figure 1:</strong> Example client-server setup with two servers.
 </div>
  
 The client can use one of two servers: **Server #1,** which you can access via a network link
@@ -60,17 +60,17 @@ algorithm (the number of cars) is only a few bytes, which is negligible.
 *So, from a performance perspective, the task's execution consists of two
 phases: sending the image data over and applying the algorithm to it.* The
 image is sent directly from the RAM on the client to the server program
-which receives it and keeps in in RAM. **That is, for now, we assume no disk I/O
+which receives it and keeps in RAM. **That is, for now, we assume no disk I/O
 whatsoever.**
 
 
-#### Simulating client-server execution
+#### Simulating Client-Server Execution
 
 Below is an app that you can use to simulate the
 above client-server setup. Try to simulate the execution with
 each server (use the radio button to select the server to use), leaving
 all values to their default.  You should notice a difference in
-execution time. Even though Server #1 has a better CPU, it it connected
+execution time. Even though Server #1 has a better CPU, it is connected
 to the client via a low-bandwidth link. Server #2 is thus
 able to finish execution more quickly than Server #1. Then,
 answer the practice questions hereafter, using the simulation app 
@@ -182,7 +182,7 @@ $\max(20.50, 17.72) = 20.50\;\text{seconds}$.
 
 If our client cannot do simultaneous network transfers, we have two options: either
 we first send an image to Server #1 and then send the other image to Server #2, or the other
-way around. Let's examine both options, giving the time line of events for each based on back-of-the-envelope calculations:
+way around. Let's examine both options, giving the timeline of events for each based on back-of-the-envelope calculations:
 
   - **Server #1 first**: 
     - time 0: start sending an image to Server #1
@@ -198,7 +198,7 @@ way around. Let's examine both options, giving the time line of events for each 
     - time 1 + 1000/60 = 17.66: Server #2 finishes computing
     - time 11 + 1000/100 = 21: Server #1 finished computing
     
-The second option is 6.66 seconds faster than the first option. As we've already seen, simulation
+The second option is 6.66 seconds faster than the first option. As we have already seen, simulation
 results would be a bit different, but not  to the extent that the first option would be faster!
 
 This example highlights
@@ -206,7 +206,8 @@ a pretty well-known rule of thumb: trying to get computers to compute  as early 
 In our case, this works out great because Server #2 can get the image really quickly, and is slower
 than Server #1 for computing. So we achieve  much better overlap of communication and computation
 with the second option than with the first option. This is exactly the same idea as
-overlapping I/O and computation as see in [I/O tab of the Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io).
+overlapping I/O and computation as see in the 
+[I/O tab of the Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io).
 
    </div>
  </div>
@@ -222,7 +223,7 @@ has both an input and an output file), answer the following  **four questions**:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/client_server/client_server_question.svg">Client / Server Setup for Question</object>
 <div class="caption">
-<strong>Figure 2: Another example client-server setup with two servers</strong>.
+<strong>Figure 2:</strong> Another example client-server setup with two servers.
 </div>
 
 Once again, you will answer these questions using back-of-the-envelope estimates, even though simulation

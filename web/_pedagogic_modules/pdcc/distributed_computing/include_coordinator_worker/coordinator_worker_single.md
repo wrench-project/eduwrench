@@ -1,60 +1,57 @@
 
 #### Learning Objectives
 
-- Understand the principles of master-worker computing
-- Understand the basic concept of scheduling in the context of master-worker
+- Understand the principles of coordinator-worker computing
+- Understand the basic concept of scheduling in the context of coordinator-worker
 - Experience how different scheduling strategies can affect performance
 
 ----
 
 ### Basics
 
-The term **master-worker** makes a reference to a typical real-life scenario
-in which a master (or boss) assigns labor to workers. 
+The term **coordinator-worker**<sup>1</sup> makes a reference to a typical real-life scenario
+in which a coordinator (or boss) assigns labor to workers. 
 The workers just do the jobs given to them without knowing or worrying about the larger picture.
-Only the master focuses  on the larger picture. Regardless of the real-life social implications
-of this model, in the context of computing it is commonplace and very useful. The main issue
-is how to design  a master that assigns work to workers as judiciously as possible. More precisely,
-the master must decide which task should be sent to which worker and when. These
-are called **scheduling decisions**, and there are many different **scheduling strategies**
-that a master could employ.  The goal of this module is not to teach deep scheduling
+Only the coordinator focuses  on the larger picture. The main issue
+is how to design a coordinator that assigns work to workers as judiciously as possible. More precisely,
+the coordinator must decide which task should be sent to which worker and when. These
+are called **scheduling decisions**, and there are many **scheduling strategies**
+that a coordinator could employ.  The goal of this module is not to teach deep scheduling
 concepts and algorithms, of which there are many, but rather to provide you with an introduction 
-to this complex topic and give
-your a feel for it via hands-on experiments. 
+to this complex topic and give your a feel for it via hands-on experiments. 
 
-### Parallelism through Master-Worker
+### Parallelism through Coordinator-Worker
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/master_worker_narrative.svg">Master / Worker Setup</object>
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/coordinator_worker/coordinator_worker_narrative.svg">Coordinator / Worker Setup</object>
 <div class="caption">
-<strong>Figure 1: Master-worker setup</strong>.
+<strong>Figure 1:</strong> Coordinator-worker setup.
 </div>
 
-Figure 1 above shows the typical view of a master-worker setup. **You will note that this is
+Figure 1 above shows the typical view of a coordinator-worker setup. **You will note that this is
 very similar to the client-server setup that we studied in the previous module.**  In fact, 
-one can view master-worker as an extension of client-server in which the client (the master)
+one can view coordinator-worker as an extension of client-server in which the client (the coordinator)
 uses the servers (the workers) to perform many tasks in parallel. You may recall that in the client-server module,
 practice question *A.3.2.p1.3* touched on the notion that the client could have more than
-on task to perform. This was really a master-worker scenario.  
+one task to perform. This was really a coordinator-worker scenario.  
 
 Note that there are many possible variations on the above setup. For instance, the network could be such
-that all workers are connected to the master via the same shared network link. Or there could be a two-link network path
-from the master to each worker, where the first link is shared by  all workers but the second link is
-dedicated  to the worker.     Also, for 
+that all workers are connected to the coordinator via the same shared network link. Or there could be a two-link network path
+from the coordinator to each worker, where the first link is shared by all workers, but the second link is
+dedicated to the worker. Also, for 
 simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
-this as the master having a fast disk and doing efficient pipelining of disk I/O and network communications --
+this as the coordinator having a fast disk and doing efficient pipelining of disk I/O and network communications --
 see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). Our goal
 here is not to consider all possible setups, but instead to consider a simple one that is sufficient to get
 a sense of what scheduling entails. 
 
-
-Given a set of tasks to perform, *whenever there is at least an idle worker* the master decides which task should
+Given a set of tasks to perform, *whenever there is at least an idle worker* the coordinator decides which task should
 be executed next and on which idle worker. The input data of the task is sent to the chosen worker,
 which then performs the task's computation. 
-In  this module we consider that the client has a set of **independent tasks**, i.e., tasks can be
-completed in  any order. In the next module we consider distributed computing with *dependent tasks*.
+In  this module, we consider that the client has a set of **independent tasks**, i.e., tasks can be
+completed in  any order. In the next module, we consider distributed computing with *dependent tasks*.
 
 
-### Master-Worker Scheduling Strategies
+### Coordinator-Worker Scheduling Strategies
 
 <!--
 You may be familiar with the concept of scheduling for a single processor. In discussions of scheduling on a single
@@ -69,20 +66,21 @@ time and resources needed. For scheduling, having that additional information an
 
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
-We have briefly encountered the concept of scheduling in the [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
+We have briefly encountered the concept of scheduling in the 
+[Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
 have encountered the term in an operating systems course or textbook. The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 
  
 Here,  we consider the following **scheduling problem**: given a set of tasks, each with some input data, and a set
-of workers, each connected to the master via a separate network link, how should tasks be sent to the (idle)
-workers so that the last task to complete completes as early as possible?  
+of workers, each connected to the coordinator via a separate network link, how should tasks be sent to the (idle)
+workers so that the last task to complete finishes as early as possible?  
 
 It turns out that, for many scheduling problems, there are many possible **scheduling strategies**. In addition,
 given the specifics of the problem, different strategies can behave very differently. Some of them can be
 very efficient, and some of them can be very inefficient. 
 
-The **scheduling strategy** used by our master will be as follows:
+The **scheduling strategy** used by our coordinator will be as follows:
 
 ```
   while there is a task to execute:
@@ -94,11 +92,11 @@ The **scheduling strategy** used by our master will be as follows:
         wait for a worker to be idle
 ```
 
-Step a) and b) are the heart of the strategy and we discuss them hereafter. Step c) requires a bit of explanation.
-We assume that the master can execute tasks on the workers simultaneously, *including the sending/receiving of
+Step a) and b) are the heart of the strategy, and we discuss them hereafter. Step c) requires a bit of explanation.
+We assume that the coordinator can execute tasks on the workers simultaneously, *including the sending/receiving of
 input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
-simultaneously to the workers (recall that each worker is connected to the master by an independent link).  In the
-extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the master by a 1 GB/sec link,
+simultaneously to the workers (recall that each worker is connected to the coordinator by an independent link).  In the
+extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the coordinator by a 1 GB/sec link,
 and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
 completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
 completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
@@ -129,9 +127,9 @@ highest work and running it on the worker that can complete it the earliest.  Th
 whether this intuition holds is to try it out.
 
 
-#### Simulating Master-Worker
+#### Simulating Coordinator-Worker
 
-The simulation app below allows use to simulate arbitrary master-worker scenarios. Task and worker specifications
+The simulation app below allows you to simulate arbitrary coordinator-worker scenarios. Task and worker specifications
 are entered using the format indicated in the input form, separated by commas. You can also pick 
 which scheduling strategy is used.  You can use this app on your own, but you should use it to answer
 some of the practice questions below. 
@@ -142,7 +140,7 @@ some of the practice questions below.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="master_worker/" %}
+    {% include simulator.html src="coordinator_worker/" %}
   </div>
 </div>
 
@@ -156,7 +154,7 @@ does it matter which options are picked for task and worker selection?
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content answer-frame">
-No, it doesn't matter. Since every task looks like every other task and every worker looks like
+No, it does not matter. Since every task looks like every other task and every worker looks like
 every other worker, all options will lead to the same schedule. If a task runs on a worker in
 10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
 $\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this with the simulation app.
@@ -187,7 +185,7 @@ Workers: 10 100, 30 80, 20 150
 Tasks: 100 2000, 100 1500, 200 1000, 200 1500, 300 2500
 ```
 
-If we use the "highest work first" task selection strategy and the "fastest host first" host
+If we use the "highest work first" task selection strategy, and the "fastest host first" host
 selection strategy, what is the total execution time (as given by the simulation)? 
 Can you, based on simulation output, confirm that the scheduling strategy works as expected?
 
@@ -202,7 +200,7 @@ any intuition for why the result is at it is?
    </div>
    <div markdown="1" class="ui segment content answer-frame">
 The execution completes in **61.51  seconds**. Inspecting the task execution timeline
-we find that the master makes the first three scheduling decisions as follows:
+we find that the coordinator makes the first three scheduling decisions as follows:
 
   - Task #5 (2500 Gflop) on worker #3 (150 Gflop/sec)
   - Task #1 (2000 Gflop) on worker #1 (100 Gflop/sec)
@@ -212,10 +210,10 @@ These decisions correspond to the "highest work first / highest speed first" str
 
 When going from "highest work first" to "lowest work first", the execution time becomes **82.01 seconds**, 
 that is 20.50 seconds slower!  One intuition for this is that if we run first the "quick" tasks, then at the
-end of the execution one can be left waiting for a long task to finish.  This is exactly what's happening here
-as seen in the task execution time line. We see that Task #5 starts last. Due to bad luck, it starts on Worker #1,
+end of the execution one can be left waiting for a long task to finish.  This is exactly what is happening here
+as seen in the task execution timeline. We see that Task #5 starts last. Due to bad luck, it starts on Worker #1,
 the only idle host at that time. This is a worker with low bandwidth and not great speed.  Since Task #5 has
-high data and high work, any scheduled in which it doesn't start early is not going to be great.
+high data and high work, any scheduled in which it does not start early is not going to be great.
             
    </div>
 </div>
@@ -223,11 +221,12 @@ high data and high work, any scheduled in which it doesn't start early is not go
 <p></p>
 
 
-**[A.3.3.p1.3]** We consider the same setup as in the previous question. In the previous question we took a "let's care about work only" approach.
-Let's now take a "let's care about data only" approach.  
+**[A.3.3.p1.3]** We consider the same setup as in the previous question. In the previous question we 
+took a "let's care about work only" approach. Let's now take a "let's care about data only" approach.  
 
-What is the execution time when using the "highest data" task selection strategy and the "best connected" worker selection strategy? How does
-the result change when we switch to the "lowest data" task selection strategy?   How do these results compare to those in the previous section?
+What is the execution time when using the "highest data" task selection strategy, and the "best connected" 
+worker selection strategy? How does the result change when we switch to the "lowest data" task selection strategy?   
+How do these results compare to those in the previous section?
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -244,12 +243,12 @@ Here are the execution time, including those in the previous question:
             
 Using "highest data / best-connected" is the better option here, and going to "lowest data" is worse. 
 Just like in the previous question, the "lowest xxx" task selection option is a mistake. This makes
-sense from a load-balancing perspective. We don't want to be  "stuck" with a long task
+sense from a load-balancing perspective. We do not want to be  "stuck" with a long task
 at the end of the execution. 
  
 These results mean that, **for this setup,** caring about data is more important than
-caring about computation. Such statements need to be taken with a grain of salt since they may not be generalizable to other setups. 
-
+caring about computation. Such statements need to be taken with a grain of salt since 
+they may not be generalizable to other setups. 
 
    </div>
 </div>
@@ -257,9 +256,8 @@ caring about computation. Such statements need to be taken with a grain of salt 
 <p></p>
 
 
-
 **[A.3.3.p1.4]** Still for the same setup as in the previous question, run the purely random/random strategy 10 times (or more). Report on the
-worst and best execution time it achieves. How does this seemingly bad approach compare to the previous approaches? (hint: if you run this
+worst and best execution times it achieves. How does this seemingly bad approach compare to the previous approaches? (hint: if you run this
 sufficiently many times, you should see some good results).
 
 <div class="ui accordion fluid">
@@ -270,25 +268,24 @@ sufficiently many times, you should see some good results).
    <div markdown="1" class="ui segment content answer-frame">
    
 Here are times obtained with 10 experiments:  56.50, 82.01, 47.67, 50.76, 61.26, 56.01, 64.00, 61.51, 56.51, 54.26.  Of course you may
-have obtained different results, but if you ran more than 10 experiments you probably saw all of the above numbers at least once, and others. 
+have obtained different results, but if you ran more than 10 experiments you probably saw all the above numbers at least once, and others. 
 
 The worst time above is 82.01 seconds, which is equivalent to the "lowest work / fastest" strategy.  But we see a very low 47.67 seconds result! This is
-much better than anything we saw above. Here is the set of decisions
+much better than anything we saw above. Here is the set of decisions:
 
-  - [0.00][master] Launching execution of Task #2 on Worker #3
-  - [0.00][master] Launching execution of Task #4 on Worker #2
-  - [0.00][master] Launching execution of Task #1 on Worker #1
-  - [15.25][master] Notified that Task #2 has completed
-  - [15.25][master] Launching execution of Task #5 on Worker #3
-  - [25.75][master] Notified that Task #4 has completed
-  - [25.75][master] Launching execution of Task #3 on Worker #2
-  - [30.50][master] Notified that Task #1 has completed
-  - [45.26][master] Notified that Task #3 has completed
-  - [47.67][master] Notified that Task #5 has completed 
+  - [0.00][coordinator] Launching execution of Task #2 on Worker #3
+  - [0.00][coordinator] Launching execution of Task #4 on Worker #2
+  - [0.00][coordinator] Launching execution of Task #1 on Worker #1
+  - [15.25][coordinator] Notified that Task #2 has completed
+  - [15.25][coordinator] Launching execution of Task #5 on Worker #3
+  - [25.75][coordinator] Notified that Task #4 has completed
+  - [25.75][coordinator] Launching execution of Task #3 on Worker #2
+  - [30.50][coordinator] Notified that Task #1 has completed
+  - [45.26][coordinator] Notified that Task #3 has completed
+  - [47.67][coordinator] Notified that Task #5 has completed 
 
 with the following task execution timeline:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/gantt_screenshot.jpg">Gantt chart</object>
+<img src="{{ site.baseurl }}/public/img/coordinator_worker/gantt_screenshot.jpg" width="80%"/>
 
 This is a particularly good execution as Task #5 and Task #3 finish almost at the same time. There may be even better options. You can double-check
 with the simulation that **none** of the other strategies come up with this execution. 
@@ -301,7 +298,6 @@ the needles  in the haystack.
 </div>
  
 <p></p>
-
 
 
 **[A.3.3.p1.5]** Come up with input to the simulation app for 2 workers and 4 tasks, such
@@ -320,7 +316,6 @@ the data transfers into account. The way to construct a counter-example is to lo
 at two very different workers and to "force" one of the strategies to make a very
 wrong decision. Let's consider these two workers:
 
-
   - Worker #1: 2000 MB/sec link; 500 Gflop/sec speed
   - Worker #2: 20 MB/sec link; 1000 Gflop/sec speed
   
@@ -338,7 +333,7 @@ decision because Task #1 has the largest input size, and Worker #2 has
 low bandwidth. Instead, the "earliest completion" strategy should avoid this
 mistake because it accounts for both data and computation. 
         
-Let's verify this in simulation with simulator input:
+Let's verify this in simulation with the following simulator input:
 ```
 Workers: 2000 500, 20 1000
 Tasks: 1000 310, 300 300, 10 10, 10 10
@@ -355,7 +350,7 @@ The simulated execution times are:
 <p></p>
 
 **[A.3.3.p1.6]** Can you  come up with a simple scenario (e.g., 2 workers and 2 tasks)
-for which none of the strategies above is optimal. In other words, you 
+for which none of the strategies above is optimal? In other words, you 
 can easily come up with a solution that is better than that of all the strategies. 
 
 <div class="ui accordion fluid">
@@ -398,11 +393,11 @@ On these workers, we need to run the following four tasks:
 
 
 **[A.3.3.q1.1]** If the tasks are assigned to workers in the order that
-both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task
-#3 to Worker #3, and Task #4 to the first worker that becomes idle). What
+both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task #3 
+to Worker #3, and Task #4 to the first worker that becomes idle). What
 will the total execution time be?
 
-**[A.3.3.q1.2]** Find one of the above scheduling strategies (i.e., those
+**[A.3.3.q1.2]** Could you find one of the above scheduling strategies (i.e., those
 implemented in the simulation) that improves on the execution
 time in the previous question? Try to develop an intuition before
 verifying your answer using the simulation app.
@@ -419,7 +414,7 @@ Gflop/sec speed. On these workers you need to run  the following workload:
   - Task #3: 2 GB input; 500 Gflop work
   - Task #4: 1.6 GB input; 1 Tflop work
 
-The master software implements the "highest data / best-connected" scheduling strategy.
+The coordinator software implements the "highest data / best-connected" scheduling strategy.
 
 So the simulator input would be:
 
@@ -436,15 +431,22 @@ Worker Scheduling: Best-connected worker
 **[A.3.3.q1.4]** You have the option to upgrade the CPUs to double the
 compute speed on all of the workers, or to upgrade the connection on one of
 the workers, doubling its bandwidth.  Which of these options is best
-(assuming the master still uses the "highest data / best-connected"
+(assuming the coordinator still uses the "highest data / best-connected"
 scheduling strategy).  Come up with an answer just by reasoning first. Then
 check your answer in simulation.
 
----
- 
 <!--
 **[A.3.3.q1.5]** Pick two scheduling strategies (or more exactly to pairs or task/worker selection strategies), ignoring
-the random strategies. Come up with a master-worker setup in which the first strategy does well and for which
-the second strategy does worse. Then come up with another master-worker setup in which the situation is reversed.  
+the random strategies. Come up with a coordinator-worker setup in which the first strategy does well and for which
+the second strategy does worse. Then come up with another coordinator-worker setup in which the situation is reversed.  
 Alternately, you can try to argue why one of the two strategies is always better than the other. 
 -->
+
+---
+
+<div class="footnote">
+<sup>1</sup>In an attempt to suppress oppressive language, we have renamed the 
+commonly used <i>master-worker</i> term by <i>coordinator-worker</i> as suggested in 
+<a href="https://tools.ietf.org/id/draft-knodel-terminology-00.html#rfc.section.1.1" 
+target="_blank">this article</a>.
+</div>

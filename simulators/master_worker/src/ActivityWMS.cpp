@@ -24,7 +24,7 @@ namespace wrench {
                                      {},
                                      nullptr,
                                      hostname,
-                                     "master_worker"
+                                     "coordinator_worker"
                                      ) {}
 
     /**

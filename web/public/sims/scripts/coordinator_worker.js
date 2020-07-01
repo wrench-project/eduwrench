@@ -33,7 +33,7 @@ $(function () {
         // Then a response with simulation data is received. The data is parsed, and rendered on the
         // screen.
         $.ajax({
-            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/master_worker',
+            url: window.location.protocol + '//' + window.location.hostname + ':3000/run/coordinator_worker',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(
@@ -68,11 +68,11 @@ $(function () {
                     generateGanttChart(executionData);
                     generateHostUtilizationChart(executionData);
 
-                    let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
+                    // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                     // generateGraph(prepared_data, "taskView", 900, 500);
                     // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
-                    populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
-                        "task-details-table-td");
+                    // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
+                    //     "task-details-table-td");
                 } else {
                     console.log(response.simulation_output);
                     $("#simulation-output").empty().append(response.simulation_output);
