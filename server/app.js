@@ -1542,6 +1542,74 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
     }
 });
 
+// execute activity compute service simulation route
+app.post("/run/compute_service_single_task", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/compute_service_single_task/");
+
+    const SIMULATOR = "compute_service_single_task";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const HOST_SELECT = req.body.hostSelect;
+    const TASK_FLOPS = req.body.taskFlops;
+    const FILE_SIZE = req.body.fileSize;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+      "--log=root.thresh:critical",
+      "--log=wrench_core_storage_service.thresh:info",
+      "--log=wrench_core_file_transfer_thread.thresh:info",
+      "--log=wms.thresh:debug",
+      "--log=simple_wms.thresh:debug",
+      "--log='root.fmt:[%.2d][%h]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [HOST_SELECT, TASK_FLOPS, FILE_SIZE].concat(LOGGING); // TODO: add simulation parameters
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status !== 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        let simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "storage_service_multiple",
+            "host_select": HOST_SELECT,
+            "task_flops": TASK_FLOPS,
+            "file_size": FILE_SIZE
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+        });
+    }
+});
 
 function logData(received_data) {
     let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
