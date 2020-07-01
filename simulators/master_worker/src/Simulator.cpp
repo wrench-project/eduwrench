@@ -95,7 +95,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                      "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                      "<platform version=\"4.1\">\n"
                      "   <zone id=\"AS0\" routing=\"Full\">\n"
-                     "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
+                     "       <host id=\"coordinator\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
                      "           <prop id=\"ram\" value=\"32GB\"/>\n"
                      "           <disk id=\"large_disk\" read_bw=\"1000000000000TBps\" write_bw=\"1000000000000TBps\">\n"
                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -126,13 +126,13 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                      "       <link id=\"link\" bandwidth=\"1000MBps\" latency=\"0us\"/>\n"
                      "       <link id=\"link1\" bandwidth=\"10000MBps\" latency=\"0us\"/>\n"
                      "       <link id=\"link2\" bandwidth=\"100000MBps\" latency=\"0us\"/>\n"
-                     "       <route src=\"master\" dst=\"worker_zero\">"
+                     "       <route src=\"coordinator\" dst=\"worker_zero\">"
                      "           <link_ctn id=\"link\"/>"
                      "       </route>"
-                     "       <route src=\"master\" dst=\"worker_one\">"
+                     "       <route src=\"coordinator\" dst=\"worker_one\">"
                      "           <link_ctn id=\"link1\"/>"
                      "       </route>"
-                     "       <route src=\"master\" dst=\"worker_two\">"
+                     "       <route src=\"coordinator\" dst=\"worker_two\">"
                      "           <link_ctn id=\"link2\"/>"
                      "       </route>"
                      "   </zone>\n"
@@ -146,7 +146,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                      "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                      "<platform version=\"4.1\">\n"
                      "   <zone id=\"AS0\" routing=\"Full\">\n"
-                     "       <host id=\"master\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
+                     "       <host id=\"coordinator\" speed=\"1000000000000000Gf\" core=\"1000\">\n"
                      "           <prop id=\"ram\" value=\"32GB\"/>\n"
                      "           <disk id=\"large_disk\" read_bw=\"1000000000000TBps\" write_bw=\"1000000000000TBps\">\n"
                      "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -162,7 +162,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
 
             pugi::xml_node previous_route;
             ///creating the workers specified by command line arguments.
-            ///Currently, only the flops and link speed to master are set.
+            ///Currently, only the flops and link speed to coordinator are set.
             for (const auto &worker : workers) {
 
                 pugi::xml_node host = xml_doc.child("platform").child("zone").prepend_child("host");
@@ -186,7 +186,7 @@ void generatePlatform(std::string platform_file_path, std::vector<std::tuple<std
                 */
 
                 pugi::xml_node route = xml_doc.child("platform").child("zone").append_child("route");
-                route.append_attribute("src") = "master";
+                route.append_attribute("src") = "coordinator";
                 route.append_attribute("dst") = (std::get<0>(worker)).c_str();
                 pugi::xml_node route_link = route.append_child("link_ctn");
                 route_link.append_attribute("id") = ("link_"+std::get<0>(worker)).c_str();
@@ -365,12 +365,12 @@ retVals parse_arguments_for_individual_run(int argc, char** argv, std::mt19937 &
         std::cerr << "          '--seed' used to specify seed if random scheduling is used. [<flag> <seed>]"
                   << std::endl;
         std::cerr <<
-                  "    task input: the amount of data that must be sent from master to worker to begin task in range of [1, " +
+                  "    task input: the amount of data that must be sent from coordinator to worker to begin task in range of [1, " +
                   std::to_string(MAX_TASK_INPUT) + "] MB" << std::endl;
         std::cerr << "    task flops: the required amount of processing needed for the task [1, " +
                      std::to_string(MAX_TASK_FLOP) + "] flop" << std::endl;
         std::cerr <<
-                  "    task output: the amount of data that must be sent back from worker to master after completion in range of [1, " +
+                  "    task output: the amount of data that must be sent back from worker to coordinator after completion in range of [1, " +
                   std::to_string(MAX_TASK_OUTPUT) + "] MB" << std::endl;
         std::cerr << "    (at most " + std::to_string(MAX_NUM_TASKS) + " tasks can be specified)" << std::endl;
     }
@@ -584,7 +584,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
     generatePlatform(platform_file_path, workers);
     simulation.instantiatePlatform(platform_file_path);
 
-    const std::string MASTER("master");
+    const std::string MASTER("coordinator");
     const std::string WORKER_ZERO("worker_zero");
     const std::string WORKER_ONE("worker_one");
     const std::string WORKER_TWO("worker_two");
