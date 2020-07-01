@@ -1,23 +1,23 @@
 
 #### Learning Objectives
 
-- Be able to use simulation to compare master-worker scheduling strategies meaningfully
+- Be able to use simulation to compare coordinator-worker scheduling strategies meaningfully
 
 ----
 
-In the previous tab you were able to simulate particular master-worker setups
+In the previous tab, you were able to simulate particular coordinator-worker setups
 with different scheduling strategies.  But it is difficult to draw general
 conclusions from just a few particular test cases. Instead, what we need to do is
 **compare scheduling strategies on many test cases**. 
 
-#### Simulating may test cases
+#### Simulating Many Test Cases
 
 Below is a simulation app that makes is possible to evaluate a scheduling
 strategy on multiple randomly generated scenarios. The app returns the
 minimum, average, and maximum execution times over all these scenarios. 
 This makes it possible to draw some informed conclusions on the relative merit
 of different strategies. But analysis of experimental data is a complicated matter,
-and we're only scratching the surface here. To do actual "research", we would
+and we are only scratching the surface here. To do actual "research", we would
 need a much more comprehensive experimental framework.
 
 The simulation app is a bit more complicated than that in  the previous tab. It allows you to specify:
@@ -39,7 +39,7 @@ interesting experiments.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="master_worker_generated/" %}
+    {% include simulator.html src="coordinator_worker_generated/" %}
   </div>
 </div>
 
@@ -54,7 +54,7 @@ paths that we could follow, and many more experiments  we could perform
 to strengthen (or weaken!) our claims.
 
 **[A.3.3.p2.1]** We have said in previous modules that a good idea is
-likely to prioritize long tasks. Consider a master-worker setup in which
+likely to prioritize long tasks. Consider a coordinator-worker setup in which
 workers are all identical (i.e., they are *homogeneous*) and tasks have
 negligible input size but a wide range of work amounts, so that task
 execution times on the workers are in the [1 sec, 10 sec] range.
@@ -69,7 +69,7 @@ How do you think these strategies rank?
 
 Check whether your expectations are confirmed in simulation (by coming up
 with appropriate simulation input).  Using a small number of workers and, 
-say, twice as many tasks should be sufficient. Also, don't forget
+say, twice as many tasks should be sufficient. Also, do not forget
 to run a statistically significant number of experiments (e.g., the "number
 of experiments" should be at least 30).  
 
@@ -108,7 +108,6 @@ range, with both better minimum and  worse maximum.
 <p></p>
 
 
-
 **[A.3.3.p2.2]** Say that now, in addition to having task work amounts vary
 by a 10x factor, worker speeds also vary by a 10x factor. Are results
 different when comparing the three strategies in the previous question?
@@ -119,7 +118,6 @@ different when comparing the three strategies in the previous question?
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content answer-frame">
-
 
 Setting worker speeds in the range [100, 1000], we obtain:
 
@@ -133,8 +131,8 @@ fastest workers.
 
 </div>
 </div>
-<p></p>
 
+<p></p>
 
 **[A.3.3.p2.3]** Let's now consider a fully heterogeneous setup in which we have
 **20 workers** and **10 tasks** with:
@@ -155,7 +153,6 @@ best? Confirm your expectation in simulation:
    </div>
    <div markdown="1" class="ui segment content answer-frame">
 
-
 The "fastest" and "best-connected" strategies only consider one
 aspect of task executions, and thus they could make very wrong decisions.
 Random, as usual, could work well sometimes, but is probably not very
@@ -170,12 +167,12 @@ Simulation results confirm the above:
 
 </div>
 </div>
+
 <p></p>
 
 
-
 **[A.3.3.p2.4]** In the previous question, we purposely had more workers
-that tasks.  What if now we were to have, say, 4 times as many tasks as
+than tasks.  What if now we were to have, say, 4 times as many tasks as
 workers. Do you think the different strategies considered in the previous
 question would be closer together or further apart in terms of their
 results?   Verify your expectation experimentally.
@@ -187,7 +184,7 @@ results?   Verify your expectation experimentally.
    </div>
    <div markdown="1" class="ui segment content answer-frame">
 
-When there are fewer tasks that workers, it is critical to pick the right
+When there are fewer tasks than workers, it is critical to pick the right
 workers (which the "earliest completion" strategy does very well). But as we add tasks, all workers are
 used to run the first batch of tasks. Then the faster workers will become
 idle first, and used again. So as the number of tasks grows, we would
@@ -199,7 +196,7 @@ simulation using 80 tasks and 20 workers:
   - highest flop / best-connected: [9.90 sec : 12.79 sec : 18.81 sec]
   - highest flop / earliest completion: [9.50 sec : 13.08 sec : 18.02 sec]
 
-The main observation is that random really look as good  as anything
+The main observation is that random really looks as good  as anything
 else now! And in fact, earliest completion is a bit worse!   Welcome
 to the confusing world of scheduling.
 
@@ -220,7 +217,7 @@ indeed more effective than the "highest flop" strategy. What about
 the "lowest byte" task selection  strategy? Do you think it would perform
 well? Confirm your expectation experimentally. 
 
-**[A.3.3.q.2.2]** In  the practice  questions above we did not consider
+**[A.3.3.q.2.2]** In  the practice  questions above, we did not consider
 the "ratio" worker selection strategies (i.e., the "highest flop/byte" and
 "highest byte/flop" strategies).  Come up with experimental campaigns to
 determine whether these strategies are worthwhile.
