@@ -154,7 +154,7 @@ does it matter which options are picked for task and worker selection?
      (click to see answer)
    </div>
    <div markdown="1" class="ui segment content answer-frame">
-No, it doesn't matter. Since every task looks like every other task and every worker looks like
+No, it does not matter. Since every task looks like every other task and every worker looks like
 every other worker, all options will lead to the same schedule. If a task runs on a worker in
 10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will be
 $\lceil n/m \rceil \times 10$ for all scheduling strategies. You can verify this with the simulation app.
@@ -185,7 +185,7 @@ Workers: 10 100, 30 80, 20 150
 Tasks: 100 2000, 100 1500, 200 1000, 200 1500, 300 2500
 ```
 
-If we use the "highest work first" task selection strategy and the "fastest host first" host
+If we use the "highest work first" task selection strategy, and the "fastest host first" host
 selection strategy, what is the total execution time (as given by the simulation)? 
 Can you, based on simulation output, confirm that the scheduling strategy works as expected?
 
@@ -200,7 +200,7 @@ any intuition for why the result is at it is?
    </div>
    <div markdown="1" class="ui segment content answer-frame">
 The execution completes in **61.51  seconds**. Inspecting the task execution timeline
-we find that the master makes the first three scheduling decisions as follows:
+we find that the coordinator makes the first three scheduling decisions as follows:
 
   - Task #5 (2500 Gflop) on worker #3 (150 Gflop/sec)
   - Task #1 (2000 Gflop) on worker #1 (100 Gflop/sec)
@@ -210,10 +210,10 @@ These decisions correspond to the "highest work first / highest speed first" str
 
 When going from "highest work first" to "lowest work first", the execution time becomes **82.01 seconds**, 
 that is 20.50 seconds slower!  One intuition for this is that if we run first the "quick" tasks, then at the
-end of the execution one can be left waiting for a long task to finish.  This is exactly what's happening here
-as seen in the task execution time line. We see that Task #5 starts last. Due to bad luck, it starts on Worker #1,
+end of the execution one can be left waiting for a long task to finish.  This is exactly what is happening here
+as seen in the task execution timeline. We see that Task #5 starts last. Due to bad luck, it starts on Worker #1,
 the only idle host at that time. This is a worker with low bandwidth and not great speed.  Since Task #5 has
-high data and high work, any scheduled in which it doesn't start early is not going to be great.
+high data and high work, any scheduled in which it does not start early is not going to be great.
             
    </div>
 </div>
@@ -221,11 +221,12 @@ high data and high work, any scheduled in which it doesn't start early is not go
 <p></p>
 
 
-**[A.3.3.p1.3]** We consider the same setup as in the previous question. In the previous question we took a "let's care about work only" approach.
-Let's now take a "let's care about data only" approach.  
+**[A.3.3.p1.3]** We consider the same setup as in the previous question. In the previous question we 
+took a "let's care about work only" approach. Let's now take a "let's care about data only" approach.  
 
-What is the execution time when using the "highest data" task selection strategy and the "best connected" worker selection strategy? How does
-the result change when we switch to the "lowest data" task selection strategy?   How do these results compare to those in the previous section?
+What is the execution time when using the "highest data" task selection strategy, and the "best connected" 
+worker selection strategy? How does the result change when we switch to the "lowest data" task selection strategy?   
+How do these results compare to those in the previous section?
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -242,12 +243,12 @@ Here are the execution time, including those in the previous question:
             
 Using "highest data / best-connected" is the better option here, and going to "lowest data" is worse. 
 Just like in the previous question, the "lowest xxx" task selection option is a mistake. This makes
-sense from a load-balancing perspective. We don't want to be  "stuck" with a long task
+sense from a load-balancing perspective. We do not want to be  "stuck" with a long task
 at the end of the execution. 
  
 These results mean that, **for this setup,** caring about data is more important than
-caring about computation. Such statements need to be taken with a grain of salt since they may not be generalizable to other setups. 
-
+caring about computation. Such statements need to be taken with a grain of salt since 
+they may not be generalizable to other setups. 
 
    </div>
 </div>
@@ -255,9 +256,8 @@ caring about computation. Such statements need to be taken with a grain of salt 
 <p></p>
 
 
-
 **[A.3.3.p1.4]** Still for the same setup as in the previous question, run the purely random/random strategy 10 times (or more). Report on the
-worst and best execution time it achieves. How does this seemingly bad approach compare to the previous approaches? (hint: if you run this
+worst and best execution times it achieves. How does this seemingly bad approach compare to the previous approaches? (hint: if you run this
 sufficiently many times, you should see some good results).
 
 <div class="ui accordion fluid">
@@ -268,25 +268,24 @@ sufficiently many times, you should see some good results).
    <div markdown="1" class="ui segment content answer-frame">
    
 Here are times obtained with 10 experiments:  56.50, 82.01, 47.67, 50.76, 61.26, 56.01, 64.00, 61.51, 56.51, 54.26.  Of course you may
-have obtained different results, but if you ran more than 10 experiments you probably saw all of the above numbers at least once, and others. 
+have obtained different results, but if you ran more than 10 experiments you probably saw all the above numbers at least once, and others. 
 
 The worst time above is 82.01 seconds, which is equivalent to the "lowest work / fastest" strategy.  But we see a very low 47.67 seconds result! This is
-much better than anything we saw above. Here is the set of decisions
+much better than anything we saw above. Here is the set of decisions:
 
-  - [0.00][master] Launching execution of Task #2 on Worker #3
-  - [0.00][master] Launching execution of Task #4 on Worker #2
-  - [0.00][master] Launching execution of Task #1 on Worker #1
-  - [15.25][master] Notified that Task #2 has completed
-  - [15.25][master] Launching execution of Task #5 on Worker #3
-  - [25.75][master] Notified that Task #4 has completed
-  - [25.75][master] Launching execution of Task #3 on Worker #2
-  - [30.50][master] Notified that Task #1 has completed
-  - [45.26][master] Notified that Task #3 has completed
-  - [47.67][master] Notified that Task #5 has completed 
+  - [0.00][coordinator] Launching execution of Task #2 on Worker #3
+  - [0.00][coordinator] Launching execution of Task #4 on Worker #2
+  - [0.00][coordinator] Launching execution of Task #1 on Worker #1
+  - [15.25][coordinator] Notified that Task #2 has completed
+  - [15.25][coordinator] Launching execution of Task #5 on Worker #3
+  - [25.75][coordinator] Notified that Task #4 has completed
+  - [25.75][coordinator] Launching execution of Task #3 on Worker #2
+  - [30.50][coordinator] Notified that Task #1 has completed
+  - [45.26][coordinator] Notified that Task #3 has completed
+  - [47.67][coordinator] Notified that Task #5 has completed 
 
 with the following task execution timeline:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/master_worker/gantt_screenshot.jpg">Gantt chart</object>
+<img src="{{ site.baseurl }}/public/img/coordinator_worker/gantt_screenshot.jpg" width="80%"/>
 
 This is a particularly good execution as Task #5 and Task #3 finish almost at the same time. There may be even better options. You can double-check
 with the simulation that **none** of the other strategies come up with this execution. 
@@ -299,7 +298,6 @@ the needles  in the haystack.
 </div>
  
 <p></p>
-
 
 
 **[A.3.3.p1.5]** Come up with input to the simulation app for 2 workers and 4 tasks, such
@@ -318,7 +316,6 @@ the data transfers into account. The way to construct a counter-example is to lo
 at two very different workers and to "force" one of the strategies to make a very
 wrong decision. Let's consider these two workers:
 
-
   - Worker #1: 2000 MB/sec link; 500 Gflop/sec speed
   - Worker #2: 20 MB/sec link; 1000 Gflop/sec speed
   
@@ -336,7 +333,7 @@ decision because Task #1 has the largest input size, and Worker #2 has
 low bandwidth. Instead, the "earliest completion" strategy should avoid this
 mistake because it accounts for both data and computation. 
         
-Let's verify this in simulation with simulator input:
+Let's verify this in simulation with the following simulator input:
 ```
 Workers: 2000 500, 20 1000
 Tasks: 1000 310, 300 300, 10 10, 10 10
@@ -353,7 +350,7 @@ The simulated execution times are:
 <p></p>
 
 **[A.3.3.p1.6]** Can you  come up with a simple scenario (e.g., 2 workers and 2 tasks)
-for which none of the strategies above is optimal. In other words, you 
+for which none of the strategies above is optimal? In other words, you 
 can easily come up with a solution that is better than that of all the strategies. 
 
 <div class="ui accordion fluid">
@@ -396,11 +393,11 @@ On these workers, we need to run the following four tasks:
 
 
 **[A.3.3.q1.1]** If the tasks are assigned to workers in the order that
-both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task
-#3 to Worker #3, and Task #4 to the first worker that becomes idle). What
+both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task #3 
+to Worker #3, and Task #4 to the first worker that becomes idle). What
 will the total execution time be?
 
-**[A.3.3.q1.2]** Find one of the above scheduling strategies (i.e., those
+**[A.3.3.q1.2]** Could you find one of the above scheduling strategies (i.e., those
 implemented in the simulation) that improves on the execution
 time in the previous question? Try to develop an intuition before
 verifying your answer using the simulation app.
@@ -417,7 +414,7 @@ Gflop/sec speed. On these workers you need to run  the following workload:
   - Task #3: 2 GB input; 500 Gflop work
   - Task #4: 1.6 GB input; 1 Tflop work
 
-The master software implements the "highest data / best-connected" scheduling strategy.
+The coordinator software implements the "highest data / best-connected" scheduling strategy.
 
 So the simulator input would be:
 
