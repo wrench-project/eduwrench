@@ -47,5 +47,5 @@ tasks.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/basics.svg">Cyberinfrastructure Setup</object>
 <div class="caption">
-<strong>Figure 1: Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service</strong>.
+<strong>Figure 1:</strong> Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service.
 </div>
