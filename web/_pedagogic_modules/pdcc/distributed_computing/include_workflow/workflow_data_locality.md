@@ -24,7 +24,7 @@ more efficient.
 Trying to keep/move data close to where the computation takes place is
 often called **improving data locality**. You may have encountered
 this term in computer architecture or operating systems courses/textbooks in
-the context of caches. Here we use it in the context of network proximity. 
+the context of caches. Here, we use it in the context of network proximity. 
 
 
 ### Better data locality for our workflow
@@ -35,7 +35,7 @@ data on the compute site. So let's enhance that site with a bit more hardware!
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_platform_zoom.svg">Storage at the compute site</object>
 <div class="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
-Figure 1 above show the compute site for the platform in the previous tab, but
+Figure 1 above shows the compute site for the platform in the previous tab, but
 with a new host (shown in green).  This host is not used for computation but provides access to a 
 disk with 500 MB/sec read/write bandwidth.
 
@@ -43,10 +43,10 @@ Given the new storage capability, we can now refine the workflow execution
 strategy: unless a task is an exit task of the workflow, it stores its output
 on the disk at the compute site. In this way, **whenever possible, tasks
 will read/write data to the local storage rather than the remote storage**. The
-initial input files to the workflow are still stored at the remove storage site, 
+initial input files to the workflow are still stored at the remote storage site, 
 and the output files must end up there as well. 
 
-#### Simulating better data locality
+#### Simulating Better Data Locality
 
 The simulation app below simulates workflow execution when the compute site
 has storage capabilities. The app is similar to that in the previous
@@ -88,14 +88,14 @@ This can be answered by just running the simulation:
   - With only remote storage: 299.69 seconds
   - With local storage: 239.91 seconds
   
-Thus the saving is 59.78 seconds. 
+Thus, the saving is 59.78 seconds. 
 
 The only  difference  in the two executions is the I/O times for the
 intermediate files. In both cases, $2 \times 20 \times 100 = 4000$ MB
 of data are being read/written from/to storage. To the remote storage, this
 should  take time 4000/100 = 40 seconds. To the local storage, this 
-should take time 4000/500  = 8 seconds.  So we'd  expect a saving of
-$40 - 8 = 32$ seconds. In fact the saving is twice as much. 
+should take time 4000/500  = 8 seconds.  So we would  expect a saving of
+$40 - 8 = 32$ seconds. In fact, the saving is twice as much. 
 
 This is because
 the wide-area data transfer rate is not 100 MB/sec, due to the high network latency.  
@@ -116,7 +116,8 @@ captured by the simulation (which we will mention in upcoming modules).
 </div>
 <p></p>
 
-**[A.3.4.p3.2]** Still using a 100 MB/sec wide-area link bandwidth, what parallel efficiency can we achieve when using 5 4-core hosts and local storage? 
+**[A.3.4.p3.2]** Still using a 100 MB/sec wide-area link bandwidth, what parallel 
+efficiency can we achieve when using 5 4-core hosts and local storage? 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -151,7 +152,7 @@ Using the simulation again, we get: (239.91 / 36.61) / 20 = 32.7%.
 <p></p>
 
 
-**[A.3.4.p3.4]** Now set the wide-area link bandwidth to a high 500 MB/sec. Do we see big jump in
+**[A.3.4.p3.4]** Now, set the wide-area link bandwidth to a high 500 MB/sec. Do we see big jump in
 efficiency? What is the effective wide-area data transfer rate? Is it anywhere close to 500 MB/sec?
 <div class="ui accordion fluid">
   <div class=" title">
@@ -164,7 +165,7 @@ Using the simulation again, we get: (239.91 / 33.45) / 20 = 35.8%.  This is *not
 jump at all. 
    
 From the simulation output, we see that it takes 4.49 seconds for all tasks to read their
-input  from remote storage. That's for a total of $20\times 50 = 1000$ MB. So the data
+input  from remote storage. That is for a total of $20\times 50 = 1000$ MB. So the data
 transfer rate is 1000/4.49 = 222.71 MB/sec. This is not even half of 500 MB/sec. The large
 latency is preventing us from achieving the peak data transfer rate.
 
@@ -174,7 +175,7 @@ latency is preventing us from achieving the peak data transfer rate.
 
 **[A.3.4.p3.5]** Assuming the wide-area latency was not a problem, and that we would
 achieve 500 MB/sec data transfer rate, what would the parallel efficiency be?  How close
-is it from the efficiency when assuming that all I/O take zero time. 
+is it from the efficiency when assuming that all I/O takes zero time?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -183,15 +184,15 @@ is it from the efficiency when assuming that all I/O take zero time.
   <div markdown="1" class="ui segment content answer-frame">
 
 Instead, of 4.49 seconds, the tasks would take "only" 1000/500 = 2 seconds to read their input.
-So we would shave 2.49 seconds off the execution time. (In fact we'd also save a tiny bit 
+So we would shave 2.49 seconds off the execution time. (In fact we would also save a tiny bit 
 for the transfer of the workflow's 1 MB output file.) So the efficiency would be: 
 (239.91 / (33.45 - 2.49)) / 20 = 38.7%. 
 
 If I/O took zero time, the sequential (1-core) execution time would be
-(20000 +  1000)/100 = 210 and the parallel execution time would be: 20 seconds. 
+(20000 +  1000)/100 = 210, and the parallel execution time would be: 20 seconds. 
 So the efficiency would be (210/20) / 20 = 52%.  
 
-So with 35.8% we're still pretty far from the ideal parallel efficiency. 
+So with 35.8% we are still pretty far from the ideal parallel efficiency. 
 
   </div>
 </div>
@@ -202,7 +203,7 @@ So with 35.8% we're still pretty far from the ideal parallel efficiency.
 
 #### Questions
 
-Consider  the following workflow:
+Consider the following workflow:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_data_locality_question.svg">Distributed platform</object>
 
