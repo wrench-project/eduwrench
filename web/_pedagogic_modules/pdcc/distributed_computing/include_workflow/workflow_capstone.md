@@ -31,7 +31,7 @@ the workflow executes in 74 seconds, but you want it to run it
 as fast as possible since you want to execute this workflow as many times
 as possible per day (with different input data). 
 
-After looking at the cloud provider's web site, you 
+After looking at the cloud provider's website, you 
 figure out you can afford **one** of the following upgrades:
 
   - **Upgrade #1:** Double the wide-area data transfer rate;
