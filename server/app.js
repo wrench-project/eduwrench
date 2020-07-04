@@ -944,7 +944,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
             "disk_speed": DISK_SPEED,
             "file_size": FILE_SIZE
         });
-
+w
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
          * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
