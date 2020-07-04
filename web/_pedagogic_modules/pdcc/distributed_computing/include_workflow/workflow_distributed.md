@@ -10,7 +10,7 @@
 
 Workflows are often comprised of many tasks that are computationally
 intensive and/or require large amounts of storage. As a result, one often
-doesn't have the necessary resources on one's local computer to execute them
+does not have the necessary resources on one's local computer to execute them
 in any reasonable amount of time.  Instead, one needs to deploy workflow
 executions on compute/storage resources that are connected via some
 network, a.k.a., distributed computing platforms. You likely have heard of
@@ -22,7 +22,7 @@ as possible, given the underlying network infrastructure (latencies,
 bandwidths, network topologies) that interconnects storage (disks) and
 compute (multi-core hosts with some RAM) resources.  This is only possible
 if an appropriate software infrastructure is provided to use
-remote resources. In this module we just assume that this is the
+remote resources. In this module, we just assume that this is the
 case, and leave the discussion of the details of the software 
 infrastructure for future modules. 
 
@@ -43,11 +43,10 @@ data has to flow back and forth between the storage site and the compute site**.
 because, for now, the compute site has no persistent storage. 
 
 The storage site simply hosts a disk with  500 MB/sec read/write bandwidth, and uses a 1 MB
-buffer when being accessed remotely (see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). It is
-connected to the compute site via a wide-area network link (in fact it's
+buffer when being accessed remotely (see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). 
+It is connected to the compute site via a wide-area network link (in fact it is
 likely a multi-link network path, but let's keep this simple and assume a single link). This link
-has 100 MB/sec bandwidth and 10
-millisecond latency.
+has 100 MB/sec bandwidth and 10 millisecond latency.
 
 Let's now look deeper into the setup of the compute site. This site hosts several
 computers, each of them with some RAM capacity and multiple cores, and each of them
@@ -60,8 +59,8 @@ in the figure below:
 Each compute host has 32 GB of RAM, cores that compute at 100  Gflop/sec, and up to 8 of these cores. All
 compute hosts are connected to the site's switch via a 10 GB/sec network link with 
 10 micro-second latency. This switch is connected to the storage site via the wide-area link. 
-Therefore, **the network path from the storage resource to each compute host has two links: the 100 MB/sec wide-area link
-and the 10 GB/sec local-area link**.
+Therefore, **the network path from the storage resource to each compute host has two links: 
+the 100 MB/sec wide-area link, and the 10 GB/sec local-area link**.
 
 Say that a task needs to perform 1000 Gflop, 
 requires 10 GB of RAM, reads in a  200 MB input file, and
@@ -79,10 +78,12 @@ $$
 The above expression assumes that data is read/written from/to the disk at 100 MB/sec,
 the smallest of the disk bandwidth (500 MB/sec) and of the bottleneck link
 bandwidth (100 MB/sec). It is only a rough estimate
-because it does not account for pipelining and latency, and because, as we've seen several time already in these modules, the network' data transfer rate is often not simply data size divided by bandwidth. This
+because it does not account for pipelining and latency, and because, as we have seen several 
+times already in these modules, the network's data transfer rate is often not simply 
+data size divided by bandwidth. This
 is especially true when network latencies are high, which is the case here
 with a 10ms latency on the wide-area link that connects the storage
-resource to the compute resources.  We'll see below how (in)accurate these
+resource to the compute resources.  We will see below how (in)accurate these
 estimates can be. But as a general note, as we progress through these
 pedagogic modules, platforms become increasingly complex. As a result, we will rely
 more and more on simulation results and less and less on
@@ -108,20 +109,19 @@ We wish to execute our workflow on our distributed platform. The workflow
 execution strategy is straightforward because our workflow has a simple
 structure: whenever there are sufficient compute resources at a compute
 host (i.e., at least one idle core and 8 GB of RAM), start the next
-to-be-executed pre_* task on it. When all pre_* tasks have been executed,
+to-be-executed `pre_*` task on it. When all `pre_*` tasks have been executed,
 then the final task can be executed.
 
-Whenever several pre_* tasks start simultaneously, then also read
+Whenever several `pre_*` tasks start simultaneously, then they also read
 their input files simultaneously, thus splitting disk and network bandwidth. And, as
 in the previous tab, a task does not free up its compute resources until its output files
 have all been fully written to disk.
 
 
-#### Simulating distributed workflow execution
+#### Simulating Distributed Workflow Execution
 
 The simulation app below simulates the execution of our workflow on our platform, and allows
-you to pick the
-number of hosts and of cores per host at the compute site. You can experiment
+you to pick the number of hosts and of cores per host at the compute site. You can experiment
 yourself with this application, but you should then use it for the practice questions hereafter. 
 
 <div class="ui accordion fluid app-ins">
@@ -149,7 +149,7 @@ what fraction of the time is spent doing actual computation?
   <div markdown="1" class="ui segment content answer-frame">
   Running the simulation gives us a total execution time of 299.69 seconds. 
   In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
-  core. So that's 210 seconds of computation. Therefore, the execution
+  core. So that is 210 seconds of computation. Therefore, the execution
   spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
   of the execution is disk and network I/O.  
   </div>
@@ -169,7 +169,7 @@ your expectation in simulation.
   <div markdown="1" class="ui segment content answer-frame">
   In the previous question, we found out that the computation in total takes
   210 seconds. On 2 cores, this should be 110 seconds (since the 
-  final task runs by itself). Therefore we'd expect the
+  final task runs by itself). Therefore we would expect the
   execution time to be 100 second shorter than in the previous question,
   that is, 199.69 seconds.  
   
@@ -192,9 +192,9 @@ have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
   </div>
   <div markdown="1" class="ui segment content answer-frame">
   
-It's better to use 5 4-core hosts because the RAM at each host
+It is better to use 5 4-core hosts because the RAM at each host
 if 32 GB. Therefore, no matter how many  cores a host has
-it cannot run more than 4 of our pre_* tasks in parallel. 
+it cannot run more than 4 of our `pre_*` tasks in parallel. 
 
 This is seen in simulation:
 
@@ -230,7 +230,7 @@ execution when using a single core? What about when using 5 4-core hosts?
   </div>
   <div markdown="1" class="ui segment content answer-frame">
   
-In total the execution reads and writes 20*(50 + 100 + 100) + 1 = 5001 MB 
+In total, the execution reads and writes 20*(50 + 100 + 100) + 1 = 5001 MB 
 of data. 
 Using the same reasoning as in question A.3.4.p2.1 above, we can compute the I/O time
 for each execution, and deduce the bandwidth. This is summarized in the table
@@ -244,7 +244,7 @@ below:
 |---|---|---|---|
 
 As earlier, we find that doing parallel I/O (over the network) brings
-some benefit. However, due to latency effects, we're pretty
+some benefit. However, due to latency effects, we are pretty
 far from achieving the peak 100 MB/s bandwidth.  It would be 
 pretty difficult to estimate the I/O time of this workflow
 execution without the simulation. 
@@ -273,8 +273,8 @@ Consider  the following workflow (all green tasks have identical specs, and so d
   Assuming the I/O and network times are zero, which of the three platforms above is the better choice?
 
 **[A.3.4.q2.2]**  Because tasks in all levels are identical, at any given time either all 
-                  running tasks compute, or all running tasks perform I/O. Assuming that the 
-                  total I/O time, regardless of the number of hosts/cores is 20
+                  running tasks compute, or all running tasks perform I/O. Assuming the 
+                  total I/O time, regardless of the number of hosts/cores, is 20
                   seconds, what is the parallel efficiency for the three platforms in the
                   previous question?
 

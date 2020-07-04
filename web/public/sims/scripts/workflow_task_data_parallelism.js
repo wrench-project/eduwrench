@@ -79,7 +79,6 @@ $(function () {
         }
     });
 
-
     $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
@@ -118,7 +117,7 @@ $(function () {
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                generateHostUtilizationChart(executionData, [], [], false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

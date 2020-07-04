@@ -15,9 +15,10 @@ to perform some complex genomic analysis can be organized as a
 bioinformatics workflow). In practice, **the tasks are stand-alone
 executable programs that read in input files and produce output files**.  A file
 produced as output by one task can be required as input for another task. Consequently, a 
-workflow is a **DAG of tasks** where edges are
-file dependencies (see the [Depencies tab of the Multi Core
-Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/dependencies) in which we already discussed dependencies between tasks). 
+workflow is typically represented as a **DAG of tasks** where edges are
+file dependencies (see the [Dependencies tab of the Multi Core
+Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/dependencies) 
+in which we already discussed dependencies between tasks). 
 
 There are two typical "rules of execution" in practice:
 
@@ -25,9 +26,10 @@ There are two typical "rules of execution" in practice:
   - *A task's output file is available only once all of that task's output files have been generated.* 
 
 In other words, a task is considered completed only once it has written all
-its output files.  Until then, its output file are "invisible" to
+its output files.  Until then, its output files are "invisible" to
 other tasks. This is because, unless we know the details of a task's 
-implementation, we can never be sure when an output files is finalized before the task's program actually exits.
+implementation, we can never be sure when an output file is finalized before 
+the task's program actually exits.
 
 **For now, we assume that a task can only run using a single core**. 
 
@@ -38,18 +40,19 @@ The figure below depicts an example workflow application:
 <strong>Figure 1:</strong> Example workflow
 application. Some examples of real-world workflows for scientific
 applications, along with their DAG representations, can be found
-<a href="https://pegasus.isi.edu/application-showcase/">here</a>.
+[here](https://pegasus.isi.edu/application-showcase/).
 </div>
 
-#### Simulating multi-core workflow execution
+#### Simulating Multi-core Workflow Execution
 
 This module relies heavily on concepts introduced in previous modules. 
-To make sure that you master these concepts, we
+To make sure you master these concepts, we
 provide you with a simulation app and accompanying practice
 questions thereafter. **If you find this content too difficult or are missing key
 knowledge, you may
 want to review the previous modules**. In particular, many concepts
-come from the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing) and the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing).
+come from the [Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing) 
+and the [Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing).
 
 The app below simulates the execution of the
 example workflow in Figure 1 on a computer with 50 Gflop/sec cores and 16 GB
@@ -63,7 +66,8 @@ in terms
 of the number of execution options. But we still need to specify some aspects of the
 execution strategy simulated by the app:
 
-  - A core never runs more than one task at time (this is because, as in all previous modules, we disallow time-sharing of cores);
+  - A core never runs more than one task at time (this is because, as in all 
+    previous modules, we disallow time-sharing of cores);
   - When there is not enough free RAM on the computer, tasks cannot be
     started;
   - When there are multiple ready tasks, they are started on cores in
@@ -90,10 +94,9 @@ execution strategy simulated by the app:
 #### Practice Questions
 
 Answer these practice questions, using the simulation app and/or using 
-analysis  (and then using
-the app for double-checking you results):
+analysis  (and then using the app for double-checking your results):
 
-**[A.3.4.p1.1]** How many MB of data are read and written by the workflow when executed on this computer
+**[A.3.4.p1.1]** How many MB of data are read and written by the workflow when executed on this computer?
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -132,7 +135,6 @@ is 100 MB/sec, this means the total data size is: 3700 MB!
 **[A.3.4.p1.2]** What is the parallel efficiency when executing the workflow on 3 cores and when the
 disk bandwidth is 150 MB/sec?
 
-
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -150,7 +152,6 @@ is 1.108/3 = 36.9%.  This is pretty low.
 
 **[A.3.4.p1.3]** Explain why there is never any improvement when going from
 a 2-core execution to a  3-core execution for this workflow? 
-
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -184,7 +185,7 @@ by tasks? How can you tell based on the simulation output?
   <div markdown="1" class="ui segment content answer-frame">
 Tasks task3 and task4 use the disk concurrently. This is easily seen in the
 "Workflow Task Data" section of the simulation output. For instance, task3 spends 16
-seconds reading its input file. Give that this file is 400 MB, this means that
+seconds reading its input file. Given that this file is 400 MB, this means that
 task3 experiences a read bandwidth of 400/16 = 25 MB/sec. This is half  of
 the disk bandwidth, meaning that the disk is used concurrently by another task (task4),
 which also gets half of the disk bandwidth.
@@ -196,7 +197,6 @@ which also gets half of the disk bandwidth.
 **[A.2.3.p1.5]** Considering a 1-core execution of the workflow, for which
 disk bandwidth would the execution be perfectly balanced between computation time
 and I/O time? 
-
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -232,7 +232,7 @@ is 100 MB/sec?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content answer-frame">
-In the [Task Dependencies tab of the Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies)
+In the [Task Dependencies tab of the Multi Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/dependencies)
 we defined the critical path without any I/O. Extending this notion to I/O is
  straightforward (one can simply consider file reads and writes as
 extra tasks to perform). 
@@ -266,7 +266,7 @@ for parallel execution in general and on our 3-core computer in particular.
 There are three clear problems here:
 
   - *Problem #1:* Only 1 level of the workflow has 3 tasks, and all other levels have
-1 task. So this workflow is mostly sequential, and **Amdahl's law** tells use this is bad news.
+1 task. So this workflow is mostly sequential, and **Amdahl's law** tells us this is bad news.
 
   - *Problem #2:* The only parallel level (the "blue" level) suffers from high
 **load imbalance**. One task runs in 100 seconds, while the other two
@@ -301,17 +301,20 @@ Given the workflow below, answer the following questions:
 **[A.2.3.q1.1]** How many MB of data are read during an execution of this workflow? How many are written?
 <p></p>
 
-**[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 Gflop/sec and the disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
+**[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 Gflop/sec and the 
+disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
 <p></p>
 
-**[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow execution strategy is, whenever there is a choice, to start the task with the **highest work**.  What is the execution time? What is the parallel efficiency? 
+**[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow execution strategy is, whenever there is 
+a choice, to start the task with the **highest work**.  What is the execution time? What is the parallel efficiency? 
 <p></p>
 
 **[A.2.3.q1.4]** Would the result be different if we instead picked
 the tasks with the **lowest work** first?
 <p></p>
 
-**[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 60% even if the disk can be upgraded at will.
+**[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 
+60% even if the disk can be upgraded at will.
 <p></p>
 
 ---
