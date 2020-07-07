@@ -462,7 +462,6 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
 });
 
 
-
 // display activity multi core visualization route
 app.get("/multi_core_independent_tasks", authCheck, function (req, res) {
     res.render("multi_core_independent_tasks", {
@@ -542,9 +541,6 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
 });
 
 
-
-
-
 // display activity multi core visualization route
 app.get("/multi_core_data_parallelism", authCheck, function (req, res) {
     res.render("multi_core_data_parallelism", {
@@ -618,7 +614,6 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
         });
     }
 });
-
 
 
 // display activity multi core visualization route
@@ -698,8 +693,6 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (req, res)
         });
     }
 });
-
-
 
 
 // display activity io operations visualization route
@@ -944,7 +937,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
             "disk_speed": DISK_SPEED,
             "file_size": FILE_SIZE
         });
-w
+        
         /**
          * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
          * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
@@ -962,8 +955,6 @@ w
         });
     }
 });
-
-
 
 
 // display activity client server visualization route
@@ -1010,41 +1001,41 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
     const NUM_INV = ["--inv", NUM_INVOCATION];
     let WORKERS = [];
     let iterator = 0;
-    while(iterator+1<HOST_SPECS.length) {
+    while (iterator + 1 < HOST_SPECS.length) {
         WORKERS.push("--worker");
-        WORKERS.push("Worker #"+(1 + Math.floor(iterator/2)));
+        WORKERS.push("Worker #" + (1 + Math.floor(iterator / 2)));
         WORKERS.push(HOST_SPECS[iterator]);
-        WORKERS.push(HOST_SPECS[iterator+1]);
-        iterator+=2;
+        WORKERS.push(HOST_SPECS[iterator + 1]);
+        iterator += 2;
     }
 
     /**
-    iterator = 0;
-    while(iterator+2<TASK_SPECS.length) {
+     iterator = 0;
+     while(iterator+2<TASK_SPECS.length) {
         TASK_SPECS[iterator+1] = (parseInt(TASK_SPECS[iterator+1])*1000000000).toString(); //converting to flop from Gflop
         iterator+=3;
     }
-    */
+     */
 
 
-    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+        // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
 
     const LOGGING = [
-        "--log=root.thresh:critical",
-        "--log=maestro.thresh:critical",
-        "--log=wms.thresh:debug",
-        // "--log=wrench_core_workunit_executor.thresh:info",
-        "--log=simple_wms.thresh:info",
-        "--log=simple_wms_scheduler.thresh:info",
-        "--log='root.fmt:[%.2d][%h]%e%m%n'"
-    ];
+            "--log=root.thresh:critical",
+            "--log=maestro.thresh:critical",
+            "--log=wms.thresh:debug",
+            // "--log=wrench_core_workunit_executor.thresh:info",
+            "--log=simple_wms.thresh:info",
+            "--log=simple_wms_scheduler.thresh:info",
+            "--log='root.fmt:[%.2d][%h]%e%m%n'"
+        ];
 
     const ABBREV_LOGGING = [
         "--log='root.fmt:[%d][%h:%t]%e%m%n'"
     ];
 
     var SIMULATION_ARGS;
-    if (NUM_INVOCATION==1) {
+    if (NUM_INVOCATION == 1) {
         SIMULATION_ARGS = INDIVIDUAL.concat(TASK_SPECS).concat(WORKERS).concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(SEED_STATE).concat(LOGGING);
     } else {
         SIMULATION_ARGS = GENERATION.concat(TASK_SCHED_SELECT).concat(COMPUTE_SCHED_SELECT).concat(NUM_INV).concat(SEED_STATE).concat(ABBREV_LOGGING);
@@ -1060,7 +1051,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
         console.log("Something went wrong with the simulation. Possibly check arguments.");
         console.log(simulation_process.stderr.toString());
     } else {
-        if (NUM_INVOCATION==1) {
+        if (NUM_INVOCATION == 1) {
             var simulation_output = simulation_process.stderr.toString();
             console.log(simulation_output);
         } else {
@@ -1070,8 +1061,8 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
 
 
         let WORKERS_STRIPPED = [];
-        for(let i = 0; i<WORKERS.length; i++){
-            if(!(WORKERS[i] == "--worker")) {
+        for (let i = 0; i < WORKERS.length; i++) {
+            if (!(WORKERS[i] == "--worker")) {
                 WORKERS_STRIPPED.push(WORKERS[i]);
             }
         }
@@ -1081,7 +1072,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        if (NUM_INVOCATION==1) {
+        if (NUM_INVOCATION == 1) {
             logData({
                 "user": USERNAME,
                 "email": EMAIL,
@@ -1131,7 +1122,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
         var find = "</span>";
         var re = new RegExp(find, "g");
 
-        if(NUM_INVOCATION == 1) {
+        if (NUM_INVOCATION == 1) {
             res.json({
                 "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
                 "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
@@ -1141,7 +1132,6 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
                 "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>"
             });
         }
-
 
 
     }
@@ -1303,7 +1293,6 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
 });
 
 
-
 // display activity workflow visualization route
 app.get("/workflow_task_data_parallelism", authCheck, function (req, res) {
     res.render("workflow_task_data_parallelism", {
@@ -1382,7 +1371,6 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 });
 
 
-
 function logData(received_data) {
     let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
     console.log(time_now + ": received data");
@@ -1403,7 +1391,7 @@ function logData(received_data) {
         // cannot simply append since we are writing as json
         fs.writeFile(DATA_FILE, JSON.stringify(current_json_data), function (err) {
             if (err) {
-                console.log("app.post('" + received_data.activity +"') callback: there was a problem writing the json file");
+                console.log("app.post('" + received_data.activity + "') callback: there was a problem writing the json file");
                 console.log(err);
                 return false;
             }
