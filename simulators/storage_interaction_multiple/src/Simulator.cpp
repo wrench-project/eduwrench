@@ -181,7 +181,7 @@ int main(int argc, char **argv) {
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Usage: " << argv[0]
-                  << " <use_nps? t or f>  <number_of_servers> <use_vivaldi? t or f>"
+                  << "<use_nps? t or f>  <number_of_servers> <use_vivaldi? t or f>"
                      "<server_to_download_from> "
                      "<server_1_bandwidth> <server_2_bandwidth> <server_3_bandwidth> <server_4_bandwidth> <server_5_bandwidth>"
                   << std::endl;
@@ -224,6 +224,15 @@ int main(int argc, char **argv) {
         NPS_TYPE = "VIVALDI";
     }
 
+    std::cerr << "----------------------------------------" << std::endl;
+
+    for (int i = 0; i < NUM_SERVER; ++i) {
+        std::cerr << "Bandwidth of Server " << i+1 << ": " << SERVER_LINK_BANDWIDTH[i] << " Mbps" <<
+                  std::endl;
+    }
+
+    std::cerr << "----------------------------------------" << std::endl;
+
     if (USE_NPS) {
         HOST_LIST.push_back(CLIENT);
         auto np_service = simulation.add(new wrench::NetworkProximityService(SERVICES, HOST_LIST,
@@ -243,9 +252,21 @@ int main(int argc, char **argv) {
     simulation.stageFile(file, client_storage_service);
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, false, false, false, false);
-    //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
-    //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
+    // Gather the data transfer completion times
+    auto file_copy_starts = simulation.getOutput().getTrace<wrench::SimulationTimestampFileCopyStart>();
+
+    std::cerr << "----------------------------------------" << std::endl;
+    std::cerr.precision(4);
+
+    for (const auto &file_copy : file_copy_starts) {
+        double start_time = file_copy->getDate();
+        double end_time = file_copy->getContent()->getEndpoint()->getDate();
+        double duration = end_time - start_time;
+
+        std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0) <<
+        " MB transfer completed at time " << duration << std::endl;
+    }
+    std::cerr << "----------------------------------------" << std::endl;
 
     return 0;
 }

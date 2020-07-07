@@ -153,9 +153,21 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "workflow_data.json", false, true, true, false, false);
-    //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", false);
-    //simulation.getOutput().dumpWorkflowGraphJSON(&workflow, "workflow_graph.json");
+    // Gather the data transfer completion times
+    auto file_copy_starts = simulation.getOutput().getTrace<wrench::SimulationTimestampFileCopyStart>();
+
+    std::cerr << "----------------------------------------" << std::endl;
+    std::cerr.precision(4);
+
+    for (const auto &file_copy : file_copy_starts) {
+        double start_time = file_copy->getDate();
+        double end_time = file_copy->getContent()->getEndpoint()->getDate();
+        double duration = end_time - start_time;
+
+        std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0) <<
+        " MB transfer completed at time " << duration << std::endl;
+    }
+    std::cerr << "----------------------------------------" << std::endl;
 
     return 0;
 }

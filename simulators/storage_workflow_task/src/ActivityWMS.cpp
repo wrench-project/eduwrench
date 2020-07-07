@@ -76,6 +76,7 @@ namespace wrench {
         std::vector<std::tuple<WorkflowFile *, std::shared_ptr<FileLocation>,
                 std::shared_ptr<FileLocation>>> yellow_post;
 
+
         for (const auto &file : this->getWorkflow()->getFiles()) {
             if (file->getID().find("blue_infile") != std::string::npos) {
                 locations_blue.insert({file, FileLocation::LOCATION(storage_service)});

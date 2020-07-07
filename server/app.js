@@ -1444,8 +1444,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
         var re = new RegExp(find, "g");
 
         res.json({
-            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            //"task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(/[\n\r]/g, "<br>" + find),
         });
     }
 });
@@ -1470,8 +1469,7 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
 
     const LOGGING = [
         "--log=root.thresh:critical",
-	      "--log=wrench_core_storage_service.thresh:info",
-	      "--log=wrench_core_file_transfer_thread.thresh:info",
+	    "--log=wrench_core_storage_service.thresh:info",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
@@ -1536,8 +1534,9 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
         var find = "</span>";
         var re = new RegExp(find, "g");
 
+
         res.json({
-            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(/[\n\r]/g, "<br>" + find),
         });
     }
 });
