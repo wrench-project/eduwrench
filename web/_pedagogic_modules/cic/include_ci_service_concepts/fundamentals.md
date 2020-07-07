@@ -49,3 +49,16 @@ tasks.
 <div class="caption">
 <strong>Figure 1:</strong> Example of a cyberinfrastructure with a website, a storage service, a file registry service, and a compute service.
 </div>
+
+Although the figure above illustrates a simple CI deployment, this configuration
+represents a typical infrastructure in which web portals (or science gateways)
+utilizes data storage services and file catalogs for data archival, and 
+computing platforms (e.g., clouds or clusters) for performing computations 
+(e.g., analysis of data or visualization). Typically, CI services are connected 
+among them with high speed network links and small latencies, while connection
+to the users (client) are usually subjected to the ISP (internet service provider) 
+bandwidth and latencies (see the
+[client-server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics)
+in which we discussed low-bandwidth implications).
+
+---
