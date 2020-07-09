@@ -2,6 +2,7 @@
 #### Learning Objectives
 
 - Understand the principles of cyberinfrastructure services
+- Understand overhead concepts and how it can impact CI services performance
 
 ---
 
@@ -40,9 +41,9 @@ general concepts related to different service categories.
 
 The figure below shows an example of a CI composed of four different services: 
 a _website_, from where users interact with the system to upload/download 
-data and launch computing tasks; a _storage service_, where data is stored
-permanently; a _file registry service_, a catalog that acts as a
-bookkeeper for data location; and a _compute service_, which executes computing
+data and launch computing tasks; a _Storage service_, where data is stored
+permanently; a _File Registry service_, a catalog that acts as a
+bookkeeper for data location; and a _Compute service_, which executes computing
 tasks.    
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/basics.svg">Cyberinfrastructure Setup</object>
@@ -58,7 +59,14 @@ computing platforms (e.g., clouds or clusters) for performing computations
 among them with high speed network links and small latencies, while connection
 to the users (client) are usually subjected to the ISP (internet service provider) 
 bandwidth and latencies (see the
-[client-server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics)
+[Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics)
 in which we discussed low-bandwidth implications).
+
+In addition to network bandwidth and latency, and disk I/O bandwidth, CI services
+also experience **overheads**, i.e. delays for processing a request. For example,
+a File Registry service may need to execute a search algorithm for identifying 
+all locations of a file that is stored in a distributed way; a Compute service
+may need to allocate and/or boot virtual machines (VMs) or containers to perform 
+the computation.
 
 ---

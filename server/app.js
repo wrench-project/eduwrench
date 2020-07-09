@@ -1371,8 +1371,6 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 });
 
 
-<<<<<<< fcda9c3700686db57a4ac31bf831fa69392df921
-=======
 // execute activity storage service simulation route
 app.post("/run/storage_service", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
@@ -1597,8 +1595,6 @@ app.post("/run/compute_service_single_task", authCheck, function (req, res) {
         });
     }
 });
->>>>>>> Integrated compute service properties simulator
-
 
 // execute activity storage service simulation route
 app.post("/run/compute_service_properties", authCheck, function (req, res) {
@@ -1689,6 +1685,7 @@ app.post("/run/compute_service_properties", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(/[\n\r]/g, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });
