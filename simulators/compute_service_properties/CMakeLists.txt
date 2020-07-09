@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
-project(STORAGE_WORKFLOW_SCHEDULING)
+project(COMPUTE_SERVICE_PROPERTIES)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
@@ -22,8 +22,8 @@ find_library(WRENCH_LIBRARY NAMES libwrench.a wrench)
 find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
-add_executable(storage_workflow_scheduling ${SOURCE_FILES})
-target_link_libraries(storage_workflow_scheduling
+add_executable(compute_service_properties ${SOURCE_FILES})
+target_link_libraries(compute_service_properties
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}
         ${PUGIXML_LIBRARY}

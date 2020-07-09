@@ -101,7 +101,6 @@ namespace wrench {
                                              {{task->getID(), chosen_compute_service->getHostname()}});
                 WRENCH_INFO("Task starting on %s", chosen_compute_service->getHostname().c_str());
 
-                WRENCH_INFO("IDLE CORES: %d", chosen_compute_service->getPerHostNumIdleCores().begin()->second);
                 locations.clear();
                 pre_op.clear();
                 post_op.clear();
@@ -120,7 +119,7 @@ namespace wrench {
                 break;
             }
         }
-        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
 
         WRENCH_INFO("--------------------------------------------------------");
         if (this->getWorkflow()->isDone()) {
@@ -151,6 +150,16 @@ namespace wrench {
         }
 
         return chosen_compute_service;
+    }
+
+    /**
+     * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
+     * @param events
+     */
+    void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
+        auto standard_job = event->standard_job;
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+        WRENCH_INFO("Task %s has completed", standard_job->getTasks().at(0)->getID().c_str());
     }
 
 }

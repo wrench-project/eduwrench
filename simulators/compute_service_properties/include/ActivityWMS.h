@@ -22,6 +22,8 @@ namespace wrench {
         std::shared_ptr<ComputeService> assignTask(std::shared_ptr<ComputeService>
                                                    compute_service1, std::shared_ptr<ComputeService> compute_service2, double mem_req,
                                                    double num_cores);
+
+        void processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) override;
     };
 };
 
