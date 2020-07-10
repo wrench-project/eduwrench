@@ -197,9 +197,7 @@ int main(int argc, char **argv) {
 
         if (use_mem) {
             for (int i = 1; i <= 4; ++i) {
-                MEMORY[i - 1] = std::stoi(std::string(argv[i + offset]));
-
-                std::cerr << MEMORY[i - 1] << std::endl;
+                MEMORY[i - 1] = std::stoi(std::string(argv[i + offset]));\
             }
             offset += 4;
         }

@@ -88,3 +88,14 @@ button to select the server to use), leaving all values to their default. You sh
 notice a difference in execution time. 
 
 ---
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="ci_overhead/" %}
+  </div>
+</div>
+

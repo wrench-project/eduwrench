@@ -1371,6 +1371,92 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 });
 
 
+// SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
+app.post("/run/ci_overhead", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/ci_overhead/");
+
+    const SIMULATOR = "ci_overhead_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
+    const HOST_SELECT = req.body.host_select;
+    const FILE_SIZE = req.body.file_size
+    const COMPUTE_1_STARTUP = req.body.compute_1_startup;
+    const COMPUTE_2_STARTUP = req.body.compute_2_startup;
+
+    //Not included in this usage of the simulator
+    const SERVER_1_LINK_LATENCY = 10;
+    const SERVER_2_LINK_BANDWIDTH = 100;
+    const BUFFER_SIZE = 1000000000;
+    const DISK_TOGGLE = 0;
+    const DISK_SPEED = 50;
+
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=maestro.thresh:critical",
+        "--log=wms.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=simple_wms_scheduler.thresh:info",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE, COMPUTE_1_STARTUP, COMPUTE_2_STARTUP].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "client_server",
+            "server_1_link_latency": SERVER_1_LINK_LATENCY,
+            "server_1_link_bandwidth": SERVER_1_LINK_BANDWIDTH,
+            "server_2_link_bandwidth": SERVER_2_LINK_BANDWIDTH,
+            "buffer_size": BUFFER_SIZE,
+            "host_select": HOST_SELECT,
+            "disk_toggle": DISK_TOGGLE,
+            "disk_speed": DISK_SPEED,
+            "file_size": FILE_SIZE
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
+
 // execute activity storage service simulation route
 app.post("/run/storage_service", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
