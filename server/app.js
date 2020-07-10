@@ -1386,8 +1386,8 @@ app.post("/run/storage_service", authCheck, function (req, res) {
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
         "--log=root.thresh:critical",
-	      "--log=wrench_core_storage_service.thresh:debug",
-	      "--log=wrench_core_file_transfer_thread.thresh:debug",
+        "--log=wrench_core_storage_service.thresh:debug",
+        "--log=wrench_core_file_transfer_thread.thresh:debug",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
@@ -1458,26 +1458,26 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
 
     const LOGGING = [
         "--log=root.thresh:critical",
-	    "--log=wrench_core_storage_service.thresh:info",
+        "--log=wrench_core_storage_service.thresh:info",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
     ];
 
-    if(USE_NPS == 'f') {
-      const CHOSEN_SERVER = req.body.chosenServer;
+    if (USE_NPS == 'f') {
+        const CHOSEN_SERVER = req.body.chosenServer;
 
-      SIMULATION_ARGS  = [USE_NPS, NUM_SERVERS, CHOSEN_SERVER];
+        SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, CHOSEN_SERVER];
 
-      for (var i = 0; i < NUM_SERVERS; ++i) {
-        SIMULATION_ARGS.push(BANDWIDTHS[i]);
-      }
+        for (var i = 0; i < NUM_SERVERS; ++i) {
+            SIMULATION_ARGS.push(BANDWIDTHS[i]);
+        }
 
-      SIMULATION_ARGS = SIMULATION_ARGS.concat(LOGGING);
+        SIMULATION_ARGS = SIMULATION_ARGS.concat(LOGGING);
     } else {
-      const USE_VIVALDI = req.body.useVivaldi;
+        const USE_VIVALDI = req.body.useVivaldi;
 
-      SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, USE_VIVALDI].concat(LOGGING);
+        SIMULATION_ARGS = [USE_NPS, NUM_SERVERS, USE_VIVALDI].concat(LOGGING);
     }
 
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
@@ -1542,12 +1542,12 @@ app.post("/run/compute_service_single_task", authCheck, function (req, res) {
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
-      "--log=root.thresh:critical",
-      "--log=wrench_core_storage_service.thresh:info",
-      "--log=wrench_core_file_transfer_thread.thresh:info",
-      "--log=wms.thresh:debug",
-      "--log=simple_wms.thresh:debug",
-      "--log='root.fmt:[%.2d][%h]%e%m%n'"
+        "--log=root.thresh:critical",
+        "--log=wrench_core_storage_service.thresh:info",
+        "--log=wrench_core_file_transfer_thread.thresh:info",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
     const SIMULATION_ARGS = [HOST_SELECT, TASK_FLOPS, FILE_SIZE].concat(LOGGING); // TODO: add simulation parameters
@@ -1617,8 +1617,8 @@ app.post("/run/compute_service_properties", authCheck, function (req, res) {
 
     const LOGGING = [
         "--log=root.thresh:critical",
-	      "--log=wrench_core_file_transfer_thread.thresh:info",
-	      "--log=wrench_core_storage_service.thresh:info",
+        "--log=wrench_core_file_transfer_thread.thresh:info",
+        "--log=wrench_core_storage_service.thresh:info",
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
@@ -1681,7 +1681,6 @@ app.post("/run/compute_service_properties", authCheck, function (req, res) {
          */
         var find = "</span>";
         var re = new RegExp(find, "g");
-
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(/[\n\r]/g, "<br>" + find),

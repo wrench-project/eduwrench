@@ -2,7 +2,7 @@
 #### Learning Objectives
 
 - Understand the principles of cyberinfrastructure services
-- Understand overhead concepts and how it can impact CI services performance
+- Understand the concept of overhead and how it can impact CI services performance
 
 ---
 
@@ -68,5 +68,23 @@ a File Registry service may need to execute a search algorithm for identifying
 all locations of a file that is stored in a distributed way; a Compute service
 may need to allocate and/or boot virtual machines (VMs) or containers to perform 
 the computation.
+
+Since a CI can be composed of several services, and each service provides 
+different performance behaviors (e.g., time to answer a request, 
+queueing time for starting processing a task, etc.), predicting accurate 
+performance is not a trivial task. Thus, in this module we mostly rely on
+simulation instead of back-of-the-envelope estimates.
+
+#### Simulating Overhead
+
+The simulation app below simulates the execution of the client-server setup
+presented in Figure 1 of the 
+[Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics).
+For this simulation, each server yields a different _overhead_ value represented
+as the time (in seconds) to start the execution of a task -- let's assume the server
+needs to perform some _startup_ operations to configure the environment for 
+executing the task. Try to simulate the execution with each server (use the radio 
+button to select the server to use), leaving all values to their default. You should 
+notice a difference in execution time. 
 
 ---
