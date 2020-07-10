@@ -40,6 +40,10 @@ $(function() {
                 console.log(response.task_data.workflow_execution.tasks);
                 console.log(formInput);
 
+                let executionData = prepareResponseData(response.task_data);
+                generateGanttChart(executionData, false);
+                generateHostUtilizationChart(executionData, [], [], false);
+
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);

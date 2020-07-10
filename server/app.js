@@ -1592,6 +1592,7 @@ app.post("/run/compute_service_single_task", authCheck, function (req, res) {
 
         res.json({
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
 });
