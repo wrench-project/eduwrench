@@ -4,7 +4,7 @@ title: Client Server
 permalink: simulations/ci_overhead/
 ---
 
-{% include partials/input_non_workflow.html imgSvg="simulation_imgs/client_server.svg" %}
+{% include partials/input_non_workflow.html imgSvg="simulation_imgs/ci_overhead.svg" %}
 
 {% include partials/simulation_parameters_form_start.html %}
 
@@ -29,23 +29,15 @@ permalink: simulations/ci_overhead/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-link">Link Speed to Server #1 (MB/sec)</label>
-    <input class="form-control" type="number" id="server-1-link" placeholder="" value="10" min="1" max="10000" step="1" required>
+    <label for="server-1-startup">Startup overhead for Server 1 (secs)</label>
+    <input class="form-control" type="number" id="server-1-startup" placeholder="" value="5" min="0" max="10" step="1" required>
     <div class="invalid-feedback">
-        Please provide the link speed from the Client to Server #1 in the range of [1, 10000] MB/sec.
+        Please provide the startup overhead for Server 1 between 0 and 10 secs.
     </div>
-</div>
-
-<div class="form-group col-md-6">
-    <label for="compute-1-startup">Startup Delay for Compute Host 1 (secs)</label>
-    <input class="form-control" type="number" id="compute-1-startup" placeholder="" value="10" min="0" max="10000" step="1" required>
+    <label for="server-2-startup">Startup overhead for Server 2 (secs)</label>
+    <input class="form-control" type="number" id="server-2-startup" placeholder="" value="7" min="0" max="10" step="1" required>
     <div class="invalid-feedback">
-        Please provide the startup delay for Compute Host 1 for between 1 and 10000 secs.
-    </div>
-    <label for="compute-2-startup">Startup Delay for Compute Host 2 (secs)</label>
-    <input class="form-control" type="number" id="compute-2-startup" placeholder="" value="10" min="0" max="10000" step="1" required>
-    <div class="invalid-feedback">
-        Please provide the startup delay for Compute Host 2 for between 1 and 10000 secs.
+        Please provide the startup overhead for Server 2 between 0 and 10 secs.
     </div>
 </div>
 

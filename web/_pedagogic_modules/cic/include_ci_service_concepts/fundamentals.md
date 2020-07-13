@@ -87,8 +87,6 @@ executing the task. Try to simulate the execution with each server (use the radi
 button to select the server to use), leaving all values to their default. You should 
 notice a difference in execution time. 
 
----
-
 <div class="ui accordion fluid app-ins">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -99,3 +97,4 @@ notice a difference in execution time.
   </div>
 </div>
 
+---

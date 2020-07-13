@@ -1,47 +1,9 @@
-$(function() {
+$(function () {
 
+    updateFigureLabel("server-1-startup", "server-1-overhead-label", 0, 10, "Startup overhead", "sec");
+    updateFigureLabel("server-2-startup", "server-2-overhead-label", 0, 10, "Startup overhead", "sec");
 
-    $("#server-1-link").on("keyup", function() {
-        let server_1_link_input_el = $(this);
-        let server_1_link_input_value = parseInt(server_1_link_input_el.val());
-        let server_1_link_label_el = $(".server-1-link-label");
-
-        if(server_1_link_input_value>=1 && server_1_link_input_value<1000){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value + " MB/sec")
-                .css("background-color", "#d3ffe9");
-
-            server_1_link_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_1_link_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if(server_1_link_input_value>=1000 && server_1_link_input_value<10001){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value/1000 + " GBps")
-                .css("background-color", "#d3ffe9");
-
-            server_1_link_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function() {
-                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    server_1_link_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            server_1_link_label_el.css("background-color", "#ffb7b5");
-            server_1_link_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
-    });
-
-
-
-
-
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -65,9 +27,9 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    compute_1_startup: $("#compute-1-startup").val(),
-                    compute_2_startup: $("#compute-2-startup").val(),
-                    server_1_link_bandwidth: $("#server-1-link").val(),
+                    compute_1_startup: $("#server-1-startup").val(),
+                    compute_2_startup: $("#server-2-startup").val(),
+                    server_1_link_bandwidth: "10",
                     server_2_link_bandwidth: "100",
                     server_1_link_latency: "10",
                     file_size: "100",
@@ -76,14 +38,14 @@ $(function() {
                     email: email
                 }),
 
-            success: function(response) {
+            success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);
 
                 // console.log(response.task_data.workflow_execution.tasks);
 
-                let executionData = prepareResponseData(response.task_data);
+                // let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 // generateHostUtilizationChart(executionData);
 
