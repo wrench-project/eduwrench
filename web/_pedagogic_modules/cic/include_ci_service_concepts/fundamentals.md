@@ -85,7 +85,11 @@ as the time (in seconds) to start the execution of a task -- let's assume the se
 needs to perform some _startup_ operations to configure the environment for 
 executing the task. Try to simulate the execution with each server (use the radio 
 button to select the server to use), leaving all values to their default. You should 
-notice a difference in execution time. 
+notice a difference in execution time. In the Client-Server module, Server #2 is 
+able to finish execution more quickly than Server #1, as the latter is connected to 
+the client via a low-bandwidth link. Here, using start overhead values of 4 sec and 
+7 sec for Server #1 and Server #2 respectively, we observe that Server #1 finishes
+execution slightly faster.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -96,5 +100,12 @@ notice a difference in execution time.
     {% include simulator.html src="ci_overhead/" %}
   </div>
 </div>
+
+---
+
+#### Practice Questions
+
+Answer the practice questions hereafter, using the simulation app above to come up 
+with or double-check answers.
 
 ---
