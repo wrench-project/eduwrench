@@ -52,13 +52,13 @@ Note that each task above can involve both I/O and computation. For
 instance, an "uncompress" task must read in an image file from disk to
 uncompress it. 
 Then, whether it writes back to
-disk the uncompressed image or keeps in RAM so that the "pre-process"
-task can do its job is up to the program's implementation in software.
+disk the uncompressed image or keeps it in RAM so that the "pre-process"
+task can do its job is up to the program's software implementation.
 Given that the DAG above does not show any output file for these tasks,
 the idea is  to keep everything in RAM and/or I/O operations. 
 Clearly keeping things in RAM can avoid costly I/O operation, but as we
 know RAM capacity is limited. So, based on what we learned in the previous
-tab, we could lose parallel efficiency due to RAM constraints. 
+tab, we could loose parallel efficiency due to RAM constraints. 
 
 
 #### Simulating Simple Task Dependencies
@@ -255,7 +255,7 @@ make any use of more than 3 cores when executing this graph, as a fourth core wo
 never have anything to do. 
 
 A third concept is that of the **critical path**:
-the longest path in the dag from the entry task(s) to the exit
+the longest path in the DAG from the entry task(s) to the exit
 task(s), where **the path length is measured in task durations, including the
 entry and the exit task(s)**. 
 No matter how many cores are used, the program cannot execute faster than

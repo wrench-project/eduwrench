@@ -148,8 +148,8 @@ we have $S/6 = 0.8$, which gives us $S = 4.8$. Therefore, the program runs in 60
 <p></p>
 
 **[A.2.p1.2]** A parallel program has a speedup of 1.6 when running on 2 cores, and runs
-10 minutes faster when running on 3 cores. Give a formula for $T(1)$ (the execution time
-on one core in minutes) as a  function of $T(3)$ (the execution time on three cores in minutes). 
+10 minutes faster when running on 3 cores than when running on 2 cores. Give a formula for $T(1)$ (the execution time
+on one core in minutes) as a  function of $T(3)$ (the execution time on 3 cores in minutes). 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -226,7 +226,7 @@ of cores (2).
 
 #### Simulating Load Imbalance
 
-So that you can gain hands-on experience, use the simulation app below 
+To gain hands-on experience, use the simulation app below 
 on your own and to answer the practice questions hereafter. 
 
 This app allows you to pick a number of cores and a number of tasks to run
@@ -280,7 +280,7 @@ question. The simulation clearly shows that the number of idle seconds is $15 \t
 </div>
 <p></p>
 
-**[A.2.p1.4]** You are told that a 10-task program runs in 1 hour with
+**[A.2.p1.4]** You are told that a 10-task program runs in 1 hour
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
 What is the execution time of one task? (you can double-check
 your answer with the simulation app above)
@@ -295,7 +295,7 @@ The execution proceeds in 4 phases. If each of the first three phases
 3 tasks are executed in parallel. In the last phase a single task executes. 
 Therefore, each phase takes 60/4 = 15 minutes, which is the execution time of a task.
 
-You can double-check this in simulation by setting the task work to $15\times 60 \ times 100 = 90000$, so
+You can double-check this in simulation by setting the task work to $15\times 60 \times 100 = 90000$, so
 that each task runs in 15 minutes on a core. The simulation clearly shows a 3600-second execution time,
 i.e., 1 hour. 
   </div>
@@ -318,12 +318,12 @@ total execution time is 3 seconds. This is because the best we can do is
 have 4 of the cores run 2 tasks and the other 4 run 3 tasks. The
 overall execution time is reduced by a factor 5/3 = 1.66.
 
-This is seen easily in simulation (setting the task work to 100 Flop). 
+This is seen easily in simulation (setting the task work to 100 GFlop). 
   </div>
 </div>
 <p></p>
 
-**[A.2.p1.6]** Assume you now have 3 tasks to compute, still each taking 1 second
+**[A.2.p1.6]** Assume you now have 3 tasks to compute, still taking 1 second each
 on a core. What is the parallel efficiency on a 4-core computer? 
 <div class="ui accordion fluid">
   <div class="title">
@@ -343,7 +343,7 @@ efficiency is 3/4 = 75%.
 you have two new multi-core computers to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
-complete on a core. Which multi-core computer will provide the higher
+complete on a core. Which multi-core computer will provide the highest
 parallel efficiency?
 <div class="ui accordion fluid">
   <div class="title">
