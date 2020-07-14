@@ -1,7 +1,16 @@
 
 #### Learning Objectives
 
--
+- Understand how data services can be used to store, copy, and access data
+- Understand the concept of data replicas and how data services can be used to keep track of them
+
+---
+
+### Data Services
+
+
+### Data Replicas
+
 
 #### Simulating
 
@@ -38,3 +47,5 @@
     {% include simulator.html src="storage_service_multiple/" %}
   </div>
 </div>
+
+---
