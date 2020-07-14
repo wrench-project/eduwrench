@@ -58,7 +58,7 @@ Given that the DAG above does not show any output file for these tasks,
 the idea is  to keep everything in RAM and/or I/O operations. 
 Clearly keeping things in RAM can avoid costly I/O operation, but as we
 know RAM capacity is limited. So, based on what we learned in the previous
-tab, we could loose parallel efficiency due to RAM constraints. 
+tab, we could lose parallel efficiency due to RAM constraints. 
 
 
 #### Simulating Simple Task Dependencies
