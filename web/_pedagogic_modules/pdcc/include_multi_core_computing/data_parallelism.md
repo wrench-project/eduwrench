@@ -203,7 +203,7 @@ known as **Amdahl's law**. This law says that the overall parallel speedup
 that a program that has a sequential and a parallel part is limited by the
 amount of time spent in the sequential part. This is very intuitive,
 since in the extreme a program is purely sequential and the parallel speedup is always
-1 regardless of the number of cores. But the (to some) surprising thing is how
+1 regardless of the number of cores. But the surprising thing is how
 severe the limit is. Let's derive Amdahl's law in the abstract, and then apply it
 to our example oil painting program. 
 

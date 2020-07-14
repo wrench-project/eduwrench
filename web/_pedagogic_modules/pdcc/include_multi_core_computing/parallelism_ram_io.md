@@ -19,7 +19,7 @@ unacceptable performance penalties. So, here again,
 we never
 exceed the physical memory capacity of a host. If insufficient
 RAM is available for a task, this task must wait for currently running
-tasks to complete and free up enough ram. This can cause cores to remain
+tasks to complete and free up enough RAM. This can cause cores to remain
 idle. The worst possible case would be running a single task that uses the
 entire RAM, thus leaving all remaining cores idle while it executes. 
 Because RAM constraints can cause idle time, they can also cause
@@ -27,7 +27,7 @@ loss of parallel efficiency.
 
 #### Simulating RAM Constraints
 
-So that you can gain hands-on experience, use the simulation 
+To gain hands-on experience, use the simulation 
 app below.  This app is similar to that in the previous tab,
 but now includes a field for specifying the "Ram Needed For
 Each Task".  So now, we can simulate the fact that tasks require RAM space
