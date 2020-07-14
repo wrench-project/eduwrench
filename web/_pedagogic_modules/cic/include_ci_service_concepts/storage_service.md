@@ -8,6 +8,16 @@
 
 ### Data Services
 
+In CI, the most common type of service provided by a data service is permanent, 
+reliable, and efficient data storage. In addition to storing data in a remote server, 
+data services may provide a number of different capabilities, for example, 
+support for registering metadata for data description, backups, search mechanisms,
+data integrity checks, etc. 
+
+A data service is typically mainly composed of the following elements: storage devices 
+(e.g, HDD, SSD, RAM, etc.), a file system, and databases (e.g., for keeping track of
+file locations and recording metadata). While a data service can be fully set up into 
+a single machine, typical CI deployments follow a distributed approach -- i.e.,  
 
 ### Data Replicas
 
