@@ -24,6 +24,11 @@ into physical remote sites (connected via WAN). The figure below shows an exampl
 data service with two data nodes and a file registry, each configured to run on
 different machines, but all part of the same local network.
 
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/simple_storage.svg">Cyberinfrastructure Setup</object>
+<div class="caption">
+<strong>Figure 1:</strong> Example of a simple CI data service deployment.
+</div>
+
 ### Data Replicas
 
 
