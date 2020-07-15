@@ -29,10 +29,7 @@ different machines, but all part of the same local network.
 <strong>Figure 1:</strong> Example of a simple CI data service deployment.
 </div>
 
-### Data Replicas
-
-
-#### Simulating
+#### Simulating a Data Service
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -43,6 +40,14 @@ different machines, but all part of the same local network.
     {% include simulator.html src="storage_service/" %}
   </div>
 </div>
+
+---
+
+### Data Replicas
+
+
+#### Simulating
+
 
 <p>&nbsp;</p>
 
