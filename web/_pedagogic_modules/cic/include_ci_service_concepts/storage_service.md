@@ -20,14 +20,35 @@ file locations and recording metadata). While a data service can be fully set up
 a single machine, typical CI deployments follow a distributed approach -- i.e.,
 multiple data servers or _data nodes_, dedicated nodes for processing query requests, 
 etc.; in which services are part of the same local network (LAN) or are distributed
-into physical remote sites (connected via WAN). The figure below shows an example
-data service with two data nodes and a file registry, each configured to run on
+into physical remote sites (connected via WAN). The figure below shows an example of
+a data service with a single data node and a file registry, each configured to run on
 different machines, but all part of the same local network.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/simple_storage.svg">Cyberinfrastructure Setup</object>
 <div class="caption">
 <strong>Figure 1:</strong> Example of a simple CI data service deployment.
 </div>
+
+In the figure above, the simply fact of storing a file into the data service involves
+interaction with two services: the storage service, and the file registry service.
+The sequence diagram shown on the right side of Figure 1, depicts the sequence of 
+operations and time elapsed to store the file in the storage service, and registering
+the file location in the file registry. Note that several overheads are incurred 
+in this operation:
+
+1. _Client Disk Overhead_: Time to read the file from the client disk into memory 
+   -- defined by the client's disk read bandwidth. 
+1. _Transfer Overhead_: Time to transfer the file from the client to the storage 
+   service -- defined by the network bandwidth and latency between the client and
+   the storage service.
+1. _Writing Overhead_: Time to write the file contents to the storage server disk
+   -- defined by the storage service's disk write bandwidth.
+1. _Registration Overhead_: Time to perform a registration operation in the File
+   Registry Service -- defined by the network bandwidth and latency between the 
+   Storage Service and File Registry Service, and any overhead to process the 
+   registration operation on the File Registry Service.
+
+
 
 #### Simulating a Data Service
 
