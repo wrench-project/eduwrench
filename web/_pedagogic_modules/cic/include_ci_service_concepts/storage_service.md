@@ -48,9 +48,15 @@ in this operation:
    Storage Service and File Registry Service, and any overhead to process the 
    registration operation on the File Registry Service.
 
-
+The steps for retrieving the file from the data service are similar to the above
+ones but in the reverse order -- instead of an overhead for registering the file
+in the file registry, now the overhead would be to resolve the query for finding the
+location(s) of the stored file, and then transmit it through the network.
 
 #### Simulating a Data Service
+
+The simulation app below simulates the execution of the data service scenario 
+shown in Figure 1. For this simulation,   
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
