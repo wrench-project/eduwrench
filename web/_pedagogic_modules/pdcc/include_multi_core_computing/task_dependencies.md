@@ -248,11 +248,15 @@ So we say that this DAG has four levels. Note that this does not mean
 that the DAG tasks must be executed level by level. For instance, we could execute
 task "plot" (level 2) before task "analyze" (level 1).
 
-A second concept is that of a **DAG width** (or **DAG parallelism**): the maximum
-number of tasks in the workflow levels. For instance, for our example DAG, the parallelism is 3
-because level 1 has 3 tasks (and all other levels have fewer tasks). This means that we cannot
-make any use of more than 3 cores when executing this graph, as a fourth core would
-never have anything to do. 
+A second concept is that of **maximum level width**: the maximum
+number of tasks in the workflow levels. For instance, for our example DAG, the 
+maximum level width is 3
+because level 1 has 3 tasks (and all other levels have fewer tasks). 
+This means that using 3 cores should lead to better performance than using 2 cores.
+If we enforce that tasks are executed level-by-level, then we cannot make use of
+more than 3 cores. Otherwise, in general, it may be possible to use more cores
+to gain some performance advantage. But this is not the case for the example DAG
+in Figure 3, for which a 4th core would never be used. 
 
 A third concept is that of the **critical path**:
 the longest path in the DAG from the entry task(s) to the exit
@@ -269,7 +273,7 @@ are used to execute this program, it can never run in less than 46 seconds!
 
 #### Practice Questions
 
-**[A.2.p3.4]** For the DAG below, give the number of levels, the width, and the
+**[A.2.p3.4]** For the DAG below, give the number of levels, the maximum level width, and the
 length of the critical path in seconds (name and execution time are shown for each task).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_1.svg">Practice Question DAG</object>
@@ -282,7 +286,7 @@ length of the critical path in seconds (name and execution time are shown for ea
   <div markdown="1" class="ui segment content answer-frame">
 
   - Number of levels: 4
-  - Width: 3 (level 3 has 3 tasks: G, E, and F)
+  - Maximum level width: 3 (level 3 has 3 tasks: G, E, and F)
   - Length of the critical path: 30s (A 1s, D 20s, F 7s, and H 2s)
  
   </div>
@@ -293,7 +297,7 @@ length of the critical path in seconds (name and execution time are shown for ea
 
 **[A.2.p3.5]** For the DAG below, would it be useful to use more than 3
 cores? Can the execution time be ever shorter than 29 seconds? Could you
-modify one edge's end point to increase the DAG width?
+modify one edge's end point to increase the DAG's maximum level width?
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_2.svg">Practice Question DAG</object>
 
@@ -319,7 +323,7 @@ Here is  the set of DAG levels:
 It would never be useful to use more than  3 cores  because the width of the DAG is 3  (level 2). The DAG's
 critical path is  {A->B->D->G->H}, which has length 28s. So yes, the execution (on 3 cores) could be lower than 29s. 
 
-Replacing the D->G edge by a D->H edge would make the DAG width 4 (i.e., level 2  would have 4 tasks in it). 
+Replacing the D->G edge by a D->H edge would make the DAG's maximum level width 4 (i.e., level 2 would have 4 tasks in it). 
   </div>
 </div>
 
@@ -492,7 +496,7 @@ of overall program execution time!
 Answer the following questions:
 
 **[A.2.q3.1]** For the DAG below, where each task has an execution time in seconds on
-a core of some computer, give the number of levels, the width, and the length of the 
+a core of some computer, give the number of levels, the maximum level width, and the length of the 
 critical path in seconds.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_1.svg">Question DAG</object>
