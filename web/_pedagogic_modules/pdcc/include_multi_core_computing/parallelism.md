@@ -53,19 +53,28 @@ cores in a computer, now you can complete the same four
 tasks in less time, ideally in two hours. **With parallelism we
 can decrease program execution time**. 
 
-Unfortunately, most real-world programs do not have ideal
-parallelism behavior. In other words, they do not run $p$ times faster when
-executed on $p$
-cores. Instead, they execute less than $p$ times faster. This may seem
-surprising, but comes about due to many reasons. For instance, when two
-tasks execute concurrently on two different cores, they still compete for
-the memory hierarchy, e.g., the L3 cache and the memory bus. We refer
-you to computer architecture courses/textbooks for more details. In this module,
-we assume that two tasks running on two different cores
-do not compete for the memory hierarchy. But even so, there are
-other reasons why a program cannot achieve ideal parallelism.
-Before we get to these reasons, let us first define two crucial metrics:
-*Parallel Speedup* and *Parallel Efficiency*.
+Unfortunately, most real-world programs do not have ideal parallelism
+behavior. In other words, they do not run $p$ times faster when executed on
+$p$ cores. Instead, they execute less than $p$ times faster. This may seem
+surprising, but comes about due to many reasons. One of these reasons is
+that program tasks running on different cores still compete for 
+shared hardware and/or software resources. 
+Each time tasks compete for such resources, i.e., one task has
+to wait for the other task being done using that resource, there is a loss
+in parallel efficiency.  
+These resources can include
+the network card, the disk, the network, the operating system's kernel data
+structures.  One hardware resource for which program tasks that
+run on different cores almost always compete is the memory hierarchy, e.g.,
+the L3 cache and the memory bus (we refer you to computer architecture
+textbooks for details on the memory hierarchy). The memory hierarchy is thus
+a notorious culprit for loss of parallel efficiency loss.
+
+In this module, we make the simplifying assumptions that program tasks
+running on different cores do not compete for any of the above resources.
+*And yet, there are other reasons why a program cannot achieve ideal
+parallelism!* Before we get to these reasons, let us first define two
+crucial metrics: *Parallel Speedup* and *Parallel Efficiency*.
 
 ### Parallel Speedup
 
