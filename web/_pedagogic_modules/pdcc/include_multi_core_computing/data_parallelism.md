@@ -36,8 +36,8 @@ processing programs.
 Consider now a program that is a sequence of two tasks: An "oil" task
 applies an oil-painting filter to an image with a given radius $r$,
 followed by a "luminence" task that computes the luminence histogram for
-the image (i.e., the statistical distribution of the brightness of its
-pixels). We can draw the program's DAG as follows:
+the image, i.e., the statistical distribution of the brightness of its
+pixels. We can draw the program's DAG as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure 1:</strong>
@@ -75,8 +75,8 @@ number of cores, which we will assume here.
 
 #### Simulating Data-Parallelism
 
-After exposing data-parallelism in our example program (i.e., by rewriting 
-the code of the "oil" task), the program's DAG is as follows:
+After exposing data-parallelism in our example program, i.e., by rewriting 
+the code of the "oil" task, the program's DAG is as follows:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
 <div class="caption"><strong>Figure 2:</strong>
@@ -116,10 +116,10 @@ results with the simulation app.
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-The execution time  on 6 cores  is: 
+The execution time on 6 cores  is: 
 
 $
-T = \frac{100 \times 3^2 / 6}{100} + \frac{100}{100} =  2.50 \text{sec}
+T(6) = \frac{100 \times 3^2 / 6}{100} + \frac{100}{100} =  2.50 \text{sec}
 $
 
   </div>
@@ -214,7 +214,7 @@ thus write the execution time on 1 core, $T(1)$, as:
 
 $$
 \begin{align}
-T(1) & = \alpha T + (1 - \alpha) T\\
+T(1) & = \alpha T(1) + (1 - \alpha) T(1)\\
 \end{align}
 $$
 
@@ -223,7 +223,7 @@ parallelizable phase, we obtain the execution time on $p$ cores, $T(p)$, as:
 
 $$
 \begin{align}
-T(p) & = \alpha T / p + (1 - \alpha) T\\
+T(p) & = \alpha T(1) / p + (1 - \alpha) T(1)\\
 \end{align}
 $$
 
@@ -234,7 +234,7 @@ The parallel speedup on $p$ cores, $S(p)$, is then:
 
 $$
 \begin{align}
-S(p) & = \frac{\alpha T + (1 - \alpha) T}{\alpha T / p + (1 - \alpha) T}\\
+S(p) & = \frac{\alpha T(1) + (1 - \alpha) T(1)}{\alpha T(1) / p + (1 - \alpha) T(1)}\\
      & = \frac{1}{ \alpha/p + 1 - \alpha}
 \end{align}
 $$
