@@ -137,8 +137,8 @@ program's tasks, showing input data files, is depicted below:
 Example 4-task parallel program with I/IO. </div>
 
 For now, let's consider an execution of this program on a 1-core
-computer with a core that computes at 400 Gflop/sec and  a disk with
-read bandwidth 100 MB/sec (on which the input data files are located). 
+computer with a core that computes at 100 Gflop/sec and  a disk with
+read bandwidth 10 MB/sec (on which the input data files are located). 
 What is the execution time? Based on what we learned about I/O, we
 should strive to overlap I/O and computation as much as possible.
 For instance, the execution could proceed as follows:
