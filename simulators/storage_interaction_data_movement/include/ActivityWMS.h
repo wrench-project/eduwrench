@@ -10,7 +10,8 @@ namespace wrench {
     class ActivityWMS : public WMS {
     public:
         ActivityWMS(const std::set<std::shared_ptr<StorageService>> &storage_services,
-                    const std::string &hostname);
+                    const std::string &hostname,
+                    const std::shared_ptr<FileRegistryService> &file_registry_service);
 
     private:
         int main() override;

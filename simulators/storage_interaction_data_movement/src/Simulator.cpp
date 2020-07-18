@@ -1,12 +1,13 @@
-#include <iostream>
-#include <fstream>
-#include <iomanip>
-#include <string>
-#include <algorithm>
+/**
+ * Copyright (c) 2020. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
 
-#include <simgrid/s4u.hpp>
-#include <wrench.h>
-#include <nlohmann/json.hpp>
+#include <wrench-dev.h>
 #include <pugixml.hpp>
 
 #include "ActivityWMS.h"
@@ -15,26 +16,25 @@
  * @brief Generates a platform with a single multi-core host
  * @param platform_file_path: path to write the platform file to
  *
- * @throws std::invalid_argumemnt
+ * @throws std::invalid_argument
  */
 void generatePlatform(std::string platform_file_path, int link_bandwidth) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
     }
-    if (link_bandwidth < 1 ) {
+    if (link_bandwidth < 1) {
         throw std::invalid_argument("generatePlatform() bandwidth must be greater than 1");
     }
-
 
     // Create a the platform file
     std::string xml_string = "<?xml version='1.0'?>\n"
                              "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                              "<platform version=\"4.1\">\n"
                              "   <zone id=\"AS0\" routing=\"Full\">\n"
-                             "       <host id=\"WMSHost\" speed=\"10Gf\" core=\"1\">\n"
+                             "       <host id=\"FileRegistryHost\" speed=\"1f\" core=\"1\">\n"
                              "       </host>\n"
-                             "       <host id=\"ServerHost\" speed=\"100Gf\" core=\"1000\">\n"
+                             "       <host id=\"StorageHost\" speed=\"100Gf\" core=\"1\">\n"
                              "           <prop id=\"ram\" value=\"32GB\"/>\n"
                              "           <disk id=\"large_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
                              "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -48,13 +48,13 @@ void generatePlatform(std::string platform_file_path, int link_bandwidth) {
                              "           </disk>\n"
                              "       </host>\n"
                              "       <link id=\"network_link\" bandwidth=\"20MBps\" latency=\"20us\"/>\n"
-                             "       <route src=\"WMSHost\" dst=\"ClientHost\">"
+                             "       <route src=\"FileRegistryHost\" dst=\"ClientHost\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
-                             "       <route src=\"WMSHost\" dst=\"ServerHost\">"
+                             "       <route src=\"FileRegistryHost\" dst=\"StorageHost\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
-                             "       <route src=\"ClientHost\" dst=\"ServerHost\">"
+                             "       <route src=\"ClientHost\" dst=\"StorageHost\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
                              "   </zone>\n"
@@ -62,13 +62,9 @@ void generatePlatform(std::string platform_file_path, int link_bandwidth) {
 
 
     pugi::xml_document xml_doc;
-
     if (xml_doc.load_string(xml_string.c_str(), pugi::parse_doctype)) {
-
         pugi::xml_node link = xml_doc.child("platform").child("zone").child("link");
-
         link.attribute("bandwidth").set_value(std::string(std::to_string(link_bandwidth) + "MBps").c_str());
-
         xml_doc.save_file(platform_file_path.c_str());
 
     } else {
@@ -82,7 +78,7 @@ void generatePlatform(std::string platform_file_path, int link_bandwidth) {
  * @param argvx
  * @return
  */
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
 
     wrench::Simulation simulation;
     simulation.init(&argc, argv);
@@ -92,7 +88,6 @@ int main(int argc, char** argv) {
     const double MB = 1000.0 * 1000.0;
 
     try {
-
         if (argc != 3) {
             throw std::invalid_argument("invalid number of arguments");
         }
@@ -105,13 +100,12 @@ int main(int argc, char** argv) {
 
         FILE_SIZE = std::stoi(std::string(argv[2]));
 
-        if (FILE_SIZE <  1 || FILE_SIZE > 10000) {
+        if (FILE_SIZE < 1 || FILE_SIZE > 10000) {
             std::cerr << "Invalid file size. Size must be in range [1,10000] MB" << std::endl;
             throw std::invalid_argument("Invalid file size.");
         }
 
-
-    } catch(std::invalid_argument &e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Usage: " << argv[0] << " <server_link_bandwidth> <file_size>" << std::endl;
         std::cerr << "   server_link_bandwidth: Bandwidth must be in range [1,1000000] MBps" << std::endl;
@@ -122,29 +116,32 @@ int main(int argc, char** argv) {
 
     // create workflow
     wrench::Workflow workflow;
-    workflow.addFile("file_copy", FILE_SIZE*MB);
+    workflow.addFile("file_copy", FILE_SIZE * MB);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, SERVER_LINK_BANDWIDTH);
     simulation.instantiatePlatform(platform_file_path);
 
-
     const std::string CLIENT("ClientHost");
-    const std::string WMS("WMSHost");
-    const std::string SERVER("ServerHost");
+    const std::string FILEREGISTRY("FileRegistryHost");
+    const std::string SERVER("StorageHost");
 
-    auto client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
-    auto server_storage_service = simulation.add(new wrench::SimpleStorageService(SERVER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
+    auto client_storage_service = simulation.add(new wrench::SimpleStorageService(
+            CLIENT, {"/"},
+            {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
+    auto server_storage_service = simulation.add(new wrench::SimpleStorageService(
+            SERVER, {"/"},
+            {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     storage_services.insert(client_storage_service);
     storage_services.insert(server_storage_service);
 
-
-    auto file_registry = new wrench::FileRegistryService(WMS);
-    simulation.add(file_registry);
-    auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, WMS));
+    auto file_registry = simulation.add(new wrench::FileRegistryService(FILEREGISTRY, {
+            {wrench::FileRegistryServiceProperty::ADD_ENTRY_COMPUTE_COST, "10"}
+    }, {}));
+    auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry));
 
     wms->addWorkflow(&workflow);
 
@@ -153,21 +150,21 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    // Gather the data transfer completion times
-    auto file_copy_starts = simulation.getOutput().getTrace<wrench::SimulationTimestampFileCopyStart>();
-
-    std::cerr << "----------------------------------------" << std::endl;
-    std::cerr.precision(4);
-
-    for (const auto &file_copy : file_copy_starts) {
-        double start_time = file_copy->getDate();
-        double end_time = file_copy->getContent()->getEndpoint()->getDate();
-        double duration = end_time - start_time;
-
-        std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0) <<
-        " MB transfer completed at time " << duration << std::endl;
-    }
-    std::cerr << "----------------------------------------" << std::endl;
+//    // Gather the data transfer completion times
+//    auto file_copy_starts = simulation.getOutput().getTrace<wrench::SimulationTimestampFileCopyStart>();
+//
+//    std::cerr << "----------------------------------------" << std::endl;
+//    std::cerr.precision(4);
+//
+//    for (const auto &file_copy : file_copy_starts) {
+//        double start_time = file_copy->getDate();
+//        double end_time = file_copy->getContent()->getEndpoint()->getDate();
+//        double duration = end_time - start_time;
+//
+//        std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0) <<
+//                  " MB transfer completed at time " << duration << std::endl;
+//    }
+//    std::cerr << "----------------------------------------" << std::endl;
 
     return 0;
 }
