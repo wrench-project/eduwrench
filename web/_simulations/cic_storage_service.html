@@ -1,0 +1,48 @@
+---
+layout: simulation
+title: Storage Service
+permalink: simulations/cic_storage_service/
+---
+
+{% include partials/input_non_workflow.html imgSvg="simulation_imgs/cic_storage_service.svg" %}
+
+{% include partials/simulation_parameters_form_start.html %}
+
+<div class="form-group col-md-6">
+    <label for="bandwidth-input">Bandwidth between Client and Data Service (MB/sec)</label>
+    <input class="form-control" type="number" id="bandwidth-input" placeholder="" value="10" min="1" max="1000"
+           step="1" required>
+    <div class="invalid-feedback">
+        Bandwidth must be between 1 and 1000 MB/sec.
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="filesize-input">File size (MBs)</label>
+    <input class="form-control" type="number" id="filesize-input" placeholder="" value="10" min="1" max="10000" step="1"
+           required>
+    <div class="invalid-feedback">
+        File size must be between 1 and 10000 MB.
+    </div>
+</div>
+
+<div class="form-group col-md-6">
+    <label for="registration-input">Registration Overhead for File Registry Service (sec)</label>
+    <input class="form-control" type="number" id="registration-input" placeholder="" value="1" min="0" max="5" step="1"
+           required>
+    <div class="invalid-feedback">
+        Registration Overhead must be between 0 and 5 secs.
+    </div>
+</div>
+
+{% include partials/simulation_parameters_form_end.html %}
+
+{% include partials/simulation_output.html %}
+
+<!--{% include partials/workflow_execution_graph.html %}-->
+
+<!--{% include partials/host_utilization_graph.html %}-->
+
+<!--{% include partials/workflow_execution_data.html %}-->
+
+<script src="{{site.baseurl}}/public/sims/scripts/cic_storage_service.js" type="text/javascript"></script>

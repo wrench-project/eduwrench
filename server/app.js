@@ -1468,6 +1468,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
     const EMAIL = req.body.email;
     const BANDWIDTH = req.body.bandwidth;
     const FILE_SIZE = req.body.fileSize;
+    const REGISTRATION_OVERHEAD = req.body.registrationOverhead;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1479,7 +1480,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE].concat(LOGGING);
+    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE, REGISTRATION_OVERHEAD].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");

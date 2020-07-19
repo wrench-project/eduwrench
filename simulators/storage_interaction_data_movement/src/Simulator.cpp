@@ -18,7 +18,7 @@
  *
  * @throws std::invalid_argument
  */
-void generatePlatform(std::string platform_file_path, int link_bandwidth) {
+void generatePlatform(std::string &platform_file_path, int link_bandwidth) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -85,10 +85,11 @@ int main(int argc, char **argv) {
 
     int SERVER_LINK_BANDWIDTH;
     int FILE_SIZE;
+    int FILE_REGISTRY_OVERHEAD;
     const double MB = 1000.0 * 1000.0;
 
     try {
-        if (argc != 3) {
+        if (argc != 4) {
             throw std::invalid_argument("invalid number of arguments");
         }
 
@@ -103,6 +104,12 @@ int main(int argc, char **argv) {
         if (FILE_SIZE < 1 || FILE_SIZE > 10000) {
             std::cerr << "Invalid file size. Size must be in range [1,10000] MB" << std::endl;
             throw std::invalid_argument("Invalid file size.");
+        }
+
+        FILE_REGISTRY_OVERHEAD = std::stoi(std::string(argv[3]));
+        if (FILE_REGISTRY_OVERHEAD < 0 || FILE_REGISTRY_OVERHEAD > 10) {
+            std::cerr << "Invalid overhead for file registry. Overhead must be in range [0, 10] sec" << std::endl;
+            throw std::invalid_argument("Invalid overhead for file registry.");
         }
 
     } catch (std::invalid_argument &e) {
@@ -139,7 +146,7 @@ int main(int argc, char **argv) {
     storage_services.insert(server_storage_service);
 
     auto file_registry = simulation.add(new wrench::FileRegistryService(FILEREGISTRY, {
-            {wrench::FileRegistryServiceProperty::ADD_ENTRY_COMPUTE_COST, "10"}
+            {wrench::FileRegistryServiceProperty::ADD_ENTRY_COMPUTE_COST, std::to_string(FILE_REGISTRY_OVERHEAD)}
     }, {}));
     auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry));
 

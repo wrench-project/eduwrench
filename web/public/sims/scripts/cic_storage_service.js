@@ -1,5 +1,8 @@
 $(function() {
 
+    updateFigureLabel("bandwidth-input", "client-bandwidth-label", 1, 1000, "Bandwidth", "MB/sec");
+    updateFigureLabel("registration-input", "registration-overhead-label", 0, 5, "Inserting", "sec");
+
     $('#simulator-form').on('submit', function(event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
@@ -27,7 +30,8 @@ $(function() {
                     userName: userName,
                     email: email,
                     bandwidth: $("#bandwidth-input").val(),
-                    fileSize: $("#filesize-input").val()
+                    fileSize: $("#filesize-input").val(),
+                    registrationOverhead: $("#registration-input").val()
                 }),
 
             success: function(response) {

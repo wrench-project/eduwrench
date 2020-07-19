@@ -97,7 +97,7 @@ execution slightly faster.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="ci_overhead/" %}
+    {% include simulator.html src="cic_overhead/" %}
   </div>
 </div>
 

@@ -64,7 +64,7 @@ shown in Figure 1. For this simulation,
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="storage_service/" %}
+    {% include simulator.html src="cic_storage_service/" %}
   </div>
 </div>
 
