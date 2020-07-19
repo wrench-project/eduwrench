@@ -55,8 +55,13 @@ location(s) of the stored file, and then transmit it through the network.
 
 #### Simulating a Data Service
 
-The simulation app below simulates the execution of the data service scenario 
-shown in Figure 1. For this simulation,   
+The simulation app below simulates the execution of the simple data service scenario 
+shown in Figure 1. For this simulation, the File Registry Service has an _overhead_
+value represented as the time (in seconds) for performing an insert operation 
+(i.e., registering a file), and storing a file in the data service involves the 
+steps shown in the sequence diagram (Figure 1 right side). If you run the simulation
+using the default values, you will notice that the registration overhead nearly
+doubles the time to perform the storing operation in the data service.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -67,6 +72,13 @@ shown in Figure 1. For this simulation,
     {% include simulator.html src="cic_storage_service/" %}
   </div>
 </div>
+
+---
+
+#### Practice Questions
+
+Answer the practice questions hereafter, using the simulation app above to come up 
+with or double-check answers.
 
 ---
 

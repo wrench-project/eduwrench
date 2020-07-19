@@ -23,6 +23,6 @@
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="compute_service_properties/" %}
+    {% include simulator.html src="cic_compute_service_properties/" %}
   </div>
 </div>
