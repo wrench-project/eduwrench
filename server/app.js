@@ -37,13 +37,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// app.use(cookieSession({
-// maxAge: 24 * 60 * 60 * 1000, // a day in milliseconds
-// keys: [keys.cookieSession.key]
-// }));
-// app.use(passport.initialize());
-// app.use(passport.session());
-
 // check if authenticated
 const authCheck = function (req, res, next) {
     // if (!req.user) {
@@ -65,30 +58,6 @@ app.get("/", function (req, res) {
         user: req.user,
         messages: req.flash("error")
     });
-});
-
-// login through google
-app.get("/google", passport.authenticate("google", {
-    scope: ["email"]
-}));
-
-// callback route for google to redirect to
-app.get("/google/redirect", passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/",
-    failureFlash: true
-}));
-
-// logout route
-app.get("/logout", function (req, res) {
-    req.logout();
-    res.redirect("/");
-});
-
-// display networking fundamentals visualization route
-app.get("/networking_fundamentals", authCheck, function (req, res) {
-    res.render("networking_fundamentals",
-        {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/networking_fundamentals_cyber_infrastructure.svg")});
 });
 
 // execute networking fundamentals simulation route
@@ -155,13 +124,6 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
     }
 });
 
-
-// display workflow execution fundamentals visualization route
-app.get("/workflow_execution_fundamentals", authCheck, function (req, res) {
-    res.render("workflow_execution_fundamentals",
-        {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_fundamentals_cyber_infrastructure.svg")});
-});
-
 // execute workflow execution fundamentals simulation route
 app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/workflow_execution_fundamentals/");
@@ -224,16 +186,7 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (req, res) 
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
         });
-
-
     }
-});
-
-
-// display workflow execution data locality visualization route
-app.get("/workflow_execution_data_locality", authCheck, function (req, res) {
-    res.render("workflow_execution_data_locality",
-        {cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_data_locality_cyber_infrastructure.svg")});
 });
 
 // execute activity 1 simulation route
@@ -299,17 +252,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (req, res)
             "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
         });
-
-
     }
-});
-
-
-// display Workflow Execution and Parallelism visualization route
-app.get("/workflow_execution_parallelism", authCheck, function (req, res) {
-    res.render("workflow_execution_parallelism", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_execution_parallelism_cyber_infrastructure.svg")
-    });
 });
 
 // execute Workflow Execution and Parallelism simulation route
@@ -385,13 +328,6 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     }
 });
 
-// display activity multi_core_dependent_tasks visualization route
-app.get("/multi_core_dependent_tasks", authCheck, function (req, res) {
-    res.render("multi_core_dependent_tasks", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_dependent_task.svg")
-    });
-});
-
 // execute activity multi core dependent tasks simulation route
 app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_dependent_tasks/");
@@ -459,14 +395,6 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-
-// display activity multi core visualization route
-app.get("/multi_core_independent_tasks", authCheck, function (req, res) {
-    res.render("multi_core_independent_tasks", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_independent_task.svg")
-    });
 });
 
 // execute activity multi core simulation route
@@ -540,14 +468,6 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
     }
 });
 
-
-// display activity multi core visualization route
-app.get("/multi_core_data_parallelism", authCheck, function (req, res) {
-    res.render("multi_core_data_parallelism", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_computing_data_parallelism.svg")
-    });
-});
-
 // execute activity multi core simulation route
 app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_data_parallelism/");
@@ -613,14 +533,6 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-
-// display activity multi core visualization route
-app.get("/multi_core_independent_tasks_ram", authCheck, function (req, res) {
-    res.render("multi_core_independent_tasks_ram", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/multi_core_independent_task.svg")
-    });
 });
 
 // execute activity multi core simulation route
@@ -694,14 +606,6 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (req, res)
     }
 });
 
-
-// display activity io operations visualization route
-app.get("/io_operations", authCheck, function (req, res) {
-    res.render("io_operations", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/io_task.svg")
-    });
-});
-
 // execute activity io operations simulation route
 app.post("/run/io_operations", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/io_operations/");
@@ -773,13 +677,6 @@ app.post("/run/io_operations", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-// display activity client server visualization route
-app.get("/client_server", authCheck, function (req, res) {
-    res.render("client_server", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server.svg")
-    });
 });
 
 // SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
@@ -863,13 +760,6 @@ app.post("/run/client_server", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-// display activity client server visualization route
-app.get("/client_server_disk", authCheck, function (req, res) {
-    res.render("client_server_disk", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server_disk.svg")
-    });
 });
 
 // FULL CLIENT SERVER (NOT SIMPLIFIED)
@@ -956,14 +846,6 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
     }
 });
 
-
-// display activity client server visualization route
-app.get("/master_worker", authCheck, function (req, res) {
-    res.render("master_worker", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/client_server.svg")
-    });
-});
-
 // execute activity client server simulation route
 app.post("/run/coordinator_worker", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/master_worker/");
@@ -1017,9 +899,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
     }
      */
 
-
         // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
-
     const LOGGING = [
             "--log=root.thresh:critical",
             "--log=maestro.thresh:critical",
@@ -1059,14 +939,12 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
             console.log(simulation_output);
         }
 
-
         let WORKERS_STRIPPED = [];
         for (let i = 0; i < WORKERS.length; i++) {
             if (!(WORKERS[i] == "--worker")) {
                 WORKERS_STRIPPED.push(WORKERS[i]);
             }
         }
-
 
         /**
          * Log the user running this simulation along with the
@@ -1132,17 +1010,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
                 "simulation_output": "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>"
             });
         }
-
-
     }
-});
-
-
-// display activity workflow visualization route
-app.get("/workflow_fundamentals", authCheck, function (req, res) {
-    res.render("workflow_fundamentals", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_fundamentals.svg")
-    });
 });
 
 // execute activity multi core simulation route
@@ -1210,14 +1078,6 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-
-// display activity workflow visualization route
-app.get("/workflow_distributed", authCheck, function (req, res) {
-    res.render("workflow_distributed", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_distributed.svg")
-    });
 });
 
 // execute activity multi core simulation route
@@ -1290,14 +1150,6 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
-});
-
-
-// display activity workflow visualization route
-app.get("/workflow_task_data_parallelism", authCheck, function (req, res) {
-    res.render("workflow_task_data_parallelism", {
-        cyber_infrastructure_svg: fs.readFileSync(__dirname + "/public/img/workflow_task_data_parallelism.svg")
-    });
 });
 
 // execute activity multi core simulation route
@@ -1777,8 +1629,13 @@ app.post("/run/compute_service_properties", authCheck, function (req, res) {
     }
 });
 
+/**
+ * Log the data into the JSON file
+ * @param received_data
+ * @returns {boolean}
+ */
 function logData(received_data) {
-    let time_now = new Date().toLocaleString("en-US", {timeZone: "Pacific/Honolulu"});
+    let time_now = new Date().toLocaleString("en-US", {timeZone: "America/Los_Angeles"});
     console.log(time_now + ": received data");
     const DATA_FILE = __dirname.replace("server", "data_server") + "/data_file.json";
     fs.readFile(DATA_FILE, function (err, data) {
@@ -1806,7 +1663,8 @@ function logData(received_data) {
     return true;
 }
 
-if (process.env.EDUWRENCH_ENABLE_SSL == "true") {
+// Enable SSL server connection
+if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require('https');
     const fs = require('fs');
     const options = {
@@ -1814,10 +1672,10 @@ if (process.env.EDUWRENCH_ENABLE_SSL == "true") {
         cert: fs.readFileSync('./ssl/' + process.env.EDUWRENCH_SSL_CERTIFICATE)
     };
     https.createServer(options, app).listen(PORT, function () {
-        console.log("Backend server is running on port " + PORT + ' with SSL-enabled mode');
+        console.log("eduWRENCH Backend server is running on port " + PORT + ' with SSL-enabled mode');
     });
 } else {
     app.listen(PORT, function () {
-        console.log("Backend server is running on port " + PORT);
+        console.log("eduWRENCH Backend server is running on port " + PORT);
     });
 }
