@@ -1,42 +1,401 @@
-$(document).ready(function() {
-  var checkboxes = jQuery('input[type="checkbox"]');
+$(document).ready(function () {
+    var checkboxes = jQuery('input[type="checkbox"]');
 
-  checkboxes.change(function(){
-    var current = checkboxes.filter(':checked').length;
-    checkboxes.filter(':not(:checked)').prop('disabled', current >= 2);
-    var input = $(this).val();
-    $("#" + input).toggle();
-  });
+    checkboxes.change(function () {
+        var current = checkboxes.filter(':checked').length;
+        checkboxes.filter(':not(:checked)').prop('disabled', current >= 2);
+        var input = $(this).val();
+        $("#" + input).toggle();
+    });
 
-  checkboxes.click(function(){
-    var input = $(this).val();
-    if (input == "b") {
-      for (var i = 1; i <= 5; ++i) {
-        $("#bandwidth" + i).val("10");
-      }
-    } else if (input == "p") {
-      $("#property1").val("0");
-      $("#property2").val("0");
-      $("#property3").val("500000");
-      $("#property4").val("0");
-    } else if (input == "c") {
-      for (var i = 1; i <= 4; ++i) {
-        $("#cores" + i).val("1");
-      }
-    } else if (input == "m") {
-      for (var i = 1; i <= 4; ++i) {
-        $("#mem" + i).val("0");
-      }
-    } else if (input == "f") {
-      $("#file-num").val("1");
-    }
-  });
+    checkboxes.click(function () {
+        let bandwidths = ["100", "10", "100", "200", "500"];
+        let property = ["0", "0", "500000", "0"];
+        if ($("#selectb").prop("checked") == false) {
+            for (var i = 1; i <= 5; ++i) {
+                $("#bandwidth" + i).val(bandwidths[i - 1]);
+                $(".bandwidth" + i + "-label").text(bandwidths[i - 1] + "MBps");
+            }
+        } else {
+            $("#bandwidth1").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".bandwidth1-label");
 
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "MBps")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#bandwidth2").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".bandwidth2-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "MBps")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#bandwidth3").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".bandwidth3-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "MBps")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#bandwidth4").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".bandwidth4-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "MBps")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#bandwidth5").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".bandwidth5-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "MBps")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+        }
+        if ($("#selectp").prop("checked") == false) {
+            for (var i = 1; i <= 4; ++i) {
+                $("#property" + i).val(property[i - 1]);
+                $(".startup" + i + "-label").text(property[i - 1] + " secs");
+            }
+        } else {
+            $("#property1").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".startup1-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " secs")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#property2").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".startup2-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " secs")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+        }
+
+        if ($("#selectc").prop("checked") == false) {
+            for (var i = 1; i <= 4; ++i) {
+                $("#cores" + i).val("1");
+                $(".cores" + i + "-label").text("1 cores");
+            }
+        } else {
+            $("#cores1").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".cores1-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " cores")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#cores2").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".cores2-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " cores")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#cores3").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".cores3-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " cores")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#cores4").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".cores4-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + " cores")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+        }
+
+        if ($("#selectm").prop("checked") == false) {
+            for (var i = 1; i <= 4; ++i) {
+                $("#mem" + i).val("0");
+                $(".mem" + i + "-label").text("10 GB");
+            }
+        } else {
+            $("#mem1").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".mem1-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "GB")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#mem2").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".mem2-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "GB")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#mem3").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".mem3-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "GB")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+            $("#mem4").on("keyup", function () {
+                let input = $(this);
+                let value = parseInt(input.val());
+                let label = $(".mem4-label");
+
+                if (value >= 0 && value <= 10000) {
+                    label.text(value + "GB")
+                        .css("background-color", "#d3ffe9");
+
+                    input.removeClass("is-invalid")
+                        .addClass("is-valid");
+
+                    setTimeout(function () {
+                        if (label.css("background-color") == "rgb(211, 255, 233)") {
+                            label.css("background-color", "");
+                        }
+                    }, 500);
+                } else {
+                    label.css("background-color", "#ffb7b5");
+                    input.removeClass("is-valid")
+                        .addClass("is-invalid");
+                }
+            });
+        }
+
+        if ($("#selectf").prop("checked") == false) {
+            $("#file-num").val("1");
+        }
+    });
 });
 
-$(function() {
+$(function () {
 
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -90,7 +449,7 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(formInput),
 
-            success: function(response) {
+            success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
                 $("#simulation-output").empty().append(response.simulation_output);

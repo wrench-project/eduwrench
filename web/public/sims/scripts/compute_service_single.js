@@ -1,4 +1,51 @@
 $(function() {
+    $("#task-flops").on("keyup", function () {
+        let task_flops_input = $(this);
+        let task_flops_value = parseInt(task_flops_input.val());
+        let task_flops_label = $(".task-flops-label");
+
+        if (task_flops_value >= 0 && task_flops_value <= 10000) {
+            task_flops_label.text(task_flops_value + " Gflops")
+                .css("background-color", "#d3ffe9");
+
+            task_flops_input.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (task_flops_label.css("background-color") == "rgb(211, 255, 233)") {
+                    task_flops_label.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            task_flops_label.css("background-color", "#ffb7b5");
+            task_flops_input.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
+
+    $("#filesize-input").on("keyup", function () {
+        let filesize_input = $(this);
+        let filesize_label_value = parseInt(filesize_input.val());
+        let filesize_label = $(".filesize-label");
+
+        if (filesize_label_value >= 0 && filesize_label_value <= 10000) {
+            filesize_label.text(filesize_label_value + " MB")
+                .css("background-color", "#d3ffe9");
+
+            filesize_input.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (filesize_label.css("background-color") == "rgb(211, 255, 233)") {
+                    filesize_label.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            filesize_label.css("background-color", "#ffb7b5");
+            filesize_input.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
 
     $('#simulator-form').on('submit', function(event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)

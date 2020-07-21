@@ -1,8 +1,10 @@
 ---
 layout: simulation
-title: Storage Service
+title: Compute Service
 permalink: simulations/compute_service_single/
 ---
+
+{% include partials/input_non_workflow.html imgSvg="simulation_imgs/ci_sim4.svg" %}
 
 {% include partials/simulation_parameters_form_start.html %}
 
@@ -32,8 +34,8 @@ permalink: simulations/compute_service_single/
            required>
 </div>
 <div class="form-group col-md-6">
-    <label for="file-size">Enter file size (MBs)</label>
-    <input class="form-control" type="number" id="file-size" placeholder="" value="10" min="1" max="10000" step="1"
+    <label for="filesize-input">Enter file size (MBs)</label>
+    <input class="form-control" type="number" id="filesize-input" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB

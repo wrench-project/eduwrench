@@ -1,8 +1,10 @@
 ---
 layout: simulation
-title: Storage Service
+title: Compute Service
 permalink: simulations/compute_service_properties/
 ---
+
+{% include partials/input_non_workflow.html imgSvg="simulation_imgs/ci_sim5.svg" %}
 
 {% include partials/simulation_parameters_form_start.html %}
 
@@ -51,31 +53,31 @@ permalink: simulations/compute_service_properties/
 </div>
 
 <div class="form-group col-md-6" id="b" style="display:none;">
-    <label for="bandwidth">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 1</label>
+    <label for="bandwidth1">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 1</label>
     <input class="form-control" type="number" id="bandwidth1" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
-    <label for="bandwidth">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 2</label>
+    <label for="bandwidth2">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 2</label>
     <input class="form-control" type="number" id="bandwidth2" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
-    <label for="bandwidth">Enter bandwidth (MBps) between WMS, File Registry and Storage Service</label>
+    <label for="bandwidth3">Enter bandwidth (MBps) between WMS, File Registry and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth3" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
-    <label for="bandwidth">Enter bandwidth (MBps) between Compute Service 1 and Storage Service</label>
+    <label for="bandwidth4">Enter bandwidth (MBps) between Compute Service 1 and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth4" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
-    <label for="bandwidth">Enter bandwidth (MBps) between Compute Service 2 and Storage Service</label>
+    <label for="bandwidth5">Enter bandwidth (MBps) between Compute Service 2 and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth5" placeholder="" value="10" min="1" max="10000" step="1"
     required>
     <div class="invalid-feedback">

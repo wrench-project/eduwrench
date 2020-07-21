@@ -1,4 +1,50 @@
 $(function() {
+    $("#bandwidth-input").on("keyup", function () {
+        let bandwidth_input = $(this);
+        let bandwidth_label_value = parseInt(bandwidth_input.val());
+        let bandwidth_label = $(".bandwidth-label");
+
+        if (bandwidth_label_value >= 0 && bandwidth_label_value <= 10000) {
+            bandwidth_label.text("Bandwidth: " + bandwidth_label_value + " Mbps")
+                .css("background-color", "#d3ffe9");
+
+            bandwidth_input.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (bandwidth_label.css("background-color") == "rgb(211, 255, 233)") {
+                    bandwidth_label.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            bandwidth_label.css("background-color", "#ffb7b5");
+            bandwidth_input.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
+    $("#filesize-input").on("keyup", function () {
+        let filesize_input = $(this);
+        let filesize_label_value = parseInt(filesize_input.val());
+        let filesize_label = $(".filesize-label");
+
+        if (filesize_label_value >= 0 && filesize_label_value <= 10000) {
+            filesize_label.text(filesize_label_value + " MB")
+                .css("background-color", "#d3ffe9");
+
+            filesize_input.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (filesize_label.css("background-color") == "rgb(211, 255, 233)") {
+                    filesize_label.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            filesize_label.css("background-color", "#ffb7b5");
+            filesize_input.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
 
     updateFigureLabel("bandwidth-input", "client-bandwidth-label", 1, 1000, "Bandwidth", "MB/sec");
     updateFigureLabel("registration-input", "registration-overhead-label", 0, 5, "Inserting", "sec");
