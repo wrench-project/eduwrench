@@ -6,6 +6,31 @@ $(document).ready(function() {
         $('#probability').hide();
       }
     });
+
+
+    $("#filesize-input").on("keyup", function () {
+        let filesize_input = $(this);
+        let filesize_label_value = parseInt(filesize_input.val());
+        let filesize_label = $(".filesize-label");
+
+        if (filesize_label_value >= 0 && filesize_label_value <= 10000) {
+            filesize_label.text(filesize_label_value + " MB")
+                .css("background-color", "#d3ffe9");
+
+            filesize_input.removeClass("is-invalid")
+                .addClass("is-valid");
+
+            setTimeout(function () {
+                if (filesize_label.css("background-color") == "rgb(211, 255, 233)") {
+                    filesize_label.css("background-color", "");
+                }
+            }, 500);
+        } else {
+            filesize_label.css("background-color", "#ffb7b5");
+            filesize_input.removeClass("is-valid")
+                .addClass("is-invalid");
+        }
+    });
   });
 
 $(function() {

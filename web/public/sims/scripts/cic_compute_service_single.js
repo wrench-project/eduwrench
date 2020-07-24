@@ -66,7 +66,7 @@ $(function() {
             email: email,
             hostSelect: $("input[name*='host-select']:checked").val(),
             taskFlops: $("#task-flops").val(),
-            fileSize: $("#file-size").val()
+            fileSize: $("#filesize-input").val()
         };
 
         // Upon submission of the form, a POST request containing the user's desired parameters
