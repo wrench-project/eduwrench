@@ -96,7 +96,7 @@ with or double-check answers.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="storage_service_choose/" %}
+    {% include simulator.html src="cic_storage_service_choose/" %}
   </div>
 </div>
 
@@ -108,7 +108,7 @@ with or double-check answers.
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="storage_service_multiple/" %}
+    {% include simulator.html src="cic_storage_service_multiple/" %}
   </div>
 </div>
 

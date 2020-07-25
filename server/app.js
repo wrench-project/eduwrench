@@ -1378,7 +1378,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
 });
 
 
-// execute activity storage service simulation route
+// execute activity storage service multiple simulation route
 app.post("/run/storage_service_multiple", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_multiple/");
 
@@ -1466,7 +1466,7 @@ app.post("/run/storage_service_multiple", authCheck, function (req, res) {
     }
 });
 
-// execute activity compute service simulation route
+// execute activity compute service single task simulation route
 app.post("/run/compute_service_single_task", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/compute_service_single_task/");
 
@@ -1536,14 +1536,13 @@ app.post("/run/compute_service_single_task", authCheck, function (req, res) {
     }
 });
 
-// execute activity storage service simulation route
+// execute activity compute service properties simulation route
 app.post("/run/compute_service_properties", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/compute_service_properties/");
 
     const SIMULATOR = "compute_service_properties";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
-    var CHOSEN_SERVER = "";
     var PARAM = req.body.paramSelect;
     var BANDWIDTHS = [req.body.bandwidth1, req.body.bandwidth2, req.body.bandwidth3, req.body.bandwidth4, req.body.bandwidth5];
     var PROPERTIES = [req.body.property1, req.body.property2, req.body.property3, req.body.property4];
@@ -1630,7 +1629,7 @@ app.post("/run/compute_service_properties", authCheck, function (req, res) {
 });
 
 
-// execute activity storage service simulation route
+// execute activity data integrity simulation route
 app.post("/run/data_integrity", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/data_integrity/");
 

@@ -10,7 +10,7 @@
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="data_integrity/" %}
+    {% include simulator.html src="cic_data_integrity/" %}
   </div>
 </div>
 

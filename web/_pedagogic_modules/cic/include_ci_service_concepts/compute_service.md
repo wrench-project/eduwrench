@@ -11,7 +11,7 @@
     (Open simulator here)
   </div>
   <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="compute_service_single/" %}
+    {% include simulator.html src="cic_compute_service_single/" %}
   </div>
 </div>
 
