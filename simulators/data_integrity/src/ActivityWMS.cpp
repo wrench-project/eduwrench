@@ -112,7 +112,7 @@ namespace wrench {
                 }
             }
         } else if (serverCorrupted) {
-            //if running scenario 2, download uncorrupted file from server 2
+            //if running scenario 2, download corrupted file from storage service
             data_manager->doSynchronousFileCopy(corrupted_file,
                                                 FileLocation::LOCATION(storage_service_1),
                                                 FileLocation::LOCATION(client_storage_service),
@@ -125,10 +125,13 @@ namespace wrench {
             WRENCH_INFO("File %s (received: %s) at server %s is corrupted! Downloading from server %s",
                         not_corrupted_file->getID().c_str(), corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str(), storage_service_2->getHostname().c_str());
 
+            //then download uncorrupted file from storage service 2 and compute checksum
             data_manager->doSynchronousFileCopy(not_corrupted_file,
                                                 FileLocation::LOCATION(storage_service_2),
                                                 FileLocation::LOCATION(client_storage_service),
                                                 file_registry);
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+            WRENCH_INFO("Computing checksum of file...");
             TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
             WRENCH_INFO("File %s from server %s was successfully transferred",
                         not_corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());

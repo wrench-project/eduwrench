@@ -179,6 +179,7 @@ int main(int argc, char** argv) {
     storage_services.insert(storage_service_1);
     storage_services.insert(storage_service_2);
 
+    //add WMS and workflow to simulation
     auto wms = simulation.add(new wrench::ActivityWMS(file_registry, {storage_services}, WMS));
 
     wms->addWorkflow(&workflow);

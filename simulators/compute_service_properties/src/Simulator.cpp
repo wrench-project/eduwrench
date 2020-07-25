@@ -26,31 +26,30 @@
  */
 void generateWorkflow(wrench::Workflow *workflow, std::vector<int> CORES, std::vector<int>
         MEMORY, int file_nums) {
-    // Blue task
+    //adding tasks
     auto blue_task = workflow->addTask("blue_task", 1000000, CORES[0], CORES[0], 1, MEMORY[0]);
     auto yellow_task = workflow->addTask("yellow_task", 1000, CORES[1], CORES[1], 1, MEMORY[1]);
     auto orange_task = workflow->addTask("orange_task", 1000, CORES[2], CORES[2], 1, MEMORY[2]);
     auto red_task  = workflow->addTask("red_task", 1000000, CORES[3], CORES[3], 1, MEMORY[3]);
 
     for (int i = 1; i <= file_nums; ++i) {
+        //adding input files for blue, orange, yellow
         blue_task->addInputFile(workflow->addFile("blue_infile" + std::to_string(i), 1000));
-    }
-    for (int i = 1; i <= file_nums; ++i) {
+        yellow_task->addInputFile(workflow->addFile("yellow_infile" + std::to_string(i), 1000));
+
+        //adding output files for blue, orange, yellow
         auto blue_output = workflow->addFile("blue_outfile" + std::to_string(i), 1000);
         blue_task->addOutputFile(blue_output);
-        red_task->addInputFile(blue_output);
-    }
 
-    for (int i = 1; i <= file_nums; ++i) {
-        yellow_task->addInputFile(workflow->addFile("yellow_infile" + std::to_string(i), 1000));
-    }
-    for (int i = 1; i <= file_nums; ++i) {
         auto yellow_output = workflow->addFile("yellow_outfile"  + std::to_string(i), 1000);
         auto orange_output = workflow->addFile("orange_outfile"  + std::to_string(i), 1000);
+
         yellow_task->addOutputFile(yellow_output);
         orange_task->addOutputFile(orange_output);
-        red_task->addInputFile(yellow_output);
 
+        //red task takes output of previous tasks as input files
+        red_task->addInputFile(blue_output);
+        red_task->addInputFile(yellow_output);
         red_task->addInputFile(orange_output);
     }
 
@@ -157,13 +156,14 @@ int main(int argc, char **argv) {
     const std::string COMPUTE_HOST2 = "ComputeHost2";
 
     std::string PARAMETERS;
-    bool use_bandwidth, use_property, use_cores, use_mem, use_file_num;
-    int offset = 1;
     int FILE_NUMS = 1;
     std::vector<int> BANDWIDTH(5, 10);
     std::vector<std::string> PROPERTY = {"0", "0", "500000", "0"};
     std::vector<int> CORES(4, 1);
     std::vector<int> MEMORY(4, 1);
+
+    bool use_bandwidth, use_property, use_cores, use_mem, use_file_num;
+    int offset = 1;
 
     try {
         PARAMETERS = std::string(argv[1]);
@@ -177,6 +177,10 @@ int main(int argc, char **argv) {
         if (use_bandwidth) {
             for (int i = 1; i <= 5; ++i) {
                 BANDWIDTH[i - 1] = std::stoi(std::string(argv[i + offset]));
+                if (BANDWIDTH[i - 1] <  1 || BANDWIDTH[i - 1] > 10000) {
+                    std::cerr << "Invalid bandwidth. Speed must be in range [1,10000] MBps" << std::endl;
+                    throw std::invalid_argument("invalid link speed");
+                }
             }
             offset += 5;
         }
@@ -197,13 +201,18 @@ int main(int argc, char **argv) {
 
         if (use_mem) {
             for (int i = 1; i <= 4; ++i) {
-                MEMORY[i - 1] = std::stoi(std::string(argv[i + offset]));\
+                MEMORY[i - 1] = std::stoi(std::string(argv[i + offset]));
             }
             offset += 4;
         }
 
         if (use_file_num) {
             FILE_NUMS = std::stoi(std::string(argv[offset + 1]));
+            offset += 1;
+        }
+
+        if (argc != offset + 1) {
+            throw std::invalid_argument("invalid number of arguments");
         }
 
     } catch (std::invalid_argument &e) {

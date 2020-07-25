@@ -134,6 +134,7 @@ int main(int argc, char **argv) {
     const std::string FILEREGISTRY("FileRegistryHost");
     const std::string SERVER("StorageHost");
 
+    //adding and instantiating storage services and file registry
     auto client_storage_service = simulation.add(new wrench::SimpleStorageService(
             CLIENT, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
@@ -148,10 +149,13 @@ int main(int argc, char **argv) {
     auto file_registry = simulation.add(new wrench::FileRegistryService(FILEREGISTRY, {
             {wrench::FileRegistryServiceProperty::ADD_ENTRY_COMPUTE_COST, std::to_string(FILE_REGISTRY_OVERHEAD)}
     }, {}));
+
+    //adding WMS and workflow to simulation
     auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry));
 
     wms->addWorkflow(&workflow);
 
+    //staging file to be copied on client storage service
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
 

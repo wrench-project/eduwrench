@@ -99,7 +99,8 @@ namespace wrench {
                         post_op, {});
                 this->job_manager->submitJob(job, chosen_compute_service,
                                              {{task->getID(), chosen_compute_service->getHostname()}});
-                WRENCH_INFO("Task starting on %s", chosen_compute_service->getHostname().c_str());
+                WRENCH_INFO("Task %s starting on %s", task->getID(),
+                        chosen_compute_service->getHostname().c_str());
 
                 locations.clear();
                 pre_op.clear();

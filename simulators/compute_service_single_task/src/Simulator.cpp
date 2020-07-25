@@ -41,18 +41,10 @@ void generateWorkflow(wrench::Workflow *workflow, int file_size, int task_flops)
  * @param num_cores_per_host: number of cores per host
  * @param effective_nework_bandwidth: wide-area bandwidth in MB/sec
  */
-void generatePlatform(std::string platform_file_path, int host_select) {
+void generatePlatform(std::string platform_file_path, std::string compute_host1, std::string
+compute_host2) {
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
-    }
-
-    std::string COMPUTE_HOST1 = "ComputeHost1";
-    std::string COMPUTE_HOST2 = "ComputeHost2";
-
-    if (host_select == 1) {
-        COMPUTE_HOST1 = "ChosenHost";
-    } else if (host_select == 2) {
-        COMPUTE_HOST2 = "ChosenHost";
     }
 
     std::string xml_string = "<?xml version='1.0'?>\n"
@@ -68,13 +60,13 @@ void generatePlatform(std::string platform_file_path, int host_select) {
                              "                            <prop id=\"mount\" value=\"/\"/>\n"
                              "           </disk>\n"
                              "       </host>\n"
-                             "       <host id=\"" + COMPUTE_HOST1 + "\" speed=\"1000Gf\" core=\"3\">\n"
+                             "       <host id=\"" + compute_host1 + "\" speed=\"1000Gf\" core=\"3\">\n"
                              "           <disk id=\"scratch\" read_bw=\"100000TBps\" write_bw=\"100000TBps\">\n"
                              "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                              "                            <prop id=\"mount\" value=\"/scratch/\"/>\n"
                              "           </disk>\n"
                              "       </host>\n"
-                             "       <host id=\"" + COMPUTE_HOST2 + "\" speed=\"500Gf\" core=\"3\">\n"
+                             "       <host id=\"" + compute_host2 + "\" speed=\"500Gf\" core=\"3\">\n"
                              "           <disk id=\"scratch\" read_bw=\"100000TBps\" write_bw=\"100000TBps\">\n"
                              "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                              "                            <prop id=\"mount\" value=\"/scratch/\"/>\n"
@@ -88,16 +80,16 @@ void generatePlatform(std::string platform_file_path, int host_select) {
                              "       <route src=\"WMSHost\" dst=\"StorageHost\">"
                              "           <link_ctn id=\"ss_link\"/>"
                              "       </route>\n"
-                             "       <route src=\"WMSHost\" dst=\"" + COMPUTE_HOST1 + "\">"
+                             "       <route src=\"WMSHost\" dst=\"" + compute_host1 + "\">"
                              "           <link_ctn id=\"compute_link1\"/>"
                              "       </route>\n"
-                             "       <route src=\"WMSHost\" dst=\""  + COMPUTE_HOST2 +  "\">"
+                             "       <route src=\"WMSHost\" dst=\""  + compute_host2 +  "\">"
                              "           <link_ctn id=\"compute_link2\"/>"
                              "       </route>\n"
-                             "       <route src=\"StorageHost\" dst=\"" + COMPUTE_HOST1 + "\">"
+                             "       <route src=\"StorageHost\" dst=\"" + compute_host1 + "\">"
                              "           <link_ctn id=\"computess_link1\"/>"
                              "       </route>\n"
-                             "       <route src=\"StorageHost\" dst=\"" + COMPUTE_HOST2 + "\">"
+                             "       <route src=\"StorageHost\" dst=\"" + compute_host2 + "\">"
                              "           <link_ctn id=\"computess_link2\"/>"
                              "       </route>\n"
                              "   </zone>\n"
@@ -151,7 +143,7 @@ int main(int argc, char **argv) {
         FILE_SIZE = std::stoi(std::string(argv[3]));
 
         if (FILE_SIZE <  1 || FILE_SIZE > 10000) {
-            std::cerr << "Invalid file size. Speed must be in range [1,10000] MB" << std::endl;
+            std::cerr << "Invalid file size. Size must be in range [1,10000] MB" << std::endl;
             throw std::invalid_argument("invalid link speed");
         }
     } catch (std::invalid_argument &e) {
@@ -162,16 +154,8 @@ int main(int argc, char **argv) {
         return 1;
     }
 
-    std::string COMPUTE_HOST1;
-    std::string COMPUTE_HOST2;
-
-    if (HOST_SELECT == 1) {
-        COMPUTE_HOST1 = "ChosenHost";
-        COMPUTE_HOST2 = "ComputeHost2";
-    } else if (HOST_SELECT == 2) {
-        COMPUTE_HOST1 = "ComputeHost1";
-        COMPUTE_HOST2 = "ChosenHost";
-    }
+    std::string COMPUTE_HOST1 = (HOST_SELECT == 1) ? "ChosenHost" : "ComputeHost1";
+    std::string COMPUTE_HOST2 = (HOST_SELECT == 2) ? "ComputeHost2" : "ChosenHost";
 
     // generate workflow
     wrench::Workflow workflow;
@@ -179,7 +163,7 @@ int main(int argc, char **argv) {
 
     // generate platform
     std::string platform_file_path = "/tmp/platform.xml";
-    generatePlatform(platform_file_path, HOST_SELECT);
+    generatePlatform(platform_file_path, HOST_SELECT, COMPUTE_HOST1, COMPUTE_HOST2);
     simulation.instantiatePlatform(platform_file_path);
 
     //instantiate compute services with their own scratch space

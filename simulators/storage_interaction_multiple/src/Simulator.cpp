@@ -1,6 +1,5 @@
 #include <iostream>
-#include <fstream>
-#include <iomanip>
+#include <random>
 #include <string>
 #include <algorithm>
 
@@ -128,9 +127,15 @@ int main(int argc, char **argv) {
     int SERVER_LINK_BANDWIDTH[5];
     std::vector<std::string> HOST_LIST;
 
+    //server names
     const std::string CLIENT("ClientHost");
     const std::string SERVICES("ServicesHost");
     std::string SERVER("ServerHost_");
+
+    //setting up random number generator
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<> dis(1,50);
 
     try {
         USE_NPS = char(tolower(*argv[1])) == 't';
@@ -171,10 +176,8 @@ int main(int argc, char **argv) {
 
             USE_VIVALDI = char(tolower(*argv[3])) == 't';
 
-            srand(time(0));
-
             for (int i = 1; i <= NUM_SERVER; ++i) {
-                SERVER_LINK_BANDWIDTH[i - 1] = rand() % 50 + 1;
+                SERVER_LINK_BANDWIDTH[i - 1] = dis(gen);
                 HOST_LIST.push_back("ServerHost_" + std::to_string(i));
             }
         }
