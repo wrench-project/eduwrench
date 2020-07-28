@@ -16,14 +16,19 @@ in the early 2000's it became increasingly difficult, and eventually impossible,
 to increase the clock rate of processors. The reasons are  well-documented power/heat
 issues (see the 2007 classic 
 [The Free Lunch Is Over](http://www.gotw.ca/publications/concurrency-ddj.htm) article).  As  a solution to this problem, microprocessor manufacturers
-started producing multi-core processors. For a  program to exploit the
-compute power of a multi-core processor, it must use *multi-threading*.
-See operating systems and concurrent programming courses/textbooks for details. Although
-there are a lot of fascinating aspects of
-multi-threading, conceptually it just  means that a program comprises a
-set of *tasks*, some of which can run at the same time on different cores.
-This is  called **parallelism** and we call this kind
-of programs **parallel programs**.
+started producing *multi-core processors*. 
+
+
+For a program to exploit the compute power of a multi-core processor, it
+must create *tasks* that can run at the same time on different cores.
+This is  called **parallelism** and we call this kind of programs
+**parallel programs**. There are a few ways in which a program can
+implement this notion of tasks, such as having tasks be different
+*processes* or different *threads*. See operating systems and concurrent
+programming courses/textbooks for details on processes and threads, and how
+they communicate and/or share memory. In  these pedagogic modules we will
+mostly refer to tasks, without needing to specify the underlying
+implementation details.
 
 Each task in a parallel program performs some computation on some input
 data,  which  can be in RAM or on disk, and which produces some output
