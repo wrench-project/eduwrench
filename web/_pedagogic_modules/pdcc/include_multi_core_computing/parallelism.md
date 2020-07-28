@@ -14,7 +14,8 @@ that are capable of executing computer code independently of each other.
  Multi-core processors have become ubiquitous. This is because starting
 in the early 2000's it became increasingly difficult, and eventually impossible,
 to increase the clock rate of processors. The reasons are  well-documented power/heat
-issues.  As  a solution to this problem, microprocessor manufacturers
+issues (see the 2007 classic 
+[The Free Lunch Is Over](http://www.gotw.ca/publications/concurrency-ddj.htm) article).  As  a solution to this problem, microprocessor manufacturers
 started producing multi-core processors. For a  program to exploit the
 compute power of a multi-core processor, it must use *multi-threading*.
 See operating systems and concurrent programming courses/textbooks for details. Although
