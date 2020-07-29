@@ -110,7 +110,7 @@ The following practice questions are based on this simulation app.
 
 #### Practice Questions
 
-**[A.2.p3.1]**  Say we run the program with an "analyze" task that has 100 Gflop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
+**[A.2.p4.1]**  Say we run the program with an "analyze" task that has 100 Gflop work. What is the parallel efficiency when running the program on the 3-core computer and when using a single analysis task? (feel free to use the simulation app  to help you)
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -141,7 +141,7 @@ So the parallel efficiency is $E(3) = (96/46)/3 =$ **69.56%**.
 
 <p></p>
 
-**[A.2.p3.2]** What is the number of idle core seconds when running the
+**[A.2.p4.2]** What is the number of idle core seconds when running the
 program when the "analyze" task has 300 Gflop work on our 3-core computer?
 You can double-check your answer in simulation. 
 
@@ -164,7 +164,7 @@ shown in the Host Utilization graph of the simulation app.
 
 <p></p>
 
-**[A.2.p3.3]** For what amount of work of the "analyze" task is the
+**[A.2.p4.3]** For what amount of work of the "analyze" task is the
 parallel efficiency maximized? You could use the simulation app to "search" 
 for the right answer, but that would be really tedious. Try using analysis
 and/or intuition first. 
@@ -274,7 +274,7 @@ are used to execute this program, it can never run in less than 46 seconds!
 
 #### Practice Questions
 
-**[A.2.p3.4]** For the DAG below, give the number of levels, the maximum level width, and the
+**[A.2.p4.4]** For the DAG below, give the number of levels, the maximum level width, and the
 length of the critical path in seconds (name and execution time are shown for each task).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/practice_dag_1.svg">Practice Question DAG</object>
@@ -296,7 +296,7 @@ length of the critical path in seconds (name and execution time are shown for ea
 <p></p>
 
 
-**[A.2.p3.5]** For the DAG below, would it be useful to use more than 3
+**[A.2.p4.5]** For the DAG below, would it be useful to use more than 3
 cores? Can the execution time be ever shorter than 29 seconds? Could you
 modify one edge's end point to increase the DAG's maximum level width?
 
@@ -382,7 +382,7 @@ answer the practice questions thereafter.
 
 #### Practice Questions
 
-**[A.2.p3.6]** Setting the "analyze" task's work to 10 Gflop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
+**[A.2.p4.6]** Setting the "analyze" task's work to 10 Gflop, does it matter which paths are prioritized  when  executing the program on  2 cores? 
 If so, which ones should
 be prioritized? Can you venture an explanation?
 
@@ -417,7 +417,7 @@ All this can be seen easily in the simulation app.
 
 <p></p>
 
-**[A.2.p3.7]** Say now  we set the work of the "analyze" task to be 300
+**[A.2.p4.7]** Say now  we set the work of the "analyze" task to be 300
 Gflop.  What are the execution times with each of the three path
 prioritization options? Can  you explain why the results are as they are?
 
@@ -447,7 +447,7 @@ overall, the execution will always be 5 + 70 + 1 = 76s.
 <p></p>
 
 
-**[A.2.p3.8]** Is it possible that, for some  amount of work of  the "analyze"  task,
+**[A.2.p4.8]** Is it possible that, for some  amount of work of  the "analyze"  task,
 all three different prioritizing options lead to three different execution times (when 
 executing the program on 2 cores)?  Although you may have a rapid intuition
 of whether the answer is yes or no, deriving a convincing argument is not that easy...
@@ -497,26 +497,26 @@ of overall program execution time!
 
 Answer the following questions:
 
-**[A.2.q3.1]** For the DAG below, where each task has an execution time in seconds on
+**[A.2.q4.1]** For the DAG below, where each task has an execution time in seconds on
 a core of some computer, give the number of levels, the maximum level width, and the length of the 
 critical path in seconds.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_1.svg">Question DAG</object>
 <p></p>
 
-**[A.2.q3.2]** For the DAG in the previous question, what would be the parallel
+**[A.2.q4.2]** For the DAG in the previous question, what would be the parallel
 efficiency on 3 cores?
 
-**[A.2.q3.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for 
+**[A.2.q4.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for 
 picking a ready task for execution, we always pick the ready task with the largest work 
 (this is a "I should do the most time-consuming chores first" approach). What is the 
 execution time?
 
-**[A.2.q3.4]** Still for that same DAG on 2 cores, we now pick the ready task with the 
+**[A.2.q4.4]** Still for that same DAG on 2 cores, we now pick the ready task with the 
 smallest work first  (this is a "I should do the easiest chores first" approach). What 
 is the execution time?  It is better than the previous approach?
 
-**[A.2.q3.5]** For this new DAG below, executed on 2 cores, what are the execution times of the "pick the 
+**[A.2.q4.5]** For this new DAG below, executed on 2 cores, what are the execution times of the "pick the 
 ready task with the largest work" and "pick the ready task with the smallest work" 
 approaches? Which approach is better?
 

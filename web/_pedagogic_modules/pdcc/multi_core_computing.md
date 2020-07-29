@@ -12,6 +12,7 @@ Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
   <a class="item" data-tab="parallelism">Parallelism</a>
+  <a class="item" data-tab="load-imbalance">Load Imbalance</a>
   <a class="item" data-tab="ram-and-io">RAM and I/O</a>
   <a class="item" data-tab="dependencies">Task Dependencies </a>
   <a class="item" data-tab="data-parallelism">Data Parallelism</a>
@@ -20,6 +21,10 @@ Go through the tabs below in sequence...
 
 <div markdown="1" class="ui tab segment active" data-tab="parallelism">
   {% include_relative include_multi_core_computing/parallelism.md %}
+</div>
+
+<div markdown="1" class="ui tab segment" data-tab="load-imbalance">
+  {% include_relative include_multi_core_computing/load_imbalance.md %}
 </div>
 
 <div markdown="1" class="ui tab segment" data-tab="ram-and-io">
