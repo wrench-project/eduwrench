@@ -71,3 +71,10 @@ h2 {
 .ui.secondary.pointing.menu .active.item {
   border-color: $main !important;
 }
+
+/* Style for learning objective box */
+.learningObjectiveBox {
+  background-color: $lo-box-background;
+  padding: 1%;
+}
+

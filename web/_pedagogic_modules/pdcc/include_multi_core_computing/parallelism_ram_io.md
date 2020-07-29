@@ -1,8 +1,12 @@
 
 #### Learning Objectives
- 
-- Understand and be able to quantify the impact of RAM constraints on parallel performance
-- Understand and be able to quantify the impact of I/O on parallel performance
+
+<div class="learningObjectiveBox">
+<ul>
+<li> Understand and be able to quantify the impact of RAM constraints on parallel performance</li>
+<li> Understand and be able to quantify the impact of I/O on parallel performance</li>
+</ul>
+</div>
 
 ----
 
@@ -120,7 +124,7 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 ---
 
-#### I/O and Parallelism
+### I/O and Parallelism
 
 Another common  cause of idle time is I/O. While a task running on a core performs 
 I/O, the core is (mostly) idle. We learned

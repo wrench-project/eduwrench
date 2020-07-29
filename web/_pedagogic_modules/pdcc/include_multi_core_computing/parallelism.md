@@ -1,9 +1,13 @@
 
 #### Learning Objectives
+<div class="learningObjectiveBox">
 
-- Understand the need for and the basics of multi-core computers
-- Understand and apply the concepts of parallel speedup and efficiency
-- Understand and quantify the relationship between idle time, speedup, and efficiency
+<ul>
+<li> Understand the need for and the basics of multi-core computers</li>
+<li> Understand and apply the concepts of parallel speedup and efficiency</li>
+<li> Understand and quantify the relationship between idle time, speedup, and efficiency</li>
+</ul>
+</div>
 
 ---
 
@@ -50,7 +54,7 @@ uninterrupted and by itself on that same core until completion.
 
 ----
 
-#### Speedup and Efficiency
+### Speedup and Efficiency
 
 A common motivation for running the tasks of a program on multiple cores is
 speed. For example, if you have tasks that a single core can complete in
@@ -193,7 +197,7 @@ $
 
 ----
 
-#### Load Imbalance and Idle Time
+### Load Imbalance and Idle Time
 
 At this point, you may be wondering why, in practice, parallel efficiency
 can be less than 100%. One reason is **idle time**. This is the
@@ -383,6 +387,8 @@ computer completes the program faster, our concern here was parallel efficiency.
   </div>
 </div>
 <p></p>
+
+---
 
 ### More Load Imbalance with Non-Identical Tasks
 
