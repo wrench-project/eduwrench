@@ -339,6 +339,7 @@ This is seen easily in simulation by setting the task work to 100 GFlop.
 </div>
 <p></p>
 
+<!--
 **[A.2.p1.6]** Assume you now have 3 tasks to compute, still taking 1 second each
 on a core. What is the parallel efficiency on a 4-core computer? 
 <div class="ui accordion fluid">
@@ -354,8 +355,9 @@ efficiency is 3/4 = 75%.
   </div>
 </div>
 <p></p>
+-->
 
-**[A.2.p1.7]** You are upgrading your (pre-historic?) single-core computer and
+**[A.2.p1.6]** You are upgrading your (pre-historic?) single-core computer and
 you have two new multi-core computers to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
@@ -432,7 +434,7 @@ problem, i.e., how to allocate tasks to compute resources, again in upcoming mod
 
 #### Practice Questions
 
-**[A.2.p1.8]** A 5-task program runs optimally (i.e., it's the best it can
+**[A.2.p1.7]** A 5-task program runs optimally (i.e., it's the best it can
 possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in 
 2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5 runs in 7s?
 <div class="ui accordion fluid">
@@ -450,7 +452,7 @@ to 11.
 </div>
 <p></p>
 
-**[A.2.p1.9]** Consider a 6-task program. The execution times of 5
+**[A.2.p1.8]** Consider a 6-task program. The execution times of 5
 of the tasks are: 6, 8, 7, 12, 9. What should the 6th task's execution
 time so that this program can run with 100% parallel efficiency
 on 3 cores? 
