@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of memory (RAM)
 - Understand how the amount of available memory limits program executions
-
+</div>
 ---
 
 ### Memory

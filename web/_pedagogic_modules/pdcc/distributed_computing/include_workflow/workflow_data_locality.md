@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
   - Understand the concept of data locality in distributed platforms
   - Be able to quantify the impact of data locality on workflow execution
-
+</div>
 ---
 
 ### The need for data locality

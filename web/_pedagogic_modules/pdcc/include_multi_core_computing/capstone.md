@@ -1,7 +1,8 @@
 
 #### Learning Objectives
-
-- Be able to apply(most of) the concepts in this module to a case-study
+<div class="learningObjectiveBox" markdown="1">
+- Be able to apply (most of) the concepts in this module to a case-study
+</div>
 
 ---
 

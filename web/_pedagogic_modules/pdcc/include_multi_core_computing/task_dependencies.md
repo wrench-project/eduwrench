@@ -1,12 +1,13 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of task dependencies
 - Understand and quantify the impact of task dependencies on parallelism
+</div>
 
 ---
 
-#### Basic Concept
+### Basic Concept
 
 So far, we have only considered *independent* tasks in our parallel programs,
 i.e., tasks that can be executed in any order and concurrently. In other
@@ -218,7 +219,7 @@ For $x = 300$ the efficiency is 84.05%, which is the best this program can ever 
 
 <p></p>
 
-#### Levels, Width, Critical Path
+### Levels, Width, Critical Path
 
 In the previous section, and the practice questions, we touched upon some
 fundamental concepts without naming them explicitly. Let's do so now.
@@ -329,6 +330,7 @@ Replacing the D->G edge by a D->H edge would make the DAG's maximum level width 
 
 <p></p>
 
+---
 
 ### Choosing which task to run next
 

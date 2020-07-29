@@ -1,11 +1,8 @@
 
 #### Learning Objectives
-
-<div class="learningObjectiveBox">
-<ul>
-<li> Understand and be able to quantify the impact of RAM constraints on parallel performance</li>
-<li> Understand and be able to quantify the impact of I/O on parallel performance</li>
-</ul>
+<div class="learningObjectiveBox" markdown="1">
+  - Understand and be able to quantify the impact of RAM constraints on parallel performance
+  - Understand and be able to quantify the impact of I/O on parallel performance
 </div>
 
 ----

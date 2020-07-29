@@ -1,9 +1,10 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of data-parallelism
 - Understand and be able to apply Amdahl's law
 - Understand and be able to reason about the performance of data-parallel programs
+</div>
 
 ---
 
@@ -196,7 +197,7 @@ speedup is 30/15 = 2. So, the parallel efficiency is 50%.
 
 ---
 
-#### Amdahl's Law
+### Amdahl's Law
 
 The simulation and practice questions above highlight a simple phenomenon
 known as **Amdahl's law**. This law says that the overall parallel speedup

@@ -1,12 +1,12 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of network contention
 - Be able to estimate data transfer times in the presence of contention
-
+</div>
 ---
 
-#### Networks are Shared
+### Networks are Shared
 
 Typically, several data transfers occur concurrently (i.e., at the same
 time) on a network, and some of these transfers may be using the same

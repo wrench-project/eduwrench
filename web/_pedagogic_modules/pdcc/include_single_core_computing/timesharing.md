@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of time sharing
 - Understand how time sharing impacts program execution times
-
+</div>
 ---
 
 ### Time Sharing

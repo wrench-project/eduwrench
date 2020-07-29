@@ -1,10 +1,10 @@
 
 #### Learning Objectives
-
-- Understand the principles of coordinator-worker computing
-- Understand the basic concept of scheduling in the context of coordinator-worker
-- Experience how different scheduling strategies can affect performance
-
+<div class="learningObjectiveBox" markdown="1">
+  - Understand the principles of coordinator-worker computing
+  - Understand the basic concept of scheduling in the context of coordinator-worker
+  - Experience how different scheduling strategies can affect performance
+</div>
 ----
 
 ### Basics

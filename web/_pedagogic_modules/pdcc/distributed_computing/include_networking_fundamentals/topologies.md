@@ -1,10 +1,10 @@
 
 #### Learning objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of network topology
 - Be able to compute end-to-end latencies and bandwidths
 - Be able to compute end-to-end data transfer times
-
+</div>
 ---
 
 ### Network Topologies 

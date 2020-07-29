@@ -1,12 +1,12 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concepts of *work* and of *compute speed*
 - Be familiar with Flop as a measure of work and with Flop/sec
   as a measure of compute speed
 - Understand the simple relationship between program execution time, 
   work, and compute speed
-
+</div>
 ---
 
 ### Measures of Work and Compute Speed

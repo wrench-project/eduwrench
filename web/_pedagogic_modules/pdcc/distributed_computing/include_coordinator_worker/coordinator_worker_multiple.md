@@ -1,8 +1,8 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Be able to use simulation to compare coordinator-worker scheduling strategies meaningfully
-
+</div>
 ----
 
 In the previous tab, you were able to simulate particular coordinator-worker setups

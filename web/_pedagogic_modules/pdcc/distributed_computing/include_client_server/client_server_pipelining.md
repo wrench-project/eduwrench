@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the need for and the mechanics of pipelining
 - Be able to reason about how pipelining impacts performance
-
+</div>
 ---
 
 ### Adding I/O on the Client

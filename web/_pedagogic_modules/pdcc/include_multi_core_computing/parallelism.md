@@ -1,12 +1,9 @@
 
 #### Learning Objectives
-<div class="learningObjectiveBox">
-
-<ul>
-<li> Understand the need for and the basics of multi-core computers</li>
-<li> Understand and apply the concepts of parallel speedup and efficiency</li>
-<li> Understand and quantify the relationship between idle time, speedup, and efficiency</li>
-</ul>
+<div class="learningObjectiveBox" markdown="1">
+  - Understand the need for and the basics of multi-core computers
+  - Understand and apply the concepts of parallel speedup and efficiency
+  - Understand and quantify the relationship between idle time, speedup, and efficiency
 </div>
 
 ---

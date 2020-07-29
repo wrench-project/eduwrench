@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
   - Be able to reason about workflow execution performance on
     distributed multi-host/multi-core platforms
-
+</div>
 ---
 
 ### Executing Workflows on Distributed Platforms
