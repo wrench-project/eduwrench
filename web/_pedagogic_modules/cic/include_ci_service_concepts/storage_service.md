@@ -1,8 +1,10 @@
 
 #### Learning Objectives
 
+<div class="learningObjectiveBox" markdown="1">
 - Understand how data services can be used to store, copy, and access data
 - Understand the concept of data replicas and how data services can be used to keep track of them
+</div>
 
 ---
 

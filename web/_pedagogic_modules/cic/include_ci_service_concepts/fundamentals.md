@@ -1,8 +1,10 @@
 
 #### Learning Objectives
 
+<div class="learningObjectiveBox" markdown="1">
 - Understand the principles of cyberinfrastructure services
 - Understand the concept of overhead and how it can impact CI services performance
+</div>
 
 ---
 
