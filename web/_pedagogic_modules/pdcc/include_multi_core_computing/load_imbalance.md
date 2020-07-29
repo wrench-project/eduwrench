@@ -66,8 +66,9 @@ overall execution pattern. The "Host Utilization" graph displays the
 execution as  in Figure 1 above. Now try running a number of tasks and
 cores where the number of tasks does not evenly divide the number of cores.
 Looking at the host utilization graph again, now you will be able to see
-idle time for some of the cores (in light pink). Whenever we can see idle
-time on the graph, parallel efficiency is below 100%.
+idle time for some of the cores (in light pink). Whenever there is idle
+time, parallel efficiency is below 100% and you can easily compute
+its actual value. 
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
