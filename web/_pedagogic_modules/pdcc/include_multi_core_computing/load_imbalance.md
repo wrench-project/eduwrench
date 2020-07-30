@@ -242,7 +242,7 @@ to each other as possible is a difficult problem. We are able to do it for
 the small examples like above, but as soon as the number of tasks gets large,
 it is no longer humanly possible. And in fact, it is not computer-ly
 possible either, or at least, not quickly. More formally, determining the best split is an NP-complete
-problem (see algorithm/theory textbooks/courses). We will encounter this kind of
+problem (see Algorithms/Theory [textbooks](/textbooks)). We will encounter this kind of
 problem, i.e., how to allocate tasks to compute resources, again in upcoming modules.
 
 ----

@@ -24,8 +24,8 @@ must create *tasks* that can run at the same time on different cores.
 This is  called **parallelism** and we call this kind of programs
 **parallel programs**. There are a few ways in which a program can
 implement this notion of tasks, such as having tasks be different
-*processes* or different *threads*. See operating systems and concurrent
-programming courses/textbooks for details on processes and threads, and how
+*processes* or different *threads*. See Operating Systems [textbooks](/textbooks)
+ for details on processes and threads, and how
 they communicate and/or share memory. In  these pedagogic modules we will
 mostly refer to tasks, without needing to specify the underlying
 implementation details.
@@ -72,8 +72,8 @@ These resources can include
 the network card, the disk, the network, the operating system's kernel data
 structures.  One hardware resource for which program tasks that
 run on different cores almost always compete is the memory hierarchy, e.g.,
-the L3 cache and the memory bus (we refer you to computer architecture
-textbooks for details on the memory hierarchy). The memory hierarchy is thus
+the L3 cache and the memory bus (we refer you to Computer Architecture
+[textbooks](/textbooks) for details on the memory hierarchy). The memory hierarchy is thus
 a notorious culprit for loss of parallel efficiency loss.
 
 In this module, we make the simplifying assumptions that program tasks

@@ -13,7 +13,7 @@ memory (a.k.a., Random Access Memory or RAM) to store its "address space".
 The address space consists of all the bytes of content that the program 
 needs to execute (the "code", "data", "stack", "heap", "page table", etc.). 
 You can learn about details of the structure of address spaces in 
-Operating Systems textbooks. In these pedagogic modules, we simply 
+Operating Systems [textbooks](/textbooks). In these pedagogic modules, we simply 
 consider that a program needs some number of bytes of RAM to execute.
 
 When not enough RAM is available (e.g., the program's address space is too
@@ -30,7 +30,7 @@ same time, because 6 GB is larger than the available RAM. But we can run
 program *A* and *C* together as they together require 4 GB of RAM.  Note
 that in practice such a "tight" fit may not work because the entire RAM is
 not available for user processes. For instance, some RAM is used
-to store the Operating System's Kernel (see an OS textbook).
+to store the Operating System's Kernel (see Operating Systems [textbooks](/textbooks)).
 
 If you have been paying attention you may wonder why we are even talking 
 about running programs at the same time since 

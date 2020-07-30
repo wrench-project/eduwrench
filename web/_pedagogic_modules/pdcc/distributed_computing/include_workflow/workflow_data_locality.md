@@ -23,7 +23,7 @@ more efficient.
 
 Trying to keep/move data close to where the computation takes place is
 often called **improving data locality**. You may have encountered
-this term in computer architecture or operating systems courses/textbooks in
+this term in Computer Architecture or Operating Systems [textbooks](/textbooks) in
 the context of caches. Here, we use it in the context of network proximity. 
 
 

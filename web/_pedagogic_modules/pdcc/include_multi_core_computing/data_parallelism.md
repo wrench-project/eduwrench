@@ -18,7 +18,7 @@ parallelism**.
 Let's now consider one task, which performs some computation on a single
 core.  Perhaps, one can rewrite the code of this task to use multiple cores
 to accelerate its computation. This is done by writing the task's code so that it
-uses multiple threads (see concurrent programming textbooks/courses).
+uses multiple threads (see Operating Systems [textbooks](/textbooks)).
 In other terms, perhaps the task's computation itself can be **parallelized**. 
 
 ### An Example

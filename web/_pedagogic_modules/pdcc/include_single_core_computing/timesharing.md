@@ -15,14 +15,14 @@ do since the 1960's. Considering **a single core**, the Operating System
 allows a program to run for a while, then another program, and so
 on until we cycle back and repeat. This is called **time sharing**. 
 How this is done is one of the core topics of all Operating 
-System textbooks.
+System [textbooks](/textbooks).
 
 In these pedagogic modules we take a very high-level, ideal view: When
 running *n* programs at the same time on one core, each of them proceeds at
 *1/n*-th of the core's compute speed.  This is not true in practice, as
 time sharing has some overhead.  Also, programs compete for some hardware
 resources, such as caches (see Computer Architecture and Operating Systems
-textbooks for all details), and thus can slow each other down.
+[textbooks](/textbooks) for all details), and thus can slow each other down.
 
 
 With our ideal model, say that at time 0 two programs are started on a
