@@ -173,7 +173,7 @@ is depicted below:
 <div class="caption"><strong>Figure 4:</strong>
 Execution on 4 cores, with staggered I/O. </div>
 
-The execution time is still 8s, so, for this example, the two executions are equivalent. 
+The execution time is still 8s, so the two executions are equivalent.   
 
 Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel efficiency of
 only about 53%. And this is in spite of having 4 identical tasks and 4 cores, which,
