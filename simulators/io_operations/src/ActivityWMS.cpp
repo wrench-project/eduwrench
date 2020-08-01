@@ -38,7 +38,7 @@ namespace wrench {
                     S4U_Simulation::getHostName().c_str(),
                     this->mailbox_name.c_str());
         WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
-        *//
+        */
 
         // Create a job manager
         this->job_manager = this->createJobManager();
