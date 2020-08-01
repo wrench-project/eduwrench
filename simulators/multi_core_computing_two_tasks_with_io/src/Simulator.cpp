@@ -53,19 +53,21 @@ void generateWorkflow(wrench::Workflow *workflow,
     int count = 0;
     for (auto const &task_spec : task_specs) {
         count++;
-        // IO read task
-        std::string io_read_task_id("io read task #" + std::to_string(count));
-        auto io_read_task = workflow->addTask(io_read_task_id, 0, 1, 1, 1.0, 0);
-        io_read_task->addInputFile(workflow->addFile(io_read_task_id+"::in", std::get<0>(task_spec) * MB));
-
-        // IO write task
-        std::string io_write_task_id("io write task #" + std::to_string(count));
-        auto io_write_task = workflow->addTask(io_read_task_id, 0, 1, 1, 1.0, 0);
-        io_read_task->addInputFile(workflow->addFile(io_read_task_id+"::out", std::get<1>(task_spec) * MB));
 
         // Compute task
         std::string compute_task_id("task #" + std::to_string(count));
         auto compute_task = workflow->addTask(compute_task_id, std::get<2>(task_spec) * GFLOP, 1, 1, 1.0, 0);
+
+        // IO read task
+        std::string io_read_task_id("io read task #" + std::to_string(count));
+        auto io_read_task = workflow->addTask(io_read_task_id, 0, 1, 1, 1.0, 0);
+        io_read_task->addInputFile(workflow->addFile(compute_task_id+"::in", std::get<0>(task_spec) * MB));
+
+        // IO write task
+        std::string io_write_task_id("io write task #" + std::to_string(count));
+        auto io_write_task = workflow->addTask(io_write_task_id, 0, 1, 1, 1.0, 0);
+        io_read_task->addInputFile(workflow->addFile(compute_task_id+"::out", std::get<1>(task_spec) * MB));
+
 
         // Add implicit control dependencies
         workflow->addControlDependency(io_read_task, compute_task);
@@ -73,11 +75,21 @@ void generateWorkflow(wrench::Workflow *workflow,
         tasks.push_back({io_read_task, io_write_task, compute_task});
     }
 
-    // Add implicit control dependencies due to order
+    // Add implicit read input control dependencies due to order
     int first_task = (task1_before_task2 ? 0 : 1);
     int last_task = (task1_before_task2 ? 1 : 0);
-
     workflow->addControlDependency(std::get<0>(tasks[first_task]), std::get<0>(tasks[last_task]));
+
+    // Add implicit write output control dependency based on what we know the schedule to be
+    double first_task_finishes_computing  = std::get<0>(task_specs[first_task]) / 100.0  +
+            std::get<2>(task_specs[first_task]) / 100.0;
+    double last_task_finishes_computing  = std::get<0>(task_specs[first_task]) / 100.0 + std::get<0>(task_specs[last_task]) / 100.0  +
+                                            std::get<2>(task_specs[last_task]) / 100.0;
+    if (first_task_finishes_computing  <= last_task_finishes_computing) {
+        workflow->addControlDependency(std::get<1>(tasks[first_task]), std::get<1>(tasks[last_task]));
+    } else {
+        workflow->addControlDependency(std::get<1>(tasks[last_task]), std::get<1>(tasks[first_task]));
+    }
 }
 
 /**
@@ -97,7 +109,7 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"io_host\" speed=\"100Gf\" core=\"2\">\n"
+                      "       <host id=\"twocorehost\" speed=\"100Gf\" core=\"2\">\n"
                       "           <prop id=\"ram\" value=\"31GB\"/>\n"
                       "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
                       "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -105,7 +117,7 @@ void generatePlatform(std::string platform_file_path) {
                       "           </disk>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"io_host\" dst=\"io_host\">\n"
+                      "       <route src=\"twocorehost\" dst=\"twocorehost\">\n"
                       "           <link_ctn id=\"link\"/>\n"
                       "       </route>\n"
                       "   </zone>\n"
@@ -192,9 +204,9 @@ int main(int argc, char **argv) {
 
     simulation.instantiatePlatform(platform_file_path);
 
-    const std::string WMS_HOST("io_host");
-    const std::string COMPUTE_HOST("io_host");
-    const std::string STORAGE_HOST("io_host");
+    const std::string WMS_HOST("twocorehost");
+    const std::string COMPUTE_HOST("twocorehost");
+    const std::string STORAGE_HOST("twocorehost");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     auto io_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));

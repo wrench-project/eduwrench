@@ -43,20 +43,13 @@ namespace wrench {
 
         while (true) {
 
-            // Get the ready tasks and SORT them by taskID
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            std::sort(ready_tasks.begin(), ready_tasks.end(), [ ] (WorkflowTask *lhs, WorkflowTask *rhs) {
-                return lhs->getID() < rhs->getID();
-            });
-
             // Get the available compute services, in this case only one
             const std::set<std::shared_ptr<ComputeService>> compute_services = this->getAvailableComputeServices<ComputeService>();
 
             // Run ready tasks with defined scheduler implementation
             this->getStandardJobScheduler()->scheduleTasks(
                     compute_services,
-                    ready_tasks);
+                    this->getWorkflow()->getReadyTasks());
 
             // Wait for a workflow execution event, and process it
             try {
