@@ -116,7 +116,7 @@ void generatePlatform(std::string platform_file_path) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"io_host\" speed=\"100Gf\" core=\"1\">\n"
+                      "       <host id=\"host\" speed=\"100Gf\" core=\"1\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "           <disk id=\"large_disk\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
                       "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
@@ -124,7 +124,7 @@ void generatePlatform(std::string platform_file_path) {
                       "           </disk>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"io_host\" dst=\"io_host\">\n"
+                      "       <route src=\"host\" dst=\"host\">\n"
                       "           <link_ctn id=\"link\"/>\n"
                       "       </route>\n"
                       "   </zone>\n"
@@ -221,9 +221,9 @@ int main(int argc, char **argv) {
 
     simulation.instantiatePlatform(platform_file_path);
 
-    const std::string WMS_HOST("io_host");
-    const std::string COMPUTE_HOST("io_host");
-    const std::string STORAGE_HOST("io_host");
+    const std::string WMS_HOST("host");
+    const std::string COMPUTE_HOST("host");
+    const std::string STORAGE_HOST("host");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     auto io_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));
