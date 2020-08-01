@@ -140,4 +140,18 @@ the better choice provided the task has enough computation to do.
 Answer the practice questions hereafter, using the simulation app above to come up 
 with or double-check answers.
 
+IDEAS FOR PRACTICE QUESTIONS:
+  - Say Server 2 has overhad Xs. For which value of the overhead on Server 1 is it equivalent to Server 2 
+
+  - If I had two options:
+        - Run one big tasks with work X
+        - Split it into two tasks with work X/2
+    Say the overhead to Server 1 is X and that on Server 2 is Y. What should I do? (Assuming I can can send data for a run task on two different servers concurrencly)
+
+IDEAS FOR ACTIVITIES:
+
+  - One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is
+   running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password.  Then type the commmand "time ssh localhost sleep 1". What is the overhead of the Ssh service in seconds?
+
+  - Pick a cloud provider and measure the overhead for starting a VM instance. 
 ---
