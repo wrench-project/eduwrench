@@ -181,6 +181,20 @@ without I/O, would be 100% efficient.
 Increasing the parallel efficiency would require, for instance,  upgrading to a disk with
 higher read bandwidth.
 
+#### Simulating I/O Operations
+
+**TBD**
+
+<div class="ui accordion fluid app-ins">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (Open simulator here)
+  </div>
+  <div markdown="0" class="ui segment content sim-frame">
+    {% include simulator.html src="multi_core_independent_tasks_io/" %}
+  </div>
+</div>
+
 #### Practice Questions 
 
 **[A.2.p3.3]** A parallel program consists of 2 tasks:

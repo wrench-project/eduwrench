@@ -33,10 +33,10 @@ namespace wrench {
     int ActivityWMS::main() {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
-                    S4U_Simulation::getHostName().c_str(),
-                    this->mailbox_name.c_str());
-        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
+//        WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
+//                    S4U_Simulation::getHostName().c_str(),
+//                    this->mailbox_name.c_str());
+//        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
 
         // Create a job manager
         this->job_manager = this->createJobManager();
@@ -83,7 +83,25 @@ namespace wrench {
      */
     void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
         auto standard_job = event->standard_job;
-        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        WRENCH_INFO("Task %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
+        auto task = (*standard_job->getTasks().begin());
+        if (task->getID() == "io read task #1") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+            WRENCH_INFO("Finished reading input file for task #1");
+        } else if (task->getID() == "io read task #2") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+            WRENCH_INFO("Finished reading input file for task #2");
+        } else if (task->getID() == "task #1") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+            WRENCH_INFO("Finished computation for task #1");
+        } else if (task->getID() == "task #2") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+            WRENCH_INFO("Finished computation for task #2");
+        } else if (task->getID() == "io write task #1") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+            WRENCH_INFO("Finished writing output file for task #1");
+        } else if (task->getID() == "io write task #2") {
+            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+            WRENCH_INFO("Finished writing output file for task #2");
+        }
     }
 }

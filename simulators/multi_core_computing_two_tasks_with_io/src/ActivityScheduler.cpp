@@ -27,21 +27,16 @@ namespace wrench {
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                                           const std::vector<WorkflowTask *> &ready_tasks) {
 
-        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
 
         auto compute_service = *compute_services.begin();
         auto compute_host = compute_service->getHostname();
-        auto idle_core_counts = compute_service->getPerHostNumIdleCores();
-        auto num_idle_cores = idle_core_counts.at(compute_service->getHostname());
 
         std::vector<WorkflowTask *> tasks_to_submit;
         std::map<std::string, std::string> service_specific_args;
         //add all tasks possible to be submitted.
         for (const auto &task : ready_tasks) {
-            if (task->getMaxNumCores() <= num_idle_cores) {
-                tasks_to_submit.push_back(task);
-                service_specific_args[task->getID()] = compute_host + ":" + std::to_string(task->getMaxNumCores());
-            }
+//            WRENCH_INFO("TASK : %s", task->getID().c_str());
+            tasks_to_submit.push_back(task);
         }
 
         std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
@@ -54,9 +49,28 @@ namespace wrench {
             for (const auto &file : task->getOutputFiles()) {
                 file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
+            WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(task, file_locations);
+            this->getJobManager()->submitJob(job, compute_service, service_specific_args);
+            if (task->getID() == "io read task #1") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+                WRENCH_INFO("Starting reading input file for task #1");
+            } else if (task->getID() == "io read task #2") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+                WRENCH_INFO("Starting reading input file for task #2");
+            } else if (task->getID() == "task #1") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+                WRENCH_INFO("Starting computation for task #1");
+            } else if (task->getID() == "task #2") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+                WRENCH_INFO("Starting computation for task #2");
+            } else if (task->getID() == "io write task #1") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
+                WRENCH_INFO("Starting writing output file for task #1");
+            } else if (task->getID() == "io write task #2") {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+                WRENCH_INFO("Starting writing output file for task #2");
+            }
         }
-        WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
-        this->getJobManager()->submitJob(job, compute_service, service_specific_args);
 
     }
 }
