@@ -191,6 +191,8 @@ higher read bandwidth.
 We execute this program on a computer with cores that compute at 
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
+The program is written such that at any given time at most one file is being read/written from/to disk. For instance, if Task #1 starts writing its output file before Task #2, then Task #2 cannot start writing its output file until Task #1's output file has been written.
+
 What is the best parallel speedup  that can be achieved 
 when running on 2 cores? 
 
