@@ -1,10 +1,10 @@
 
 #### Learning objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of network topology
 - Be able to compute end-to-end latencies and bandwidths
 - Be able to compute end-to-end data transfer times
-
+</div>
 ---
 
 ### Network Topologies 
@@ -15,7 +15,7 @@ the graph represent either end-points, i.e., computers connected to the
 network, or routers, i.e., devices that are used to connect network links
 together.  We are abstracting away here many interesting details of how
 network technology makes it possible to implement network topologies. For
-instance, we will not discuss how routers work (see a networking course or textbook for 
+instance, we will not discuss how routers work (see Networking [textbooks](/textbooks) for 
 all interesting details).
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology.svg">topology</object>

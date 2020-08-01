@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the basics of the client/server model of computation
 - Be able to reason about the performance of a simple client/server setup
-
+</div>
 ---
 
 ### Client-Server Model

@@ -33,24 +33,15 @@ namespace wrench {
     int ActivityWMS::main() {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        /**
         WRENCH_INFO("Starting on host %s listening on mailbox_name %s",
                     S4U_Simulation::getHostName().c_str(),
                     this->mailbox_name.c_str());
         WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
-        */
 
         // Create a job manager
         this->job_manager = this->createJobManager();
 
         while (true) {
-
-            // Get the ready tasks and SORT them by taskID
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            std::sort(ready_tasks.begin(), ready_tasks.end(), [ ] (WorkflowTask *lhs, WorkflowTask *rhs) {
-                return lhs->getID() < rhs->getID();
-            });
 
             // Get the available compute services, in this case only one
             const std::set<std::shared_ptr<ComputeService>> compute_services = this->getAvailableComputeServices<ComputeService>();
@@ -58,7 +49,7 @@ namespace wrench {
             // Run ready tasks with defined scheduler implementation
             this->getStandardJobScheduler()->scheduleTasks(
                     compute_services,
-                    ready_tasks);
+                    this->getWorkflow()->getReadyTasks());
 
             // Wait for a workflow execution event, and process it
             try {
@@ -80,7 +71,6 @@ namespace wrench {
         } else {
             WRENCH_INFO("Execution is incomplete!");
         }
-        WRENCH_INFO("--------------------------------------------------------");
 
         this->job_manager.reset();
 
@@ -94,6 +84,6 @@ namespace wrench {
     void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
-        //WRENCH_INFO("Task %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
+        WRENCH_INFO("Task %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
     }
 }

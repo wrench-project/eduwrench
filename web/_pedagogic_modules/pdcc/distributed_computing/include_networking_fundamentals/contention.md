@@ -1,12 +1,12 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of network contention
 - Be able to estimate data transfer times in the presence of contention
-
+</div>
 ---
 
-#### Networks are Shared
+### Networks are Shared
 
 Typically, several data transfers occur concurrently (i.e., at the same
 time) on a network, and some of these transfers may be using the same
@@ -37,7 +37,7 @@ bandwidth**. If this splitting is fair they both
 receive half of the link's bandwidth, 20 MB/sec. (It turns out that bandwidth sharing
 is a bit complicated in practice as it also depends on latencies, but in
 this case both transfers have the same end-to-end latencies, which leads to
-fair sharing (see a networking course/textbook for more details if interested).
+fair sharing (see a Networking [textbooks](/textbooks) for more details if interested).
 
 Given the above, both transfers proceed at 20 MB/sec, i.e., half the bandwidth of the link into
 host C, which is their bottleneck link. 
@@ -108,7 +108,7 @@ $$
 
 This discrepancy is because the simulator captures some details of
 real-world networks (e.g., the TCP slow-start behavior that you may have read about
-in a networking textbook) that are 
+in Networking [textbooks](/textbooks)) that are 
 not captured by the
 above mathematical expression. Such expressions are
 still useful approximations that we can use to reason about data transfer

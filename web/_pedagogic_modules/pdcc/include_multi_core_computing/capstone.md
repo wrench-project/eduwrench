@@ -1,7 +1,8 @@
 
 #### Learning Objectives
-
-- Be able to apply(most of) the concepts in this module to a case-study
+<div class="learningObjectiveBox" markdown="1">
+- Be able to apply (most of) the concepts in this module to a case-study
+</div>
 
 ---
 
@@ -25,7 +26,7 @@ read from storage at bandwidth 100 MB/sec.
 
 #### Questions
 
-**[A.2.q5.1]** What is the execution time of this program on this VM?
+**[A.2.q6.1]** What is the execution time of this program on this VM?
 
 ---
 
@@ -62,6 +63,6 @@ worth it *if it makes the program run in under 60s.*
 
 #### Questions
 
-**[A.2.q5.2]** Which of the options above are worth it?
+**[A.2.q6.2]** Which of the options above are worth it?
 
 ---

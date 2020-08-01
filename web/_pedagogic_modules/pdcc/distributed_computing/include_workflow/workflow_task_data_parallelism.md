@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
   - Understand how task- and data-parallelism can be mixed
   - Be able to reason about the performance of programs that include both task- and data-parallelism
-
+</div>
 ---
 
 ### Basic concept

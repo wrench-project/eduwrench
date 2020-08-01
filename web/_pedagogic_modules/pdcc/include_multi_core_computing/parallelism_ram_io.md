@@ -1,8 +1,9 @@
 
 #### Learning Objectives
- 
-- Understand and be able to quantify the impact of RAM constraints on parallel performance
-- Understand and be able to quantify the impact of I/O on parallel performance
+<div class="learningObjectiveBox" markdown="1">
+  - Understand and be able to quantify the impact of RAM constraints on parallel performance
+  - Understand and be able to quantify the impact of I/O on parallel performance
+</div>
 
 ----
 
@@ -56,7 +57,7 @@ constraints.
 
 #### Practice Questions 
 
-**[A.2.p2.1]** You need to execute 5 tasks that each run in 1 second on one
+**[A.2.p3.1]** You need to execute 5 tasks that each run in 1 second on one
 core.  Your current single-core processor thus can run these tasks in 5
 seconds.  The processor is then upgraded to have 5 cores, each identical in
 processing power to the original single core. If the machine has 32 GB of
@@ -96,7 +97,7 @@ We would have been better off with a 4-core computer (since, likely, it would co
 
 <p></p>
 
-**[A.2.p2.2]** Assume you have a 2-core machine on which you need to run 6 tasks (in any order).
+**[A.2.p3.2]** Assume you have a 2-core machine on which you need to run 6 tasks (in any order).
 Each task runs in 1 second on a core. However, the tasks have the following RAM
 requirements in GB: 6, 2, 4, 3, 1, 7.  If your machine has a total of 8 GB of RAM, can
 you achieve 100% parallel efficiency?
@@ -120,7 +121,7 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 ---
 
-#### I/O and Parallelism
+### I/O and Parallelism
 
 Another common  cause of idle time is I/O. While a task running on a core performs 
 I/O, the core is (mostly) idle. We learned
@@ -172,7 +173,7 @@ is depicted below:
 <div class="caption"><strong>Figure 4:</strong>
 Execution on 4 cores, with staggered I/O. </div>
 
-The execution time is still 8s, so, for this example, the two executions are equivalent. 
+The execution time is still 8s, so the two executions are equivalent.   
 
 Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel efficiency of
 only about 53%. And this is in spite of having 4 identical tasks and 4 cores, which,
@@ -182,13 +183,15 @@ higher read bandwidth.
 
 #### Practice Questions 
 
-**[A.2.p2.3]** A parallel program consists of 2 tasks:
+**[A.2.p3.3]** A parallel program consists of 2 tasks:
 
   - Task #1 reads 20 MB of input, computes 500 Gflop, writes back 10 MB of output
   - Task #2 reads 10 MB of input, computes for 200 Gflop, writes back 20 MB of output
 
 We execute this program on a computer with cores that compute at 
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
+
+The program is written such that at any given time at most one file is being read/written from/to disk. For instance, if Task #1 starts writing its output file before Task #2, then Task #2 cannot start writing its output file until Task #1's output file has been written.
 
 What is the best parallel speedup  that can be achieved 
 when running on 2 cores? 
@@ -233,19 +236,19 @@ So here also, the execution takes 9s. You  can try to draw the execution timelin
 
 #### Questions
 
-**[A.2.q2.1]** We are using a computer with 32 GB of RAM. What is the parallel
+**[A.2.q3.1]** We are using a computer with 32 GB of RAM. What is the parallel
 efficiency when running 2 tasks on 2 cores if they each require 16 GB of RAM? What if
 each task requires 20 GB of RAM?
 
-**[A.2.q2.2]** You are given a 2-core computer with 15 GB of RAM. On this computer 
+**[A.2.q3.2]** You are given a 2-core computer with 15 GB of RAM. On this computer 
 you need to execute 6 tasks. The tasks have different RAM requirements (in GB): 
 4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency? 
 
-**[A.2.q2.3]** A program consists of 3 tasks that each takes in 2 GB of input data and
+**[A.2.q3.3]** A program consists of 3 tasks that each takes in 2 GB of input data and
 have 30,000 Gflop work. This program is executed on a 2-core computer with
 1 Tflop/sec cores and equipped with a disk with 250 MB/sec read bandwidth. What is
 the parallel  efficiency if the program can never overlap I/O and computation (but
 multiple I/O operations can happen at the same time)? 
 
-**[A.2.q2.4]** Same question as above but now the program always overlaps I/O and
+**[A.2.q3.4]** Same question as above but now the program always overlaps I/O and
 computation.

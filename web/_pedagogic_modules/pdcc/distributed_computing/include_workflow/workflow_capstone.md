@@ -1,8 +1,8 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
   - Be able to put together the concepts learned in the previous tabs  
-
+</div>
 ---
 
 ### Scenario

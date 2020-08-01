@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the need for and the mechanics of pipelining
 - Be able to reason about how pipelining impacts performance
-
+</div>
 ---
 
 ### Adding I/O on the Client
@@ -299,7 +299,7 @@ The simulation gives us: 135.40 seconds!!!!
 No, the two numbers do not match and **our estimate is way optimistic**. Once again, this is because  our estimate fails
 to capture complex network behaviors. In this case, when latencies get really high, the network protocol 
 that we simulate (TCP) leads to a severe performance collapse. This is something you can find out more about
-in advanced networking courses, but for now, let's just remember that  *latency is bad* :)
+in Networking [textbooks](/textbooks), but for now, let's just remember that  *latency is bad* :)
  
 </div>
 </div>

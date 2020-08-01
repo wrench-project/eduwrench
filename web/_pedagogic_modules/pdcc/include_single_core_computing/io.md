@@ -1,10 +1,10 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of IO
 - Understand the impact of IO operations on computing
 - Understand the basics of optimizing computation around IO operations
-
+</div>
 ---
 
 ### Basic Concepts
@@ -161,7 +161,7 @@ CPU time needed. In these cases, CPU utilization will be lower due to the need t
 
 In practice, one can implement a program that overlaps IO and computation. 
 This can be done by using non-blocking IO operations and/or threads. These 
-are techniques that are often taught in Operating Systems courses. The 
+are techniques that are described in Operating Systems [textbooks](/textbooks). The 
 overlap may not be completely "free", as reading/writing data from disk 
 can still require the CPU to perform some computation. Therefore, there 
 can be time-sharing of the CPU between the IO operations and the computation, 
@@ -169,7 +169,7 @@ and the computation is slowed down a little bit by the IO operations
 (something we did not show in the figures above). This said, there are 
 ways for IO operations to use almost no CPU cycles. One such technique, 
 which relies on specific but commonplace hardware, is called Direct Memory 
-Access (DMA). See an Operating Systems course for more details.
+Access (DMA). See Operating Systems [textbooks](/textbooks) for more details.
 
 Another practical concern is RAM pressure. When going from the example 
 execution in Figure 1 to that in Figure 2, the peak amount 

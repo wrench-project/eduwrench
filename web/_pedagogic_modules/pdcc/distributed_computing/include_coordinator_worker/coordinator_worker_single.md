@@ -1,10 +1,10 @@
 
 #### Learning Objectives
-
-- Understand the principles of coordinator-worker computing
-- Understand the basic concept of scheduling in the context of coordinator-worker
-- Experience how different scheduling strategies can affect performance
-
+<div class="learningObjectiveBox" markdown="1">
+  - Understand the principles of coordinator-worker computing
+  - Understand the basic concept of scheduling in the context of coordinator-worker
+  - Experience how different scheduling strategies can affect performance
+</div>
 ----
 
 ### Basics
@@ -68,7 +68,7 @@ You have likely already heard of *scheduling* in real-world contexts (train sche
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
 We have briefly encountered the concept of scheduling in the 
 [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
-have encountered the term in an operating systems course or textbook. The OS  constantly makes scheduling decisions
+have encountered the term in Operating Systems [textbooks](/textbooks). The OS  constantly makes scheduling decisions
 regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
 as used as possible while making the processes as "happy" as possible. 
  
@@ -101,7 +101,7 @@ and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then
 completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
 completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
 amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
-task execution (see an operating systems or concurrent programming course).
+task execution (see Operating Systems [textbooks](/textbooks)).
 
 So, what can we do for steps a) and b) above? It is easy to come up with a bunch of options. Here are "a few": 
 

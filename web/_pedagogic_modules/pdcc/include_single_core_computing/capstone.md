@@ -1,9 +1,10 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Be able to apply the concepts learned in this module to reason about
 and optimize the performance of a scenario that includes computation activities,
 I/O activities, and RAM constraints
+</div>
 
 ---
 

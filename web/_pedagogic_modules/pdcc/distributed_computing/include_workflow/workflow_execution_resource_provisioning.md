@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Be able to make calculated platform design decisions for optimizing workflow executions;
 - Be able to apply the knowledge acquired in all previous modules in a holistic manner.
-
+</div>
 ----
 
 # Overview

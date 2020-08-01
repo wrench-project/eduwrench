@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concept of time sharing
 - Understand how time sharing impacts program execution times
-
+</div>
 ---
 
 ### Time Sharing
@@ -11,43 +11,38 @@
 As you know, you can execute multiple programs at once on your computer
 (e.g., your Web browser and a text editor). This is called
 multi-programming, something that Operating Systems have known how to 
-do since the 1960's.  
-
-Consider multiple (non-interactive) programs that run **on a single core**.
-In this case, the Operating System makes it so that the programs alternate
-on the core: a program runs for a while, then another, then another, and so
-on until we cycle back and repeat. This is called **time sharing**. The
-process of going from one running program to another is called **context
-switching**. How this is done is one of the core topics of all Operating 
-System textbooks.
+do since the 1960's. Considering **a single core**, the Operating System
+allows a program to run for a while, then another program, and so
+on until we cycle back and repeat. This is called **time sharing**. 
+How this is done is one of the core topics of all Operating 
+System [textbooks](/textbooks).
 
 In these pedagogic modules we take a very high-level, ideal view: When
-running *n* programs at the same time on one core, each of them 
-proceeds at *1/n*-th of the core's compute speed.  
+running *n* programs at the same time on one core, each of them proceeds at
+*1/n*-th of the core's compute speed.  This is not true in practice, as
+time sharing has some overhead.  Also, programs compete for some hardware
+resources, such as caches (see Computer Architecture and Operating Systems
+[textbooks](/textbooks) for all details), and thus can slow each other down.
 
-For instance, if at time
-0 I start two programs, each with work 5 Gflop on a single core with speed
-1 Gflop/sec, both programs would complete at time 10.  Say now that the
-second program has work of 10 Gflop. Then the first program will complete
-at time 10, and the second program at time 15. During the first 10 seconds,
-both program proceed at speed 0.5 Gflop/sec. At time 10 the first program
-thus completes (because it has performed all its work), at which point the
-second program proceeds at full 1 Gflop/sec speed. Since the second program
-still has 5 units of work to complete, it runs for another 5 seconds and 
-completes at time 15. 
 
-In practice, the programs in the above examples would complete later! This
-is because in real systems the context switching overhead is non-zero and
-because the programs would most likely compete for memory and caches (see 
-Computer Architecture and Operating Systems textbooks for all details). 
-But the above ideal model will be sufficient for our purposes. 
+With our ideal model, say that at time 0 two programs are started on a
+single core with speed 1Gflop/sec. If both programs have work 5 Gflop, then
+they both complete at time 10 sec.  Say now that the second program has
+work of 10 Gflop. Then the first program will complete at time 10, and the
+second program at time 15. During the first 10 seconds, both programs
+proceed at speed 0.5 Gflop/sec. At time 10 the first program thus completes
+(because it has performed all its work), at which point the second program
+proceeds at full 1 Gflop/sec speed. Since the second program still has 5
+units of work to complete, it runs for another 5 seconds and completes at
+time 15.
 
-In fact, we will almost always avoid time sharing altogether by never running two 
-programs on a single core. 
-However, the reasoning needed to compute
-how time sharing would impact program execution times is important and 
-applicable to other learning objectives (e.g., networking). This is why we
-include below some questions on this topic.
+As you go through upcoming models, you will not that we almost always avoid
+time sharing altogether by never running two programs at the same time on a
+single core. This is typical when one focuses on high performance.
+However, the reasoning needed to compute how time sharing would impact
+program execution times is general and applicable to other settings (e.g.,
+sharing of network bandwidth). This is why we include below some questions
+on this topic.
 
 ---
 

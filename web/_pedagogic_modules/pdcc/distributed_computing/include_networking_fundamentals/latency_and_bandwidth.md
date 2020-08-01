@@ -1,12 +1,12 @@
 
 #### Learning objectives
-
+<div class="learningObjectiveBox" markdown="1">
 - Understand the concepts of latency and bandwidth
 - Be able to estimate data transfer time through a network link
-
+</div>
 ---
 
-#### Link Latency and Bandwidth
+### Link Latency and Bandwidth
 
 A network is built from **network links** (in the case of wired
 networks, these links are network cables). 
@@ -41,7 +41,7 @@ is sufficient for our purpose.
 
 ---
 
-#### Data Transfer Time
+### Data Transfer Time
 
 Given a network link with latency $\alpha$ and bandwidth $\beta$, the time
 $T$ to transfer an amount of data $s$ over the link can be estimated as a first

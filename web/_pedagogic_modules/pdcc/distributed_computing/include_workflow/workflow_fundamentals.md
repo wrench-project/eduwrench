@@ -1,9 +1,9 @@
 
 #### Learning Objectives
-
+<div class="learningObjectiveBox" markdown="1">
   - Understand the concept of a workflow
   - Be able to reason about the performance of a workflow on a multi-core computer
-
+</div>
 ---
 
 ### What is a workflow?
