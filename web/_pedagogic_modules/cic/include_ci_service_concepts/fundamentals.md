@@ -12,7 +12,8 @@
 
 The term **cyberinfrastructure** (CI) was introduced in the late 1990s, and 
 became popular starting around 2003. Although no strict definition is widely
-accepted, all commonly used definitions allude to systems comprising a computational _infrastructure_ for enabling breakthrough scientific discoveries. 
+accepted, all commonly used definitions allude to systems comprising a 
+computational _infrastructure_ for enabling breakthrough scientific discoveries. 
 In summary, a _cyberinfrastructure_ can be composed of (but not limited to)
 the following elements:  
  
@@ -34,7 +35,7 @@ needs.
 
 A CI is typically composed of several services that together
 provide the fundamental abstractions for executing application workloads
-comnveniently and efficiently. Common CI services  target data storage and
+conveniently and efficiently. Common CI services  target data storage and
 management, data movements over the network, computation on bare-metal or
 virtualized compute nodes, web sites that serve as portals for the CI.
 In this module, we explore different approaches and
@@ -48,7 +49,7 @@ services: a _website_, from where users interact with the system to
 upload/download data and launch compute tasks; a _Storage service_, where
 data can stored and retrieve persistently; a _File Registry service_, which
 is a catalog that acts as a bookkeeper for data location; and a _Compute
-service_, which can executes compute tasks on demand.
+service_, which can execute compute tasks on demand.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/cyberinfrastructure/basics.svg">Cyberinfrastructure Setup</object>
 <div class="caption">
@@ -68,7 +69,7 @@ Fundamentals module]({{site.baseurl}}/pedagogic_modules/pdcc/networking_fundamen
 for a discussion of network latencies, bandwidths, and topologies; and see
 the [Client-Server
 module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics)
-to see the implications of low networkflow bandwidth on a distributed
+to see the implications of low network bandwidth on a distributed
 computation).
 
 ### CI Service Overhead
@@ -77,7 +78,7 @@ In the [Distributed Computing
 module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/) you
 have learned how to reason about the performance of distributed programs
 and how to estimate their execution times based on network, I/O, and
-compute times.  This is certainly a foundations on which we can build to
+compute times.  This is certainly a foundation on which we can build to
 estimate the execution times of an application running on a set of CI
 services, but it does not account for the fact that we're now using a
 possibly complicate software infrastructure. In this infrastructure using
@@ -94,7 +95,7 @@ need to interact with a Web server and a File Registry service when a new
 file is stored.
 
 Some of these overheads can be at most a few seconds, while others can
-be up to several minutes. As a result, prodicting the execution of a
+be up to several minutes. As a result, predicting the execution of a
 possibly complex application workload on a particular CI is not an easy task
 when trying to account for these overheads. And yet, not accounting for them
 can lead to overly optimistic performance expectations. 
@@ -141,12 +142,12 @@ Answer the practice questions hereafter, using the simulation app above to come 
 with or double-check answers.
 
 IDEAS FOR PRACTICE QUESTIONS:
-  - Say Server 2 has overhad Xs. For which value of the overhead on Server 1 is it equivalent to Server 2 
+  - Say Server 2 has overhead Xs. For which value of the overhead on Server 1 is it equivalent to Server 2 
 
   - If I had two options:
         - Run one big tasks with work X
         - Split it into two tasks with work X/2
-    Say the overhead to Server 1 is X and that on Server 2 is Y. What should I do? (Assuming I can can send data for a run task on two different servers concurrencly)
+    Say the overhead to Server 1 is X and that on Server 2 is Y. What should I do? (Assuming I can can send data for a run task on two different servers concurrently)
 
 IDEAS FOR ACTIVITIES:
 
