@@ -72,11 +72,11 @@ void generatePlatform(std::string platform_file_path, int num_cores) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"the_host\" speed=\"100Gf\" core=\"" + std::to_string(num_cores)  + "\">\n"
+                      "       <host id=\"thehost\" speed=\"100Gf\" core=\"" + std::to_string(num_cores)  + "\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"the_host\" dst=\"the_host\">"
+                      "       <route src=\"thehost\" dst=\"thehost\">"
                       "           <link_ctn id=\"link\"/>"
                       "       </route>"
                       "   </zone>\n"
@@ -160,7 +160,7 @@ int main(int argc, char** argv) {
     simulation.instantiatePlatform(platform_file_path);
 
 
-    const std::string THE_HOST("the_host");
+    const std::string THE_HOST("thehost");
 
     auto compute_service = simulation.add(
             new wrench::BareMetalComputeService(
