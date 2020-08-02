@@ -123,10 +123,10 @@ of their RAM requirements never exceeds 8 GB?  The answer is "yes":
 
 ### I/O and Parallelism
 
-Another common  cause of idle time is I/O. While a task running on a core performs 
-I/O, the core is (mostly) idle. We learned
-about  this in the [I/O tab of the Single Core Computing
-module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io). 
+Another common  cause of idle time is I/O. While a task running on a core
+performs I/O, the core is (mostly) idle. We learned about  this in the [I/O
+tab of the Single Core Computing
+module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io).
 In a parallel program this can translate to loss  of parallel efficiency.
 
 Let's consider a simple parallel program: 4 tasks that each read in 10 MB
@@ -150,8 +150,9 @@ Execution on 1 core. </div>
 
 It takes 1 second to read an input file, and then a task computes for 4
 seconds.  Using overlap of I/O and computation, the execution time is thus
-17 seconds (only the first file read is not overlapped with computation). This is a great
-utilization of a single core. But what can we gain by  running on multiple cores?
+17 seconds (only the first file read is not overlapped with computation).
+This is a great utilization of a single core. But what can we gain by
+running on multiple cores?
 
 Let's say now that we have 4 cores. One option is for all 4 tasks to start
 at the same time, in which case they all read their input data at the same time
@@ -163,8 +164,6 @@ depicted below:
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_4_cores_1.svg">I/O parallel program execution on 4 core</object>
 <div class="caption"><strong>Figure 3:</strong>
 Execution on 4 cores, with simultaneous I/O. </div>
-
-One  may wonder whether it may be a  better idea  to stagger the  task
 executions, so that only one file is read from disk at a time,  and so that
 I/O is overlapped with computation. This alternative
 is depicted below:
@@ -175,15 +174,33 @@ Execution on 4 cores, with staggered I/O. </div>
 
 The execution time is still 8s, so the two executions are equivalent.   
 
-Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel efficiency of
-only about 53%. And this is in spite of having 4 identical tasks and 4 cores, which,
-without I/O, would be 100% efficient.
-Increasing the parallel efficiency would require, for instance,  upgrading to a disk with
-higher read bandwidth.
+Overall, we achieve a parallel speedup of 17/8 = 2.125 and a parallel
+efficiency of only about 53%. And this is in spite of having 4 identical
+tasks and 4 cores, which, without I/O, would be 100% efficient.  Increasing
+the parallel efficiency would require, for instance,  upgrading to a disk
+with higher read bandwidth.
 
 #### Simulating I/O Operations
 
-**TBD**
+The simulation app below allows you to simulation the execution of a
+two-task program on a two-core computer. Each task reads its own input file
+and writes its own output file.  The program is written such that at any
+given time at most one file is being read/written from/to disk at a time (but computation can
+happen while I/O is happening). For
+instance, if Task #1 starts writing its output file before Task #2, then
+Task #2 cannot start writing its output file until Task #1's output file
+has been written. In other words, the execution looks like Figure 4 above,
+and not like Figure 3 above. 
+
+The app allows you to pick the characteristics (input/output file sizes,
+amount of work) for Task #1, while Task #2 has set characteristics.  First
+run the app with the default values for the characteristics of Task #1,
+which is the easiest case where both tasks are identical. In this case, it
+doesn't matter which task reads its input file first. Make sure you understand
+the simulation output. Then you can
+experiment with different Task #1 characteristics and different orders of
+task executions, in particular while answering the practice questions
+below.
 
 <div class="ui accordion fluid app-ins">
   <div class="title">
@@ -199,16 +216,15 @@ higher read bandwidth.
 
 **[A.2.p3.3]** A parallel program consists of 2 tasks:
 
-  - Task #1 reads 20 MB of input, computes 500 Gflop, writes back 10 MB of output
-  - Task #2 reads 10 MB of input, computes for 200 Gflop, writes back 20 MB of output
+  - Task #1 reads 20 MB of input, computes 500 Gflop, writes back 100 MB of output
+  - Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output
 
-We execute this program on a computer with cores that compute at 
+We execute this program on a computer with two cores that compute at 
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
-The program is written such that at any given time at most one file is being read/written from/to disk. For instance, if Task #1 starts writing its output file before Task #2, then Task #2 cannot start writing its output file until Task #1's output file has been written.
-
-What is the best parallel speedup  that can be achieved 
-when running on 2 cores? 
+Is  it better to run Task #1 or Task #2 first? Try to come up with an answer via
+reasoning rather than by estimate the execution time of both options and comparing.  You can
+double-check your result in simulation.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -216,31 +232,124 @@ when running on 2 cores?
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content answer-frame">
-The execution on 1 core is as follows:
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_1_core_practice.svg">I/O parallel program execution on 1 core (practice)</object>
 
-and takes 11 seconds. 
+It's better to run Task #1 first. This is because it has a small input size, so it can start
+executing early, and while it computes the input file for Task #2 can be read. This reasoning holds
+because both tasks compute for the same time and write the same amount of output. The simulation confirms 
+ that running Task #1 first is 0.8 seconds faster than running Task #2 first.
 
-The execution on 2 cores is as follows:
+  </div>
+</div>
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice.svg">I/O parallel program execution on 2 cores (practice)</object>
+<p></p>
 
-and takes 8 seconds. So the speedup is only 11/8 = 1.375. 
 
-Note that there are other options for running this program. For instance,
-we could start with reading the input for  Task #2. This is not
-a good idea, because it means that Task #1 (which is much longer  than
-Task #2) will start, and thus finish, later. Here is the execution:
+**[A.2.p3.4]** A parallel program consists of 2 tasks:
 
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_io_dag_2_cores_practice_no_good.svg">I/O parallel program execution on 2 cores (practice)</object>
+  - Task #1 reads 120 MB of input, computes 800 Gflop, writes back 20 MB of output
+  - Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output
 
-This execution takes 9s, that is, 1 more second!
+We execute this program on a computer with two cores that compute at 
+100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
-You may be wondering what happens if one does not stagger the I/O, but instead
-starts reading input files of both tasks at once. In this case, due to
-disk bandwidth sharing, Task #2 starts at time 2 and Task #1 starts at time 3. 
-So here also, the execution takes 9s. You  can try to draw the execution timeline  as an exercise.
+Estimate the execution time of the "Task #1 first" option. For what fraction of this execution are both
+ cores utilized. Double-check your result in simulation.
 
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content answer-frame">
+
+Here is the time-line of events:
+  - Time 0.0: Task #1 starts reading input
+  - Time 1.2: Task #1 starts computing on core 1
+  - Time 1.2: Task #2 starts reading input
+  - Time 2.2: Task #2 starts computing on core 2
+  - Time 7.2: Task #2 start writing output
+  - Time 8.2: Task #2 finishes writing output
+  - Time 9.2: Task #1 starts writing output
+  - Time 9.4: Task #1 finishes writing output
+   
+Execution time: 9.4 seconds. Both cores are utilized from time 2.2 until time 7.2, that is for 5 seconds, which is
+$5 / 7.2 = 69.4\%$ of the execution time.
+   
+  </div>
+</div>
+
+<p></p>
+
+**[A.2.p3.5]** A parallel program consists of 2 tasks:
+               
+  - Task #1 reads 80 MB of input, computes 200 Gflop, writes back 100 MB of output
+  - Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output
+
+We execute this program on a computer with two cores that compute at 
+100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
+
+We consider the "Task #2 first" execution, which leads to some overall execution time. Say we now increase
+the work of Task #1. What is the smallest increase that will cause the overall execution time to also increase?
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content answer-frame">
+
+In this execution, Task #2 finishes its computation at time 6, while Task #1 finishes writing its output
+at time 100/100 + 80/100 + 200/100 + 100/100 = 4.8. Consequently, Task #1 could compute for 6 - 4.8 = 1.2 seconds longer
+without impacting the execution of Task #2. This means that the overall execution time would increase 
+when Task #1's work becomes strictly superior to 120 Gflop.
+
+One can double-check this in simulation, which gives the following execution times for different values of Task #1's work:
+  - Task #1 work at 200 Gflop: 7.00 seconds (original)
+  - Task #1 work at 320 Gflop: 7.00 seconds (no increase)
+  - Task #1 work at 321 Gflop: 7.01 seconds (increase)
+   
+  </div>
+</div>
+
+<p></p>
+
+
+**[A.2.p3.6]** A parallel program consists of 2 tasks:
+               
+  - Task #1 reads 200 MB of input, computes 300 Gflop, writes back 10 MB of output
+  - Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output
+
+We execute this program on a computer with two cores that compute at 
+100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
+
+Which of the two execution options ("Task #1 first" or "Task #2 first") leads to the
+highest parallel efficiency? What is that efficiency? 
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content answer-frame">
+
+The simulation gives the following execution times on 2 cores for each option:
+ 
+  - Task #1 first: 9.00 seconds
+  - Task #2 first: 7.10 seconds
+
+We now need to determine the sequential execution time for each option. This is similar to 
+what we did in the [I/O tab of the Single Core Computing module]({{site.baseurl}}/pedagogic_modules/pdcc/single_core_computing/#/io) when considering
+overlap of I/O and computation:
+
+  - Task #1 first: 200/100 + 300/100 + 500/100 + 100/100 = 11.00 seconds
+  - Task #2 first: 100/100 + 500/100  + 300/100 + 10/100 = 9.0 seconds
+  
+Hence the parallel efficiencies:
+
+  - Task #1 first: (11.00 / 9.00) / 2 = 61.1%
+  - Task #2 first: (9.00  / 7.10) / 2 = 63.3%
+   
+The "Task #2 first" option has the higest parallel efficiency, at 63.3%. 
   </div>
 </div>
 

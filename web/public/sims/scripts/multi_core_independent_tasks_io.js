@@ -4,11 +4,11 @@ $(function () {
     $("#task1-input-size").on("keyup", function () {
         let task1_input_size_el = $(this);
         let task1_input_size_value = parseInt(task1_input_size_el.val());
-        let task1_input_size_label_el = $(".task1-input-size");
+        let task1_input_size_label_el = $(".task1-input-size-label");
 
-        if (task1_input_size_value >= 100 && task1_input_size_value <= 1000) {
+        if (task1_input_size_value >= 1 && task1_input_size_value <= 1000) {
 
-            task1_input_size_label_el.text("Input size: " + task1_input_size_value)
+            task1_input_size_label_el.text(task1_input_size_value + " MB")
                 .css("background-color", "#d3ffe9");
 
             task1_input_size_el.removeClass("is-invalid")
@@ -30,11 +30,11 @@ $(function () {
     $("#task1-output-size").on("keyup", function () {
         let task1_output_size_el = $(this);
         let task1_output_size_value = parseInt(task1_output_size_el.val());
-        let task1_output_size_label_el = $(".task1-output-size");
+        let task1_output_size_label_el = $(".task1-output-size-label");
 
-        if (task1_output_size_value >= 100 && task1_output_size_value <= 1000) {
+        if (task1_output_size_value >= 1 && task1_output_size_value <= 1000) {
 
-            task1_output_size_label_el.text("Output size: " + task1_output_size_value)
+            task1_output_size_label_el.text(task1_output_size_value + " MB")
                 .css("background-color", "#d3ffe9");
 
             task1_output_size_el.removeClass("is-invalid")
@@ -54,39 +54,45 @@ $(function () {
 
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
-    $("#task1-gflop").on("keyup", function () {
-        let task1_gflop_input_el = $(this);
-        let task1_gflop_input_value = parseInt(task1_gflop_input_el.val());
-        let task1_gflop_label_el = $(".task-gflop-label");
+    $("#task1-work").on("keyup", function () {
+        let task1_work_input_el = $(this);
+        let task1_work_input_value = parseInt(task1_work_input_el.val());
+        let task1_work_label_el = $(".task1-work-label");
 
-        if (task1_gflop_input_value >= 100 && task1_gflop_input_value < 1000) {
+        console.log("HERE1: ");
+        console.log(task1_work_label_el);
+        console.log("HERE2: " );
+        console.log(task1_work_input_el);
+        console.log("HERE3: "  + task1_work_input_value);
 
-            task1_gflop_label_el.text(task1_gflop_input_value + " GFlop")
+        if (task1_work_input_value >= 1 && task1_work_input_value < 1000) {
+
+            task1_work_label_el.text(task1_work_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
 
-            task1_gflop_input_el.removeClass("is-invalid")
+            task1_work_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (task1_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_gflop_label_el.css("background-color", "");
+                if (task1_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    task1_work_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if (task1_gflop_input_value >= 1000 && task1_gflop_input_value < 1000000) {
-            task1_gflop_label_el.text(task1_gflop_input_value / 1000 + " TFlop")
+        } else if (task1_work_input_value >= 1000 && task1_work_input_value < 1000000) {
+            task1_work_label_el.text(task1_work_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
-            task1_gflop_input_el.removeClass("is-invalid")
+            task1_work_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (task1_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_gflop_label_el.css("background-color", "");
+                if (task1_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                    task1_work_label_el.css("background-color", "");
                 }
             }, 500);
         } else {
-            task1_gflop_label_el.css("background-color", "#ffb7b5");
-            task1_gflop_input_el.removeClass("is-valid")
+            task1_work_label_el.css("background-color", "#ffb7b5");
+            task1_work_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });
@@ -119,8 +125,8 @@ $(function () {
                     task1_input_size: $("#task1-input-size").val(),
                     task1_output_size: $("#task1-output-size").val(),
                     task1_work: $("#task1-work").val(),
-                    task2_input_size: 500,
-                    task2_output_size: 500,
+                    task2_input_size: 100,
+                    task2_output_size: 100,
                     task2_work: 500,
                     first_task: $('input[name=task-select]:checked').val(),
                     userName: userName,
