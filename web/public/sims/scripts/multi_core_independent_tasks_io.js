@@ -139,8 +139,8 @@ $(function () {
                 $("#simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                generateGanttChart(executionData, zoom=false);
+                generateHostUtilizationChart(executionData, hostsList = [], diskHostsList = [], zoom=false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
