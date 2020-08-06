@@ -145,7 +145,7 @@
                                     <span>Cores: 1</span>
                                 </div>
                                 <div>
-                                    <span class="server-1-overhead-label">Startup overhead: 4 sec</span>
+                                    <span class="server-1-overhead-label">Startup overhead: 1 sec</span>
                                 </div>
                             </div>
                         </div>
@@ -249,7 +249,7 @@
                                 <div>task
                                     <br/>
                                 </div>
-                                1 Tflop
+                                <span class="task-work-label">1000 Gflop</span>
                             </div>
                         </div>
                     </div>
@@ -281,7 +281,7 @@
                                     <span>Cores: 1</span>
                                 </div>
                                 <div>
-                                    <span class="server-2-overhead-label">Startup overhead: 7 sec</span>
+                                    <span class="server-2-overhead-label">Startup overhead: 5 sec</span>
                                 </div>
                             </div>
                         </div>

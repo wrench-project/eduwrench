@@ -1245,6 +1245,10 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
     const DISK_TOGGLE = 0;
     const DISK_SPEED = 50;
 
+    const TASK_WORK = req.body.task_work;
+
+    console.log("TASK_WORK= " + TASK_WORK);
+
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1256,7 +1260,7 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
         "--log='root.fmt:[%.2d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE, COMPUTE_1_STARTUP, COMPUTE_2_STARTUP].concat(LOGGING);
+    const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE, COMPUTE_1_STARTUP, COMPUTE_2_STARTUP, TASK_WORK].concat(LOGGING);
     const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
     console.log("\nRunning Simulation");
@@ -1287,7 +1291,10 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
             "host_select": HOST_SELECT,
             "disk_toggle": DISK_TOGGLE,
             "disk_speed": DISK_SPEED,
-            "file_size": FILE_SIZE
+            "file_size": FILE_SIZE,
+            "server_1_startup_overhead": COMPUTE_1_STARTUP,
+            "server_2_startup_overhead": COMPUTE_2_STARTUP,
+            "task_work": TASK_WORK
         });
 
         /**

@@ -23,7 +23,11 @@ function updateFigureLabel(divId, spanLabel, minRange, maxRange, labelText, labe
         let label_el = $("." + spanLabel);
 
         if (input_value >= minRange && input_value <= maxRange) {
-            label_el.text(labelText + ": " + input_value + " " + labelUnit).css("background-color", "#d3ffe9");
+            if (labelText === "") {
+                label_el.text(input_value + " " + labelUnit).css("background-color", "#d3ffe9");
+            } else {
+                label_el.text(labelText + ": " + input_value + " " + labelUnit).css("background-color", "#d3ffe9");
+            }
             input_el.removeClass("is-invalid").addClass("is-valid");
 
             setTimeout(function () {

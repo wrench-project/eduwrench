@@ -29,15 +29,20 @@ permalink: simulations/cic_overhead/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-startup">Startup overhead for Server 1 (secs)</label>
-    <input class="form-control" type="number" id="server-1-startup" placeholder="" value="4" min="0" max="10" step="1" required>
+    <label for="server-1-startup">Task startup overhead for Server #1 (secs)</label>
+    <input class="form-control" type="number" id="server-1-startup" placeholder="" value="1" min="0" max="10" step="1" required>
     <div class="invalid-feedback">
-        Please provide the startup overhead for Server 1 between 0 and 10 secs.
+        Please provide a value between 0 and 10.
     </div>
-    <label for="server-2-startup">Startup overhead for Server 2 (secs)</label>
-    <input class="form-control" type="number" id="server-2-startup" placeholder="" value="7" min="0" max="10" step="1" required>
+    <label for="server-2-startup">Task startup overhead for Server #2 (secs)</label>
+    <input class="form-control" type="number" id="server-2-startup" placeholder="" value="5" min="0" max="10" step="1" required>
     <div class="invalid-feedback">
-        Please provide the startup overhead for Server 2 between 0 and 10 secs.
+        Please provide a value between 0 and 10.
+    </div>
+    <label for="task-work">Task work (GFlop)</label>
+    <input class="form-control" type="number" id="task-work" placeholder="" value="1000" min="100" max="2000" step="1" required>
+    <div class="invalid-feedback">
+        Please provide a value between 100 and 2000.
     </div>
 </div>
 

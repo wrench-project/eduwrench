@@ -19,7 +19,7 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
+void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb, int task_work_in_gf) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -34,7 +34,7 @@ void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     wrench::WorkflowTask *single_task;
-    single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
+    single_task = workflow->addTask("slow_server_task", task_work_in_gf * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
     single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb*MB));
 
 }
@@ -163,10 +163,11 @@ int main(int argc, char** argv) {
     int FILE_SIZE;
     std::string COMPUTE_1_OVERHEAD;
     std::string COMPUTE_2_OVERHEAD;
+    int TASK_WORK_GF;
 
     try {
 
-        if (argc != 11) {
+        if (argc != 12) {
             throw std::invalid_argument("invalid number of arguments");
         }
 
@@ -234,9 +235,11 @@ int main(int argc, char** argv) {
 
         COMPUTE_2_OVERHEAD = std::string(argv[10]);
 
+        TASK_WORK_GF = std::stoi(std::string(argv[11]));
+
     } catch(std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <server_1_link_latency> <server_1_link_speed> <server_2_link_speed> <buffer> <host_select> <disk select> <disk speed>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <server_1_link_latency> <server_1_link_speed> <server_2_link_speed> <buffer> <host_select> <disk select> <disk speed> <file size> <server_1_overhead> <server_2_overhead> <task_work>" << std::endl;
         std::cerr << "   server_1_link_latency: Latency must be in range [1,1000000] us  (microsecs)" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   server_2_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
@@ -245,13 +248,16 @@ int main(int argc, char** argv) {
         std::cerr << "   disk toggle: disk toggle should be either 0 or 1" << std::endl;
         std::cerr << "   disk speed: Speed must be in range [1,100000] MBps" << std::endl;
         std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
+        std::cerr << "   server1_overhead: overhead in seconds " << std::endl;
+        std::cerr << "   server2_overhead: overhead in seconds " << std::endl;
+        std::cerr << "   task_work: task work in GFlop " <<  std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
 
     // create workflow
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, FILE_SIZE);
+    generateWorkflow(&workflow, FILE_SIZE, TASK_WORK_GF);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";

@@ -2,6 +2,7 @@ $(function () {
 
     updateFigureLabel("server-1-startup", "server-1-overhead-label", 0, 10, "Startup overhead", "sec");
     updateFigureLabel("server-2-startup", "server-2-overhead-label", 0, 10, "Startup overhead", "sec");
+    updateFigureLabel("task-work", "task-work-label", 100, 2000, "", "GFlop");
 
     $('#simulator-form').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
@@ -33,6 +34,7 @@ $(function () {
                     server_2_link_bandwidth: "100",
                     server_1_link_latency: "10",
                     file_size: "100",
+                    task_work: $("#task-work").val(),
                     host_select: $('input[name=host-select]:checked').val(),
                     userName: userName,
                     email: email

@@ -100,14 +100,14 @@ possibly complex application workload on a particular CI is not an easy task
 when trying to account for these overheads. And yet, not accounting for them
 can lead to overly optimistic performance expectations. 
 
-#### Simulating Overhead
+#### Simulating Service Overhead
 
 The simulation app below simulates the execution of the client-server setup
 depicted in Figure 1 of the 
 [Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/basics).
-But unlike the setup in that module, here each server is implemented as a
+But here each server is implemented as a
 CI service that experience some _overhead_ (a time in seconds) each time a
-task is started.  This i s the time needed to perform _startup_ operations
+task is started.  This is the time needed to perform _startup_ operations
 to configure the environment for executing the task (e.g., booting a VM
 instance). As a result, if it has high overhead, a server may not be as
 attractive as it may seem based on purely its network connectivity and
@@ -118,9 +118,9 @@ Using the app, experiment with simulating the execution with each server
 their default. You should notice a difference in execution time. In the
 client Client-Server module, Server #2 is able to finish execution more
 quickly than Server #1, as the latter is connected to the client via a
-low-bandwidth link. Here, using the default overhead values of 4 sec and 7
+low-bandwidth link. Here, using the default overhead values of 1 sec and 5
 sec for Server #1 and Server #2 respectively, we observe that Server #1
-finishes execution slightly faster. For a task with less computation to do,
+finishes execution a bit faster. For a task with less computation to do,
 Server \#1 would be even more preferable, while Server \#2 would be
 the better choice provided the task has enough computation to do. 
 
@@ -138,21 +138,115 @@ the better choice provided the task has enough computation to do.
 
 #### Practice Questions
 
-Answer the practice questions hereafter, using the simulation app above to come up 
-with or double-check answers.
+Answer the practice questions hereafter, which pertain  to the setup in the above simulation (You can use
+the simulation to double-check answers). 
 
-IDEAS FOR PRACTICE QUESTIONS:
-  - Say Server 2 has overhead Xs. For which value of the overhead on Server 1 is it equivalent to Server 2 
 
-  - If I had two options:
-        - Run one big tasks with work X
-        - Split it into two tasks with work X/2
-    Say the overhead to Server 1 is X and that on Server 2 is Y. What should I do? (Assuming I can can send data for a run task on two different servers concurrently)
+**[B.1.p1.1]** Using the default values in the above setup as the base case (Server #1: 1 second; Server #2: 5 seconds; Task: 1000 GFlop), would reducing the
+overhead of Server #2 by 1 second make it preferable to Server #1? 
+  
 
-IDEAS FOR ACTIVITIES:
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+   In the base setup, Server #2 completes the task 1.22 second slower than Server #1. So no, we would have to reduce the
+   overhead by more than 1 second. 
+  </div>
+</div>
 
-  - One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is
+<p> </p>
+
+**[B.1.p1.2]** With the default overhead values (1 and 5 seconds), for which value of the task's 
+work would both servers complete the task in the same about of time?  Try to come up with an analytical answer 
+first. Then use the
+simulation to see how close it is to the true value (by doing a by-hand binary search on the execution time difference!).
+  
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+  <div markdown="1" class="ui segment content">
+   Let $x$ be the task's work. The execution time on each server is estimated as:
+ 
+$$
+T_{server\#1} = 100 / 10 + 1 + x / 100
+$$
+and
+$$
+T_{server\#2} = 100 / 100 + 5 + x / 60
+$$
+
+Solving 
+$$T_{server\#1}  = T_{server\#2}$$
+
+yields 
+$$x = 750\;\text{GFlop}$$. 
+    
+As we know from previous modules, such estimates can be inaccurate, especially because they cannot
+capture the complexity of actual networks. Doing a simple binary search with the simulation app yields
+a value of $$x = 818\;\text{GFlop}$$. 
+
+
+  </div>
+</div>
+
+<p> </p>
+
+
+**[B.1.p1.3]** We have to run a computation on the above two-server system, where Server #1 has a 3 sec task
+startup overhead and Server #2 has a 5 sec task startup overhead.  You have a computation to run that has 500 GFlop of work. You have two options:
+
+  - Option #1: run the computation as a single task on one of the servers (whichever one is the fatest)
+  - Option #2: split the computation into to 250-GFlop tasks that each read the whole input file, and run them concurrently on the two servers
+
+Using the simulation app figure out which option is best.
+
+<div class="ui accordion fluid">
+  <div class="title">
+    <i class="dropdown icon"></i>
+    (click to see answer)
+  </div>
+<div markdown="1" class="ui segment content">
+   
+Using the simulation, we obtain:
+
+  - Running a 500-GFlop task on Server #1: 18.50 sec
+  - Running a 500-GFlop task on Server #2: 14.38 sec
+  - Running a 250-GFlop task on Server #1: 16.00 sec
+  - Running a 250-GFlop task on Server #2: 10.22 sec
+
+So we obtain the execution time for each option:
+  
+  - Option #1: min(18.50, 14.38) = 14.38 sec
+  - Option #2: max(16.00, 10.22) = 10.22 sec
+  
+We are better off with Option #2!
+
+  </div>
+</div>
+
+<p> </p>
+
+---
+
+#### Questions
+
+TBD
+
+---
+
+#### Suggested Activities
+
+  - IDEA: One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is
    running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password.  Then type the commmand "time ssh localhost sleep 1". What is the overhead of the Ssh service in seconds?
 
-  - Pick a cloud provider and measure the overhead for starting a VM instance. 
+  - IDEA: Pick a cloud provider and measure the overhead for starting a VM instance. 
+  
 ---
+
+
