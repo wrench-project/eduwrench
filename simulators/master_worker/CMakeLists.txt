@@ -5,7 +5,7 @@ project(MASTER_WORKER_SIMULATOR)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
 
 # include directories for dependencies and WRENCH libraries
 include_directories(src/ include/  /usr/local/include /usr/local/include/wrench /opt/local/include)
@@ -13,8 +13,8 @@ include_directories(src/ include/  /usr/local/include /usr/local/include/wrench 
 # source files
 set(SOURCE_FILES
         include/ActivityWMS.h
-        src/ActivityWMS.cpp
         include/ActivityScheduler.h
+        src/ActivityWMS.cpp
         src/ActivityScheduler.cpp
         src/Simulator.cpp
         )
@@ -25,6 +25,7 @@ find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(master_worker_simulator ${SOURCE_FILES})
+
 target_link_libraries(master_worker_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}

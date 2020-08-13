@@ -26,15 +26,15 @@ void generateWorkflow(wrench::Workflow *workflow) {
     const double GB = MB * 1000.0;
 
     auto data_file = workflow->addFile("data", 500  * MB);
-    auto task1 = workflow->addTask("task1", 500 * GFLOP, 1, 1, 1.0, 12 * GB);
+    auto task1 = workflow->addTask("task1", 500 * GFLOP, 1, 1, 12 * GB);
     task1->addInputFile(data_file);
     task1->setColor("#D4E8D4");
     auto filtered_file = workflow->addFile("filtered", 400 *  MB);
     task1->addOutputFile(filtered_file);
 
-    auto task2 = workflow->addTask("task2", 1000 * GFLOP, 1, 1, 1.0, 15 * GB);
-    auto task3 = workflow->addTask("task3", 5000 * GFLOP, 1, 1, 1.0, 7 * GB);
-    auto task4 = workflow->addTask("task4", 1000 * GFLOP, 1, 1, 1.0, 7 * GB);
+    auto task2 = workflow->addTask("task2", 1000 * GFLOP, 1, 1, 15 * GB);
+    auto task3 = workflow->addTask("task3", 5000 * GFLOP, 1, 1, 7 * GB);
+    auto task4 = workflow->addTask("task4", 1000 * GFLOP, 1, 1, 7 * GB);
 
     task2->addInputFile(filtered_file);
     task2->setColor("#DAE8FC");
@@ -51,7 +51,7 @@ void generateWorkflow(wrench::Workflow *workflow) {
     task3->addOutputFile(finalB_file);
     task4->addOutputFile(finalC_file);
 
-    auto task5 = workflow->addTask("task5", 2000 * GFLOP, 1, 1, 1.0, 2 * GB);
+    auto task5 = workflow->addTask("task5", 2000 * GFLOP, 1, 1, 2 * GB);
     task5->setColor("#FFFCCC");
     task5->addInputFile(finalB_file);
     task5->addInputFile(finalC_file);
@@ -59,7 +59,7 @@ void generateWorkflow(wrench::Workflow *workflow) {
     auto aggBC_file = workflow->addFile("aggBC", 200 * MB);
     task5->addOutputFile(aggBC_file);
 
-    auto task6 = workflow->addTask("task6", 200 * GFLOP, 1, 1, 1, 4 * GB);
+    auto task6 = workflow->addTask("task6", 200 * GFLOP, 1, 1, 4 * GB);
     task6->addInputFile(finalA_file);
     task6->addInputFile(aggBC_file);
     task6->setColor("#F8CECC");

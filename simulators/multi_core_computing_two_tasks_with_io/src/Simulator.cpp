@@ -56,16 +56,16 @@ void generateWorkflow(wrench::Workflow *workflow,
 
         // Compute task
         std::string compute_task_id("task #" + std::to_string(count));
-        auto compute_task = workflow->addTask(compute_task_id, std::get<2>(task_spec) * GFLOP, 1, 1, 1.0, 0);
+        auto compute_task = workflow->addTask(compute_task_id, std::get<2>(task_spec) * GFLOP, 1, 1, 0);
 
         // IO read task
         std::string io_read_task_id("io read task #" + std::to_string(count));
-        auto io_read_task = workflow->addTask(io_read_task_id, 0, 1, 1, 1.0, 0);
+        auto io_read_task = workflow->addTask(io_read_task_id, 0, 1, 1, 0);
         io_read_task->addInputFile(workflow->addFile(compute_task_id+"::in", std::get<0>(task_spec) * MB));
 
         // IO write task
         std::string io_write_task_id("io write task #" + std::to_string(count));
-        auto io_write_task = workflow->addTask(io_write_task_id, 0, 1, 1, 1.0, 0);
+        auto io_write_task = workflow->addTask(io_write_task_id, 0, 1, 1, 0);
         io_write_task->addOutputFile(workflow->addFile(compute_task_id+"::out", std::get<1>(task_spec) * MB));
 
         // Add implicit control dependencies

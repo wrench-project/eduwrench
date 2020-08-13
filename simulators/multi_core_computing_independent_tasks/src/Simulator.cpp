@@ -43,7 +43,6 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
     const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
-    const double PARALLEL_EFFICIENCY = 1.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     // create the tasks
@@ -51,7 +50,7 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
         ostringstream os;
         os << setfill('0') << setw(2) << i;
         std::string task_id("task_" + os.str());
-        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, task_ram * GB);
+        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, task_ram * GB);
     }
 }
 

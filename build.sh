@@ -1,8 +1,10 @@
 #!/bin/bash
+
 #
 #  Usage  ./build.sh [-jX]
 #  Example: ./build.sh -j10 (make will run with 10 threads)
 #      
+
 
 # Get a numthreads argument (for parallel compilation)
 # example: 4
@@ -17,8 +19,13 @@ fi
 echo "Compiling simulators"
 for  dir in `ls simulators/`; do 
     echo "Building in simulator/$dir ..."
-    cd simulators/$dir
-    ./build.sh $makedashjarg
+    cd simulators/$dir 
+    if [[ -f build.sh  ]]; then
+        ./build.sh $makedashjarg
+        if [[ $? -ne 0 ]]; then
+            exit 1
+        fi
+    fi
     cd ../..
 done
 

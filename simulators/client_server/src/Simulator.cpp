@@ -29,12 +29,11 @@ void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
     const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
-    const double PARALLEL_EFFICIENCY = 1.0;
     const double                  MB = 1000.0 * 1000.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     wrench::WorkflowTask *single_task;
-    single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 8 * GB);
+    single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, 8 * GB);
     single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb*MB));
 
 }
