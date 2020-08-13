@@ -53,24 +53,13 @@ completed in  any order. In the next module, we consider distributed computing w
 
 ### Coordinator-Worker Scheduling Strategies
 
-<!--
-You may be familiar with the concept of scheduling for a single processor. In discussions of scheduling on a single
-machine where decisions must be made very quickly and efficiently, complex scheduling is not realistic. Your time spent
-trying to calculate the most efficient scheduling of tasks takes longer than the gains, or unexpected I/O takes
-precedence and necessitates frequent recalculations. When dealing
-with large computational workloads the gains from trying more complex scheduling can potentially have a larger payoff.
-Scheduling efficiently may cut minutes or hours off of the computation time needed. You do not
-have to account for the possibility of unexpected I/O, and workloads can be submitted with an estimate of computation
-time and resources needed. For scheduling, having that additional information and payoff could be a game changer.
--->
 
 You have likely already heard of *scheduling* in real-world contexts (train schedules, classroom schedules). 
 At the most abstract level, scheduling is about assigning work to resources throughout a time period. 
 We have briefly encountered the concept of scheduling in the 
 [Task Dependencies of the Multicore computing module]({{site.baseurl}}/pedagogic_modules/pdcc/multi_core_computing/#/task-dependencies). You may also
 have encountered the term in Operating Systems [textbooks](/textbooks). The OS  constantly makes scheduling decisions
-regarding which process runs next on which core and for how long. The goal of the OS is to keep the cores
-as used as possible while making the processes as "happy" as possible. 
+regarding which program runs next on which core and for how long.  
  
 Here,  we consider the following **scheduling problem**: given a set of tasks, each with some input data, and a set
 of workers, each connected to the coordinator via a separate network link, how should tasks be sent to the (idle)

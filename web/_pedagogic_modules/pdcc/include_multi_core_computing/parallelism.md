@@ -20,7 +20,7 @@ started producing *multi-core processors*.
 
 
 For a program to exploit the compute power of a multi-core processor, it
-must create *tasks* that can run at the same time on different cores.
+must create **tasks** that can run at the same time on different cores.
 This is  called **parallelism** and we call this kind of programs
 **parallel programs**. There are a few ways in which a program can
 implement this notion of tasks, such as having tasks be different

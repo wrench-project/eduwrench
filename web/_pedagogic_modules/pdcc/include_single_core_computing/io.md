@@ -61,8 +61,8 @@ Let us consider a program that performs a task in three phases. First,
 it reads data from disk. Second, it performs some computation on that 
 data to create new data. And third, it writes the new data back to disk. 
 This could be one of the image processing programs mentioned in the 
-previous section as examples. If this program is invoked to process 2 
-images, i.e., so that it performs 2 tasks, then its execution timeline 
+previous section as examples. If this program is invoked to process two
+images, i.e., so that it performs two tasks, then its execution timeline 
 is as depicted below:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/io_effects/IO_figure_1.svg">Example execution timeline</object>
