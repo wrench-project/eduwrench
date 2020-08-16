@@ -2,6 +2,7 @@
 #### Learning Objectives
 <div class="learningObjectiveBox" markdown="1">
   - Understand the need for and the basics of multi-core computers
+  - Undertand the notion of program consisting of independent tasks
   - Understand and apply the concepts of parallel speedup and efficiency
 </div>
 

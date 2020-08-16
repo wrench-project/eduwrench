@@ -11,7 +11,7 @@ The goal of this module is to introduce you to multi-core computing (i.e., runni
 Go through the tabs below in sequence...
 
 <div class="ui pointing secondary menu">
-  <a class="item" data-tab="parallelism">Parallelism</a>
+  <a class="item" data-tab="parallelism">Task Parallelism</a>
   <a class="item" data-tab="load-imbalance">Load Imbalance</a>
   <a class="item" data-tab="ram-and-io">RAM and I/O</a>
   <a class="item" data-tab="dependencies">Task Dependencies </a>
