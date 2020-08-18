@@ -1,7 +1,8 @@
 
 #### Learning Objectives
 <div class="learningObjectiveBox" markdown="1">
-- TBD
+  - Understand how compute services can be used to carry out computation on data acquired from storage services
+
 </dov>
 
 #### Simulating
