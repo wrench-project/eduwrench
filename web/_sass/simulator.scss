@@ -30,10 +30,10 @@
   display: block !important;
 }
 
-.myApp {
-  width: 100%;
-  height: 800px;
-}
+//.myApp {
+//  width: 100%;
+//  height: 800px;
+//}
 
 .signInBut {
   text-align: center;
@@ -47,10 +47,10 @@
   display: block;
 }
 
-.myAppFrame {
-  width: 100%;
-  height: 1000px;
-}
+//.myAppFrame {
+//  width: 100%;
+//  height: 1000px;
+//}
 
 .app-ins {
   background-color: $light;
@@ -100,4 +100,8 @@
 
 .form-row {
   width: 100% !important;
+}
+
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1.1em !important;
 }

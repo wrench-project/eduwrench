@@ -1,11 +1,10 @@
 <div id="inputs">
-  <div class="input-card card shadow mb-2" id="platform-card-single">
-      <div class="card-body" id="platform-card-body">
-          <h6 class="card-title rounded border-left border-primary border-8">Simulation Scenario</h6>
-          <div class="d-flex justify-content-center">
-              <!-- <img src="{{site.baseurl}}/public/sims/img/{{include.imgSvg}}" alt=""> -->
-              {% include {{include.imgSvg}} %}
-          </div>
-      </div>
-  </div>
+    <div class="ui fluid raised card">
+        <div class="content">
+            <div class="header">Simulation Scenario</div>
+        </div>
+        <div class="center aligned content">
+            {% include {{ include.imgSvg }} %}
+        </div>
+    </div>
 </div>
