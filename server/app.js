@@ -468,6 +468,83 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
     }
 });
 
+
+// execute activity multi core simulation route
+app.post("/run/multi_core_independent_tasks_io", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_two_tasks_with_io/");
+
+    const SIMULATOR = "multi_core_io_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    console.log(req.body);
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const TASK1_INPUT_SIZE = req.body.task1_input_size;
+    const TASK1_OUTPUT_SIZE = req.body.task1_output_size;
+    const TASK1_WORK = req.body.task1_work;
+    const TASK2_INPUT_SIZE = req.body.task2_input_size;
+    const TASK2_OUTPUT_SIZE = req.body.task2_output_size;
+    const TASK2_WORK = req.body.task2_work;
+    const TASK1_BEFORE_TASK2 = (req.body.first_task == 1);
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [TASK1_INPUT_SIZE, TASK1_OUTPUT_SIZE, TASK1_WORK, TASK2_INPUT_SIZE, TASK2_OUTPUT_SIZE, TASK2_WORK, TASK1_BEFORE_TASK2].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status != 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        var simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "multi_core_machines",
+            "task1_input_ize": TASK1_INPUT_SIZE,
+            "task1_output_ize": TASK1_OUTPUT_SIZE,
+            "task1_work": TASK1_WORK,
+            "task1_before_task2": TASK1_BEFORE_TASK2
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        var find = "</span>";
+        var re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
 // execute activity multi core simulation route
 app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/multi_core_computing_data_parallelism/");

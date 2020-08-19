@@ -46,15 +46,6 @@ namespace wrench {
         std::map<std::string, std::string> arguments;
     } JobsAwaitingSubmission;
 
-    /**
-     * @brief struct for randomization of task/compute choices, used in random_shuffle
-     */
-    struct RNG {
-        int operator() (int n) {
-            return std::rand() / (1.0 + RAND_MAX) * n;
-        }
-    };
-
 
     bool compareFlop (const TaskInformation &a, const TaskInformation &b) {
         return a.flop < b.flop;
@@ -129,6 +120,9 @@ namespace wrench {
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                                           const std::vector<WorkflowTask *> &ready_tasks) {
 
+        std::random_device rd;
+        std::mt19937 RNG(rd());
+
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
 
@@ -153,7 +147,7 @@ namespace wrench {
         ///sorts tasks based on scheduling behavior specified.
         switch (task_selection) {
             case 0:
-                std::random_shuffle(task_information.begin(), task_information.end(), RNG());
+                std::shuffle(task_information.begin(), task_information.end(), RNG);
                 break;
             case 1:
                 std::sort(task_information.begin(), task_information.end(), compareFlopDesc); //highest flop first
@@ -205,7 +199,7 @@ namespace wrench {
 
         switch (compute_selection) {
             case 0:
-                std::random_shuffle(compute_service_information.begin(), compute_service_information.end(), RNG());
+                std::shuffle(compute_service_information.begin(), compute_service_information.end(), RNG);
                 break;
             case 1:
                 std::sort(compute_service_information.begin(), compute_service_information.end(), compareFlopsDescCompute);

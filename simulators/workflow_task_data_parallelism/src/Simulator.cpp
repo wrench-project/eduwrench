@@ -26,32 +26,35 @@ void generateWorkflow(wrench::Workflow *workflow,
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
 
     //  Green task
-    auto green_task  = workflow->addTask("green", 100 * GFLOP, 1,  1, 1.0, 0);
+    auto green_task  = workflow->addTask("green", 100 * GFLOP, 1,  1, 0);
     green_task->setColor("#D5E8D4");
 
     // Blue task
     double blue_alpha = 0.9;
     double blue_parallel_efficiency =  (1 / (blue_alpha / task_blue_num_cores +  (1 - blue_alpha))) / task_blue_num_cores;
     double blue_work = 1000 * GFLOP;
-    auto blue_task = workflow->addTask("blue", blue_work, task_blue_num_cores,  task_blue_num_cores, blue_parallel_efficiency, 0);
+    auto blue_task = workflow->addTask("blue", blue_work, task_blue_num_cores,  task_blue_num_cores, 0);
+    blue_task->setParallelModel(wrench::ParallelModel::CONSTANTEFFICIENCY(blue_parallel_efficiency));
     blue_task->setColor("#DAE8FC");
 
     // Yellow task
     double yellow_alpha = 0.85;
     double yellow_parallel_efficiency =  (1 / (yellow_alpha / task_yellow_num_cores +  (1 - yellow_alpha))) / task_yellow_num_cores;
     double yellow_work = 2000 * GFLOP;
-    auto yellow_task = workflow->addTask("yellow", yellow_work, task_yellow_num_cores,  task_yellow_num_cores, yellow_parallel_efficiency, 0);
+    auto yellow_task = workflow->addTask("yellow", yellow_work, task_yellow_num_cores,  task_yellow_num_cores, 0);
+    yellow_task->setParallelModel(wrench::ParallelModel::CONSTANTEFFICIENCY(yellow_parallel_efficiency));
     yellow_task->setColor("#FFF2CC");
 
     // Purple task
     double purple_alpha = 0.80;
     double purple_parallel_efficiency =  (1 / (purple_alpha / task_purple_num_cores +  (1 - purple_alpha))) / task_purple_num_cores;
     double purple_work = 1200 * GFLOP;
-    auto purple_task = workflow->addTask("purple", purple_work, task_purple_num_cores,  task_purple_num_cores, purple_parallel_efficiency, 0);
+    auto purple_task = workflow->addTask("purple", purple_work, task_purple_num_cores,  task_purple_num_cores, 0);
+    purple_task->setParallelModel(wrench::ParallelModel::CONSTANTEFFICIENCY(purple_parallel_efficiency));
     purple_task->setColor("#E1D5E7");
 
     // Red task
-    auto red_task  = workflow->addTask("red", 100 * GFLOP, 1,  1, 1.0, 0);
+    auto red_task  = workflow->addTask("red", 100 * GFLOP, 1,  1, 0);
     red_task->setColor("#F8CECC");
 
     workflow->addControlDependency(green_task,  blue_task);

@@ -13,8 +13,8 @@ include_directories(src/ include/  /usr/local/include /usr/local/include/wrench 
 # source files
 set(SOURCE_FILES
         include/ActivityWMS.h
-        src/ActivityWMS.cpp
         include/ActivityScheduler.h
+        src/ActivityWMS.cpp
         src/ActivityScheduler.cpp
         src/Simulator.cpp
         )
@@ -25,6 +25,7 @@ find_library(SIMGRID_LIBRARY NAMES simgrid)
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(master_worker_simulator ${SOURCE_FILES})
+
 target_link_libraries(master_worker_simulator
         ${WRENCH_LIBRARY}
         ${SIMGRID_LIBRARY}

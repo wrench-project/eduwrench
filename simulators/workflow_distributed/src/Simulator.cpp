@@ -29,14 +29,14 @@ void generateWorkflow(wrench::Workflow *workflow) {
 
     const int num_pre_tasks = 20;
 
-    auto final_task = workflow->addTask("final", 1000 * GFLOP, 1, 1, 1.0, 2 * GB);
+    auto final_task = workflow->addTask("final", 1000 * GFLOP, 1, 1, 2 * GB);
     for (int  i=1; i < num_pre_tasks+1; i++) {
         ostringstream os;
         os<<setfill('0')<<setw(2)<<i;
         auto  number =  os.str();
         auto ifile = workflow->addFile("in_" + number, 50 * MB);
         auto ofile = workflow->addFile("out_" + number, 100 * MB);
-        auto task = workflow->addTask("pre_" + number, 1000 *  GFLOP, 1, 1, 1.0, 8 *GB);
+        auto task = workflow->addTask("pre_" + number, 1000 *  GFLOP, 1, 1, 8 *GB);
         task->setColor("#D4E8D4");
         task->addInputFile(ifile);
         task->addOutputFile(ofile);

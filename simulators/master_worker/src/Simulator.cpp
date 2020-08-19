@@ -62,12 +62,11 @@ void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,
     const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
-    const double PARALLEL_EFFICIENCY = 1.0;
     const double                  MB = 1000.0 * 1000.0;
     int                TASK_ID = 1;
 
     for (auto const &task : task_list) {
-        auto current_task = workflow->addTask("Task #"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, 0);
+        auto current_task = workflow->addTask("Task #"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, 0);
         current_task->addInputFile(workflow->addFile("input_" + std::to_string(TASK_ID), std::get<0>(task) * MB));
         current_task->addOutputFile(workflow->addFile("output_" + std::to_string(TASK_ID), std::get<2>(task) * MB));
         TASK_ID++;

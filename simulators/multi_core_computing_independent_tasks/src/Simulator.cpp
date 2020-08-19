@@ -43,7 +43,6 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
     const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
     const unsigned long    MIN_CORES = 1;
     const unsigned long    MAX_CORES = 1;
-    const double PARALLEL_EFFICIENCY = 1.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
     // create the tasks
@@ -51,7 +50,7 @@ void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop,
         ostringstream os;
         os << setfill('0') << setw(2) << i;
         std::string task_id("task_" + os.str());
-        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, PARALLEL_EFFICIENCY, task_ram * GB);
+        workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, task_ram * GB);
     }
 }
 
@@ -72,11 +71,11 @@ void generatePlatform(std::string platform_file_path, int num_cores) {
                       "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                       "<platform version=\"4.1\">\n"
                       "   <zone id=\"AS0\" routing=\"Full\">\n"
-                      "       <host id=\"the_host\" speed=\"100Gf\" core=\"" + std::to_string(num_cores)  + "\">\n"
+                      "       <host id=\"thehost\" speed=\"100Gf\" core=\"" + std::to_string(num_cores)  + "\">\n"
                       "           <prop id=\"ram\" value=\"32GB\"/>\n"
                       "       </host>\n"
                       "       <link id=\"link\" bandwidth=\"100000TBps\" latency=\"0us\"/>\n"
-                      "       <route src=\"the_host\" dst=\"the_host\">"
+                      "       <route src=\"thehost\" dst=\"thehost\">"
                       "           <link_ctn id=\"link\"/>"
                       "       </route>"
                       "   </zone>\n"
@@ -160,7 +159,7 @@ int main(int argc, char** argv) {
     simulation.instantiatePlatform(platform_file_path);
 
 
-    const std::string THE_HOST("the_host");
+    const std::string THE_HOST("thehost");
 
     auto compute_service = simulation.add(
             new wrench::BareMetalComputeService(
