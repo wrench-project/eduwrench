@@ -1,31 +1,29 @@
-$(function() {
-
-
-    $("#server-1-link").on("keyup", function() {
+$(function () {
+    $("#cs-server-1-link").on("keyup", function () {
         let server_1_link_input_el = $(this);
         let server_1_link_input_value = parseInt(server_1_link_input_el.val());
-        let server_1_link_label_el = $(".server-1-link-label");
+        let server_1_link_label_el = $(".cs-server-1-link-label");
 
-        if(server_1_link_input_value>=1 && server_1_link_input_value<1000){
+        if (server_1_link_input_value >= 1 && server_1_link_input_value < 1000) {
             server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value + " MB/sec")
                 .css("background-color", "#d3ffe9");
 
             server_1_link_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     server_1_link_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(server_1_link_input_value>=1000 && server_1_link_input_value<10001){
-            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value/1000 + " GBps")
+        } else if (server_1_link_input_value >= 1000 && server_1_link_input_value < 10001) {
+            server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value / 1000 + " GBps")
                 .css("background-color", "#d3ffe9");
 
             server_1_link_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     server_1_link_label_el.css("background-color", "");
                 }
@@ -37,11 +35,7 @@ $(function() {
         }
     });
 
-
-
-
-
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form-client-server').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -65,21 +59,19 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    server_1_link_bandwidth: $("#server-1-link").val(),
+                    server_1_link_bandwidth: $("#cs-server-1-link").val(),
                     server_2_link_bandwidth: "100",
                     server_1_link_latency: "10",
                     file_size: "100",
-                    host_select: $('input[name=host-select]:checked').val(),
+                    host_select: $('input[name=cs-host-select]:checked').val(),
                     userName: userName,
                     email: email
                 }),
 
-            success: function(response) {
+            success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
-
-                // console.log(response.task_data.workflow_execution.tasks);
+                $("#cs-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);

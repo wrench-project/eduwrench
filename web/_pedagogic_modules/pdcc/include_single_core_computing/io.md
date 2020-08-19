@@ -194,15 +194,7 @@ amounts to create IO-intensive or CPU-intensive tasks. Understanding
 which tasks will benefit from increased R/W or computation speeds will 
 assist you in answering the questions to come.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="io_operations/" %}
-  </div>
-</div>
+{% include simulator.html src="io_operations" %}
 
 ----
 

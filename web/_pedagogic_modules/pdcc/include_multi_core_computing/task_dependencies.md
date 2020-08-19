@@ -98,15 +98,7 @@ that task on that core immediately. We call  a task whose parents
 have all executed a **ready task**.
 The following practice questions are based on this simulation app.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_dependent_tasks/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_dependent_tasks_3_cores" %}
 
 #### Practice Questions
 
@@ -370,15 +362,7 @@ visualization or an analysis task over the "stats" task.
 You can experiment yourself with different settings, and use the app to
 answer the practice questions thereafter.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_dependent_tasks_2_cores/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_dependent_tasks_2_cores" %}
 
 #### Practice Questions
 

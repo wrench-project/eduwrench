@@ -123,15 +123,7 @@ are entered using the format indicated in the input form, separated by commas. Y
 which scheduling strategy is used.  You can use this app on your own, but you should use it to answer
 some of the practice questions below. 
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="coordinator_worker/" %}
-  </div>
-</div>
+{% include simulator.html src="coordinator_worker" %}
 
 #### Practice Questions
 

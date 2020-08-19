@@ -76,15 +76,7 @@ able to finish execution more quickly than Server #1. Then,
 answer the practice questions hereafter, using the simulation app 
 to come up with or double-check answers.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="client_server/" %}
-  </div>
-</div>
+{% include simulator.html src="client_server" %}
 
 ---
 

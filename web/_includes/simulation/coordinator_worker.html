@@ -1,88 +1,84 @@
----
-layout: simulation
-title: Coordinator-Worker
-permalink: simulations/coordinator_worker/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/coordinator_worker_no_output.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="coordinator-worker" %}
+
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="num-workers" placeholder="5" value="5" required hidden>
+<input type="text" class="form-control" id="cw-num-workers" placeholder="5" value="5" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,50].-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="min-worker-flops" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-min-worker-flops" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="max-worker-flops" placeholder="100" value="100" required hidden>
+<input type="text" class="form-control" id="cw-max-worker-flops" placeholder="100" value="100" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="min-worker-band" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-min-worker-band" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and less than or equal to the maximum bandwidth specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="max-worker-band" placeholder="100" value="100" required hidden>
+<input type="text" class="form-control" id="cw-max-worker-band" placeholder="100" value="100" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and more than or equal to the minimum bandwidth specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="num-tasks" placeholder="5" value="5" required hidden>
+<input type="text" class="form-control" id="cw-num-tasks" placeholder="5" value="5" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,100].-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="min-task-input" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-min-task-input" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and less than or equal to the maximum input specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="max-task-input" placeholder="100" value="100" required hidden>
+<input type="text" class="form-control" id="cw-max-task-input" placeholder="100" value="100" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and more than or equal to the minimum input specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="min-task-flop" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-min-task-flop" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="max-task-flop" placeholder="100" value="100" required hidden>
+<input type="text" class="form-control" id="cw-max-task-flop" placeholder="100" value="100" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6" hidden>-->
-<input type="text" class="form-control" id="min-task-output" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-min-task-output" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and less than or equal to the maximum output specified.-->
 <!--    </div>-->
 <!--</div>-->
 <!--<div class="form-group col-md-6">-->
-<input type="text" class="form-control" id="max-task-output" placeholder="100" value="100" required hidden>
+<input type="text" class="form-control" id="cw-max-task-output" placeholder="100" value="100" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a number in the range [1,1000000] and more than or equal to the minimum output specified.-->
 <!--    </div>-->
 <!--</div>-->
 
 <div class="form-group col-md-6">
-    <label for="host_specs">List of workers ([MB/sec][Gflop/sec])</label>
-    <input type="text" class="form-control" id="host-specs" placeholder="10 100, 100 100, 1000 100"
+    <label for="cw-host-specs">List of workers ([MB/sec][Gflop/sec])</label>
+    <input type="text" class="form-control" id="cw-host-specs" placeholder="10 100, 100 100, 1000 100"
            value="10 100, 100 100, 1000 100" required>
     <div class="invalid-feedback">
         Please provide a comma- or space-separated list of host specifications. ([Bandwidth to Coordinator][Gflop/sec], ...)
@@ -90,8 +86,8 @@ permalink: simulations/coordinator_worker/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="task_specs">List of tasks ([Input MB][Gflop])</label>
-    <input type="text" class="form-control" id="task-specs" placeholder="100 10, 100 1000, 1000 1000, 1000 1000"
+    <label for="cw-task-specs">List of tasks ([Input MB][Gflop])</label>
+    <input type="text" class="form-control" id="cw-task-specs" placeholder="100 10, 100 1000, 1000 1000, 1000 1000"
            value="100 10, 100 1000, 1000 1000, 1000 1000" required>
     <div class="invalid-feedback">
         Please provide a comma- or spwace-separated list of host specifications. ([Input MB][Gflop], ...)
@@ -102,56 +98,56 @@ permalink: simulations/coordinator_worker/
     <label>Task selection</label>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="0" checked>
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-0" value="0" checked>
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-0">
                 Random&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="1">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-1" value="1">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-1">
                 Highest work&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="2">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-2" value="2">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-2">
                 Lowest work&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="3">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-3" value="3">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-3">
                 Highest data&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="4">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-4" value="4">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-4">
                 Lowest data&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="5">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-5" value="5">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-5">
                 Highest work/data ratio&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="task-scheduling-select" id="task-scheduling-select" value="6">
-            <label class="radio-inline control-label" for="task_scheduling_select">
+            <input type="radio" name="cw-task-scheduling-select" id="cw-task-scheduling-select-6" value="6">
+            <label class="radio-inline control-label" for="cw-task-scheduling-select-6">
                 Lowest work/data ratio&nbsp;
             </label>
         </div>
@@ -162,24 +158,24 @@ permalink: simulations/coordinator_worker/
     <label>Worker selection</label>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="0" checked>
-            <label class="radio-inline control-label" for="compute_scheduling_select">
+            <input type="radio" name="cw-compute-scheduling-select" id="cw-compute-scheduling-select-0" value="0" checked>
+            <label class="radio-inline control-label" for="cw-compute-scheduling-select-0">
                 Random&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="1">
-            <label class="radio-inline control-label" for="compute_scheduling_select">
+            <input type="radio" name="cw-compute-scheduling-select" id="cw-compute-scheduling-select-1" value="1">
+            <label class="radio-inline control-label" for="cw-compute-scheduling-select-1">
                 Fastest&nbsp;
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="2">
-            <label class="radio-inline control-label" for="compute_scheduling_select">
+            <input type="radio" name="cw-compute-scheduling-select" id="cw-compute-scheduling-select-2" value="2">
+            <label class="radio-inline control-label" for="cw-compute-scheduling-select-2">
                 Best-Connected&nbsp;
             </label>
         </div>
@@ -194,8 +190,8 @@ permalink: simulations/coordinator_worker/
     <!--    </div>-->
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="compute-scheduling-select" id="compute-scheduling-select" value="4">
-            <label class="radio-inline control-label" for="compute_scheduling_select">
+            <input type="radio" name="cw-compute-scheduling-select" id="cw-compute-scheduling-select-4" value="4">
+            <label class="radio-inline control-label" for="cw-compute-scheduling-select-4">
                 Earliest completion&nbsp;
             </label>
         </div>
@@ -204,14 +200,14 @@ permalink: simulations/coordinator_worker/
 
 
 <!--<div class="form-group col-md-6">-->
-<input type="text" class="form-control" id="invocations" placeholder="1" value="1" required hidden>
+<input type="text" class="form-control" id="cw-invocations" placeholder="1" value="1" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide an integer value in the range [1,100].-->
 <!--    </div>-->
 <!--</div>-->
 
 <!--<div class="form-group col-md-6">-->
-<input type="text" class="form-control" id="seed" placeholder="12345" value="12345" required hidden>
+<input type="text" class="form-control" id="cw-seed" placeholder="12345" value="12345" required hidden>
 <!--    <div class="invalid-feedback">-->
 <!--        Please provide a positive integer value.-->
 <!--    </div>-->
@@ -220,11 +216,11 @@ permalink: simulations/coordinator_worker/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="cw" %}
 
-{% include partials/workflow_execution_graph.html %}
+{% include partials/workflow_execution_graph.html prefixID="cw" %}
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="cw" %}
 
 <!--{% include partials/workflow_execution_data.html %}-->
 

@@ -1,17 +1,11 @@
----
-layout: simulation
-title: Networking Fundamentals
-permalink: simulations/networking_fundamentals/
----
-
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/networking_fundamentals_cyber_infrastructure.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="networking" %}
 
 <div class="form-group">
-  <label for="file_sizes">List of file sizes (MB)</label>
-  <input type="text" class="form-control" id="file-sizes" placeholder="10, 20" value="10, 20" required>
+  <label for="networking-file-sizes">List of file sizes (MB)</label>
+  <input type="text" class="form-control" id="networking-file-sizes" placeholder="10, 20" value="10, 20" required>
   <div class="invalid-feedback">
     Please provide a comma- or space-separated list of integral file sizes
   </div>
@@ -19,7 +13,7 @@ permalink: simulations/networking_fundamentals/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="networking" %}
 
 <script src="{{site.baseurl}}/public/sims/scripts/networking_fundamentals.js" type="text/javascript"></script>
 

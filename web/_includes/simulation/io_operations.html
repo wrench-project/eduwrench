@@ -1,8 +1,7 @@
-{% include partials/header.html %}
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/io_task.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="io-operations" %}
 
 <div class="form-group col-md-6">
     <label for="num-tasks">Number of Tasks</label>
@@ -53,7 +52,7 @@
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="io" %}
 
 {% include partials/workflow_execution_graph.html %}
 
@@ -62,5 +61,3 @@
 {% include partials/workflow_execution_data.html %}
 
 <script src="{{site.baseurl}}/public/sims/scripts/io_operations.js" type="text/javascript"></script>
-
-{% include partials/footer.html %}

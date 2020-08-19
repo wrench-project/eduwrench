@@ -33,15 +33,7 @@ The simulation app is a bit more complicated than that in  the previous tab. It 
 You can  use this application on your own, but below are practice questions that guide you through some
 interesting experiments.
  
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="coordinator_worker_generated/" %}
-  </div>
-</div>
+{% include simulator.html src="coordinator_worker_generated" %}
 
 ----- 
 

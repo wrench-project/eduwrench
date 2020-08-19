@@ -114,7 +114,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-io-operations').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -149,7 +149,7 @@ $(function () {
 
             success: function (response) {
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#io-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
                 generateGanttChart(executionData);
