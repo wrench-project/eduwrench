@@ -6,7 +6,7 @@ $(function () {
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
         let num_tasks_label_el = $(".num-tasks-label");
 
-        if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
+        if (num_tasks_input_value >= 1 && num_tasks_input_value <= 100) {
 
             num_tasks_label_el.text(num_tasks_input_value + " Task(s)")
                 .css("background-color", "#d3ffe9");
@@ -152,8 +152,8 @@ $(function () {
                 $("#io-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                generateGanttChart(executionData, 'io-graph-container');
+                generateHostUtilizationChart(executionData, 'io-host-utilization-chart');
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

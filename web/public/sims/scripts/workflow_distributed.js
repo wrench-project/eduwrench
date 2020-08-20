@@ -1,6 +1,6 @@
 $(function () {
 
-    $("#num-hosts").on("keyup", function () {
+    $("#wf-dist-num-hosts").on("keyup", function () {
         let num_hosts_input_el = $(this);
         let num_hosts_input_value = parseInt(num_hosts_input_el.val());
         let num_hosts_label_el = $(".num-hosts-label");
@@ -25,7 +25,7 @@ $(function () {
         }
     });
 
-    $("#num-cores").on("keyup", function () {
+    $("#wf-dist-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
         let num_cores_label_el = $(".num-cores-label");
@@ -51,7 +51,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-wf-dist').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -75,8 +75,8 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_hosts: $("#num-hosts").val(),
-                    num_cores: $("#num-cores").val(),
+                    num_hosts: $("#wf-dist-num-hosts").val(),
+                    num_cores: $("#wf-dist-num-cores").val(),
                     link_bandwidth: "100",
                     use_local_storage: "0",
                     userName: userName,
@@ -86,11 +86,11 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#wf-dist-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                // generateGanttChart(executionData, 'wf-dist-graph-container');
+                generateHostUtilizationChart(executionData, 'wf-dist-host-utilization-chart');
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

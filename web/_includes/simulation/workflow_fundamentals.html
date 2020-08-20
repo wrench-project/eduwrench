@@ -1,20 +1,19 @@
-
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/workflow_fundamentals.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="wf" %}
 
 <div class="form-group col-md-6">
-    <label for="num-cores">Number of cores</label>
-    <input class="form-control" type="number" id="num-cores" placeholder="Enter a value in the range [1,3]" value="1" min="1" max="3" step="1"
-           required>
+    <label for="wf-num-cores">Number of cores</label>
+    <input class="form-control" type="number" id="wf-num-cores" placeholder="Enter a value in the range [1,3]" value="1"
+           min="1" max="3" step="1" required>
     <div class="invalid-feedback">
         Please provide a number of cores in the range [1,3].
     </div>
 </div>
 <div class="form-group col-md-6">
-    <label for="disk-bandwidth">Disk bandwidth (MB/sec)</label>
-    <input class="form-control" type="number" id="disk-bandwidth" placeholder="Enter a value in the range [10,500]" value="100" min="10" max="500" step="1"
-           required>
+    <label for="wf-disk-bandwidth">Disk bandwidth (MB/sec)</label>
+    <input class="form-control" type="number" id="wf-disk-bandwidth" placeholder="Enter a value in the range [10,500]"
+           value="100" min="10" max="500" step="1" required>
     <div class="invalid-feedback">
         Please provide a disk read/write bandwidth value in the range [10,500].
     </div>
@@ -22,11 +21,11 @@
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="wf" %}
 
-<!--{% include partials/workflow_execution_graph.html %}-->
+<!--{% include partials/workflow_execution_graph.html prefixID="wf" %}-->
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="wf" %}
 
 {% include partials/workflow_execution_data.html %}
 

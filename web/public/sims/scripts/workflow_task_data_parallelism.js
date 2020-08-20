@@ -1,6 +1,6 @@
 $(function () {
 
-    $("#num-cores-blue").on("keyup", function () {
+    $("#wf-parallel-num-cores-blue").on("keyup", function () {
         let num_cores_blue_input_el = $(this);
         let num_cores_blue_input_value = parseInt(num_cores_blue_input_el.val());
         let num_cores_blue_label_el = $(".num-cores-blue-label");
@@ -27,7 +27,7 @@ $(function () {
         }
     });
 
-    $("#num-cores-yellow").on("keyup", function () {
+    $("#wf-parallel-num-cores-yellow").on("keyup", function () {
         let num_cores_yellow_input_el = $(this);
         let num_cores_yellow_input_value = parseInt(num_cores_yellow_input_el.val());
         let num_cores_yellow_label_el = $(".num-cores-yellow-label");
@@ -53,7 +53,7 @@ $(function () {
         }
     });
 
-    $("#num-cores-purple").on("keyup", function () {
+    $("#wf-parallel-num-cores-purple").on("keyup", function () {
         let num_cores_purple_input_el = $(this);
         let num_cores_purple_input_value = parseInt(num_cores_purple_input_el.val());
         let num_cores_purple_label_el = $(".num-cores-purple-label");
@@ -79,7 +79,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-wf-parallel').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -103,9 +103,9 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_cores_blue: $("#num-cores-blue").val(),
-                    num_cores_yellow: $("#num-cores-yellow").val(),
-                    num_cores_purple: $("#num-cores-purple").val(),
+                    num_cores_blue: $("#wf-parallel-num-cores-blue").val(),
+                    num_cores_yellow: $("#wf-parallel-num-cores-yellow").val(),
+                    num_cores_purple: $("#wf-parallel-num-cores-purple").val(),
                     userName: userName,
                     email: email
                 }),
@@ -113,15 +113,14 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#wf-parallel-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData, [], [], false);
+                // generateGanttChart(executionData, 'wf-parallel-graph-container');
+                generateHostUtilizationChart(executionData, 'wf-parallel-host-utilization-chart', [], [], false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
-                // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

@@ -5,9 +5,9 @@
 
 <div class="form-group col-md-6">
     <label for="num-tasks">Number of Tasks</label>
-    <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" max="999" step="1" required>
+    <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" max="100" step="1" required>
     <div class="invalid-feedback">
-        Please provide the number of tasks in the range of [1, 999].
+        Please provide the number of tasks in the range of [1, 100].
     </div>
 </div>
 
@@ -54,9 +54,9 @@
 
 {% include partials/simulation_output.html prefixID="io" %}
 
-{% include partials/workflow_execution_graph.html %}
+{% include partials/workflow_execution_graph.html prefixID="io" %}
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="io" %}
 
 {% include partials/workflow_execution_data.html %}
 
