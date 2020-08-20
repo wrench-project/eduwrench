@@ -1,11 +1,11 @@
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/multi_core_dependencies_2_cores.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="mcdt2" %}
 
 <div class="form-group col-md-6">
-    <label for="analyze-work">Work of "analyze" task in Gflop</label>
-    <input class="form-control" type="number" id="analyze-work" placeholder="100" value="100" min="10" max="1000"
+    <label for="mcdt2-analyze-work">Work of "analyze" task in Gflop</label>
+    <input class="form-control" type="number" id="mcdt2-analyze-work" placeholder="100" value="100" min="10" max="1000"
            step="1" required>
     <div class="invalid-feedback">
         Please provide the work of the "analyze" task in the range [10, 1000].
@@ -13,29 +13,29 @@
 </div>
 
 <div class="form-group radio-form-fix col-md-6">
-    <input type="radio" name="scheduling-scheme-select" id="scheduling-scheme-select-stats" value="stats" checked>
-    <label class="radio-inline control-label" for="scheduling-scheme-select-stats">
+    <input type="radio" name="mcdt2-scheduling-scheme-select" id="mcdt2-scheduling-scheme-select-stats" value="stats" checked>
+    <label class="radio-inline control-label" for="mcdt2-scheduling-scheme-select-stats">
         Prioritize visualization and analysis
     </label>
     <br>
-    <input type="radio" name="scheduling-scheme-select" id="scheduling-scheme-select-analyze" value="analyze">
-    <label class="radio-inline control-label" for="scheduling-scheme-select-analyze">
+    <input type="radio" name="mcdt2-scheduling-scheme-select" id="mcdt2-scheduling-scheme-select-analyze" value="analyze">
+    <label class="radio-inline control-label" for="mcdt2-scheduling-scheme-select-analyze">
         Prioritize visualization and statistics
     </label>
     <br>
-    <input type="radio" name="scheduling-scheme-select" id="scheduling-scheme-select-viz" value="viz">
-    <label class="radio-inline control-label" for="scheduling-scheme-select-viz">
+    <input type="radio" name="mcdt2-scheduling-scheme-select" id="mcdt2-scheduling-scheme-select-viz" value="viz">
+    <label class="radio-inline control-label" for="mcdt2-scheduling-scheme-select-viz">
         Prioritize analysis and statistics
     </label>
 </div>
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="mcdt2" %}
 
-<!--{% include partials/workflow_execution_graph.html %}-->
+<!--{% include partials/workflow_execution_graph.html prefixID="mcdt2" %}-->
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="mcdt2" %}
 
 <!--{% include partials/workflow_execution_data.html %}-->
 
