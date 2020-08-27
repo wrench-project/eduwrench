@@ -113,13 +113,16 @@ So, what can we do for steps a) and b) above? It is easy to come up with a bunch
     - Pick a random worker
     - Pick the fastest worker (i.e., highest Flop/sec)
     - Pick the best-connected worker (i.e., highest link MB/sec)
-    - Pick the worker that can complete the task  the earliest (based on a back-of-the-envelope estimate)
+    - Pick the 
+    - Pick the worker that can complete the task the earliest (based on a back-of-the-envelope estimate)
 
-The above defines $7 \times 4 = 28$ different scheduling strategies, and we could come up with many more!!   The big
-question of course is whether some of these strategies are good. Intuitively, it would seem that doing 
-random task selection and random worker selection would be less effective than, e.g., picking the task with the
-highest work and running it on the worker that can complete it the earliest.  The only way to know 
-whether this intuition holds is to try it out.
+The above defines $7 \times 4 = 28$ different scheduling strategies, and we
+could come up with many more!  The big question of course is whether any of
+these strategies are good.  Intuitively, it would seem that doing random
+task selection and random worker selection would be less effective than,
+e.g., picking the task with the highest work and running it on the worker
+that can complete it the earliest.  The only way to know whether this
+intuition holds is to try it out.
 
 
 #### Simulating Coordinator-Worker
