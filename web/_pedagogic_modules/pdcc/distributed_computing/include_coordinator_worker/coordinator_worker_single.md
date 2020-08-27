@@ -9,16 +9,22 @@
 
 ### Basics
 
-The term **coordinator-worker**<sup>1</sup> makes a reference to a typical real-life scenario
-in which a coordinator (or boss) assigns labor to workers. 
-The workers just do the jobs given to them without knowing or worrying about the larger picture.
-Only the coordinator focuses  on the larger picture. The main issue
-is how to design a coordinator that assigns work to workers as judiciously as possible. More precisely,
-the coordinator must decide which task should be sent to which worker and when. These
-are called **scheduling decisions**, and there are many **scheduling strategies**
-that a coordinator could employ.  The goal of this module is not to teach deep scheduling
-concepts and algorithms, of which there are many, but rather to provide you with an introduction 
-to this complex topic and give your a feel for it via hands-on experiments. 
+The term **coordinator-worker**<sup>1</sup> makes a reference to a typical
+real-life scenario in which a coordinator (or boss) assigns labor to
+workers.  The workers just do the tasks assigned to them without knowing or
+worrying about the larger picture.  Only the coordinator focuses  on the
+larger picture and tries to achieve some performance goal. For instance, it
+may want to minimize overall execution time (or "makespan"), i.e., the time
+at which the last task finishes.
+
+The problem is to design a coordinator that assigns work to workers
+judiciously so at to achieve the intended goal. More precisely, the
+coordinator must decide which task should be sent to which worker and when.
+These are called **scheduling decisions**, and there are many **scheduling
+strategies** that a coordinator could employ. The objective of this module
+is not to teach deep scheduling concepts and algorithms, of which there are
+many, but rather to provide you with an introduction to this complex topic
+and give your a feel for it via hands-on experiments.
 
 ### Parallelism through Coordinator-Worker
 
