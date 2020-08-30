@@ -441,7 +441,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b><span class="num-cores-label">Cores: 4</span></b>
+                                    <b><span class="wf-locality-num-cores-label">Cores: 4</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>
@@ -513,7 +513,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 159px; height: 1px; padding-top: 571px; margin-left: 138px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <div style="font-size: 14px">Latency: 10 ms</div><span class="link-bandwidth-label">Bandwidth: 100 MB/sec</span>
+                                <div style="font-size: 14px">Latency: 10 ms</div><span class="wf-locality-link-bandwidth-label">Bandwidth: 100 MB/sec</span>
                             </div>
                         </div>
                     </div>
@@ -568,7 +568,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 80px; height: 1px; padding-top: 471px; margin-left: 614px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: left; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <b><span class="num-hosts-label">N=1 Host</span></b>
+                                <b><span class="wf-locality-num-hosts-label">N=1 Host</span></b>
                             </div>
                         </div>
                     </div>
@@ -790,7 +790,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b><span class="num-cores-label">Cores: 1</span></b>
+                                    <b><span class="wf-locality-num-cores-label">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>

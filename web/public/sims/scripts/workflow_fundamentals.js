@@ -3,7 +3,7 @@ $(function () {
     $("#wf-disk-bandwidth").on("keyup", function () {
         let disk_bandwidth_input_el = $(this);
         let disk_bandwidth_input_value = parseInt(disk_bandwidth_input_el.val());
-        let disk_bandwidth_label_el = $(".disk-bandwidth-label");
+        let disk_bandwidth_label_el = $(".wf-disk-bandwidth-label");
 
         if (disk_bandwidth_input_value >= 10 && disk_bandwidth_input_value <= 500) {
 
@@ -28,7 +28,7 @@ $(function () {
     $("#wf-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".wf-num-cores-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 3) {

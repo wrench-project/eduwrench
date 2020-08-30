@@ -273,7 +273,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 48px; height: 1px; padding-top: 184px; margin-left: 81px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                <span class="num-cores-blue-label">1 core</span>
+                                <span class="wf-parallel-num-cores-blue-label">1 core</span>
                             </div>
                         </div>
                     </div>
@@ -292,7 +292,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 48px; height: 1px; padding-top: 184px; margin-left: 176px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                <span class="num-cores-yellow-label">1 core</span>
+                                <span class="wf-parallel-num-cores-yellow-label">1 core</span>
                             </div>
                         </div>
                     </div>
@@ -311,7 +311,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 48px; height: 1px; padding-top: 184px; margin-left: 270px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                <span class="num-cores-purple-label">1 core</span>
+                                <span class="wf-parallel-num-cores-purple-label">1 core</span>
                             </div>
                         </div>
                     </div>

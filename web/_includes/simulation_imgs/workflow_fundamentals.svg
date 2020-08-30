@@ -64,7 +64,7 @@
                                 <div style="font-size: 13px">
                                     <span style="font-size: 13px">Cores:
                                         <b style="font-size: 13px">
-                                            <span class="num-cores-label">1</span>
+                                            <span class="wf-num-cores-label">1</span>
                                         </b>
                                         <br style="font-size: 13px"/>
                                     </span>
@@ -442,7 +442,7 @@
                                 </div>
                                 <div style="font-size: 13px">
                                     <b style="font-size: 13px">
-                                        <span class="disk-bandwidth-label">100  MB/sec</span></b>
+                                        <span class="wf-disk-bandwidth-label">100  MB/sec</span></b>
                                     <br style="font-size: 13px"/>
                                 </div>
                             </div>

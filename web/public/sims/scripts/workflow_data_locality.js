@@ -3,7 +3,7 @@ $(function () {
     $("#wf-locality-num-hosts").on("keyup", function () {
         let num_hosts_input_el = $(this);
         let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".num-hosts-label");
+        let num_hosts_label_el = $(".wf-locality-num-hosts-label");
 
         if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
 
@@ -30,7 +30,7 @@ $(function () {
     $("#wf-locality-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".wf-locality-num-cores-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
@@ -56,7 +56,7 @@ $(function () {
     $("#wf-locality-link-bandwidth").on("keyup", function () {
         let link_bandwidth_input_el = $(this);
         let link_bandwidth_input_value = parseInt(link_bandwidth_input_el.val());
-        let link_bandwidth_label_el = $(".link-bandwidth-label");
+        let link_bandwidth_label_el = $(".wf-locality-link-bandwidth-label");
 
         if (link_bandwidth_input_value >= 1 && link_bandwidth_input_value <= 500) {
 

@@ -3,7 +3,7 @@ $(function () {
     $("#wf-parallel-num-cores-blue").on("keyup", function () {
         let num_cores_blue_input_el = $(this);
         let num_cores_blue_input_value = parseInt(num_cores_blue_input_el.val());
-        let num_cores_blue_label_el = $(".num-cores-blue-label");
+        let num_cores_blue_label_el = $(".wf-parallel-num-cores-blue-label");
 
         if (num_cores_blue_input_value >= 1 && num_cores_blue_input_value <= 3) {
 
@@ -30,7 +30,7 @@ $(function () {
     $("#wf-parallel-num-cores-yellow").on("keyup", function () {
         let num_cores_yellow_input_el = $(this);
         let num_cores_yellow_input_value = parseInt(num_cores_yellow_input_el.val());
-        let num_cores_yellow_label_el = $(".num-cores-yellow-label");
+        let num_cores_yellow_label_el = $(".wf-parallel-num-cores-yellow-label");
 
         if (num_cores_yellow_input_value >= 1 && num_cores_yellow_input_value <= 3) {
 
@@ -56,7 +56,7 @@ $(function () {
     $("#wf-parallel-num-cores-purple").on("keyup", function () {
         let num_cores_purple_input_el = $(this);
         let num_cores_purple_input_value = parseInt(num_cores_purple_input_el.val());
-        let num_cores_purple_label_el = $(".num-cores-purple-label");
+        let num_cores_purple_label_el = $(".wf-parallel-num-cores-purple-label");
 
         if (num_cores_purple_input_value >= 1 && num_cores_purple_input_value <= 3) {
 

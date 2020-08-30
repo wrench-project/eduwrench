@@ -3,7 +3,7 @@ $(function () {
     $("#wf-dist-num-hosts").on("keyup", function () {
         let num_hosts_input_el = $(this);
         let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".num-hosts-label");
+        let num_hosts_label_el = $(".wf-dist-num-hosts-label");
 
         if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
 
@@ -28,7 +28,7 @@ $(function () {
     $("#wf-dist-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".wf-dist-num-cores-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
