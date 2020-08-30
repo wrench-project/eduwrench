@@ -4,8 +4,8 @@ $(function () {
     $("#mcdp-oil-radius").on("keyup", function () {
         let oil_radius_input_el = $(this);
         let oil_radius_input_value = parseInt(oil_radius_input_el.val());
-        let task_1_label_el = $(".oil-task-1-label");
-        let task_2_label_el = $(".oil-task-2-label");
+        let task_1_label_el = $(".mcdp-oil-task-1-label");
+        let task_2_label_el = $(".mcdp-oil-task-2-label");
 
         if (oil_radius_input_value >= 1 && oil_radius_input_value <= 10) {
 
@@ -36,8 +36,8 @@ $(function () {
     $("#mcdp-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
-        let data_parallelism_label_el = $(".data-parallelism-label");
+        let num_cores_label_el = $(".mcdp-num-cores-label");
+        let data_parallelism_label_el = $(".mcdp-data-parallelism-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 100) {

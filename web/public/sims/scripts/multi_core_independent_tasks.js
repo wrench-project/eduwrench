@@ -4,7 +4,7 @@ $(function () {
     $("#mcit-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".mcit-num-cores-label");
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
 
@@ -30,7 +30,7 @@ $(function () {
     $("#mcit-num-tasks").on("keyup", function () {
         let num_tasks_input_el = $(this);
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
-        let num_tasks_label_el = $(".num-tasks-label");
+        let num_tasks_label_el = $(".mcit-num-tasks-label");
 
         if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
 
@@ -56,7 +56,7 @@ $(function () {
     // $("#task-ram").on("keyup", function () {
     //     let task_ram_input_el = $(this);
     //     let task_ram_input_value = parseInt(task_ram_input_el.val());
-    //     let task_ram_label_el = $(".task-ram-label");
+    //     let task_ram_label_el = $(".mcit-task-ram-label");
     //
     //     if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
     //
@@ -82,16 +82,12 @@ $(function () {
     $("#mcit-task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
-        let task_gflop_label_el = $(".task-gflop-label");
-        console.log("===>" + task_gflop_label_el);
-        console.log("===>" + JSON.stringify(task_gflop_label_el, null, 4));
+        let task_gflop_label_el = $(".mcit-task-gflop-label");
 
         if (task_gflop_input_value >= 1 && task_gflop_input_value < 1000) {
 
-            console.log("===> HERE");
             task_gflop_label_el.text(task_gflop_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
-            console.log("====> DONE");
 
             task_gflop_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
@@ -102,7 +98,6 @@ $(function () {
                 }
             }, 500);
         } else if (task_gflop_input_value >= 1000 && task_gflop_input_value < 1000000) {
-            console.log("===> THERE");
             task_gflop_label_el.text(task_gflop_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
@@ -115,7 +110,6 @@ $(function () {
                 }
             }, 500);
         } else {
-            console.log("===> THERE2");
             task_gflop_label_el.css("background-color", "#ffb7b5");
             task_gflop_input_el.removeClass("is-valid")
                 .addClass("is-invalid");

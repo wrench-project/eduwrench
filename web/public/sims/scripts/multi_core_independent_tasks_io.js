@@ -4,7 +4,7 @@ $(function () {
     $("#mcit-io-task1-input-size").on("keyup", function () {
         let task1_input_size_el = $(this);
         let task1_input_size_value = parseInt(task1_input_size_el.val());
-        let task1_input_size_label_el = $(".task1-input-size-label");
+        let task1_input_size_label_el = $(".mcit-io-task1-input-size-label");
 
         if (task1_input_size_value >= 1 && task1_input_size_value <= 1000) {
 
@@ -30,7 +30,7 @@ $(function () {
     $("#mcit-io-task1-output-size").on("keyup", function () {
         let task1_output_size_el = $(this);
         let task1_output_size_value = parseInt(task1_output_size_el.val());
-        let task1_output_size_label_el = $(".task1-output-size-label");
+        let task1_output_size_label_el = $(".mcit-io-task1-output-size-label");
 
         if (task1_output_size_value >= 1 && task1_output_size_value <= 1000) {
 
@@ -57,7 +57,7 @@ $(function () {
     $("#mcit-io-task1-work").on("keyup", function () {
         let task1_work_input_el = $(this);
         let task1_work_input_value = parseInt(task1_work_input_el.val());
-        let task1_work_label_el = $(".task1-work-label");
+        let task1_work_label_el = $(".mcit-io-task1-work-label");
 
         console.log(task1_work_label_el);
         console.log(task1_work_input_el);
@@ -65,18 +65,6 @@ $(function () {
         if (task1_work_input_value >= 1 && task1_work_input_value < 1000) {
 
             task1_work_label_el.text(task1_work_input_value + " GFlop")
-                .css("background-color", "#d3ffe9");
-
-            task1_work_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task1_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_work_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if (task1_work_input_value >= 1000 && task1_work_input_value < 1000000) {
-            task1_work_label_el.text(task1_work_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
             task1_work_input_el.removeClass("is-invalid")

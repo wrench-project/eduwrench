@@ -4,26 +4,14 @@ $(function () {
     $("#mcdt3-analyze-work").on("keyup", function () {
         let analyze_work_input_el = $(this);
         let analyze_work_input_value = parseInt(analyze_work_input_el.val());
-        let analyze_work_label_el = $(".analyze-work-label");
+        let analyze_work_label_el = $(".mcdt3-analyze-work-label");
 
-        if (analyze_work_input_value >= 10 && analyze_work_input_value < 1000) {
+        if (analyze_work_input_value >= 10 && analyze_work_input_value <= 1000) {
 
             analyze_work_label_el.text(analyze_work_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
 
             analyze_work_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (analyze_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    analyze_work_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if (analyze_work_input_value < 10000) {
-            analyze_work_label_el.text(analyze_work_input_value / 1000 + " TFlop")
-                .css("background-color", "#d3ffe9");
-
-            analyze_work_input_value.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function () {
