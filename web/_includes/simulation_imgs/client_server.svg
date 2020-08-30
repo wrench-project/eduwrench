@@ -20,7 +20,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 147px; height: 1px; padding-top: 168px; margin-left: 296px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <br/><span class="server-2-link-label">Bandwidth: 100 MB/sec</span>
+                                <br/><span class="cs-server-2-link-label">Bandwidth: 100 MB/sec</span>
                             </div>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 126px; height: 1px; padding-top: 159px; margin-left: 175px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <br/><span class="server-1-link-label">Bandwidth: 10 MB/sec</span>
+                                <br/><span class="cs-server-1-link-label">Bandwidth: 10 MB/sec</span>
                             </div>
                         </div>
                     </div>

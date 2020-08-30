@@ -16,7 +16,7 @@ $(function () {
                     server_1_link_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if (server_1_link_input_value >= 1000 && server_1_link_input_value < 10001) {
+        } else if (server_1_link_input_value >= 1000 && server_1_link_input_value <= 10000) {
             server_1_link_label_el.text("Bandwidth: " + server_1_link_input_value / 1000 + " GBps")
                 .css("background-color", "#d3ffe9");
 
