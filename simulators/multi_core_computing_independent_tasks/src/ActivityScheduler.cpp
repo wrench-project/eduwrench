@@ -20,9 +20,8 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
 
-
-        auto idle_core_count = compute_service->getPerHostNumIdleCores()["the_host"];
-        auto ram_capacity = compute_service->getPerHostAvailableMemoryCapacity()["the_host"];
+        auto idle_core_count = (*(compute_service->getPerHostNumIdleCores().begin())).second;
+        auto ram_capacity = (*(compute_service->getPerHostAvailableMemoryCapacity().begin())).second;
 
         for (auto const &ready_task : ready_tasks) {
             auto task_memory = ready_task->getMemoryRequirement();
