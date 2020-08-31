@@ -1,7 +1,9 @@
-<div class="card shadow mb-2" id="simulation-output-card">
-    <div class="card-body" id="simulation-output-card-body">
-        <h6 class="card-title rounded border-left border-danger border-8">Simulation Output</h6>
+<div class="ui fluid raised card" id="simulation-output-card">
+    <div class="content" id="simulation-output-card-body">
+        <div class="header">Simulation Output</div>
+    </div>
+    <div class="content">
         <h6 class="card-subtitle mb-2 text-muted font-weight-light" id="simulation-parameters"></h6>
-        <div id="simulation-output"></div>
+        <div id="{{ include.prefixID }}-simulation-output"></div>
     </div>
 </div>

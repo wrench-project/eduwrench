@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" style="background-color: rgb(255, 255, 255);"
      xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="436px" height="239px" viewBox="-0.5 -0.5 436 239"
      content="&lt;mxfile modified=&quot;2020-05-02T03:23:35.183Z&quot; host=&quot;app.diagrams.net&quot; agent=&quot;5.0 (Macintosh)&quot; etag=&quot;kEeM-dqM2T_AIg_Hcgs5&quot; version=&quot;13.0.5&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;0&quot; name=&quot;Page-1&quot;&gt;7Vlbc9sqEP41frRH6Gbl0fc+tJ3MSTO9vGSwhCUaJHQQtuX++oIAW7Jku2mcJp1z8pARC8suu99ewD1nkpYLBvPkA40Q6dlWVPacac+2fQDEf0nYaYJrKULMcKRI4EC4wz+QJpplaxyhorGQU0o4zpvEkGYZCnmDBhmj2+ayFSVNqTmMUYtwF0LSpn7GEU8UNfCsA/0dwnFiJANLzyxh+Bgzus60vJ7trKo/NZ1Cs5deXyQwotsayZn1nAmjlKuvtJwgIk1rzKb45idm93ozlPFfYfj0LY0+juj9t/5s7tP5/Xy2AX2j3AaSNTLn8InYcBzhjfiM5achFTnMDO0dLXgGU8E0ki5L0EMiKIMkDwcoWhsOoU6dqUbu2P6CxLscoUiJq5xgLeaE5lICCl9C3oQyCcxKnplfso6trybxn9EHJc+xF08VUEGM7wysK2BKc02BmN4mmKO7HIZydiviWNASnhI9vcKETCihrOIVMEZ+GErdOKOPyMxkNBPs45jBCAvMHZH38AZ7derY1HDdIMZRWSNprC4QTRFnO7FEzzomj+i8AgJPjbeHKAWOr2hJLULNOqgTQ7zf+hAc4kPHx1NiBZyPlZr5/X/XMqzH4qy8DwmOM+VXglb8MHvs0k5wnXOytCYWqew9XCJySwvMMRWSpkvKOU0FByxylTNXuJRgqDvdMI+UelNO81Mu1yeYhsKdSNDHdM0JzsQyk5MthYBcKpaWsawUgxBzhssBp1vEHgrENhXr1XESuAOviRTHaSHF8dpAcf3nA2V2a9+vfkzTT35Ap7tN9LEYLfpdODkZnlbTK98R5ztdJeGaU2lsxhMa00z4mUofVetQifkXyS4Or0ZfazPTUu9cDXZmkInTfakPvtYHB6ZqZLiU7ihqldGW0wq6ZiE6YxjtFw5ZjPiZdXa3xxkikONNU48u72nWW4qFhnuk2MNmRtm3IGYLpZfmOsLAXo3fh4X95PSxohnvFxUYqipk56VKDkcJhKxTEY2ZsP3l6vMMMY2qe0hZz9jxF/OcMK5oB9HlQtbKd0eVLfJQELmtNCdmAnvp+L5WXccfsM1Yq3IqOXVEw8l8BVy3iULHamWrwOooa9ZpvD8rWzlXgWXLtRST66HxylB8dRyKW4Ld0WFJhPpL3/sTOBw2YQjAK8PQ/R+G/0UY7lneCg69t968gVdq3txXbd6APxyAwAI3buD6vuWZHt9UUd/pnL7Q2rXEDG/Ot4jKSi/WIvqXwadC1TxV2U0AHl/BVoRuwwQyPoBZRjmU98MHULvRVRdSZ5zLAyE22whUFHqvCDORPNSFUhxbihtfIeD9o7pjtePd9kA74B33hQJ+2LK5/3IZ16r+rmNJcGxKz26ZsuPae4XnkU47Bn+tHYM3Zcebv9WOtvWm7AjaT9sR5LAvDgQJQQQXaaWbUK164BWVrXgsWqaWT3iX7Vxvk9yjNsnqekG7gr3dZgkctq1t33TY23l65ySGh98pVK07/BbkzH4C&lt;/diagram&gt;&lt;/mxfile&gt;">
@@ -24,7 +23,7 @@
                                     <span>Speed: 100 GFlop/sec</span>
                                 </div>
                                 <div>
-                                    <span class="num-cores-label">Cores: 1
+                                    <span class="mcdp-num-cores-label">Cores: 1
                                         <br/>
                                     </span>
                                 </div>
@@ -114,7 +113,7 @@
                                 <div style="font-size: 12px">oil</div>
                                 <div style="font-size: 12px">
                                     <div>
-                                        <span class="oil-task-1-label">100 GFlop</span>
+                                        <span class="mcdp-oil-task-1-label">100 GFlop</span>
                                     </div>
                                     <br style="font-size: 12px"/>
                                 </div>
@@ -139,7 +138,7 @@
                                 <div style="font-size: 12px">oil</div>
                                 <div style="font-size: 12px">
                                     <div>
-                                        <span class="oil-task-2-label">100 GFlop</span>
+                                        <span class="mcdp-oil-task-2-label">100 GFlop</span>
                                     </div>
                                     <br style="font-size: 12px"/>
                                 </div>
@@ -224,7 +223,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>
-                                    <span class="data-parallelism-label"> data-parallelism with 1 tasks</span>
+                                    <span class="mcdp-data-parallelism-label"> data-parallelism with 1 tasks</span>
                                 </div>
                             </div>
                         </div>

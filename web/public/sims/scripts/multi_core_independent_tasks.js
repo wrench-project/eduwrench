@@ -1,10 +1,10 @@
 $(function () {
 
     // Update the label that says how many cores each compute node has
-    $("#num-cores").on("keyup", function () {
+    $("#mcit-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".mcit-num-cores-label");
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
 
@@ -27,10 +27,10 @@ $(function () {
     });
 
     // Update the label that says how many tasks will be run
-    $("#num-tasks").on("keyup", function () {
+    $("#mcit-num-tasks").on("keyup", function () {
         let num_tasks_input_el = $(this);
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
-        let num_tasks_label_el = $(".num-tasks-label");
+        let num_tasks_label_el = $(".mcit-num-tasks-label");
 
         if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
 
@@ -56,7 +56,7 @@ $(function () {
     // $("#task-ram").on("keyup", function () {
     //     let task_ram_input_el = $(this);
     //     let task_ram_input_value = parseInt(task_ram_input_el.val());
-    //     let task_ram_label_el = $(".task-ram-label");
+    //     let task_ram_label_el = $(".mcit-task-ram-label");
     //
     //     if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
     //
@@ -79,19 +79,15 @@ $(function () {
     // });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
-    $("#task-gflop").on("keyup", function () {
+    $("#mcit-task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
-        let task_gflop_label_el = $(".task-gflop-label");
-        console.log("===>" + task_gflop_label_el);
-        console.log("===>" + JSON.stringify(task_gflop_label_el, null, 4));
+        let task_gflop_label_el = $(".mcit-task-gflop-label");
 
         if (task_gflop_input_value >= 1 && task_gflop_input_value < 1000) {
 
-        console.log("===> HERE");
             task_gflop_label_el.text(task_gflop_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
-            console.log("====> DONE");
 
             task_gflop_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
@@ -102,7 +98,6 @@ $(function () {
                 }
             }, 500);
         } else if (task_gflop_input_value >= 1000 && task_gflop_input_value < 1000000) {
-        console.log("===> THERE");
             task_gflop_label_el.text(task_gflop_input_value / 1000 + " TFlop")
                 .css("background-color", "#d3ffe9");
 
@@ -115,14 +110,13 @@ $(function () {
                 }
             }, 500);
         } else {
-        console.log("===> THERE2");
             task_gflop_label_el.css("background-color", "#ffb7b5");
             task_gflop_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-mcit').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -146,9 +140,9 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_cores: $("#num-cores").val(),
-                    num_tasks: $("#num-tasks").val(),
-                    task_gflop: $("#task-gflop").val(),
+                    num_cores: $("#mcit-num-cores").val(),
+                    num_tasks: $("#mcit-num-tasks").val(),
+                    task_gflop: $("#mcit-task-gflop").val(),
                     task_ram: 0,
                     userName: userName,
                     email: email
@@ -157,11 +151,11 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#mcit-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                generateHostUtilizationChart(executionData, 'mcit-host-utilization-chart');
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

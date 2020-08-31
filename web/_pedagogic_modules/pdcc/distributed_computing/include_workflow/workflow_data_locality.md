@@ -57,15 +57,7 @@ the compute site (if not checked, the simulated execution behaves as in the
 previous tab, with poor data locality). You can use the app on your own,
 but then you should  use it to answer the practice questions hereafter.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="workflow_data_locality/" %}
-  </div>
-</div>
+{% include simulator.html src="workflow_data_locality" %}
 
 ---
 

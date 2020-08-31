@@ -151,16 +151,7 @@ latency for Server #1, and you can pick the buffer size used by the client progr
 You can use this app on your own, and then you should use it to answer
 the following practice questions. 
 
-
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="client_server_disk/" %}
-  </div>
-</div>
+{% include simulator.html src="client_server_disk" %}
 
 #### Practice Questions
 

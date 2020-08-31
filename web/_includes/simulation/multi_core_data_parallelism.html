@@ -1,24 +1,19 @@
----
-layout: simulation
-title: Running the oil filter program
-permalink: simulations/multi_core_data_parallelism/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/multi_core_data_parallelism.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="mcdp" %}
 
 <div class="form-group col-md-6">
-    <label for="oil-radius">Radius of the "oil" task</label>
-    <input class="form-control" type="number" id="oil-radius" placeholder="1" value="1" min="1" max="10" step="1"
+    <label for="mcdp-oil-radius">Radius of the "oil" task</label>
+    <input class="form-control" type="number" id="mcdp-oil-radius" placeholder="1" value="1" min="1" max="10" step="1"
            required>
     <div class="invalid-feedback">
         Please provide a radius for the "oil" task in the range [1,10].
     </div>
 </div>
 <div class="form-group col-md-6">
-    <label for="num-cores">Number of cores</label>
-    <input class="form-control" type="number" id="num-cores" placeholder="1" value="1" min="1" max="100" step="1"
+    <label for="mcdp-num-cores">Number of cores</label>
+    <input class="form-control" type="number" id="mcdp-num-cores" placeholder="1" value="1" min="1" max="100" step="1"
            required>
     <div class="invalid-feedback">
         Please provide a number of cores in the range [1,100].
@@ -27,11 +22,11 @@ permalink: simulations/multi_core_data_parallelism/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="mcdp" %}
 
-<!--{% include partials/workflow_execution_graph.html %}-->
+<!--{% include partials/workflow_execution_graph.html prefixID="mcdp" %}-->
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="mcdp" %}
 
 <!--{% include partials/workflow_execution_data.html %}-->
 

@@ -1,27 +1,22 @@
----
-layout: simulation
-title: Client Server
-permalink: simulations/client_server/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/client_server.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="client-server" %}
 
 <div class="grouped fields col-md-6">
     <label>Host selection</label>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select-1" value="1" checked>
-            <label class="radio-inline control-label" for="host-select-1">
+            <input type="radio" name="cs-host-select" id="cs-host-select-1" value="1" checked>
+            <label class="radio-inline control-label" for="cs-host-select-1">
                 Server #1
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select-2" value="2">
-            <label class="radio-inline control-label" for="host-select-2">
+            <input type="radio" name="cs-host-select" id="cs-host-select-2" value="2">
+            <label class="radio-inline control-label" for="cs-host-select-2">
                 Server #2
             </label>
         </div>
@@ -29,8 +24,8 @@ permalink: simulations/client_server/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-link">Link Speed to Server #1 (MB/sec)</label>
-    <input class="form-control" type="number" id="server-1-link" placeholder="" value="10" min="1" max="10000" step="1" required>
+    <label for="cs-server-1-link">Link Speed to Server #1 (MB/sec)</label>
+    <input class="form-control" type="number" id="cs-server-1-link" placeholder="" value="10" min="1" max="10000" step="1" required>
     <div class="invalid-feedback">
         Please provide the link speed from the Client to Server #1 in the range of [1, 10000] MB/sec.
     </div>
@@ -38,7 +33,7 @@ permalink: simulations/client_server/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="cs" %}
 
 <!--{% include partials/workflow_execution_graph.html %}-->
 

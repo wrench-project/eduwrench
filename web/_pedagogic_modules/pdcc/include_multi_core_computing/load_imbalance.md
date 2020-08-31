@@ -70,15 +70,7 @@ idle time for some of the cores (in light pink). Whenever there is idle
 time, parallel efficiency is below 100% and you can easily compute
 its actual value. 
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_independent_tasks/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_independent_tasks" %}
 
 #### Practice Questions
 

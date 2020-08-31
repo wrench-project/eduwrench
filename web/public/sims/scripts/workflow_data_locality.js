@@ -1,9 +1,9 @@
 $(function () {
 
-    $("#num-hosts").on("keyup", function () {
+    $("#wf-locality-num-hosts").on("keyup", function () {
         let num_hosts_input_el = $(this);
         let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".num-hosts-label");
+        let num_hosts_label_el = $(".wf-locality-num-hosts-label");
 
         if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
 
@@ -27,10 +27,10 @@ $(function () {
         }
     });
 
-    $("#num-cores").on("keyup", function () {
+    $("#wf-locality-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".wf-locality-num-cores-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
@@ -53,10 +53,10 @@ $(function () {
         }
     });
 
-    $("#link-bandwidth").on("keyup", function () {
+    $("#wf-locality-link-bandwidth").on("keyup", function () {
         let link_bandwidth_input_el = $(this);
         let link_bandwidth_input_value = parseInt(link_bandwidth_input_el.val());
-        let link_bandwidth_label_el = $(".link-bandwidth-label");
+        let link_bandwidth_label_el = $(".wf-locality-link-bandwidth-label");
 
         if (link_bandwidth_input_value >= 1 && link_bandwidth_input_value <= 500) {
 
@@ -80,7 +80,7 @@ $(function () {
 
 
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-wf-locality').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -104,10 +104,10 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_hosts: $("#num-hosts").val(),
-                    num_cores: $("#num-cores").val(),
-                    link_bandwidth: $("#link-bandwidth").val(),
-                    use_local_storage: $('#remote-storage-service-input').is(':checked') ? "1" : "0",
+                    num_hosts: $("#wf-locality-num-hosts").val(),
+                    num_cores: $("#wf-locality-num-cores").val(),
+                    link_bandwidth: $("#wf-locality-link-bandwidth").val(),
+                    use_local_storage: $('#wf-locality-remote-storage-service-input').is(':checked') ? "1" : "0",
                     userName: userName,
                     email: email
                 }),
@@ -115,17 +115,16 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#wf-locality-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                // generateGanttChart(executionData, 'wf-locality-graph-container');
+                generateHostUtilizationChart(executionData, 'wf-locality-host-utilization-chart');
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
-                populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
-                    "task-details-table-td");
+                populateWorkflowTaskDataTable(prepared_data, 'wf-locality-task-details-table');
             }
         });
     });

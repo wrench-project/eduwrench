@@ -1,11 +1,11 @@
 $(function () {
 
     // Update the label that says how many tasks will be run
-    $("#oil-radius").on("keyup", function () {
+    $("#mcdp-oil-radius").on("keyup", function () {
         let oil_radius_input_el = $(this);
         let oil_radius_input_value = parseInt(oil_radius_input_el.val());
-        let task_1_label_el = $(".oil-task-1-label");
-        let task_2_label_el = $(".oil-task-2-label");
+        let task_1_label_el = $(".mcdp-oil-task-1-label");
+        let task_2_label_el = $(".mcdp-oil-task-2-label");
 
         if (oil_radius_input_value >= 1 && oil_radius_input_value <= 10) {
 
@@ -33,11 +33,11 @@ $(function () {
         }
     });
 
-    $("#num-cores").on("keyup", function () {
+    $("#mcdp-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
-        let data_parallelism_label_el = $(".data-parallelism-label");
+        let num_cores_label_el = $(".mcdp-num-cores-label");
+        let data_parallelism_label_el = $(".mcdp-data-parallelism-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 100) {
@@ -66,7 +66,7 @@ $(function () {
     });
 
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-mcdp').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -90,8 +90,8 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_cores: $("#num-cores").val(),
-                    oil_radius: $("#oil-radius").val(),
+                    num_cores: $("#mcdp-num-cores").val(),
+                    oil_radius: $("#mcdp-oil-radius").val(),
                     userName: userName,
                     email: email
                 }),
@@ -99,11 +99,11 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#mcdp-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                // generateGanttChart(executionData, 'mcdp-graph-container');
+                generateHostUtilizationChart(executionData, 'mcdp-host-utilization-chart');
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

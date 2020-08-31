@@ -77,16 +77,7 @@ execution strategy simulated by the app:
     and read their input files simultaneously. Importantly, 
     these tasks then split the disk bandwidth equally.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="workflow_fundamentals/" %}
-  </div>
-</div>
-
+{% include simulator.html src="workflow_fundamentals" %}
 
 ---
 

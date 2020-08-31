@@ -131,15 +131,7 @@ You should use the simulation to explore different scenarios and test your
 computed data transfer time estimates for various combinations of
 concurrent transfers.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="networking_fundamentals/" %}
-  </div>
-</div>
+{% include simulator.html src="networking_fundamentals" %}
 
 --- 
 

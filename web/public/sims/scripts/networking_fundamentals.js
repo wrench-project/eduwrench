@@ -21,7 +21,7 @@ function is_valid_list(str) {
 $(function () {
 
     // Check that input is valid
-    $('#file-sizes').on('keyup', function () {
+    $('#networking-file-sizes').on('keyup', function () {
 
         let file_sizes_input_el = $(this)
         let file_sizes_input_value = file_sizes_input_el.val();
@@ -47,7 +47,7 @@ $(function () {
     });
 
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-networking').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -66,15 +66,14 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    file_sizes: $('#file-sizes').val(),
+                    file_sizes: $('#networking-file-sizes').val(),
                     userName: userName,
                     email: email
                 }),
 
             success: function (response) {
-                console.log(response.simulation_output)
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#networking-simulation-output").empty().append(response.simulation_output);
             }
         });
     });

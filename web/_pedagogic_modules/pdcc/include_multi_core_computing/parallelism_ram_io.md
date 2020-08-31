@@ -43,15 +43,7 @@ Now try again, but this time set the tasks' RAM requirement to 16 GB. There will
 idle time, as only 2 cores can be utilized simultaneously due to RAM
 constraints.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_independent_tasks_ram/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_independent_tasks_ram" %}
 
 ----
 
@@ -202,15 +194,7 @@ experiment with different Task #1 characteristics and different orders of
 task executions, in particular while answering the practice questions
 below.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_independent_tasks_io/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_independent_tasks_io" %}
 
 #### Practice Questions 
 

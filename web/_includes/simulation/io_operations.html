@@ -1,18 +1,13 @@
----
-layout: simulation
-title: IO Operations
-permalink: simulations/io_operations/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/io_task.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="io-operations" %}
 
 <div class="form-group col-md-6">
     <label for="num-tasks">Number of Tasks</label>
-    <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" max="999" step="1" required>
+    <input class="form-control" id="num-tasks" placeholder="1" value="1" min="1" max="100" step="1" required>
     <div class="invalid-feedback">
-        Please provide the number of tasks in the range of [1, 999].
+        Please provide the number of tasks in the range of [1, 100].
     </div>
 </div>
 
@@ -57,12 +52,12 @@ permalink: simulations/io_operations/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="io" %}
 
-{% include partials/workflow_execution_graph.html %}
+{% include partials/workflow_execution_graph.html prefixID="io" %}
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="io" %}
 
-{% include partials/workflow_execution_data.html %}
+{% include partials/workflow_execution_data.html prefixID="io" %}
 
 <script src="{{site.baseurl}}/public/sims/scripts/io_operations.js" type="text/javascript"></script>
