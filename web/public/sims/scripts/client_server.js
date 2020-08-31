@@ -73,7 +73,7 @@ $(function () {
                 // Add the new simulation output into the "Simulation Output" section
                 $("#cs-simulation-output").empty().append(response.simulation_output);
 
-                let executionData = prepareResponseData(response.task_data);
+                // let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 // generateHostUtilizationChart(executionData);
 
