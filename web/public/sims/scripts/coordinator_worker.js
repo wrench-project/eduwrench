@@ -59,7 +59,11 @@ $(function () {
                 $("#cw-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                generateGanttChart(executionData, 'cw-graph-container');
+                generateGanttChart(executionData, 'cw-graph-container', true, {
+                    read: {display: true, label: "Receiving Input"},
+                    compute: {display: true, label: "Computing"},
+                    write: {display: false, label: ""},
+                });
                 generateHostUtilizationChart(executionData, 'cw-host-utilization-chart');
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
