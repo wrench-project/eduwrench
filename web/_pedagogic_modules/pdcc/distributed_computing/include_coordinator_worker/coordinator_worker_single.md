@@ -87,18 +87,7 @@ The **scheduling strategy** used by our coordinator will be as follows:
         wait for a worker to be idle
 ```
 
-Step a) and b) are the heart of the strategy, and we discuss them hereafter. Step c) requires a bit of explanation.
-We assume that the coordinator can execute tasks on the workers simultaneously, *including the sending/receiving of
-input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
-simultaneously to the workers (recall that each worker is connected to the coordinator by an independent link).  In the
-extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the coordinator by a 1 GB/sec link,
-and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
-completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
-completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
-amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
-task execution (see Operating Systems [textbooks](/textbooks)).
-
-So, what can we do for steps a) and b) above? It is easy to come up with a bunch of options. Here are "a few": 
+Step a) and b) define the strategy, and it is easy to come up with a bunch of options. Here are "a few": 
 
   - a) Task selection options:
     - Pick a random task
@@ -124,6 +113,37 @@ e.g., picking the task with the highest work and running it on the worker
 that can complete it the earliest.  The only way to know whether this
 intuition holds is to try it out.
 
+For Step c) we simply assume that the coordinator can *trigger* a task execution on an
+idle workers (which will entail sending input, computing, and receiving output) and
+immediately proceed to the next iteration of the while loop.
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     Click to see mode details about Step c)
+   </div>
+   <div markdown="1" class="ui segment content answer-frame">
+Say that we have 10 workers that compute at 1 Gflop/sec,  each connected to
+the coordinator by a 1 GB/sec link, and that we have 10 tasks that each
+have 1 GB of input and 1 Gflop of work. Then, each task completes in 2
+seconds (a bit more due to network effects that we are overlooking here),
+and all tasks run completely in parallel, so that they all complete at the
+same time.
+
+This is only possible if step c) takes zero (or very little) time in the
+strategy, so that the coordinator can trigger task executions 
+instantly and, importantly, *asynchronously*. The work
+"asynchronous" here means that the coordinator triggers a task execution and can
+continue immediately without having to wait for that task to be completed.
+
+There are many ways to implemented step c) in software. For instance, a
+commonplace  approach would be to start a separate "thread" to handle each
+new task execution (see Operating Systems [textbooks](/textbooks) for more
+details).
+
+   </div>
+</div>
 
 #### Simulating Coordinator-Worker
 
