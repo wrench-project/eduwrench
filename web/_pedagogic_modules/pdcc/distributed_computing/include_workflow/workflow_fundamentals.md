@@ -36,11 +36,10 @@ the task's program actually exits.
 The figure below depicts an example workflow application:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/example_workflow_1.svg">Dag</object>
-<div class="caption">
+<div class="caption" markdown="1">
 <strong>Figure 1:</strong> Example workflow
-application. Some examples of real-world workflows for scientific
-applications, along with their DAG representations, can be found
-[here](https://pegasus.isi.edu/application-showcase/).
+application, where each task has an amount of work to do (in GFlop) and a memory footprint (in GB). Some examples of real-world workflows for scientific
+applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
 </div>
 
 #### Simulating Multi-core Workflow Execution
@@ -78,16 +77,7 @@ execution strategy simulated by the app:
     and read their input files simultaneously. Importantly, 
     these tasks then split the disk bandwidth equally.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="workflow_fundamentals/" %}
-  </div>
-</div>
-
+{% include simulator.html src="workflow_fundamentals" %}
 
 ---
 

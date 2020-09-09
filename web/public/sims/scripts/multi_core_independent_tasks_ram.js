@@ -1,7 +1,7 @@
 $(function () {
 
     // Update the label that says how many cores each compute node has
-    $("#num-cores").on("keyup", function () {
+    $("#mcit-ram-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
         let num_cores_label_el = $(".num-cores-label");
@@ -27,7 +27,7 @@ $(function () {
     });
 
     // Update the label that says how many tasks will be run
-    $("#num-tasks").on("keyup", function () {
+    $("#mcit-ram-num-tasks").on("keyup", function () {
         let num_tasks_input_el = $(this);
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
         let num_tasks_label_el = $(".num-tasks-label");
@@ -53,7 +53,7 @@ $(function () {
     });
 
     // Update the label that says how much RAM is used by each task
-    $("#task-ram").on("keyup", function () {
+    $("#mcit-ram-task-ram").on("keyup", function () {
         let task_ram_input_el = $(this);
         let task_ram_input_value = parseInt(task_ram_input_el.val());
         let task_ram_label_el = $(".task-ram-label");
@@ -79,7 +79,7 @@ $(function () {
     });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
-    $("#task-gflop").on("keyup", function () {
+    $("#mcit-ram-task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
         let task_gflop_label_el = $(".task-gflop-label");
@@ -116,7 +116,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-mcit-ram').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -140,10 +140,10 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_cores: $("#num-cores").val(),
-                    num_tasks: $("#num-tasks").val(),
-                    task_gflop: $("#task-gflop").val(),
-                    task_ram: $("#task-ram").val(),
+                    num_cores: $("#mcit-ram-num-cores").val(),
+                    num_tasks: $("#mcit-ram-num-tasks").val(),
+                    task_gflop: $("#mcit-ram-task-gflop").val(),
+                    task_ram: $("#mcit-ram-task-ram").val(),
                     userName: userName,
                     email: email
                 }),
@@ -151,11 +151,11 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#mcit-ram-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                generateHostUtilizationChart(executionData, 'mcit-ram-host-utilization-chart');
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

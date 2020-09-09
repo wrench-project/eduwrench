@@ -1,11 +1,11 @@
-<div class="card text-center shadow">
-    <div class="card-body" id="task-details-card">
-        <h6 class="card-title text-left rounded border-left  border-muted border-8">Task Data</h6>
-        <table class="table table-hover text-muted" id="task-details-table"></table>
+<div class="ui fluid raised card">
+    <div class="content" id="task-details-card">
+        <div class="header">Task Data</div>
+    </div>
+    <div class="content">
+        <table class="table table-hover text-muted" id="{{ include.prefixID }}-task-details-table"></table>
     </div>
 </div>
 
 <script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/simulation-details.js"
-        type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/simulation-details.js"
         type="text/javascript"></script>

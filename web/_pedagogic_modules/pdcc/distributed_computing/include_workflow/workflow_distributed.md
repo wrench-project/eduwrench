@@ -124,15 +124,7 @@ The simulation app below simulates the execution of our workflow on our platform
 you to pick the number of hosts and of cores per host at the compute site. You can experiment
 yourself with this application, but you should then use it for the practice questions hereafter. 
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="workflow_distributed/" %}
-  </div>
-</div>
+{% include simulator.html src="workflow_distributed" %}
 
 ---
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="751px"
      height="324px" viewBox="-0.5 -0.5 751 324"
      content="&lt;mxfile host=&quot;app.diagrams.net&quot; modified=&quot;2020-06-10T01:16:49.017Z&quot; agent=&quot;5.0 (Macintosh)&quot; etag=&quot;LPMQ7rbY30DeLGXZ-uwK&quot; version=&quot;13.2.1&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;eMjVCTEv8ugWz1WF5fTv&quot; name=&quot;Page-1&quot;&gt;7Vptb6M4EP41/XgIY14/Ntm2e9KuVKkrXe+jG5yEXYORcZrkfv3ZYIOJSZM2cJfTlUiVPX7D88yM5zG9gfN898BQuf5OU0xuPDfd3cAvN57nQ1f8lYJ9I4h92AhWLEsbEegET9lfWAnVuNUmS3HV68gpJTwr+8IFLQq84D0ZYoxu+92WlPRXLdEKW4KnBSK29I8s5Wu1i8Dt5F9xtlrrlYGrWnKkOytBtUYp3RoieHcD54xS3pTy3RwTqTutl2bc/ZHW9sUYLvg5A7xmwCsiG7U39V58rzeLi/RW6kzUCloI4WzNcyJqQBTxLuPPouw6IYCq/mddj0Ck6l8k7K6u7I3KI2ZZjjlmSma/vdpQRTdsoZWvbAWnPZDU/h4wFTOyveiw7aDRyKwNVLSMYYJ49tqHFikLWbXTtSs80ky8nedqY9bYKluGkdufonl3NcqE4nCi4GAi72AijtgKc2siUTC23YlqpIdRh6dRF4ZZyqIAAxGCCV0xlAuISgOyXpuB5Wy7zjh+KlEN2VaEgL7RLDNC5pRQVi8Fl4H8CXnFGf2FdYsyNkY3RYpTNbT1F/CWubxixvHuTeNQSgZB0gwxjCV0B6wFJG9YRg+KN/QeDOg9JGKF2QsTpZUszVCRqpe5FX3r0OF+F3u9r/DCgqmvnRN6b5XnHlN2I9QxzTvAqkWEC4ehhZD4/oUwqFYv8Z0E9szfA7HjRhY4wE9scEL3cmzCj2BzxdBAEI+DDYigk0R9bNzEgZ6NjRdPg01sYfOEmdiBwAXlUpPFS1XWuxWLQWBBoYOZOMEJ3fDTcJhRTg0y41tJq0yq2atPunggpqUIx8vFMSyXtOAqqwG+rqvXdUeAzO+fJG22YWCVDMS4KLgcKp2ijZBR+H4/owg+M4qrzSgAOA27tN9MeNM39ILJo3Ih0fRCOad53wp031uSrWQfTksrBsp+KarWdYx1myBau3m+W0na4aBtBVMnRRzNBfy15x6mHvVjualoCe7kT7SgqmwoxDLbyZXMGPumhb3DXXUs1f6aBJa/wsC2N3+E0ArGYwCH/hq+21uFCtn+WTm7rwXK+wNd7+ara3uzdpH/N+6g84yrignQDcUhnLjt4/csBoSJ44Kke+IPRozwIGLA6SLGGSTkCiPGfH4vnn87YngxcPRp3TKZ0AljO26EzlDkAG3+dlHw8P+TGF5H1AegA0wH/shO1MLACeFEudpxzpNmr5r0aFFVokLLvtKKFyjHDQ+q6mQc6I6SDxl9DfHArCcWeiqxVH/HhB+WRBiFYlzjrzenTF4s1uu9c/5L6J9loDhcHGUPo92BqNbAd/qhpI36JreDwVAgGYPdLX/8/szoLnsItuD+ZxjO0Ev626BtfoaWMxPKodASOXZWOWFwGUY1slDVTF4y9+PXkNMwdwivjrkHH6TuwJkMM/v2ZU4yrBLAfw6sKLo2sNoh+jPWmVglEyHl2Tdfkr7oLVPG13RFC0TuOqlxvy6DT9fnG5URsobpJ+Z8rxSJNpweI4CBQf90yxHyZxC9Hs07wfGOgmbSuWErVko3Od6wEhViJ4nf2YzuMu9LLO/Lcvl50nOFL2D7jrr7YDBiQoJBGuBo6Fibw9vZWMdWCPvBD3j+wJkFvAGfmiwP8YbuM61UUkOChOPsq6w6OwflqPplYzg8XCjP/dGkv4deTkhWVvg0rFbuYeEZ1s9AYqM/0skgasibZyT8Dw8/30Y/HgA/HuMe7Pi3uQ9wIW8KbmJwofCTCk1ChaDNhfwBLuRPxoWGLlQ+YIU6QfufoKYvsdurMPfccwP678ZMVLv/z2kuPrt/coJ3fwM=&lt;/diagram&gt;&lt;/mxfile&gt;">
@@ -21,7 +20,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 147px; height: 1px; padding-top: 168px; margin-left: 296px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <br/><span class="server-2-link-label">Bandwidth: 100 MB/sec</span>
+                                <br/><span class="cs-server-2-link-label">Bandwidth: 100 MB/sec</span>
                             </div>
                         </div>
                     </div>
@@ -41,7 +40,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 126px; height: 1px; padding-top: 159px; margin-left: 175px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <br/><span class="server-1-link-label">Bandwidth: 10 MB/sec</span>
+                                <br/><span class="cs-server-1-link-label">Bandwidth: 10 MB/sec</span>
                             </div>
                         </div>
                     </div>

@@ -1,8 +1,8 @@
-var auth2; // The Sign-In object.
-var googleUser; // The current user.
+let auth2; // The Sign-In object.
+let googleUser; // The current user.
 
 function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
+    let auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         // hide sign out button and show sign in button
         $(".signOutBut")
@@ -24,13 +24,13 @@ function signOut() {
  */
 function onStart() {
     gapi.load('auth2', initSigninV2);
-};
+}
 
 
 /**
  * Initializes Signin v2 and sets up listeners.
  */
-var initSigninV2 = function () {
+let initSigninV2 = function () {
     auth2 = gapi.auth2.init();
 
     // Listen for sign-in state changes.
@@ -54,9 +54,9 @@ var initSigninV2 = function () {
  *
  * @param {boolean} val the updated signed out state.
  */
-var signinChanged = function (val) {
+let signinChanged = function (val) {
     if (val) { // user signed in
-        var profile = googleUser.getBasicProfile();
+        let profile = googleUser.getBasicProfile();
         $(".user-title").html('');
         $(".user-given-name").html('');
         $(".user-email").html('');
@@ -99,7 +99,7 @@ var signinChanged = function (val) {
  *
  * @param {GoogleUser} user the updated user.
  */
-var userChanged = function (user) {
+let userChanged = function (user) {
     // console.log('User now: ', user);
     googleUser = user;
     updateGoogleUser();
@@ -109,7 +109,7 @@ var userChanged = function (user) {
 /**
  * Updates the properties in the Google User table using the current user.
  */
-var updateGoogleUser = function () {
+let updateGoogleUser = function () {
     if (googleUser.uc) {
     } else {
         $('.myAppFrame').removeClass('show').addClass('hide');
@@ -121,7 +121,7 @@ var updateGoogleUser = function () {
  * Retrieves the current user and signed in states from the GoogleAuth
  * object.
  */
-var refreshValues = function () {
+let refreshValues = function () {
     if (auth2) {
         googleUser = auth2.currentUser.get();
         updateGoogleUser();

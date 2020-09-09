@@ -131,15 +131,7 @@ You should use the simulation to explore different scenarios and test your
 computed data transfer time estimates for various combinations of
 concurrent transfers.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="networking_fundamentals/" %}
-  </div>
-</div>
+{% include simulator.html src="networking_fundamentals" %}
 
 --- 
 
@@ -190,10 +182,12 @@ Topology for practice questions.
 
 $$
 \begin{align}
-  T_{D \rightarrow B} & = 250\;\text{us} + \frac{100\;\text{MB}}{30\;\text{MB/sec}} = 3.3335\;\text{sec}\\
-  T_{A \rightarrow C} & = 250\;\text{us} + \frac{100\;\text{MB}}{40\;\text{MB/sec}} = 2.5002\;\text{sec}
+T_{D \rightarrow B} & = 200\;\text{us} + \frac{100\;\text{MB}}{30\;\text{MB/sec}} = 3.3335\;\text{sec}\\
+T_{A \rightarrow C} & = 200\;\text{us} + \frac{100\;\text{MB}}{40\;\text{MB/sec}} = 2.5002\;\text{sec}\\
 \end{align}
 $$
+<br/><br/>
+Note that the latency term (the first term) above is negligible when compared to the bandwidth term  (the second term).
   </div>
 </div>
 
@@ -215,10 +209,13 @@ proceeds at 30 MB/sec (as it is now bottlenecked on the link from host B). There
 
 $$
 \begin{align}
-  T_{A \rightarrow C} & = 250\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} = 3.0002\;\text{sec}\\
-  T_{B \rightarrow C} & = 250\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} + \frac{40\;\text{MB}}{30\;\text{MB/sec}} = 4.3335\;\text{sec}
+T_{A \rightarrow C} & = 200\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} = 3.0002\;\text{sec}\\
+T_{B \rightarrow C} & = 200\;\text{us} + \frac{60\;\text{MB}}{20\;\text{MB/sec}} + \frac{40\;\text{MB}}{30\;\text{MB/sec}} = 4.3335\;\text{sec}
 \end{align}
 $$
+<br/><br/>
+Note that the latency term (the first term) above is negligible when compared to the bandwidth term  (the second term).
+
   </div>
 </div>
 

@@ -90,15 +90,7 @@ and a number of cores (using one "oil" task per core). You can use the
 simulation to explore data-parallelism on your own, but also to answer some of the 
 practice questions below. 
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="multi_core_data_parallelism/" %}
-  </div>
-</div>
+{% include simulator.html src="multi_core_data_parallelism" %}
 
 <p></p>
 

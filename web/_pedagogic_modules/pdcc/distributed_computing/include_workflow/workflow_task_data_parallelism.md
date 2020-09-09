@@ -79,15 +79,7 @@ matter in terms of application performance  (because we have only 3 tasks
 to run on the 2 compute hosts).  You can use this app on your own, but then
 you should use it to answer the following practice questions.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="workflow_task_data_parallelism/" %}
-  </div>
-</div>
+{% include simulator.html src="workflow_task_data_parallelism" %}
 
 ---
 

@@ -1,29 +1,17 @@
 $(function () {
 
     // Update the label that says how many tasks will be run
-    $("#analyze-work").on("keyup", function () {
+    $("#mcdt2-analyze-work").on("keyup", function () {
         let analyze_work_input_el = $(this);
         let analyze_work_input_value = parseInt(analyze_work_input_el.val());
-        let analyze_work_label_el = $(".analyze-work-label");
+        let analyze_work_label_el = $(".mcdt2-analyze-work-label");
 
-        if (analyze_work_input_value >= 10 && analyze_work_input_value < 1000) {
+        if (analyze_work_input_value >= 10 && analyze_work_input_value <= 1000) {
 
             analyze_work_label_el.text(analyze_work_input_value + " GFlop")
                 .css("background-color", "#d3ffe9");
 
             analyze_work_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (analyze_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    analyze_work_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else if (analyze_work_input_value < 10000) {
-            analyze_work_label_el.text(analyze_work_input_value / 1000 + " TFlop")
-                .css("background-color", "#d3ffe9");
-
-            analyze_work_input_value.removeClass("is-invalid")
                 .addClass("is-valid");
 
             setTimeout(function () {
@@ -38,7 +26,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-mcdt2').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -63,8 +51,8 @@ $(function () {
             data: JSON.stringify(
                 {
                     num_cores: "2",
-                    analyze_work: $("#analyze-work").val(),
-                    scheduling_scheme: $('input[name="scheduling-scheme-select"]:checked').val(),
+                    analyze_work: $("#mcdt2-analyze-work").val(),
+                    scheduling_scheme: $('input[name="mcdt2-scheduling-scheme-select"]:checked').val(),
                     userName: userName,
                     email: email
                 }),
@@ -72,15 +60,15 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#mcdt2-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData);
+                // generateGanttChart(executionData, 'mcdt2-graph-container');
+                generateHostUtilizationChart(executionData, 'mcdt2-host-utilization-chart',
+                    hostsList = [], diskHostsList = [], zoom = false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
-                // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

@@ -1,9 +1,9 @@
 $(function () {
 
-    $("#disk-bandwidth").on("keyup", function () {
+    $("#wf-disk-bandwidth").on("keyup", function () {
         let disk_bandwidth_input_el = $(this);
         let disk_bandwidth_input_value = parseInt(disk_bandwidth_input_el.val());
-        let disk_bandwidth_label_el = $(".disk-bandwidth-label");
+        let disk_bandwidth_label_el = $(".wf-disk-bandwidth-label");
 
         if (disk_bandwidth_input_value >= 10 && disk_bandwidth_input_value <= 500) {
 
@@ -25,10 +25,10 @@ $(function () {
         }
     });
 
-    $("#num-cores").on("keyup", function () {
+    $("#wf-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".wf-num-cores-label");
 
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 3) {
@@ -51,7 +51,7 @@ $(function () {
         }
     });
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-wf').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -75,8 +75,8 @@ $(function () {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    num_cores: $("#num-cores").val(),
-                    disk_bandwidth: $("#disk-bandwidth").val(),
+                    num_cores: $("#wf-num-cores").val(),
+                    disk_bandwidth: $("#wf-disk-bandwidth").val(),
                     userName: userName,
                     email: email
                 }),
@@ -84,17 +84,16 @@ $(function () {
             success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#wf-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData, [], [], false);
+                // generateGanttChart(executionData, 'wf-graph-container');
+                generateHostUtilizationChart(executionData, 'wf-host-utilization-chart', [], [], false);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
-                populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
-                    "task-details-table-td");
+                populateWorkflowTaskDataTable(prepared_data, 'wf-task-details-table');
             }
         });
     });

@@ -1,18 +1,17 @@
-$(function() {
-
-    $("#server-1-link-latency").on("keyup", function() {
+$(function () {
+    $("#csd-server-1-link-latency").on("keyup", function () {
         let server_1_link_input_el = $(this);
         let server_1_link_input_value = parseInt(server_1_link_input_el.val());
-        let server_1_link_label_el = $(".server-1-link-latency-label");
+        let server_1_link_label_el = $(".csd-server-1-link-latency-label");
 
-        if(server_1_link_input_value>=1 && server_1_link_input_value<10000){
+        if (server_1_link_input_value >= 1 && server_1_link_input_value < 10000) {
             server_1_link_label_el.text("Latency: " + server_1_link_input_value + " us")
                 .css("background-color", "#d3ffe9");
 
             server_1_link_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     server_1_link_label_el.css("background-color", "");
                 }
@@ -24,13 +23,12 @@ $(function() {
         }
     });
 
-
-    $("#buffer-size").on("keyup", function() {
+    $("#csd-buffer-size").on("keyup", function () {
         let buffer_size_input_el = $(this);
         let buffer_size_input_value = parseInt(buffer_size_input_el.val());
-        let buffer_size_label_el = $(".buffer-size-label");
+        let buffer_size_label_el = $(".csd-buffer-size-label");
 
-        if(buffer_size_input_value>=100 && buffer_size_input_value<1000) {
+        if (buffer_size_input_value >= 100 && buffer_size_input_value < 1000) {
             buffer_size_label_el.text(buffer_size_input_value + " KB")
                 .css("background-color", "#d3ffe9");
 
@@ -42,8 +40,8 @@ $(function() {
                     buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if(buffer_size_input_value>=1000 && buffer_size_input_value<1000000) {
-            buffer_size_label_el.text(buffer_size_input_value/1000 + " MB")
+        } else if (buffer_size_input_value >= 1000 && buffer_size_input_value < 1000000) {
+            buffer_size_label_el.text(buffer_size_input_value / 1000 + " MB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
@@ -54,14 +52,14 @@ $(function() {
                     buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if (buffer_size_input_value == 1000000){
-            buffer_size_label_el.text(buffer_size_input_value/1000000 + " GB")
+        } else if (buffer_size_input_value == 1000000) {
+            buffer_size_label_el.text(buffer_size_input_value / 1000000 + " GB")
                 .css("background-color", "#d3ffe9");
 
             buffer_size_input_el.removeClass("is-invalid")
                 .addClass("is-valid");
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
                     buffer_size_label_el.css("background-color", "");
                 }
@@ -73,11 +71,7 @@ $(function() {
         }
     });
 
-
-
-
-
-    $('#simulator-form').on('submit', function(event) {
+    $('#simulator-form-client-server-disk').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();
@@ -101,29 +95,28 @@ $(function() {
             contentType: 'application/json',
             data: JSON.stringify(
                 {
-                    server_1_link_latency: $("#server-1-link-latency").val(),
+                    server_1_link_latency: $("#csd-server-1-link-latency").val(),
                     server_1_link_bandwidth: 200,
                     server_2_link_bandwidth: 600,
                     file_size: "1000",
-                    buffer_size: 1000 * $("#buffer-size").val(),
-                    host_select: $('input[name=host-select]:checked').val(),
+                    buffer_size: 1000 * $("#csd-buffer-size").val(),
+                    host_select: $('input[name=csd-host-select]:checked').val(),
                     disk_speed: 400,
                     userName: userName,
                     email: email
                 }),
 
-            success: function(response) {
+            success: function (response) {
 
                 // Add the new simulation output into the "Simulation Output" section
-                $("#simulation-output").empty().append(response.simulation_output);
+                $("#csd-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
-                // generateGanttChart(executionData);
-                generateHostUtilizationChart(executionData, [], ["client"]);
+                // generateGanttChart(executionData, 'csd-graph-container');
+                generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client']);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
-                // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

@@ -1,27 +1,22 @@
----
-layout: simulation
-title: Client Server
-permalink: simulations/client_server_disk/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/client_server_disk.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="client-server-disk" %}
 
 <div class="grouped fields col-md-6">
     <label>Host selection</label>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select" value="1" checked>
-            <label class="radio-inline control-label" for="host-select">
+            <input type="radio" name="csd-host-select" id="csd-host-select-1" value="1" checked>
+            <label class="radio-inline control-label" for="csd-host-select-1">
                 Server #1
             </label>
         </div>
     </div>
     <div class="field">
         <div class="ui radio checkbox">
-            <input type="radio" name="host-select" id="host-select" value="2">
-            <label class="radio-inline control-label" for="host-select">
+            <input type="radio" name="csd-host-select" id="csd-host-select-2" value="2">
+            <label class="radio-inline control-label" for="csd-host-select-2">
                 Server #2
             </label>
         </div>
@@ -29,8 +24,8 @@ permalink: simulations/client_server_disk/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="server-1-link-latency">Latency to Server #1 (us)</label>
-    <input class="form-control" type="number" id="server-1-link-latency" placeholder="10" value="10" min="1" max="10000"
+    <label for="csd-server-1-link-latency">Latency to Server #1 (us)</label>
+    <input class="form-control" type="number" id="csd-server-1-link-latency" placeholder="10" value="10" min="1" max="10000"
            step="1" required>
     <div class="invalid-feedback">
         Please provide the latency from the Client to Server #1 in us between 1 and 10,000.
@@ -42,8 +37,8 @@ permalink: simulations/client_server_disk/
 </div>
 
 <div class="form-group col-md-6">
-    <label for="buffer-size">Buffer Size (KB)</label>
-    <input class="form-control" type="number" id="buffer-size" placeholder="Provide a buffer size in KB" value="10000"
+    <label for="csd-buffer-size">Buffer Size (KB)</label>
+    <input class="form-control" type="number" id="csd-buffer-size" placeholder="Provide a buffer size in KB" value="10000"
            min="100" max="1000000" step="1" required>
     <div class="invalid-feedback">
         Please provide a buffer size in KB between 100 and 1,000,000.
@@ -76,11 +71,11 @@ permalink: simulations/client_server_disk/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="csd" %}
 
 <!--{% include partials/workflow_execution_graph.html %}-->
 
-{% include partials/host_utilization_graph.html %}
+{% include partials/host_utilization_graph.html prefixID="csd" %}
 
 <!--{% include partials/workflow_execution_data.html %}-->
 
