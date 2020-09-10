@@ -374,9 +374,9 @@ scenario, none of them can produce the optimal execution.
 
 ---
 
-### Many Possible Assumptions
+### Beyond our simple Coordinator-Worker setup
 
-In this module we have made several assumptions regarding our
+We have made several assumptions regarding our
 coordinator-worker setup.  Our goal was not to consider all possible
 setups, but instead to consider a simple one that is sufficient to introduce
 you to notions of scheduling. 
@@ -400,22 +400,22 @@ experience contention on that link. In this case, it may not be judicious
 to trigger task executions on all idle workers as aggressively.  Or there
 could be a two-link network path from the coordinator to each worker, where
 the first link is shared by all workers, but the second link is dedicated
-to the worker. This would ressemble more closely real-world network setups.
+to the worker. This would resemble more closely real-world network setups.
 Regardless, when moving away from individual private links, reasoning about
 the execution becomes much more difficult (let's *again* be thankful for
 simulation!).
 
 Also, we have only focused on overall execution time as our performance metric. But
-many other metrics are possible, such as monetary cost (in case each work charges
-some hourly rate - e.g., a VM in a commercial cloud), energy consumption (as different
-workers may be more or less power-efficient), etc.  Considering different metrics
+many other metrics are possible, such as monetary cost (in case each worker charges
+some hourly rate as in commercial clouds) or energy consumption (as different
+workers may be more or less power-efficient).  Considering different metrics
 leads to different results for scheduling strategies, and typically suggests
 new strategies. One can even try to target multiple metrics at once. For instance,
 one could say "I want to execute the tasks as fast as possible but without exceeding
 some energy budget". 
 
 Exploring these more realistic, but often more relevant to practice, setups
-can take you down interesting paths that lead to Computer Science research. But
+can take you down fascinating paths that lead to Computer Science research. But
 for now, how about just answering the questions below? 
 
 
