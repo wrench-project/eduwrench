@@ -75,6 +75,19 @@ $$
 T_{green} = 200\;\text{us} + \frac{50\;\text{MB}}{20\;\text{MB/sec}} + \frac{50\;\text{MB}}{30\;\text{MB/sec}} = 4.1668\;\text{sec}
 $$
 
+This execution is depicted in 
+the figure below, which shows the bandwidth utilization of the network link into host C. 
+in the second phase above, part of that link's bandwidth is unused. 
+
+<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/link_utilization.svg">link bandwidth utilization</object>
+<div class="caption"><strong>Figure 3:</strong>
+Bandwidth utilization of the link into host C vs. time, showing both the red and the green
+transfers. Because the green transfer is bottlened by a 30 MB/sec link, 10 MB/sec of bandwidth
+remain unused for the link into host C. 
+</div>
+
+
+
 ----
 
 #### Simulating Contention
@@ -84,7 +97,7 @@ This simulation is for the following scenario in which a number of transfers
 occur concurrently on the same three-link route:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_simulation.svg">simulation scenario</object>
-<div class="caption"><strong>Figure 3:</strong>
+<div class="caption"><strong>Figure 4:</strong>
 Simulation scenario.
 </div>
 
@@ -140,7 +153,7 @@ concurrent transfers.
 The following practice questions pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_practice.svg">simulation scenario for practice questions</object>
-<div class="caption"><strong>Figure 4:</strong>
+<div class="caption"><strong>Figure 5:</strong>
 Topology for practice questions.
 </div>
 
@@ -229,7 +242,7 @@ Note that the latency term (the first term) above is negligible when compared to
 Answer the following questions, which pertain to this topology:
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/topology_contention_questions.svg">simulation scenario for questions</object>
-<div class="caption"><strong>Figure 5:</strong>
+<div class="caption"><strong>Figure 6:</strong>
 Topology for questions (lat = "latency"; bw = "bandwidth").
 </div>
 
