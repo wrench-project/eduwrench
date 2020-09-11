@@ -4,7 +4,7 @@ $(function () {
     updateFigureLabel("server-2-startup", "server-2-overhead-label", 0, 10, "Startup overhead", "sec");
     updateFigureLabel("task-work", "task-work-label", 100, 2000, "", "GFlop");
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-cic-overhead').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();

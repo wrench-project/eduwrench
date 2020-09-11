@@ -124,15 +124,7 @@ finishes execution a bit faster. For a task with less computation to do,
 Server \#1 would be even more preferable, while Server \#2 would be
 the better choice provided the task has enough computation to do. 
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="cic_overhead/" %}
-  </div>
-</div>
+{% include simulator.html src="cic_overhead" %}
 
 ---
 

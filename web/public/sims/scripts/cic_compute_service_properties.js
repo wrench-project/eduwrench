@@ -395,7 +395,7 @@ $(document).ready(function () {
 
 $(function () {
 
-    $('#simulator-form').on('submit', function (event) {
+    $('#simulator-form-cic-compute-service-properties').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();

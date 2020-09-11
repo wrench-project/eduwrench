@@ -1,19 +1,13 @@
----
-layout: simulation
-title: Compute Service
-permalink: simulations/cic_compute_service_properties/
----
-
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/ci_sim5.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="cic-compute-service-properties" %}
 
 <div class="grouped fields col-md-12">
     <label>Choose two parameters</label>
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="param-select" class="param-select" id="selectb" value="b">
-            <label class="control-label" for="param-select">
+            <label class="control-label" for="selectb">
                 Bandwidth
             </label>
         </div>
@@ -21,7 +15,7 @@ permalink: simulations/cic_compute_service_properties/
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="param-select" class="param-select" id="selectp" value="p">
-            <label class="control-label" for="param-select">
+            <label class="control-label" for="selectp">
                 Properties of Services
             </label>
         </div>
@@ -29,7 +23,7 @@ permalink: simulations/cic_compute_service_properties/
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="param-select" class="param-select" id="selectc" value="c">
-            <label class="control-label" for="param-select">
+            <label class="control-label" for="selectc">
                 Cores for each task
             </label>
         </div>
@@ -37,7 +31,7 @@ permalink: simulations/cic_compute_service_properties/
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="param-select" class="param-select" id="selectm" value="m">
-            <label class="control-label" for="param-select">
+            <label class="control-label" for="selectm">
                 Memory for each task
             </label>
         </div>
@@ -45,7 +39,7 @@ permalink: simulations/cic_compute_service_properties/
     <div class="field">
         <div class="ui checkbox">
             <input type="checkbox" name="param-select" class="param-select" id="selectf" value="f">
-            <label class="control-label" for="param-select">
+            <label class="control-label" for="selectf">
                 Number of I/O files
             </label>
         </div>
@@ -55,112 +49,112 @@ permalink: simulations/cic_compute_service_properties/
 <div class="form-group col-md-6" id="b" style="display:none;">
     <label for="bandwidth1">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 1</label>
     <input class="form-control" type="number" id="bandwidth1" placeholder="" value="10" min="1" max="10000" step="1"
-    required>
+           required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
     <label for="bandwidth2">Enter bandwidth (MBps) between WMS, File Registry and Compute Service 2</label>
     <input class="form-control" type="number" id="bandwidth2" placeholder="" value="10" min="1" max="10000" step="1"
-    required>
+           required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
     <label for="bandwidth3">Enter bandwidth (MBps) between WMS, File Registry and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth3" placeholder="" value="10" min="1" max="10000" step="1"
-    required>
+           required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
     <label for="bandwidth4">Enter bandwidth (MBps) between Compute Service 1 and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth4" placeholder="" value="10" min="1" max="10000" step="1"
-    required>
+           required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
     <label for="bandwidth5">Enter bandwidth (MBps) between Compute Service 2 and Storage Service</label>
     <input class="form-control" type="number" id="bandwidth5" placeholder="" value="10" min="1" max="10000" step="1"
-    required>
+           required>
     <div class="invalid-feedback">
         Bandwidth must be between 1 and 100000 MBps, and file size must be between 1 and 10000 MB
     </div>
 </div>
 
 <div class="form-group col-md-6" id="p" style="display:none;">
-  <label for="property1">Enter startup time for Compute Service 1</label>
-  <input class="form-control" type="number" id="property1" placeholder="" value="10" min="0" max="10000" step="1"
-  required>
-  <label for="property2">Enter startup time for Compute Service 2</label>
-  <input class="form-control" type="number" id="property2" placeholder="" value="10" min="0" max="10000" step="1"
-  required>
-  <label for="property3">Enter buffer size of Storage Service</label>
-  <input class="form-control" type="number" id="property3" placeholder="" value="500000" min="1" step="1"
-  required>
-  <label for="property4">Enter computational requirement for lookup of File Registry Service</label>
-  <input class="form-control" type="number" id="property4" placeholder="" value="100" min="0" max="10000" step="1"
-  required>
+    <label for="property1">Enter startup time for Compute Service 1</label>
+    <input class="form-control" type="number" id="property1" placeholder="" value="10" min="0" max="10000" step="1"
+           required>
+    <label for="property2">Enter startup time for Compute Service 2</label>
+    <input class="form-control" type="number" id="property2" placeholder="" value="10" min="0" max="10000" step="1"
+           required>
+    <label for="property3">Enter buffer size of Storage Service</label>
+    <input class="form-control" type="number" id="property3" placeholder="" value="500000" min="1" step="1"
+           required>
+    <label for="property4">Enter computational requirement for lookup of File Registry Service</label>
+    <input class="form-control" type="number" id="property4" placeholder="" value="100" min="0" max="10000" step="1"
+           required>
 </div>
 
 <div class="form-group col-md-6" id="c" style="display:none;">
-  <label for="cores1">Enter number of cores for Blue Task</label>
-  <input class="form-control" type="number" id="cores1" placeholder="" value="1" min="1" max="3" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 3 cores
-  </div>
-  <label for="cores2">Enter number of cores for Yellow Task</label>
-  <input class="form-control" type="number" id="cores2" placeholder="" value="1" min="1" max="3" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 3 cores
-  </div>
-  <label for="cores3">Enter number of cores for Orange Task</label>
-  <input class="form-control" type="number" id="cores3" placeholder="" value="1" min="1" max="3" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 3 cores
-  </div>
-  <label for="cores4">Enter number of cores for Red Task</label>
-  <input class="form-control" type="number" id="cores4" placeholder="" value="1" min="1" max="3" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 3 cores
-  </div>
+    <label for="cores1">Enter number of cores for Blue Task</label>
+    <input class="form-control" type="number" id="cores1" placeholder="" value="1" min="1" max="3" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 3 cores
+    </div>
+    <label for="cores2">Enter number of cores for Yellow Task</label>
+    <input class="form-control" type="number" id="cores2" placeholder="" value="1" min="1" max="3" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 3 cores
+    </div>
+    <label for="cores3">Enter number of cores for Orange Task</label>
+    <input class="form-control" type="number" id="cores3" placeholder="" value="1" min="1" max="3" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 3 cores
+    </div>
+    <label for="cores4">Enter number of cores for Red Task</label>
+    <input class="form-control" type="number" id="cores4" placeholder="" value="1" min="1" max="3" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 3 cores
+    </div>
 </div>
 
 <div class="form-group col-md-6" id="m" style="display:none;">
-  <label for="mem1">Enter memory requirement for Blue Task</label>
-  <input class="form-control" type="number" id="mem1" placeholder="" value="1" min="0" max="1000000" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 1000000
-  </div>
-  <label for="mem2">Enter memory requirement for Yellow Task</label>
-  <input class="form-control" type="number" id="mem2" placeholder="" value="1" min="0" max="1000000" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 1000000
-  </div>
-  <label for="mem3">Enter memory requirement for Orange Task</label>
-  <input class="form-control" type="number" id="mem3" placeholder="" value="1" min="0" max="1000000" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 1000000
-  </div>
-  <label for="mem4">Enter memory requirement for Red Task</label>
-  <input class="form-control" type="number" id="mem4" placeholder="" value="1" min="0" max="1000000" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 1000000
-  </div>
+    <label for="mem1">Enter memory requirement for Blue Task</label>
+    <input class="form-control" type="number" id="mem1" placeholder="" value="1" min="0" max="1000000" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 1000000
+    </div>
+    <label for="mem2">Enter memory requirement for Yellow Task</label>
+    <input class="form-control" type="number" id="mem2" placeholder="" value="1" min="0" max="1000000" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 1000000
+    </div>
+    <label for="mem3">Enter memory requirement for Orange Task</label>
+    <input class="form-control" type="number" id="mem3" placeholder="" value="1" min="0" max="1000000" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 1000000
+    </div>
+    <label for="mem4">Enter memory requirement for Red Task</label>
+    <input class="form-control" type="number" id="mem4" placeholder="" value="1" min="0" max="1000000" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 1000000
+    </div>
 </div>
 
 <div class="form-group col-md-6" id="f" style="display:none;">
-  <label for="file-num">Enter number of I/O files for tasks</label>
-  <input class="form-control" type="number" id="file-num" placeholder="" value="1" min="1" max="10" step="1"
-  required>
-  <div class="invalid-feedback">
-      Must be between 1 and 10 files
-  </div>
+    <label for="file-num">Enter number of I/O files for tasks</label>
+    <input class="form-control" type="number" id="file-num" placeholder="" value="1" min="1" max="10" step="1"
+           required>
+    <div class="invalid-feedback">
+        Must be between 1 and 10 files
+    </div>
 </div>
 
 
@@ -174,18 +168,4 @@ permalink: simulations/cic_compute_service_properties/
 
 <!--{% include partials/workflow_execution_data.html %}-->
 
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/util.js" type="text/javascript"></script>
-<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/initialise.js" type="text/javascript"></script>
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/simulation-graph.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/simulation-graph.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/host-utilization.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/host-utilization.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/scripts/graph-sections/simulation-details.js"-->
-<!--        type="text/javascript"></script>-->
-<!--<script src="{{site.baseurl}}/public/sims/scripts/dashboard/partials/simulation-details.js"-->
-<!--        type="text/javascript"></script>-->
 <script src="{{site.baseurl}}/public/sims/scripts/cic_compute_service_properties.js" type="text/javascript"></script>

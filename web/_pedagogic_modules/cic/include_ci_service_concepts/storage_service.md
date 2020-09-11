@@ -65,15 +65,7 @@ steps shown in the sequence diagram (Figure 1 right side). If you run the simula
 using the default values, you will notice that the registration overhead nearly
 doubles the time to perform the storing operation in the data service.
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="cic_storage_service/" %}
-  </div>
-</div>
+{% include simulator.html src="cic_storage_service" %}
 
 ---
 
@@ -92,26 +84,10 @@ with or double-check answers.
 
 <p>&nbsp;</p>
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="cic_storage_service_choose/" %}
-  </div>
-</div>
+{% include simulator.html src="cic_storage_service_choose" %}
 
 <p>&nbsp;</p>
 
-<div class="ui accordion fluid app-ins">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (Open simulator here)
-  </div>
-  <div markdown="0" class="ui segment content sim-frame">
-    {% include simulator.html src="cic_storage_service_multiple/" %}
-  </div>
-</div>
+{% include simulator.html src="cic_storage_service_multiple" %}
 
 ---

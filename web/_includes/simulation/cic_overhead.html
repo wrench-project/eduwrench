@@ -1,12 +1,7 @@
----
-layout: simulation
-title: Client Server
-permalink: simulations/cic_overhead/
----
 
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/ci_overhead.svg" %}
 
-{% include partials/simulation_parameters_form_start.html %}
+{% include partials/simulation_parameters_form_start.html simID="cic-overhead" %}
 
 <div class="grouped fields col-md-6">
     <label>Host selection</label>
@@ -48,7 +43,7 @@ permalink: simulations/cic_overhead/
 
 {% include partials/simulation_parameters_form_end.html %}
 
-{% include partials/simulation_output.html %}
+{% include partials/simulation_output.html prefixID="cic-o" %}
 
 <!--{% include partials/workflow_execution_graph.html %}-->
 
