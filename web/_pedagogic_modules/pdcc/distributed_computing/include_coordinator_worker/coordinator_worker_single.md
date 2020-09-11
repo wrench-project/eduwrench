@@ -38,23 +38,16 @@ very similar to the client-server setup that we studied in the previous module.*
 one can view coordinator-worker as an extension of client-server in which the client (the coordinator)
 uses the servers (the workers) to perform many tasks in parallel. You may recall that in the client-server module,
 practice question *A.3.2.p1.3* touched on the notion that the client could have more than
-one task to perform. This was really a coordinator-worker scenario.  
+one task to perform. This was really a coordinator-worker scenario.  For simplicity, we 
+assume  that all data is in RAM (i.e., no disks). 
 
-Note that there are many possible variations on the above setup. For instance, the network could be such
-that all workers are connected to the coordinator via the same shared network link. Or there could be a two-link network path
-from the coordinator to each worker, where the first link is shared by all workers, but the second link is
-dedicated to the worker. Also, for 
-simplicity and unlike in the previous module, we do not consider disk I/O at all (we could simply think of
-this as the coordinator having a fast disk and doing efficient pipelining of disk I/O and network communications --
-see the [Pipelining tab of the Client-Server module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)). Our goal
-here is not to consider all possible setups, but instead to consider a simple one that is sufficient to get
-a sense of what scheduling entails. 
-
-Given a set of tasks to perform, *whenever there is at least an idle worker* the coordinator decides which task should
-be executed next and on which idle worker. The input data of the task is sent to the chosen worker,
-which then performs the task's computation. 
-In  this module, we consider that the client has a set of **independent tasks**, i.e., tasks can be
-completed in  any order. In the next module, we consider distributed computing with *dependent tasks*.
+Given a set of tasks to perform, *whenever there is at least an idle
+worker* the coordinator decides which task should be executed next and on
+which idle worker. The input data of the task is sent to the chosen worker,
+which then performs the task's computation.  In  this module, we consider
+that the client has a set of **independent tasks**, i.e., tasks can be
+completed in  any order. In the next module, we consider distributed
+computing with *dependent tasks*.
 
 
 ### Coordinator-Worker Scheduling Strategies
@@ -71,11 +64,8 @@ Here,  we consider the following **scheduling problem**: given a set of tasks, e
 of workers, each connected to the coordinator via a separate network link, how should tasks be sent to the (idle)
 workers so that the last task to complete finishes as early as possible?  
 
-It turns out that, for many scheduling problems, there are many possible **scheduling strategies**. In addition,
-given the specifics of the problem, different strategies can behave very differently. Some of them can be
-very efficient, and some of them can be very inefficient. 
-
-The **scheduling strategy** used by our coordinator will be as follows:
+It turns out that there are many possible **scheduling strategies**.  The template for
+the scheduling strategy used by our coordinator will be as follows:
 
 ```
   while there is a task to execute:
@@ -87,18 +77,7 @@ The **scheduling strategy** used by our coordinator will be as follows:
         wait for a worker to be idle
 ```
 
-Step a) and b) are the heart of the strategy, and we discuss them hereafter. Step c) requires a bit of explanation.
-We assume that the coordinator can execute tasks on the workers simultaneously, *including the sending/receiving of
-input/output data*. That is,  if we have two idle workers and two tasks, then we send the input for both tasks
-simultaneously to the workers (recall that each worker is connected to the coordinator by an independent link).  In the
-extreme, say that we have 10 workers that compute at 1 Gflop/sec,  each connected to the coordinator by a 1 GB/sec link,
-and that we have 10 tasks that each have 1 GB of input and 1 Gflop of work. Then, each task
-completes in 2 seconds (a bit more due to network effects that we are overlooking here), and all tasks run
-completely in parallel and all complete at the same time.  Step c) above takes zero time (or a very short
-amount of time). In practice, we would implement step c) in software by starting a separate thread to handle each new
-task execution (see Operating Systems [textbooks](/textbooks)).
-
-So, what can we do for steps a) and b) above? It is easy to come up with a bunch of options. Here are "a few": 
+Step a) and b) define the strategy, and it is easy to come up with a bunch of options. Here are "a few": 
 
   - a) Task selection options:
     - Pick a random task
@@ -124,6 +103,37 @@ e.g., picking the task with the highest work and running it on the worker
 that can complete it the earliest.  The only way to know whether this
 intuition holds is to try it out.
 
+For Step c) we simply assume that the coordinator can *trigger* a task execution on an
+idle workers (which will entail sending input, computing, and receiving output) and
+immediately proceed to the next iteration of the while loop.
+
+
+<div class="ui accordion fluid">
+   <div class="title">
+     <i class="dropdown icon"></i>
+     Click to see mode details about Step c)
+   </div>
+   <div markdown="1" class="ui segment content answer-frame">
+Say that we have 10 workers that compute at 1 Gflop/sec,  each connected to
+the coordinator by a 1 GB/sec link, and that we have 10 tasks that each
+have 1 GB of input and 1 Gflop of work. Then, each task completes in 2
+seconds (a bit more due to network effects that we are overlooking here),
+and all tasks run completely in parallel, so that they all complete at the
+same time.
+
+This is only possible if step c) takes zero (or very little) time in the
+strategy, so that the coordinator can trigger task executions 
+instantly and, importantly, *asynchronously*. The work
+"asynchronous" here means that the coordinator triggers a task execution and can
+continue immediately without having to wait for that task to be completed.
+
+There are many ways to implemented step c) in software. For instance, a
+commonplace  approach would be to start a separate "thread" to handle each
+new task execution (see Operating Systems [textbooks](/textbooks) for more
+details).
+
+   </div>
+</div>
 
 #### Simulating Coordinator-Worker
 
@@ -361,6 +371,52 @@ scenario, none of them can produce the optimal execution.
 </div>
  
 <p></p>
+
+---
+
+### Beyond our simple Coordinator-Worker setup
+
+We have made several assumptions regarding our
+coordinator-worker setup.  Our goal was not to consider all possible
+setups, but instead to consider a simple one that is sufficient to introduce
+you to notions of scheduling. 
+
+For instance, we have assumed that all data is in RAM, so that we do not
+need to take disk I/O into account. This  is still realistic for some
+setups. For instance, if the coordinator has a fast disk, does efficient
+pipelining of disk I/O and network communications (see the [Pipelining tab
+of the Client-Server
+module]({{site.baseurl}}/pedagogic_modules/pdcc/distributed_computing/client_server/#/pipelining)),
+and workers keep all data in RAM. But we could have considered a scenario
+in which both the coordinator and the workers have relatively slow disks
+and do arbitrary pipelining. In this case it becomes even more difficult to
+reason about the execution (let's be thankful for having simulation!). 
+
+We have also assumed that each worker is connected to the coordinator via
+a single, private link. But many other practical situations can occur.  For
+instance, the network could be such that all workers are connected to the
+coordinator via a single shared network link, in which  case data transfers
+experience contention on that link. In this case, it may not be judicious
+to trigger task executions on all idle workers as aggressively.  Or there
+could be a two-link network path from the coordinator to each worker, where
+the first link is shared by all workers, but the second link is dedicated
+to the worker. This would resemble more closely real-world network setups.
+Regardless, when moving away from individual private links, reasoning about
+the execution becomes much more difficult (let's *again* be thankful for
+simulation!).
+
+Also, we have only focused on overall execution time as our performance metric. But
+many other metrics are possible, such as monetary cost (in case each worker charges
+some hourly rate as in commercial clouds) or energy consumption (as different
+workers may be more or less power-efficient).  Considering different metrics
+leads to different results for scheduling strategies, and typically suggests
+new strategies. One can even try to target multiple metrics at once. For instance,
+one could say "I want to execute the tasks as fast as possible but without exceeding
+some energy budget". 
+
+Exploring these more realistic, but often more relevant to practice, setups
+can take you down fascinating paths that lead to Computer Science research. But
+for now, how about just answering the questions below? 
 
 
 ---
