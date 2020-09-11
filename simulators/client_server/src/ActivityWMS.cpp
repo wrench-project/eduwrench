@@ -40,8 +40,16 @@ namespace wrench {
         auto job_manager = this->createJobManager();
         auto data_manager = this->createDataMovementManager();
 
+
         // Get the compute service
         const auto compute_service = *(this->getAvailableComputeServices<ComputeService>().begin());
+
+        // Start bandwidth meters
+        const double BANDWIDTH_METER_PERIOD = 0.1;
+        std::vector<std::string> linknames;
+        linknames.emplace_back("link1");
+        linknames.emplace_back("link2");
+        auto em = this->createBandwidthMeter(linknames, BANDWIDTH_METER_PERIOD);
 
         std::shared_ptr<StorageService> client_storage_service, server_storage_service;
         for (const auto &ss : this->getAvailableStorageServices()) {
@@ -67,7 +75,7 @@ namespace wrench {
         file_locations[file] = FileLocation::LOCATION(server_storage_service);
         auto job = job_manager->createStandardJob(task, file_locations);
         job_manager->submitJob(job, compute_service, {});
-        
+
         // Wait for a workflow execution event, and process it
         try {
             this->waitForAndProcessNextEvent();

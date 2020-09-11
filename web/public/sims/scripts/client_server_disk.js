@@ -115,6 +115,16 @@ $(function () {
                 // generateGanttChart(executionData, 'csd-graph-container');
                 generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client']);
 
+                let link_to_display
+                if ($('input[name=csd-host-select]:checked').val() === 'server1') {
+                    link_to_display = 'link1'
+                } else {
+                    link_to_display = 'link2'
+                }
+
+
+                generateBandwidthUsage(executionData, dataSizeUnits.MB, null, false, [link_to_display], [])
+
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",

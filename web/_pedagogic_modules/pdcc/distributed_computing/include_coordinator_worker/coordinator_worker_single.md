@@ -367,6 +367,12 @@ worker. But the strategies above always assign  tasks to workers whenever possib
 whenever there is a yet-to-be-executed task and an idle worker). And so, in this simple
 scenario, none of them can produce the optimal execution.
 
+This is an example in which adding one extra worker (the slow one), hurts overall execution time.
+To remedy this situation, we need a much smarter scheduling strategy that would say: "don't assign
+work to an idle worker, A, if a faster worker, B, will become idle and then complete that task
+before A would".  This leads us down the path of a "planning" strategy that comes up
+with the schedule ahead of time. 
+
    </div>
 </div>
  

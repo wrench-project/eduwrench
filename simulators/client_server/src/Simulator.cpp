@@ -308,8 +308,6 @@ int main(int argc, char** argv) {
 
 
 
-
-
     wms->addWorkflow(&workflow);
 
     simulation.add(new wrench::FileRegistryService(CLIENT));
@@ -322,7 +320,7 @@ int main(int argc, char** argv) {
 
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, true, true);
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
 
     return 0;
 }
