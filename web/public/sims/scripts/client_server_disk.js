@@ -112,6 +112,7 @@ $(function () {
                 $("#csd-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
+
                 // generateGanttChart(executionData, 'csd-graph-container');
                 generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client']);
 
@@ -121,6 +122,7 @@ $(function () {
                 } else {
                     link_to_display = 'link2'
                 }
+
 
 
                 generateBandwidthUsage(executionData, dataSizeUnits.MB, null, false, [link_to_display], [])

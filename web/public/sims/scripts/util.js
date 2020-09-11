@@ -12,6 +12,7 @@ function prepareResponseData(responseData) {
     return {
         tasks: responseData.workflow_execution.tasks,
         disk: responseData.disk_operations,
-        contents: responseData.workflow_execution.tasks // TODO: remove
+        contents: responseData.workflow_execution.tasks, // TODO: remove
+        network: responseData.link_usage.links
     };
 }
