@@ -107,25 +107,17 @@ $(function () {
                 }),
 
             success: function (response) {
-
                 // Add the new simulation output into the "Simulation Output" section
                 $("#csd-simulation-output").empty().append(response.simulation_output);
 
                 let executionData = prepareResponseData(response.task_data);
 
                 // generateGanttChart(executionData, 'csd-graph-container');
-                generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client']);
+                generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client'], false);
 
-                let link_to_display
-                if ($('input[name=csd-host-select]:checked').val() === 'server1') {
-                    link_to_display = 'link1'
-                } else {
-                    link_to_display = 'link2'
-                }
-
-
-
-                generateBandwidthUsage(executionData, dataSizeUnits.MB, null, false, [link_to_display], [])
+                let link_to_display = $('input[name=csd-host-select]:checked').val() === '1' ? 'link1' : 'link2';
+                generateBandwidthUsage(executionData, dataSizeUnits.MB, 'csd-network-bandwidth-chart', false,
+                    [link_to_display], null);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
