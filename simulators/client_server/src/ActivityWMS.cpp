@@ -45,7 +45,7 @@ namespace wrench {
         const auto compute_service = *(this->getAvailableComputeServices<ComputeService>().begin());
 
         // Start bandwidth meters
-        const double BANDWIDTH_METER_PERIOD = 0.1;
+        const double BANDWIDTH_METER_PERIOD = 0.05;
         std::vector<std::string> linknames;
         linknames.emplace_back("link1");
         linknames.emplace_back("link2");
