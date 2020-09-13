@@ -4,7 +4,7 @@ $(function () {
         let server_1_link_input_value = parseInt(server_1_link_input_el.val());
         let server_1_link_label_el = $(".csd-server-1-link-latency-label");
 
-        if (server_1_link_input_value >= 1 && server_1_link_input_value < 10000) {
+        if (server_1_link_input_value >= 1 && server_1_link_input_value <= 10000) {
             server_1_link_label_el.text("Latency: " + server_1_link_input_value + " us")
                 .css("background-color", "#d3ffe9");
 
@@ -12,7 +12,7 @@ $(function () {
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (server_1_link_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                if (server_1_link_label_el.css("background-color") === "rgb(211, 255, 233)") {
                     server_1_link_label_el.css("background-color", "");
                 }
             }, 500);
@@ -37,11 +37,11 @@ $(function () {
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                if (buffer_size_label_el.css("background-color") === "rgb(211, 255, 233)") {
                     buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
-        } else if (buffer_size_input_value == 1000000) {
+        } else if (buffer_size_input_value === 1000000) {
             buffer_size_label_el.text(buffer_size_input_value / 1000000 + " GB")
                 .css("background-color", "#d3ffe9");
 
@@ -49,12 +49,11 @@ $(function () {
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (buffer_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                if (buffer_size_label_el.css("background-color") === "rgb(211, 255, 233)") {
                     buffer_size_label_el.css("background-color", "");
                 }
             }, 500);
         } else {
-            console.log("ASDSAD");
             buffer_size_label_el.css("background-color", "#ffb7b5");
             buffer_size_input_el.removeClass("is-valid")
                 .addClass("is-invalid");
