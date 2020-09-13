@@ -20,7 +20,7 @@ function getOffset(el) {
  * "#worfklow-execution-chart".
  */
 function generate_workflow_execution_graph(workflow_execution_data) {
-    let data = JSON.parse(JSON.stringify(workflow_execution_data));
+    let data = JSON.parse(JSON.stringify(workflow_execution_data));w
     // prepare data for d3 stacked layout
     var keys = ['read', 'compute', 'write', 'whole_task'];
 
