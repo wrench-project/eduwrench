@@ -510,10 +510,10 @@
                 <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%"
                                height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                     <div xmlns="http://www.w3.org/1999/xhtml"
-                         style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 159px; height: 1px; padding-top: 571px; margin-left: 138px;">
+                         style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 159px; height: 1px; padding-top: 561px; margin-left: 138px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <div style="font-size: 14px">Latency: 10 ms</div><span class="wf-locality-link-bandwidth-label">Bandwidth: 100 MB/sec</span>
+                                <div syle="font-size: 14px">wide_area_link</div><div style="font-size: 14px">Latency: 10 ms</div><span class="wf-locality-link-bandwidth-label">Bandwidth: 100 MB/sec</span>
                             </div>
                         </div>
                     </div>

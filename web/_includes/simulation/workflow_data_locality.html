@@ -37,7 +37,7 @@
     <div class="form-check">
         <label class="form-check-label">
             <input class="form-check-input" id="wf-locality-remote-storage-service-input"
-                   name="swf-locality-torage_service_options" type="checkbox" value="1" checked>
+                   name="swf-locality-storage_service_options" type="checkbox" value="1" checked>
             Use storage on <span class="font-weight-normal font-italic">hpc_storage.edu</span>
         </label>
     </div>
@@ -51,6 +51,9 @@
 
 {% include partials/host_utilization_graph.html prefixID="wf-locality" %}
 
+{% include partials/network_bandwidth_usage_graph.html prefixID="wf-locality" %}
+
 {% include partials/workflow_execution_data.html prefixID="wf-locality" %}
+
 
 <script src="{{site.baseurl}}/public/sims/scripts/workflow_data_locality.js" type="text/javascript"></script>

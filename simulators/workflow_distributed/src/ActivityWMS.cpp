@@ -40,6 +40,12 @@ namespace wrench {
         // Create a job manager
         this->job_manager = this->createJobManager();
 
+
+        // Start bandwidth meters
+        const double BANDWIDTH_METER_PERIOD = 0.01;
+        const std::vector<std::string> linknames = {"wide_area_link"};
+        auto em = this->createBandwidthMeter(linknames, BANDWIDTH_METER_PERIOD);
+
         while (true) {
 
             // Get the ready tasks and SORT them by taskID

@@ -119,12 +119,15 @@ $(function () {
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData, 'wf-locality-graph-container');
-                generateHostUtilizationChart(executionData, 'wf-locality-host-utilization-chart');
+                generateHostUtilizationChart(executionData, 'wf-locality-host-utilization-chart', [], [], false);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
                 // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 populateWorkflowTaskDataTable(prepared_data, 'wf-locality-task-details-table');
+
+                generateBandwidthUsage(executionData, dataSizeUnits.MB, 'wf-locality-network-bandwidth-chart', false,
+                    ["wide_area_link"], null);
             }
         });
     });

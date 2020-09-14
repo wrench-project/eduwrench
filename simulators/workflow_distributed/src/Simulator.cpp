@@ -137,7 +137,7 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
     xml += "          </host>\n";
     xml += "      </zone>\n";
 
-    xml += "      <link id=\"slow_wide_area_link\" bandwidth=\"" + std::to_string(wide_area_bandwidth_in_kb_p_sec) + "kBps\" latency=\"10ms\"/>\n";
+    xml += "      <link id=\"wide_area_link\" bandwidth=\"" + std::to_string(wide_area_bandwidth_in_kb_p_sec) + "kBps\" latency=\"10ms\"/>\n";
     xml += "      <link id=\"fast_wide_area_link\" bandwidth=\"1000000GBps\" latency=\"1us\"/>\n";
     xml += "      <zoneRoute src=\"AS3\" dst=\"AS2\" gw_src=\"user.edu\" gw_dst=\"storage.edu\">\n";
     xml += "        <link_ctn id=\"fast_wide_area_link\"/>\n";
@@ -146,7 +146,7 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
     xml += "        <link_ctn id=\"fast_wide_area_link\"/>\n";
     xml += "      </zoneRoute>\n";
     xml += "      <zoneRoute src=\"AS2\" dst=\"AS1\" gw_src=\"storage.edu\" gw_dst=\"hpc_router\">\n";
-    xml += "        <link_ctn id=\"slow_wide_area_link\"/>\n";
+    xml += "        <link_ctn id=\"wide_area_link\"/>\n";
     xml += "      </zoneRoute>\n";
     xml += "   </zone>\n";
     xml += "</platform>\n";
@@ -273,5 +273,5 @@ int main(int argc, char **argv) {
     // launch the simulation
     simulation.launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json");
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
 }
