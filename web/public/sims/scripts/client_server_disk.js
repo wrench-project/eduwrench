@@ -63,6 +63,7 @@ $(function () {
     });
 
     $('#simulator-form-client-server-disk').on('submit', function (event) {
+
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();
         disableRunSimulationButton();

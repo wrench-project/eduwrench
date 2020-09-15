@@ -1,4 +1,80 @@
 $(function () {
+
+
+    $("#cw-host-specs").on("keyup", function () {
+        let tokens = $("#cw-host-specs").val().split(",");
+        let all_input_valid  = true;
+        for (let i = 0; i < tokens.length; i++) {
+            let sub_tokens = tokens[i].split(" ");
+            let num_ints = 0;
+            let valid = true;
+            for (let j = 0; j < sub_tokens.length; j++) {
+                if (sub_tokens[j] === "") {
+                    continue; // Ignore extra white spaces
+                }
+                if (!Number.isInteger(Number(sub_tokens[j]))) {
+                    valid = false;
+                }
+                if (Number(sub_tokens[j] <= 0)) {
+                    valid = false;
+                }
+                num_ints += 1;
+            }
+            if ((!valid) || (num_ints !== 2)) {
+                all_input_valid = false;
+                break;
+            }
+        }
+
+        let run_simulation_button = $("#run-button");
+        if (!all_input_valid) {
+            run_simulation_button.attr("disabled", "disabled");
+            $("#cw-host-specs").addClass("is-invalid");
+        }  else {
+            run_simulation_button.removeAttr("disabled");
+            $("#cw-host-specs").removeClass("is-invalid");
+
+        }
+    });
+
+    $("#cw-task-specs").on("keyup", function () {
+        let tokens = $("#cw-task-specs").val().split(",");
+        let all_input_valid  = true;
+        for (let i = 0; i < tokens.length; i++) {
+            let sub_tokens = tokens[i].split(" ");
+            let num_ints = 0;
+            let valid = true;
+            for (let j = 0; j < sub_tokens.length; j++) {
+                if (sub_tokens[j] === "") {
+                    continue; // Ignore extra white spaces
+                }
+                if (!Number.isInteger(Number(sub_tokens[j]))) {
+                    valid = false;
+                }
+                if (Number(sub_tokens[j] <= 0)) {
+                    valid = false;
+                }
+                num_ints += 1;
+            }
+            if ((!valid) || (num_ints !== 2)) {
+                all_input_valid = false;
+                break;
+            }
+        }
+
+        let run_simulation_button = $("#run-button");
+        if (!all_input_valid) {
+            run_simulation_button.attr("disabled", "disabled");
+            $("#cw-task-specs").addClass("is-invalid");
+        }  else {
+            run_simulation_button.removeAttr("disabled");
+            $("#cw-task-specs").removeClass("is-invalid");
+
+        }
+    });
+
+
+
     $('#simulator-form-coordinator-worker').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();

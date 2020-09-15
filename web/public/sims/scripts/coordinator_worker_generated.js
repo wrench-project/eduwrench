@@ -1,4 +1,6 @@
 $(function () {
+
+
     $('#simulator-form-coordinator-worker-generated').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();

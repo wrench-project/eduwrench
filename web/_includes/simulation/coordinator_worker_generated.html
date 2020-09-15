@@ -25,7 +25,7 @@
 
 <div class="form-group col-md-12">
     <label for="cwg-num-workers">Number of Workers</label>
-    <input type="text" class="form-control" id="cwg-num-workers" placeholder="5" value="5" required>
+    <input type="number" class="form-control" id="cwg-num-workers" placeholder="5" value="5" min="1" max="50" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,50].
     </div>
@@ -33,14 +33,14 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-min-worker-flops">Minimum Gflop Per Worker</label>
-    <input type="text" class="form-control" id="cwg-min-worker-flops" placeholder="1" value="1" required>
+    <input type="number" class="form-control" id="cwg-min-worker-flops" placeholder="1" value="1" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
     </div>
 </div>
 <div class="form-group col-md-6">
     <label for="cwg-max-worker-flops">Maximum Gflop Per Worker</label>
-    <input type="text" class="form-control" id="cwg-max-worker-flops" placeholder="100" value="100" required>
+    <input type="number" class="form-control" id="cwg-max-worker-flops" placeholder="100" value="100" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
     </div>
@@ -48,7 +48,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-min-worker-band">Minimum Bandwidth (MBps) Per Worker</label>
-    <input type="text" class="form-control" id="cwg-min-worker-band" placeholder="1" value="1" required>
+    <input type="number" class="form-control" id="cwg-min-worker-band" placeholder="1" value="1" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum bandwidth specified.
     </div>
@@ -56,7 +56,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-max-worker-band">Maximum Bandwidth (MBps) Per Worker</label>
-    <input type="text" class="form-control" id="cwg-max-worker-band" placeholder="100" value="100" required>
+    <input type="number" class="form-control" id="cwg-max-worker-band" placeholder="100" value="100" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum bandwidth specified.
     </div>
@@ -67,7 +67,7 @@
 </div>
 <div class="form-group col-md-12">
     <label for="cwg-num-tasks">Number of Tasks</label>
-    <input type="text" class="form-control" id="cwg-num-tasks" placeholder="5" value="5" required>
+    <input type="number" class="form-control" id="cwg-num-tasks" placeholder="5" value="5" min="1" max="100" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,100].
     </div>
@@ -75,7 +75,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-min-task-input">Minimum Input Per Task (MB)</label>
-    <input type="text" class="form-control" id="cwg-min-task-input" placeholder="1" value="1" required>
+    <input type="number" class="form-control" id="cwg-min-task-input" placeholder="1" value="1" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum input specified.
     </div>
@@ -83,7 +83,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-max-task-input">Maximum Input Per Task (MB)</label>
-    <input type="text" class="form-control" id="cwg-max-task-input" placeholder="100" value="100" required>
+    <input type="number" class="form-control" id="cwg-max-task-input" placeholder="100" value="100" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum input specified.
     </div>
@@ -91,7 +91,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-min-task-flop">Minimum Gflop Per Task</label>
-    <input type="text" class="form-control" id="cwg-min-task-flop" placeholder="1" value="1" required>
+    <input type="number" class="form-control" id="cwg-min-task-flop" placeholder="1" value="1" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and less than or equal to the maximum Gflop specified.
     </div>
@@ -99,7 +99,7 @@
 
 <div class="form-group col-md-6">
     <label for="cwg-max-task-flop">Maximum Gflop Per Task</label>
-    <input type="text" class="form-control" id="cwg-max-task-flop" placeholder="100" value="100" required>
+    <input type="number" class="form-control" id="cwg-max-task-flop" placeholder="100" value="100" min="1" max="1000000" required>
     <div class="invalid-feedback">
         Please provide a number in the range [1,1000000] and more than or equal to the minimum Gflop specified.
     </div>
