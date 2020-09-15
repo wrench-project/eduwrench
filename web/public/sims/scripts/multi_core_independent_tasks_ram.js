@@ -4,7 +4,7 @@ $(function () {
     $("#mcit-ram-num-cores").on("keyup", function () {
         let num_cores_input_el = $(this);
         let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".num-cores-label");
+        let num_cores_label_el = $(".mcit-ram-num-cores-label");
 
         if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
 
@@ -30,7 +30,7 @@ $(function () {
     $("#mcit-ram-num-tasks").on("keyup", function () {
         let num_tasks_input_el = $(this);
         let num_tasks_input_value = parseInt(num_tasks_input_el.val());
-        let num_tasks_label_el = $(".num-tasks-label");
+        let num_tasks_label_el = $(".mcit-ram-num-tasks-label");
 
         if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
 
@@ -56,7 +56,7 @@ $(function () {
     $("#mcit-ram-task-ram").on("keyup", function () {
         let task_ram_input_el = $(this);
         let task_ram_input_value = parseInt(task_ram_input_el.val());
-        let task_ram_label_el = $(".task-ram-label");
+        let task_ram_label_el = $(".mcit-ram-task-ram-label");
 
         if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
 
@@ -82,7 +82,7 @@ $(function () {
     $("#mcit-ram-task-gflop").on("keyup", function () {
         let task_gflop_input_el = $(this);
         let task_gflop_input_value = parseInt(task_gflop_input_el.val());
-        let task_gflop_label_el = $(".task-gflop-label");
+        let task_gflop_label_el = $(".mcit-ram-task-gflop-label");
 
         if (task_gflop_input_value >= 1 && task_gflop_input_value < 1000) {
 

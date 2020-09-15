@@ -24,7 +24,7 @@
                                 <span>Speed: 100 GFlop/sec</span>
                             </div>
                             <div>
-                                <span class="mcit-num-cores-label">Cores: 1</span>
+                                <span class="mcit-ram-num-cores-label">Cores: 1</span>
                             </div>
                             <div>
                                 <span>RAM: 32GB</span>
@@ -83,15 +83,15 @@
                          style="display: inline-block; font-size: 12px; font-family: Helvetica; color: rgb(0, 0, 0); line-height: 1.2; vertical-align: top; width: 58px; white-space: nowrap; overflow-wrap: normal; text-align: center;">
                         <div xmlns="http://www.w3.org/1999/xhtml"
                              style="display:inline-block;text-align:inherit;text-decoration:inherit;white-space:normal;">
-                            <span class="mcit-num-tasks-label" style="width: 50px">
+                            <span class="mcit-ram-num-tasks-label" style="width: 50px">
                                 1 Task(s)
                             </span>
                             <br/>
-                            <span class="mcit-task-ram-label" style="width: 50px">
+                            <span class="mcit-ram-task-ram-label" style="width: 50px">
                                 0 GB
                             </span>
                             <br/>
-                            <span class="mcit-task-gflop-label" style="width: 50px">
+                            <span class="mcit-ram-task-gflop-label" style="width: 50px">
                                 100 GFlop
                             </span>
                         </div>
