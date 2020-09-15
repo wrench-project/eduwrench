@@ -9,10 +9,11 @@ function disableRunSimulationButton() {
 }
 
 function prepareResponseData(responseData) {
+    let links = responseData.link_usage ? responseData.link_usage.links : [];
     return {
         tasks: responseData.workflow_execution.tasks,
         disk: responseData.disk_operations,
         contents: responseData.workflow_execution.tasks, // TODO: remove
-        network: responseData.link_usage.links
+        network: links
     };
 }
