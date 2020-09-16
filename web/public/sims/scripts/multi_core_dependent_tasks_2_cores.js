@@ -2,28 +2,7 @@ $(function () {
 
     // Update the label that says how many tasks will be run
     $("#mcdt2-analyze-work").on("keyup", function () {
-        let analyze_work_input_el = $(this);
-        let analyze_work_input_value = parseInt(analyze_work_input_el.val());
-        let analyze_work_label_el = $(".mcdt2-analyze-work-label");
-
-        if (analyze_work_input_value >= 10 && analyze_work_input_value <= 1000) {
-
-            analyze_work_label_el.text(analyze_work_input_value + " GFlop")
-                .css("background-color", "#d3ffe9");
-
-            analyze_work_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (analyze_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    analyze_work_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            analyze_work_label_el.css("background-color", "#ffb7b5");
-            analyze_work_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 10, 1000, [{className: ".mcdt2-analyze-work-label", text: "GFlop"}]);
     });
 
     $('#simulator-form-mcdt2').on('submit', function (event) {
