@@ -1,6 +1,52 @@
 $(function () {
+    $('#cwg-num-workers').on('keyup', function () {
+        validateFieldInRange($(this), 1, 50);
+    });
 
+    $('#cwg-min-worker-flops').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
 
+    $('#cwg-max-worker-flops').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-min-worker-band').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-max-worker-band').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-num-tasks').on('keyup', function () {
+        validateFieldInRange($(this), 1, 100);
+    });
+
+    $('#cwg-min-task-input').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-max-task-input').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-min-task-flop').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-max-task-flop').on('keyup', function () {
+        validateFieldInRange($(this), 1, 1000000);
+    });
+
+    $('#cwg-invocations').on('keyup', function () {
+        validateFieldInRange($(this), 2, 100);
+    });
+
+    $('#cwg-seed').on('keyup', function () {
+        validateFieldInRange($(this), 1, 99999);
+    });
+    
     $('#simulator-form-coordinator-worker-generated').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();

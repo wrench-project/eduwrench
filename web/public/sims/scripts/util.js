@@ -17,3 +17,17 @@ function prepareResponseData(responseData) {
         network: links
     };
 }
+
+function validateFieldInRange(input_el, minRange, maxRange) {
+    let input_value = input_el.val();
+    let run_simulation_button = $("#run-button");
+
+    if (input_value >= minRange && input_value <= maxRange) {
+        input_el.removeClass("is-invalid").addClass("is-valid");
+        run_simulation_button.attr("disabled", "enabled");
+        run_simulation_button.removeAttr("disabled");
+    } else {
+        input_el.removeClass("is-valid").addClass("is-invalid");
+        run_simulation_button.attr("disabled", "disabled");
+    }
+}
