@@ -2,80 +2,17 @@ $(function () {
 
     // Update the label that says how many cores each compute node has
     $("#mcit-ram-num-cores").on("keyup", function () {
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".mcit-ram-num-cores-label");
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
-
-            num_cores_label_el.text("Cores: " + num_cores_input_value)
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 32, [{className: ".mcit-ram-num-cores-label", pretext: "Cores:"}]);
     });
 
     // Update the label that says how many tasks will be run
     $("#mcit-ram-num-tasks").on("keyup", function () {
-        let num_tasks_input_el = $(this);
-        let num_tasks_input_value = parseInt(num_tasks_input_el.val());
-        let num_tasks_label_el = $(".mcit-ram-num-tasks-label");
-
-        if (num_tasks_input_value >= 1 && num_tasks_input_value < 1000) {
-
-            num_tasks_label_el.text(num_tasks_input_value + " Task(s)")
-                .css("background-color", "#d3ffe9");
-
-            num_tasks_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_tasks_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_tasks_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_tasks_label_el.css("background-color", "#ffb7b5");
-            num_tasks_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 999, [{className: ".mcit-ram-num-tasks-label", text: "Task(s)"}]);
     });
 
     // Update the label that says how much RAM is used by each task
     $("#mcit-ram-task-ram").on("keyup", function () {
-        let task_ram_input_el = $(this);
-        let task_ram_input_value = parseInt(task_ram_input_el.val());
-        let task_ram_label_el = $(".mcit-ram-task-ram-label");
-
-        if (task_ram_input_value >= 0 && task_ram_input_value <= 32) {
-
-            task_ram_label_el.text(task_ram_input_value + "GB")
-                .css("background-color", "#d3ffe9");
-
-            task_ram_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task_ram_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_ram_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task_ram_label_el.css("background-color", "#ffb7b5");
-            task_ram_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 0, 32, [{className: ".mcit-ram-task-ram-label", text: "GB"}]);
     });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.

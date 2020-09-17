@@ -1,11 +1,11 @@
-
 {% include partials/input_non_workflow.html imgSvg="simulation_imgs/multi_core_io.svg" %}
 
 {% include partials/simulation_parameters_form_start.html simID="mcit-io" %}
 
 <div class="form-group col-md-6">
     <label for="mcit-io-task1-input-size">Task #1 input size (MB)</label>
-    <input class="form-control" type="number" id="mcit-io-task1-input-size" placeholder="1" value="100" min="1" max="1000" step="1"
+    <input class="form-control" type="number" id="mcit-io-task1-input-size" placeholder="1" value="100" min="1"
+           max="1000" step="1"
            required>
     <div class="invalid-feedback">
         Please provide a number of MBs in the range of [100, 1000].
@@ -14,7 +14,8 @@
 
 <div class="form-group col-md-6">
     <label for="mcit-io-task1-work">Task #1 work (Gflop)</label>
-    <input class="form-control" type="number" id="mcit-io-task1-work" placeholder="1" value="500" min="1" max="1000" step="1"
+    <input class="form-control" type="number" id="mcit-io-task1-work" placeholder="1" value="500" min="1" max="1000"
+           step="1"
            required>
     <div class="invalid-feedback">
         Please provide a number of Gflop in the range of [100, 1000].
@@ -23,7 +24,8 @@
 
 <div class="form-group col-md-6">
     <label for="mcit-io-task1-output-size">Task #1 output size (MB)</label>
-    <input class="form-control" type="number" id="mcit-io-task1-output-size" placeholder="1" value="100" min="1" max="1000" step="1"
+    <input class="form-control" type="number" id="mcit-io-task1-output-size" placeholder="1" value="100" min="1"
+           max="1000" step="1"
            required>
     <div class="invalid-feedback">
         Please provide a number of MBs in the range of [100, 1000].

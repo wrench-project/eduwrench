@@ -2,86 +2,18 @@ $(function () {
 
     // Update the label that says how many cores each compute node has
     $("#mcit-io-task1-input-size").on("keyup", function () {
-        let task1_input_size_el = $(this);
-        let task1_input_size_value = parseInt(task1_input_size_el.val());
-        let task1_input_size_label_el = $(".mcit-io-task1-input-size-label");
-
-        if (task1_input_size_value >= 1 && task1_input_size_value <= 1000) {
-
-            task1_input_size_label_el.text(task1_input_size_value + " MB")
-                .css("background-color", "#d3ffe9");
-
-            task1_input_size_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task1_input_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_input_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task1_input_size_label_el.css("background-color", "#ffb7b5");
-            task1_input_size_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 100, 1000, [{className: ".mcit-io-task1-input-size-label", text: "MB"}]);
     });
 
     // Update the label that says how many cores each compute node has
     $("#mcit-io-task1-output-size").on("keyup", function () {
-        let task1_output_size_el = $(this);
-        let task1_output_size_value = parseInt(task1_output_size_el.val());
-        let task1_output_size_label_el = $(".mcit-io-task1-output-size-label");
-
-        if (task1_output_size_value >= 1 && task1_output_size_value <= 1000) {
-
-            task1_output_size_label_el.text(task1_output_size_value + " MB")
-                .css("background-color", "#d3ffe9");
-
-            task1_output_size_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task1_output_size_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_output_size_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task1_output_size_label_el.css("background-color", "#ffb7b5");
-            task1_output_size_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 100, 1000, [{className: ".mcit-io-task1-output-size-label", text: "MB"}]);
     });
-
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
     $("#mcit-io-task1-work").on("keyup", function () {
-        let task1_work_input_el = $(this);
-        let task1_work_input_value = parseInt(task1_work_input_el.val());
-        let task1_work_label_el = $(".mcit-io-task1-work-label");
-
-        console.log(task1_work_label_el);
-        console.log(task1_work_input_el);
-
-        if (task1_work_input_value >= 1 && task1_work_input_value < 1000) {
-
-            task1_work_label_el.text(task1_work_input_value + " GFlop")
-                .css("background-color", "#d3ffe9");
-
-            task1_work_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task1_work_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task1_work_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task1_work_label_el.css("background-color", "#ffb7b5");
-            task1_work_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 100, 1000, [{className: ".mcit-io-task1-work-label", text: "GFlop"}]);
     });
-
 
     $('#simulator-form-mcit-io').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)

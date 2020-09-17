@@ -2,70 +2,19 @@ $(function () {
 
     // Update the label that says how many tasks will be run
     $("#mcdp-oil-radius").on("keyup", function () {
-        let oil_radius_input_el = $(this);
-        let oil_radius_input_value = parseInt(oil_radius_input_el.val());
-        let task_1_label_el = $(".mcdp-oil-task-1-label");
-        let task_2_label_el = $(".mcdp-oil-task-2-label");
-
-        if (oil_radius_input_value >= 1 && oil_radius_input_value <= 10) {
-
-            task_1_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
-                .css("background-color", "#d3ffe9");
-            task_2_label_el.text((oil_radius_input_value * oil_radius_input_value * 100).toString() + " GFlop")
-                .css("background-color", "#d3ffe9");
-
-
-            oil_radius_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task_1_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_1_label_el.css("background-color", "");
-                }
-                if (task_2_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_2_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task_1_label_el.css("background-color", "#ffb7b5");
-            task_2_label_el.css("background-color", "#ffb7b5");
-            oil_radius_input_el.removeClass("is-valid").addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 10, [
+            {className: ".mcdp-oil-task-1-label", text: "GFlop"},
+            {className: ".mcdp-oil-task-2-label", text: "GFlop"}
+            ]);
     });
 
     $("#mcdp-num-cores").on("keyup", function () {
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".mcdp-num-cores-label");
-        let data_parallelism_label_el = $(".mcdp-data-parallelism-label");
-
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 100) {
-
-            num_cores_label_el.text("Cores: " + num_cores_input_value)
-                .css("background-color", "#d3ffe9");
-            data_parallelism_label_el.text("Data-parallelism with " + num_cores_input_value + " tasks")
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-                if (data_parallelism_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    data_parallelism_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 100, [
+            {className: ".mcdp-num-cores-label", pretext: "Cores:"},
+            {className: ".mcdp-data-parallelism-label", pretext: "Data-parallelism with", text: "tasks"}
+        ]);
     });
-
-
+    
     $('#simulator-form-mcdp').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)
         event.preventDefault();

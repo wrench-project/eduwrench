@@ -2,28 +2,7 @@ $(function () {
 
     // Update the label that says how many tasks will be run
     $("#num-tasks").on("keyup", function () {
-        let num_tasks_input_el = $(this);
-        let num_tasks_input_value = parseInt(num_tasks_input_el.val());
-        let num_tasks_label_el = $(".num-tasks-label");
-
-        if (num_tasks_input_value >= 1 && num_tasks_input_value <= 100) {
-
-            num_tasks_label_el.text(num_tasks_input_value + " Task(s)")
-                .css("background-color", "#d3ffe9");
-
-            num_tasks_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_tasks_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_tasks_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_tasks_label_el.css("background-color", "#ffb7b5");
-            num_tasks_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 100, [{className: ".num-tasks-label", text: "Task(s)"}]);
     });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
@@ -41,7 +20,7 @@ $(function () {
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (task_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                if (task_gflop_label_el.css("background-color") === "rgb(211, 255, 233)") {
                     task_gflop_label_el.css("background-color", "");
                 }
             }, 500);
@@ -53,7 +32,7 @@ $(function () {
                 .addClass("is-valid");
 
             setTimeout(function () {
-                if (task_gflop_label_el.css("background-color") == "rgb(211, 255, 233)") {
+                if (task_gflop_label_el.css("background-color") === "rgb(211, 255, 233)") {
                     task_gflop_label_el.css("background-color", "");
                 }
             }, 500);
@@ -66,52 +45,12 @@ $(function () {
 
     // Update the label that says how much input data must be read from disk for each task.
     $("#task-input").on("keyup", function () {
-        let task_input_input_el = $(this);
-        let task_input_input_value = parseInt(task_input_input_el.val());
-        let task_input_label_el = $(".task-input-label");
-
-        if (task_input_input_value >= 1 && task_input_input_value < 1000) {
-            task_input_label_el.text("In: " + task_input_input_value + "MB")
-                .css("background-color", "#d3ffe9");
-
-            task_input_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task_input_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_input_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task_input_label_el.css("background-color", "#ffb7b5");
-            task_input_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 999, [{className: ".task-input-label", pretext: "In:", text: "MB"}]);
     });
 
     // Update the label that says how much output data must be written to disk for each task.
     $("#task-output").on("keyup", function () {
-        let task_output_input_el = $(this);
-        let task_output_input_value = parseInt(task_output_input_el.val());
-        let task_output_label_el = $(".task-output-label");
-
-        if (task_output_input_value >= 1 && task_output_input_value < 1000) {
-            task_output_label_el.text("Out: " + task_output_input_value + "MB")
-                .css("background-color", "#d3ffe9");
-
-            task_output_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (task_output_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    task_output_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            task_output_label_el.css("background-color", "#ffb7b5");
-            task_output_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 999, [{className: ".task-output-label", pretext: "Out:", text: "MB"}]);
     });
 
     $('#simulator-form-io-operations').on('submit', function (event) {
