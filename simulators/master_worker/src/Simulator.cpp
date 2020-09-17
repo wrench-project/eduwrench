@@ -692,6 +692,11 @@ int main(int argc, char** argv) {
     //Mersenne Twister: Good quality random number generator
     std::mt19937 rng;
 
+    if (argc <= 1) {
+        std::cerr << "Try " << argv[0] << " --help\n";
+        return 1;
+    }
+
     if (std::string(argv[1]).compare("individual") == 0) {
         try {
             rng.seed(std::random_device{}());
@@ -751,6 +756,7 @@ int main(int argc, char** argv) {
         }
         result = result/num_invocation;
 
+        std::cout << "Statistics calculated for " << num_invocation << " experiments" << std::endl;
         std::cout << "----------------------------------------" << std::endl;
         std::cout.precision(4);
         printf("Minimum Execution Time: %.2lf sec\n", *min_element(results.begin(), results.end()));
