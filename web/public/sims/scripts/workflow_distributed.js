@@ -1,54 +1,11 @@
 $(function () {
 
     $("#wf-dist-num-hosts").on("keyup", function () {
-        let num_hosts_input_el = $(this);
-        let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".wf-dist-num-hosts-label");
-
-        if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
-
-            num_hosts_label_el.text("N=" + (num_hosts_input_value).toString() + " Hosts")
-                .css("background-color", "#d3ffe9");
-
-            num_hosts_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_hosts_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_hosts_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_hosts_label_el.css("background-color", "#ffb7b5");
-            num_hosts_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 20, [{className: ".wf-dist-num-hosts-label", pretext: "N=", text: "Hosts"}]);
     });
 
     $("#wf-dist-num-cores").on("keyup", function () {
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".wf-dist-num-cores-label");
-
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
-
-            num_cores_label_el.text("Cores: " + num_cores_input_value.toString())
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 32, [{className: ".wf-dist-num-cores-label", pretext: "Cores:"}]);
     });
 
     $('#simulator-form-wf-dist').on('submit', function (event) {

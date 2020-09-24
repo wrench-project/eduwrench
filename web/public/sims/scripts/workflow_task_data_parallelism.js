@@ -1,82 +1,15 @@
 $(function () {
 
     $("#wf-parallel-num-cores-blue").on("keyup", function () {
-        let num_cores_blue_input_el = $(this);
-        let num_cores_blue_input_value = parseInt(num_cores_blue_input_el.val());
-        let num_cores_blue_label_el = $(".wf-parallel-num-cores-blue-label");
-
-        if (num_cores_blue_input_value >= 1 && num_cores_blue_input_value <= 3) {
-
-
-            num_cores_blue_label_el.text((num_cores_blue_input_value).toString() +
-                (num_cores_blue_input_value == 1 ? " core" : " cores"))
-                .css("background-color", "#d3ffe9");
-
-            num_cores_blue_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_blue_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_blue_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_blue_label_el.css("background-color", "#ffb7b5");
-            num_cores_blue_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 3, [{className: ".wf-parallel-num-cores-blue-label", text: "core(s)"}]);
     });
 
     $("#wf-parallel-num-cores-yellow").on("keyup", function () {
-        let num_cores_yellow_input_el = $(this);
-        let num_cores_yellow_input_value = parseInt(num_cores_yellow_input_el.val());
-        let num_cores_yellow_label_el = $(".wf-parallel-num-cores-yellow-label");
-
-        if (num_cores_yellow_input_value >= 1 && num_cores_yellow_input_value <= 3) {
-
-            num_cores_yellow_label_el.text((num_cores_yellow_input_value).toString() +
-                (num_cores_yellow_input_value == 1 ? " core" : " cores"))
-                .css("background-color", "#d3ffe9");
-
-            num_cores_yellow_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_yellow_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_yellow_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_yellow_label_el.css("background-color", "#ffb7b5");
-            num_cores_yellow_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 3, [{className: ".wf-parallel-num-cores-yellow-label", text: "core(s)"}]);
     });
 
     $("#wf-parallel-num-cores-purple").on("keyup", function () {
-        let num_cores_purple_input_el = $(this);
-        let num_cores_purple_input_value = parseInt(num_cores_purple_input_el.val());
-        let num_cores_purple_label_el = $(".wf-parallel-num-cores-purple-label");
-
-        if (num_cores_purple_input_value >= 1 && num_cores_purple_input_value <= 3) {
-
-            num_cores_purple_label_el.text((num_cores_purple_input_value).toString() +
-                (num_cores_purple_input_value == 1 ? " core" : " cores"))
-                .css("background-color", "#d3ffe9");
-
-            num_cores_purple_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_purple_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_purple_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_purple_label_el.css("background-color", "#ffb7b5");
-            num_cores_purple_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 3, [{className: ".wf-parallel-num-cores-purple-label", text: "core(s)"}]);
     });
 
     $('#simulator-form-wf-parallel').on('submit', function (event) {

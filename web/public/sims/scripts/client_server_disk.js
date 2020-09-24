@@ -1,26 +1,6 @@
 $(function () {
     $("#csd-server-1-link-latency").on("keyup", function () {
-        let server_1_link_input_el = $(this);
-        let server_1_link_input_value = parseInt(server_1_link_input_el.val());
-        let server_1_link_label_el = $(".csd-server-1-link-latency-label");
-
-        if (server_1_link_input_value >= 1 && server_1_link_input_value <= 10000) {
-            server_1_link_label_el.text("Latency: " + server_1_link_input_value + " us")
-                .css("background-color", "#d3ffe9");
-
-            server_1_link_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (server_1_link_label_el.css("background-color") === "rgb(211, 255, 233)") {
-                    server_1_link_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            server_1_link_label_el.css("background-color", "#ffb7b5");
-            server_1_link_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 10000, [{className: ".csd-server-1-link-latency-label", pretext: "Latency:", text: "us"}]);
     });
 
     $("#csd-buffer-size").on("keyup", function () {
