@@ -145,7 +145,7 @@ T_A(6) = \frac{100 \times 2^2 / 6}{100} + \frac{100}{100} = 1.66 \text{sec}\\
 $
 
 You can confirm the above numbers with the simulation. The 
-parallel efficiency is  $E_A = (10/2.5)/6 $ = 52.08%.
+parallel efficiency is  $E_A = (5.0/1.66)/6 $ = 50.20%.
 
 Similarly for execution B on 1 and 8 cores:
 $
@@ -220,7 +220,7 @@ T(p) & = \alpha T(1) / p + (1 - \alpha) T(1)\\
 \end{align}
 $$
 
-The above just says that the parallel part goes $n$ times faster, while the 
+The above just says that the parallel part goes $p$ times faster, while the 
 sequential part is unchanged. 
 
 The parallel speedup on $p$ cores, $S(p)$, is then:
