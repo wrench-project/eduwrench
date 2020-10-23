@@ -1,84 +1,24 @@
 $(function () {
 
     $("#wf-locality-num-hosts").on("keyup", function () {
-        let num_hosts_input_el = $(this);
-        let num_hosts_input_value = parseInt(num_hosts_input_el.val());
-        let num_hosts_label_el = $(".wf-locality-num-hosts-label");
-
-        if (num_hosts_input_value >= 1 && num_hosts_input_value <= 20) {
-
-
-            num_hosts_label_el.text("N=" + (num_hosts_input_value).toString() +
-                (num_hosts_input_value == 1 ? " Host" : " Hosts"))
-                .css("background-color", "#d3ffe9");
-
-            num_hosts_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_hosts_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_hosts_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_hosts_label_el.css("background-color", "#ffb7b5");
-            num_hosts_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 20, [{
+            className: ".wf-locality-num-hosts-label",
+            pretext: "N =",
+            text: "Host(s)"
+        }]);
     });
 
     $("#wf-locality-num-cores").on("keyup", function () {
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".wf-locality-num-cores-label");
-
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 32) {
-
-            num_cores_label_el.text("Cores: " + num_cores_input_value.toString())
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 20, [{className: ".wf-locality-num-cores-label", pretext: "Cores:"}]);
     });
 
     $("#wf-locality-link-bandwidth").on("keyup", function () {
-        let link_bandwidth_input_el = $(this);
-        let link_bandwidth_input_value = parseInt(link_bandwidth_input_el.val());
-        let link_bandwidth_label_el = $(".wf-locality-link-bandwidth-label");
-
-        if (link_bandwidth_input_value >= 1 && link_bandwidth_input_value <= 500) {
-
-            link_bandwidth_label_el.text("Bandwidth: " + (link_bandwidth_input_value).toString() + " MB/sec")
-                .css("background-color", "#d3ffe9");
-
-            link_bandwidth_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (link_bandwidth_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    link_bandwidth_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            link_bandwidth_label_el.css("background-color", "#ffb7b5");
-            link_bandwidth_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 500, [{
+            className: ".wf-locality-link-bandwidth-label",
+            pretext: "Bandwidth:",
+            text: "MB/sec"
+        }]);
     });
-
-
 
     $('#simulator-form-wf-locality').on('submit', function (event) {
         // we don't want the page reloading, so things look dynamic (this will be nice when we use d3's transitions)

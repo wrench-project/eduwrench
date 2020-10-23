@@ -57,7 +57,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b>Cores: 1</b>
+                                    <b><span class="wf-dist-num-cores-label">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>
@@ -93,7 +93,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b>Cores: 1</b>
+                                    <b><span class="wf-dist-num-cores-label">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>
@@ -263,7 +263,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 87px; height: 1px; padding-top: 317px; margin-left: 594px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: left; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <b>N=1 Host(s)</b>
+                                <b><span class="wf-dist-num-hosts-label">N=1 Host(s)</span></b>
                             </div>
                         </div>
                     </div>

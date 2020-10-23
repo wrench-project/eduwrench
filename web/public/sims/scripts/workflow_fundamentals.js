@@ -1,54 +1,11 @@
 $(function () {
 
     $("#wf-disk-bandwidth").on("keyup", function () {
-        let disk_bandwidth_input_el = $(this);
-        let disk_bandwidth_input_value = parseInt(disk_bandwidth_input_el.val());
-        let disk_bandwidth_label_el = $(".wf-disk-bandwidth-label");
-
-        if (disk_bandwidth_input_value >= 10 && disk_bandwidth_input_value <= 500) {
-
-            disk_bandwidth_label_el.text((disk_bandwidth_input_value).toString() + " MB/sec")
-                .css("background-color", "#d3ffe9");
-
-            disk_bandwidth_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (disk_bandwidth_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    disk_bandwidth_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            disk_bandwidth_label_el.css("background-color", "#ffb7b5");
-            disk_bandwidth_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 10, 500, [{className: ".wf-disk-bandwidth-label", text: "MB/sec"}]);
     });
 
     $("#wf-num-cores").on("keyup", function () {
-        let num_cores_input_el = $(this);
-        let num_cores_input_value = parseInt(num_cores_input_el.val());
-        let num_cores_label_el = $(".wf-num-cores-label");
-
-
-        if (num_cores_input_value >= 1 && num_cores_input_value <= 3) {
-
-            num_cores_label_el.text(num_cores_input_value.toString())
-                .css("background-color", "#d3ffe9");
-
-            num_cores_input_el.removeClass("is-invalid")
-                .addClass("is-valid");
-
-            setTimeout(function () {
-                if (num_cores_label_el.css("background-color") == "rgb(211, 255, 233)") {
-                    num_cores_label_el.css("background-color", "");
-                }
-            }, 500);
-        } else {
-            num_cores_label_el.css("background-color", "#ffb7b5");
-            num_cores_input_el.removeClass("is-valid")
-                .addClass("is-invalid");
-        }
+        validateFieldInRange($(this), 1, 3, [{className: ".wf-num-cores-label"}]);
     });
 
     $('#simulator-form-wf').on('submit', function (event) {
