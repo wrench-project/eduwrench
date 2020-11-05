@@ -1,6 +1,14 @@
 <div class="ui fluid raised card" id="network-bandwidth-chart-card">
     <div class="content" id="network-bandwidth-chart-block">
-        <div class="header">Network Bandwidth Usage</div>
+        <div class="header">
+            Network Bandwidth Usage
+            {% if include.tooltip %}
+            <button class="ui circular grey icon button" data-tooltip="{{ include.tooltip }}" data-inverted=""
+                    style="font-size: 0.5em; top: -0.25em">
+                <i class="question icon"></i>
+            </button>
+            {% endif %}
+        </div>
     </div>
     <div class="content">
         <canvas id="{{ include.prefixID }}-network-bandwidth-chart"></canvas>
