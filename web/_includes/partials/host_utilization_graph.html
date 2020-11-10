@@ -1,6 +1,14 @@
 <div class="ui fluid raised card" id="host-utilization-chart-card">
     <div class="content" id="host-utilization-chart-block">
-        <div class="header">Host Utilization</div>
+        <div class="header">
+            Host Utilization
+            {% if include.tooltip %}
+            <button class="ui circular grey icon button" data-tooltip="{{ include.tooltip }}" data-inverted=""
+                    style="font-size: 0.5em; top: -0.25em">
+                <i class="question icon"></i>
+            </button>
+            {% endif %}
+        </div>
     </div>
     <div class="content">
         <canvas id="{{ include.prefixID }}-host-utilization-chart"></canvas>

@@ -1,6 +1,14 @@
 <div class="ui fluid raised card">
     <div class="content" id="task-details-card">
-        <div class="header">Task Data</div>
+        <div class="header">
+            Task Data
+            {% if include.tooltip %}
+            <button class="ui circular grey icon button" data-tooltip="{{ include.tooltip }}" data-inverted=""
+                    style="font-size: 0.5em; top: -0.25em">
+                <i class="question icon"></i>
+            </button>
+            {% endif %}
+        </div>
     </div>
     <div class="content">
         <table class="table table-hover text-muted" id="{{ include.prefixID }}-task-details-table"></table>
