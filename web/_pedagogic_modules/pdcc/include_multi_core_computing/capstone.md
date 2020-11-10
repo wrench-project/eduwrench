@@ -55,7 +55,7 @@ faster, you have the following options at your disposal:
 
   - **Option #4**: Pay a software developer to
     re-implement Task 5 so that it exposes some data parallelism. This is
-    done by replacing the current Task 5 by a 1000  Gflop task followed 
+    done by replacing the current Task 5 by a 1000  Gflop task followed by
     $n$ independent tasks, each with work 9000/$n$ Gflop.
 
 Each option above costs money, and you can afford only one of them. But the money spent is
