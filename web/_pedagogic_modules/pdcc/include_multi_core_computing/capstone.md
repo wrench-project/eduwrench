@@ -56,7 +56,7 @@ faster, you have the following options at your disposal:
   - **Option #4**: Pay a software developer to
     re-implement Task 5 so that it exposes some data parallelism. This is
     done by replacing the current Task 5 by a 1000  Gflop task (that requires 15 GB of RAM) followed by
-    $n$ independent tasks, each with work 9000/$n$ Gflop and requiring (15/$n$ GB of RAM).
+    $n$ independent tasks, each with work 9000/$n$ Gflop (and requiring 15/$n$ GB of RAM).
 
 Each option above costs money, and you can afford only one of them. But the money spent is
 worth it *if it makes the program run in under 60s.*
