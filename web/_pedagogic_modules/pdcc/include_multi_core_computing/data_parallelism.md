@@ -149,11 +149,11 @@ parallel efficiency is  $E_A = (5.0/1.66)/6 $ = 50.20%.
 
 Similarly for execution B on 1 and 8 cores:
 $
-T_A(1) = \frac{100 \times 3^2}{100} + \frac{100}{100} = 10 \text{sec}\\
+T_B(1) = \frac{100 \times 3^2}{100} + \frac{100}{100} = 10 \text{sec}\\
 $
 
 $
-T_A(6) = \frac{100 \times 3^2 / 8}{100} + \frac{100}{100} = 2.125 \text{sec}\\
+T_B(8) = \frac{100 \times 3^2 / 8}{100} + \frac{100}{100} = 2.125 \text{sec}\\
 $
 
 You can confirm the above numbers with the simulation. The 
