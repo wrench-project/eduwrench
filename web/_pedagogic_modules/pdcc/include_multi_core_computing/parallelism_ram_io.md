@@ -257,7 +257,7 @@ Here is the time-line of events:
   - Time 9.4: Task #1 finishes writing output
    
 Execution time: 9.4 seconds. Both cores are utilized from time 2.2 until time 7.2, that is for 5 seconds, which is
-$5 / 7.2 = 69.4\%$ of the execution time.
+$5 / 9.4 = 53.2\%$ of the execution time.
    
   </div>
 </div>
