@@ -42,6 +42,8 @@ figure out you can afford **one** of the following upgrades:
 
 #### Questions
 
-[**A.3.4.q5.1]** Which upgrade should you pick?
+[**A.3.4.q5.1]** Which upgrade should you pick?  Show your work, by deriving
+the completion time of the last task from a Gantt chart of the workflow
+execution for each option above. 
 
 ---

@@ -288,15 +288,18 @@ Given the workflow below, answer the following questions:
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/workflows/workflow_fundamental_question.svg">Dag</object>
 <p></p>
 
-**[A.2.3.q1.1]** How many MB of data are read during an execution of this workflow? How many are written?
+**[A.2.3.q1.1]** How many MB of data are read during an execution of this workflow? How many are written? Show your work.
 <p></p>
 
 **[A.2.3.q1.2]** Say we run this workflow on a 1-core computer where the core speed is 100 Gflop/sec and the 
-disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time?
+disk has read/write bandwidth at 100 MB/sec. What is the workflow execution time? Show your work.
 <p></p>
 
-**[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow execution strategy is, whenever there is 
-a choice, to start the task with the **highest work**.  What is the execution time? What is the parallel efficiency? 
+**[A.2.3.q1.3]** Say now this computer has 2 cores, and the workflow
+execution strategy is, whenever there is a choice, to start the task with
+the **highest work**.  What is the execution time? What is the parallel
+efficiency? Show your work. It is likely a good idea to draw the Gantt
+chart of the execution to estimate the execution time as a sum of terms.
 <p></p>
 
 **[A.2.3.q1.4]** Would the result be different if we instead picked
@@ -304,7 +307,7 @@ the tasks with the **lowest work** first?
 <p></p>
 
 **[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 
-60% even if the disk can be upgraded at will.
+60% even if the disk can be upgraded at will. 
 <p></p>
 
 ---

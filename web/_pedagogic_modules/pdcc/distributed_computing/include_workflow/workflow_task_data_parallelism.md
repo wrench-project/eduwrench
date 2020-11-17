@@ -197,10 +197,11 @@ Considering the workflow below, answer the following questions.
 **[A.3.4.q4.1]** If we are given two hosts with 100 Gflop/sec hosts, where
 host1 has 20 cores and host2 has 40 cores. Should we run the blue task on
 host1 or on host2 (if our objective is to run the workflow as quickly as
-possible)?
+possible)?  Show your work, execution each task execution time on each host.
 
 **[A.3.4.q4.2]** If, instead, we run the workflow on a single 4-core computer,
-what is the best approach?
+what is the best approach? Show your work, estimating the execution times of each task
+on 1, 2, 3, and 4 cores, and considering all ways to assign cores to each task. 
 
 **[A.3.4.q4.3]** Say now we are running our workflow on a single 40-core
 host. What is the best way to allocate cores to the blue and purple tasks? If
@@ -209,6 +210,6 @@ finding roots of degree-2 polynomials).  More easily, you can simply
 write the execution time as a function of the number of cores allocated
 to the blue task, and plot this function to find where it attains 
 its minimum visually.  There are many websites on which you can do this
-(search for "graphing calculator"). 
+(search for "graphing calculator"). Show your work.
 
 ---

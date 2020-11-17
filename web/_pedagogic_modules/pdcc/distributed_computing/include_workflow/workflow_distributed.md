@@ -263,11 +263,13 @@ Consider  the following workflow (all green tasks have identical specs, and so d
   - **Platform C:** One 3-core hosts, with 16 GB of RAM, and 120 Gflop/sec core compute speed
   
   Assuming the I/O and network times are zero, which of the three platforms above is the better choice?
+Show your work, estimating the execution time on each platform.
 
 **[A.3.4.q2.2]**  Because tasks in all levels are identical, at any given time either all 
                   running tasks compute, or all running tasks perform I/O. Assuming the 
                   total I/O time, regardless of the number of hosts/cores, is 20
                   seconds, what is the parallel efficiency for the three platforms in the
-                  previous question?
+                  previous question? Show your work, again estimating the execution time on
+                  each platform.
 
 ---

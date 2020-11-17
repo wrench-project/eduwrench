@@ -204,14 +204,16 @@ Consider the following workflow:
 **[A.3.4.q3.1]** Say we execute this workflow at a compute site that hosts
 a 2-core hosts, with cores computing at 
 100 Gflop/sec. All data is read/written from/to a remote
-storage site. How many MB are read/written in total?
+storage site. How many MB are read/written in total? Show your 
+work, giving an expression as a sum of terms. 
 
 **[A.3.4.q3.2]** Say that the read/write data rate for the remote storage
-site is 200 MB/sec (which, as we know from
-the simulation above, could be well below the actual bandwidth). What is the
-workflow execution time? *Hint: be careful about how the two blue tasks split the
-bandwidth.*
+site is 200 MB/sec (which, as we know from the simulation above, could be
+well below the actual bandwidth). What is the workflow execution time? Show
+your work, estimating I/O and compute times for all tasks. *Hint: be
+careful about how the two blue tasks split the bandwidth.*
 
 **[A.3.4.q3.3]** We now have local storage at the compute site, with data
-access rate 500 MB/sec. What is the workflow execution time now? What is the
-parallel efficiency? 
+access rate 500 MB/sec. What is the workflow execution time now? What is
+the parallel efficiency? Show your work, using the same approach as in the
+previous question.
