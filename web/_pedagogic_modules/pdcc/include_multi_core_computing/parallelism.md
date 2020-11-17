@@ -200,12 +200,12 @@ $
 
 **[A.2.q1.1]** You are told that a parallel program runs in 1 hour on a
 3-core machine, and that the parallel efficiency is 90%. How long, in
-minutes, would the program take if executed using a single core?
+minutes, would the program take if executed using a single core? Show your work.
 
 **[A.2.q1.2]**  You are told that a parallel program runs in 10 hours when using the
 4 cores of some computer with parallel efficiency 80%. Using 8 cores, the
 program runs in 6 hours. What is the parallel efficiency of this 8-core
-execution?
+execution? Show your work and reasoning.
 
 
 ---

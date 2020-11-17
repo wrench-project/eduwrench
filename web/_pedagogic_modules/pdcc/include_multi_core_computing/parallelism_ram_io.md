@@ -345,17 +345,18 @@ The "Task #2 first" option has the higest parallel efficiency, at 63.3%.
 
 **[A.2.q3.1]** We are using a computer with 32 GB of RAM. What is the parallel
 efficiency when running 2 tasks on 2 cores if they each require 16 GB of RAM? What if
-each task requires 20 GB of RAM?
+each task requires 20 GB of RAM?  Show your work. You can answer this question
+purely via reasoning (i.e., no math).
 
 **[A.2.q3.2]** You are given a 2-core computer with 15 GB of RAM. On this computer 
 you need to execute 6 tasks. The tasks have different RAM requirements (in GB): 
-4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency? 
+4, 5, 8, 10, 11, 14. Can you achieve 100% parallel efficiency?  Show your reasoning. Consider  the tasks that can be paired (i.e., run simultaneously) and determine whether you can find 3 such pairs.
 
 **[A.2.q3.3]** A program consists of 3 tasks that each takes in 2 GB of input data and
 have 30,000 Gflop work. This program is executed on a 2-core computer with
 1 Tflop/sec cores and equipped with a disk with 250 MB/sec read bandwidth. What is
 the parallel  efficiency if the program can never overlap I/O and computation (but
-multiple I/O operations can happen at the same time)? 
+multiple I/O operations can happen at the same time)? Show your work and reasoning.
 
 **[A.2.q3.4]** Same question as above but now the program always overlaps I/O and
-computation.
+computation. Show your work and reasining.

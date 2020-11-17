@@ -445,14 +445,19 @@ On these workers, we need to run the following four tasks:
 
 
 **[A.3.3.q1.1]** If the tasks are assigned to workers in the order that
-both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task #3 
-to Worker #3, and Task #4 to the first worker that becomes idle). What
-will the total execution time be?
+both are numbered (Task #1 goes to Worker #1, Task #2 to Worker #2, Task #3
+to Worker #3, and Task #4 to the first worker that becomes idle). What will
+the total execution time be? Show your work. In particular, give the
+completion times of the first 3 tasks, so as to determine the completion
+time of the fourth task.
 
-**[A.3.3.q1.2]** Could you find one of the above scheduling strategies (i.e., those
-implemented in the simulation) that improves on the execution
-time in the previous question? Try to develop an intuition before
-verifying your answer using the simulation app.
+**[A.3.3.q1.2]** Could you find one of the above scheduling strategies
+(i.e., those implemented in the simulation) that improves on the execution
+time in the previous question? Try to develop an intuition before verifying
+your answer using the simulation app. Show your work and reasoning. Hint: 
+think of why the schedule in the previous question is inefficient, and of
+what we could do to make it better  (it all has to do with the 4th task). 
+
 
  <p></p>
 
@@ -478,14 +483,15 @@ Worker Scheduling: Best-connected worker
 ```
 
 
-**[A.3.3.q1.3]** Estimate the total execution time. Then verify your answer in simulation.
+**[A.3.3.q1.3]** Estimate the total execution time, showing your work. Then verify your answer
+in simulation. 
 
 **[A.3.3.q1.4]** You have the option to upgrade the CPUs to double the
 compute speed on all of the workers, or to upgrade the connection on one of
 the workers, doubling its bandwidth.  Which of these options is best
 (assuming the coordinator still uses the "highest data / best-connected"
-scheduling strategy).  Come up with an answer just by reasoning first. Then
-check your answer in simulation.
+scheduling strategy).  Come up with an answer just by reasoning first, showing your work. Then
+check your answer in simulation. 
 
 <!--
 **[A.3.3.q1.5]** Pick two scheduling strategies (or more exactly to pairs or task/worker selection strategies), ignoring

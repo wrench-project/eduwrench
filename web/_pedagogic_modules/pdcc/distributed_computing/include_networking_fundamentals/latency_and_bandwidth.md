@@ -142,7 +142,8 @@ GB movie file. The file is available at two mirror sites, both of them one
 network link away from your computer.  Mirror *A* is connected to your
 computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
 *B* is connected to your computer by a link with latency 300 ms and
-bandwidth 700 MB/sec.  Which mirror should you use and why?
+bandwidth 700 MB/sec.  Which mirror should you use and why? You can answer
+this question purely via reasoning (i.e., you don't need to compute anything).
 
 <p> </p>
 

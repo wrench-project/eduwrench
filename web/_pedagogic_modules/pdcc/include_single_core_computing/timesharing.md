@@ -71,7 +71,6 @@ Gflop. At what times do the programs complete?
    <br/>
 
    $$ T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2\; \text{Tflop/sec}} = 0.21 \; \text{sec} $$
-
   </div>
 </div>
 
@@ -97,15 +96,15 @@ the core's speed in Gflop/sec?
 
 **[A.1.q2.1]** Two programs are started at the same time on a core. These 
 programs both have work 1 Tflop, and both complete after 220 seconds. What 
-was the core speed in Gflop/sec?
+was the core speed in Gflop/sec? Show your work.
 
 **[A.1.q2.2]** Three programs, A, B, and C, were started at the same time on 
 a core with speed 600 GFLop/sec. After 10 seconds, A and C complete. Then, 
 2 seconds later, program B completes. What is the work (in Gflop) of each of 
-the three programs?
+the three programs? Show your work.
 
 **[A.1.q2.3]** A program, A, with work 4 Tflop is started on a core of speed 
 500 Gflop/sec. 5 seconds later another program B, is started. Both programs 
-finish at the same time. What is the work of B in Tflop?
+finish at the same time. What is the work of B in Tflop? Show your work.
 
 ---

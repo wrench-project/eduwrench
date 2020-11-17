@@ -519,21 +519,25 @@ Answer the following questions:
 **[A.2.q5.1]** If the sequential execution of a program spends 30% of its
 time in a phase that could be parallelized perfectly, what would be the
 parallel efficiency of an execution of this program on  6 cores  (assuming
-that phase has been parallelized)?
+that phase has been parallelized)? Show your work. 
 
-**[A.2.q5.2]** A program consists of a sequential phase and a
-perfectly parallelizable phase. The program runs on 1 core in 20 minutes and on 3 cores
-in 10 minutes.  How long does the sequential phase run for?
+**[A.2.q5.2]** A program consists of a sequential phase and a perfectly
+parallelizable phase. The program runs on 1 core in 20 minutes and on 3
+cores in 10 minutes.  How long does the sequential phase run for? Show your
+work.
 
 **[A.2.q5.3**] If a parallel program achieves parallel efficiency of 99%
 when running on 64 cores, what fraction of its sequential execution time
-was non-parallelizable?
+was non-parallelizable? Show your work. Write and solve an equation where
+the fraction is the unknown.
 
-**[A.2.q5.4]** Consider a program that consists of a single task  with  work  10,000 Gflop. 
-Developer $A$ proposes to replace this task with 5 tasks each with work  2,000 Gflop. 
-Developer  $B$ proposes to replace this task with  4 tasks  each  with  work 3,000 Gflop,
-followed by a sequential task with work  500  Gflop. Which developer's idea  should you use
-when running this program on a 4-core machine?
+**[A.2.q5.4]** Consider a program that consists of a single task  with
+work  10,000 Gflop.  Developer $A$ proposes to replace this task with 5
+tasks each with work  2,000 Gflop.  Developer  $B$ proposes to replace this
+task with  4 tasks  each  with  work 3,000 Gflop, followed by a sequential
+task with work  500  Gflop. Which developer's idea  should you use when
+running this program on a 4-core machine? Show your work. For each option
+show the execution time as a function of the core speed, and compare.
 
 **[A.2.q5.5]** A program currently consists of two tasks, $A$  and $B$,
 that are independent (i.e., they  can be performed in parallel).  Task $A$
@@ -541,4 +545,5 @@ has work 1000 Gflop, while task $B$ has work 2000 Gflop.  You  can either
 replace task $A$ with two independent tasks each with work 600 Gflop, or
 replace task $B$ with  two independent tasks each with  work 1900 Gflop.
 If running on a 3-core computer,  which replacement would be best in  terms
-of program execution  time?
+of program execution  time? Sow your wqork. For each option determine the
+execution time, and compare.

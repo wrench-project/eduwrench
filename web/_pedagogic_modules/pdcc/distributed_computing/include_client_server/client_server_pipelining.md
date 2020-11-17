@@ -325,20 +325,27 @@ in Networking [textbooks](/textbooks), but for now, let's just remember that  *l
 
 #### Questions
 
-**[A.3.2.q2.1]** You have a laundry room with a washer and drier. The washer washes a load in 30 minutes, and the drier 
-dries a load in 45 minutes. You have 4 loads to do. How long until the last load is dried? What fraction of the time was
-the washer used? Could you have gone faster with two driers, and if so by how much?
+**[A.3.2.q2.1]** You have a laundry room with a washer and drier. The
+washer washes a load in 30 minutes, and the drier dries a load in 45
+minutes. You have 4 loads to do. How long until the last load is dried?
+What fraction of the time was the washer used? Could you have gone faster
+with two driers, and if so by how much? Show your work.
 
 
-**[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote server over a single network link. The disk's read bandwidth
-is 500 MB/sec. The network link's bandwidth is 250 MB/sec, with a latency below 100 microseconds. How much faster would the transfer
-go using pipelining with a 100 MB buffer compared to no pipelining?  Answer
-this question with a  back-of-the-envelope estimation (even though we saw
-in the practice questions that simulation results can be different).
+**[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote
+server over a single network link. The disk's read bandwidth is 500 MB/sec.
+The network link's bandwidth is 250 MB/sec, with a latency below 100
+microseconds. How much faster would the transfer go using pipelining with a
+100 MB buffer compared to no pipelining?  Show your work. Answer this
+question with a back-of-the-envelope estimation of the  execution time for
+the pipelining and no pipelining cases (even though we saw in the practice
+questions that simulation results can be different).
 
 
-**[A.3.2.q2.3]** Your business has a client-server setup for your computing needs. The client is on-site and there are 
-two off-site servers you have access to. The specifications of the client and two servers and their costs are below:
+**[A.3.2.q2.3]** Your business has a client-server setup for your computing
+needs. The client is on-site and there are two off-site servers you have
+access to. The specifications of the client and two servers and their costs
+are below:
 
   - **Client**:
      - Disk: 500 MBps R/W bandwidth
@@ -353,17 +360,20 @@ two off-site servers you have access to. The specifications of the client and tw
     - CPU: 1 core with 200 Gflop/sec speed
     - Link: 500 MB/sec
 
-Latency and RAM can be disregarded when considering these options. Cost calculations include data transfer time as well 
-as compute time. 
+Latency and RAM can be disregarded when considering these options. Cost
+calculations include data transfer time as well as compute time.
 
 On these servers, you need  to run a  task that has 100 GB input and 100 Tflop work. 
 
 Assuming no pipelining is used, which of these two servers would lead to the lowest
-execution cost? 
+execution cost? Show you work, in which you estimate the execution time on both servers.
 
 
-**[A.3.2.q2.4]** This question is for the same setup as in the previous question and the same task
-to execute. Assume that, for each server, ideal pipelining is possible used (i.e., assuming that network latency is
-zero and a 1-byte buffer can be used). Which of these two servers would lead to the lowest execution cost?
+**[A.3.2.q2.4]** This question is for the same setup as in the previous
+question and the same task to execute. Assume that, for each server, ideal
+pipelining is possible used (i.e., assuming that network latency is zero
+and a 1-byte buffer can be used). Which of these two servers would lead to
+the lowest execution cost? Show your work, in which you estimate the
+execution time on both servers.
 
 ---

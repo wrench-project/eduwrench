@@ -285,23 +285,24 @@ finish computing in 15s. So the answer is 3 seconds.
 #### Questions
 
 **[A.2.q2.1]** What parallel speedup will you observe when running 10
-tasks with identical work on 3 cores?
+tasks with identical work on 3 cores? Show your work.
 
 
 **[A.2.q2.2]** The parallel efficiency of a parallel program with 12
 identical tasks on a multi-core computer is more than 82% but less than 90%.  You know this
-computer has no more than 8 cores. How many cores does it have?
+computer has no more than 8 cores. How many cores does it have? Show your work. You could try to compute the efficiency for 1 core, 2 cores, etc. But try to narrow it down as several numbers of cores clearly cannot lead to a parallel efficiency in the desired range. For the remaining numbers, compute the parallel efficiency and see which one falls into that range.
 
 **[A.2.q2.3]** You have a 20-task program where each task's work is 10
 Gflop. You currently have a 4-core computer where each core computes at
 speed 50 Gflop/sec. For the same amount of money you can either (1)
 increase the speeds of all 4 cores by 20%; or (2) add a 5th 50 Gflop/sec
 core. What should you do if you want to run your program as quickly as
-possible?  
+possible?  Show your work by computing the execution time for each option.
 
 **[A.2.q2.4]** Consider a 6-task program to be executed on a 3-core
 computer. The task execution times on one core are: 2s, 4s, 8s, 3s, 9s, and
 3s. What is the best possible program execution time
-on these 3 cores? Could we do better with 4 cores?
+on these 3 cores? Could we do better with 4 cores? Show your work by giving the
+execution time for both options.
 
 ---

@@ -63,6 +63,6 @@ worth it *if it makes the program run in under 60s.*
 
 #### Questions
 
-**[A.2.q6.2]** Which of the options above are worth it? Show your work (e.g., mathematical expressions, narratives).
+**[A.2.q6.2]** Which of the options above are worth it? Show your work for each option (e.g., mathematical expressions, narratives).
 
 ---

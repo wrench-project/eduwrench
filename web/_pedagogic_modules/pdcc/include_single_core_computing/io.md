@@ -335,10 +335,13 @@ each task requires 1 second to read data from disk, 2 seconds for computation,
 and 0.5 seconds to write the output back to the disk.
 
 - What is the lowest possible execution time if we are not able to perform IO 
-during computation? 
+during computation?  Show your work.
 
 - What is the lowest possible execution time when overlap of computation and 
-IO is possible?
+IO is possible? Show your work.
+
+For each option you can "draw" the execution as in the figures earlier in
+this page and compute the execution times accordingly.
 
 
 **[A.1.q4.2]**
@@ -350,6 +353,8 @@ executed continuously in sequence throughout the day, in a way that
 disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
 Tflop/sec.  We wish to increase the number of task instances we can execute
 per day. Should we upgrade the processor? Or should we upgrade the disk?
+Show your work by computing execution times for both options, and perhaps
+drawing the executions as in the figures earlier in this page. 
 
 **[A.1.q4.3]**
 A task requires 100 MB of input data to be loaded from disk, performs 1
@@ -357,8 +362,8 @@ Tflop of computation, and writes some output back to disk. A batch of fifty
 instances of this task is to be run on a computer with a processor capable
 of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
 computation are overlapped.* How large can the task output be so that the CPU is still 100% utilized?
-(ignoring the initial input read and final output write, during which the
-CPU is necessarily idle).
+(ignoring the initial input read and final output write, during which the 
+CPU is necessarily idle). Show your work byt writing (and solving) a simple inequation. 
 
 ---
 

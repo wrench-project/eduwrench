@@ -481,27 +481,31 @@ of overall program execution time!
 
 Answer the following questions:
 
-**[A.2.q4.1]** For the DAG below, where each task has an execution time in seconds on
-a core of some computer, give the number of levels, the maximum level width, and the length of the 
-critical path in seconds.
+**[A.2.q4.1]** For the DAG below, where each task has an execution time in
+seconds on a core of some computer, give the number of levels, the maximum
+level width, and the length of the critical path in seconds.
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_1.svg">Question DAG</object>
 <p></p>
 
 **[A.2.q4.2]** For the DAG in the previous question, what would be the parallel
-efficiency on 3 cores?
+efficiency on 3 cores? Show your work and reasoning.
 
 **[A.2.q4.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for 
 picking a ready task for execution, we always pick the ready task with the largest work 
 (this is a "I should do the most time-consuming chores first" approach). What is the 
-execution time?
+execution time? Show your work. It's likely a good idea to draw the execution as a Gantt
+chart, as seen in the simulation output. 
 
 **[A.2.q4.4]** Still for that same DAG on 2 cores, we now pick the ready task with the 
 smallest work first  (this is a "I should do the easiest chores first" approach). What 
-is the execution time?  It is better than the previous approach?
+is the execution time?  It is better than the previous approach? Show your work. Use the same
+approach as in the previous question.
 
 **[A.2.q4.5]** For this new DAG below, executed on 2 cores, what are the execution times of the "pick the 
-ready task with the largest work" and "pick the ready task with the smallest work" 
-approaches? Which approach is better?
+ready task with the largest work" and "pick the ready task with the smallest work"  
+approaches? Which approach is better? Show your work. For each approach it is likely a good
+idea to draw the Gantt chart of the application execution for determining the
+execution time. 
 
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_2.svg">Question DAG</object>

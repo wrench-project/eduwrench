@@ -221,19 +221,21 @@ has both an input and an output file), answer the following  **four questions**:
 Once again, you will answer these questions using back-of-the-envelope estimates, even though simulation
 would produce slightly different results. 
 
-**[A.3.2.q1.1]** Assuming that the task can use only 1 core, which server should be used?  
+**[A.3.2.q1.1]** Assuming that the task can use only 1 core, which server should be used?  Show your work.
 
 **[A.3.2.q1.2]** Assuming now that the task is data-parallel and can run on
 any number of cores, always with 100% parallel efficiency, which server
-would be used?
+would be used? Show your work.
 
 **[A.3.2.q1.3]** It turns out the parallel efficiency of the data-parallel
 task is not 100%. You observe that on Server #1 the execution, using all 4
-cores, takes 15 sec. What is the task's parallel efficiency?
+cores, takes 15 sec. What is the task's parallel efficiency? Show your work. Write
+an equation where the parallel efficiency is the unknown and solve it.
 
 **[A.3.2.q1.4]** Assuming that the task's parallel efficiency is 60%
 regardless of the number of cores, what should the network bandwidth to
 Server #1 be for both servers to complete the task in the  same amount of
-time (including the time to get the task's input data)?
+time (including the time to get the task's input data)? Show your work. 
+Write an equation where the bandwidth is the unknown and solve it.
 
 ---

@@ -247,11 +247,14 @@ Topology for questions (lat = "latency"; bw = "bandwidth").
 </div>
 
 
-**[A.3.1.q3.1]** At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB transfer starts from host A to host D. Do they finish at the same time?
+**[A.3.1.q3.1]** At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB transfer starts from host A to host D. Do they finish at the same time? Show your work. You don't need to compute full transfer times but can instead use simple reasoning about bottleneck 
+bandwidths.
 
 <p></p>
 
 **[A.3.1.q3.2]** At time 0, a 100 MB transfer starts from host B to host C,
 and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
+Show your work. Consider the first phase in which both transfers are ongoing, and the second
+phase in which only one transfer is ongoing.
 
 <p></p>
