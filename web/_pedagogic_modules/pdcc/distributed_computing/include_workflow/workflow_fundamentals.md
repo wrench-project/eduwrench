@@ -42,6 +42,9 @@ application, where each task has an amount of work to do (in GFlop) and a memory
 applications, along with their DAG representations, can be found [here](https://pegasus.isi.edu/application-showcase/).
 </div>
 
+**Note:** In this module, for simplicity, we assume that workflow tasks "communicate" only via files. While this is the case for many
+real-world workflow applications, other options are of course also common (e.g., network communications, sharing memory). 
+
 #### Simulating Multi-core Workflow Execution
 
 This module relies heavily on concepts introduced in previous modules. 
