@@ -203,8 +203,8 @@ assist you in answering the questions to come.
 **[A.1.p4.1]** Say you have 10 tasks to execute, where each task reads in 200 MB of input, 
 computes 2500  Gflop,  and writes out  100MB of output. These 10 tasks are to be executed on
 the platform shown in the simulation app above. What is the total execution time when I/O
-and computation can be overlaped? Use the simulation app to check your answer. What is the
-core utilization percentage? 
+and computation can be overlaped? Show your work. Use the simulation app to check your answer. What is the
+core utilization percentage? Show your work.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -229,7 +229,7 @@ computation on this input, and then writes 1GB of output to disk. It is
 executed on a computer that has a CPU that computes at speed 500 Gflop/sec
 and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution 
 IO-intensive or CPU-intensive? If you could upgrade either the CPU or the 
-HDD, which upgrade would you choose?
+HDD, which upgrade would you choose? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -267,10 +267,12 @@ end it writes the output of the last two tasks one after the other.  The
 computation on the CPU for a task is started as soon as its input has been
 read from disk.
 
-What is the total execution time when processing 4 consecutive task instances?  You can 
+What is the total execution time when processing 4 consecutive task instances?  Show your work, 
+possibly including
+a depiction of the execution as in Figure 3 above. You can 
 use the simulation app above to check your answer!
 
-What is the core utilization?
+What is the core utilization? Show your work.
 
 
 <div class="ui accordion fluid">
@@ -302,7 +304,8 @@ The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18
 **[A.1.p4.4]** In the same setting as in the previous question, it is decided
 to purchase a SSD to replace the HDD currently being used. The SSD has
 **twice the bandwidth** of the HDD.  What is now the CPU utilization when
-processing 4 consecutive task instances?
+processing 4 consecutive task instances? Show your work, possibly including
+a depiction of the execution as in Figure 3 above.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -340,7 +343,7 @@ during computation?  Show your work.
 - What is the lowest possible execution time when overlap of computation and 
 IO is possible? Show your work.
 
-For each option you can "draw" the execution as in the figures earlier in
+Show your work, depicting executions as in the figures earlier in
 this page and compute the execution times accordingly.
 
 
@@ -353,17 +356,18 @@ executed continuously in sequence throughout the day, in a way that
 disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
 Tflop/sec.  We wish to increase the number of task instances we can execute
 per day. Should we upgrade the processor? Or should we upgrade the disk?
-Show your work by computing execution times for both options, and perhaps
-drawing the executions as in the figures earlier in this page. 
+Show your work by computing execution times for both options, possibly
+depicting executions as in the figures earlier in this page. 
 
 **[A.1.q4.3]**
 A task requires 100 MB of input data to be loaded from disk, performs 1
 Tflop of computation, and writes some output back to disk. A batch of fifty
 instances of this task is to be run on a computer with a processor capable
 of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. *IO and
-computation are overlapped.* How large can the task output be so that the CPU is still 100% utilized?
-(ignoring the initial input read and final output write, during which the 
-CPU is necessarily idle). Show your work byt writing (and solving) a simple inequation. 
+computation are overlapped.* How large can the task output be so that the
+CPU is still 100% utilized?  (ignoring the initial input read and final
+output write, during which the CPU is necessarily idle). Show your work byt
+writing (and solving) a simple inequation.
 
 ---
 

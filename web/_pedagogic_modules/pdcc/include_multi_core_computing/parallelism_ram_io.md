@@ -54,8 +54,8 @@ core.  Your current single-core processor thus can run these tasks in 5
 seconds.  The processor is then upgraded to have 5 cores, each identical in
 processing power to the original single core. If the machine has 32 GB of
 RAM and each task requires 8 GB of RAM to execute, what is the execution time
-on the new 5-core processor? (You can double-check your answer in simulation.) What
-is the parallel efficiency?
+on the new 5-core processor? Show your work. (You can double-check your answer in simulation.) What
+is the parallel efficiency? Show your work.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -92,7 +92,7 @@ We would have been better off with a 4-core computer (since, likely, it would co
 **[A.2.p3.2]** Assume you have a 2-core machine on which you need to run 6 tasks (in any order).
 Each task runs in 1 second on a core. However, the tasks have the following RAM
 requirements in GB: 6, 2, 4, 3, 1, 7.  If your machine has a total of 8 GB of RAM, can
-you achieve 100% parallel efficiency?
+you achieve 100% parallel efficiency? Show your work and reasoning. 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -206,8 +206,8 @@ below.
 We execute this program on a computer with two cores that compute at 
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
-Is  it better to run Task #1 or Task #2 first? Try to come up with an answer via
-reasoning rather than by estimate the execution time of both options and comparing.  You can
+Is it better to run Task #1 or Task #2 first? Try to come up with an answer via
+reasoning rather than by estimating the execution time of both options and comparing. Show your work.  You can
 double-check your result in simulation.
 
 <div class="ui accordion fluid">
@@ -237,7 +237,8 @@ We execute this program on a computer with two cores that compute at
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
 Estimate the execution time of the "Task #1 first" option. For what fraction of this execution are both
- cores utilized. Double-check your result in simulation.
+ cores utilized.  Show your work, possibly including a depiction of the execution as in the figures
+earlier in this page.  Double-check your result in simulation.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -274,6 +275,8 @@ We execute this program on a computer with two cores that compute at
 
 We consider the "Task #2 first" execution, which leads to some overall execution time. Say we now increase
 the work of Task #1. What is the smallest increase that will cause the overall execution time to also increase?
+Show your work and reasoning, possibly including a depiction of the execution as in the figures
+earlier in this page. You can check your answer in simulation.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -285,7 +288,7 @@ the work of Task #1. What is the smallest increase that will cause the overall e
 In this execution, Task #2 finishes its computation at time 6, while Task #1 finishes writing its output
 at time 100/100 + 80/100 + 200/100 + 100/100 = 4.8. Consequently, Task #1 could compute for 6 - 4.8 = 1.2 seconds longer
 without impacting the execution of Task #2. This means that the overall execution time would increase 
-when Task #1's work becomes strictly superior to 120 Gflop.
+when Task #1's work becomes strictly superior to 200 + 120 = 320 Gflop.
 
 One can double-check this in simulation, which gives the following execution times for different values of Task #1's work:
   - Task #1 work at 200 Gflop: 7.00 seconds (original)
@@ -307,7 +310,8 @@ We execute this program on a computer with two cores that compute at
 100 Gflop/sec and with a disk with 100 MB/sec read and write bandwidth. 
 
 Which of the two execution options ("Task #1 first" or "Task #2 first") leads to the
-highest parallel efficiency? What is that efficiency? 
+highest parallel efficiency? What is that efficiency?  Show your work. Feel free to use
+the simulation to determine the execution times for each option as a first step.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -333,7 +337,7 @@ Hence the parallel efficiencies:
   - Task #1 first: (11.00 / 9.00) / 2 = 61.1%
   - Task #2 first: (9.00  / 7.10) / 2 = 63.3%
    
-The "Task #2 first" option has the higest parallel efficiency, at 63.3%. 
+The "Task #2 first" option has the highest parallel efficiency, at 63.3%. 
   </div>
 </div>
 
@@ -359,4 +363,4 @@ the parallel  efficiency if the program can never overlap I/O and computation (b
 multiple I/O operations can happen at the same time)? Show your work and reasoning.
 
 **[A.2.q3.4]** Same question as above but now the program always overlaps I/O and
-computation. Show your work and reasining.
+computation. Show your work and reasoning.
