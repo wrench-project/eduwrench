@@ -99,7 +99,7 @@ practice questions below.
 #### Practice Questions
 
 **[A.2.p5.1]** Analytically estimate the execution time of the oil-painting
-program with radius $r = 3$ when it runs on 6 cores. Then check your
+program with radius $r = 3$ when it runs on 6 cores. Show your work, then check your
 results with the simulation app.
 
 <div class="ui accordion fluid">
@@ -121,7 +121,7 @@ $
 <p></p>
 **[A.2.p5.2]** Which execution has the best parallel efficiency: A) $r=2$ 
 on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
-check your intuition using analytics and/or the  simulation?
+check your intuition using analytics and/or the simulation. Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -170,7 +170,7 @@ is confirmed! Execution B has better efficiency!
 runs in 10s and the second in 20 seconds, on one core of a 4-core computer. 
 A developer has an idea to expose data-parallelism in the second task and
 rewrites it so that it is replaced by 4 independent tasks each with 1/4-th of the
-original task's work. What is the parallel efficiency on 4 cores?
+original task's work. What is the parallel efficiency on 4 cores? Show your work.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -285,7 +285,7 @@ uses increases, we say that the program "scales".
 
 **[A.2.p5.4]** A program that consists of a sequential phase and a perfectly
 parallelizable phase runs on 1 core in 10 minutes and on  4 cores in 6 minutes. 
-How long does  the sequential phase run for?
+How long does  the sequential phase run for? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -316,7 +316,7 @@ minutes.
 **[A.2.p5.5]** A program consists of a sequential phase and a perfectly parallelizable
 phase. When executed on 1 core, the parallel phase accounts for 92% of
 the execution time.  What fraction of the execution time on 6 cores does
-this phase account for?
+this phase account for? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -350,7 +350,7 @@ So only 65% of the 6-core execution is  spent in the parallel phase.
 
 **[A.2.p5.6]** 40% of the sequential execution time of a program is spent
 in a phase that could be perfectly parallelized. What is  the maximum  speedup
-one could achieve if any number of cores  can be used?
+one could achieve if any number of cores  can be used? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -434,7 +434,7 @@ data-parallelism. But it is not perfect: the single task is rewritten as a
 first task with work 500 Gflop, and then $n$ tasks with each work $10000/n$
 Gflop. So the total work of the program is larger and there is still a sequential phase. What would the speedup
 be if executing the modified code on 4 cores (compared to the original
-1-task program on 1 of these cores)?
+1-task program on 1 of these cores)? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -471,7 +471,7 @@ data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
 data-parallelism, but there is no sequential phase). What is the largest value of X 
 for which the parallel efficiency would be above 90%
-when running on an 8-core computer?
+when running on an 8-core computer? Show your work and reasoning. 
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -519,16 +519,16 @@ Answer the following questions:
 **[A.2.q5.1]** If the sequential execution of a program spends 30% of its
 time in a phase that could be parallelized perfectly, what would be the
 parallel efficiency of an execution of this program on  6 cores  (assuming
-that phase has been parallelized)? Show your work. 
+that phase has been parallelized)? Show your work and reasoning.
 
 **[A.2.q5.2]** A program consists of a sequential phase and a perfectly
 parallelizable phase. The program runs on 1 core in 20 minutes and on 3
 cores in 10 minutes.  How long does the sequential phase run for? Show your
-work.
+work and reasoning.
 
 **[A.2.q5.3**] If a parallel program achieves parallel efficiency of 99%
 when running on 64 cores, what fraction of its sequential execution time
-was non-parallelizable? Show your work. Write and solve an equation where
+was non-parallelizable? Show your work and reasoning. Write and solve an equation where
 the fraction is the unknown.
 
 **[A.2.q5.4]** Consider a program that consists of a single task  with
@@ -536,7 +536,7 @@ work  10,000 Gflop.  Developer $A$ proposes to replace this task with 5
 tasks each with work  2,000 Gflop.  Developer  $B$ proposes to replace this
 task with  4 tasks  each  with  work 3,000 Gflop, followed by a sequential
 task with work  500  Gflop. Which developer's idea  should you use when
-running this program on a 4-core machine? Show your work. For each option
+running this program on a 4-core machine? Show your work and reasoning. For each option
 show the execution time as a function of the core speed, and compare.
 
 **[A.2.q5.5]** A program currently consists of two tasks, $A$  and $B$,
@@ -545,5 +545,5 @@ has work 1000 Gflop, while task $B$ has work 2000 Gflop.  You  can either
 replace task $A$ with two independent tasks each with work 600 Gflop, or
 replace task $B$ with  two independent tasks each with  work 1900 Gflop.
 If running on a 3-core computer,  which replacement would be best in  terms
-of program execution  time? Sow your wqork. For each option determine the
+of program execution  time? Sow your work and reasoning. For each option determine the
 execution time, and compare.
