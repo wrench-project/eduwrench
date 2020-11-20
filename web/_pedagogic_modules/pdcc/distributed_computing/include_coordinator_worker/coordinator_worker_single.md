@@ -147,7 +147,7 @@ some of the practice questions below.
 #### Practice Questions
 
 **[A.3.3.p1.1]** If all tasks have the same specifications and all the workers have the same specifications,
-does it matter which options are picked for task and worker selection?
+does it matter which options are picked for task and worker selection? Explain your reasoning.
 <div class="ui accordion fluid">
    <div class="title">
      <i class="dropdown icon"></i>
@@ -225,7 +225,7 @@ high data and high work, any scheduled in which it does not start early is not g
 took a "let's care about work only" approach. Let's now take a "let's care about data only" approach.  
 
 What is the execution time when using the "highest data" task selection strategy, and the "best connected" 
-worker selection strategy? How does the result change when we switch to the "lowest data" task selection strategy?   
+worker selection strategy? Explain how the result changes when we switch to the "lowest data" task selection strategy?   
 How do these results compare to those in the previous section?
 
 <div class="ui accordion fluid">
@@ -257,8 +257,7 @@ they may not be generalizable to other setups.
 
 
 **[A.3.3.p1.4]** Still for the same setup as in the previous question, run the purely random/random strategy 10 times (or more). Report on the
-worst and best execution times it achieves. How does this seemingly bad approach compare to the previous approaches? (hint: if you run this
-sufficiently many times, you should see some good results).
+worst and best execution times it achieves. How does this seemingly bad approach compare to the previous approaches? Discuss. (hint: if you run this sufficiently many times, you should see some good results).
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -349,9 +348,10 @@ The simulated execution times are:
  
 <p></p>
 
-**[A.3.3.p1.6]** Can you  come up with a simple scenario (e.g., 2 workers and 2 tasks)
-for which none of the strategies above is optimal? In other words, you 
-can easily come up with a solution that is better than that of all the strategies. 
+**[A.3.3.p1.6]** Come up with a simple scenario (e.g., 2 workers and 2
+tasks) for which none of the strategies above is optimal. In other words,
+for that scenario, you can yourself come up with a solution that is better
+than that that produced by all the strategies.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -428,7 +428,6 @@ for now, how about just answering the questions below?
 ---
 
 #### Questions
-
 
 Say that you have three workers with the following specs:
  

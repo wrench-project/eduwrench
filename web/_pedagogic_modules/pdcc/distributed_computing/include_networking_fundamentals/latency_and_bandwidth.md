@@ -77,7 +77,7 @@ we will always mean its *effective bandwidth*.
 
 To make sure the above is crystal clear, answer the following practice questions:
 
-**[A.3.1.p1.1]** How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 microseconds and 20 GB/sec bandwidth?
+**[A.3.1.p1.1]** How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 microseconds and 20 GB/sec bandwidth? Show your work as a mathematical expression.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -90,7 +90,7 @@ To make sure the above is crystal clear, answer the following practice questions
 
 <p> </p>
 
-**[A.3.1.p1.2]** How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 microseconds and 520 MB/sec bandwidth?
+**[A.3.1.p1.2]** How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 microseconds and 520 MB/sec bandwidth? Show your work as a mathematical expression.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -103,7 +103,7 @@ To make sure the above is crystal clear, answer the following practice questions
 
 <p> </p>
 
-**[A.3.1.p1.3]** You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth, in GB/sec, should the link have so that the data transfer takes 2.5 sec?
+**[A.3.1.p1.3]** You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth, in GB/sec, should the link have so that the data transfer takes 2.5 sec? Show your work by writing (and solving) a simple equation.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -123,17 +123,20 @@ To make sure the above is crystal clear, answer the following practice questions
 #### Questions
 
 **[A.3.1.q1.1]** How long, in seconds, does it take to transfer 12 GB of data
-over a link with latency 10 ms and bandwidth 500 MB/sec?
+over a link with latency 10 ms and bandwidth 500 MB/sec? Show your work
+as a mathematical expression.
 
 <p> </p>
 
 **[A.3.1.q1.2]** 3 MB of data was transferred over a link with 18 MB/sec
-bandwidth in 3.03 sec. What is the link's latency in seconds?
+bandwidth in 3.03 sec. What is the link's latency in seconds? Show your work
+by writing (and solving) a simple equation.
 
 <p> </p>
 
 **[A.3.1.q1.3]** A data transfer took 14 minutes on a link with 
 latency 100 ms and bandwidth 120 KB/sec. How much data, in MB, was transferred?
+Show your work by writing (and solving) a simple equation.
 
 <p> </p>
 
@@ -142,8 +145,9 @@ GB movie file. The file is available at two mirror sites, both of them one
 network link away from your computer.  Mirror *A* is connected to your
 computer by a link with latency 100 ms and bandwidth 400 MB/sec.  Mirror
 *B* is connected to your computer by a link with latency 300 ms and
-bandwidth 700 MB/sec.  Which mirror should you use and why? You can answer
-this question purely via reasoning (i.e., you don't need to compute anything).
+bandwidth 700 MB/sec.  Which mirror should you use and why? Should your
+work and reasoning. You can answer this question purely via reasoning
+(i.e., you don't need to compute anything).
 
 <p> </p>
 

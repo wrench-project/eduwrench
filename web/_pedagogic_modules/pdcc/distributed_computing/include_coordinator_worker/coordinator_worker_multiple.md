@@ -46,9 +46,9 @@ paths that we could follow, and many more experiments  we could perform
 to strengthen (or weaken!) our claims.
 
 **[A.3.3.p2.1]** We have said in previous modules that a good idea is
-likely to prioritize long tasks. Consider a coordinator-worker setup in which
-workers are all identical (i.e., they are *homogeneous*) and tasks have
-negligible input size but a wide range of work amounts, so that task
+likely to prioritize long tasks. Consider a coordinator-worker setup in
+which workers are all identical (i.e., they are *homogeneous*) and tasks
+have negligible input size but a wide range of work amounts, so that task
 execution times on the workers are in the [1 sec, 10 sec] range.
 
 For this setup, let's consider the following strategies:
@@ -57,7 +57,7 @@ For this setup, let's consider the following strategies:
   - highest flop / fastest
   - lowest flop / fastest
 
-How do you think these strategies rank? 
+How do you think these strategies rank?  Explain your reasoning.
 
 Check whether your expectations are confirmed in simulation (by coming up
 with appropriate simulation input).  Using a small number of workers and, 
@@ -102,7 +102,7 @@ range, with both better minimum and  worse maximum.
 
 **[A.3.3.p2.2]** Say that now, in addition to having task work amounts vary
 by a 10x factor, worker speeds also vary by a 10x factor. Are results
-different when comparing the three strategies in the previous question?
+different when comparing the three strategies in the previous question? Discuss.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -136,7 +136,7 @@ fastest workers.
 
 Say we still select tasks based on the "highest flop" criterion. Among all
 the available worker selection strategies, which one do you think would work
-best? Confirm your expectation in simulation:
+best and why? Confirm your expectation in simulation:
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -148,7 +148,8 @@ best? Confirm your expectation in simulation:
 The "fastest" and "best-connected" strategies only consider one
 aspect of task executions, and thus they could make very wrong decisions.
 Random, as usual, could work well sometimes, but is probably not very
-consistent. Earliest completion, does consider both aspects, and should do the best. 
+consistent. Earliest completion, does consider both aspects, and should do
+the best. 
 
 Simulation results confirm the above:
 
@@ -167,7 +168,7 @@ Simulation results confirm the above:
 than tasks.  What if now we were to have, say, 4 times as many tasks as
 workers. Do you think the different strategies considered in the previous
 question would be closer together or further apart in terms of their
-results?   Verify your expectation experimentally.
+results? Explain.  Verify your expectation experimentally.
 
 <div class="ui accordion fluid">
    <div class="title">

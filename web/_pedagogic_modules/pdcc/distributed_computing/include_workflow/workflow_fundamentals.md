@@ -89,7 +89,7 @@ execution strategy simulated by the app:
 Answer these practice questions, using the simulation app and/or using 
 analysis  (and then using the app for double-checking your results):
 
-**[A.3.4.p1.1]** How many MB of data are read and written by the workflow when executed on this computer?
+**[A.3.4.p1.1]** How many MB of data are read and written by the workflow when executed on this computer? Show your work.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -126,7 +126,7 @@ is 100 MB/sec, this means the total data size is: 3700 MB!
 <p></p>
 
 **[A.3.4.p1.2]** What is the parallel efficiency when executing the workflow on 3 cores and when the
-disk bandwidth is 150 MB/sec?
+disk bandwidth is 150 MB/sec? Show your work.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -144,7 +144,7 @@ is 1.108/3 = 36.9%.  This is pretty low.
 <p></p>
 
 **[A.3.4.p1.3]** Explain why there is never any improvement when going from
-a 2-core execution to a  3-core execution for this workflow? 
+a 2-core execution to a  3-core execution for this workflow?  Show your work.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -168,7 +168,7 @@ they use less than 16 GB of RAM.
 
 **[A.2.3.p1.4]**  Consider the execution of this workflow on 2 cores
 with disk bandwidth set to 50 MB/sec. Is the disk ever used concurrently
-by tasks? How can you tell based on the simulation output?
+by tasks? How can you tell based on the simulation output? Show your work. 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -189,7 +189,7 @@ which also gets half of the disk bandwidth.
 
 **[A.2.3.p1.5]** Considering a 1-core execution of the workflow, for which
 disk bandwidth would the execution be perfectly balanced between computation time
-and I/O time? 
+and I/O time? Show your work.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -217,7 +217,7 @@ which is almost exactly twice 194.
 
 **[A.2.3.p1.6]** Considering computation and I/O, what is the length
 of the workflow's critical path (in seconds) if the disk bandwidth
-is 100 MB/sec?
+is 100 MB/sec? show your work.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -246,8 +246,9 @@ than 175 seconds no matter how many cores are used.
 <p></p>
 
 
-**[A.2.3.p1.7]** Give your thoughts on why this workflow is poorly suited
-for parallel execution in general and on our 3-core computer in particular. 
+**[A.2.3.p1.7]** Explain why this workflow is poorly suited
+for parallel execution in general and on our 3-core computer in particular. Hint: There
+are several reasons why.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -306,7 +307,7 @@ chart of the execution to estimate the execution time as a sum of terms.
 <p></p>
 
 **[A.2.3.q1.4]** Would the result be different if we instead picked
-the tasks with the **lowest work** first?
+the tasks with the **lowest work** first? Explain why or why not.
 <p></p>
 
 **[A.2.3.q1.5]** Say we now have 4 cores. Explain why there is no way to get the parallel efficiency above 

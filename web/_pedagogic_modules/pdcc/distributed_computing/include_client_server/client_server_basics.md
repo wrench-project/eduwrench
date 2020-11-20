@@ -83,8 +83,8 @@ to come up with or double-check answers.
 #### Practice Questions
 
 **[A.3.2.p1.1]** The client's link to Server #2 is faster than that to Server #1. 
-Is there a bandwidth for Server #1 that would make it equivalent to Server #2 from the client's perspective? 
-You can check your answer using the simulation app.
+Is there a bandwidth for Server #1 that would make it equivalent to Server #2 from the client's perspective? Show your work and reasoning. You should write (and solve) and equation where 
+the bandwidth to Server #1 is the unknown.  You can check your answer using the simulation app.
  
  <div class="ui accordion fluid">
    <div class="title">
@@ -132,7 +132,7 @@ to that for Server #2.
 
 
 **[A.3.2.p1.2]** It is possible to set a bandwidth to Server #1 so that the task execution time with that server
-is one third of the execution time with the original 10 MB/sec bandwidth?
+is one third of the execution time with the original 10 MB/sec bandwidth? Show your work and reasoning.
  
  <div class="ui accordion fluid">
    <div class="title">
@@ -157,7 +157,8 @@ to Server #1 is set to the original 10 MB/sec
 client program can do two network transfers at the same time, what would be the total execution time (using both servers)?  
 
 What if
-your client program  can only do one network transfer at a time? 
+your client program  can only do one network transfer at a time? Show your work and reasoning. It 
+may be a good idea to depict executions timelines.
  
  <div class="ui accordion fluid">
    <div class="title">

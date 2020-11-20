@@ -85,8 +85,7 @@ you should use it to answer the following practice questions.
 
 #### Practice Questions
 
-**[A.3.4.p4.1]** Estimate the execution time when all data-parallel tasks use 3 cores. Double-check
-your result in simulation.
+**[A.3.4.p4.1]** Estimate the execution time when all data-parallel tasks use 3 cores. Show your work, and double-check your answer in simulation.
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -111,7 +110,8 @@ The total execution time is thus 11.60 seconds, which is confirmed by the simula
 
 **[A.3.4.p4.2]** Say that you must configure two of the data-parallel tasks to use 
 1 core, and the third one to use 3 cores.  Which task should use 3 cores to achieve
-the shortest execution time?  Come up with an answer based on your intuition, and then
+the shortest execution time?  Come up with an answer based on reasoning (i.e., without
+computing anything),  and then
 check your intuition in simulation. 
 
 <div class="ui accordion fluid">
@@ -140,7 +140,7 @@ the execution time.
 
 
 **[A.3.4.p4.3]** Say we configure each data-parallel to run on 2 cores. Which of these tasks 
-will run on the same host? Come up with an answer using intuition, or analytically, and then double-check
+will run on the same host? Come up with an answer using either reasoning (i.e., don't compute anything), and then double-check
 it in simulation.
 
 <div class="ui accordion fluid">
@@ -160,7 +160,7 @@ confirmed in the simulation output.
 
 **[A.3.4.p4.4]** Because the yellow task is so expensive,  we decide to always  run
 it on 3 cores. Is it better to give 1 core to the blue task and 2 cores to the
-purple task, or the other way around?
+purple task, or the other way around? Show your work/reasoning.
 
 <div class="ui accordion fluid">
   <div class=" title">

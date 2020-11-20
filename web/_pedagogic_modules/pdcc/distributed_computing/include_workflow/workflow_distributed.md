@@ -131,7 +131,8 @@ yourself with this application, but you should then use it for the practice ques
 ####  Practice Questions
 
 **[A.3.4.p2.1]** When executing the workflow with a single 1-core compute host,
-what fraction of the time is spent doing actual computation? 
+what fraction of the time is spent doing actual computation?  Use the simulation to answer this
+question, and show your work. 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -150,8 +151,8 @@ what fraction of the time is spent doing actual computation?
 
 
 **[A.3.4.p2.2]** Based on the answer to the previous question, how long would you
-expect the execution time to be if the (single) compute host had 2 cores? Double-check
-your expectation in simulation.
+expect the execution time to be if the (single) compute host had 2 cores? Show your work, and then
+double-check your answer in simulation. 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -176,7 +177,7 @@ your expectation in simulation.
 <p></p>
 
 **[A.3.4.p2.3]** For running our workflow, is it better to 
-have 5 4-core compute hosts or 4 5-core hosts? Check your answer in simulation.
+have 5 4-core compute hosts or 4 5-core hosts? Show your work. Check your answer in simulation.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -197,7 +198,7 @@ This is seen in simulation:
 <p></p>
 
 **[A.3.4.p2.4]** What is the parallel efficiency (in terms of cores) of the
-execution when using 5 4-core compute hosts? 
+execution when using 5 4-core compute hosts? Show your work.  
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -214,7 +215,7 @@ whatsoever.
 <p></p>
 
 **[A.3.4.p2.5]** What overall I/O bandwidth is achieved by the workflow
-execution when using a single core? What about when using 5 4-core hosts? 
+execution when using a single core? What about when using 5 4-core hosts?  Show your work. 
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -269,7 +270,7 @@ Show your work, estimating the execution time on each platform.
                   running tasks compute, or all running tasks perform I/O. Assuming the 
                   total I/O time, regardless of the number of hosts/cores, is 20
                   seconds, what is the parallel efficiency for the three platforms in the
-                  previous question? Show your work, again estimating the execution time on
+                  previous question? Show your work, again, estimating the execution time on
                   each platform.
 
 ---

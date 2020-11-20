@@ -122,7 +122,7 @@ Network topology for practice questions.
 </div>
 
 
-**[A.3.1.p2.1]** What is the latency of the route from host E to host D?
+**[A.3.1.p2.1]** What is the latency of the route from host E to host D? Show your work.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -141,7 +141,7 @@ $$
 
 <p> </p>
 
-**[A.3.1.p2.2]** What is the bandwidth of the route from host E to host D?
+**[A.3.1.p2.2]** What is the bandwidth of the route from host E to host D? Show your work.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -160,7 +160,7 @@ $$
 
 <p> </p>
 
-**[A.3.1.p2.3]** I am a user sitting at host E and have to download a large file. That file is on a Web site at host A but also on a mirror Web site at host D.  Which mirror should I select?
+**[A.3.1.p2.3]** I am a user sitting at host E and have to download a large file. That file is on a Web site at host A but also on a mirror Web site at host D.  Which mirror should I select? Explain your reasoning.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -177,7 +177,7 @@ $$
 
 <p> </p>
 
-**[A.3.1.p2.4]** What is the transfer time for sending 1 MB of data from host E to host D?
+**[A.3.1.p2.4]** What is the transfer time for sending 1 MB of data from host E to host D? Show your work.
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -208,31 +208,32 @@ Network topology for questions (lat = "latency"; bw = "bandwidth").
 </div>
 
 
-**[A.3.1.q2.1]** What is the latency of the route from host A to host B?
+**[A.3.1.q2.1]** What is the latency of the route from host A to host B? Show your work.
 
 <p></p>
-**[A.3.1.q2.2]** What is the bandwidth of the route from host C to host D?
+**[A.3.1.q2.2]** What is the bandwidth of the route from host C to host D? Show your work.
 
 <p></p>
 **[A.3.1.q2.3]** How long, in seconds, does it take to transfer 100 MB of
-  data from host A to host D?
+  data from host A to host D? Show your work by writing (and solving) a simple equation.
 
 <p></p>
-**[A.3.1.q2.4]** A lot of users are transferring data from host B to host D,
-thus competing for the bandwidth on that route. Would it help to 
-purchase an upgrade to the link that connects host B to the network? Explain why or why not.
+**[A.3.1.q2.4]** A lot of users are transferring data from host B to host
+D, thus competing for the bandwidth on that route. Would it help to
+purchase an upgrade to the link that connects host B to the network?
+Explain why or why not.
 
 <p></p>
 **[A.3.1.q2.5]** I am sitting at host D and want to download a tiny file
 that is mirrored at all other hosts.  From my perspective, does it matter
-which mirror I pick, and if yes which one should I pick? You can answer this
+which mirror I pick, and if yes which one should I pick? Show your work and reasoning. You can answer this
 question purely via reasoning (i.e., you don't need to compute anything).
 
 <p></p>
 **[A.3.1.q2.6]** I am sitting at host D and want to download a huge file
 that is mirrored at all other hosts.  From my perspective, does it matter which mirror I pick,
-and if yes which one should I pick? You can answer this
+and if yes which one should I pick? Show your work and reasoning. You can answer this
 question purely via reasoning (i.e., you don't need to compute anything).
 
 <p></p>
-**[A.3.1.q2.7]** Of all the possible routes above, which route has the highest bandwidth?
+**[A.3.1.q2.7]** Of all the possible routes above, which route has the highest bandwidth? Show your work and reasoning.

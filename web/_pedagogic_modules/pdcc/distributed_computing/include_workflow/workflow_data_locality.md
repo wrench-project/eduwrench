@@ -65,9 +65,10 @@ but then you should  use it to answer the practice questions hereafter.
 
 **[A.3.4.p3.1]** When executing the workflow with a 100 MB/sec wide-area link
 bandwidth and using a single core, how much
-time is saved when storing intermediate files at the compute site? If you 
+time is saved when storing intermediate files at the compute site? Use the simulation
+to answer this question. If you 
 do a back-of-the-envelope estimation of the time saved based on data sizes
-and bandwidths, do you get the same answer? 
+and bandwidths, do you get the same answer? Show your work. 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -109,7 +110,8 @@ captured by the simulation (which we will mention in upcoming modules).
 <p></p>
 
 **[A.3.4.p3.2]** Still using a 100 MB/sec wide-area link bandwidth, what parallel 
-efficiency can we achieve when using 5 4-core hosts and local storage? 
+efficiency can we achieve when using 5 4-core hosts and local storage? Use the simulation
+and show your work. 
 
 <div class="ui accordion fluid">
   <div class=" title">
@@ -129,7 +131,7 @@ than without using local storage, but still not great.
 <p></p>
 
 
-**[A.3.4.p3.3]**  What is the parallel efficiency when doubling the wide-area link bandwidth?
+**[A.3.4.p3.3]**  What is the parallel efficiency when doubling the wide-area link bandwidth? Show your work. 
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -145,7 +147,7 @@ Using the simulation again, we get: (239.91 / 36.61) / 20 = 32.7%.
 
 
 **[A.3.4.p3.4]** Now, set the wide-area link bandwidth to a high 500 MB/sec. Do we see big jump in
-efficiency? What is the effective wide-area data transfer rate? Is it anywhere close to 500 MB/sec?
+efficiency? What is the effective wide-area data transfer rate? Show your work. Is it anywhere close to 500 MB/sec?
 <div class="ui accordion fluid">
   <div class=" title">
     <i class="dropdown icon"></i>
@@ -166,7 +168,7 @@ latency is preventing us from achieving the peak data transfer rate.
 <p></p>
 
 **[A.3.4.p3.5]** Assuming the wide-area latency was not a problem, and that we would
-achieve 500 MB/sec data transfer rate, what would the parallel efficiency be?  How close
+achieve 500 MB/sec data transfer rate, what would the parallel efficiency be?  Show your work. How close
 is it from the efficiency when assuming that all I/O takes zero time?
 <div class="ui accordion fluid">
   <div class=" title">
