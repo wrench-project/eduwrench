@@ -82,7 +82,7 @@ in the second phase above, part of that link's bandwidth is unused.
 <object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/networking_fundamentals/link_utilization.svg">link bandwidth utilization</object>
 <div class="caption"><strong>Figure 3:</strong>
 Bandwidth utilization of the link into host C vs. time, showing both the red and the green
-transfers. Because the green transfer is bottlened by a 30 MB/sec link, 10 MB/sec of bandwidth
+transfers. Because the green transfer is bottlenecked by a 30 MB/sec link, 10 MB/sec of bandwidth
 remain unused for the link into host C. 
 </div>
 
@@ -158,9 +158,7 @@ Topology for practice questions.
 </div>
 
 
-**[A.3.1.p3.1]** A 100 MB transfer from host A to host C, and a 100 MB transfer
-	 from host B to host C start at the same time. Do they finish at
-	 the same time?
+**[A.3.1.p3.1]** A 100 MB transfer from host A to host C, and a 100 MB transfer from host B to host C start at the same time. Do they finish at the same time? Explain your reasoning.
 
 
 <div class="ui accordion fluid">
@@ -177,9 +175,7 @@ Topology for practice questions.
 <p> </p>
 
 
-**[A.3.1.p3.2]** A 100 MB transfer from host D to host B, and a 100 MB transfer
-         from host A to host C start at time 0. At what time
-         does each of them complete? 
+**[A.3.1.p3.2]** A 100 MB transfer from host D to host B, and a 100 MB transfer from host A to host C start at time 0. At what time does each of them complete? Show your work and reasoning.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -208,7 +204,7 @@ Note that the latency term (the first term) above is negligible when compared to
 
 
 **[A.3.1.p3.3]** A 100 MB transfer from host B to host C and a 60 MB transfer 
-from host A to host C start at time 0. At what time do they complete?
+from host A to host C start at time 0. At what time do they complete? Show your work. 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -254,7 +250,7 @@ bandwidths.
 
 **[A.3.1.q3.2]** At time 0, a 100 MB transfer starts from host B to host C,
 and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
-Show your work. Consider the first phase in which both transfers are ongoing, and the second
+Show your work. Hint: Consider the first phase in which both transfers are ongoing, and the second
 phase in which only one transfer is ongoing.
 
 <p></p>
