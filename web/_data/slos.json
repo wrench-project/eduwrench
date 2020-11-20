@@ -2,7 +2,8 @@
     "top-level-slos": {
       "tlslo1": "Be able to explain and apply the fundamental concepts of sequential, parallel, and distributed computing",
       "tlslo2": "Be able to describe typical parallel/distributed computing (PDC) applications and the platforms on which they run",
-      "tlslo3": "Be able to reason about and improve the performance of parallel/distributed computing (PDC) applications"
+      "tlslo3": "Be able to reason about and improve the performance of parallel/distributed computing (PDC) applications",
+      "tlslo4": "Be comfortable with and able to use standard tools provided as part of current CyberInfrastructure deployments"
     },
 
     "slos": [

@@ -1,0 +1,77 @@
+---
+layout: page
+title: 'FOR TEACHERS'
+permalink: /for_teachers
+---
+
+<div markdown="1" class="ui tab segment active">
+This page is intended to provide teachers and instructors information regarding
+the EduWRENCH pedagogic modules, namely: 
+
+  - [What is the target audience?](#target-audience)
+  - [What are the learning objectives?](#learning-objectives)
+  - [How can these modules be integrated into courses?](#integration-into-courses)
+  - [How to run your own EduWRENCH server?](#running-your-own-eduwrench-server)
+  - [How to get help or get involved?](#getting-help-and-getting-involved)
+</div>
+
+
+#### Target audience
+
+The EduWRENCH modules were designed with college students in mind, starting at the
+freshman level.  A current design principle is that no programming is
+required. Therefore, it should be possible for younger students, e.g.,
+high school or earlier, to go benefit from these modules.  
+
+The modules aim to be as self-contained as possible: The only prerequisite
+to the first module is that students be familiar with the concept of a
+program running on a computer for some lapse of time to compute something
+of interest.  Depending on their levels, students can skim earlier modules
+or jump directly to later modules.  Although references are made to
+textbooks, especially in the earlier modules, consulting these textbooks is
+not required. Textbooks references are included, in part, to connect the
+EduWRENCH content to the general Computer Science curriculum.
+
+#### Learning Objectives
+
+The EduWRENCH modules target four top-level Student Learning Objectives (SLOs):
+
+  - **SLO1**: Be able to explain and apply the fundamental concepts of sequential, parallel, and distributed computing
+  - **SLO2**: Be able to describe typical parallel/distributed computing (PDC) applications and the platforms on which they run
+  - **SLO3**: Be able to reason about and improve the performance of PDC applications 
+  - **SLO4**: Be comfortable with and able to use standard tools provided as part of current CyberInfrastructure deployments
+
+Each module, and in fact each tab within each module page, lists specific SLOs, each mapping to one or more of
+the top-level SLOs. See the comprehensive [SLO Map](XXXXX).
+
+#### Integration into courses
+
+There are several ways to integrate the EduWRENCH modules in your courses.
+Each module includes pedagogic narratives that can be used as lecture notes.
+That is, instead of lecturing on a particular
+topic, students could be directed to the relevant EduWRENCH page on which
+they will find relevant pedagogic material (narrative, definition,
+examples, figures, simulation activities, practice questions).  Another
+option is for the instructor, during a lecture, to use particular
+simulation activities to illustrate particular concepts interactively, and
+to go through practice questions in class (revealing answers only once
+students have had a chance to participate). Each module contains several
+questions without no answers provided (answers are available to instructors
+upon request). These can be used by instructors in various ways including
+for in-class activities, optionally with instructor-provided scaffolding,
+for homework assignments, or for exam questions. All these modalities have
+been already employed successfully in undergraduate university courses.
+
+
+#### Running your own server
+
+EduWRENCH is available at [on GitHub](https://github.com/wrench-project/eduwrench). Straightforward instructions
+are provided in the repository's README file for deploying the EduWRENCH Web app and server. 
+
+#### Getting help and getting involved
+
+You can contact us at [support@wrench-project.org](emailto:support@wrench-project.org) with any questions, feedback,
+or suggestions. Do not hesitate even if only to report a typo. Pull requests are of course welcome. 
+
+
+---
