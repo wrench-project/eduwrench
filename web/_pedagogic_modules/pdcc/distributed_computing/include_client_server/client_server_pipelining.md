@@ -156,7 +156,7 @@ the following practice questions.
 #### Practice Questions
 
 **[A.3.2.p2.1]** When using a 1 GB buffer size (i.e., no pipelining), what would you  expect the execution time
-to be when running on Server #2? Check your answer with the simulation.
+to be when running on Server #2? Show your work. Check your answer with the simulation.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -181,7 +181,7 @@ some network behaviors), but it is close.
 
 <p></p>
 
-**[A.3.2.p2.2]** Still on Server #2, what do you think the execution time would be when setting the buffer size to 500 MB? Check your answer in simulation.
+**[A.3.2.p2.2]** Still on Server #2, what do you think the execution time would be when setting the buffer size to 500 MB? Show your work and reasoning. Check your answer in simulation.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -200,7 +200,6 @@ network  latencies since we incur only three of them.
 
 The simulation gives us 20.04 seconds, which again is very close.
        
-       
    </div>
  </div>
 
@@ -208,7 +207,7 @@ The simulation gives us 20.04 seconds, which again is very close.
 
 **[A.3.2.p2.3]** Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it takes for the
 server to *receive the data*. Discuss/explain what you observe.  What would be an ideal transfer time assuming no latencies whatsoever and maximum
-pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack?
+pipelining?  Can we pick a good buffer size that gets close? Is it easy  to pick a good buffer size, or is it like finding a needle in a haystack? For all these questions, show your work and reasoning.
 
 <div class="ui accordion fluid">
    <div class="title">
@@ -247,7 +246,7 @@ It is not difficult to pick a good buffer size as between 500KB and 10MB we get 
 
 **[A.3.2.p2.4]** Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the simulation, determine the
 data transfer time with the original 10 us latency. Say now that the latency is instead 20 us. What is the increase in data
-transfer time? For this new latency, can we lower the data transfer time by using a different buffer size?
+transfer time? For this new latency, can we lower the data transfer time by using a different buffer size? Show your work and reasoning. 
  
 <div class="ui accordion fluid">
     <div class="title">
@@ -272,7 +271,7 @@ So if a client program is told the latency of the network to the server, it coul
  
 **[A.3.2.p2.5]** Going more extreme, say now that the latency to Server #1 is 1 millisecond, but that the client program
 has  not been updated and still uses a 100KB buffer. Can  you come up with a rough estimate of how long the data transfer
-will take? Check your answer in simulation. Do the two numbers agree? 
+will take? Show your work. Check your answer in simulation. Do the two numbers agree?  
 
 
 <div class="ui accordion fluid">
@@ -300,7 +299,7 @@ in Networking [textbooks](/textbooks), but for now, let's just remember that  *l
  
  **[A.3.2.p2.6]** With the 1 millisecond latency to Server #1, is pipelining still useful?  Answer this question
  purely experimentally (since from the previous question we see that our estimates are not useful for such
- high latencies). 
+ high latencies).  Show your work and reasoning.
  
   <div class="ui accordion fluid">
  <div class="title">
@@ -329,7 +328,7 @@ in Networking [textbooks](/textbooks), but for now, let's just remember that  *l
 washer washes a load in 30 minutes, and the drier dries a load in 45
 minutes. You have 4 loads to do. How long until the last load is dried?
 What fraction of the time was the washer used? Could you have gone faster
-with two driers, and if so by how much? Show your work.
+with two driers, and if so by how much? Show your work and reasoning.
 
 
 **[A.3.2.q2.2]** You need to send 1 GB of data stored on disk to a remote
