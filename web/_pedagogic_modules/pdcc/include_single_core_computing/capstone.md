@@ -78,18 +78,18 @@ further.
 that computer? Show your work by computing and adding all I/O and compute times
 for each task.
 
-**[A.1.q5.2]** Is the execution I/O-intensive or CPU-intensive? 
+**[A.1.q5.2]** Is the execution I/O-intensive or CPU-intensive?  Explain your reasoning.
   
 **[A.1.q5.3]** If you were given only $100 to spend on upgrades, which 
 upgrade in the list above would you purchase?  You can answer this question
-purely via reasoning without computing anything. 
+purely via reasoning without computing anything. Show your work.
 
 **[A.1.q5.4]** What is the optimal way to spend the $250 on upgrades to 
 decrease execution time and what is the corresponding execution time? Show your
 work by discussing all possible ways to spend the money and estimating the
 execution time for each.
 
-**[A.1.q5.5]** Will the execution then be I/O-intensive or CPU-intensive?
+**[A.1.q5.5]** Will the execution then be I/O-intensive or CPU-intensive? Explain your reasoning.
 
 ----
     
@@ -113,19 +113,20 @@ is now a choice of which task to execute first.
 
 #### Questions
 
-**[A.1.q5.6]** If you execute A before B, what is the best way to spend 
-the $250 on upgrades? Consider all possible ways to spend the money. Hint: one
-upgrade is necessary to make the execution different from that in A.1.q5.4 above.
-Express the execution time as a mathematical expression (it's a good idea to
-draw the execution as in the figures in the previous tab), and modify the
-terms in this expression based on different upgrades to compare their effect
-on execution time.
+**[A.1.q5.6]** If you execute A before B, what is the best way to spend the
+$250 on upgrades? Consider all possible ways to spend the money. Hint: one
+upgrade is necessary to make the execution different from that in A.1.q5.4
+above.  Show your work by expressing the execution time as a mathematical
+expression (it's a good idea to depict the execution as in the figures in
+the previous tab), and modifying the terms in this expression based on
+different upgrades to compare their effect on execution time.
 
 **[A.1.q5.7]** If you execute B before A, what is the best way to spend 
-the $250 on upgrades? Use the same approach as for the previous question.
+the $250 on upgrades? Use the same approach as for the previous question and
+show your work similarly.
 
-**[A.1.q5.8]** Considering the best of these two options, compare and 
-contrast to your answers to A.1.q5.4 in terms of money spend and execution 
-time achieved. Is the more complex implementation worthwhile? 
+**[A.1.q5.8]** Considering the best of these two options (i.e., A.1.q5.6 and A.1.q5.7), compare and 
+contrast to your answer to A.1.q5.4 in terms of money spend and execution 
+time achieved. Is the more complex implementation worthwhile? Show your reasoning.
 
 ---

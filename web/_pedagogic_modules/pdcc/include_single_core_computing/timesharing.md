@@ -51,7 +51,7 @@ on this topic.
 
 **[A.1.p2.1]** At time 0 on a core with speed 2 Tflop/sec you start two 
 programs. Program *A*'s work is 200 Gflop, and program *B*'s work is 220 
-Gflop. At what times do the programs complete?
+Gflop. At what times do the programs complete? Show your work. 
 
 <div class="ui accordion fluid">
   <div class="title">

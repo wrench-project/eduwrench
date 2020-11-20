@@ -76,7 +76,8 @@ its actual value.
 
 **[A.2.p2.1]** You have a 4-core computer where each core computes at speed 1000 Gflop/sec. 
 You are told that a 10-task parallel program has 30 idle core seconds in total when executed
-on that computer. All tasks have the same work. What is the task work in  Gflop? You can double-check
+on that computer. All tasks have the same work. What is the task work in  Gflop? Show your work and reasoning,
+and in particular write and solve a simple equation where the task work is the unknown. You can double-check
 your answer with the simulation app above.
 <div class="ui accordion fluid">
   <div class="title">
@@ -105,7 +106,7 @@ question. The simulation clearly shows that the number of idle seconds is $15 \t
 
 **[A.2.p2.2]** You are told that a 10-task program runs in 1 hour
 on a 3-core machine. All tasks execute in the same amount of time on one core. 
-What is the execution time of one task? You can double-check
+What is the execution time of one task? Show your work and reasoning. You can double-check
 your answer with the simulation app above.
 
 <div class="ui accordion fluid">
@@ -127,7 +128,7 @@ i.e., 1 hour.
 
 **[A.2.p2.3]** Assume you have 20 tasks to execute on a multi-core computer,
 where each task runs in 1 second on a core. By what factor is the overall
-execution time reduced when going from 4 to 8 cores? You can double-check
+execution time reduced when going from 4 to 8 cores? Show your work and reasoning. You can double-check
 your answer in simulation. 
 <div class="ui accordion fluid">
   <div class="title">
@@ -169,7 +170,7 @@ you have two new multi-core computers to choose from, one with 5 cores and
 one with 10 cores. *Your only concern is to maximize parallel efficiency.* All of
 the cores are identical. You have 15 tasks to run, each taking 1 second to
 complete on a core. Which multi-core computer will provide the highest
-parallel efficiency?
+parallel efficiency? Show your work and reasoning. 
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -243,7 +244,7 @@ problem, i.e., how to allocate tasks to compute resources, again in upcoming mod
 
 **[A.2.p2.5]** A 5-task program runs optimally (i.e., it's the best it can
 possibly do) in 10 seconds on a 2-core computer. Tasks 1 to 4 run in 
-2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5 runs in 7s?
+2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5 runs in 7s? Show your work and reasoning.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>
@@ -262,7 +263,7 @@ to 11.
 **[A.2.p2.6]** Consider a 6-task program. The execution times of 5
 of the tasks are: 6, 8, 7, 12, 9. What should the 6th task's execution
 time so that this program can run with 100% parallel efficiency
-on 3 cores? 
+on 3 cores?  Show your work and reasoning.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>

@@ -148,7 +148,7 @@ In the next tab we explore one of the reasons why such waste occurs.
 
 **[A.2.p1.1]** Consider a parallel program that runs in 1 hour on a single core of a computer. 
 The program's execution on 6 cores has 80% parallel efficiency. What is the program's execution time
-when running on 6 cores?
+when running on 6 cores? Show your work.
 <div class="ui accordion fluid">
   <div class="title">
     <i class="dropdown icon"></i>

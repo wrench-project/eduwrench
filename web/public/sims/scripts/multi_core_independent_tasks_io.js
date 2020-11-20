@@ -1,13 +1,13 @@
 $(function () {
 
-    // Update the label that says how many cores each compute node has
+    // Update the label that states task #1's input size
     $("#mcit-io-task1-input-size").on("keyup", function () {
-        validateFieldInRange($(this), 100, 1000, [{className: ".mcit-io-task1-input-size-label", text: "MB"}]);
+        validateFieldInRange($(this), 1, 1000, [{className: ".mcit-io-task1-input-size-label", text: "MB"}]);
     });
 
-    // Update the label that says how many cores each compute node has
+    // Update the label that states task #1's output size
     $("#mcit-io-task1-output-size").on("keyup", function () {
-        validateFieldInRange($(this), 100, 1000, [{className: ".mcit-io-task1-output-size-label", text: "MB"}]);
+        validateFieldInRange($(this), 1, 1000, [{className: ".mcit-io-task1-output-size-label", text: "MB"}]);
     });
 
     // Update the label that says how much GFlop each task is. Converts to TFlop to save space if it gets too large.
