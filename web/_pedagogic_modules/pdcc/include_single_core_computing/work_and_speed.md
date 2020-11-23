@@ -53,13 +53,19 @@ seconds than another could actually be preferred for running some program.
 
 ### Flop and Flop/sec
 
-It turns out that the question of defining a universal unit of work is
-not possible. 
-Nevertheless, in these pedagogic modules, unless specified
-otherwise, we use a simple measure of work: the number of floating-point
-operations, or **Flop**, that the program performs.  We thus measure the
-speed of a core in Flop/sec, which is commonly used in the field of
-high-performance scientific computing.
+It turns out that the question of defining a universal unit of work is not
+possible, but we haver have to pick a consistent measure in these pedagogic
+modules. One option would be Million of Instructions, and thus the
+well-known MIPS (Million Instructions Per Second) measure of compute speed.
+A problem with this metric is that instructions (i.e., hardware instructions)
+are different across microprocessor families, thus leading to
+apples-to-oranges comparisons. Another metric, which is more related to
+what is being computed is the number of floating-point operations, or
+**Flop**, to perform (making the implicit assumptions that the programs we
+consider mostly perform floating point computations). This is the metric
+that we use in these pedagogic modules, unless specified otherwise.  We
+thus measure the speed of a core in Flop/sec, which is commonly used in the
+field of high-performance scientific computing.
 
 Like any single measure of work, the Flop count is imperfect (e.g.,
 programs do non-floating-point computations, floating-point operations are
