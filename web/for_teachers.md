@@ -59,19 +59,38 @@ table, th, td {
 }
 </style>
 
-| NSF/IEEE-TCPP Topic  | NSF/IEEE-TCPP SLO | EduWRENCH Modules |
+|NSF/IEEE-TCPP Topic|NSF/IEEE-TCPP SLO|EduWRENCH Modules|
+| --- | --- | --- |
+*Architecture*|Topologie |A.3.1|
+*Architecture*|Latency |A.3.1|
+*Architecture*|Bandwidth |A.3.1|
+*Architecture*|MIPS/FLOPS |A.1|
+*Architecture*|Power, Energy |Coming soon|
+*Programming*|Load balancing |A.2|
+*Programming*|Scheduling and mapping (core, advanced)|A.2,A.3.3|
+*Programming*|Performance metrics |A.2|
+*Programming*|Speedup |A.2|
+*Programming*|Efficiency |A.2|
+*Programming*|Parallel Scalability |Coming soon|
+*Programming*|Amdahl's Law |A.2|
+*Programming*|Gustanfson's Law |Coming soon|
+*Programming*|Energy efficiency vs. load balancing |Coming soon|
+*Programming*|Power consumption of parallel program |Coming soon|
+*Algorithms*|Time |A.1|
+*Algorithms*|Work |A.1|
+*Algorithms*|Memory and Communication complexity |A.3|
+*Algorithms*|Speedup |A.2|
+*Algorithms*|Efficiency |A.2|
+*Algorithms*|Scalability |Coming soon|
+*Algorithms*|Throughput |Coming soon|
+*Algorithms*|Time vs. Space |Coming soon|
+*Algorithms*|Power vs. Time |Coming soon|
+*Algorithms*|Dependencies |A.2|
+*Algorithms*|Task graphs |A.2, A.3.4|
+*Algorithms*|Makespan |A.2|
+*Algorithms*|Energy aware scheduling |Coming soon|
+*Algorithms*|Load Balancing |Coming soon|
 |---|---|---|
-|---|---|---|
-|   | asdasa| asd|
-| asd | asdasd | asdas|
-| | asdasd | asdas|
-| | asdasd | asdas|
-|---|---|
-|   | asdasa| asd|
-| asd | asdasd | asdas|
-| | asdasd | asdas|
-| | asdasd | asdas|
-|---|---|
 
 
 <style>
