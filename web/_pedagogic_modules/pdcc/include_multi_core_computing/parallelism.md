@@ -58,7 +58,8 @@ speed. For example, if you have tasks that a single core can complete in
 one hour, it will take four hours to complete four tasks. If you have two
 cores in a computer, now you can complete the same four
 tasks in less time, ideally in two hours. **With parallelism we
-can decrease program execution time**. 
+can decrease program execution time**.   Note that another common
+term for "execution time" is *makespan*.
 
 Unfortunately, most real-world programs do not have ideal parallelism
 behavior. In other words, they do not run $p$ times faster when executed on

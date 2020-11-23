@@ -10,8 +10,9 @@ the EduWRENCH pedagogic modules, namely:
 
   - [What is the target audience?](#target-audience)
   - [What are the learning objectives?](#learning-objectives)
+  - [What is the relationship to the NSF/IEEE-TCPP Curriculum?](#nsfieee-tcpp-curriculum-initiative)
   - [How can these modules be integrated into courses?](#integration-into-courses)
-  - [How to run your own EduWRENCH server?](#running-your-own-eduwrench-server)
+  - [How to run your own EduWRENCH server?](#running-your-own-server)
   - [How to get help or get involved?](#getting-help-and-getting-involved)
 </div>
 
@@ -43,6 +44,41 @@ The EduWRENCH modules target four top-level Student Learning Objectives (SLOs):
 
 Each module, and in fact each tab within each module page, lists specific SLOs, each mapping to one or more of
 the top-level SLOs. See the comprehensive [SLO Map](XXXXX).
+
+#### NSF/IEEE-TCPP Curriculum Initiative
+
+The [NSF/IEEE-TCPP Curriculum Initiative on Parallel and Distributed
+Computing](https://tcpp.cs.gsu.edu/curriculum/) has produced curriculum
+recommendations for Core Topics for Undergraduates. [Version 2.0 beta](https://tcpp.cs.gsu.edu/curriculum/?q=system/files/TCPP%20PDC%20Curriculum%20V2.0beta-Nov12.2020.pdf)
+was released in November 2020. Below is a table that identifies which of
+the SLOs therein as part of these pedagogic modules.
+
+<style>
+table, th, td {
+  border: 1px solid black;
+}
+</style>
+
+| NSF/IEEE-TCPP Topic  | NSF/IEEE-TCPP SLO | EduWRENCH Modules |
+|---|---|---|
+|---|---|---|
+|   | asdasa| asd|
+| asd | asdasd | asdas|
+| | asdasd | asdas|
+| | asdasd | asdas|
+|---|---|
+|   | asdasa| asd|
+| asd | asdasd | asdas|
+| | asdasd | asdas|
+| | asdasd | asdas|
+|---|---|
+
+
+<style>
+table, th, td {
+  border: 0px;
+}
+</style>
 
 #### Integration into courses
 

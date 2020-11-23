@@ -34,7 +34,10 @@
   description: a directed graph containing no cycles, often used to represent a workflow
 
 - term: "execution time"
-  description: the time it takes for a task/program to execute from start to finish.
+  description: the time it takes for a task/program to execute from start to finish (also called "makespan").
+
+- term: "makespan"
+  description: the time it takes for a task/program to execute from start to finish (also called "execution time").
 
 - term: "fork-join"
   description: a pattern in a directed acyclic graph (workflow) in which one vertex (source task) is connected to many other vertices (children tasks), and these vertices are then all connected to a single vertex (sink task). 
