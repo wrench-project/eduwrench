@@ -1,12 +1,12 @@
 ---
 layout: page
-title: 'FOR TEACHERS'
-permalink: /for_teachers
+title: 'For Teachers'
+permalink: /teachers
 ---
 
 <div markdown="1" class="ui tab segment active">
-This page is intended to provide teachers and instructors information regarding
-the EduWRENCH pedagogic modules, namely: 
+This page is intended to provide **teachers** and **instructors** information regarding
+the eduWRENCH pedagogic modules, namely: 
 
   - [What is the target audience?](#target-audience)
   - [What are the learning objectives?](#learning-objectives)
@@ -14,15 +14,13 @@ the EduWRENCH pedagogic modules, namely:
   - [How can these modules be integrated into courses?](#integration-into-courses)
   - [How to run your own EduWRENCH server?](#running-your-own-server)
   - [How to get help or get involved?](#getting-help-and-getting-involved)
-</div>
 
+#### Target Audience
 
-#### Target audience
-
-The EduWRENCH modules were designed with college students in mind, starting at the
+The eduWRENCH modules were designed with college students in mind, starting at the
 freshman level.  A current design principle is that no programming is
 required. Therefore, it should be possible for younger students, e.g.,
-high school or earlier, to go benefit from these modules.  
+high school or earlier, to benefit from these modules.  
 
 The modules aim to be as self-contained as possible: The only prerequisite
 to the first module is that students be familiar with the concept of a
@@ -31,11 +29,11 @@ of interest.  Depending on their levels, students can skim earlier modules
 or jump directly to later modules.  Although references are made to
 textbooks, especially in the earlier modules, consulting these textbooks is
 not required. Textbooks references are included, in part, to connect the
-EduWRENCH content to the general Computer Science curriculum.
+eduWRENCH content to the general Computer Science curriculum.
 
 #### Learning Objectives
 
-The EduWRENCH modules target four top-level Student Learning Objectives (SLOs):
+The eduWRENCH modules target four top-level Student Learning Objectives (SLOs):
 
   - **SLO1**: Be able to explain and apply the fundamental concepts of sequential, parallel, and distributed computing
   - **SLO2**: Be able to describe typical parallel/distributed computing (PDC) applications and the platforms on which they run
@@ -49,7 +47,8 @@ the top-level SLOs. See the comprehensive [SLO Map](XXXXX).
 
 The [NSF/IEEE-TCPP Curriculum Initiative on Parallel and Distributed
 Computing](https://tcpp.cs.gsu.edu/curriculum/) has produced curriculum
-recommendations for Core Topics for Undergraduates. [Version 2.0 beta](https://tcpp.cs.gsu.edu/curriculum/?q=system/files/TCPP%20PDC%20Curriculum%20V2.0beta-Nov12.2020.pdf)
+recommendations for Core Topics for Undergraduates. 
+[Version 2.0 beta](https://tcpp.cs.gsu.edu/curriculum/?q=system/files/TCPP%20PDC%20Curriculum%20V2.0beta-Nov12.2020.pdf)
 was released in November 2020. Below is a table that identifies which of
 the SLOs therein as part of these pedagogic modules.
 
@@ -59,7 +58,7 @@ table, th, td {
 }
 </style>
 
-|NSF/IEEE-TCPP Topic|NSF/IEEE-TCPP SLO|EduWRENCH Modules|
+|NSF/IEEE-TCPP Topic|NSF/IEEE-TCPP SLO|eduWRENCH Modules|
 | --- | --- | --- |
 *Architecture*|Topologie |A.3.1|
 *Architecture*|Latency |A.3.1|
@@ -67,7 +66,7 @@ table, th, td {
 *Architecture*|MIPS/FLOPS |A.1|
 *Architecture*|Power, Energy |Coming soon|
 *Programming*|Load balancing |A.2|
-*Programming*|Scheduling and mapping (core, advanced)|A.2,A.3.3|
+*Programming*|Scheduling and mapping (core, advanced)|A.2, A.3.3|
 *Programming*|Performance metrics |A.2|
 *Programming*|Speedup |A.2|
 *Programming*|Efficiency |A.2|
@@ -99,34 +98,38 @@ table, th, td {
 }
 </style>
 
-#### Integration into courses
+#### Integration into Courses
 
-There are several ways to integrate the EduWRENCH modules in your courses.
+There are several ways to integrate the eduWRENCH modules in your courses.
 Each module includes pedagogic narratives that can be used as lecture notes.
 That is, instead of lecturing on a particular
-topic, students could be directed to the relevant EduWRENCH page on which
+topic, students could be directed to the relevant eduWRENCH page on which
 they will find relevant pedagogic material (narrative, definition,
 examples, figures, simulation activities, practice questions).  Another
 option is for the instructor, during a lecture, to use particular
 simulation activities to illustrate particular concepts interactively, and
 to go through practice questions in class (revealing answers only once
 students have had a chance to participate). Each module contains several
-questions without no answers provided (answers are available to instructors
+questions with no answers provided (answers are available to instructors
 upon request). These can be used by instructors in various ways including
 for in-class activities, optionally with instructor-provided scaffolding,
 for homework assignments, or for exam questions. All these modalities have
 been already employed successfully in undergraduate university courses.
 
 
-#### Running your own server
+#### Running your Own Server
 
-EduWRENCH is available at [on GitHub](https://github.com/wrench-project/eduwrench). Straightforward instructions
-are provided in the repository's README file for deploying the EduWRENCH Web app and server. 
+eduWRENCH is available [on GitHub](https://github.com/wrench-project/eduwrench). 
+Straightforward instructions are provided in the repository's README file for 
+deploying the eduWRENCH Web app and server. 
 
-#### Getting help and getting involved
+#### Getting Help and Getting Involved
 
-You can contact us at [support@wrench-project.org](emailto:support@wrench-project.org) with any questions, feedback,
-or suggestions. Do not hesitate even if only to report a typo. Pull requests are of course welcome.  Also, we would very much like to hear from you if you have used these pedagogic modules in your courses, and for which kind of courses.
+You can contact us at [support@wrench-project.org](emailto:support@wrench-project.org) 
+with any questions, feedback, or suggestions. Do not hesitate even if only to report 
+a typo. Pull requests are of course welcome.  
 
+Also, we would very much like to hear from you if you have used these pedagogic 
+modules in your courses, and for which kind of courses.
 
----
+</div>
