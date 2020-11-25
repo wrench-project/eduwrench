@@ -126,7 +126,7 @@ are provided in the repository's README file for deploying the EduWRENCH Web app
 #### Getting help and getting involved
 
 You can contact us at [support@wrench-project.org](emailto:support@wrench-project.org) with any questions, feedback,
-or suggestions. Do not hesitate even if only to report a typo. Pull requests are of course welcome. 
+or suggestions. Do not hesitate even if only to report a typo. Pull requests are of course welcome.  Also, we would very much like to hear from you if you have used these pedagogic modules in your courses, and for which kind of courses.
 
 
 ---

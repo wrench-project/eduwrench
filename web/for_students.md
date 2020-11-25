@@ -7,10 +7,12 @@ permalink: /for_students
 
 
 <div markdown="1" class="ui tab segment active">
+This page is intended to provide students information regarding
 the EduWRENCH pedagogic modules, namely: 
 
-  - [What is the target audience?](#target-audience)
+  - [What are the prerequisites](#prerequisites)
   - [What are the learning objectives?](#learning-objectives)
+  - [How to provide feedback?](#providing-feedback)
 </div>
 
 
