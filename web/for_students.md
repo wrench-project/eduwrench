@@ -1,24 +1,20 @@
 ---
 layout: page
-title: 'FOR STUDENTS'
-permalink: /for_students
+title: 'For Students'
+permalink: /students
 ---
-
-
 
 <div markdown="1" class="ui tab segment active">
 This page is intended to provide students information regarding
-the EduWRENCH pedagogic modules, namely: 
+the eduWRENCH pedagogic modules, namely: 
 
   - [What are the prerequisites](#prerequisites)
   - [What are the learning objectives?](#learning-objectives)
   - [How to provide feedback?](#providing-feedback)
-</div>
-
 
 #### Prerequisites
 
-The EduWRENCH modules aim to be as self-contained as possible. The only
+The eduWRENCH modules aim to be as self-contained as possible. The only
 prerequisite to the first module is that you must be familiar with the
 concept of a program running on a computer for some lapse of time to
 compute something of interest. The modules are intended to be done in
@@ -38,7 +34,7 @@ parallel and distributed applications.
 
 #### Learning Objectives
 
-The EduWRENCH modules target four top-level Student Learning Objectives (SLOs):
+The eduWRENCH modules target four top-level Student Learning Objectives (SLOs):
 
   - **SLO1**: Be able to explain and apply the fundamental concepts of sequential, parallel, and distributed computing
   - **SLO2**: Be able to describe typical parallel/distributed computing (PDC) applications and the platforms on which they run
@@ -56,6 +52,4 @@ You can contact us at
 [support@wrench-project.org](emailto:support@wrench-project.org) to provide
 feedback, even if only to let us know about errors/typos on the site.
 
-
-
----
+</div>
