@@ -1,0 +1,35 @@
+.card {
+  background-color: white !important;
+  border-color: white !important;
+}
+
+ul li::before {
+  color: black;
+}
+
+Badge {
+  color: white !important;
+  background-color: white !important;
+}
+
+.main {
+  border-color: lightgrey !important;
+  margin-bottom: 50px;
+}
+
+ul li {
+  background-color: white;
+}
+
+ul {
+  background-color: white;
+}
+
+b {
+  background-color: white;
+}
+
+.privacy {
+  background-color: white;
+  margin-top: 15px;
+}

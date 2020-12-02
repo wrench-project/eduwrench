@@ -1,0 +1,24 @@
+{
+  "name": "test_dashboard",
+  "version": "1.0.0",
+  "description": "test code for the dashboard",
+  "main": "index.js",
+  "dependencies": {
+    "ansi_up": "^3.0.0",
+    "body-parser": "^1.18.3",
+    "connect-flash": "^0.1.1",
+    "cookie-session": "^2.0.0-beta.3",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "method-override": "^3.0.0",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ryan",
+  "license": "ISC"
+}

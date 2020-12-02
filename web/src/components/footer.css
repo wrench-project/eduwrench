@@ -1,0 +1,53 @@
+.text {
+  color: #969899;
+  margin-left: 20px;
+  background-color: white;
+}
+
+html {
+  background-color: white;
+}
+
+* {
+  background-color: white;
+}
+
+.banner {
+  margin-top: 10px;
+  background-color: white;
+}
+
+.footer {
+  background-color: white;
+  color: white;
+  padding: 40px;
+}
+
+.slink {
+  color: #969899;
+}
+
+.slink:hover {
+  color: #969899;
+}
+
+.row {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.column {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.inline-block {
+  display: inline-block;
+  background-color: white;
+}

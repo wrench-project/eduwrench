@@ -1,0 +1,94 @@
+# terms are sorted alphabetically when displayed in the glossary
+# each term should be entered in the following format:
+# - term: "<word>
+#   description: <word's description>
+
+- term: "bandwidth"
+  description: peak achievable data transfer rate across a network link/path, measured in bytes per second
+
+- term: "cluster"
+  description: a set of possibly many computers (or compute nodes) interconnected via a high-speed network used as a high-capacity compute platform
+
+- term: "compute node"
+  description: a computer in a compute platform such as a cluster
+
+- term: "compute service"
+  description: a software service that manages compute resources and handles requests for executing computational tasks
+
+- term: "core (or CPU core)"
+  description: a processing unit, or processor, in a multi-core microprocessor
+
+- term: "CPU utilization"
+  description: the fraction of time that a CPU (core) spends computing during a program execution
+
+- term: "critical path"
+  description: The longest path, in seconds, from an entry task to an exit task in a directed acyclic graph (DAG) of tasks.
+
+- term: "cyber infrastructure"
+  description: a set of hardware resources (hardware infrastructure) managed by software services (software infrastructures) that make it possible to execute parallel programs
+
+- term: "data locality"
+  description: the concept of having date  "close" to where the computation takes place. This could be having data in a cache close to the core withing a computer, or data in storage close to a computer  (in terms of network proximity).
+
+- term: "directed acyclic graph (DAG)"
+  description: a directed graph containing no cycles, often used to represent a workflow
+
+- term: "execution time"
+  description: the time it takes for a task/program to execute from start to finish.
+
+- term: "fork-join"
+  description: a pattern in a directed acyclic graph (workflow) in which one vertex (source task) is connected to many other vertices (children tasks), and these vertices are then all connected to a single vertex (sink task).
+
+- term: "floating point operation (flop)"
+  description: a standard unit of "amount of work to do" used for scientific applications (as many of such applications perform mostly floating point arithmetic); computational hardware resources then have speed measured in flop/sec, i.e., how much "work" they can perform per time unit
+
+- term: "frontend node"
+  description: the entry-point computer to a cluster, which typically is connected to the internet and runs software to handle requests for the cluster's compute nodes
+
+- term: "idle time"
+  description: the amount of time that a core/computer does not actually compute during a program execution (typically because of I/O operations taking place)
+
+- term: "latency"
+  description: the time it takes for a single packet to travel from one end of a network link/path to the other end
+
+- term: "makespan"
+  description: the overall execution time of a program execution (i.e., the wall-clock time between the beginning of the program's first task and the competion of the program's last task).
+
+- term: "persistent storage"
+  description: a storage device, such as a hard drive, that retains data even after its power source has been shut off
+
+- term: "parallelism"
+  description: the ability of a program to execute multiple streams of instructions simultaneously on multiple processors
+
+- term: "parallel efficiency"
+  description: the parallel speedup divided by the number of processors, as a percentage
+
+- term: "parallel speedup"
+  description: the acceleration factor (when compared to a sequential execution) when running an application using multiple processors
+
+- term: "RAM (Random Access Memory)"
+  description: memory provided by a computer so that running programs can store all the code/data needed for their execution on that computer
+
+- term: "parallel scalability"
+  description: the ability of a parallel program to maintain high parallel efficiency as the number of compute nodes / cores increases
+
+- term: "storage service"
+  description: a software service that manages persistent storage and handles requests for creating, deleting, reading, and writing files
+
+- term: "network topology"
+  description: a graph in which edges are network links and vertices are either end-points (i.e., computers) or routers
+
+- term: "time sharing"
+  description: the technique by which an operating system runs multiple programs on the same core, rapidly cycling over them throughout time.
+
+- term: "turnaround-time"
+  description: the time elapsed between a task is submitted for execution and its completion
+
+- term: "work"
+  description: the number of operations that a particular task needs to execute when executed on a core that performs some number of such operations per time unit. For instance, a task with 100 GFlop work would run in .5 seconds on a core with 200 GFlop/sec speed.
+
+- term: "workflow"
+  description: a program comprised of individual computational tasks, often stand-alone executables, that must execute in some particular sequence to produce a final desired output
+
+- term: "workflow management system (WMS)"
+  description: a software tool that automatically orchestrates the execution of a workflow on a cyber infrastructure

@@ -1,0 +1,27 @@
+.irow {
+  background-color: #fefaec;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.icolumn {
+  background-color: #fefaec;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.link {
+  color: #c78651;
+}
+
+.link:hover {
+  color: #c78651;
+}
+
+.m {
+  border-color: lightgrey !important;
+}
