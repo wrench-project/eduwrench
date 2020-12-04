@@ -18,6 +18,7 @@ const ForStudents = () => (
         textAlign: "center",
         marginBottom: `30px`,
         marginTop: `50px`,
+        color: "#525252",
       }}
     >
       For Students

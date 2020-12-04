@@ -18,6 +18,7 @@ const Modules = () => (
         textAlign: "center",
         marginBottom: `30px`,
         marginTop: `50px`,
+        color: "#525252",
       }}
     >
       Our Modules
@@ -35,7 +36,10 @@ const Modules = () => (
           <Card.Title style={{ backgroundColor: "white" }}>
             A. Parallel and Distributed Computing Concepts
           </Card.Title>
-          <Card.Link style={{ color: "#c78651" }} href="#">
+          <Card.Link
+            style={{ color: "#c78651" }}
+            href="/pedagogic_modules/single_core_computing/"
+          >
             <b style={{ backgroundColor: "white" }}>
               &emsp;A.1. Single-core Computing
             </b>

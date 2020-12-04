@@ -32,6 +32,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `30px`,
+              color: "#525252",
             }}
           >
             GOAL
@@ -69,6 +70,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `10px`,
+              color: "#525252",
             }}
           >
             ABOUT WRENCH AND SIMGRID
@@ -101,6 +103,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `30px`,
+              color: "#525252",
             }}
           >
             WHAT THIS IS NOT ABOUT
@@ -127,6 +130,7 @@ const IndexPage = () => (
         textAlign: "center",
         marginBottom: `30px`,
         marginTop: `30px`,
+        color: "#525252",
       }}
     >
       MODULES
@@ -145,7 +149,10 @@ const IndexPage = () => (
           <Card.Title style={{ backgroundColor: "white" }}>
             A. Parallel and Distributed Computing Concepts
           </Card.Title>
-          <Card.Link style={{ color: "#c78651" }} href="#">
+          <Card.Link
+            style={{ color: "#c78651" }}
+            href="/pedagogic_modules/single_core_computing/"
+          >
             A.1. Single-core Computing
           </Card.Link>
           <br />

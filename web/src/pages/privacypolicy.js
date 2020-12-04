@@ -18,6 +18,7 @@ const PrivacyPolicy = () => (
         textAlign: "center",
         marginBottom: `30px`,
         marginTop: `50px`,
+        color: "#525252",
       }}
     >
       Privacy Policy
