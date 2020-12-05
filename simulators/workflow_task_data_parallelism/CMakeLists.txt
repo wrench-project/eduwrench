@@ -5,7 +5,7 @@ project(ACTIVITY_WORKFLOW_TASK_DATA_PARALLELISM)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 # include directories for dependencies and WRENCH libraries
 include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include)

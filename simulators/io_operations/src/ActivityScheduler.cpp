@@ -55,7 +55,7 @@ namespace wrench {
                 file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
         }
-        WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
+        auto job = this->getJobManager()->createStandardJob(tasks_to_submit, file_locations);
         this->getJobManager()->submitJob(job, compute_service, service_specific_args);
 
     }
