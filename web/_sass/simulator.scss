@@ -96,17 +96,17 @@
   font-size: 1.1em !important;
 }
 
-.read-col {
-  background-color: #efe8f4 !important;
-}
-
-.compute-col {
-  background-color: #f9eedb !important;
-}
-
-.write-col {
-  background-color: #e2f5ff !important;
-}
+//.read-col {
+//  background-color: #efe8f4 !important;
+//}
+//
+//.compute-col {
+//  background-color: #f9eedb !important;
+//}
+//
+//.write-col {
+//  background-color: #e2f5ff !important;
+//}
 
 .task-details-table-td {
   padding: .75rem;
@@ -118,4 +118,8 @@
   border-top: 1px solid #dee2e6;
   font-size: 12px;
   padding: 0.5em 0.2em;
+}
+
+.details td, .details th {
+  border: 0 !important;
 }
