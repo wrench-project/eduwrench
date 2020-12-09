@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import React from "react"
 import Navbar from "react-bootstrap/Navbar"
 import Nav from "react-bootstrap/Nav"
+import Auth from "./auth"
 
 const Header = props => {
   return (
@@ -41,13 +42,7 @@ const Header = props => {
             className="ml-auto"
             style={{ backgroundColor: "#f8f9fa" }}
           >
-            <img
-              src={require("../images/signin.png")}
-              height="40"
-              style={{ margin: "20px", backgroundColor: "white" }}
-              className="d-inline-block align-top"
-              alt="Sign In"
-            />
+            <Auth />
           </Navbar.Brand>
         </Navbar>
         <Navbar bg="light">

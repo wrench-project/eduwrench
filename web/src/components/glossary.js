@@ -3,7 +3,6 @@ import { Link } from "gatsby"
 import "antd/dist/antd.css"
 import "./glossary.css"
 import { Drawer, Button, Input } from "antd"
-import YAMLData from "../../content/glossary.yml"
 import { useStaticQuery, graphql } from "gatsby"
 
 const Glossary = () => {
@@ -63,6 +62,7 @@ const Glossary = () => {
         size="large"
         type="primary"
         onClick={showDrawer}
+        className="glossary"
       >
         Glossary
       </Button>
