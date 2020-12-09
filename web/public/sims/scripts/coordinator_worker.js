@@ -141,9 +141,14 @@ $(function () {
                     write: {display: false, label: ""},
                 });
                 generateHostUtilizationChart(executionData, 'cw-host-utilization-chart', [], [], false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'cw-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: []
+                }
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                // generateGraph(prepared_data, "taskView", 900, 500);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

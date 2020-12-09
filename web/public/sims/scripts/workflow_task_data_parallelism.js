@@ -51,6 +51,12 @@ $(function () {
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData, 'wf-parallel-graph-container');
                 generateHostUtilizationChart(executionData, 'wf-parallel-host-utilization-chart', [], [], false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'wf-parallel-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: []
+                }
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

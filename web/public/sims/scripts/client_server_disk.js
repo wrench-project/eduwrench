@@ -86,13 +86,18 @@ $(function () {
 
                 // generateGanttChart(executionData, 'csd-graph-container');
                 generateHostUtilizationChart(executionData, 'csd-host-utilization-chart', [], ['client'], false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'csd-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: ['client']
+                }
 
                 let link_to_display = $('input[name=csd-host-select]:checked').val() === '1' ? 'link1' : 'link2';
                 generateBandwidthUsage(executionData, dataSizeUnits.MB, 'csd-network-bandwidth-chart', false,
                     [link_to_display], null);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                // generateGraph(prepared_data, "taskView", 900, 500);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

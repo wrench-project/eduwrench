@@ -45,9 +45,14 @@ $(function () {
                 // generateGanttChart(executionData, 'mcdt2-graph-container');
                 generateHostUtilizationChart(executionData, 'mcdt2-host-utilization-chart',
                     hostsList = [], diskHostsList = [], zoom = false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'mcdt2-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: []
+                }
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                // generateGraph(prepared_data, "taskView", 900, 500);
                 // populateWorkflowTaskDataTable(prepared_data, "task-details-table", "task-details-table-body",
                 //     "task-details-table-td");
             }

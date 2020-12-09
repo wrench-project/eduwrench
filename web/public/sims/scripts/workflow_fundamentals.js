@@ -46,10 +46,14 @@ $(function () {
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData, 'wf-graph-container');
                 generateHostUtilizationChart(executionData, 'wf-host-utilization-chart', [], [], false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'wf-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: []
+                }
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
-                // generateGraph(prepared_data, "taskView", 900, 500);
-                // generateHostUtilizationGraph(prepared_data, 900, 300, 60);
                 populateWorkflowTaskDataTable(prepared_data, 'wf-task-details-table');
             }
         });

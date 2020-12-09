@@ -114,6 +114,12 @@ $(function () {
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData);
                 generateHostUtilizationChart(executionData, 'mcit-host-utilization-chart', [], [], false);
+                hostUtilizationData = {
+                    data: executionData,
+                    containedId: 'mcit-host-utilization-chart',
+                    hostsList: [],
+                    diskHostsList: []
+                }
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
