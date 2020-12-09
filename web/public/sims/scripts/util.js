@@ -32,7 +32,7 @@ function prepareResponseData(responseData) {
  * @param maxRange
  * @param label
  */
-function validateFieldInRange(input_el, minRange, maxRange, label = null) {
+function validateFieldInRange(input_el, minRange, maxRange, label = null, valueLambdaFunction) {
     let input_value = input_el.val();
     let run_simulation_button = $("#run-button");
 
@@ -44,6 +44,9 @@ function validateFieldInRange(input_el, minRange, maxRange, label = null) {
             for (let idx in label) {
                 let label_el = $(label[idx].className);
                 let textLabel = input_value;
+                if (valueLambdaFunction) {
+                    textLabel = valueLambdaFunction(input_value);
+                }
                 if (label[idx].pretext) {
                     textLabel = label[idx].pretext + " " + textLabel;
                 }
