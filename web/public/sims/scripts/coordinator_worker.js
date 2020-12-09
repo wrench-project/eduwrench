@@ -140,7 +140,7 @@ $(function () {
                     compute: {display: true, label: "Computing"},
                     write: {display: false, label: ""},
                 });
-                generateHostUtilizationChart(executionData, 'cw-host-utilization-chart');
+                generateHostUtilizationChart(executionData, 'cw-host-utilization-chart', [], [], false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

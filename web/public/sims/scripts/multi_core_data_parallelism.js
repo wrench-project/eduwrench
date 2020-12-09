@@ -52,7 +52,7 @@ $(function () {
 
                 let executionData = prepareResponseData(response.task_data);
                 // generateGanttChart(executionData, 'mcdp-graph-container');
-                generateHostUtilizationChart(executionData, 'mcdp-host-utilization-chart');
+                generateHostUtilizationChart(executionData, 'mcdp-host-utilization-chart', [], [], false);
 
                 // let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);

@@ -92,7 +92,7 @@ $(function () {
 
                 let executionData = prepareResponseData(response.task_data);
                 generateGanttChart(executionData, 'io-graph-container');
-                generateHostUtilizationChart(executionData, 'io-host-utilization-chart');
+                generateHostUtilizationChart(executionData, 'io-host-utilization-chart', [], [], false);
 
                 let prepared_data = prepareData(response.task_data.workflow_execution.tasks);
                 // generateGraph(prepared_data, "taskView", 900, 500);
