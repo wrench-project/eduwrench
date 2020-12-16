@@ -26,6 +26,7 @@ class Auth extends Component {
         isLogined: true,
         accessToken: response.accessToken,
       }))
+      localStorage.setItem("login", "true")
     }
   }
 
@@ -34,6 +35,7 @@ class Auth extends Component {
       isLogined: false,
       accessToken: "",
     }))
+    localStorage.setItem("login", "false")
   }
 
   handleLoginFailure(response) {

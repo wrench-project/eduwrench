@@ -1,74 +1,19 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Card from "react-bootstrap/Card"
+import Accordion from "react-bootstrap/Accordion"
 
 const IO = () => {
+  const [auth, setAuth] = useState("false")
+
+  useEffect(() => {
+    const authenticated = localStorage.getItem("login")
+    setAuth(authenticated)
+  })
+
   return (
     <>
       <Card className="main">
         <Card.Body className="card">
-          <p className="card">
-            This page is intended to provide students information regarding the
-            eduWRENCH pedagogic modules, namely:
-          </p>
-          <ul className="card">
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#prerequisites">
-                What are the prerequisites?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#objectives">
-                What are the learning objectives?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#feedback">
-                How to provide feedback?
-              </a>
-            </li>
-          </ul>
-
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="prerequisites">Prerequisites</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules aim to be as self-contained as possible. The
-            only prerequisite to the first module is that you must be familiar
-            with the concept of a program running on a computer for some lapse
-            of time to compute something of interest. The modules are intended
-            to be done in sequence. Depending on your level of knowledge, you
-            may be able to skip (or merely skim) the earlier module(s).
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            The content in these modules, especially for the earlier ones,
-            references classic textbooks. This is to make connections to the
-            standard Computer Science curriculum. Consulting these textbooks,
-            however, is completely optional.
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            Finally, these modules do not assume any computer programming
-            knowledge or skills, and do not involve any programming activities.
-            This said, the concepts you will learn have direct implications on
-            the development of parallel and distributed applications.
-          </p>
           <div
             style={{
               height: 50,
@@ -90,37 +35,16 @@ const IO = () => {
               <a id="objectives">Learning Objectives</a>
             </h6>
           </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules target four top-level Student Learning
-            Objectives (SLOs):
-          </p>
-          <ul style={{ backgroundColor: "white" }}>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO1</b>: Be able to
-              explain and apply the fundamental concepts of sequential,
-              parallel, and distributed computing
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO2</b>: Be able to
-              describe typical parallel/distributed computing (PDC) applications
-              and the platforms on which they run
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO3</b>: Be able to
-              reason about and improve the performance of PDC applications
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO4</b>: Be comfortable
-              with and able to use standard tools provided as part of current
-              CyberInfrastructure deployments
+          <br />
+          <ul>
+            <li>Understand the concept of IO</li>
+            <li>Understand the impact of IO operations on computing</li>
+            <li>
+              Understand the basics of optimizing computation around IO
+              operations
             </li>
           </ul>
-          <p style={{ backgroundColor: "white" }}>
-            Each module, and in fact each tab within each module page, lists
-            specific SLOs, each mapping to one or more of the top-level SLOs.
-            See the comprehensive SLO Map if interest.
-          </p>
-
+          <hr></hr>
           <div
             style={{
               height: 50,
@@ -139,21 +63,63 @@ const IO = () => {
                 textAlign: "center",
               }}
             >
-              <a id="feedback">Providing Feedback</a>
+              <a id="objectives">Simulating IO</a>
             </h6>
           </div>
-
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            You can contact us at{" "}
-            <a
-              href="mailto:support@wrench-project.org"
-              style={{ color: "#d3834a", backgroundColor: "white" }}
-            >
-              support@wrench-project.org
-            </a>{" "}
-            to provide feedback, even if only to let us know about errors/typos
-            on the site.
+          <br />
+          <p className="card">
+            So that you can gain hands-on experience with the above concepts,
+            use the simulation app below.
           </p>
+          <p className="card">
+            Initially, you can create a series of identical tasks that have a
+            certain input and output. Run the simulation to see the progression
+            of tasks and host utilization without allowing IO to overlap with
+            computation. Once you have observed this, try selecting the checkbox
+            to allow overlap. With IO overlap there should be an improvement in
+            execution time and host utilization. You can view this in the output
+            graphs that are generated. You can also try varying the input/output
+            and computation amounts to create IO-intensive or CPU-intensive
+            tasks. Understanding which tasks will benefit from increased R/W or
+            computation speeds will assist you in answering the questions to
+            come.
+          </p>
+          <Accordion>
+            <Card>
+              <Accordion.Toggle as={Card.Header} eventKey="0">
+                (Open Simulator Here)
+              </Accordion.Toggle>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body className="card">
+                  {auth === "true" ? (
+                    <h5 className="card">Logged in</h5>
+                  ) : (
+                    <div className="card">
+                      <img
+                        src={require("../../../images/wrench_logo.png")}
+                        width="40"
+                        height="40"
+                        style={{
+                          backgroundColor: "white",
+                        }}
+                        alt="eduWRENCH logo"
+                      />
+                      <h4 className="card" style={{ color: "grey" }}>
+                        {" "}
+                        eduWRENCH Pedagogic Module Simulator
+                      </h4>
+                      <p className="card">
+                        <b className="card">
+                          Sign in on the top of the page to access the
+                          simulator.
+                        </b>
+                      </p>
+                    </div>
+                  )}
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
         </Card.Body>
       </Card>
     </>
