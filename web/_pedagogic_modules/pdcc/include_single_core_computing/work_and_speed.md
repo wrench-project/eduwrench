@@ -98,9 +98,9 @@ Make sure you know your units:
     - K(ilo): $10^3$
     - M(ega): $10^6$
     - G(iga): $10^9$
-    - T(era): $10^12$
-    - P(eta): $10^15$
-    - E(exa): $10^18$
+    - T(era): $10^{12}$
+    - P(eta): $10^{15}$
+    - E(exa): $10^{18}$
 
 ---
 
