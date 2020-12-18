@@ -92,7 +92,6 @@ Step a) and b) define the strategy, and it is easy to come up with a bunch of op
     - Pick a random worker
     - Pick the fastest worker (i.e., highest Flop/sec)
     - Pick the best-connected worker (i.e., highest link MB/sec)
-    - Pick the 
     - Pick the worker that can complete the task the earliest (based on a back-of-the-envelope estimate)
 
 The above defines $7 \times 4 = 28$ different scheduling strategies, and we
