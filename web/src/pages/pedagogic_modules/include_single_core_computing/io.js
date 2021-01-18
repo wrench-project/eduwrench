@@ -1,14 +1,34 @@
 import React, { useState, useEffect } from "react"
 import Card from "react-bootstrap/Card"
 import Accordion from "react-bootstrap/Accordion"
+import Form from "react-bootstrap/Form"
+import Col from "react-bootstrap/Col"
+import Button from "react-bootstrap/Button"
+import axios from "axios"
+import "./../pedagogic_modules.css"
 
 const IO = () => {
   const [auth, setAuth] = useState("false")
+  const [test, setTest] = useState([])
 
   useEffect(() => {
     const authenticated = localStorage.getItem("login")
     setAuth(authenticated)
   })
+
+  const handleClick = () => {
+    fetch("http://localhost:3000/run/test/io").then(response => response.json())
+  }
+
+  const handlePost = () => {
+    // POST request using axios inside useEffect React hook
+    const data = {
+      email: "jwfeuerstein@gmail.com",
+      time: 7676,
+      activity: "test",
+    }
+    axios.post("http://localhost:3000/insert", data)
+  }
 
   return (
     <>
@@ -92,7 +112,160 @@ const IO = () => {
               <Accordion.Collapse eventKey="0">
                 <Card.Body className="card">
                   {auth === "true" ? (
-                    <h5 className="card">Logged in</h5>
+                    <div>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">
+                            Simulation Scenario
+                          </Card.Title>
+                          <hr></hr>
+                          <img
+                            src={require("../../../sim_images/io_task.svg")}
+                            height="300"
+                            style={{
+                              backgroundColor: "white",
+                            }}
+                            alt="eduWRENCH logo"
+                          />
+                        </Card.Body>
+                      </Card>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">
+                            Enter Simulation Parameters
+                          </Card.Title>
+                          <hr></hr>
+                          <Form style={{ backgroundColor: "white" }}>
+                            <Form.Row style={{ backgroundColor: "white" }}>
+                              <Form.Group
+                                as={Col}
+                                controlId="numTasks"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                <Form.Label
+                                  style={{ backgroundColor: "white" }}
+                                >
+                                  Number of Tasks
+                                </Form.Label>
+                                <Form.Control
+                                  style={{ backgroundColor: "white" }}
+                                  type="number"
+                                  defaultValue="1"
+                                />
+                              </Form.Group>
+                              <Form.Group
+                                as={Col}
+                                controlId="taskGflop"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                <Form.Label
+                                  style={{ backgroundColor: "white" }}
+                                >
+                                  Task Gflop
+                                </Form.Label>
+                                <Form.Control
+                                  type="Number"
+                                  defaultValue="100"
+                                  style={{ backgroundColor: "white" }}
+                                />
+                              </Form.Group>
+                            </Form.Row>
+                            <Form.Row style={{ backgroundColor: "white" }}>
+                              <Form.Group
+                                as={Col}
+                                controlId="amountInput"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                <Form.Label
+                                  style={{ backgroundColor: "white" }}
+                                >
+                                  Amount of Task Input Data
+                                </Form.Label>
+                                <Form.Control
+                                  type="number"
+                                  defaultValue="1"
+                                  style={{ backgroundColor: "white" }}
+                                />
+                              </Form.Group>
+                              <Form.Group
+                                as={Col}
+                                controlId="amountOutput"
+                                style={{ backgroundColor: "white" }}
+                              >
+                                <Form.Label
+                                  style={{ backgroundColor: "white" }}
+                                >
+                                  Amount of Task Output Data
+                                </Form.Label>
+                                <Form.Control
+                                  type="Number"
+                                  defaultValue="1"
+                                  style={{ backgroundColor: "white" }}
+                                />
+                              </Form.Group>
+                            </Form.Row>
+                            <Form.Row style={{ backgroundColor: "white" }}>
+                              <Form.Group style={{ backgroundColor: "white" }}>
+                                <Form.Check
+                                  custom
+                                  className="check"
+                                  style={{ backgroundColor: "white" }}
+                                  type="checkbox"
+                                  id="overlap"
+                                  label="IO Overlap Allowed (Computation and IO can take place concurrently)"
+                                />
+                              </Form.Group>
+                            </Form.Row>
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                backgroundColor: "white",
+                                color: "white",
+                              }}
+                            >
+                              <Button custom onClick={handleClick}>
+                                Run Simulation
+                              </Button>
+                              <Button custom onClick={handlePost}>
+                                Run Post
+                              </Button>
+                              <h1>{test}</h1>
+                            </div>
+                          </Form>
+                        </Card.Body>
+                      </Card>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">
+                            Simulation Output
+                          </Card.Title>
+                          <hr></hr>
+                        </Card.Body>
+                      </Card>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">
+                            Task Executions
+                          </Card.Title>
+                          <hr></hr>
+                        </Card.Body>
+                      </Card>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">
+                            Host Utilization
+                          </Card.Title>
+                          <hr></hr>
+                        </Card.Body>
+                      </Card>
+                      <Card className="card">
+                        <Card.Body className="card">
+                          <Card.Title className="card">Task Data</Card.Title>
+                          <hr></hr>
+                        </Card.Body>
+                      </Card>
+                    </div>
                   ) : (
                     <div className="card">
                       <img

@@ -11,3 +11,7 @@
   background-color: #c78651 !important;
   color: white !important;
 }
+
+.check * {
+  background-color: white;
+}

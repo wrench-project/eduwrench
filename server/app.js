@@ -18,10 +18,8 @@ const express = require("express"),
   passportSetup = require("./passport-setup");
 
 const cors = require("cors");
-
+const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
-
-//const gatsby = require("gatsby-plugin-nodejs");
 
 (cookieSession = require("cookie-session")),
   (request = require("request")),
@@ -75,6 +73,18 @@ const authCheck = function (req, res, next) {
 
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 var ansi_up = new au.default();
+
+// route to test insertion into database
+app.post("/insert", (req, res) => {
+  sims
+    .add(req.body)
+    .then((simulation) => {
+      res.status(200).json(simulation);
+    })
+    .catch((error) => {
+      res.status(500).json({ message: error.message });
+    });
+});
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
@@ -804,6 +814,10 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (
       task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
     });
   }
+});
+
+app.post("/run/test/io", function (req, res) {
+  res.send();
 });
 
 // execute activity io operations simulation route
