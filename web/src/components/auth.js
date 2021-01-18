@@ -12,12 +12,17 @@ class Auth extends Component {
     this.state = {
       isLogined: false,
       accessToken: "",
+      currentUser: "",
     }
 
     this.login = this.login.bind(this)
     this.handleLoginFailure = this.handleLoginFailure.bind(this)
     this.logout = this.logout.bind(this)
     this.handleLogoutFailure = this.handleLogoutFailure.bind(this)
+  }
+
+  storeUser = () => {
+    localStorage.setItem("currentUser", this.state.currentUser)
   }
 
   login(response) {
@@ -30,12 +35,36 @@ class Auth extends Component {
     }
   }
 
+  handleLogin = async googleData => {
+    if (googleData.accessToken) {
+      this.setState(state => ({
+        isLogined: true,
+        accessToken: googleData.accessToken,
+      }))
+      localStorage.setItem("login", "true")
+    }
+    const res = await fetch("http://localhost:3000/auth/google", {
+      method: "POST",
+      body: JSON.stringify({
+        token: googleData.tokenId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    const data = await res.json()
+    this.setState(state => ({ currentUser: data.email }))
+    this.storeUser()
+  }
+
   logout(response) {
     this.setState(state => ({
       isLogined: false,
       accessToken: "",
+      currentUser: "",
     }))
     localStorage.setItem("login", "false")
+    localStorage.setItem("currentUser", "")
   }
 
   handleLoginFailure(response) {
@@ -61,7 +90,8 @@ class Auth extends Component {
           <GoogleLogin
             clientId={CLIENT_ID}
             buttonText="Login"
-            onSuccess={this.login}
+            //onSuccess={this.login}
+            onSuccess={this.handleLogin}
             onFailure={this.handleLoginFailure}
             cookiePolicy={"single_host_origin"}
             responseType="code,token"

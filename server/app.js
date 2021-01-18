@@ -20,6 +20,11 @@ const express = require("express"),
 const cors = require("cors");
 const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
+const CLIENT_ID =
+  "1043042177326-hr8cj7m89j8s8i4bopgm9pkkllr4dedf.apps.googleusercontent.com";
+
+const { OAuth2Client } = require("google-auth-library");
+const client = new OAuth2Client(CLIENT_ID);
 
 (cookieSession = require("cookie-session")),
   (request = require("request")),
@@ -84,6 +89,20 @@ app.post("/insert", (req, res) => {
     .catch((error) => {
       res.status(500).json({ message: error.message });
     });
+});
+
+app.post("/auth/google", async (req, res) => {
+  const { token } = req.body;
+  const ticket = await client.verifyIdToken({
+    idToken: token,
+    audience: process.env.CLIENT_ID,
+  });
+  const { name, email, picture } = ticket.getPayload();
+
+  const user = { email: email };
+  //req.session.userId = user.id;
+  res.status(201);
+  res.json(user);
 });
 
 // main route that will show login/logout and available activities

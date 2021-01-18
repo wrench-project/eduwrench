@@ -23,9 +23,9 @@ const IO = () => {
   const handlePost = () => {
     // POST request using axios inside useEffect React hook
     const data = {
-      email: "jwfeuerstein@gmail.com",
-      time: 7676,
-      activity: "test",
+      email: localStorage.getItem("currentUser"),
+      time: Math.floor(Date.now() / 1000),
+      activity: "IO",
     }
     axios.post("http://localhost:3000/insert", data)
   }
@@ -230,7 +230,6 @@ const IO = () => {
                               <Button custom onClick={handlePost}>
                                 Run Post
                               </Button>
-                              <h1>{test}</h1>
                             </div>
                           </Form>
                         </Card.Body>
