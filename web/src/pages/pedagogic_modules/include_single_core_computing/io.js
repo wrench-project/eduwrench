@@ -11,13 +11,39 @@ const IO = () => {
   const [auth, setAuth] = useState("false")
   const [test, setTest] = useState([])
 
+  const [numTasks, setNumTasks] = useState(1)
+  const [taskGflop, setTaskGflop] = useState(100)
+  const [amountInput, setAmountInput] = useState(1)
+  const [amountOutput, setAmountOutput] = useState(1)
+  const [overlapAllowed, setOverlapAllowed] = useState(false)
+
   useEffect(() => {
     const authenticated = localStorage.getItem("login")
     setAuth(authenticated)
   })
 
   const handleClick = () => {
-    fetch("http://localhost:3000/run/test/io").then(response => response.json())
+    const data = {
+      email: localStorage.getItem("currentUser"),
+      time: Math.floor(Date.now() / 1000),
+      activity: "IO",
+      num_tasks: numTasks,
+      task_gflop: taskGflop,
+      task_input: amountInput,
+      task_output: amountOutput,
+      io_overlap: overlapAllowed,
+    }
+    axios
+      .post("http://localhost:3000/insert", data)
+      .then(
+        response => {
+          console.log(response)
+        },
+        error => {
+          console.log(error)
+        }
+      )
+      .then(alert("Simulation executed"))
   }
 
   const handlePost = () => {
@@ -26,8 +52,41 @@ const IO = () => {
       email: localStorage.getItem("currentUser"),
       time: Math.floor(Date.now() / 1000),
       activity: "IO",
+      num_tasks: numTasks,
+      task_gflop: taskGflop,
+      task_input: amountInput,
+      task_output: amountOutput,
+      io_overlap: overlapAllowed,
     }
     axios.post("http://localhost:3000/insert", data)
+  }
+
+  const handleNumTasks = e => {
+    if (!isNaN(e.target.value) && e.target.value != 0) {
+      setNumTasks(e.target.value)
+    }
+  }
+
+  const handleTaskGflop = e => {
+    if (!isNaN(e.target.value) && e.target.value != 0) {
+      setTaskGflop(e.target.value)
+    }
+  }
+
+  const handleAmountInput = e => {
+    if (!isNaN(e.target.value) && e.target.value != 0) {
+      setAmountInput(e.target.value)
+    }
+  }
+
+  const handleAmountOutput = e => {
+    if (!isNaN(e.target.value) && e.target.value != 0) {
+      setAmountOutput(e.target.value)
+    }
+  }
+
+  const handleOverlapAllowed = e => {
+    setOverlapAllowed(e.target.checked)
   }
 
   return (
@@ -150,7 +209,8 @@ const IO = () => {
                                 <Form.Control
                                   style={{ backgroundColor: "white" }}
                                   type="number"
-                                  defaultValue="1"
+                                  defaultValue={numTasks}
+                                  onChange={handleNumTasks}
                                 />
                               </Form.Group>
                               <Form.Group
@@ -165,8 +225,9 @@ const IO = () => {
                                 </Form.Label>
                                 <Form.Control
                                   type="Number"
-                                  defaultValue="100"
+                                  defaultValue={taskGflop}
                                   style={{ backgroundColor: "white" }}
+                                  onChange={handleTaskGflop}
                                 />
                               </Form.Group>
                             </Form.Row>
@@ -183,8 +244,9 @@ const IO = () => {
                                 </Form.Label>
                                 <Form.Control
                                   type="number"
-                                  defaultValue="1"
+                                  defaultValue={amountInput}
                                   style={{ backgroundColor: "white" }}
+                                  onChange={handleAmountInput}
                                 />
                               </Form.Group>
                               <Form.Group
@@ -199,8 +261,9 @@ const IO = () => {
                                 </Form.Label>
                                 <Form.Control
                                   type="Number"
-                                  defaultValue="1"
+                                  defaultValue={amountOutput}
                                   style={{ backgroundColor: "white" }}
+                                  onChange={handleAmountOutput}
                                 />
                               </Form.Group>
                             </Form.Row>
@@ -213,6 +276,8 @@ const IO = () => {
                                   type="checkbox"
                                   id="overlap"
                                   label="IO Overlap Allowed (Computation and IO can take place concurrently)"
+                                  onChange={handleOverlapAllowed}
+                                  checked={overlapAllowed}
                                 />
                               </Form.Group>
                             </Form.Row>
@@ -226,9 +291,6 @@ const IO = () => {
                             >
                               <Button custom onClick={handleClick}>
                                 Run Simulation
-                              </Button>
-                              <Button custom onClick={handlePost}>
-                                Run Post
                               </Button>
                             </div>
                           </Form>
