@@ -87,13 +87,15 @@ void generatePlatform(std::string platform_file_path) {
                       "<platform version=\"4.1\">\n";
     xml += "   <zone id=\"AS0\" routing=\"Full\">\n";
 
-    // The loopback link
-    xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
 
     // The two hosts
     xml += "      <host id=\"host1\" speed=\"100Gf\" core=\"3\"/>\n";
     xml += "      <host id=\"host2\" speed=\"100Gf\" core=\"3\"/>\n";
 
+    // The loopback link
+    xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
+
+    // The routes
     xml += "      <route src=\"host1\" dst=\"host2\">\n";
     xml += "          <link_ctn id=\"loopback\"/>\n";
     xml += "      </route>\n";
