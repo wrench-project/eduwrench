@@ -35,7 +35,7 @@ $ cd web
 $ gatsby develop
 ```
 
-Open a Web browser and navigate to http://localhost:4000
+Open a Web browser and navigate to http://localhost:8000
 
 ### Running with Docker
 
