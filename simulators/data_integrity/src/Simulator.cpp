@@ -21,11 +21,18 @@ void generateWorkflow(wrench::Workflow *workflow, int scenario, int probability,
     const double MB = 1000.0 * 1000.0;
 
     if (scenario == 1) {
-        //if scenario 1, add a dummy file to store probablity value
-        workflow->addFile("file.p" + std::to_string(probability), 0);
         workflow->addFile("file.XmOWL", file_size*MB);
     } else if (scenario == 2) {
         workflow->addFile("file.XuOWL", file_size*MB);
+    } else if (scenario == 3) {
+        workflow->addFile("file.XrOWL", file_size*MB);
+    } else if (scenario == 4) {
+        workflow->addFile("file.XzOWL", file_size*MB);
+    }
+
+    if (scenario == 1 || scenario == 3) {
+        //if scenario 1 or 3, add a dummy file to store probablity value
+        workflow->addFile("file.p" + std::to_string(probability), 0);
     }
 
     //uncorrupted file
@@ -115,29 +122,30 @@ int main(int argc, char** argv) {
     int SCENARIO;
 
     try {
+        if (argc < 2) {
+            throw std::invalid_argument("Invalid number of arguments");
+        } 
         SCENARIO = std::stoi(std::string(argv[1]));
-        if (SCENARIO < 1 || SCENARIO > 2) {
-            std::cerr << "Invalid scenario, must be 1 or 2" << std::endl;
+        if (SCENARIO < 1 || SCENARIO > 4) {
+            std::cerr << "Invalid scenario, must be 1,2,3 or 4" << std::endl;
             throw std::invalid_argument("Invalid scenario.");
         }
 
-        if (SCENARIO == 1) {
+        if (SCENARIO == 1 || SCENARIO == 3) {
+            if (argc != 4) {
+                throw std::invalid_argument("Invalid number of arguments");
+            }
             PROBABILITY = std::stoi(std::string(argv[2]));
             if (PROBABILITY < 0 || PROBABILITY > 99) {
                 std::cerr << "Probability must be between 0 and 99" << std::endl;
                 throw std::invalid_argument("Invalid probability.");
             }
             FILE_SIZE = std::stoi(std::string(argv[3]));
-
-            if (argc != 4) {
-                throw std::invalid_argument("invalid number of arguments");
-            }
-        } else {
-            FILE_SIZE = std::stoi(std::string(argv[2]));
-
+        } else if (SCENARIO == 2 || SCENARIO == 4) {
             if (argc != 3) {
-                throw std::invalid_argument("invalid number of arguments");
+                throw std::invalid_argument("Invalid number of arguments");
             }
+            FILE_SIZE = std::stoi(std::string(argv[2]));
         }
         if (FILE_SIZE < 1 || FILE_SIZE > 10000) {
             std::cerr << "Invalid file size. Size must be in range [1,10000] MB" << std::endl;
@@ -187,7 +195,7 @@ int main(int argc, char** argv) {
     //stage files based on scenario chosen
     for (auto file : workflow.getFiles()) {
         simulation.stageFile(file, storage_service_1);
-        if (SCENARIO == 2) {
+        if (SCENARIO == 2 || SCENARIO == 3 || SCENARIO == 4) {
             simulation.stageFile(file, storage_service_2);
         }
     }

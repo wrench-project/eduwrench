@@ -51,7 +51,7 @@ namespace wrench {
             }
         }
 
-        bool transferCorrupted, serverCorrupted;
+        bool transferCorrupted, serverCorrupted, transfer2Corrupted, server2Corrupted;
         double probability;
         WorkflowFile* corrupted_file;
         WorkflowFile* not_corrupted_file;
@@ -63,9 +63,27 @@ namespace wrench {
             } else if (file->getID().find("XmOWL") != std::string::npos) {
                 corrupted_file = file;
                 transferCorrupted = true;
+                serverCorrupted = false;
+                transfer2Corrupted = false;
+                server2Corrupted == false;
             } else if (file->getID().find("XuOWL") != std::string::npos) {
                 corrupted_file = file;
+                transferCorrupted = false;
                 serverCorrupted = true;
+                transfer2Corrupted = false;
+                server2Corrupted == false;
+            } else if (file->getID().find("XrOWL") != std::string::npos) {
+                corrupted_file = file;
+                transferCorrupted = false;
+                serverCorrupted = false;
+                transfer2Corrupted = true;
+                server2Corrupted == false;
+            } else if (file->getID().find("XzOWL") != std::string::npos) {
+                corrupted_file = file;
+                transferCorrupted = false;
+                serverCorrupted = false;
+                transfer2Corrupted = false;
+                server2Corrupted == true;
             } else if (file->getID().find("p") != std::string::npos) {
                 //get probability of file being corrupted if scenario 1 was chosen
                 std::string ID = file->getID();
@@ -125,16 +143,48 @@ namespace wrench {
             WRENCH_INFO("File %s (received: %s) at server %s is corrupted! Downloading from server %s",
                         not_corrupted_file->getID().c_str(), corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str(), storage_service_2->getHostname().c_str());
 
-            //then download uncorrupted file from storage service 2 and compute checksum
-            data_manager->doSynchronousFileCopy(not_corrupted_file,
+            if (transfer2Corrupted) {
+                while (transfer2Corrupted) {
+                    if (dis(gen) < probability) {
+                        data_manager->doSynchronousFileCopy(corrupted_file,
                                                 FileLocation::LOCATION(storage_service_2),
                                                 FileLocation::LOCATION(client_storage_service),
                                                 file_registry);
-            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
-            WRENCH_INFO("Computing checksum of file...");
-            TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
-            WRENCH_INFO("File %s from server %s was successfully transferred",
+                        //faux checksum computing runtime based on file size
+                        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+                        WRENCH_INFO("Computing checksum of file...");
+                        Simulation::sleep(corrupted_file->getSize() * 0.0000002);
+
+                        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                        WRENCH_INFO("File %s from server %s was corrupted during transfer",
+                        corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
+                    } else {
+                        //then download uncorrupted file from storage service 2 and compute checksum
+                        data_manager->doSynchronousFileCopy(not_corrupted_file,
+                                                            FileLocation::LOCATION(storage_service_2),
+                                                            FileLocation::LOCATION(client_storage_service),
+                                                            file_registry);
+                        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+                        WRENCH_INFO("Computing checksum of file...");
+                        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                        WRENCH_INFO("File %s from server %s was successfully transferred",
                         not_corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
+                        transfer2Corrupted = false;
+                    }
+                }
+            } else if (server2Corrupted) {
+                data_manager->doSynchronousFileCopy(corrupted_file,
+                                            FileLocation::LOCATION(storage_service_2),
+                                            FileLocation::LOCATION(client_storage_service),
+                                            file_registry);
+                //faux checksum computing runtime based on file size
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+                WRENCH_INFO("Computing checksum of file...");
+                Simulation::sleep(corrupted_file->getSize() * 0.0000002);
+
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                WRENCH_INFO("Files from both servers were corrupted! Data needs to be recreated");
+            }
         }
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLACK);
