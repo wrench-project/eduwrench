@@ -147,6 +147,7 @@ namespace wrench {
 
             if (transfer2Corrupted) {
                 while (transfer2Corrupted) {
+                    // if scenario 3, retry until not corrupted
                     if (dis(gen) < probability) {
                         data_manager->doSynchronousFileCopy(corrupted_file,
                                                 FileLocation::LOCATION(storage_service_2),
@@ -175,6 +176,7 @@ namespace wrench {
                     }
                 }
             } else if (server2Corrupted) {
+                // if scenario 4, recreate the data
                 data_manager->doSynchronousFileCopy(corrupted_file,
                                             FileLocation::LOCATION(storage_service_2),
                                             FileLocation::LOCATION(client_storage_service),
@@ -186,7 +188,8 @@ namespace wrench {
 
                 TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
                 WRENCH_INFO("Files from both servers were corrupted! Data needs to be recreated");
-            } else {
+            } else { 
+                // if scenario 2, transfer the file succesfully
                 data_manager->doSynchronousFileCopy(not_corrupted_file,
                                                 FileLocation::LOCATION(storage_service_2),
                                                 FileLocation::LOCATION(client_storage_service),
