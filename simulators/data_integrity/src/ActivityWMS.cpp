@@ -65,25 +65,25 @@ namespace wrench {
                 transferCorrupted = true;
                 serverCorrupted = false;
                 transfer2Corrupted = false;
-                server2Corrupted == false;
+                server2Corrupted = false;
             } else if (file->getID().find("XuOWL") != std::string::npos) {
                 corrupted_file = file;
                 transferCorrupted = false;
                 serverCorrupted = true;
                 transfer2Corrupted = false;
-                server2Corrupted == false;
+                server2Corrupted = false;
             } else if (file->getID().find("XrOWL") != std::string::npos) {
                 corrupted_file = file;
                 transferCorrupted = false;
-                serverCorrupted = false;
+                serverCorrupted = true;
                 transfer2Corrupted = true;
-                server2Corrupted == false;
+                server2Corrupted = false;
             } else if (file->getID().find("XzOWL") != std::string::npos) {
                 corrupted_file = file;
                 transferCorrupted = false;
-                serverCorrupted = false;
+                serverCorrupted = true;
                 transfer2Corrupted = false;
-                server2Corrupted == true;
+                server2Corrupted = true;
             } else if (file->getID().find("p") != std::string::npos) {
                 //get probability of file being corrupted if scenario 1 was chosen
                 std::string ID = file->getID();
@@ -143,6 +143,8 @@ namespace wrench {
             WRENCH_INFO("File %s (received: %s) at server %s is corrupted! Downloading from server %s",
                         not_corrupted_file->getID().c_str(), corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str(), storage_service_2->getHostname().c_str());
 
+
+
             if (transfer2Corrupted) {
                 while (transfer2Corrupted) {
                     if (dis(gen) < probability) {
@@ -184,6 +186,16 @@ namespace wrench {
 
                 TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
                 WRENCH_INFO("Files from both servers were corrupted! Data needs to be recreated");
+            } else {
+                data_manager->doSynchronousFileCopy(not_corrupted_file,
+                                                FileLocation::LOCATION(storage_service_2),
+                                                FileLocation::LOCATION(client_storage_service),
+                                                file_registry);
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+                WRENCH_INFO("Computing checksum of file...");
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                WRENCH_INFO("File %s from server %s was successfully transferred",
+                not_corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
             }
         }
 
