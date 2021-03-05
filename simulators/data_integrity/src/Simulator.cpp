@@ -16,7 +16,7 @@
  * @brief Generate the workflow
  * @description Fork-Join
  */
-void generateWorkflow(wrench::Workflow *workflow, int scenario, int probability, int file_size) {
+void generateWorkflow(wrench::Workflow *workflow, int scenario, int probability, int file_size, int max_retries) {
     // Blue task
     const double MB = 1000.0 * 1000.0;
 
@@ -33,6 +33,7 @@ void generateWorkflow(wrench::Workflow *workflow, int scenario, int probability,
     if (scenario == 1 || scenario == 3) {
         //if scenario 1 or 3, add a dummy file to store probablity value
         workflow->addFile("file.p" + std::to_string(probability), 0);
+        workflow->addFile("file.mr" + std::to_string(max_retries), 0);
     }
 
     //uncorrupted file
@@ -120,9 +121,10 @@ int main(int argc, char** argv) {
     int PROBABILITY = 0;
     int FILE_SIZE;
     int SCENARIO;
+    int MAX_RETRIES = 0;
 
     try {
-        if (argc < 2) {
+        if (argc < 3) {
             throw std::invalid_argument("Invalid number of arguments");
         } 
         SCENARIO = std::stoi(std::string(argv[1]));
@@ -131,40 +133,47 @@ int main(int argc, char** argv) {
             throw std::invalid_argument("Invalid scenario.");
         }
 
-        if (SCENARIO == 1 || SCENARIO == 3) {
-            if (argc != 4) {
-                throw std::invalid_argument("Invalid number of arguments");
-            }
-            PROBABILITY = std::stoi(std::string(argv[2]));
-            if (PROBABILITY < 0 || PROBABILITY > 99) {
-                std::cerr << "Probability must be between 0 and 99" << std::endl;
-                throw std::invalid_argument("Invalid probability.");
-            }
-            FILE_SIZE = std::stoi(std::string(argv[3]));
-        } else if (SCENARIO == 2 || SCENARIO == 4) {
-            if (argc != 3) {
-                throw std::invalid_argument("Invalid number of arguments");
-            }
-            FILE_SIZE = std::stoi(std::string(argv[2]));
-        }
+        FILE_SIZE = std::stoi(std::string(argv[2]));
         if (FILE_SIZE < 1 || FILE_SIZE > 10000) {
             std::cerr << "Invalid file size. Size must be in range [1,10000] MB" << std::endl;
             throw std::invalid_argument("Invalid file size.");
         }
+
+        if (SCENARIO == 1 || SCENARIO == 3) {
+            if (argc != 5) {
+                throw std::invalid_argument("Invalid number of arguments");
+            }
+            PROBABILITY = std::stoi(std::string(argv[3]));
+            if (PROBABILITY < 0 || PROBABILITY > 100) {
+                std::cerr << "Probability must be between 0 and 100" << std::endl;
+                throw std::invalid_argument("Invalid probability.");
+            }
+
+            MAX_RETRIES = std::stoi(std::string(argv[4]));
+            if (MAX_RETRIES < 0) {
+                std::cerr << "Max retries must be nonnegative" << std::endl;
+                throw std::invalid_argument("Invalid max retries");
+            }
+            
+        } else if ((SCENARIO == 2 || SCENARIO == 4) && argc != 3) {
+            throw std::invalid_argument("Invalid number of arguments");
+        }
+        
     } catch(std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         std::cerr << "Usage:" << std::endl;
-        std:cerr << argv[0] << " <scenario> <probability> <file_size> if scenario 1 or 3" << std::endl;
+        std::cerr << argv[0] << " <scenario> <file_size> <probability> <max_retries> if scenario 1 or 3" << std::endl;
         std::cerr << argv[0] << " <scenario> <file_size> if scenario 2 or 4" << std::endl;
         std::cerr << "   scenario: Scenario must be between 1 and 4 inclusive" << std::endl;
         std::cerr << "   probability: Probability must be between 0 and 100 inclusive" << std::endl;
         std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
+        std::cerr << "   max retries: Max retries must be 0 or larger" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
 
     wrench::Workflow workflow;
-    generateWorkflow(&workflow, SCENARIO, PROBABILITY, FILE_SIZE);
+    generateWorkflow(&workflow, SCENARIO, PROBABILITY, FILE_SIZE, MAX_RETRIES);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";

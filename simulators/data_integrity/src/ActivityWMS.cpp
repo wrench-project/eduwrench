@@ -55,6 +55,8 @@ namespace wrench {
         double probability;
         WorkflowFile* corrupted_file;
         WorkflowFile* not_corrupted_file;
+        int max_retries;
+        int retries = -1; // initialize to -1 to account for the original try before retrying
 
         //get files from workflow
         for (auto file : this->getWorkflow()->getFiles()) {
@@ -89,6 +91,9 @@ namespace wrench {
                 std::string ID = file->getID();
                 ID = std::regex_replace(ID, std::regex("[^0-9]*([0-9]+).*"), std::string("$1"));
                 probability = std::stoi(ID) / 100.0;
+            } else if (file->getID().find("mr") != std::string::npos) {
+                std::string ID = file->getID();
+                max_retries = std::stoi(std::regex_replace(ID, std::regex("[^0-9]*([0-9]+).*"), std::string("$1")));
             }
         }
 
@@ -97,9 +102,10 @@ namespace wrench {
 
         if (transferCorrupted) {
             //if running scenario 1, while the uncorrupted file is not transferred, keep trying
-            while (transferCorrupted) {
+            while (transferCorrupted && retries < max_retries) {
                 //using random number generator to determine if corrupted file will be retrieved
                 if (dis(gen) < probability) {
+                    retries++;
                     data_manager->doSynchronousFileCopy(corrupted_file,
                                                         FileLocation::LOCATION(storage_service_1),
                                                         FileLocation::LOCATION(client_storage_service),
@@ -111,8 +117,13 @@ namespace wrench {
                     Simulation::sleep(corrupted_file->getSize() * 0.0000002);
 
                     TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
-                    WRENCH_INFO("File %s from server %s was corrupted during transfer",
-                                corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str());
+                    char* message;
+                    if (retries >= max_retries) {
+                        message = "File %s from server %s was corrupted during transfer";
+                    } else {
+                        message = "File %s from server %s was corrupted during transfer. Retrying %d of %d times";
+                    }
+                    WRENCH_INFO(message, corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str(), retries + 1, max_retries);
                 } else {
                     data_manager->doSynchronousFileCopy(not_corrupted_file,
                                                         FileLocation::LOCATION(storage_service_1),
@@ -129,6 +140,12 @@ namespace wrench {
                     transferCorrupted = false;
                 }
             }
+            if (retries >= max_retries) {
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                WRENCH_INFO("Exceeded maximum number of retries transferring file %s from server %s",
+                                corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str());
+
+            }
         } else if (serverCorrupted) {
             //if running scenario 2, download corrupted file from storage service
             data_manager->doSynchronousFileCopy(corrupted_file,
@@ -143,12 +160,11 @@ namespace wrench {
             WRENCH_INFO("File %s (received: %s) at server %s is corrupted! Downloading from server %s",
                         not_corrupted_file->getID().c_str(), corrupted_file->getID().c_str(), storage_service_1->getHostname().c_str(), storage_service_2->getHostname().c_str());
 
-
-
             if (transfer2Corrupted) {
-                while (transfer2Corrupted) {
+                while (transfer2Corrupted && retries < max_retries) {
                     // if scenario 3, retry until not corrupted
                     if (dis(gen) < probability) {
+                        retries++;
                         data_manager->doSynchronousFileCopy(corrupted_file,
                                                 FileLocation::LOCATION(storage_service_2),
                                                 FileLocation::LOCATION(client_storage_service),
@@ -159,8 +175,13 @@ namespace wrench {
                         Simulation::sleep(corrupted_file->getSize() * 0.0000002);
 
                         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
-                        WRENCH_INFO("File %s from server %s was corrupted during transfer",
-                        corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
+                        char* message;
+                        if (retries >= max_retries) {
+                            message = "File %s from server %s was corrupted during transfer";
+                        } else {
+                            message = "File %s from server %s was corrupted during transfer. Retrying %d of %d times";
+                        }
+                        WRENCH_INFO(message, corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str(), retries + 1, max_retries);
                     } else {
                         //then download uncorrupted file from storage service 2 and compute checksum
                         data_manager->doSynchronousFileCopy(not_corrupted_file,
@@ -174,6 +195,12 @@ namespace wrench {
                         not_corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
                         transfer2Corrupted = false;
                     }
+                }
+                if (retries >= max_retries) {
+                    TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
+                    WRENCH_INFO("Exceeded maximum number of retries transferring file %s from server %s",
+                                corrupted_file->getID().c_str(), storage_service_2->getHostname().c_str());
+
                 }
             } else if (server2Corrupted) {
                 // if scenario 4, recreate the data
