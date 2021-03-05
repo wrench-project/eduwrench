@@ -153,9 +153,11 @@ int main(int argc, char** argv) {
         }
     } catch(std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <scenario> <probability> <file_size>" << std::endl;
-        std::cerr << "   scenario: Scenario must be between 1 or 2" << std::endl;
-        std::cerr << "   probability: Probability must be between 0 and 100" << std::endl;
+        std::cerr << "Usage:" << std::endl;
+        std:cerr << argv[0] << " <scenario> <probability> <file_size> if scenario 1 or 3" << std::endl;
+        std::cerr << argv[0] << " <scenario> <file_size> if scenario 2 or 4" << std::endl;
+        std::cerr << "   scenario: Scenario must be between 1 and 4 inclusive" << std::endl;
+        std::cerr << "   probability: Probability must be between 0 and 100 inclusive" << std::endl;
         std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
