@@ -12,6 +12,7 @@ async function add(sim) {
   const [io_id] = await db("io_operations").insert(sim);
   return id;
   */
+  /*
   return db("executed_sims")
     .insert({ email: sim.email, time: sim.time, activity: "IO" })
     .returning("id")
@@ -25,4 +26,19 @@ async function add(sim) {
         io_overlap: sim.io_overlap,
       });
     });
+*/
+  var jsonObj = {
+    num_tasks: sim.num_tasks,
+    task_gflop: sim.task_gflop,
+    task_input: sim.task_input,
+    task_output: sim.task_output,
+    io_overlap: sim.io_overlap,
+  };
+  return db("executed_sims").insert({
+    username: sim.user,
+    email: sim.email,
+    time: sim.time,
+    activity: sim.activity,
+    params: JSON.stringify(jsonObj),
+  });
 }

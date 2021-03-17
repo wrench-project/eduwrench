@@ -59,11 +59,7 @@ app.use(
   })
 );
 
-/*
-gatsby.prepare({ app }, () => {
-  // Here you can define your routes
-});
-*/
+
 // check if authenticated
 const authCheck = function (req, res, next) {
   // if (!req.user) {
@@ -839,6 +835,7 @@ app.post("/run/test/io", function (req, res) {
   res.send();
 });
 
+
 // execute activity io operations simulation route
 app.post("/run/io_operations", authCheck, function (req, res) {
   const PATH_PREFIX = __dirname.replace("server", "simulators/io_operations/");
@@ -852,7 +849,7 @@ app.post("/run/io_operations", authCheck, function (req, res) {
   const TASK_GFLOP = req.body.task_gflop;
   const TASK_INPUT = req.body.task_input;
   const TASK_OUTPUT = req.body.task_output;
-  const IO_OVERLAP = req.body.io_overlap == 1 ? true : false;
+  const IO_OVERLAP = req.body.io_overlap;
 
   // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
   const LOGGING = [
@@ -890,6 +887,7 @@ app.post("/run/io_operations", authCheck, function (req, res) {
      * Log the user running this simulation along with the
      * simulation parameters to the data server.
      */
+    /*
     logData({
       user: USERNAME,
       email: EMAIL,
@@ -901,6 +899,28 @@ app.post("/run/io_operations", authCheck, function (req, res) {
       task_gflop: TASK_GFLOP,
       io_overlap: IO_OVERLAP,
     });
+    */
+    sims
+      .add({
+        user: USERNAME,
+        email: EMAIL,
+        time: Math.round(new Date().getTime() / 1000), // unix timestamp
+        activity: "io_operations",
+        task_input: TASK_INPUT,
+        task_output: TASK_OUTPUT,
+        num_tasks: NUM_TASKS,
+        task_gflop: TASK_GFLOP,
+        io_overlap: IO_OVERLAP,
+      })
+      .then((simulation) => {
+        res.status(200).json(simulation);
+      })
+      .catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
+
+
+
 
     /**
      * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
@@ -914,9 +934,10 @@ app.post("/run/io_operations", authCheck, function (req, res) {
     var re = new RegExp(find, "g");
 
     res.json({
-      simulation_output: ansi_up
-        .ansi_to_html(simulation_output)
-        .replace(re, "<br>" + find),
+      simulation_output: //simulation_output,
+            ansi_up
+        .ansi_to_html(simulation_output),
+       // .replace(re, "<br>" + find),
       task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
     });
   }
@@ -1549,6 +1570,18 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
     });
   }
 });
+
+function storeData(data){
+  sims
+  .add(data)
+  //.then((simulation) => {
+  //  res.status(200).json(simulation);
+  //})
+  //.catch((error) => {
+  //  res.status(500).json({ message: error.message });
+  //});
+}
+
 
 /**
  * Log the data into the JSON file

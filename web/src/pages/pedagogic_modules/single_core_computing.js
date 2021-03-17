@@ -32,7 +32,6 @@ const SingleCoreComputing = () => {
   return (
     <Layout>
       <SEO title="A.1. Single-core Computing" />
-      <button onClick={handleClick}>Test</button>
       <h3
         style={{
           display: "flex",

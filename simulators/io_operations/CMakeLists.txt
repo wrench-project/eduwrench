@@ -7,8 +7,12 @@ add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
 set(CMAKE_CXX_STANDARD 11)
 
+# CHANGE ALL
 # include directories for dependencies and WRENCH libraries
-include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include)
+include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include /opt/simgrid/include)
+
+# CHANGE ALL
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/simgrid/lib)
 
 # source files
 set(SOURCE_FILES
