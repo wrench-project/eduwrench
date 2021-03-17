@@ -2,7 +2,7 @@
 [![License: LGPL v3][license-badge]](LICENSE)
 [![CodeFactor][codefactor-badge]][codefactor-link]
 
-<img src="web/assets/wrench_logo.png" width="100" />
+<img src="web/src/images/wrench_logo.png" width="100" />
 
 ## eduWRENCH
 
@@ -25,17 +25,17 @@ Start the backend server:
 
 ```bash
 $ cd server
-$ node app.js
+$ nodemon app.js
 ```
 
 Start the frontend application:
 
 ```bash
 $ cd web
-$ bundle exec jekyll serve
+$ gatsby develop
 ```
 
-Open a Web browser and navigate to http://localhost:4000
+Open a Web browser and navigate to http://localhost:8000
 
 ### Running with Docker
 
