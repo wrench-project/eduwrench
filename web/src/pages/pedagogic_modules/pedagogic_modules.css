@@ -15,3 +15,32 @@
 .check * {
   background-color: white;
 }
+
+table {
+  background-color: white;
+}
+
+tr {
+  background-color: white;
+  font-size: 12px;
+}
+
+th {
+  background-color: white;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+td {
+  background-color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.task-details-table {
+  width: 1000px;
+
+  text-align: left;
+  table-layout: fixed;
+}
