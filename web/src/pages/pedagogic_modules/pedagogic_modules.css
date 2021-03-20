@@ -44,3 +44,8 @@ td {
   text-align: left;
   table-layout: fixed;
 }
+
+.error {
+  color: red;
+  background-color: white;
+}

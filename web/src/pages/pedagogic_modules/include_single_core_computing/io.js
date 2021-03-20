@@ -740,6 +740,10 @@ const IO = () => {
   const [amountInput, setAmountInput] = useState(1)
   const [amountOutput, setAmountOutput] = useState(1)
   const [overlapAllowed, setOverlapAllowed] = useState(false)
+  const [numTasksError, setNumTasksError] = useState("")
+  const [taskGflopError, setTaskGflopError] = useState("")
+  const [amountInputError, setAmountInputError] = useState("")
+  const [amountOutputError, setAmountOutputError] = useState("")
   const [simulationOutput, setSimulationOutput] = useState("")
   const [simulationExecuted, setSimulationExecuted] = useState(false)
   const [ganttChartInfo, setGanttChartInfo] = useState({})
@@ -762,107 +766,97 @@ const IO = () => {
       io_overlap: overlapAllowed,
     }
 
-    // console.log(data);
-    axios.post("http://localhost:3000/run/io_operations", data).then(
-      response => {
-        //console.log(response.data.simulation_output)
-        let executionData = prepareResponseData(response.data.task_data)
-        //console.log(executionData)
-        let ganttChartInfo = generateGanttChartInfo(
-          executionData,
-          "io-graph-container"
-        )
-        let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
-          executionData,
-          "io-host-utilization-chart",
-          [],
-          [],
-          false
-        )
-        //console.log(ganttChartInfo)
-        setGanttChartInfo(ganttChartInfo)
-        setHostUtilizationChartInfo(hostUtilizationChartInfo)
-        setSimulationOutput(
-          response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
-        )
-        let preparedData = prepareData(
-          response.data.task_data.workflow_execution.tasks
-        )
-        populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
-        setSimulationExecuted(true)
-        alert("Simulation executed")
-      },
-      error => {
-        console.log(error)
-        alert("Error executing simulation")
-      }
-      //setChartInfo(generateChartInfo());
-    )
-    //.then(response => response.json())
-    // .then(response => setSimulationOutput(response.data.simulation_output))
-  }
+    let errorsPresent = false
 
-  const handleClick = () => {
-    const data = {
-      email: localStorage.getItem("currentUser"),
-      time: Math.floor(Date.now() / 1000),
-      activity: "IO",
-      num_tasks: numTasks,
-      task_gflop: taskGflop,
-      task_input: amountInput,
-      task_output: amountOutput,
-      io_overlap: overlapAllowed,
+    if (!numTasks || numTasks < 1 || numTasks > 100) {
+      errorsPresent = true
+      setNumTasksError(
+        "Please provide the number of tasks in the range of [1, 100]."
+      )
+    } else {
+      setNumTasksError("")
     }
-    axios
-      .post("http://localhost:3000/insert", data)
-      .then(
+
+    if (!taskGflop || taskGflop < 1 || taskGflop > 999999) {
+      errorsPresent = true
+      setTaskGflopError(
+        "Please provide the amount of Gflop per task in the range of [1, 999999]."
+      )
+    } else {
+      setTaskGflopError("")
+    }
+
+    if (!amountInput || amountInput < 1 || amountInput > 999) {
+      errorsPresent = true
+      setAmountInputError(
+        "Please provide the amount of input data per task in the range of [0, 999] MB."
+      )
+    } else {
+      setAmountInputError("")
+    }
+
+    if (!amountOutput || amountOutput < 1 || amountOutput > 999) {
+      errorsPresent = true
+      setAmountOutputError(
+        "Please provide the amount of output data per task in the range of [0, 999] MB."
+      )
+    } else {
+      setAmountOutputError("")
+    }
+
+    if (!errorsPresent) {
+      // console.log(data);
+      axios.post("http://localhost:3000/run/io_operations", data).then(
         response => {
-          console.log(response)
+          //console.log(response.data.simulation_output)
+          let executionData = prepareResponseData(response.data.task_data)
+          //console.log(executionData)
+          let ganttChartInfo = generateGanttChartInfo(
+            executionData,
+            "io-graph-container"
+          )
+          let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
+            executionData,
+            "io-host-utilization-chart",
+            [],
+            [],
+            false
+          )
+          //console.log(ganttChartInfo)
+          setGanttChartInfo(ganttChartInfo)
+          setHostUtilizationChartInfo(hostUtilizationChartInfo)
+          setSimulationOutput(
+            response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
+          )
+          let preparedData = prepareData(
+            response.data.task_data.workflow_execution.tasks
+          )
+          populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
+          setSimulationExecuted(true)
+          alert("Simulation executed")
         },
         error => {
           console.log(error)
+          alert("Error executing simulation")
         }
       )
-      .then(alert("Simulation executed"))
-  }
-
-  const handlePost = () => {
-    // POST request using axios inside useEffect React hook
-    const data = {
-      email: localStorage.getItem("currentUser"),
-      time: Math.floor(Date.now() / 1000),
-      activity: "IO",
-      num_tasks: numTasks,
-      task_gflop: taskGflop,
-      task_input: amountInput,
-      task_output: amountOutput,
-      io_overlap: overlapAllowed,
     }
-    axios.post("http://localhost:3000/insert", data)
   }
 
   const handleNumTasks = e => {
-    if (!isNaN(e.target.value) && e.target.value != 0) {
-      setNumTasks(e.target.value)
-    }
+    setNumTasks(e.target.value)
   }
 
   const handleTaskGflop = e => {
-    if (!isNaN(e.target.value) && e.target.value != 0) {
-      setTaskGflop(e.target.value)
-    }
+    setTaskGflop(e.target.value)
   }
 
   const handleAmountInput = e => {
-    if (!isNaN(e.target.value) && e.target.value != 0) {
-      setAmountInput(e.target.value)
-    }
+    setAmountInput(e.target.value)
   }
 
   const handleAmountOutput = e => {
-    if (!isNaN(e.target.value) && e.target.value != 0) {
-      setAmountOutput(e.target.value)
-    }
+    setAmountOutput(e.target.value)
   }
 
   const handleOverlapAllowed = e => {
@@ -1003,6 +997,7 @@ const IO = () => {
                                   defaultValue={numTasks}
                                   onChange={handleNumTasks}
                                 />
+                                <small className="error">{numTasksError}</small>
                               </Form.Group>
                               <Form.Group
                                 as={Col}
@@ -1029,6 +1024,10 @@ const IO = () => {
                                 >
                                   Host capable of 100 Gflops
                                 </Form.Label>
+                                <br />
+                                <small className="error">
+                                  {taskGflopError}
+                                </small>
                               </Form.Group>
                             </Form.Row>
                             <Form.Row style={{ backgroundColor: "white" }}>
@@ -1057,6 +1056,10 @@ const IO = () => {
                                 >
                                   Disk reads at 100 MBps
                                 </Form.Label>
+                                <br />
+                                <small className="error">
+                                  {amountInputError}
+                                </small>
                               </Form.Group>
                               <Form.Group
                                 as={Col}
@@ -1083,6 +1086,10 @@ const IO = () => {
                                 >
                                   Disk writes at 100 MBps
                                 </Form.Label>
+                                <br />
+                                <small className="error">
+                                  {amountOutputError}
+                                </small>
                               </Form.Group>
                             </Form.Row>
                             <Form.Row style={{ backgroundColor: "white" }}>
