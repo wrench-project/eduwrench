@@ -105,6 +105,7 @@ const Textbooks = () => (
         </ul>
 
         <b className="card">Algorithms and Theory:</b>
+        <br />
         <ul>
           <li>
             <i style={{ backgroundColor: "white" }}>Algorithms</i> (4th Edition,

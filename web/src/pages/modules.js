@@ -59,7 +59,10 @@ const Modules = () => (
             </i>
           </p>
           <br />
-          <Card.Link style={{ color: "#c78651" }} href="#">
+          <Card.Link
+            style={{ color: "#c78651" }}
+            href="/pedagogic_modules/multi_core_computing/"
+          >
             <b style={{ backgroundColor: "white" }}>
               &emsp;A.2. Multi-core Computing
             </b>

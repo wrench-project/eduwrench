@@ -49,3 +49,74 @@ td {
   color: red;
   background-color: white;
 }
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 50px;
+  color: #525252;
+}
+
+.banner-div {
+  height: 50px;
+  background-color: #d3834a;
+  border-radius: 10px;
+}
+
+.banner-header {
+  margin-top: 15px;
+  color: white;
+  background-color: #d3834a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.highlighted {
+  background-color: #ecc099;
+}
+
+.header-small {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+  color: #525252;
+  background: white;
+}
+
+.tlink {
+  display: inline-block;
+}
+
+MathJax > * {
+  background-color: white;
+}
+
+.formula {
+  background-color: white;
+  height: 40%;
+  width: 40%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.var {
+  background-color: white;
+  font-family: "Times New Roman", Times, serif;
+  display: inline-block;
+}
+
+.formula-inline {
+  background-color: white;
+  display: inline-block;
+}
+
+.formula-newline {
+  background-color: white;
+}

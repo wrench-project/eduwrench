@@ -21,14 +21,6 @@ function callback(key) {
 }
 
 const SingleCoreComputing = () => {
-  const [test, setTest] = useState("")
-
-  const handleClick = () => {
-    fetch("http://localhost:3000/test")
-      .then(response => response.json())
-      .then(response => setTest(response.express))
-  }
-
   return (
     <Layout>
       <SEO title="A.1. Single-core Computing" />
@@ -45,7 +37,6 @@ const SingleCoreComputing = () => {
       >
         A.1. Single-core Computing
       </h3>
-      <h5>{test}</h5>
       <p>
         The goal of this module is to provide you with basic knowledge about
         sequential computing (i.e., running a program on a single core).

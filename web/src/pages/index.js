@@ -156,7 +156,10 @@ const IndexPage = () => (
             A.1. Single-core Computing
           </Card.Link>
           <br />
-          <Card.Link style={{ color: "#c78651" }} href="#">
+          <Card.Link
+            style={{ color: "#c78651" }}
+            href="/pedagogic_modules/multi_core_computing/"
+          >
             A.2. Multi-core Computing
           </Card.Link>
           <br />
