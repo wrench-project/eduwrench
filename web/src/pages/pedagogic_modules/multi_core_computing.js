@@ -8,19 +8,12 @@ import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
 import "./pedagogic_modules.css"
 
-import WorkAndSpeed from "./include_single_core_computing/work_and_speed"
-import TimeSharing from "./include_single_core_computing/time_sharing"
-import Memory from "./include_single_core_computing/memory"
-import IO from "./include_single_core_computing/io"
-import Capstone from "./include_single_core_computing/capstone"
-
 import TaskParallelism from "./include_multi_core_computing/task_parallelism"
 import TaskDependencies from "./include_multi_core_computing/task_dependencies"
 import RamAndIO from "./include_multi_core_computing/ram_and_io"
 import LoadImbalance from "./include_multi_core_computing/load_imbalance"
 import DataParallelism from "./include_multi_core_computing/data_parallelism"
 import MultiCoreCapstone from "./include_multi_core_computing/capstone"
-import Latex from "./../../components/latex"
 
 const { TabPane } = Tabs
 
