@@ -3,8 +3,23 @@ import MathJax from "react-mathjax2"
 import MathJaxOrig from "react-mathjax"
 import Card from "react-bootstrap/Card"
 import Accordion from "react-bootstrap/Accordion"
+import Markdown from '../../../Components/Markdown';
 import "katex/dist/katex.min.css"
-import { InlineMath, BlockMath } from "react-katex"
+//import { InlineMath, BlockMath } from "react-katex"
+import TeX from '@matejmazur/react-katex';
+
+
+const equation1 = `
+$$
+\\text{Speedup}(p) = \\frac{\\text{Execution Time with 1 core}}{\\text{Execution Time with p cores}}
+$$
+`;
+
+const equation2 = `
+$$
+\\text{Speedup}(2) = \\frac{3}{2} = 1.5
+$$
+`;
 
 const TaskParallelism = () => {
   return (
@@ -187,20 +202,20 @@ const TaskParallelism = () => {
             cores used to execute a program. The speedup on{" "}
             <i className="var">p</i> cores is:
           </p>
-          <img
-            className="formula"
-            src="https://quicklatex.com/cache3/33/ql_19306aa9cab27e5391e6edea25c0ce33_l3.png"
-            alt="new"
-          />
+
+          <div>
+          <Markdown className="equation">{equation1}</Markdown>
+          </div>
+          
           <p style={{ display: "inline-block" }} className="card">
             For instance, if a program runs in 3 hours on 1 core but runs in 2
             hours on 2 cores, then its speedup is:
           </p>
-          <img
-            className="formula"
-            src="https://quicklatex.com/cache3/ac/ql_173e7962082fa06518f22f5279e8a8ac_l3.png"
-            alt="new"
-          />
+
+          <div>
+          <Markdown className="equation">{equation2}</Markdown>
+          </div>
+
           <p style={{ display: "inline-block" }} className="card">
             In this example, we would be somewhat “unhappy” because although we
             have 2 cores, we only go 1.5 times faster. We would likely be hoping
