@@ -34,6 +34,6 @@ done
 echo "Copying WRENCH dashboard scripts into web application"
 ln -s /usr/local/wrench/dashboard web/public/sims/scripts/dashboard
 
-# bundle install jekyll application
-echo "Installing Jekyll application"
-cd web && sudo bundle install && cd ..
+#DEPRECATED bundle install jekyll application
+#echo "Installing Jekyll application"
+#cd web && sudo bundle install && cd ..
