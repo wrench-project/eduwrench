@@ -49,7 +49,7 @@ namespace wrench {
             for (const auto &file : task->getOutputFiles()) {
                 file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
-            WorkflowJob *job = (WorkflowJob *) this->getJobManager()->createStandardJob(task, file_locations);
+            auto job = this->getJobManager()->createStandardJob(task, file_locations);
             this->getJobManager()->submitJob(job, compute_service, service_specific_args);
             if (task->getID() == "io read task #1") {
                 TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
