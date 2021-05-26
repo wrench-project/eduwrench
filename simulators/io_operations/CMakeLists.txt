@@ -5,7 +5,7 @@ project(ACTIVITY_IO_OPERATIONS)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 # CHANGE ALL
 # include directories for dependencies and WRENCH libraries
