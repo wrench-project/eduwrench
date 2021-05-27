@@ -1,6 +1,17 @@
 import React, { useState } from "react"
+import Markdown from '../../../Components/Markdown';
 
 import Card from "react-bootstrap/Card"
+
+
+const equation1 = `
+$
+\\frac{2 \\times w}{1000} = 30
+$
+`;
+
+
+
 
 const LoadImbalance = () => {
   return (

@@ -5,7 +5,6 @@ import Card from "react-bootstrap/Card"
 import Accordion from "react-bootstrap/Accordion"
 import Markdown from '../../../Components/Markdown';
 import "katex/dist/katex.min.css"
-//import { InlineMath, BlockMath } from "react-katex"
 import TeX from '@matejmazur/react-katex';
 
 
@@ -246,19 +245,15 @@ const TaskParallelism = () => {
             <i className="var">p</i> cores is:
           </p>
 
-          <div>
-          <Markdown className="equation">{equation1}</Markdown>
-          </div>
+          
+          <Markdown className="equation">{}</Markdown>
+          
           
           <p style={{ display: "inline-block" }} className="card">
             For instance, if a program runs in 3 hours on 1 core but runs in 2
             hours on 2 cores, then its speedup is:
           </p>
-
-          <div>
           <Markdown className="equation">{equation2}</Markdown>
-          </div>
-
           <p style={{ display: "inline-block" }} className="card">
             In this example, we would be somewhat “unhappy” because although we
             have 2 cores, we only go 1.5 times faster. We would likely be hoping
@@ -279,17 +274,16 @@ const TaskParallelism = () => {
           <p style={{ display: "inline-block" }} className="card">
             More formally, the efficiency of an execution on p cores is:
           </p>
-          <div>
+          
           <Markdown className="equation">{equation3}</Markdown>
-          </div>
+          
           <p style={{ display: "inline-block" }} className="card">
             If the speedup on 2 cores is 1.5, then the efficiency on 2 cores is:
           </p>
 
-          <div>
+          
+          
           <Markdown className="equation">{equation4}</Markdown>
-          </div>
-
           
 
           <p style={{ display: "inline-block" }} className="card">
