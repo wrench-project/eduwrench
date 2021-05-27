@@ -21,6 +21,49 @@ $$
 $$
 `;
 
+const equation3 = `
+$$
+\\text{Efficiency}(p) = \\frac{\\text{Speedup}(p)}{p}
+$$
+`;
+
+const equation4 = `
+$$
+\\text{Efficiency}(2) = \\frac{1.5}{2} = 0.75 = \\text{75\\%}
+$$
+`;
+
+const equation5 = `
+$ T(2) = T(1) / 1.6 $
+`;
+
+const equation6 = `
+$ T(3) = T(2) -  10 $
+`;
+
+const equation7 = `
+$
+T(3) = T(1) / 1.6 - 10 
+$
+`;
+
+const equation8 = `
+$
+T(1) = 1.6 \\times (T(3) + 10)
+$
+`;
+
+
+
+
+
+
+const equationX = `
+$$
+
+$$
+`;
+
 const TaskParallelism = () => {
   return (
     <>
@@ -236,22 +279,18 @@ const TaskParallelism = () => {
           <p style={{ display: "inline-block" }} className="card">
             More formally, the efficiency of an execution on p cores is:
           </p>
-          <img
-            className="formula"
-            src="https://quicklatex.com/cache3/a7/ql_ce8bddf25243559c1852c3137b547ea7_l3.png"
-            alt="new"
-          />
+          <div>
+          <Markdown className="equation">{equation3}</Markdown>
+          </div>
           <p style={{ display: "inline-block" }} className="card">
             If the speedup on 2 cores is 1.5, then the efficiency on 2 cores is:
           </p>
 
-          <img
-            className="formula"
-            style={{ width: "30%" }}
-            src="https://i.ibb.co/f41KBLp/Screen-Shot-2021-04-07-at-3-37-28-PM.png"
-            alt="new"
-            border="0"
-          />
+          <div>
+          <Markdown className="equation">{equation4}</Markdown>
+          </div>
+
+          
 
           <p style={{ display: "inline-block" }} className="card">
             Ideally, the efficiency would be 100%, which corresponds to going{" "}
@@ -324,30 +363,18 @@ const TaskParallelism = () => {
                 <Card.Body style={{ backgroundColor: "white" }}>
                   <p style={{ display: "inline-block" }} className="card">
                     Because the speedup on 2 cores is 1.6, we have:{" "}
-                    <img
-                      className="formula-inline"
-                      src="https://quicklatex.com/cache3/2e/ql_e642dedfa3dfccfb7885006e983f7e2e_l3.png"
-                    ></img>
                   </p>
+                  <Markdown className="equation">{equation5}</Markdown>
                   <br />
                   <p style={{ display: "inline-block" }} className="card">
                     And the 10-minute time reduction gives us:{" "}
-                    <img
-                      className="formula-inline"
-                      src="https://quicklatex.com/cache3/33/ql_c7fc238c681645c572953d1c45c2d833_l3.png"
-                    ></img>
                   </p>
+                  <Markdown className="equation">{equation6}</Markdown>
                   <p className="card">Therefore,</p>
-                  <img
-                    className="formula-newline"
-                    src="https://quicklatex.com/cache3/53/ql_796045a83f7b67cc99f2d8658fe21253_l3.png"
-                  ></img>
+                  <Markdown className="equation">{equation7}</Markdown>
                   <br />
                   <p className="card">which we can rewrite as:</p>
-                  <img
-                    className="formula-newline"
-                    src="https://quicklatex.com/cache3/1f/ql_e54f387dd7b20771bdc98f35c0961f1f_l3.png"
-                  ></img>
+                  <Markdown className="equation">{equation8}</Markdown>
                 </Card.Body>
               </Accordion.Collapse>
             </Card>

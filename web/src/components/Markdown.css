@@ -1,4 +1,4 @@
-html, .equation,.card>div,span.base,span.base,.katex-html,span.base>*,span.mord>*,.mfrac>.vlist-t>.vlist-r,span.mord,span.mord.text,span.stretchy>*,span.vlist-s,span.vlist-t2  {
+html, .equation,.card>div,span.base,span.base,.katex-html,span.base>*,span.mord>*,.mfrac>.vlist-t>.vlist-r,span.mord,span.mord.text,span.stretchy>*,span.vlist-s,span.vlist-t2,div.equation>p  {
     background-color: white;
 }
 
