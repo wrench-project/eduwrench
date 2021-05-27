@@ -79,8 +79,6 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
 
     xml += "    <zone id=\"AS1\" routing=\"Full\">\n";
 
-    // The loopback link
-    xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
 
 
     // The cluster's storage node)
@@ -101,6 +99,9 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
 
     // The cluster's router
     xml += "       <router id=\"hpc_router\"> </router>\n";
+
+    // The loopback link
+    xml += "      <link id=\"loopback\" bandwidth=\"50000GBps\" latency=\"0ns\"/>\n";
 
     // The cluster's network links
     for (int i = 0; i < num_hosts + 1; i++) {

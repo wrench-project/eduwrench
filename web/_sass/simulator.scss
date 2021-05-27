@@ -1,0 +1,125 @@
+// center sign in button
+.g-signin2 {
+  width: 100%;
+}
+
+.g-signin2 > div {
+  margin: 0 auto;
+}
+
+.app-wrapper {
+  width: 100%;
+  // margin-left: 5%;
+  text-align: center;
+  background-color: $light;
+}
+
+.app-content p {
+  color: gray;
+}
+
+.hide {
+  display: none !important;
+}
+
+.show {
+  display: inline !important;
+}
+
+.showTitle {
+  display: block !important;
+}
+
+.signInBut {
+  text-align: center;
+}
+
+.signInBut a {
+  display: inline-block;
+}
+
+.signInBut a img {
+  display: block;
+}
+
+.app-ins {
+  background-color: $light;
+}
+
+.option {
+  color: $link-color !important;
+}
+
+.option:hover {
+  cursor: pointer;
+}
+
+.selected {
+  color: white !important;
+  background-color: $main !important;
+}
+
+.signOutBut {
+  margin-top: 2%;
+  border: $main 2px solid !important;
+  text-decoration: none !important;
+}
+
+.signOutBut:hover {
+  background-color: $main;
+  color: white !important;
+}
+
+.signInText img {
+  display: inline !important;
+}
+
+.signInText h2 {
+  display: inline !important;
+}
+
+.sim-frame {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.answer-frame {
+  margin: 0 !important;
+  padding: 1em !important;
+}
+
+.form-row {
+  width: 100% !important;
+}
+
+.ui.card>.content>.header:not(.ui), .ui.cards>.card>.content>.header:not(.ui) {
+  font-size: 1.1em !important;
+}
+
+//.read-col {
+//  background-color: #efe8f4 !important;
+//}
+//
+//.compute-col {
+//  background-color: #f9eedb !important;
+//}
+//
+//.write-col {
+//  background-color: #e2f5ff !important;
+//}
+
+.task-details-table-td {
+  padding: .75rem;
+  border-top: 1px solid #dee2e6;
+  font-size: 12px;
+}
+
+.task-details-table-header {
+  border-top: 1px solid #dee2e6;
+  font-size: 12px;
+  padding: 0.5em 0.2em;
+}
+
+.details td, .details th {
+  border: 0 !important;
+}
