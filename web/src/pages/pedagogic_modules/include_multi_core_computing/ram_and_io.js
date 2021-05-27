@@ -79,13 +79,13 @@ easily in simulation.
 Therefore:
 
 $
-\text{Speedup}(5)  = \frac{5}{2} = 2.5
+\\text{Speedup}(5)  = \\frac{5}{2} = 2.5
 $
 
 and 
 
 $
-\text{Efficiency}(5)  = \frac{2.5}{5} = \text{50%}
+\\text{Efficiency}(5)  = \\frac{2.5}{5} = \\text{50\\%}
 $
 
 We would have been better off with a 4-core computer (since, likely, it would cost less). 
@@ -264,7 +264,7 @@ Here is the time-line of events:
   - Time 9.4: Task #1 finishes writing output
    
 Execution time: 9.4 seconds. Both cores are utilized from time 2.2 until time 7.2, that is for 5 seconds, which is
-$5 / 9.4 = 53.2\%$ of the execution time.
+$5 / 9.4 = 53.2\\%$ of the execution time.
    
   </div>
 </div>
