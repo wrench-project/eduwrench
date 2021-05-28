@@ -13,7 +13,7 @@
 Dependencies:
 - [WRENCH 1.7-dev](https://github.com/wrench-project/wrench)
 - [Node.js](https://nodejs.org/en/)
-- [Jekyll](https://jekyllrb.com/docs/installation/)
+
 
 Run the build script (compiles all simulators, and configures web application):
 
@@ -25,7 +25,7 @@ Start the backend server:
 
 ```bash
 $ cd server
-$ nodemon app.js
+$ npx nodemon app.js
 ```
 
 Start the frontend application:
