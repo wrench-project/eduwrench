@@ -23,6 +23,11 @@ You can do this with:
 
 and I believe that node automatically adjusted itself to be compatible. 
 
+**EDIT BY HENRI:** On my Mac I had to do the following for node to go to the correct version:
+
+>sudo npm install -g n install n
+>sudo n 12.18.0
+
 All the plugins should work using the provided package-lock.json file where their versions are specified. Troubleshooting steps would usually mean deleting the node_modules directory and downloading everything again. 
 
 There are a lot of unused gatsby files still hanging around from the template Jason was using, fyi. 
