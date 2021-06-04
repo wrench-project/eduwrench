@@ -56,7 +56,6 @@ There are a lot of unused gatsby files still hanging around from the template Ja
 1. That's it (so far)
 
 
-
 ### List of things that cannot be parsed in Markdown currently: 
   1. Align statements/ampersand in equations (remove these, replace with html as necessary)
   2. Backslashes and percent signs (among probably other symbols) need to be escaped. 
