@@ -2,6 +2,11 @@
   color: #969899;
   margin-left: 20px;
   background-color: white;
+  font-size: 0.8em;
+}
+
+.smaller {
+  font-size: 0.7em;
 }
 
 html {
@@ -43,7 +48,6 @@ html {
   background-color: white;
   display: flex;
   flex-direction: column;
-  flex-basis: 100%;
   flex: 1;
 }
 

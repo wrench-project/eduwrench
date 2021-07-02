@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import { Link } from "gatsby"
 import "antd/dist/antd.css"
 import "./glossary.css"
 import { Drawer, Button, Input } from "antd"
@@ -27,7 +26,7 @@ const Glossary = () => {
     }
   `)
 
-  var searchData
+  let searchData
 
   if (input.length > 0) {
     searchData = data.allGlossaryYaml.nodes.filter(i => {
@@ -57,7 +56,10 @@ const Glossary = () => {
           backgroundColor: "#d3834a",
           borderColor: "#d3834a",
           position: "fixed",
-          marginTop: 60,
+          top: 150,
+          left: -28,
+          borderBottomLeftRadius: "0.5em",
+          borderBottomRightRadius: "0.5em"
         }}
         size="large"
         type="primary"
@@ -86,11 +88,10 @@ const Glossary = () => {
             bordered={false}
           ></Input>
           {listItems}
-          <br />
-          <p style={{ color: "grey" }}>©2020 eduWRENCH. All rights reserved.</p>
         </div>
       </Drawer>
     </>
   )
 }
+
 export default Glossary

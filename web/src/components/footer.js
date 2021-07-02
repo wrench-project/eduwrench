@@ -8,8 +8,9 @@ const Footer = () => (
   <div className="footer">
     <div className="row">
       <div className="column">
-        <p className="text">©2020 eduWRENCH.</p>
         <p className="text">
+          ©2020-{new Date().getFullYear()} eduWRENCH.
+          <br/>
           Released under{" "}
           <a
             target="_blank"
@@ -19,17 +20,25 @@ const Footer = () => (
           >
             GNU General Public License v3.0.{" "}
           </a>{" "}
+          <br/>
         </p>
         <small className="text">
           <Link className="slink" to="/privacypolicy/">
-            Privacy Policy{" "}
+            Privacy Policy
           </Link>
-          <Link className="slink" to="/modules/">
-            | Our Modules |{" "}
-          </Link>
-          <Link className="slink" to="https://wrench-project.org/">
+          {" "} | {" "}
+          <a className="slink" to="/modules/">
+             Our Modules
+          </a>
+          {" "} | {" "}
+          <a
+            href="https://wrench-project.org/"
+            target="_blank"
+            rel="noreferrer"
+            className="slink"
+          >
             WRENCH Project
-          </Link>
+          </a>
         </small>
         <div className="banner">
           <div className="inline-block">
@@ -105,7 +114,7 @@ const Footer = () => (
             1923621.{" "}
           </a>{" "}
         </p>
-        <small className="text">
+        <small className="smaller text">
           Any opinions, findings, and conclusions or recommendations expressed
           in this material are those of the author(s) and do not necessarily
           reflect the views of the National Science Foundation.

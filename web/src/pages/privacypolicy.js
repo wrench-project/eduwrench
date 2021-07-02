@@ -1,13 +1,13 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import Card from "react-bootstrap/Card"
 import "./privacypolicy.css"
 
 const PrivacyPolicy = () => (
   <Layout>
-    <SEO title="Privacy Policy" />
+    <Seo title="Privacy Policy" />
     <h3
       style={{
         display: "flex",

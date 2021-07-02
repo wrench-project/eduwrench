@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
-import SEO from "../../components/seo"
+import Seo from "../../components/seo"
 import Card from "react-bootstrap/Card"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
@@ -23,7 +23,7 @@ function callback(key) {
 const SingleCoreComputing = () => {
   return (
     <Layout>
-      <SEO title="A.1. Single-core Computing" />
+      <Seo title="A.1. Single-core Computing" />
       <h3
         style={{
           display: "flex",

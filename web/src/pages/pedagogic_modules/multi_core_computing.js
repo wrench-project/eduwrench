@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Link } from "gatsby"
 
 import Layout from "../../components/layout"
-import SEO from "../../components/seo"
+import Seo from "../../components/seo"
 import Card from "react-bootstrap/Card"
 import Tab from "react-bootstrap/Tab"
 import Tabs from "react-bootstrap/Tabs"
@@ -24,7 +24,7 @@ function callback(key) {
 const MultiCoreComputing = () => {
   return (
     <Layout>
-      <SEO title="A.2. Multi-core Computing" />
+      <Seo title="A.2. Multi-core Computing" />
       <h3 className="header">A.2. Multi-core Computing</h3>
       <p>
         The goal of this module is to introduce you to multi-core computing

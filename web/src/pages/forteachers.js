@@ -2,14 +2,14 @@ import React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import Card from "react-bootstrap/Card"
 import CardDeck from "react-bootstrap/CardDeck"
 import "./forteachers.css"
 
 const ForTeachers = () => (
   <Layout>
-    <SEO title="For Teachers" />
+    <Seo title="For Teachers" />
     <h3
       style={{
         display: "flex",

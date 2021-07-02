@@ -1,4 +1,5 @@
-import { Link } from "gatsby"
+import "./header.css"
+import { StaticImage } from "gatsby-plugin-image"
 import PropTypes from "prop-types"
 import React from "react"
 import Navbar from "react-bootstrap/Navbar"
@@ -9,20 +10,36 @@ const Header = props => {
   return (
     <div>
       <div>
-        <Navbar bg="light">
-          <Navbar.Brand style={{ backgroundColor: "#f8f9fa" }}>
-            <Link to="/">
-              <img
-                src={require("../images/wrench_logo.png")}
-                width="40"
-                height="40"
-                style={{ margin: "20px", backgroundColor: "#f8f9fa" }}
-                className="d-inline-block align-top"
-                alt="eduWRENCH logo"
-              />
-            </Link>
+        <Navbar bg="light" fixed="top" expand="md" style={{ boxShadow: "#ccc 2px 2px 2px" }}>
+          <Navbar.Brand href="/" style={{ backgroundColor: "#f8f9fa" }}>
+            <StaticImage
+              src="../images/wrench_logo.png"
+              width="30"
+              height="30"
+              alt="eduWRENCH logo"
+            />
           </Navbar.Brand>
-          <Nav.Link style={{ color: "#c78651" }} href="/">
+          <Navbar.Text style={{ lineHeight: "1em" }}>
+            <strong style={{
+              backgroundColor: "#f8f9fa",
+              color: "#c78651",
+              display: "inline-block"
+            }}>
+              eduWRENCH - Pedagogic Modules
+              <small
+                style={{
+                  color: "#bbbdbf",
+                  marginLeft: 5,
+                  marginBottom: 5,
+                  backgroundColor: "#f8f9fa",
+                  fontSize: "0.7em"
+                }}
+              ><br />Parallel and Distributed Computing Courseware
+              </small>
+            </strong>
+          </Navbar.Text>
+
+          <Nav.Link style={{ color: "#c78651", marginLeft: "1em" }} href="/">
             Home
           </Nav.Link>
 
@@ -38,37 +55,13 @@ const Header = props => {
             For Teachers
           </Nav.Link>
 
-          <Navbar.Brand
-            className="ml-auto"
-            style={{ backgroundColor: "#f8f9fa" }}
-          >
-            <Auth />
-          </Navbar.Brand>
-        </Navbar>
-        <Navbar bg="light">
-          {" "}
-          <Link to="/">
-            <h5
-              style={{
-                backgroundColor: "#f8f9fa",
-                color: "#c78651",
-                marginLeft: 20,
-                display: "inline-block",
-              }}
-            >
-              eduWRENCH - Pedagogic Modules
-            </h5>
-          </Link>
-          <small
-            style={{
-              color: "#bbbdbf",
-              marginLeft: 5,
-              marginBottom: 5,
-              backgroundColor: "#f8f9fa",
-            }}
-          >
-            Parallel and Distributed Computing Courseware
-          </small>
+          <Navbar.Collapse className="justify-content-end" style={{
+            backgroundColor: "#f8f9fa", marginRight: "1em"
+          }}>
+            <Navbar.Text>
+              <Auth />
+            </Navbar.Text>
+          </Navbar.Collapse>
         </Navbar>
       </div>
     </div>
@@ -76,11 +69,11 @@ const Header = props => {
 }
 
 Header.propTypes = {
-  siteTitle: PropTypes.string,
+  siteTitle: PropTypes.string
 }
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: ``
 }
 
 export default Header

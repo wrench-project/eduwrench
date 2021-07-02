@@ -1,12 +1,12 @@
 import React from "react"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import Card from "react-bootstrap/Card"
 
 const Textbooks = () => (
   <Layout>
-    <SEO title="Further Reading" />
+    <Seo title="Further Reading" />
     <h3
       style={{
         display: "flex",

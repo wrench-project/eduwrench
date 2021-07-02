@@ -12,7 +12,7 @@ class Auth extends Component {
     this.state = {
       isLogined: false,
       accessToken: "",
-      currentUser: "",
+      currentUser: ""
     }
 
     this.login = this.login.bind(this)
@@ -29,7 +29,7 @@ class Auth extends Component {
     if (response.accessToken) {
       this.setState(state => ({
         isLogined: true,
-        accessToken: response.accessToken,
+        accessToken: response.accessToken
       }))
       localStorage.setItem("login", "true")
     }
@@ -39,18 +39,18 @@ class Auth extends Component {
     if (googleData.accessToken) {
       this.setState(state => ({
         isLogined: true,
-        accessToken: googleData.accessToken,
+        accessToken: googleData.accessToken
       }))
       localStorage.setItem("login", "true")
     }
     const res = await fetch("http://localhost:3000/auth/google", {
       method: "POST",
       body: JSON.stringify({
-        token: googleData.tokenId,
+        token: googleData.tokenId
       }),
       headers: {
-        "Content-Type": "application/json",
-      },
+        "Content-Type": "application/json"
+      }
     })
     const data = await res.json()
     this.setState(state => ({ currentUser: data.email }))
@@ -61,7 +61,7 @@ class Auth extends Component {
     this.setState(state => ({
       isLogined: false,
       accessToken: "",
-      currentUser: "",
+      currentUser: ""
     }))
     localStorage.setItem("login", "false")
     localStorage.setItem("currentUser", "")

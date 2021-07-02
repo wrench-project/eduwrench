@@ -4,12 +4,12 @@ import Card from "react-bootstrap/Card"
 import CardDeck from "react-bootstrap/CardDeck"
 
 import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import "./modules.css"
 
 const Modules = () => (
   <Layout>
-    <SEO title="Modules" />
+    <Seo title="Modules" />
     <h3
       style={{
         display: "flex",

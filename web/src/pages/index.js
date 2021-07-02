@@ -2,8 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 
 import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import Seo from "../components/seo"
 import Card from "react-bootstrap/Card"
 import CardDeck from "react-bootstrap/CardDeck"
 import "bootstrap/dist/css/bootstrap.min.css"
@@ -11,15 +10,15 @@ import "./index.css"
 
 const IndexPage = () => (
   <Layout>
-    <SEO title="Home" />
+    <Seo title="Home" />
     <div
       style={{
         maxWidth: `1400px`,
         marginTop: `1.45rem`,
-        backgroundColor: `#fefaec`,
+        backgroundColor: `#fefaec`
       }}
     >
-      <img src={require("../images/coverimg.png")} alt="cover"></img>
+      <img src={require("../images/coverimg.png")} alt="cover" />
     </div>
     <div>
       <div class="irow">
@@ -32,7 +31,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `30px`,
-              color: "#525252",
+              color: "#525252"
             }}
           >
             GOAL
@@ -49,8 +48,8 @@ const IndexPage = () => (
               className="link"
               href="https://wrench-project.org/"
             >
-              WRENCH{" "}
-            </a>
+              WRENCH
+            </a>{" "}
             simulation framework. These modules can be used to enhance/augment
             existing courses, such as university or on-line courses, or can
             simply be done in sequence by independent learners. High-level
@@ -70,7 +69,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `10px`,
-              color: "#525252",
+              color: "#525252"
             }}
           >
             ABOUT WRENCH AND SIMGRID
@@ -82,13 +81,13 @@ const IndexPage = () => (
               className="link"
               href="https://wrench-project.org/"
             >
-              WRENCH{" "}
-            </a>
+              WRENCH
+            </a>{" "}
             is a framework for simulating the execution of parallel and
             distributed applications on cyberinfrastructures. It is based on the
             lower-level{" "}
             <a target="_blank" className="link" href="https://simgrid.org/">
-              SimGrid{" "}
+              SimGrid
             </a>{" "}
             simulation framework, which provides the necessary accurate and
             scalable simulation abstractions.
@@ -103,7 +102,7 @@ const IndexPage = () => (
               textAlign: "center",
               marginBottom: `0px`,
               marginTop: `30px`,
-              color: "#525252",
+              color: "#525252"
             }}
           >
             WHAT THIS IS NOT ABOUT
@@ -130,7 +129,7 @@ const IndexPage = () => (
         textAlign: "center",
         marginBottom: `30px`,
         marginTop: `30px`,
-        color: "#525252",
+        color: "#525252"
       }}
     >
       MODULES
@@ -142,7 +141,7 @@ const IndexPage = () => (
           flex: 1,
           width: "20rem",
           backgroundColor: "white",
-          borderColor: "lightgrey !important",
+          borderColor: "lightgrey !important"
         }}
       >
         <Card.Body style={{ backgroundColor: "white" }}>
