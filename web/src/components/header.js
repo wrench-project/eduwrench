@@ -10,7 +10,8 @@ const Header = props => {
   return (
     <div>
       <div>
-        <Navbar bg="light" fixed="top" expand="md" style={{ boxShadow: "#ccc 2px 2px 2px" }}>
+        <Navbar bg="light" fixed="top" expand="md"
+                style={{ boxShadow: "#ccc 2px 2px 2px" }}>
           <Navbar.Brand href="/" style={{ backgroundColor: "#f8f9fa" }}>
             <StaticImage
               src="../images/wrench_logo.png"

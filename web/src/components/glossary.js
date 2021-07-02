@@ -59,7 +59,8 @@ const Glossary = () => {
           top: 150,
           left: -28,
           borderBottomLeftRadius: "0.5em",
-          borderBottomRightRadius: "0.5em"
+          borderBottomRightRadius: "0.5em",
+          boxShadow: "#ccc -2px 2px 2px"
         }}
         size="large"
         type="primary"

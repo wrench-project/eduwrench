@@ -1,3 +1,29 @@
+.card, .card-title, .card-body, .card-text {
+  background-color: #fff;
+}
+
+.card {
+  margin: 1em;
+  border-radius: 0.5em;
+  border: 0.5em #fff solid;
+  box-shadow: #ccc 2px 2px 2px;
+  flex: 1 0 40%;
+}
+
+.card-columns {
+  display: flex;
+  flex-direction: row;
+  /*flex-flow: column wrap;*/
+  flex-wrap: wrap;
+  flex-basis: 20%;
+}
+
+.module-desc {
+  font-size: 0.9em;
+  color: #777;
+  background-color: #fff;
+}
+
 .irow {
   background-color: #fefaec;
   display: flex;
