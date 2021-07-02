@@ -1,8 +1,7 @@
 import React from "react"
-import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
 import { Link } from "gatsby"
 import "./footer.css"
+import { StaticImage } from "gatsby-plugin-image"
 
 const Footer = () => (
   <div className="footer">
@@ -10,7 +9,7 @@ const Footer = () => (
       <div className="column">
         <p className="text">
           ©2020-{new Date().getFullYear()} eduWRENCH.
-          <br/>
+          <br />
           Released under{" "}
           <a
             target="_blank"
@@ -20,7 +19,7 @@ const Footer = () => (
           >
             GNU General Public License v3.0.{" "}
           </a>{" "}
-          <br/>
+          <br />
         </p>
         <small className="text">
           <Link className="slink" to="/privacypolicy/">
@@ -28,7 +27,7 @@ const Footer = () => (
           </Link>
           {" "} | {" "}
           <a className="slink" to="/modules/">
-             Our Modules
+            Our Modules
           </a>
           {" "} | {" "}
           <a
@@ -40,19 +39,19 @@ const Footer = () => (
             WRENCH Project
           </a>
         </small>
+
         <div className="banner">
           <div className="inline-block">
             <a
               href="https://nsf.gov/"
               target="_blank"
               rel="noreferrer"
-              className="link"
+              className="link m-lg-2"
+              style={{ marginLeft: "1em !important"}}
             >
-              <img
-                src={require("../images/logo-nsf.png")}
-                width="40"
+              <StaticImage
+                src="../images/logo-nsf.png"
                 height="40"
-                style={{ margin: "10px", backgroundColor: "white" }}
                 alt="NSF logo"
               />
             </a>
@@ -62,13 +61,11 @@ const Footer = () => (
               href="https://www.ics.hawaii.edu/"
               target="_blank"
               rel="noreferrer"
-              className="link"
+              className="link m-lg-2"
             >
-              <img
-                src={require("../images/logo-uhm.png")}
+              <StaticImage
+                src="../images/logo-uhm.png"
                 height="40"
-                width="120"
-                style={{ margin: "10px", backgroundColor: "white" }}
                 alt="UHM logo"
               />
             </a>
@@ -79,19 +76,18 @@ const Footer = () => (
               href="https://www.isi.edu/"
               target="_blank"
               rel="noreferrer"
-              className="link"
+              className="link m-lg-2"
             >
-              <img
-                src={require("../images/logo-usc.png")}
+              <StaticImage
+                src="../images/logo-usc.png"
                 height="40"
-                width="120"
-                style={{ margin: "10px", backgroundColor: "white" }}
                 alt="USC logo"
               />
             </a>
           </div>
         </div>
       </div>
+
       <div className="column">
         <p className="text">
           eduWRENCH is funded by the National Science Foundation (NSF) under
