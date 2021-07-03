@@ -37,8 +37,8 @@ const Glossary = () => {
   }
 
   const listItems = searchData.map(item => (
-    <div>
-      <br />
+    <div className="glossary-item">
+      <br/>
       <h5>{item.term}</h5>
       <p>{item.description}</p>
     </div>
@@ -70,14 +70,14 @@ const Glossary = () => {
         Glossary
       </Button>
       <Drawer
-        title=""
+        title="Glossary"
         placement="left"
         closable={false}
         onClose={onClose}
         visible={visible}
       >
         <div className="cont">
-          <h2 style={{ color: "grey" }}>Glossary</h2>
+          <h2 style={{ color: "grey", fontSize: "1.3em", fontWeight: "bold" }}>Glossary</h2>
           <br />
           <Input
             type="text"
@@ -87,6 +87,13 @@ const Glossary = () => {
             value={input}
             onChange={handleChange}
             bordered={false}
+            style={{
+              padding: "1em",
+              margin: "0",
+              borderBottom: "1px solid #ccc",
+              backgroundColor: "#fafafa",
+              fontWeight: "bold"
+            }}
           ></Input>
           {listItems}
         </div>

@@ -1,21 +1,21 @@
 .glossary * {
-  background-color: #d3834a;
-  color: white;
-  border-color: #d3834a;
+    background-color: #d3834a;
+    color: white;
+    border-color: #d3834a;
 }
 
 .glossary {
-  transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 
-Drawer * {
-  background-color: #fefaec;
-  color: #fefaec;
+.glossary-item p {
+    color: #333;
+    line-height: 1.4em;
+    font-size: 0.9em;
 }
 
-cont {
-  width: 100%;
-  position: fixed;
-  flex: 1;
-  margin-left: 0px;
+.glossary-item h5 {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: orangered;
 }
