@@ -39,19 +39,19 @@ const Header = props => {
             </strong>
           </Menu.Item>
 
-          <Menu.Item href="/">
+          <Menu.Item href="/" className="menu-item">
             Home
           </Menu.Item>
 
-          <Menu.Item href="/modules">
+          <Menu.Item href="/modules" className="menu-item">
             Modules
           </Menu.Item>
 
-          <Menu.Item href="/forstudents">
+          <Menu.Item href="/forstudents" className="menu-item">
             For Students
           </Menu.Item>
 
-          <Menu.Item href="/forteachers">
+          <Menu.Item href="/forteachers" className="menu-item">
             For Teachers
           </Menu.Item>
 

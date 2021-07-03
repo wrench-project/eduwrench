@@ -3,11 +3,11 @@
     margin-left: 0.5em !important;
 }
 
-.ui.menu .item {
+.menu-item {
     color: #d3834a !important;
 }
 
-.ui.menu .item:hover {
+.menu-item:hover {
     background-color: #d3834a !important;
     color: #fff !important;
 }

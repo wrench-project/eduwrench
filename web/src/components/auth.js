@@ -92,10 +92,10 @@ class Auth extends Component {
               </Dropdown.Menu>
             </Dropdown>
           ) : (
-            <Menu.Item style={{ backgroundColor: "#fff" }}>
+            <Menu.Item style={{ backgroundColor: "#fff" }} className="sign-in">
               <GoogleLogin
                 clientId={CLIENT_ID}
-                buttonText="Login"
+                buttonText="Sign In"
                 onSuccess={this.login}
                 onFailure={this.handleLoginFailure}
                 cookiePolicy={"single_host_origin"}

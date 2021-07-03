@@ -69,7 +69,7 @@ const IndexPage = () => (
               <ListGroup.Item>
                 <Button variant="warning" size="sm"
                         href="/pedagogic_modules/distributed_computing/coordinator_worker/">Launch</Button>
-                {" "}A.3.3 Client-Server<br />
+                {" "}A.3.3 Coordinator-Worker<br />
                 <span className="module-desc">The goal of this module is to introduce you to the coordinator/worker
                   model of computation, which in some sense extends client-server.</span>
               </ListGroup.Item>
