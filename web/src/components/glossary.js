@@ -38,7 +38,7 @@ const Glossary = () => {
 
   const listItems = searchData.map(item => (
     <div className="glossary-item">
-      <br/>
+      <br />
       <h5>{item.term}</h5>
       <p>{item.description}</p>
     </div>
@@ -70,15 +70,13 @@ const Glossary = () => {
         Glossary
       </Button>
       <Drawer
-        title="Glossary"
+        title={<h2 style={{ backgroundColor: "#fff" }}>Glossary</h2>}
         placement="left"
         closable={false}
         onClose={onClose}
         visible={visible}
       >
         <div className="cont">
-          <h2 style={{ color: "grey", fontSize: "1.3em", fontWeight: "bold" }}>Glossary</h2>
-          <br />
           <Input
             type="text"
             placeholder="Search for a term..."
@@ -94,7 +92,7 @@ const Glossary = () => {
               backgroundColor: "#fafafa",
               fontWeight: "bold"
             }}
-          ></Input>
+          />
           {listItems}
         </div>
       </Drawer>

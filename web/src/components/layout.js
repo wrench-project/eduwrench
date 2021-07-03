@@ -13,6 +13,7 @@ import Footer from "./footer"
 import Glossary from "./glossary"
 import "./layout.css"
 import "bootstrap/dist/css/bootstrap.min.css"
+import "semantic-ui-css/semantic.min.css"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`

@@ -1,5 +1,7 @@
 import React, { Component } from "react"
 import { GoogleLogin, GoogleLogout } from "react-google-login"
+// import { NavDropdown, Dropdown } from "react-bootstrap"
+import { Dropdown, Menu } from "semantic-ui-react"
 import "./auth.css"
 
 const CLIENT_ID =
@@ -10,9 +12,8 @@ class Auth extends Component {
     super(props)
 
     this.state = {
-      isLogined: false,
-      accessToken: "",
-      currentUser: ""
+      logged: false,
+      accessToken: ""
     }
 
     this.login = this.login.bind(this)
@@ -21,50 +22,35 @@ class Auth extends Component {
     this.handleLogoutFailure = this.handleLogoutFailure.bind(this)
   }
 
-  storeUser = () => {
-    localStorage.setItem("currentUser", this.state.currentUser)
-  }
-
   login(response) {
     if (response.accessToken) {
       this.setState(state => ({
-        isLogined: true,
-        accessToken: response.accessToken
+        logged: true,
+        accessToken: response.accessToken,
+        user: {
+          given: response.profileObj.givenName,
+          name: response.profileObj.name,
+          email: response.profileObj.email,
+          picture: response.profileObj.imageUrl
+        }
       }))
       localStorage.setItem("login", "true")
+      localStorage.setItem("currentUser", response.profileObj.email)
+      localStorage.setItem("userName", response.profileObj.name)
+      localStorage.setItem("userPicture", response.profileObj.imageUrl)
     }
-  }
-
-  handleLogin = async googleData => {
-    if (googleData.accessToken) {
-      this.setState(state => ({
-        isLogined: true,
-        accessToken: googleData.accessToken
-      }))
-      localStorage.setItem("login", "true")
-    }
-    const res = await fetch("http://localhost:3000/auth/google", {
-      method: "POST",
-      body: JSON.stringify({
-        token: googleData.tokenId
-      }),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    const data = await res.json()
-    this.setState(state => ({ currentUser: data.email }))
-    this.storeUser()
   }
 
   logout(response) {
     this.setState(state => ({
-      isLogined: false,
+      logged: false,
       accessToken: "",
-      currentUser: ""
+      user: {}
     }))
     localStorage.setItem("login", "false")
     localStorage.setItem("currentUser", "")
+    localStorage.setItem("userName", "")
+    localStorage.setItem("userPicture", "")
   }
 
   handleLoginFailure(response) {
@@ -77,29 +63,50 @@ class Auth extends Component {
 
   render() {
     return (
-      <div>
-        {this.state.isLogined ? (
-          <GoogleLogout
-            clientId={CLIENT_ID}
-            buttonText="Logout"
-            onLogoutSuccess={this.logout}
-            onFailure={this.handleLogoutFailure}
-            className="google"
-          ></GoogleLogout>
-        ) : (
-          <GoogleLogin
-            clientId={CLIENT_ID}
-            buttonText="Login"
-            //onSuccess={this.login}
-            onSuccess={this.handleLogin}
-            onFailure={this.handleLoginFailure}
-            cookiePolicy={"single_host_origin"}
-            responseType="code,token"
-            isSignedIn={true}
-            className="google"
-          />
-        )}
-      </div>
+      <>
+        <Menu.Menu position="right">
+          {this.state.logged ? (
+            <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} text={
+              <div className="pull-left">
+                <img className="thumbnail-image"
+                     src={this.state.user.picture}
+                     alt="user pic"
+                />
+              </div>
+            }>
+              <Dropdown.Menu>
+                <Dropdown.Item disabled>
+                  <strong>{this.state.user.name}</strong><br />
+                  <small>{this.state.user.email}</small>
+                </Dropdown.Item>
+                <Dropdown.Divider />
+                <GoogleLogout
+                  clientId={CLIENT_ID}
+                  buttonText="Sign Out"
+                  onLogoutSuccess={this.logout}
+                  onFailure={this.handleLogoutFailure}
+                  className="google sign-out"
+                  icon={false}
+                >
+                </GoogleLogout>
+              </Dropdown.Menu>
+            </Dropdown>
+          ) : (
+            <Menu.Item style={{ backgroundColor: "#fff" }}>
+              <GoogleLogin
+                clientId={CLIENT_ID}
+                buttonText="Login"
+                onSuccess={this.login}
+                onFailure={this.handleLoginFailure}
+                cookiePolicy={"single_host_origin"}
+                responseType="code,token"
+                isSignedIn={true}
+                className="google sign-out"
+              />
+            </Menu.Item>
+          )}
+        </Menu.Menu>
+      </>
     )
   }
 }

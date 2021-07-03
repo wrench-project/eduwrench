@@ -1,3 +1,38 @@
 .google * {
-  background-color: white !important;
+    background-color: white !important;
+}
+
+.thumbnail-image {
+    border-radius: 50%;
+    max-width: 3em !important;
+    max-height: 3em !important;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+.ui.item.dropdown {
+    background-color: #fff;
+    margin: 0;
+    padding: 0;
+}
+
+.ui.item.dropdown:hover {
+    background-color: #fff !important;
+}
+
+.ui.item.dropdown .icon {
+    display: none;
+}
+
+.auth-dropdown .dropdown-toggle::after {
+    display: none !important;
+}
+
+.sign-out {
+    border: 0 !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    margin: 0;
+    padding: 0;
 }

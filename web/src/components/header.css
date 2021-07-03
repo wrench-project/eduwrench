@@ -2,3 +2,16 @@
     padding: 0 !important;
     margin-left: 0.5em !important;
 }
+
+.ui.menu .item {
+    color: #d3834a !important;
+}
+
+.ui.menu .item:hover {
+    background-color: #d3834a !important;
+    color: #fff !important;
+}
+
+.menu-logo:hover {
+    background-color: #fff !important;
+}

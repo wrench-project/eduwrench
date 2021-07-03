@@ -2,68 +2,62 @@ import "./header.css"
 import { StaticImage } from "gatsby-plugin-image"
 import PropTypes from "prop-types"
 import React from "react"
-import Navbar from "react-bootstrap/Navbar"
-import Nav from "react-bootstrap/Nav"
 import Auth from "./auth"
+import { Menu } from "semantic-ui-react"
 
 const Header = props => {
   return (
     <div>
       <div>
-        <Navbar bg="light" fixed="top" expand="md"
-                style={{ boxShadow: "#ccc 2px 2px 2px" }}>
-          <Navbar.Brand href="/" style={{ backgroundColor: "#f8f9fa" }}>
+        <Menu fixed="top">
+          <Menu.Item className="menu-logo">
             <StaticImage
               src="../images/wrench_logo.png"
               width="30"
               height="30"
               alt="eduWRENCH logo"
+              backgroundColor="#fff"
+              style={{ marginRight: "1em" }}
+              className="menu-logo"
             />
-          </Navbar.Brand>
-          <Navbar.Text style={{ lineHeight: "1em" }}>
             <strong style={{
-              backgroundColor: "#f8f9fa",
+              backgroundColor: "#fff",
               color: "#c78651",
               display: "inline-block"
-            }}>
+            }} className="menu-logo">
               eduWRENCH - Pedagogic Modules
               <small
                 style={{
                   color: "#bbbdbf",
                   marginLeft: 5,
                   marginBottom: 5,
-                  backgroundColor: "#f8f9fa",
+                  backgroundColor: "#fff",
                   fontSize: "0.7em"
                 }}
               ><br />Parallel and Distributed Computing Courseware
               </small>
             </strong>
-          </Navbar.Text>
+          </Menu.Item>
 
-          <Nav.Link style={{ color: "#c78651", marginLeft: "1em" }} href="/">
+          <Menu.Item href="/">
             Home
-          </Nav.Link>
+          </Menu.Item>
 
-          <Nav.Link href="/modules/" style={{ color: "#c78651" }}>
+          <Menu.Item href="/modules">
             Modules
-          </Nav.Link>
+          </Menu.Item>
 
-          <Nav.Link href="/forstudents/" style={{ color: "#c78651" }}>
+          <Menu.Item href="/forstudents">
             For Students
-          </Nav.Link>
+          </Menu.Item>
 
-          <Nav.Link href="/forteachers/" style={{ color: "#c78651" }}>
+          <Menu.Item href="/forteachers">
             For Teachers
-          </Nav.Link>
+          </Menu.Item>
 
-          <Navbar.Collapse className="justify-content-end" style={{
-            backgroundColor: "#f8f9fa", marginRight: "1em"
-          }}>
-            <Navbar.Text>
-              <Auth />
-            </Navbar.Text>
-          </Navbar.Collapse>
-        </Navbar>
+          <Auth />
+
+        </Menu>
       </div>
     </div>
   )
