@@ -1,28 +1,21 @@
 import React from "react"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import { CardColumns, Card, Button, ListGroup } from "react-bootstrap"
+import { CardColumns, Card, ListGroup, Button } from "react-bootstrap"
 import "./index.css"
 
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
 
-    <h5
-      style={{
-        // display: "flex",
-        // flexDirection: "column",
-        // justifyContent: "center",
-        // textAlign: "center",
-        marginBottom: `20px`,
-        marginTop: `30px`,
-        margin: "auto",
-        color: "#525252"
-      }}
-    >
+    <h3 style={{
+      marginBottom: `20px`,
+      marginTop: `30px`,
+      color: "#525252"
+    }}>
       <br />OUR MODULES
-    </h5>
-    <h5><br />A. Parallel and Distributed Computing Concepts</h5>
+    </h3>
+    <h4 style={{ margin: 0 }}><br />A. Parallel and Distributed Computing Concepts</h4>
 
     <CardColumns style={{ flex: 1 }}>
       <Card>
@@ -55,28 +48,28 @@ const IndexPage = () => (
               <ListGroup.Item>
                 <Button variant="warning" size="sm"
                         href="/pedagogic_modules/distributed_computing/networking_fundamentals/">Launch</Button>
-                {" "}A.3.1 Networking Fundamentals<br />
+                &nbsp;&nbsp;A.3.1 Networking Fundamentals<br />
                 <span className="module-desc">The goal of this module is to provide you with knowledge of networking,
                   as it relates to the performance of distributed computing applications.</span>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button variant="warning" size="sm"
                         href="/pedagogic_modules/distributed_computing/client_server/">Launch</Button>
-                {" "}A.3.2 Client-Server<br />
+                &nbsp;&nbsp;A.3.2 Client-Server<br />
                 <span className="module-desc">The goal of this module is to introduce you to the fundamental
                   client/server model of computation.</span>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button variant="warning" size="sm"
                         href="/pedagogic_modules/distributed_computing/coordinator_worker/">Launch</Button>
-                {" "}A.3.3 Coordinator-Worker<br />
+                &nbsp;&nbsp;A.3.3 Coordinator-Worker<br />
                 <span className="module-desc">The goal of this module is to introduce you to the coordinator/worker
                   model of computation, which in some sense extends client-server.</span>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Button variant="warning" size="sm"
                         href="/pedagogic_modules/distributed_computing/workflow/">Launch</Button>
-                {" "}A.3.4 Workflows<br />
+                &nbsp;&nbsp;A.3.4 Workflows<br />
                 <span className="module-desc">The goal of this module is to introduce you to the workflow model of
                   computation that is used in many real-world scientific applications.</span>
               </ListGroup.Item>

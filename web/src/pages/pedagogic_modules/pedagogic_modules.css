@@ -1,122 +1,152 @@
+.tab-panes {
+    margin-bottom: 4em;
+}
+
+.tab-panes * {
+    background-color: #fff;
+}
+
+.objectives * {
+    background-color: #fafafa !important;
+}
+
+.objectives .inverted, .objectives strong {
+    background-color: #d98636 !important;
+    color: #fff !important;
+}
+
+.mord {
+    color: #000;
+    font-size: 1em;
+}
+
+.tab-panes .ui.block.header {
+    background-color: #d98636 !important;
+    color: #fff !important;
+    border: 0;
+    border-radius: 0.5em;
+    font-size: 1em !important;
+}
+
 .nav-link {
-  color: #c78651 !important;
+    color: #c78651 !important;
 }
 
 .nav-link.active {
-  color: #c78651 !important;
-  background-color: #fefaec !important;
+    color: #c78651 !important;
+    background-color: #fefaec !important;
 }
 
 .nav-link:hover {
-  background-color: #c78651 !important;
-  color: white !important;
+    background-color: #c78651 !important;
+    color: white !important;
 }
 
 .check * {
-  background-color: white;
+    background-color: white;
 }
 
 table {
-  background-color: white;
+    background-color: white;
 }
 
 tr {
-  background-color: white;
-  font-size: 12px;
+    background-color: white;
+    font-size: 12px;
 }
 
 th {
-  background-color: white;
-  white-space: nowrap;
-  overflow: hidden;
+    background-color: white;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 td {
-  background-color: white;
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
+    background-color: white;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .task-details-table {
-  width: 1000px;
+    width: 1000px;
 
-  text-align: left;
-  table-layout: fixed;
+    text-align: left;
+    table-layout: fixed;
 }
 
 .error {
-  color: red;
-  background-color: white;
+    color: red;
+    background-color: white;
 }
 
 .header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 50px;
-  color: #525252;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    color: #525252;
 }
 
 .banner-div {
-  height: 50px;
-  background-color: #d3834a;
-  border-radius: 10px;
+    height: 50px;
+    background-color: #d3834a;
+    border-radius: 10px;
 }
 
 .banner-header {
-  margin-top: 15px;
-  color: white;
-  background-color: #d3834a;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+    margin-top: 15px;
+    color: white;
+    background-color: #d3834a;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
 }
 
 .highlighted {
-  background-color: #ecc099;
+    background-color: #ecc099;
 }
 
 .header-small {
-  display: flex;
-  flex-direction: column;
-  justify-content: left;
-  text-align: left;
-  color: #525252;
-  background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    text-align: left;
+    color: #525252;
+    background: white;
 }
 
 .tlink {
-  display: inline-block;
+    display: inline-block;
 }
 
 MathJax > * {
-  background-color: white;
+    background-color: white;
 }
 
 .formula {
-  background-color: white;
-  height: 40%;
-  width: 40%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+    background-color: white;
+    height: 40%;
+    width: 40%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .var {
-  background-color: white;
-  font-family: "Times New Roman", Times, serif;
-  display: inline-block;
+    background-color: white;
+    font-family: "Times New Roman", Times, serif;
+    display: inline-block;
 }
 
 .formula-inline {
-  background-color: white;
-  display: inline-block;
+    background-color: white;
+    display: inline-block;
 }
 
 .formula-newline {
-  background-color: white;
+    background-color: white;
 }
