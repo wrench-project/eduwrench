@@ -1,162 +1,171 @@
 import React, { useState } from "react"
-
-import Card from "react-bootstrap/Card"
+import { Divider, Header, Segment } from "semantic-ui-react"
+import TeX from "@matejmazur/react-katex"
 
 const Capstone = () => {
   return (
     <>
-      <Card className="main">
-        <Card.Body className="card">
-          <p className="card">
-            This page is intended to provide students information regarding the
-            eduWRENCH pedagogic modules, namely:
-          </p>
-          <ul className="card">
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#prerequisites">
-                What are the prerequisites?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#objectives">
-                What are the learning objectives?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#feedback">
-                How to provide feedback?
-              </a>
+      <Segment.Group className="objectives">
+        <Segment inverted><strong>Learning Objectives</strong></Segment>
+        <Segment style={{ backgroundColor: "#fafafa" }}>
+          <ul style={{ backgroundColor: "#fafafa" }}>
+            <li>Be able to apply the concepts learned in this module to reason about and optimize the performance of a
+              scenario that includes computation activities, I/O activities, and RAM constraints
             </li>
           </ul>
+        </Segment>
+      </Segment.Group>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="prerequisites">Prerequisites</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules aim to be as self-contained as possible. The
-            only prerequisite to the first module is that you must be familiar
-            with the concept of a program running on a computer for some lapse
-            of time to compute something of interest. The modules are intended
-            to be done in sequence. Depending on your level of knowledge, you
-            may be able to skip (or merely skim) the earlier module(s).
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            The content in these modules, especially for the earlier ones,
-            references classic textbooks. This is to make connections to the
-            standard Computer Science curriculum. Consulting these textbooks,
-            however, is completely optional.
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            Finally, these modules do not assume any computer programming
-            knowledge or skills, and do not involve any programming activities.
-            This said, the concepts you will learn have direct implications on
-            the development of parallel and distributed applications.
-          </p>
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="objectives">Learning Objectives</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules target four top-level Student Learning
-            Objectives (SLOs):
-          </p>
-          <ul style={{ backgroundColor: "white" }}>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO1</b>: Be able to
-              explain and apply the fundamental concepts of sequential,
-              parallel, and distributed computing
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO2</b>: Be able to
-              describe typical parallel/distributed computing (PDC) applications
-              and the platforms on which they run
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO3</b>: Be able to
-              reason about and improve the performance of PDC applications
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO4</b>: Be comfortable
-              with and able to use standard tools provided as part of current
-              CyberInfrastructure deployments
-            </li>
-          </ul>
-          <p style={{ backgroundColor: "white" }}>
-            Each module, and in fact each tab within each module page, lists
-            specific SLOs, each mapping to one or more of the top-level SLOs.
-            See the comprehensive SLO Map if interest.
-          </p>
+      <h2>Production Scenario</h2>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="feedback">Providing Feedback</a>
-            </h6>
-          </div>
+      <p>
+        You are working for a company that uses a single-core computer to run computational tasks as part of day-to-day
+        business. The specifications of the computer and tasks are as follows:
+      </p>
 
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            You can contact us at{" "}
-            <a
-              href="mailto:support@wrench-project.org"
-              style={{ color: "#d3834a", backgroundColor: "white" }}
-            >
-              support@wrench-project.org
-            </a>{" "}
-            to provide feedback, even if only to let us know about errors/typos
-            on the site.
-          </p>
-        </Card.Body>
-      </Card>
+      <p>
+        <strong>Machine</strong>
+        <ul>
+          <li>1 1-Core CPU that computes at 50 Gflop/sec</li>
+          <li>12 GB of RAM</li>
+          <li>1 HDD with 1TB capacity and 200 MB/sec R/W bandwidth</li>
+        </ul>
+      </p>
+
+      <p><strong>Tasks</strong></p>
+      <p>
+        Two tasks need to be run back-to-back throughout the day. Each task proceeds in three phases: (i) it reads its
+        input file fully; (ii) it computes; and (iii) it writes its output file fully. Each task has a memory footprint
+        that must be allocated to it throughout its execution (i.e., from the time it begins reading its input file
+        until it finishes writing its output file).
+      </p>
+
+      <ul>
+        <li>Task A:</li>
+        <ul>
+          <li>500 Gflop</li>
+          <li>Requires 12 GB of RAM</li>
+          <li>Input File (Read from disk before computation can start): 4 GB</li>
+          <li>Output File (Written to disk after computation has completed): 2 GB</li>
+        </ul>
+        <li>Task B:</li>
+        <ul>
+          <li>800 Gflop</li>
+          <li>Requires 12 GB of RAM</li>
+          <li>Input File (Read from disk before computation can start): 2 GB</li>
+          <li>Output File (Written to disk after computation has completed): 4 GB</li>
+        </ul>
+      </ul>
+
+      <h3>Phase #1: Hardware upgrades for the current implementation</h3>
+
+      <p>
+        In the current implementation of the software that executes the two tasks, the first task must run to completion
+        (i.e., its output file must be written to disk) before the next task cant start executing (i.e., start reading
+        its input file from disk).
+      </p>
+
+      <p>
+        Your manager has tasked you with decreasing the total execution time for executing the two tasks. Ignoring
+        things like hardware wear-and-tear and reliability, you have some decisions to make as far as allocating funds
+        to upgrade the computer used to run the tasks. Here are possible upgrades:
+      </p>
+
+      <p><strong>CPU Upgrades</strong></p>
+      <ul>
+        <li>Keep current 50 Gflop/sec CPU for $0</li>
+        <li>Upgrade CPU to 100 Gflop/sec for $100</li>
+        <li>Upgrade CPU to 200 Gflop/sec for $250</li>
+      </ul>
+
+      <p><strong>RAM Upgrades</strong></p>
+
+      <ul>
+        <li>Keep current 12 GB RAM for $0</li>
+        <li>Upgrade to 16GB RAM for $50</li>
+        <li>Upgrade to 32GB RAM for $100</li>
+      </ul>
+
+      <p><strong>Storage Upgrades</strong></p>
+
+      <ul>
+        <li>Keep current 200 MB/sec HDD for $0</li>
+        <li>Upgrade to SSD with 400 MB/sec R/W for $100</li>
+        <li>Upgrade to SSD with 500 MB/sec R/W for $250</li>
+      </ul>
+
+      <p>
+        Your manager has allocated $250 to spend for upgrades. Leftover money is encouraged if spending it will not
+        decrease execution time further.
+      </p>
+
+      <Header as="h3" block>
+        Questions
+      </Header>
+
+      <p>
+        <strong>[A.1.q5.1]</strong> What is the execution time of this 2-task application on that computer? Show your
+        work by computing and adding all I/O and compute times for each task.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.2]</strong> Is the execution I/O-intensive or CPU-intensive? Explain your reasoning.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.3]</strong> If you were given only $100 to spend on upgrades, which upgrade in the list above
+        would you purchase? You can answer this question purely via reasoning without computing anything. Show your
+        work.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.4]</strong> What is the optimal way to spend the $250 on upgrades to decrease execution time and
+        what is the corresponding execution time? Show your work by discussing all possible ways to spend the money and
+        estimating the execution time for each.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.5]</strong> Will the execution then be I/O-intensive or CPU-intensive? Explain your reasoning.
+      </p>
+
+      <Divider />
+
+      <h3>Phase #2: Hardware upgrades for a better implementation</h3>
+
+      <p>
+        Before you purchase the upgrades you determined in question A.1.q5.4 above, your manager informs you that a
+        software engineer in the company has just rewritten the software so that the execution can be more efficient:
+        when the first task starts performing its computation, the second task can then start reading its input file
+        from disk. However, only one task can compute at a time, and only one I/O operation can be performed at a time.
+        So, for instance, if at time <TeX math="t" /> the first task begins computing, which will last 100 seconds, and
+        the second task begins reading its input file, which will last 200 seconds, then the first task will only start
+        writing its output file at time <TeX math="t + 200" /> (i.e., it has to wait for the disk to be idle). The above
+        is only feasible if there is <strong>sufficient RAM to accommodate both tasks</strong>.
+      </p>
+
+      <Header as="h3" block>
+        Questions
+      </Header>
+
+      <p>
+        <strong>[A.1.q5.6]</strong> If you execute A before B, what is the best way to spend the $250 on upgrades?
+        Consider all possible ways to spend the money. Hint: one upgrade is necessary to make the execution different
+        from that in A.1.q5.4 above. Show your work by expressing the execution time as a mathematical expression (it’s
+        a good idea to depict the execution as in the figures in the previous tab), and modifying the terms in this
+        expression based on different upgrades to compare their effect on execution time.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.7]</strong> If you execute B before A, what is the best way to spend the $250 on upgrades? Use
+        the same approach as for the previous question and show your work similarly.
+      </p>
+
+      <p>
+        <strong>[A.1.q5.8]</strong> Considering the best of these two options (i.e., A.1.q5.6 and A.1.q5.7), compare and
+        contrast to your answer to A.1.q5.4 in terms of money spend and execution time achieved. Is the more complex
+        implementation worthwhile? Show your reasoning.
+      </p>
+
     </>
   )
 }
