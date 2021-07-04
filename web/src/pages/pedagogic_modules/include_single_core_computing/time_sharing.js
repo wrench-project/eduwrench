@@ -1,162 +1,118 @@
-import React, { useState } from "react"
-
-import Card from "react-bootstrap/Card"
+import React from "react"
+import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
+import TeX from "@matejmazur/react-katex"
 
 const TimeSharing = () => {
   return (
     <>
-      <Card className="main">
-        <Card.Body className="card">
-          <p className="card">
-            This page is intended to provide students information regarding the
-            eduWRENCH pedagogic modules, namely:
-          </p>
-          <ul className="card">
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#prerequisites">
-                What are the prerequisites?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#objectives">
-                What are the learning objectives?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#feedback">
-                How to provide feedback?
-              </a>
-            </li>
+      <Segment.Group className="objectives">
+        <Segment inverted><strong>Learning Objectives</strong></Segment>
+        <Segment style={{ backgroundColor: "#fafafa" }}>
+          <ul style={{ backgroundColor: "#fafafa" }}>
+            <li>Understand the concept of time sharing</li>
+            <li>Understand how time sharing impacts program execution times</li>
           </ul>
+        </Segment>
+      </Segment.Group>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="prerequisites">Prerequisites</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules aim to be as self-contained as possible. The
-            only prerequisite to the first module is that you must be familiar
-            with the concept of a program running on a computer for some lapse
-            of time to compute something of interest. The modules are intended
-            to be done in sequence. Depending on your level of knowledge, you
-            may be able to skip (or merely skim) the earlier module(s).
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            The content in these modules, especially for the earlier ones,
-            references classic textbooks. This is to make connections to the
-            standard Computer Science curriculum. Consulting these textbooks,
-            however, is completely optional.
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            Finally, these modules do not assume any computer programming
-            knowledge or skills, and do not involve any programming activities.
-            This said, the concepts you will learn have direct implications on
-            the development of parallel and distributed applications.
-          </p>
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="objectives">Learning Objectives</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules target four top-level Student Learning
-            Objectives (SLOs):
-          </p>
-          <ul style={{ backgroundColor: "white" }}>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO1</b>: Be able to
-              explain and apply the fundamental concepts of sequential,
-              parallel, and distributed computing
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO2</b>: Be able to
-              describe typical parallel/distributed computing (PDC) applications
-              and the platforms on which they run
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO3</b>: Be able to
-              reason about and improve the performance of PDC applications
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO4</b>: Be comfortable
-              with and able to use standard tools provided as part of current
-              CyberInfrastructure deployments
-            </li>
-          </ul>
-          <p style={{ backgroundColor: "white" }}>
-            Each module, and in fact each tab within each module page, lists
-            specific SLOs, each mapping to one or more of the top-level SLOs.
-            See the comprehensive SLO Map if interest.
-          </p>
+      <h2>Time Sharing</h2>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="feedback">Providing Feedback</a>
-            </h6>
-          </div>
+      <p>
+        As you know, you can execute multiple programs at once on your computer (e.g., your Web browser and a text
+        editor). This is called multi-programming, something that Operating Systems have known how to do since the
+        1960's. Considering <strong>a single core</strong>, the Operating System allows a program to run for a while,
+        then another program, and so on until we cycle back and repeat. This is called <strong>time sharing</strong>.
+        How this is done is one of the core topics of all Operating System <a href="/textbooks">textbooks</a>.
+      </p>
 
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            You can contact us at{" "}
-            <a
-              href="mailto:support@wrench-project.org"
-              style={{ color: "#d3834a", backgroundColor: "white" }}
-            >
-              support@wrench-project.org
-            </a>{" "}
-            to provide feedback, even if only to let us know about errors/typos
-            on the site.
-          </p>
-        </Card.Body>
-      </Card>
+      <p>
+        In these pedagogic modules we take a very high-level, ideal view: When running n programs at the same time on
+        one core, each of them proceeds at <i>1/n</i>-th of the core’s compute speed. This is not true in practice, as
+        time sharing has some overhead. Also, programs compete for some hardware resources, such as caches (see Computer
+        Architecture and Operating Systems <a href="/textbooks">textbooks</a> for all details), and thus can slow each
+        other down.
+      </p>
+
+      <p>
+        With our ideal model, say that at time 0 two programs are started on a single core with speed 1Gflop/sec. If
+        both programs have work 5 Gflop, then they both complete at time 10 sec. Say now that the second program has
+        work of 10 Gflop. Then the first program will complete at time 10, and the second program at time 15. During the
+        first 10 seconds, both programs proceed at speed 0.5 Gflop/sec. At time 10 the first program thus completes
+        (because it has performed all its work), at which point the second program proceeds at full 1 Gflop/sec speed.
+        Since the second program still has 5 units of work to complete, it runs for another 5 seconds and completes at
+        time 15.
+      </p>
+
+      <p>
+        As you go through upcoming models, you will not that we almost always avoid time sharing altogether by never
+        running two programs at the same time on a single core. This is typical when one focuses on high performance.
+        However, the reasoning needed to compute how time sharing would impact program execution times is general and
+        applicable to other settings (e.g., sharing of network bandwidth). This is why we include below some questions
+        on this topic.
+      </p>
+
+      <Divider />
+
+      <Header as="h3" block>
+        Practice Questions
+      </Header>
+
+      <Accordion exclusive={false} panels={[
+        {
+          key: "A.1.p2.1",
+          title: "[A.1.p2.1] At time 0 on a core with speed 2 Tflop/sec you start two programs. Program A’s work is " +
+            "200 Gflop, and program B’s work is 220 Gflop. At what times do the programs complete? Show your work.",
+          content: {
+            content: (
+              <Segment>
+                In a first phase, both programs proceed at speed 1 TFLop/sec. Program A completes first at time:
+                <TeX math="T_{A} = \frac{0.2 \text{Tflop}}{1 \text{Tflop/sec}} = 0.2 \text{sec}" block />
+                At that point, program <TeX math="B" /> still has 20 Gflop left to compute, but it now proceeds at speed
+                2 Tflop/sec. Therefore, it completes at time:
+                <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
+              </Segment>
+            )
+          }
+        },
+        {
+          key: "A.1.p2.2",
+          title: "[A.1.p2.2] Two programs, each with work 800 Tflop, were started at the same time on a core and " +
+            "both completed simultaneously after one hour. What is the core's speed in Gflop/sec?",
+          content: {
+            content: (
+              <Segment>
+                <TeX
+                  math="\text{speed} = 2 \times \frac{800000 \text{Gflop}}{ 3600 \text{sec}} \simeq 444.44 \text{Gflop/sec}"
+                  block />
+              </Segment>
+            )
+          }
+        }
+      ]
+      } />
+
+      <Divider />
+
+      <Header as="h3" block>
+        Questions
+      </Header>
+
+      <p>
+        <strong>[A.1.q2.1]</strong> Two programs are started at the same time on a core. These programs both have work 1
+        Tflop, and both complete after 220 seconds. What was the core speed in Gflop/sec? Show your work.
+      </p>
+
+      <p>
+        <strong>[A.1.q2.2]</strong> Three programs, A, B, and C, were started at the same time on a core with speed 600
+        GFLop/sec. After 10 seconds, A and C complete. Then, 2 seconds later, program B completes. What is the work (in
+        Gflop) of each of the three programs? Show your work.
+      </p>
+
+      <p>
+        <strong>[A.1.q2.3]</strong> A program, A, with work 4 Tflop is started on a core of speed 500 Gflop/sec. 5
+        seconds later another program B, is started. Both programs finish at the same time. What is the work of B in
+        Tflop? Show your work.
+      </p>
     </>
   )
 }
