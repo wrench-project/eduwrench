@@ -1,7 +1,7 @@
 import React from "react"
 import { Link } from "gatsby"
-import "./footer.css"
 import { StaticImage } from "gatsby-plugin-image"
+import "./footer.css"
 
 const Footer = () => (
   <div className="footer">
@@ -53,6 +53,7 @@ const Footer = () => (
                 src="../images/logo-nsf.png"
                 height="40"
                 alt="NSF logo"
+                backgroundColor="#fff"
               />
             </a>
           </div>
@@ -67,6 +68,7 @@ const Footer = () => (
                 src="../images/logo-uhm.png"
                 height="40"
                 alt="UHM logo"
+                backgroundColor="#fff"
               />
             </a>
           </div>
@@ -82,6 +84,7 @@ const Footer = () => (
                 src="../images/logo-usc.png"
                 height="40"
                 alt="USC logo"
+                backgroundColor="#fff"
               />
             </a>
           </div>

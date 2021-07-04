@@ -1,162 +1,68 @@
-import React, { useState } from "react"
-
-import Card from "react-bootstrap/Card"
+import React from "react"
+import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 
 const Memory = () => {
   return (
     <>
-      <Card className="main">
-        <Card.Body className="card">
-          <p className="card">
-            This page is intended to provide students information regarding the
-            eduWRENCH pedagogic modules, namely:
-          </p>
-          <ul className="card">
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#prerequisites">
-                What are the prerequisites?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#objectives">
-                What are the learning objectives?
-              </a>
-            </li>
-            <li className="card" style={{ color: "#c78651" }}>
-              <a style={{ color: "#c78651" }} href="#feedback">
-                How to provide feedback?
-              </a>
-            </li>
+      <Segment.Group className="objectives">
+        <Segment inverted><strong>Learning Objectives</strong></Segment>
+        <Segment style={{ backgroundColor: "#fafafa" }}>
+          <ul style={{ backgroundColor: "#fafafa" }}>
+            <li>Understand the concept of memory (RAM)</li>
+            <li>Understand how the amount of available memory limits program executions</li>
           </ul>
+        </Segment>
+      </Segment.Group>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="prerequisites">Prerequisites</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules aim to be as self-contained as possible. The
-            only prerequisite to the first module is that you must be familiar
-            with the concept of a program running on a computer for some lapse
-            of time to compute something of interest. The modules are intended
-            to be done in sequence. Depending on your level of knowledge, you
-            may be able to skip (or merely skim) the earlier module(s).
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            The content in these modules, especially for the earlier ones,
-            references classic textbooks. This is to make connections to the
-            standard Computer Science curriculum. Consulting these textbooks,
-            however, is completely optional.
-          </p>
-          <p style={{ backgroundColor: "white" }}>
-            Finally, these modules do not assume any computer programming
-            knowledge or skills, and do not involve any programming activities.
-            This said, the concepts you will learn have direct implications on
-            the development of parallel and distributed applications.
-          </p>
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="objectives">Learning Objectives</a>
-            </h6>
-          </div>
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            The eduWRENCH modules target four top-level Student Learning
-            Objectives (SLOs):
-          </p>
-          <ul style={{ backgroundColor: "white" }}>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO1</b>: Be able to
-              explain and apply the fundamental concepts of sequential,
-              parallel, and distributed computing
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO2</b>: Be able to
-              describe typical parallel/distributed computing (PDC) applications
-              and the platforms on which they run
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO3</b>: Be able to
-              reason about and improve the performance of PDC applications
-            </li>
-            <li style={{ backgroundColor: "white" }}>
-              <b style={{ backgroundColor: "white" }}>SLO4</b>: Be comfortable
-              with and able to use standard tools provided as part of current
-              CyberInfrastructure deployments
-            </li>
-          </ul>
-          <p style={{ backgroundColor: "white" }}>
-            Each module, and in fact each tab within each module page, lists
-            specific SLOs, each mapping to one or more of the top-level SLOs.
-            See the comprehensive SLO Map if interest.
-          </p>
+      <h2>Memory</h2>
 
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="feedback">Providing Feedback</a>
-            </h6>
-          </div>
+      <p>
+        When a program executes on a computer, it uses some of the computer’s memory (a.k.a., Random Access Memory or
+        RAM) to store its “address space”. The address space consists of all the bytes of content that the program needs
+        to execute (the “code”, “data”, “stack”, “heap”, “page table”, etc.). You can learn about details of the
+        structure of address spaces in Operating Systems <a href="/textbooks">textbooks</a>. In these pedagogic modules,
+        we simply consider that a program needs some number of bytes of RAM to execute.
+      </p>
 
-          <p style={{ backgroundColor: "white", marginTop: 15 }}>
-            You can contact us at{" "}
-            <a
-              href="mailto:support@wrench-project.org"
-              style={{ color: "#d3834a", backgroundColor: "white" }}
-            >
-              support@wrench-project.org
-            </a>{" "}
-            to provide feedback, even if only to let us know about errors/typos
-            on the site.
-          </p>
-        </Card.Body>
-      </Card>
+      <p>
+        When not enough RAM is available (e.g., the program’s address space is too big), the Operating System keeps part
+        of the address space on disk and shuffles content between RAM and disk as necessary. Albeit fascinating, this
+        comes with a significant performance hit. Our main focus in these pedagogic modules is performance, and
+        <strong>we will only consider executing a program if its entire address space fits in RAM</strong>.
+      </p>
+
+      <p>
+        For instance, consider a single-core computer with 4 GB of RAM. We have three programs A, B, and C, with address
+        spaces of 1 GB, 2 GB, and 3 GB, respectively. In this case, we cannot run all three programs at the same time,
+        because 6 GB is larger than the available RAM. But we can run program A and C together as they together require
+        4 GB of RAM. Note that in practice such a “tight” fit may not work because the entire RAM is not available for
+        user processes. For instance, some RAM is used to store the Operating System’s Kernel (see Operating Systems
+        <a href="/textbooks">textbooks</a>).
+      </p>
+
+      <p>
+        If you have been paying attention you may wonder why we are even talking about running programs at the same time
+        since in the previous tab we said we would almost never do it! We will find out in the Multicore Computing
+        module!
+      </p>
+
+      <Header as="h3" block>
+        Suggested Activities
+      </Header>
+
+      <p>
+        <strong>[How much RAM on your computer]</strong> Find out how much RAM you have on your computer in total, and
+        how much RAM is available for running new programs on your computer right now.
+      </p>
+
+      <p>
+        <strong>[How much RAM for your browser]</strong> Find out how much RAM your Web browser is using right now on
+        your computer (this could be a substantial amount). In these pedagogic modules we often assume that programs use
+        a fixed amount of memory that is allocated throughout the program’s execution. But in fact, programs’ memory
+        needs typically evolve throughout their execution. To see this in action, in your browser open a few tabs to
+        navigate to content-heavy Web sites (e.g., news sites, social media sites). How much more memory does your
+        browser use now?
+      </p>
     </>
   )
 }

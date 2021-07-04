@@ -2,7 +2,8 @@ import React, { useState } from "react"
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 import { Segment, Tab } from "semantic-ui-react"
-import 'katex/dist/katex.min.css';
+// import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom"
+import "katex/dist/katex.min.css"
 import "./pedagogic_modules.css"
 
 import WorkAndSpeed from "./include_single_core_computing/work_and_speed"
@@ -26,34 +27,50 @@ const SingleCoreComputing = () => {
         program on a single core).
         <br /><br />
         There is a lot of complexity under the cover, which belongs in Computer Architecture and Operating Systems{" "}
-        <a className="link" href="/textbooks/"> textbooks </a> . Instead, we take a high-level approach, with a focus on
+        <a className="link" href="/textbooks"> textbooks </a> . Instead, we take a high-level approach, with a focus on
         performance.
         <br /><br />
         Go through the tabs below in sequence…
       </Segment>
 
-      <Tab className="tab-panes" panes={[
+      <Tab className="tab-panes" renderActiveOnly={true} panes={[
         {
-          menuItem: "Work and Speed",
+          menuItem: {
+            key: "work_and_speed",
+            content: "Work and Speed"
+          },
           render: () => <Tab.Pane><WorkAndSpeed /></Tab.Pane>
         },
         {
-          menuItem: "Time Sharing",
+          menuItem: {
+            key: "time_sharing",
+            content: "Time Sharing"
+          },
           render: () => <Tab.Pane><TimeSharing /></Tab.Pane>
         },
         {
-          menuItem: "Memory",
+          menuItem: {
+            key: "memory",
+            content: "Memory"
+          },
           render: () => <Tab.Pane><Memory /></Tab.Pane>
         },
         {
-          menuItem: "I/O",
+          menuItem: {
+            key: "io",
+            content: "I/O"
+          },
           render: () => <Tab.Pane><IO /></Tab.Pane>
         },
         {
-          menuItem: "Capstone",
+          menuItem: {
+            key: "capstone",
+            content: "Capstone"
+          },
           render: () => <Tab.Pane><Capstone /></Tab.Pane>
         }
-      ]} />
+      ]}
+      />
     </Layout>
   )
 }

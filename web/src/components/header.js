@@ -1,9 +1,9 @@
-import "./header.css"
-import { StaticImage } from "gatsby-plugin-image"
-import PropTypes from "prop-types"
 import React from "react"
-import Auth from "./auth"
+import PropTypes from "prop-types"
 import { Menu } from "semantic-ui-react"
+import { StaticImage } from "gatsby-plugin-image"
+import Auth from "./auth"
+import "./header.css"
 
 const Header = props => {
   return (
@@ -18,7 +18,6 @@ const Header = props => {
               alt="eduWRENCH logo"
               backgroundColor="#fff"
               style={{ marginRight: "1em" }}
-              className="menu-logo"
             />
             <strong style={{
               backgroundColor: "#fff",
