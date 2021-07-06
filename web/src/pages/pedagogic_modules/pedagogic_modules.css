@@ -20,12 +20,24 @@
     font-size: 1em;
 }
 
+.vlist {
+    height: 0 !important;
+}
+
 .tab-panes .ui.block.header {
     background-color: #d98636 !important;
     color: #fff !important;
     border: 0;
     border-radius: 0.5em;
     font-size: 1em !important;
+}
+
+.caption {
+    color: #999;
+}
+
+.caption strong {
+    color: #c78651;
 }
 
 .nav-link {

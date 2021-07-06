@@ -6,14 +6,25 @@ import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
 import axios from "axios"
 import ScriptTag from "react-script-tag"
-import "./../pedagogic_modules.css"
 import * as d3 from "d3"
 import Chart from "chart.js"
 import IOGanttChart from "../../../charts/io_gantt_chart"
 import IOHostUtilizationChart from "../../../charts/io_host_utilization_chart"
+import { StaticImage } from "gatsby-plugin-image"
 //import { prepareResponseData } from "./../../../sims/scripts/util.js"
 
 //const prepareResponseData = require("./../../../sims/scripts/util.js");
+
+import { Divider, Header, Segment, Table } from "semantic-ui-react"
+import TeX from "@matejmazur/react-katex"
+import "./../pedagogic_modules.css"
+
+import IOFigure1 from "../../../images/svgs/IO_figure_1.svg"
+import IOFigure2 from "../../../images/svgs/IO_figure_2.svg"
+import IOFigure3 from "../../../images/svgs/IO_figure_3.svg"
+import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
+import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
+
 
 function processIO(taskIO) {
   let minStart = 0
@@ -22,7 +33,7 @@ function processIO(taskIO) {
   if (taskIO && Object.keys(taskIO).length > 0) {
     minStart = Number.MAX_VALUE
     let ioKeys = Object.keys(taskIO)
-    ioKeys.forEach(function (ioKey) {
+    ioKeys.forEach(function(ioKey) {
       let tIO = taskIO[ioKey]
       minStart = Math.min(tIO.start, minStart)
       maxEnd = Math.max(tIO.end, maxEnd)
@@ -36,22 +47,22 @@ const ganttChartScales = {
     {
       stacked: true,
       ticks: {
-        reverse: true,
+        reverse: true
       },
       scaleLabel: {
         display: true,
-        labelString: "Tasks ID",
-      },
-    },
+        labelString: "Tasks ID"
+      }
+    }
   ],
   xAxes: [
     {
       scaleLabel: {
         display: true,
-        labelString: "Time (seconds)",
-      },
-    },
-  ],
+        labelString: "Time (seconds)"
+      }
+    }
+  ]
 }
 
 function fillEmptyValues(datasets, end, labels) {
@@ -62,7 +73,7 @@ function fillEmptyValues(datasets, end, labels) {
       taskId: [],
       borderColor: "rgba(0, 0, 0, 0.3)",
       borderWidth: 1,
-      barPercentage: 1.2,
+      barPercentage: 1.2
     })
   }
   for (let i = 0; i < datasets.length; i++) {
@@ -82,7 +93,7 @@ function ingestData(obj, start, end, color, id) {
 
 function findTaskScheduling(data, hosts) {
   let keys = Object.keys(hosts)
-  keys.forEach(function (key) {
+  keys.forEach(function(key) {
     let hostTasks = []
     // obtaining sorted list of tasks by start time
     for (let i = 0; i < data.length; i++) {
@@ -151,15 +162,15 @@ function generateGanttChartInfo(
   let labels = label
     ? label
     : {
-        read: { display: true, label: "Reading Input" },
-        compute: { display: true, label: "Performing Computation" },
-        write: { display: true, label: "Writing Output" },
-      }
+      read: { display: true, label: "Reading Input" },
+      compute: { display: true, label: "Performing Computation" },
+      write: { display: true, label: "Writing Output" }
+    }
 
   const colors = {
     read: "#cbb5dd",
     compute: "#f7daad",
-    write: "#abdcf4",
+    write: "#abdcf4"
   }
 
   // prepare data
@@ -170,26 +181,26 @@ function generateGanttChartInfo(
         data: [],
         backgroundColor: [],
         host: [],
-        label: labels.read.label,
+        label: labels.read.label
       },
       {
         data: [],
         backgroundColor: [],
         host: [],
-        label: labels.compute.label,
+        label: labels.compute.label
       },
       {
         data: [],
         host: [],
         backgroundColor: [],
-        label: labels.write.label,
-      },
-    ],
+        label: labels.write.label
+      }
+    ]
   }
   let zoomMaxRange = 0
 
   let keys = Object.keys(rawData.tasks)
-  keys.forEach(function (key) {
+  keys.forEach(function(key) {
     let task = rawData.tasks[key]
     data.labels.push(task.task_id)
 
@@ -240,7 +251,7 @@ function generateGanttChartInfo(
         mode: "point",
         intersect: "false",
         callbacks: {
-          label: function (tooltipItem, data) {
+          label: function(tooltipItem, data) {
             let value = tooltipItem.value
               .replace("[", "")
               .replace("]", "")
@@ -255,19 +266,19 @@ function generateGanttChartInfo(
             }
             return ""
           },
-          afterBody: function (tooltipItem, data) {
+          afterBody: function(tooltipItem, data) {
             return (
               "Execution Host: " +
               data.datasets[tooltipItem[0].datasetIndex].host[
                 tooltipItem[0].index
-              ]
+                ]
             )
-          },
-        },
-      },
+          }
+        }
+      }
       //,
       //plugins: pluginsProperties
-    },
+    }
   }
   //);
 }
@@ -301,14 +312,14 @@ function generateHostUtilizationChartInfo(
   // prepare data
   let data = {
     labels: [],
-    datasets: [],
+    datasets: []
   }
   let zoomMaxRange = 0
 
   // obtain list of hosts
   let hosts = {}
   let keys = Object.keys(rawData.tasks)
-  keys.forEach(function (key) {
+  keys.forEach(function(key) {
     let task = rawData.tasks[key]
     if (
       hostsList.length > 0 &&
@@ -319,7 +330,7 @@ function generateHostUtilizationChartInfo(
     if (!(task.execution_host.hostname in hosts)) {
       hosts[task.execution_host.hostname] = {
         cores: task.execution_host.cores,
-        tasks: {},
+        tasks: {}
       }
       for (let i = 0; i < task.execution_host.cores; i++) {
         hosts[task.execution_host.hostname].tasks[i] = []
@@ -330,14 +341,14 @@ function generateHostUtilizationChartInfo(
   // obtain additional hosts without tasks
   if (rawData.disk) {
     keys = Object.keys(rawData.disk)
-    keys.forEach(function (key) {
+    keys.forEach(function(key) {
       if (diskHostsList.length > 0 && !diskHostsList.includes(key)) {
         return
       }
       if (!(key in hosts)) {
         hosts[key] = {
           cores: 1,
-          tasks: {},
+          tasks: {}
         }
       }
     })
@@ -347,7 +358,7 @@ function generateHostUtilizationChartInfo(
 
   // populate data
   keys = Object.keys(hosts)
-  keys.forEach(function (key) {
+  keys.forEach(function(key) {
     let host = hosts[key]
 
     // add disk operations
@@ -357,7 +368,7 @@ function generateHostUtilizationChartInfo(
       rawData.disk[key]
     ) {
       let mounts = Object.keys(rawData.disk[key])
-      mounts.forEach(function (mount) {
+      mounts.forEach(function(mount) {
         let diskMounts = rawData.disk[key]
 
         // read operations
@@ -406,7 +417,7 @@ function generateHostUtilizationChartInfo(
     // add compute tasks
     if (hostsList.length === 0 || hostsList.includes(key)) {
       let tasks = Object.keys(host.tasks)
-      tasks.forEach(function (core) {
+      tasks.forEach(function(core) {
         let coreTasks = host.tasks[core]
         data.labels.push(key + " (core #" + core + ")")
         // filling empty values
@@ -443,31 +454,31 @@ function generateHostUtilizationChartInfo(
           {
             stacked: true,
             ticks: {
-              reverse: true,
-            },
-          },
+              reverse: true
+            }
+          }
         ],
         xAxes: [
           {
             scaleLabel: {
               display: true,
-              labelString: "Time (seconds)",
-            },
-          },
-        ],
+              labelString: "Time (seconds)"
+            }
+          }
+        ]
       },
       chartArea: {
-        backgroundColor: "#FEF8F8",
+        backgroundColor: "#FEF8F8"
       },
       legend: {
-        display: false,
+        display: false
       },
       tooltips: {
         position: "nearest",
         mode: "point",
         intersect: "false",
         callbacks: {
-          label: function (tooltipItem, data) {
+          label: function(tooltipItem, data) {
             let value = tooltipItem.value
               .replace("[", "")
               .replace("]", "")
@@ -477,19 +488,19 @@ function generateHostUtilizationChartInfo(
               let label =
                 data.datasets[tooltipItem.datasetIndex].taskId[
                   tooltipItem.index
-                ] || ""
+                  ] || ""
               if (label) {
                 label += ": " + runtime.toFixed(3) + "s"
               }
               return label
             }
             return ""
-          },
-        },
-      },
+          }
+        }
+      }
       //,
       //plugins: pluginsProperties,
-    },
+    }
   }
 }
 
@@ -505,16 +516,16 @@ function prepareResponseData(responseData) {
     tasks: responseData.workflow_execution.tasks,
     disk: responseData.disk_operations,
     contents: responseData.workflow_execution.tasks, // TODO: remove
-    network: links,
+    network: links
   }
 }
 
 function prepareData(data) {
   const nullReplacement = {
     start: 0,
-    end: 0,
+    end: 0
   }
-  data.forEach(function (d) {
+  data.forEach(function(d) {
     if (d.read === null) {
       d.read = [nullReplacement]
     }
@@ -562,8 +573,8 @@ function convertToTableFormat(d, section, property) {
       metric =
         property === "start"
           ? d[section][i][property] < metric
-            ? d[section][i][property]
-            : metric
+          ? d[section][i][property]
+          : metric
           : d[section][i][property] > metric
           ? d[section][i][property]
           : metric
@@ -596,13 +607,13 @@ function populateWorkflowTaskDataTable(data, tableID = null, label = null) {
   let labels = label
     ? label
     : {
-        read: { display: true, label: "Read Input" },
-        compute: { display: true, label: "Computation" },
-        write: { display: true, label: "Write Output" },
-      }
+      read: { display: true, label: "Read Input" },
+      compute: { display: true, label: "Computation" },
+      write: { display: true, label: "Write Output" }
+    }
 
   let tableContents = `
-      <table class="task-details-table" id='${tableId}'>
+      <table class="task-details-table" id="${tableId}">
           <colgroup>
               <col span="1"></col>`
 
@@ -681,11 +692,11 @@ function populateWorkflowTaskDataTable(data, tableID = null, label = null) {
 
   let task_details_table_body = d3.select(`#${tableBodyId}`)
 
-  const TASK_DATA = Object.assign([], data).sort(function (lhs, rhs) {
+  const TASK_DATA = Object.assign([], data).sort(function(lhs, rhs) {
     return parseInt(lhs.compute.start) - parseInt(rhs.compute.start)
   })
 
-  TASK_DATA.forEach(function (task) {
+  TASK_DATA.forEach(function(task) {
     let task_id = task["task_id"]
 
     let read_start = convertToTableFormat(task, "read", "start")
@@ -763,7 +774,7 @@ const IO = () => {
       task_gflop: taskGflop,
       task_input: amountInput,
       task_output: amountOutput,
-      io_overlap: overlapAllowed,
+      io_overlap: overlapAllowed
     }
 
     let errorsPresent = false
@@ -876,78 +887,206 @@ const IO = () => {
 
   return (
     <>
-      <Card className="main">
-        <Card.Body className="card">
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="objectives">Learning Objectives</a>
-            </h6>
-          </div>
-          <br />
-          <ul>
+      <Segment.Group className="objectives">
+        <Segment inverted><strong>Learning Objectives</strong></Segment>
+        <Segment style={{ backgroundColor: "#fafafa" }}>
+          <ul style={{ backgroundColor: "#fafafa" }}>
             <li>Understand the concept of IO</li>
             <li>Understand the impact of IO operations on computing</li>
-            <li>
-              Understand the basics of optimizing computation around IO
-              operations
-            </li>
+            <li>Understand the basics of optimizing computation around IO operations</li>
           </ul>
-          <hr></hr>
-          <div
-            style={{
-              height: 50,
-              backgroundColor: "#d3834a",
-              borderRadius: 10,
-            }}
-          >
-            <h6
-              style={{
-                marginTop: 15,
-                color: "white",
-                backgroundColor: "#d3834a",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                textAlign: "center",
-              }}
-            >
-              <a id="objectives">Simulating IO</a>
-            </h6>
-          </div>
-          <br />
-          <p className="card">
-            So that you can gain hands-on experience with the above concepts,
-            use the simulation app below.
-          </p>
-          <p className="card">
-            Initially, you can create a series of identical tasks that have a
-            certain input and output. Run the simulation to see the progression
-            of tasks and host utilization without allowing IO to overlap with
-            computation. Once you have observed this, try selecting the checkbox
-            to allow overlap. With IO overlap there should be an improvement in
-            execution time and host utilization. You can view this in the output
-            graphs that are generated. You can also try varying the input/output
-            and computation amounts to create IO-intensive or CPU-intensive
-            tasks. Understanding which tasks will benefit from increased R/W or
-            computation speeds will assist you in answering the questions to
-            come.
-          </p>
+        </Segment>
+      </Segment.Group>
+
+      <h2>Basic Concepts</h2>
+
+      <p>
+        A computer typically does not run a program start to finish in a vacuum. Programs often need to
+        consume <strong>I</strong>nput and produce <strong>O</strong>utput, which is done by executing <strong>IO
+        operations</strong>. A couple of very common IO operations are reading from disk and writing to disk. As the
+        disk is much slower than the CPU, even small disk reads or writes can represent a large (from the CPU’s
+        perspective) chunk of time during which the CPU is sitting idle.
+      </p>
+
+      <p>
+        When it comes to IO operations, not all programs are created equal. Some programs will require more IO time than
+        others. In fact, programs are typically categorized as IO- or CPU-intensive. If a program spends more time
+        performing IO operations than CPU operations, it is said to be <i>IO-intensive</i>. If the situation is
+        reversed, the program is said to be <i>CPU-intensive</i>. For instance, a program that reads a large jpeg image
+        from disk, reduces the brightness of every pixel (to make the image darker), and writes the modified image to
+        disk is IO-intensive on most standard computers (a lot of data to read/write from/to disk, and very quick
+        computation on this data – in this case perhaps just a simple subtraction). By contrast, a program that instead
+        of reducing the brightness of the image applies an oil painting filter to it will most likely be CPU-intensive
+        (applying an oil painting filter entails many, many more computations than a simple subtraction).
+      </p>
+
+      <p>
+        As mentioned above, reading from and writing to the disk are slow operations compared to the CPU. Typically,
+        there is a difference between read and write speeds as well. Reading is typically significantly faster than
+        writing. Furthermore, different kinds of disks have different speeds as well. The table below shows advertised
+        read and write speeds for two mass-market SATA disks, a Hard Disk Drive (HDD) and a Solid State Drive (SSD), at
+        the time this content is being written:
+      </p>
+
+      <Table collapsing>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Disk</Table.HeaderCell>
+            <Table.HeaderCell>Read Bandwidth</Table.HeaderCell>
+            <Table.HeaderCell>Write Bandwidth</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell>WD HDD (10EZEX)</Table.Cell>
+            <Table.Cell>160 MB/sec</Table.Cell>
+            <Table.Cell>143 MB/sec</Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell>Samsung 860 EVO</Table.Cell>
+            <Table.Cell>550 MB/sec</Table.Cell>
+            <Table.Cell>520 MB/sec</Table.Cell>
+          </Table.Row>
+        </Table.Body>
+        <Table.Footer>
+          <Table.Row>
+            <Table.HeaderCell colSpan="3">
+              The read and write speeds are often referred to as <strong>bandwidths</strong>. The units above is MB/sec
+              (MegaByte per second), which is also written as MBps.
+            </Table.HeaderCell>
+          </Table.Row>
+        </Table.Footer>
+      </Table>
+
+      <p>
+        Determining the exact bandwidth that disk reads and writes will experience during program execution is actually
+        difficult (due to the complexity of the underlying hardware and software, and due to how the data is stored and
+        accessed on the disk). In this module, we will always assume that disk bandwidths are constant.
+      </p>
+
+      <h2>A Program with Computation and IO</h2>
+
+      <p>
+        Let us consider a program that performs a task in three phases. First, it reads data from disk. Second, it
+        performs some computation on that data to create new data. And third, it writes the new data back to disk. This
+        could be one of the image processing programs mentioned in the previous section as examples. If this program is
+        invoked to process two images, i.e., so that it performs two tasks, then its execution timeline is as depicted
+        below:
+      </p>
+
+      <IOFigure1 />
+      <div className="caption"><strong>Figure 1:</strong> Example execution timeline.</div>
+
+      <p>
+        As can be seen in the figure, at any given time either the CPU is idle (while IO operations are ongoing) or the
+        disk is idle (while computation is ongoing). In the above figure, reading an image from disk takes 1 second,
+        writing an image to disk takes 1 second, and processing an image takes 2 seconds. (We can thus infer that the
+        two images have the same size, and that the disk has identical read and write bandwidths). We can compute the
+        CPU Utilization as follows:
+      </p>
+
+      <TeX block math="\text{CPU Utilization}  = \frac{T_{Compute}}{T_{Compute} + T_{Idle}} = \frac{4}{4 + 4} = 0.5" />
+
+      <p>
+        This means that the CPU is idle for half of the execution of the program. This program is perfectly balanced,
+        i.e., it is neither CPU-intensive nor IO-intensive.
+      </p>
+
+      <h2>Overlapping computation and IO</h2>
+
+      <p>
+        The execution in the previous section can be improved. This is because <strong>the CPU and the disk are two
+        different hardware components, and they can work at the same time</strong>. As a result, while the CPU is
+        processing the 1st image, the 2nd image could be read from disk! The CPU can then start processing the 2nd image
+        right away after it finishes processing the 1st image. The 1st image can be written to disk at the same time.
+        This execution is depicted below:
+      </p>
+
+      <IOFigure2 />
+      <div className="caption"><strong>Figure 2:</strong> Example execution timeline with overlap of IO and computation.
+      </div>
+
+      <p>
+        The total execution time has dropped by 2 seconds <strong>and</strong> the CPU utilization is increased:
+      </p>
+
+      <TeX block math="\text{CPU Utilization} = \frac{T_{Compute}}{T_{Compute} + T_{Idle}} = \frac{4}{4 + 2} = 0.66" />
+
+      <p>
+        If there were additional, similar images to process, the CPU utilization would continue to drop as it would be
+        idle only at the very beginning and at the very end of the execution.
+      </p>
+
+      <p>
+        The above is an ideal situation because IO time for an image is exactly equal to compute time. More precisely,
+        save for the first and last task, <i>while the program computes task <TeX math="i" /> there is enough time to
+        write the output of task <TeX math="i-1" /> and to read the input of task <TeX math="i+1" /></i>.
+      </p>
+
+      <p>
+        If the above condition does not hold, then there is necessarily CPU idle time. For instance, if the time to read
+        an image is instead 2s (for instance because the program reads larger images but writes back down-scaled images)
+        and the program must process 3 images, then the execution would be as:
+      </p>
+
+      <IOFigure3 />
+      <div className="caption"><strong>Figure 3:</strong> Example execution timeline with overlap of IO and computation.
+      </div>
+
+      <p>
+        As expected, the program first reads 2 images, and then alternates write and read operations while CPU
+        computation is going on. But in this case, the CPU experiences idle time because images cannot be read from disk
+        fast enough. So although overlapping IO and computation almost always reduces program execution time, the
+        benefit can vary based on IO and computation volumes (and especially if these volumes vary from task to task!).
+      </p>
+
+      <Divider />
+
+      <h2>Practical concerns</h2>
+
+      <p>
+        In practice, one can implement a program that overlaps IO and computation. This can be done by using
+        non-blocking IO operations and/or threads. These are techniques that are described in Operating Systems
+        <a href="/textbooks">textbooks</a>. The overlap may not be completely "free", as reading/writing data from disk
+        can still require the CPU to perform some computation. Therefore, there can be time-sharing of the CPU between
+        the IO operations and the computation, and the computation is slowed down a little bit by the IO operations
+        (something we did not show in the figures above). This said, there are ways for IO operations to use almost no
+        CPU cycles. One such technique, which relies on specific but commonplace hardware, is called Direct Memory
+        Access (DMA). See Operating Systems <a href="/textbooks">textbooks</a> for more details.
+      </p>
+
+      <p>
+        Another practical concern is RAM pressure. When going from the example execution in Figure 1 to that in Figure
+        2, the peak amount of RAM needed by the program is increased because at some point more than one input images
+        are held in RAM. Since tasks could have significant memory requirements, RAM constrains can prevent some overlap
+        of IO and computation.
+      </p>
+
+      <Header as="h3" block>
+        Simulating IO
+      </Header>
+
+      <p>
+        So that you can gain hands-on experience with the above concepts, use the simulation app below.
+      </p>
+
+      <p>
+        Initially, you can create a series of identical tasks that have a certain input and output. Run the simulation
+        to see the progression of tasks and host utilization without allowing IO to overlap with computation. Once you
+        have observed this, try selecting the checkbox to allow overlap. With IO overlap there should be an improvement
+        in execution time and host utilization. You can view this in the output graphs that are generated. You can also
+        try varying the input/output and computation amounts to create IO-intensive or CPU-intensive tasks.
+        Understanding which tasks will benefit from increased R/W or computation speeds will assist you in answering the
+        questions to come.
+      </p>
+
+      <IOFigure4 />
+      <IOFigure5 />
+
+
+      <Card className="main">
+        <Card.Body className="card">
+
           <Accordion>
             <Card>
               <Accordion.Toggle as={Card.Header} eventKey="0">
@@ -967,7 +1106,7 @@ const IO = () => {
                             src={require("../../../sim_images/io_task.svg")}
                             height="300"
                             style={{
-                              backgroundColor: "white",
+                              backgroundColor: "white"
                             }}
                             alt="eduWRENCH logo"
                           />
@@ -1019,7 +1158,7 @@ const IO = () => {
                                   style={{
                                     backgroundColor: "white",
                                     color: "grey",
-                                    fontSize: "small",
+                                    fontSize: "small"
                                   }}
                                 >
                                   Host capable of 100 Gflops
@@ -1051,7 +1190,7 @@ const IO = () => {
                                   style={{
                                     backgroundColor: "white",
                                     color: "grey",
-                                    fontSize: "small",
+                                    fontSize: "small"
                                   }}
                                 >
                                   Disk reads at 100 MBps
@@ -1081,7 +1220,7 @@ const IO = () => {
                                   style={{
                                     backgroundColor: "white",
                                     color: "grey",
-                                    fontSize: "small",
+                                    fontSize: "small"
                                   }}
                                 >
                                   Disk writes at 100 MBps
@@ -1111,7 +1250,7 @@ const IO = () => {
                                 display: "flex",
                                 justifyContent: "center",
                                 backgroundColor: "white",
-                                color: "white",
+                                color: "white"
                               }}
                             >
                               <Button onClick={runSimulation}>
@@ -1172,7 +1311,7 @@ const IO = () => {
                         width="40"
                         height="40"
                         style={{
-                          backgroundColor: "white",
+                          backgroundColor: "white"
                         }}
                         alt="eduWRENCH logo"
                       />
