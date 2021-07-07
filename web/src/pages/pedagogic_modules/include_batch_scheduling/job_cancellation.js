@@ -9,7 +9,7 @@ const JobCancellation = () => {
                 <Segment inverted><strong>Learning Objectives</strong></Segment>
                 <Segment style={{ backgroundColor: "#fafafa" }}>
                     <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand what canceling a job entails</li>
+                        <li>Understand what canceling a batch job entails</li>
                         <li>Be able to use a simple <tt>scancel</tt> command</li>
                         <li>Understand how inspecting the batch queue can help pick
                             job parameters that reduce job turnaround time</li>
@@ -17,7 +17,7 @@ const JobCancellation = () => {
                 </Segment>
             </Segment.Group>
 
-            <h2>The scancel command</h2>
+            <h2>The <tt>scancel</tt> command</h2>
 
             <p>
                 You have learned to use the <tt>sbatch</tt> command to submit jobs. The
@@ -26,11 +26,12 @@ const JobCancellation = () => {
                 single command-line argument.
             </p>
 
-            <h2>Simulation scenario</h2>
+            <h2>Simulated scenario</h2>
             <p>
-                As for the simulation scenario in the previous tab, you can access
-                a simulation terminal on the 32-node cluster's head node by
+                As for the simulated scenario in the previous tab, you can access
+                a simulated terminal on the 32-node cluster's head node by
                 using the following command to start a Docker container:
+            </p>
 
                 <p>
                     <Segment raised>
@@ -40,6 +41,7 @@ const JobCancellation = () => {
                     </Segment>
                 </p>
 
+            <p>
                 and, in a new browser window, navigate to: <a href="http://localhost:8808">http://localhost:8808</a>.
             </p>
 
@@ -70,12 +72,14 @@ const JobCancellation = () => {
                 <ul>
                     <li> Submit a job to run <tt>myprogram</tt> on <strong>16</strong> nodes with enough requested time.</li>
                     <li> Soon after submission, inspect the state of the batch queue and answer the following questions:</li>
+
                     <ul>
                         <li>How many jobs are currently pending?</li>
                         <li>How many jobs are currently running?</li>
                         <li>Is your job pending or running? (your username is <tt>slurm_user</tt>)</li>
                     </ul>
-                    <li> Advance simulation time until your job has completed. You'll have to advance time by quite a lot.
+
+                    <li> Advance the time until your job has completed (using the <tt>sleep</tt> command). You'll have to advance time by quite a lot.
                         Imagine what it would be in the real world where, unlike in simulation,
                         you can't fast-forward time (if you can, contact us immediately!)</li>
                     <li> What was your job's wait time? (you can infer it based on the time of
@@ -88,19 +92,31 @@ const JobCancellation = () => {
                 <ul>
                     <li> Reset the time to zero, to pretend the above never happened.</li>
                     <li> Inspect the state of the queue and answer the following questions:</li>
+
                     <ul>
                         <li> How many nodes are currently in used by running jobs?</li>
                         <li> How many nodes are currently idle?</li>
                     </ul>
+
                     <li> Submit a job to run <tt>myprogram</tt> successfully, asking for as many nodes as
                         possible so that your job can run right now (unless another competing
                         job shows up in the nick of time!)</li>
                     <li> Inspect the state of the queue. Is your job running?</li>
-                    <li> Advance time until your job completes</li>
-                    <li> Compare an contrast your job turn-around time with that in the previous question.</li>
+                    <li> Advance time until your job completes.</li>
+                    <li> Compare an contrast your job turnaround time with that in the previous question.</li>
 
                 </ul>
             </p>
+
+            <Header as="h3" block>
+                Take-Away
+            </Header>
+            <p><strong>
+                Cancelling a job is easy, and often a good idea if the job is "stuck" in the batch queue and
+                should be resubmitted with different parameters (requested numbers of node, requested duration).
+            </strong></p>
+
+
         </>
 
     )

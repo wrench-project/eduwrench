@@ -9,13 +9,13 @@ const JobDuration = () => {
                 <Segment inverted><strong>Learning Objectives</strong></Segment>
                 <Segment style={{ backgroundColor: "#fafafa" }}>
                     <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand and gains experience with how requested job
-                            duration impacts job turnaround time</li>
+                        <li>Understand and gain experience with how requested job
+                            duration impacts turnaround time</li>
                     </ul>
                 </Segment>
             </Segment.Group>
 
-            <h2>Impact of request job requested duration</h2>
+            <h2>Impact of requested duration</h2>
 
             <p>
                 In the previous tabs, you were instructed to submit jobs that ask for a
@@ -25,16 +25,14 @@ const JobDuration = () => {
             </p>
 
             <p>
-                It turns out that many users, in practice ask for much more time that
+                It turns out that many users, in practice ask for much more time than
                 needed. This is because they do not know how long their programs will run
                 (for instance, the program runs shorter or longer based on its input data).
                 Furthermore, users many not know the speedup behavior of their programs. So
                 although they may know how long the program would run on 1 node, they don't
                 know how long it will run on 10 nodes.  Since asking for too little time
                 leads to job failures, most users are conservative and ask for more time.
-                This behavior has been studied by researchers (here is
-                <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.9.5068&rep=rep1&type=pdf">research article on this topic</a>
-                if interested).
+                This behavior has been studied by researchers (here is <a href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.9.5068&rep=rep1&type=pdf">research article on this topic</a> if interested).
             </p>
 
             <p>
@@ -45,11 +43,12 @@ const JobDuration = () => {
                 using simulation!
             </p>
 
-            <h2>Simulation scenario</h2>
+            <h2>Simulated scenario</h2>
             <p>
-                As for the simulation scenario in the previous tab, you can access
-                a simulation terminal on the 32-node cluster's head node by
+                As for the simulated scenario in the previous tab, you can access
+                a simulated terminal on the 32-node cluster's head node by
                 using the following command to start a Docker container:
+            </p>
 
                 <p>
                     <Segment raised>
@@ -59,6 +58,7 @@ const JobDuration = () => {
                     </Segment>
                 </p>
 
+            <p>
                 and, in a new browser window, navigate to: <a href="http://localhost:8808">http://localhost:8808</a>.
             </p>
 
@@ -82,8 +82,8 @@ const JobDuration = () => {
                 <strong>[C.1.q5.1] Asking for the right amount of time:</strong>
                 <ul>
                     <li> Feel free to inspect the state of the queue, which will show that all nodes are currently busy.</li>
-                    <li> Submit a job asking for 16 nodes and just enough time to run <strong>myprogram</strong>.</li>
-                    <li> What is the job's turn-around time?</li>
+                    <li> Submit a job asking for 16 nodes and just enough time to run <tt>myprogram</tt>.</li>
+                    <li> What is the job's turnaround time?</li>
                 </ul>
             </p>
 
@@ -94,7 +94,7 @@ const JobDuration = () => {
                     <li> Resubmit the job, but now asking for 22 hours, pretending to
                         be a user who doesn't know the program's speedup behavior and
                         conservatively asks for the sequential time.</li>
-                    <li> What is the job's turn-around time?</li>
+                    <li> What is the job's turnaround time?</li>
                 </ul>
             </p>
 

@@ -25,10 +25,15 @@ const BatchScheduling = () => {
 
             <Segment style={{ marginBottom: "2em" }}>
                 The goal of this module is to provide you with fundamental knowledge of and
-                hands-on experience with the use of a batch scheduler. This module assumes
+                hands-on experience with the use of a batch scheduler.
+                <br />
+                <br />
+                This module assumes
                 that you have basic knowledge of the Linux command-line, and that you
                 have <a href="https://www.docker.com">Docker</a> installed on your computer.
-                <br /><br />
+                <br />
+                <br />
+
                 Go through the tabs below in sequence.
             </Segment>
 

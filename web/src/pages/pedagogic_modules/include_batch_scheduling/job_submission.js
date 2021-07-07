@@ -9,23 +9,23 @@ const JobSubmission = () => {
                 <Segment inverted><strong>Learning Objectives</strong></Segment>
                 <Segment style={{ backgroundColor: "#fafafa" }}>
                     <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand what submission a batch job entails</li>
-                        <li>Be able to use a simple <tt>sbatch</tt> command</li>
+                        <li>Understand what submitting a batch job entails</li>
+                        <li>Be able to use the <tt>sbatch</tt> command</li>
                     </ul>
                 </Segment>
             </Segment.Group>
 
-            <h2>The sbatch command</h2>
+            <h2>The <tt>sbatch</tt> command</h2>
 
             <p>
                 The <tt>sbatch</tt> command is used to
-                submit jobs. It takes a single command-line argument, which is the name of
+                submit jobs. It takes a single command-line argument, which is the path to a file called
                 a <i>batch script</i>. The batch script specifies the job request, and in
                 particular the desired number of nodes and duration.
             </p>
 
             <p>
-                When invoked the <tt>sbatch</tt> command submits the
+                When invoked, the <tt>sbatch</tt> command submits the
                 job specified in the batch script to the batch scheduler and prints a job ID after
                 being invoked, say <tt>job_12</tt>.
             </p>
@@ -35,24 +35,25 @@ const JobSubmission = () => {
                 created, which is the standard output produced by the job.
                 If the job is not successful, for instance because the job did not request enough
                 time, a file <tt>job_12.err</tt> is created that contains some error message
-                (as well as possible standard error produced by the job).
+                (as well as possible standard error produced by the job). Note that with Slurm
+                it is possible to customize the name of these two files, but in all that follows
+                they are named as above (job ID with a <tt>.out</tt> and <tt>.err</tt> suffix).
             </p>
 
 
-            <h2>Simulation scenario</h2>
+            <h2>Simulated scenario</h2>
             <p>
                 You were given an account on a <strong>batch-scheduled cluster with 32 nodes</strong>. You
-                have logged in to cluster's <i>head node</i>, on which you can run Slurm
+                have logged in to the cluster's <i>head node</i>, on which you can run Slurm
                 commands to use the cluster's nodes.
-                In your working directory on the cluster's front-end node there is:
+                In your working directory on the cluster's head node there is:
 
                 <ul>
                     <li>An executable called <tt>myprogram</tt>. This is the program you want to run
                         on the cluster. This program can run on one or more nodes, each time
                         using all the cores on each node. It has the following parallel
                         speedup behavior: <strong>It runs in <TeX math="2 + 20/n"/> hours when
-                            executed on <TeX math="n"/> nodes</strong>
-                        (typical Amdahl Law behavior). So for instance, running
+                            executed on <TeX math="n"/> nodes</strong> (typical Amdahl Law behavior). So for instance, running
                         <tt>myprogram</tt> on 5 nodes takes 6 hours.</li>
                     <li>A batch script, stored in file <tt>batch.slurm</tt>, which is to be
                         passed to the Slurm <tt>sbatch</tt> command.  This batch script specifies the desired
@@ -80,8 +81,7 @@ const JobSubmission = () => {
             </p>
 
             <p>
-                You can now navigate to this URL in a new browser window:
-                <a href="http://localhost:8808">http://localhost:8808</a>.
+                You can now navigate to this URL in a new browser window: <a href="http://localhost:8808">http://localhost:8808</a>.
             </p>
 
             <p>
@@ -99,15 +99,15 @@ const JobSubmission = () => {
 
             <p>
 
-                Interact with the simulated terminal to answer the following questions (recall that <tt>myprogram</tt> runs in <TeX math="2 + 20/n"/>
-                hours  on <TeX math="n"/> nodes).
+                Interact with the simulated terminal to answer the following questions (recall that <tt>myprogram</tt> runs
+                in <TeX math="2 + 20/n"/> hours  on <TeX math="n"/> nodes).
             </p>
 
             <p>
                 <strong>[C.1.q2.1] Successful job execution:</strong>
                 <ul>
                     <li> Edit the batch script to specify that you want
-                        to run <tt>myprogram</tt> on 4 nodes (<tt>edit</tt> command).
+                        to run <tt>myprogram</tt> on 4 nodes (use the <tt>edit</tt> command).
                         Specify a duration that is sufficient
                         for <tt>myprogram</tt> to complete successfully.</li>
                     <li> Submit this job to the batch scheduler and move time forward
@@ -131,6 +131,14 @@ const JobSubmission = () => {
                     <li> Did the job file about when you thought it would?</li>
                 </ul>
             </p>
+
+            <Header as="h3" block>
+                Take-Away
+            </Header>
+            <p><strong>
+                When submitting a job one must pick a number of nodes and a duration. It is crucial to pick
+                a duration that allows the program to run to completion.
+            </strong></p>
 
         </>
 
