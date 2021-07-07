@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import Card from "react-bootstrap/Card"
-import Accordion from "react-bootstrap/Accordion"
 import Form from "react-bootstrap/Form"
 import Col from "react-bootstrap/Col"
 import Button from "react-bootstrap/Button"
@@ -15,8 +14,9 @@ import { StaticImage } from "gatsby-plugin-image"
 
 //const prepareResponseData = require("./../../../sims/scripts/util.js");
 
-import { Divider, Header, Segment, Table } from "semantic-ui-react"
+import { Accordion, Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import IOSimulation from "./io_simulation"
 import "./../pedagogic_modules.css"
 
 import IOFigure1 from "../../../images/svgs/IO_figure_1.svg"
@@ -1080,259 +1080,268 @@ const IO = () => {
         questions to come.
       </p>
 
+      <Accordion styled defaultActiveIndex={0} fluid panels={[{
+        title: "Open Simulator Here",
+        content: {
+          content: <IOSimulation />
+        }
+      }]}>
+
+      </Accordion>
+
       <IOFigure4 />
       <IOFigure5 />
 
 
-      <Card className="main">
-        <Card.Body className="card">
+      {/*<Card className="main">*/}
+      {/*  <Card.Body className="card">*/}
 
-          <Accordion>
-            <Card>
-              <Accordion.Toggle as={Card.Header} eventKey="0">
-                (Open Simulator Here)
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey="0">
-                <Card.Body className="card">
-                  {auth === "true" ? (
-                    <div>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">
-                            Simulation Scenario
-                          </Card.Title>
-                          <hr></hr>
-                          <img
-                            src={require("../../../sim_images/io_task.svg")}
-                            height="300"
-                            style={{
-                              backgroundColor: "white"
-                            }}
-                            alt="eduWRENCH logo"
-                          />
-                        </Card.Body>
-                      </Card>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">
-                            Enter Simulation Parameters
-                          </Card.Title>
-                          <hr></hr>
-                          <Form style={{ backgroundColor: "white" }}>
-                            <Form.Row style={{ backgroundColor: "white" }}>
-                              <Form.Group
-                                as={Col}
-                                controlId="numTasks"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                <Form.Label
-                                  style={{ backgroundColor: "white" }}
-                                >
-                                  Number of Tasks
-                                </Form.Label>
-                                <Form.Control
-                                  style={{ backgroundColor: "white" }}
-                                  type="number"
-                                  defaultValue={numTasks}
-                                  onChange={handleNumTasks}
-                                />
-                                <small className="error">{numTasksError}</small>
-                              </Form.Group>
-                              <Form.Group
-                                as={Col}
-                                controlId="taskGflop"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                <Form.Label
-                                  style={{ backgroundColor: "white" }}
-                                >
-                                  Task Gflop
-                                </Form.Label>
-                                <Form.Control
-                                  type="Number"
-                                  defaultValue={taskGflop}
-                                  style={{ backgroundColor: "white" }}
-                                  onChange={handleTaskGflop}
-                                />
-                                <Form.Label
-                                  style={{
-                                    backgroundColor: "white",
-                                    color: "grey",
-                                    fontSize: "small"
-                                  }}
-                                >
-                                  Host capable of 100 Gflops
-                                </Form.Label>
-                                <br />
-                                <small className="error">
-                                  {taskGflopError}
-                                </small>
-                              </Form.Group>
-                            </Form.Row>
-                            <Form.Row style={{ backgroundColor: "white" }}>
-                              <Form.Group
-                                as={Col}
-                                controlId="amountInput"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                <Form.Label
-                                  style={{ backgroundColor: "white" }}
-                                >
-                                  Amount of Task Input Data
-                                </Form.Label>
-                                <Form.Control
-                                  type="number"
-                                  defaultValue={amountInput}
-                                  style={{ backgroundColor: "white" }}
-                                  onChange={handleAmountInput}
-                                />
-                                <Form.Label
-                                  style={{
-                                    backgroundColor: "white",
-                                    color: "grey",
-                                    fontSize: "small"
-                                  }}
-                                >
-                                  Disk reads at 100 MBps
-                                </Form.Label>
-                                <br />
-                                <small className="error">
-                                  {amountInputError}
-                                </small>
-                              </Form.Group>
-                              <Form.Group
-                                as={Col}
-                                controlId="amountOutput"
-                                style={{ backgroundColor: "white" }}
-                              >
-                                <Form.Label
-                                  style={{ backgroundColor: "white" }}
-                                >
-                                  Amount of Task Output Data
-                                </Form.Label>
-                                <Form.Control
-                                  type="Number"
-                                  defaultValue={amountOutput}
-                                  style={{ backgroundColor: "white" }}
-                                  onChange={handleAmountOutput}
-                                />
-                                <Form.Label
-                                  style={{
-                                    backgroundColor: "white",
-                                    color: "grey",
-                                    fontSize: "small"
-                                  }}
-                                >
-                                  Disk writes at 100 MBps
-                                </Form.Label>
-                                <br />
-                                <small className="error">
-                                  {amountOutputError}
-                                </small>
-                              </Form.Group>
-                            </Form.Row>
-                            <Form.Row style={{ backgroundColor: "white" }}>
-                              <Form.Group style={{ backgroundColor: "white" }}>
-                                <Form.Check
-                                  custom
-                                  className="check"
-                                  style={{ backgroundColor: "white" }}
-                                  type="checkbox"
-                                  id="overlap"
-                                  label="IO Overlap Allowed (Computation and IO can take place concurrently)"
-                                  onChange={handleOverlapAllowed}
-                                  checked={overlapAllowed}
-                                />
-                              </Form.Group>
-                            </Form.Row>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                backgroundColor: "white",
-                                color: "white"
-                              }}
-                            >
-                              <Button onClick={runSimulation}>
-                                Run Simulation
-                              </Button>
-                            </div>
-                          </Form>
-                        </Card.Body>
-                      </Card>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">
-                            Simulation Output
-                          </Card.Title>
-                          <hr></hr>
-                          <SimulationOutputPretty></SimulationOutputPretty>
-                        </Card.Body>
-                      </Card>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">
-                            Task Executions
-                          </Card.Title>
-                          <hr></hr>
-                          {simulationExecuted && (
-                            <IOGanttChart chartInfo={ganttChartInfo} />
-                          )}
-                        </Card.Body>
-                      </Card>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">
-                            Host Utilization
-                          </Card.Title>
-                          <hr></hr>
-                          {simulationExecuted && (
-                            <IOHostUtilizationChart
-                              chartInfo={hostUtilizationChartInfo}
-                            />
-                          )}
-                        </Card.Body>
-                      </Card>
-                      <Card className="card">
-                        <Card.Body className="card">
-                          <Card.Title className="card">Task Data</Card.Title>
-                          <hr></hr>
-                          <div
-                            style={{ backgroundColor: "white" }}
-                            id="io-task-details-table"
-                          ></div>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  ) : (
-                    <div className="card">
-                      <img
-                        src={require("../../../images/wrench_logo.png")}
-                        width="40"
-                        height="40"
-                        style={{
-                          backgroundColor: "white"
-                        }}
-                        alt="eduWRENCH logo"
-                      />
-                      <h4 className="card" style={{ color: "grey" }}>
-                        {" "}
-                        eduWRENCH Pedagogic Module Simulator
-                      </h4>
-                      <p className="card">
-                        <b className="card">
-                          Sign in on the top of the page to access the
-                          simulator.
-                        </b>
-                      </p>
-                    </div>
-                  )}
-                </Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
-        </Card.Body>
-      </Card>
+      {/*    <Accordion>*/}
+      {/*      <Card>*/}
+      {/*        <Accordion.Toggle as={Card.Header} eventKey="0">*/}
+      {/*          (Open Simulator Here)*/}
+      {/*        </Accordion.Toggle>*/}
+      {/*        <Accordion.Collapse eventKey="0">*/}
+      {/*          <Card.Body className="card">*/}
+      {/*            {auth === "true" ? (*/}
+      {/*              <div>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">*/}
+      {/*                      Simulation Scenario*/}
+      {/*                    </Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    <img*/}
+      {/*                      src={require("../../../sim_images/io_task.svg")}*/}
+      {/*                      height="300"*/}
+      {/*                      style={{*/}
+      {/*                        backgroundColor: "white"*/}
+      {/*                      }}*/}
+      {/*                      alt="eduWRENCH logo"*/}
+      {/*                    />*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">*/}
+      {/*                      Enter Simulation Parameters*/}
+      {/*                    </Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    <Form style={{ backgroundColor: "white" }}>*/}
+      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
+      {/*                        <Form.Group*/}
+      {/*                          as={Col}*/}
+      {/*                          controlId="numTasks"*/}
+      {/*                          style={{ backgroundColor: "white" }}*/}
+      {/*                        >*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                          >*/}
+      {/*                            Number of Tasks*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <Form.Control*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                            type="number"*/}
+      {/*                            defaultValue={numTasks}*/}
+      {/*                            onChange={handleNumTasks}*/}
+      {/*                          />*/}
+      {/*                          <small className="error">{numTasksError}</small>*/}
+      {/*                        </Form.Group>*/}
+      {/*                        <Form.Group*/}
+      {/*                          as={Col}*/}
+      {/*                          controlId="taskGflop"*/}
+      {/*                          style={{ backgroundColor: "white" }}*/}
+      {/*                        >*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                          >*/}
+      {/*                            Task Gflop*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <Form.Control*/}
+      {/*                            type="Number"*/}
+      {/*                            defaultValue={taskGflop}*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                            onChange={handleTaskGflop}*/}
+      {/*                          />*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{*/}
+      {/*                              backgroundColor: "white",*/}
+      {/*                              color: "grey",*/}
+      {/*                              fontSize: "small"*/}
+      {/*                            }}*/}
+      {/*                          >*/}
+      {/*                            Host capable of 100 Gflops*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <br />*/}
+      {/*                          <small className="error">*/}
+      {/*                            {taskGflopError}*/}
+      {/*                          </small>*/}
+      {/*                        </Form.Group>*/}
+      {/*                      </Form.Row>*/}
+      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
+      {/*                        <Form.Group*/}
+      {/*                          as={Col}*/}
+      {/*                          controlId="amountInput"*/}
+      {/*                          style={{ backgroundColor: "white" }}*/}
+      {/*                        >*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                          >*/}
+      {/*                            Amount of Task Input Data*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <Form.Control*/}
+      {/*                            type="number"*/}
+      {/*                            defaultValue={amountInput}*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                            onChange={handleAmountInput}*/}
+      {/*                          />*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{*/}
+      {/*                              backgroundColor: "white",*/}
+      {/*                              color: "grey",*/}
+      {/*                              fontSize: "small"*/}
+      {/*                            }}*/}
+      {/*                          >*/}
+      {/*                            Disk reads at 100 MBps*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <br />*/}
+      {/*                          <small className="error">*/}
+      {/*                            {amountInputError}*/}
+      {/*                          </small>*/}
+      {/*                        </Form.Group>*/}
+      {/*                        <Form.Group*/}
+      {/*                          as={Col}*/}
+      {/*                          controlId="amountOutput"*/}
+      {/*                          style={{ backgroundColor: "white" }}*/}
+      {/*                        >*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                          >*/}
+      {/*                            Amount of Task Output Data*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <Form.Control*/}
+      {/*                            type="Number"*/}
+      {/*                            defaultValue={amountOutput}*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                            onChange={handleAmountOutput}*/}
+      {/*                          />*/}
+      {/*                          <Form.Label*/}
+      {/*                            style={{*/}
+      {/*                              backgroundColor: "white",*/}
+      {/*                              color: "grey",*/}
+      {/*                              fontSize: "small"*/}
+      {/*                            }}*/}
+      {/*                          >*/}
+      {/*                            Disk writes at 100 MBps*/}
+      {/*                          </Form.Label>*/}
+      {/*                          <br />*/}
+      {/*                          <small className="error">*/}
+      {/*                            {amountOutputError}*/}
+      {/*                          </small>*/}
+      {/*                        </Form.Group>*/}
+      {/*                      </Form.Row>*/}
+      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
+      {/*                        <Form.Group style={{ backgroundColor: "white" }}>*/}
+      {/*                          <Form.Check*/}
+      {/*                            custom*/}
+      {/*                            className="check"*/}
+      {/*                            style={{ backgroundColor: "white" }}*/}
+      {/*                            type="checkbox"*/}
+      {/*                            id="overlap"*/}
+      {/*                            label="IO Overlap Allowed (Computation and IO can take place concurrently)"*/}
+      {/*                            onChange={handleOverlapAllowed}*/}
+      {/*                            checked={overlapAllowed}*/}
+      {/*                          />*/}
+      {/*                        </Form.Group>*/}
+      {/*                      </Form.Row>*/}
+      {/*                      <div*/}
+      {/*                        style={{*/}
+      {/*                          display: "flex",*/}
+      {/*                          justifyContent: "center",*/}
+      {/*                          backgroundColor: "white",*/}
+      {/*                          color: "white"*/}
+      {/*                        }}*/}
+      {/*                      >*/}
+      {/*                        <Button onClick={runSimulation}>*/}
+      {/*                          Run Simulation*/}
+      {/*                        </Button>*/}
+      {/*                      </div>*/}
+      {/*                    </Form>*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">*/}
+      {/*                      Simulation Output*/}
+      {/*                    </Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    <SimulationOutputPretty></SimulationOutputPretty>*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">*/}
+      {/*                      Task Executions*/}
+      {/*                    </Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    {simulationExecuted && (*/}
+      {/*                      <IOGanttChart chartInfo={ganttChartInfo} />*/}
+      {/*                    )}*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">*/}
+      {/*                      Host Utilization*/}
+      {/*                    </Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    {simulationExecuted && (*/}
+      {/*                      <IOHostUtilizationChart*/}
+      {/*                        chartInfo={hostUtilizationChartInfo}*/}
+      {/*                      />*/}
+      {/*                    )}*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*                <Card className="card">*/}
+      {/*                  <Card.Body className="card">*/}
+      {/*                    <Card.Title className="card">Task Data</Card.Title>*/}
+      {/*                    <hr></hr>*/}
+      {/*                    <div*/}
+      {/*                      style={{ backgroundColor: "white" }}*/}
+      {/*                      id="io-task-details-table"*/}
+      {/*                    ></div>*/}
+      {/*                  </Card.Body>*/}
+      {/*                </Card>*/}
+      {/*              </div>*/}
+      {/*            ) : (*/}
+      {/*              <div className="card">*/}
+      {/*                <img*/}
+      {/*                  src={require("../../../images/wrench_logo.png")}*/}
+      {/*                  width="40"*/}
+      {/*                  height="40"*/}
+      {/*                  style={{*/}
+      {/*                    backgroundColor: "white"*/}
+      {/*                  }}*/}
+      {/*                  alt="eduWRENCH logo"*/}
+      {/*                />*/}
+      {/*                <h4 className="card" style={{ color: "grey" }}>*/}
+      {/*                  {" "}*/}
+      {/*                  eduWRENCH Pedagogic Module Simulator*/}
+      {/*                </h4>*/}
+      {/*                <p className="card">*/}
+      {/*                  <b className="card">*/}
+      {/*                    Sign in on the top of the page to access the*/}
+      {/*                    simulator.*/}
+      {/*                  </b>*/}
+      {/*                </p>*/}
+      {/*              </div>*/}
+      {/*            )}*/}
+      {/*          </Card.Body>*/}
+      {/*        </Accordion.Collapse>*/}
+      {/*      </Card>*/}
+      {/*    </Accordion>*/}
+      {/*  </Card.Body>*/}
+      {/*</Card>*/}
     </>
   )
 }
