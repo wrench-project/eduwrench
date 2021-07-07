@@ -80,7 +80,7 @@ const JobSubmission = () => {
             </p>
 
             <p>
-                You can now navigate to this URL im a new browser window:
+                You can now navigate to this URL in a new browser window:
                 <a href="http://localhost:8808">http://localhost:8808</a>.
             </p>
 
@@ -104,7 +104,7 @@ const JobSubmission = () => {
             </p>
 
             <p>
-                <strong>[C.1.q1.1] Successful job execution:</strong>
+                <strong>[C.1.q2.1] Successful job execution:</strong>
                 <ul>
                     <li> Edit the batch script to specify that you want
                         to run <tt>myprogram</tt> on 4 nodes (<tt>edit</tt> command).
@@ -120,7 +120,7 @@ const JobSubmission = () => {
                 </ul>
             </p>
 
-            <p><strong>[C.1.q1.2] Failed job execution:</strong>
+            <p><strong>[C.1.q2.2] Failed job execution:</strong>
                 <ul>
                     <li> Now Submit a job to run <tt>myprogram</tt> on 6 nodes <strong>without</strong> enough
                         requested time, so that it will certainly fail.</li>

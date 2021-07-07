@@ -40,7 +40,7 @@ const BatchQueue = () => {
             <h2>Simulation scenario</h2>
             <p>
                 As for the simulation scenario in the previous tab, you can access
-                a simulation terminal on the cluster's head node by
+                a simulation terminal on the 32-node cluster's head node by
                 using the following command to start a Docker container:
 
                 <p>
@@ -55,7 +55,7 @@ const BatchQueue = () => {
             </p>
 
             <p>
-                As in the previous tab, again, your home directory in the simulated terminal contains the <tt>my_program</tt>
+                As in the previous tab, again, your home directory in the simulated terminal contains the <tt>myprogram</tt>
                 program and the <tt>batch.slurm</tt> batch script.
             </p>
 
@@ -70,11 +70,11 @@ const BatchQueue = () => {
             </p>
 
             <p>
-                <strong>[C.1.q2.1] Inspecting the batch queue:</strong>
+                <strong>[C.1.q3.1] Inspecting the batch queue:</strong>
                 <ul>
                     <li> Submit a job to run <tt>myprogram</tt> on 25 nodes with enough requested time so that it will successfully complete.</li>
                     <li> Use `squeue` to inspect the state of the batch queue. You should see that your job is running.</li>
-                    <li> Soon after, submit another job to run *myprogram* successfully again (you can modify the same .slurm file, or copy it), but using 10 nodes.</li>
+                    <li> Soon after, submit another job to run *myprogram* successfully again (you can modify the same <tt>.slurm</tt> file, or copy it), but using 10 nodes.</li>
                     <li> Use `squeue` to inspect the state of the batch queue. You should see that your second job is "stuck" in the queue, waiting for the first job to complete.</li>
                     <li> Without advancing time, estimate the following:</li>
                     <ul>
