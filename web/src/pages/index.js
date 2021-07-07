@@ -80,6 +80,21 @@ const IndexPage = () => (
       </Card>
     </CardColumns>
 
+    <h4 style={{ margin: 0 }}><br />C. Specific Cyberinfrastructure Services</h4>
+
+    <CardColumns style={{ flex: 1 }}>
+      <Card>
+        <Card.Body>
+          <Card.Title>C.1. Batch Scheduling</Card.Title>
+          <Card.Text className="module-desc">
+            The goal of this module is to provide you with fundamental knowledge of and
+            hands-on experience with the use of a batch scheduler.
+          </Card.Text>
+          <Button variant="warning" href="/pedagogic_modules/batch_scheduling/">Launch</Button>
+        </Card.Body>
+      </Card>
+    </CardColumns>
+
     <div className="irow" style={{ marginTop: "2em", marginBottom: "2em" }}>
       <div className="icolumn">
         <h5
