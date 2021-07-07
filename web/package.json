@@ -12,6 +12,7 @@
     "bootstrap": "^5.0.2",
     "chart.js": "^3.4.0",
     "d3": "^7.0.0",
+    "formik": "^2.2.9",
     "gatsby": "^3.8.1",
     "gatsby-plugin-image": "^1.8.0",
     "gatsby-plugin-manifest": "^3.8.0",
