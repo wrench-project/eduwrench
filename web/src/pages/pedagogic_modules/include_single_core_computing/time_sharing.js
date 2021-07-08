@@ -1,6 +1,7 @@
 import React from "react"
-import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
+import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import PracticeQuestions from "../../../components/practice_questions"
 
 const TimeSharing = () => {
   return (
@@ -53,43 +54,33 @@ const TimeSharing = () => {
 
       <Divider />
 
-      <Header as="h3" block>
-        Practice Questions
-      </Header>
-
-      <Accordion exclusive={false} panels={[
+      <PracticeQuestions questions={[
         {
           key: "A.1.p2.1",
-          title: "[A.1.p2.1] At time 0 on a core with speed 2 Tflop/sec you start two programs. Program A’s work is " +
+          question: "At time 0 on a core with speed 2 Tflop/sec you start two programs. Program A’s work is " +
             "200 Gflop, and program B’s work is 220 Gflop. At what times do the programs complete? Show your work.",
-          content: {
-            content: (
-              <Segment>
-                In a first phase, both programs proceed at speed 1 TFLop/sec. Program A completes first at time:
-                <TeX math="T_{A} = \frac{0.2 \text{Tflop}}{1 \text{Tflop/sec}} = 0.2 \text{sec}" block />
-                At that point, program <TeX math="B" /> still has 20 Gflop left to compute, but it now proceeds at speed
-                2 Tflop/sec. Therefore, it completes at time:
-                <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
-              </Segment>
-            )
-          }
+          content: (
+            <>
+              In a first phase, both programs proceed at speed 1 TFLop/sec. Program A completes first at time:
+              <TeX math="T_{A} = \frac{0.2 \text{Tflop}}{1 \text{Tflop/sec}} = 0.2 \text{sec}" block />
+              At that point, program <TeX math="B" /> still has 20 Gflop left to compute, but it now proceeds at speed
+              2 Tflop/sec. Therefore, it completes at time:
+              <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
+            </>
+          )
         },
         {
           key: "A.1.p2.2",
-          title: "[A.1.p2.2] Two programs, each with work 800 Tflop, were started at the same time on a core and " +
+          question: "Two programs, each with work 800 Tflop, were started at the same time on a core and " +
             "both completed simultaneously after one hour. What is the core's speed in Gflop/sec?",
-          content: {
-            content: (
-              <Segment>
-                <TeX
-                  math="\text{speed} = 2 \times \frac{800000 \text{Gflop}}{ 3600 \text{sec}} \simeq 444.44 \text{Gflop/sec}"
-                  block />
-              </Segment>
-            )
-          }
+          content: (
+            <TeX
+              math="\text{speed} = 2 \times \frac{800000 \text{Gflop}}{ 3600 \text{sec}} \simeq 444.44 \text{Gflop/sec}"
+              block />
+          )
         }
-      ]
-      } />
+      ]}
+      />
 
       <Divider />
 

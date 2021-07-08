@@ -1,6 +1,7 @@
 import React from "react"
-import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
+import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import PracticeQuestions from "../../../components/practice_questions"
 
 const WorkAndSpeed = () => {
   return (
@@ -101,36 +102,25 @@ const WorkAndSpeed = () => {
 
       <Divider />
 
-      <Header as="h3" block>
-        Practice Questions
-      </Header>
-
-      <Accordion exclusive={false} panels={[
+      <PracticeQuestions questions={[
         {
           key: "A.1.p1.1",
-          title: "[A.1.p1.1] You have to run a program that performs 4000 Gflop, and your core computes at speed 30 " +
+          question: "You have to run a program that performs 4000 Gflop, and your core computes at speed 30 " +
             "Tflop/sec. How long will the program run for in seconds?",
-          content: {
-            content: (
-              <Segment>
-                <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
-              </Segment>
-            )
-          }
+          content: (
+            <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
+          )
         },
         {
           key: "A.1.p1.2",
-          title: "[A.1.p1.2] A program just ran in 0.32 sec on a core with speed 2 Tflop/sec, how many Gflop does the program perform?",
-          content: {
-            content: (
-              <Segment>
-                <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
-              </Segment>
-            )
-          }
+          question: "A program just ran in 0.32 sec on a core with speed 2 Tflop/sec, how many Gflop does the " +
+            "program perform?",
+          content: (
+            <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
+          )
         }
-      ]
-      } />
+      ]}
+      />
 
       <Divider />
 
