@@ -854,26 +854,6 @@ const IO = () => {
     }
   }
 
-  const handleNumTasks = e => {
-    setNumTasks(e.target.value)
-  }
-
-  const handleTaskGflop = e => {
-    setTaskGflop(e.target.value)
-  }
-
-  const handleAmountInput = e => {
-    setAmountInput(e.target.value)
-  }
-
-  const handleAmountOutput = e => {
-    setAmountOutput(e.target.value)
-  }
-
-  const handleOverlapAllowed = e => {
-    setOverlapAllowed(e.target.checked)
-  }
-
   const SimulationOutputPretty = () => {
     const output = simulationOutput.split("@")
     const elements = output.map(line => <p className="card">{line}</p>)

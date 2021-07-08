@@ -41,6 +41,11 @@
     color: #c78651;
 }
 
+.info-label {
+    border: 0 !important;
+    color: #666666 !important;
+}
+
 .nav-link {
     color: #c78651 !important;
 }

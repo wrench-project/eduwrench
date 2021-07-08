@@ -1,5 +1,5 @@
 import React from "react"
-import { Form, Segment } from "semantic-ui-react"
+import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 
 const IOSimulation = () => {
@@ -69,7 +69,12 @@ const IOSimulation = () => {
                                 content: "Please provide the amount of Gflop per task in the range of [1, 999999].",
                                 pointing: "above"
                               } : null}
-                  />
+                  >
+                    <input />
+                    <Label basic className="info-label">
+                      Host capable of 100 Gflops
+                    </Label>
+                  </Form.Input>
                 </Form.Group>
                 <Form.Group widths="equal">
                   <Form.Input fluid
@@ -86,7 +91,12 @@ const IOSimulation = () => {
                                 content: "Please provide the amount of input data per task in the range of [0, 999] MB.",
                                 pointing: "above"
                               } : null}
-                  />
+                  >
+                    <input />
+                    <Label basic className="info-label">
+                      Disk reads at 100 MBps
+                    </Label>
+                  </Form.Input>
                   <Form.Input fluid
                               name="amountOutput"
                               label="Amount of Task Output Data"
@@ -101,7 +111,12 @@ const IOSimulation = () => {
                                 content: "Please provide the amount of output data per task in the range of [0, 999] MB.",
                                 pointing: "above"
                               } : null}
-                  />
+                  >
+                    <input />
+                    <Label basic className="info-label">
+                      Disk writes at 100 MBps
+                    </Label>
+                  </Form.Input>
                 </Form.Group>
                 <Form.Checkbox label="IO Overlap Allowed (Computation and IO can take place concurrently)" />
                 <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
