@@ -777,81 +777,40 @@ const IO = () => {
       io_overlap: overlapAllowed
     }
 
-    let errorsPresent = false
-
-    if (!numTasks || numTasks < 1 || numTasks > 100) {
-      errorsPresent = true
-      setNumTasksError(
-        "Please provide the number of tasks in the range of [1, 100]."
-      )
-    } else {
-      setNumTasksError("")
-    }
-
-    if (!taskGflop || taskGflop < 1 || taskGflop > 999999) {
-      errorsPresent = true
-      setTaskGflopError(
-        "Please provide the amount of Gflop per task in the range of [1, 999999]."
-      )
-    } else {
-      setTaskGflopError("")
-    }
-
-    if (!amountInput || amountInput < 1 || amountInput > 999) {
-      errorsPresent = true
-      setAmountInputError(
-        "Please provide the amount of input data per task in the range of [0, 999] MB."
-      )
-    } else {
-      setAmountInputError("")
-    }
-
-    if (!amountOutput || amountOutput < 1 || amountOutput > 999) {
-      errorsPresent = true
-      setAmountOutputError(
-        "Please provide the amount of output data per task in the range of [0, 999] MB."
-      )
-    } else {
-      setAmountOutputError("")
-    }
-
-    if (!errorsPresent) {
-      // console.log(data);
-      axios.post("http://localhost:3000/run/io_operations", data).then(
-        response => {
-          //console.log(response.data.simulation_output)
-          let executionData = prepareResponseData(response.data.task_data)
-          //console.log(executionData)
-          let ganttChartInfo = generateGanttChartInfo(
-            executionData,
-            "io-graph-container"
-          )
-          let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
-            executionData,
-            "io-host-utilization-chart",
-            [],
-            [],
-            false
-          )
-          //console.log(ganttChartInfo)
-          setGanttChartInfo(ganttChartInfo)
-          setHostUtilizationChartInfo(hostUtilizationChartInfo)
-          setSimulationOutput(
-            response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
-          )
-          let preparedData = prepareData(
-            response.data.task_data.workflow_execution.tasks
-          )
-          populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
-          setSimulationExecuted(true)
-          alert("Simulation executed")
-        },
-        error => {
-          console.log(error)
-          alert("Error executing simulation")
-        }
-      )
-    }
+    axios.post("http://localhost:3000/run/io_operations", data).then(
+      response => {
+        //console.log(response.data.simulation_output)
+        let executionData = prepareResponseData(response.data.task_data)
+        //console.log(executionData)
+        let ganttChartInfo = generateGanttChartInfo(
+          executionData,
+          "io-graph-container"
+        )
+        let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
+          executionData,
+          "io-host-utilization-chart",
+          [],
+          [],
+          false
+        )
+        //console.log(ganttChartInfo)
+        setGanttChartInfo(ganttChartInfo)
+        setHostUtilizationChartInfo(hostUtilizationChartInfo)
+        setSimulationOutput(
+          response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
+        )
+        let preparedData = prepareData(
+          response.data.task_data.workflow_execution.tasks
+        )
+        populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
+        setSimulationExecuted(true)
+        alert("Simulation executed")
+      },
+      error => {
+        console.log(error)
+        alert("Error executing simulation")
+      }
+    )
   }
 
   const SimulationOutputPretty = () => {
@@ -1060,17 +1019,15 @@ const IO = () => {
         questions to come.
       </p>
 
-      <Accordion styled defaultActiveIndex={0} fluid panels={[{
-        title: "Open Simulator Here",
-        content: {
-          content: <IOSimulation />
-        }
+      <Accordion styled style={{ backgroundColor: "#f7f7f7" }} defaultActiveIndex={-1} fluid panels={[{
+        title: "Simulation Activity",
+        content: <IOSimulation />
       }]}>
 
       </Accordion>
 
-      <IOFigure4 />
-      <IOFigure5 />
+      {/*<IOFigure4 />*/}
+      {/*<IOFigure5 />*/}
 
 
       {/*<Card className="main">*/}

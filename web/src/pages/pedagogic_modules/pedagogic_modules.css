@@ -46,6 +46,10 @@
     color: #666666 !important;
 }
 
+.simulation-output {
+    line-height: 0.7em;
+}
+
 .nav-link {
     color: #c78651 !important;
 }

@@ -1,15 +1,27 @@
-import React from "react"
+import React, { useState } from "react"
+import axios from "axios"
 import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
+import SimulationOutput from "../../../components/simulation_output"
 
 const IOSimulation = () => {
+
+  const [simulationOutput, setSimulationOutput] = useState("")
+
   return (
     <>
       <Segment.Group>
-        <Segment color="orange"><strong>Enter Simulation Parameters</strong></Segment>
+        <Segment color="orange"><strong>Simulation Parameters</strong></Segment>
         <Segment>
           <Formik
-            initialValues={{ numTasks: 1, taskGflop: 100, amountInput: 1, amountOutput: 1 }}
+            initialValues={{
+              numTasks: 1,
+              taskGflop: 100,
+              amountInput: 1,
+              amountOutput: 1,
+              overlapAllowed: false
+            }}
+
             validate={values => {
               const errors = {}
               if (!values.numTasks || !/^[0-9]+$/i.test(values.numTasks) || values.numTasks > 100 || values.numTasks < 1) {
@@ -23,9 +35,31 @@ const IOSimulation = () => {
               }
               return errors
             }}
+
             onSubmit={(values, { setSubmitting }) => {
               setTimeout(() => {
-                alert(JSON.stringify(values, null, 2))
+                const userEmail = localStorage.getItem("currentUser")
+                const data = {
+                  userName: userEmail.split("@")[0],
+                  email: userEmail,
+                  num_tasks: values.numTasks,
+                  task_gflop: values.taskGflop,
+                  task_input: values.amountInput,
+                  task_output: values.amountOutput,
+                  io_overlap: values.overlapAllowed
+                }
+                axios.post("http://localhost:3000/run/io_operations", data).then(
+                  response => {
+                    setSimulationOutput(
+                      response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
+                    )
+                    console.log(response.data.task_data)
+                  },
+                  error => {
+                    console.log(error)
+                    alert("Error executing simulation.")
+                  }
+                )
                 setSubmitting(false)
               }, 400)
             }}
@@ -118,12 +152,25 @@ const IOSimulation = () => {
                     </Label>
                   </Form.Input>
                 </Form.Group>
-                <Form.Checkbox label="IO Overlap Allowed (Computation and IO can take place concurrently)" />
+                <Form.Field
+                  type="checkbox"
+                  control="input"
+                  label="IO Overlap Allowed (Computation and IO can take place concurrently)"
+                  name="overlapAllowed"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.overlapAllowed}
+                />
                 <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
               </Form>
             )}
           </Formik>
         </Segment>
+      </Segment.Group>
+
+      <Segment.Group>
+        <Segment color="grey"><strong>Simulation Output</strong></Segment>
+        <SimulationOutput output={simulationOutput} />
       </Segment.Group>
     </>
   )
