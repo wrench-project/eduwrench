@@ -3,6 +3,8 @@ import axios from "axios"
 import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation_output"
+import SimulationScenario from "../../../components/simulation_scenario"
+import IOTask from "../../../images/svgs/io_task.svg"
 
 const IOSimulation = () => {
 
@@ -10,8 +12,10 @@ const IOSimulation = () => {
 
   return (
     <>
+      <SimulationScenario scenario={<IOTask />} />
+
       <Segment.Group>
-        <Segment color="orange"><strong>Simulation Parameters</strong></Segment>
+        <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
         <Segment>
           <Formik
             initialValues={{
@@ -168,10 +172,7 @@ const IOSimulation = () => {
         </Segment>
       </Segment.Group>
 
-      <Segment.Group>
-        <Segment color="grey"><strong>Simulation Output</strong></Segment>
-        <SimulationOutput output={simulationOutput} />
-      </Segment.Group>
+      <SimulationOutput output={simulationOutput} />
     </>
   )
 }

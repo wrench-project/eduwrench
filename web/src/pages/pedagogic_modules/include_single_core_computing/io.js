@@ -14,7 +14,7 @@ import { StaticImage } from "gatsby-plugin-image"
 
 //const prepareResponseData = require("./../../../sims/scripts/util.js");
 
-import { Accordion, Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
+import { Accordion, Divider, Header, Icon, Label, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import IOSimulation from "./io_simulation"
 import "./../pedagogic_modules.css"
@@ -1021,7 +1021,9 @@ const IO = () => {
 
       <Accordion styled style={{ backgroundColor: "#f7f7f7" }} defaultActiveIndex={-1} fluid panels={[{
         title: "Simulation Activity",
-        content: <IOSimulation />
+        content: {
+          content: (<IOSimulation />)
+        }
       }]}>
 
       </Accordion>
