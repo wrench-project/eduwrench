@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react"
-import Card from "react-bootstrap/Card"
-import Form from "react-bootstrap/Form"
-import Col from "react-bootstrap/Col"
-import Button from "react-bootstrap/Button"
-import axios from "axios"
-import ScriptTag from "react-script-tag"
 import * as d3 from "d3"
-import Chart from "chart.js"
+
 import IOGanttChart from "../../../charts/io_gantt_chart"
 import IOHostUtilizationChart from "../../../charts/io_host_utilization_chart"
 import { StaticImage } from "gatsby-plugin-image"
-//import { prepareResponseData } from "./../../../sims/scripts/util.js"
-
-//const prepareResponseData = require("./../../../sims/scripts/util.js");
 
 import { Accordion, Divider, Header, Icon, Label, Segment, Table } from "semantic-ui-react"
+import axios from "axios"
 import TeX from "@matejmazur/react-katex"
 import IOSimulation from "./io_simulation"
 import "./../pedagogic_modules.css"
@@ -25,45 +17,6 @@ import IOFigure3 from "../../../images/svgs/IO_figure_3.svg"
 import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
 import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
 
-
-function processIO(taskIO) {
-  let minStart = 0
-  let maxEnd = 0
-
-  if (taskIO && Object.keys(taskIO).length > 0) {
-    minStart = Number.MAX_VALUE
-    let ioKeys = Object.keys(taskIO)
-    ioKeys.forEach(function(ioKey) {
-      let tIO = taskIO[ioKey]
-      minStart = Math.min(tIO.start, minStart)
-      maxEnd = Math.max(tIO.end, maxEnd)
-    })
-  }
-  return [minStart, maxEnd]
-}
-
-const ganttChartScales = {
-  yAxes: [
-    {
-      stacked: true,
-      ticks: {
-        reverse: true
-      },
-      scaleLabel: {
-        display: true,
-        labelString: "Tasks ID"
-      }
-    }
-  ],
-  xAxes: [
-    {
-      scaleLabel: {
-        display: true,
-        labelString: "Time (seconds)"
-      }
-    }
-  ]
-}
 
 function fillEmptyValues(datasets, end, labels) {
   for (let i = datasets.length; i < end; i++) {
@@ -143,145 +96,7 @@ function findTaskScheduling(data, hosts) {
   })
 }
 
-/**
- * Generates the gantt chart.
- *
- * @param rawData: simulation data
- * @param containedId: id for the chart container element
- * @param zoom: whether to allow zoom functionality in the chart
- * @param label: labels to be displayed
- */
-function generateGanttChartInfo(
-  rawData,
-  containedId = null,
-  zoom = true,
-  label = null
-) {
-  const containerId = containedId ? containedId : "graph-container"
 
-  let labels = label
-    ? label
-    : {
-      read: { display: true, label: "Reading Input" },
-      compute: { display: true, label: "Performing Computation" },
-      write: { display: true, label: "Writing Output" }
-    }
-
-  const colors = {
-    read: "#cbb5dd",
-    compute: "#f7daad",
-    write: "#abdcf4"
-  }
-
-  // prepare data
-  let data = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: [],
-        host: [],
-        label: labels.read.label
-      },
-      {
-        data: [],
-        backgroundColor: [],
-        host: [],
-        label: labels.compute.label
-      },
-      {
-        data: [],
-        host: [],
-        backgroundColor: [],
-        label: labels.write.label
-      }
-    ]
-  }
-  let zoomMaxRange = 0
-
-  let keys = Object.keys(rawData.tasks)
-  keys.forEach(function(key) {
-    let task = rawData.tasks[key]
-    data.labels.push(task.task_id)
-
-    // read
-    data.datasets[0].data.push(processIO(task.read))
-    data.datasets[0].backgroundColor.push(colors.read)
-    data.datasets[0].host.push(task.execution_host.hostname)
-
-    // compute
-    data.datasets[1].data.push([task.compute.start, task.compute.end])
-    data.datasets[1].backgroundColor.push(colors.compute)
-    data.datasets[1].host.push(task.execution_host.hostname)
-
-    // write
-    data.datasets[2].data.push(processIO(task.write))
-    data.datasets[2].backgroundColor.push(colors.write)
-    data.datasets[2].host.push(task.execution_host.hostname)
-
-    zoomMaxRange = Math.max(zoomMaxRange, task.whole_task.end)
-  })
-
-  // parse labels
-  let datasets = []
-  if (labels.read.display) {
-    datasets.push(data.datasets[0])
-  }
-  if (labels.compute.display) {
-    datasets.push(data.datasets[1])
-  }
-  if (labels.write.display) {
-    datasets.push(data.datasets[2])
-  }
-
-  data.datasets = datasets
-
-  // zoom properties
-  //let pluginsProperties = definePluginsProperties(zoom, zoomMaxRange);
-
-  // ganttChart = new Chart(ctx
-  //   ,
-  return {
-    type: "horizontalBar",
-    data: data,
-    options: {
-      scales: ganttChartScales,
-      tooltips: {
-        position: "nearest",
-        mode: "point",
-        intersect: "false",
-        callbacks: {
-          label: function(tooltipItem, data) {
-            let value = tooltipItem.value
-              .replace("[", "")
-              .replace("]", "")
-              .split(", ")
-            let runtime = value[1] - value[0]
-            if (runtime > 0) {
-              let label = data.datasets[tooltipItem.datasetIndex].label || ""
-              if (label) {
-                label += ": " + runtime.toFixed(3) + "s"
-              }
-              return label
-            }
-            return ""
-          },
-          afterBody: function(tooltipItem, data) {
-            return (
-              "Execution Host: " +
-              data.datasets[tooltipItem[0].datasetIndex].host[
-                tooltipItem[0].index
-                ]
-            )
-          }
-        }
-      }
-      //,
-      //plugins: pluginsProperties
-    }
-  }
-  //);
-}
 
 /**
  * Generates the host utilization chart
@@ -504,21 +319,7 @@ function generateHostUtilizationChartInfo(
   }
 }
 
-/**
- *
- * @param responseData
- * @returns {{disk: *, contents: {}, tasks: {}, network: (*|*[])}}
- */
-function prepareResponseData(responseData) {
-  let links = responseData.link_usage ? responseData.link_usage.links : []
-  console.log(responseData)
-  return {
-    tasks: responseData.workflow_execution.tasks,
-    disk: responseData.disk_operations,
-    contents: responseData.workflow_execution.tasks, // TODO: remove
-    network: links
-  }
-}
+
 
 function prepareData(data) {
   const nullReplacement = {
@@ -755,9 +556,7 @@ const IO = () => {
   const [taskGflopError, setTaskGflopError] = useState("")
   const [amountInputError, setAmountInputError] = useState("")
   const [amountOutputError, setAmountOutputError] = useState("")
-  const [simulationOutput, setSimulationOutput] = useState("")
   const [simulationExecuted, setSimulationExecuted] = useState(false)
-  const [ganttChartInfo, setGanttChartInfo] = useState({})
   const [hostUtilizationChartInfo, setHostUtilizationChartInfo] = useState({})
 
   useEffect(() => {
@@ -780,47 +579,36 @@ const IO = () => {
     axios.post("http://localhost:3000/run/io_operations", data).then(
       response => {
         //console.log(response.data.simulation_output)
-        let executionData = prepareResponseData(response.data.task_data)
-        //console.log(executionData)
-        let ganttChartInfo = generateGanttChartInfo(
-          executionData,
-          "io-graph-container"
-        )
-        let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
-          executionData,
-          "io-host-utilization-chart",
-          [],
-          [],
-          false
-        )
-        //console.log(ganttChartInfo)
-        setGanttChartInfo(ganttChartInfo)
-        setHostUtilizationChartInfo(hostUtilizationChartInfo)
-        setSimulationOutput(
-          response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
-        )
-        let preparedData = prepareData(
-          response.data.task_data.workflow_execution.tasks
-        )
-        populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
-        setSimulationExecuted(true)
+        // let executionData = prepareResponseData(response.data.task_data)
+        // //console.log(executionData)
+        // let ganttChartInfo = generateGanttChartInfo(
+        //   executionData,
+        //   "io-graph-container"
+        // )
+        // let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
+        //   executionData,
+        //   "io-host-utilization-chart",
+        //   [],
+        //   [],
+        //   false
+        // )
+        // //console.log(ganttChartInfo)
+        // setGanttChartInfo(ganttChartInfo)
+        // setHostUtilizationChartInfo(hostUtilizationChartInfo)
+        // setSimulationOutput(
+        //   response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
+        // )
+        // let preparedData = prepareData(
+        //   response.data.task_data.workflow_execution.tasks
+        // )
+        // populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
+        // setSimulationExecuted(true)
         alert("Simulation executed")
       },
       error => {
         console.log(error)
         alert("Error executing simulation")
       }
-    )
-  }
-
-  const SimulationOutputPretty = () => {
-    const output = simulationOutput.split("@")
-    const elements = output.map(line => <p className="card">{line}</p>)
-
-    return (
-      <div style={{ color: "#a129ab" }} className="card">
-        {elements}
-      </div>
     )
   }
 
@@ -1044,190 +832,6 @@ const IO = () => {
       {/*          <Card.Body className="card">*/}
       {/*            {auth === "true" ? (*/}
       {/*              <div>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">*/}
-      {/*                      Simulation Scenario*/}
-      {/*                    </Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    <img*/}
-      {/*                      src={require("../../../sim_images/io_task.svg")}*/}
-      {/*                      height="300"*/}
-      {/*                      style={{*/}
-      {/*                        backgroundColor: "white"*/}
-      {/*                      }}*/}
-      {/*                      alt="eduWRENCH logo"*/}
-      {/*                    />*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">*/}
-      {/*                      Enter Simulation Parameters*/}
-      {/*                    </Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    <Form style={{ backgroundColor: "white" }}>*/}
-      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
-      {/*                        <Form.Group*/}
-      {/*                          as={Col}*/}
-      {/*                          controlId="numTasks"*/}
-      {/*                          style={{ backgroundColor: "white" }}*/}
-      {/*                        >*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                          >*/}
-      {/*                            Number of Tasks*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <Form.Control*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                            type="number"*/}
-      {/*                            defaultValue={numTasks}*/}
-      {/*                            onChange={handleNumTasks}*/}
-      {/*                          />*/}
-      {/*                          <small className="error">{numTasksError}</small>*/}
-      {/*                        </Form.Group>*/}
-      {/*                        <Form.Group*/}
-      {/*                          as={Col}*/}
-      {/*                          controlId="taskGflop"*/}
-      {/*                          style={{ backgroundColor: "white" }}*/}
-      {/*                        >*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                          >*/}
-      {/*                            Task Gflop*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <Form.Control*/}
-      {/*                            type="Number"*/}
-      {/*                            defaultValue={taskGflop}*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                            onChange={handleTaskGflop}*/}
-      {/*                          />*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{*/}
-      {/*                              backgroundColor: "white",*/}
-      {/*                              color: "grey",*/}
-      {/*                              fontSize: "small"*/}
-      {/*                            }}*/}
-      {/*                          >*/}
-      {/*                            Host capable of 100 Gflops*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <br />*/}
-      {/*                          <small className="error">*/}
-      {/*                            {taskGflopError}*/}
-      {/*                          </small>*/}
-      {/*                        </Form.Group>*/}
-      {/*                      </Form.Row>*/}
-      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
-      {/*                        <Form.Group*/}
-      {/*                          as={Col}*/}
-      {/*                          controlId="amountInput"*/}
-      {/*                          style={{ backgroundColor: "white" }}*/}
-      {/*                        >*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                          >*/}
-      {/*                            Amount of Task Input Data*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <Form.Control*/}
-      {/*                            type="number"*/}
-      {/*                            defaultValue={amountInput}*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                            onChange={handleAmountInput}*/}
-      {/*                          />*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{*/}
-      {/*                              backgroundColor: "white",*/}
-      {/*                              color: "grey",*/}
-      {/*                              fontSize: "small"*/}
-      {/*                            }}*/}
-      {/*                          >*/}
-      {/*                            Disk reads at 100 MBps*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <br />*/}
-      {/*                          <small className="error">*/}
-      {/*                            {amountInputError}*/}
-      {/*                          </small>*/}
-      {/*                        </Form.Group>*/}
-      {/*                        <Form.Group*/}
-      {/*                          as={Col}*/}
-      {/*                          controlId="amountOutput"*/}
-      {/*                          style={{ backgroundColor: "white" }}*/}
-      {/*                        >*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                          >*/}
-      {/*                            Amount of Task Output Data*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <Form.Control*/}
-      {/*                            type="Number"*/}
-      {/*                            defaultValue={amountOutput}*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                            onChange={handleAmountOutput}*/}
-      {/*                          />*/}
-      {/*                          <Form.Label*/}
-      {/*                            style={{*/}
-      {/*                              backgroundColor: "white",*/}
-      {/*                              color: "grey",*/}
-      {/*                              fontSize: "small"*/}
-      {/*                            }}*/}
-      {/*                          >*/}
-      {/*                            Disk writes at 100 MBps*/}
-      {/*                          </Form.Label>*/}
-      {/*                          <br />*/}
-      {/*                          <small className="error">*/}
-      {/*                            {amountOutputError}*/}
-      {/*                          </small>*/}
-      {/*                        </Form.Group>*/}
-      {/*                      </Form.Row>*/}
-      {/*                      <Form.Row style={{ backgroundColor: "white" }}>*/}
-      {/*                        <Form.Group style={{ backgroundColor: "white" }}>*/}
-      {/*                          <Form.Check*/}
-      {/*                            custom*/}
-      {/*                            className="check"*/}
-      {/*                            style={{ backgroundColor: "white" }}*/}
-      {/*                            type="checkbox"*/}
-      {/*                            id="overlap"*/}
-      {/*                            label="IO Overlap Allowed (Computation and IO can take place concurrently)"*/}
-      {/*                            onChange={handleOverlapAllowed}*/}
-      {/*                            checked={overlapAllowed}*/}
-      {/*                          />*/}
-      {/*                        </Form.Group>*/}
-      {/*                      </Form.Row>*/}
-      {/*                      <div*/}
-      {/*                        style={{*/}
-      {/*                          display: "flex",*/}
-      {/*                          justifyContent: "center",*/}
-      {/*                          backgroundColor: "white",*/}
-      {/*                          color: "white"*/}
-      {/*                        }}*/}
-      {/*                      >*/}
-      {/*                        <Button onClick={runSimulation}>*/}
-      {/*                          Run Simulation*/}
-      {/*                        </Button>*/}
-      {/*                      </div>*/}
-      {/*                    </Form>*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">*/}
-      {/*                      Simulation Output*/}
-      {/*                    </Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    <SimulationOutputPretty></SimulationOutputPretty>*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">*/}
-      {/*                      Task Executions*/}
-      {/*                    </Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    {simulationExecuted && (*/}
-      {/*                      <IOGanttChart chartInfo={ganttChartInfo} />*/}
-      {/*                    )}*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
       {/*                <Card className="card">*/}
       {/*                  <Card.Body className="card">*/}
       {/*                    <Card.Title className="card">*/}

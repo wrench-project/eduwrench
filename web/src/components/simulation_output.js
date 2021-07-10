@@ -1,8 +1,9 @@
 import React from "react"
 import { Segment } from "semantic-ui-react"
+import "./simulation_output.css"
 
 const SimulationOutput = ({ output }) => {
-  const elements = output.split("@").map(line => <>{line}<br /></>)
+  const elements = output.split("@").map(line => <>{line}<br/></>)
 
   return (
     <>
