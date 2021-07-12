@@ -178,10 +178,6 @@ const HostUtilizationChart = ({
               chartData.labels
             )
 
-            console.log("************")
-            console.log(chartData)
-            console.log("************")
-
             for (let i = 0; i < diskMounts[mount].reads.length; i++) {
               let operation = diskMounts[mount].reads[i]
               ingestData(
@@ -251,6 +247,7 @@ const HostUtilizationChart = ({
           reverse: true
         },
         x: {
+          stacked: true,
           title: {
             display: true,
             text: "Time (seconds)"
@@ -267,10 +264,11 @@ const HostUtilizationChart = ({
           intersect: "false",
           callbacks: {
             label: function(context) {
+              console.log(context)
               let value = context.formattedValue.replace("[", "").replace("]", "").split(", ")
               let runtime = value[1] - value[0]
-              if (runtime > 0) {
-                let label = context.dataset.label || ""
+              if (runtime > 0.0) {
+                let label = context.dataset.taskId[context.dataIndex] || ""
                 if (label) {
                   label += ": " + runtime.toFixed(3) + "s"
                 }
