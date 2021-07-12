@@ -5,13 +5,13 @@ import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation_output"
 import SimulationScenario from "../../../components/simulation_scenario"
 import GanttChart from "../../../charts/gantt_chart"
+import HostUtilizationChart from "../../../charts/host_utilization_chart"
 
 import IOTask from "../../../images/svgs/io_task.svg"
 
 const IOSimulation = () => {
 
-  const [simulationOutput, setSimulationOutput] = useState("")
-  const [responseData, setResponseData] = useState({})
+  const [simulationResults, setSimulationResults] = useState(<></>)
 
   return (
     <>
@@ -57,11 +57,16 @@ const IOSimulation = () => {
                 }
                 axios.post("http://localhost:3000/run/io_operations", data).then(
                   response => {
-                    setSimulationOutput(response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@"))
-                    setResponseData(response.data.task_data)
                     // console.log(response.data.task_data)
                     // let executionData = prepareResponseData(response.data.task_data)
                     // console.log(executionData)
+                    setSimulationResults(
+                      <>
+                        <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />
+                        <GanttChart data={response.data.task_data} />
+                        <HostUtilizationChart data={response.data.task_data} />
+                      </>
+                    )
                   },
                   error => {
                     console.log(error)
@@ -176,8 +181,7 @@ const IOSimulation = () => {
         </Segment>
       </Segment.Group>
 
-      <SimulationOutput output={simulationOutput} />
-      <GanttChart data={responseData} />
+      {simulationResults}
     </>
   )
 }

@@ -2,6 +2,11 @@ import React, { Component, useState, useEffect } from "react"
 import { Bar } from "react-chartjs-2"
 import { Segment } from "semantic-ui-react"
 
+/**
+ *
+ * @param taskIO
+ * @returns {number[]}
+ */
 function processIO(taskIO) {
   let minStart = 0
   let maxEnd = 0
@@ -18,6 +23,13 @@ function processIO(taskIO) {
   return [minStart, maxEnd]
 }
 
+/**
+ *
+ * @param data
+ * @param label
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const GanttChart = ({ data, label = null }) => {
 
   let labels = label ? label : {
@@ -26,39 +38,40 @@ const GanttChart = ({ data, label = null }) => {
     write: { display: true, label: "Writing Output" }
   }
 
-  let chartData = {
-    labels: [],
-    datasets: [
-      {
-        data: [],
-        backgroundColor: [],
-        host: [],
-        label: labels.read.label
-      },
-      {
-        data: [],
-        backgroundColor: [],
-        host: [],
-        label: labels.compute.label
-      },
-      {
-        data: [],
-        host: [],
-        backgroundColor: [],
-        label: labels.write.label
-      }
-    ]
-  }
-
+  let chartData = {}
   let options = {}
 
   if (data.workflow_execution) {
     const tasksData = data.workflow_execution.tasks
 
+    chartData = {
+      labels: [],
+      datasets: [
+        {
+          data: [],
+          backgroundColor: [],
+          host: [],
+          label: labels.read.label
+        },
+        {
+          data: [],
+          backgroundColor: [],
+          host: [],
+          label: labels.compute.label
+        },
+        {
+          data: [],
+          host: [],
+          backgroundColor: [],
+          label: labels.write.label
+        }
+      ]
+    }
+
     const colors = {
-      read: "#cbb5dd",
-      compute: "#f7daad",
-      write: "#abdcf4"
+      read: "#469C76",
+      compute: "#EEE461",
+      write: "#6FB2E4"
     }
 
     let zoomMaxRange = 0
@@ -121,37 +134,30 @@ const GanttChart = ({ data, label = null }) => {
           }
         }
       },
-      tooltips: {
-        position: "nearest",
-        mode: "point",
-        intersect: "false",
-        callbacks: {
-          label: function(tooltipItem, data) {
-            let value = tooltipItem.value
-              .replace("[", "")
-              .replace("]", "")
-              .split(", ")
-            let runtime = value[1] - value[0]
-            if (runtime > 0) {
-              let label = data.datasets[tooltipItem.datasetIndex].label || ""
-              if (label) {
-                label += ": " + runtime.toFixed(3) + "s"
+      plugins: {
+        tooltip: {
+          position: "nearest",
+          mode: "point",
+          intersect: "false",
+          callbacks: {
+            label: function(context) {
+              let value = context.formattedValue.replace("[", "").replace("]", "").split(", ")
+              let runtime = value[1] - value[0]
+              if (runtime > 0) {
+                let label = context.dataset.label || ""
+                if (label) {
+                  label += ": " + runtime.toFixed(3) + "s"
+                }
+                return label
               }
-              return label
+              return ""
+            },
+            afterBody: function(context) {
+              return ("Execution Host: " + context[0].dataset.host[context[0].dataIndex])
             }
-            return ""
-          },
-          afterBody: function(tooltipItem, data) {
-            return (
-              "Execution Host: " +
-              data.datasets[tooltipItem[0].datasetIndex].host[
-                tooltipItem[0].index
-                ]
-            )
           }
         }
       }
-      // plugins: pluginsProperties
     }
   }
 
