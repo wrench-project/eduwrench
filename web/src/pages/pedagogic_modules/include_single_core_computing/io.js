@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react"
-import { Accordion, Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
+import React from "react"
+import { Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
-import IOSimulation from "./io_simulation"
+import SimulationActivity from "../../../components/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
+import IOSimulation from "./io_simulation"
 
 import IOFigure1 from "../../../images/svgs/IO_figure_1.svg"
 import IOFigure2 from "../../../images/svgs/IO_figure_2.svg"
@@ -11,14 +12,6 @@ import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
 import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
 
 const IO = () => {
-  const [auth, setAuth] = useState("false")
-  const [test, setTest] = useState([])
-
-  useEffect(() => {
-    const authenticated = localStorage.getItem("login")
-    setAuth(authenticated)
-  })
-
   return (
     <>
       <Segment.Group className="objectives">
@@ -214,14 +207,7 @@ const IO = () => {
         questions to come.
       </p>
 
-      <Accordion styled className="simulation" defaultActiveIndex={-1} fluid panels={[{
-        key: "io",
-        title: "Simulation Activity",
-        content: {
-          content: (<IOSimulation />)
-        }
-      }]}
-      />
+      <SimulationActivity key="io" content={<IOSimulation />} />
 
       <Divider />
 
@@ -406,45 +392,6 @@ const IO = () => {
         frequent in the file. Is this modified program more or less I/O-intensive? By how much?
       </p>
 
-      {/*<Card className="main">*/}
-      {/*  <Card.Body className="card">*/}
-      {/*    <Accordion>*/}
-      {/*      <Card>*/}
-      {/*        <Accordion.Toggle as={Card.Header} eventKey="0">*/}
-      {/*          (Open Simulator Here)*/}
-      {/*        </Accordion.Toggle>*/}
-      {/*        <Accordion.Collapse eventKey="0">*/}
-      {/*          <Card.Body className="card">*/}
-      {/*            {auth === "true" ? (*/}
-      {/*            ) : (*/}
-      {/*              <div className="card">*/}
-      {/*                <img*/}
-      {/*                  src={require("../../../images/wrench_logo.png")}*/}
-      {/*                  width="40"*/}
-      {/*                  height="40"*/}
-      {/*                  style={{*/}
-      {/*                    backgroundColor: "white"*/}
-      {/*                  }}*/}
-      {/*                  alt="eduWRENCH logo"*/}
-      {/*                />*/}
-      {/*                <h4 className="card" style={{ color: "grey" }}>*/}
-      {/*                  {" "}*/}
-      {/*                  eduWRENCH Pedagogic Module Simulator*/}
-      {/*                </h4>*/}
-      {/*                <p className="card">*/}
-      {/*                  <b className="card">*/}
-      {/*                    Sign in on the top of the page to access the*/}
-      {/*                    simulator.*/}
-      {/*                  </b>*/}
-      {/*                </p>*/}
-      {/*              </div>*/}
-      {/*            )}*/}
-      {/*          </Card.Body>*/}
-      {/*        </Accordion.Collapse>*/}
-      {/*      </Card>*/}
-      {/*    </Accordion>*/}
-      {/*  </Card.Body>*/}
-      {/*</Card>*/}
     </>
   )
 }

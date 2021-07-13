@@ -1,6 +1,5 @@
-import React, { Component } from "react"
+import React, { Component, useState } from "react"
 import { GoogleLogin, GoogleLogout } from "react-google-login"
-// import { NavDropdown, Dropdown } from "react-bootstrap"
 import { Dropdown, Menu } from "semantic-ui-react"
 import "./auth.css"
 
