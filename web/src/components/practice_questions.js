@@ -12,7 +12,7 @@ const PracticeQuestions = ({ questions }) => {
         content: (<><strong>[{value.key}]</strong> {value.question}</>)
       },
       content: {
-        content: (<Segment>{value.content}</Segment>)
+        content: (<Segment style={{  borderLeft: "3px solid #999" }}>{value.content}</Segment>)
       }
     })
   }
