@@ -285,7 +285,7 @@ const HostUtilizationChart = ({
   return (
     <>
       <Segment.Group>
-        <Segment color="blue"><strong>Host Utilization</strong></Segment>
+        <Segment color="olive"><strong>Host Utilization</strong></Segment>
         <Segment>
           <Bar type="bar" data={chartData} options={options} />
         </Segment>

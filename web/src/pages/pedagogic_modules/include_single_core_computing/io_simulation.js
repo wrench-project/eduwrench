@@ -6,6 +6,7 @@ import SimulationOutput from "../../../components/simulation_output"
 import SimulationScenario from "../../../components/simulation_scenario"
 import GanttChart from "../../../charts/gantt_chart"
 import HostUtilizationChart from "../../../charts/host_utilization_chart"
+import TasksData from "../../../charts/tasks_data"
 
 import IOTask from "../../../images/svgs/io_task.svg"
 
@@ -58,7 +59,7 @@ const IOSimulation = () => {
                 setSimulationResults(<></>)
                 axios.post("http://localhost:3000/run/io_operations", data).then(
                   response => {
-                    // console.log(response.data.task_data)
+                    console.log(response.data.task_data)
                     // let executionData = prepareResponseData(response.data.task_data)
                     // console.log(executionData)
                     setSimulationResults(
@@ -66,6 +67,7 @@ const IOSimulation = () => {
                         <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />
                         <GanttChart data={response.data.task_data} />
                         <HostUtilizationChart data={response.data.task_data} />
+                        <TasksData data={response.data.task_data} />
                       </>
                     )
                   },
