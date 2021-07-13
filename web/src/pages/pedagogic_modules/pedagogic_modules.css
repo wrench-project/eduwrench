@@ -1,3 +1,13 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    color: #525252;
+}
+
 .tab-panes {
     margin-bottom: 4em;
 }

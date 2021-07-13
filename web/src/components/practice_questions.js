@@ -8,7 +8,9 @@ const PracticeQuestions = ({ questions }) => {
   for (const [index, value] of questions.entries()) {
     panels.push({
       key: value.key,
-      title: "[" + value.key + "] " + value.question,
+      title: {
+        content: (<><strong>[{value.key}]</strong> {value.question}</>)
+      },
       content: {
         content: (<Segment>{value.content}</Segment>)
       }
