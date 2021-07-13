@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import "antd/dist/antd.css"
-import "./glossary.css"
 import { Drawer, Button, Input } from "antd"
 import { useStaticQuery, graphql } from "gatsby"
+import "antd/dist/antd.css"
+import "./glossary.css"
 
 const Glossary = () => {
   const [visible, setVisible] = useState(false)
@@ -37,7 +37,7 @@ const Glossary = () => {
   }
 
   const listItems = searchData.map(item => (
-    <div className="glossary-item">
+    <div className="glossary-item" key={item.term}>
       <br />
       <h5>{item.term}</h5>
       <p>{item.description}</p>

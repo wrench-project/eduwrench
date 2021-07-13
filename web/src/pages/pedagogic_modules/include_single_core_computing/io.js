@@ -216,6 +216,7 @@ const IO = () => {
       </p>
 
       <Accordion styled className="simulation" defaultActiveIndex={-1} fluid panels={[{
+        key: "io",
         title: "Simulation Activity",
         content: {
           content: (<IOSimulation />)
@@ -353,14 +354,14 @@ const IO = () => {
         task requires 1 second to read data from disk, 2 seconds for computation, and 0.5 seconds to write the output
         back
         to the disk.
-        <ul>
-          <li>What is the lowest possible execution time if we are not able to perform IO during computation? Show your
-            work.
-          </li>
-          <li>What is the lowest possible execution time when overlap of computation and IO is possible? Show your work.
-          </li>
-        </ul>
       </p>
+      <ul>
+        <li>What is the lowest possible execution time if we are not able to perform IO during computation? Show your
+          work.
+        </li>
+        <li>What is the lowest possible execution time when overlap of computation and IO is possible? Show your work.
+        </li>
+      </ul>
       <p>
         Show your work, depicting executions as in the figures earlier in this page and compute the execution times
         accordingly.
