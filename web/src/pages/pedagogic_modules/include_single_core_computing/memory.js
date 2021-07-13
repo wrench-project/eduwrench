@@ -1,5 +1,5 @@
 import React from "react"
-import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
+import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 
 const Memory = () => {
@@ -41,6 +41,8 @@ const Memory = () => {
         since in the previous tab we said we would almost never do it! We will find out in the Multicore Computing
         module!
       </p>
+
+      <Divider />
 
       <Header as="h3" block>
         Suggested Activities

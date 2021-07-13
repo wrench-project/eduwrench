@@ -1,5 +1,5 @@
-import React, { useState } from "react"
-import { Divider, Header, Segment } from "semantic-ui-react"
+import React from "react"
+import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"

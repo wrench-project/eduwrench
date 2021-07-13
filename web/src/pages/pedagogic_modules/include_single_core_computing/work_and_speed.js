@@ -13,15 +13,6 @@ const WorkAndSpeed = () => {
         "Understand the simple relationship between program execution time, work, and compute speed"
       ]} />
 
-      <Segment.Group className="objectives">
-        <Segment inverted><strong>Learning Objectives</strong></Segment>
-        <Segment style={{ backgroundColor: "#fafafa" }}>
-          <ul style={{ backgroundColor: "#fafafa" }}>
-
-          </ul>
-        </Segment>
-      </Segment.Group>
-
       <h2>Measures of Work and Compute Speed</h2>
 
       <p>
