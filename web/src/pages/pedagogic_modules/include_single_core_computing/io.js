@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react"
 import { Accordion, Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import IOSimulation from "./io_simulation"
-import "./../pedagogic_modules.css"
+import PracticeQuestions from "../../../components/practice_questions"
 
 import IOFigure1 from "../../../images/svgs/IO_figure_1.svg"
 import IOFigure2 from "../../../images/svgs/IO_figure_2.svg"
 import IOFigure3 from "../../../images/svgs/IO_figure_3.svg"
 import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
 import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
-import PracticeQuestions from "../../../components/practice_questions"
 
 const IO = () => {
   const [auth, setAuth] = useState("false")
