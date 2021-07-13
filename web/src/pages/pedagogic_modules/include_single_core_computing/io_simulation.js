@@ -55,6 +55,7 @@ const IOSimulation = () => {
                   task_output: values.amountOutput,
                   io_overlap: values.overlapAllowed
                 }
+                setSimulationResults(<></>)
                 axios.post("http://localhost:3000/run/io_operations", data).then(
                   response => {
                     // console.log(response.data.task_data)

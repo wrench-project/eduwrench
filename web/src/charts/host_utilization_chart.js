@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react"
-import { Bar } from "react-chartjs-2"
+import { Bar } from "@iftek/react-chartjs-3"
 import { Segment } from "semantic-ui-react"
 
 /**
@@ -70,7 +70,7 @@ function fillEmptyValues(datasets, end, labels) {
       data: [],
       backgroundColor: [],
       taskId: [],
-      borderColor: "rgba(0, 0, 0, 0.3)",
+      borderColor: "rgba(0, 0, 0, 0.4)",
       borderWidth: 1,
       barPercentage: 1.2
     })
@@ -241,17 +241,18 @@ const HostUtilizationChart = ({
 
     options = {
       indexAxis: "y",
+      responsive: true,
       scales: {
-        y: {
-          stacked: true,
-          reverse: true
-        },
         x: {
-          stacked: true,
+          stacked: false,
           title: {
             display: true,
             text: "Time (seconds)"
           }
+        },
+        y: {
+          stacked: true,
+          reverse: true
         }
       },
       plugins: {
@@ -264,13 +265,12 @@ const HostUtilizationChart = ({
           intersect: "false",
           callbacks: {
             label: function(context) {
-              console.log(context)
               let value = context.formattedValue.replace("[", "").replace("]", "").split(", ")
               let runtime = value[1] - value[0]
               if (runtime > 0.0) {
                 let label = context.dataset.taskId[context.dataIndex] || ""
                 if (label) {
-                  label += ": " + runtime.toFixed(3) + "s"
+                  label += ": " + runtime.toFixed(3) + "s - [" + value[0] + ", " + value[1] + "]"
                 }
                 return label
               }
@@ -280,7 +280,6 @@ const HostUtilizationChart = ({
         }
       }
     }
-    console.log(chartData)
   }
 
   return (
@@ -288,7 +287,7 @@ const HostUtilizationChart = ({
       <Segment.Group>
         <Segment color="blue"><strong>Host Utilization</strong></Segment>
         <Segment>
-          <Bar type="horizontalBar" data={chartData} options={options} />
+          <Bar type="bar" data={chartData} options={options} />
         </Segment>
       </Segment.Group>
     </>

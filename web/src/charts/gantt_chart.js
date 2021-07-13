@@ -1,5 +1,5 @@
 import React, { Component, useState, useEffect } from "react"
-import { Bar } from "react-chartjs-2"
+import { Bar } from "@iftek/react-chartjs-3"
 import { Segment } from "semantic-ui-react"
 
 /**
@@ -166,7 +166,7 @@ const GanttChart = ({ data, label = null }) => {
       <Segment.Group>
         <Segment color="yellow"><strong>Task Executions</strong></Segment>
         <Segment>
-          <Bar type="horizontalBar" data={chartData} options={options} />
+          <Bar type="bar" data={chartData} options={options} />
         </Segment>
       </Segment.Group>
     </>
