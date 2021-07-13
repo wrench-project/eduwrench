@@ -1,18 +1,14 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
+import LearningObjectives from "../../../components/learning_objectives"
 
 const Memory = () => {
   return (
     <>
-      <Segment.Group className="objectives">
-        <Segment inverted><strong>Learning Objectives</strong></Segment>
-        <Segment style={{ backgroundColor: "#fafafa" }}>
-          <ul style={{ backgroundColor: "#fafafa" }}>
-            <li>Understand the concept of memory (RAM)</li>
-            <li>Understand how the amount of available memory limits program executions</li>
-          </ul>
-        </Segment>
-      </Segment.Group>
+      <LearningObjectives objectives={[
+        "Understand the concept of memory (RAM)",
+        "Understand how the amount of available memory limits program executions"
+      ]} />
 
       <h2>Memory</h2>
 

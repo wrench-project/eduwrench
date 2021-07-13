@@ -1,6 +1,7 @@
 import React from "react"
 import { Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 import IOSimulation from "./io_simulation"
@@ -14,16 +15,11 @@ import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
 const IO = () => {
   return (
     <>
-      <Segment.Group className="objectives">
-        <Segment inverted><strong>Learning Objectives</strong></Segment>
-        <Segment style={{ backgroundColor: "#fafafa" }}>
-          <ul style={{ backgroundColor: "#fafafa" }}>
-            <li>Understand the concept of IO</li>
-            <li>Understand the impact of IO operations on computing</li>
-            <li>Understand the basics of optimizing computation around IO operations</li>
-          </ul>
-        </Segment>
-      </Segment.Group>
+      <LearningObjectives objectives={[
+        "Understand the concept of IO",
+        "Understand the impact of IO operations on computing",
+        "Understand the basics of optimizing computation around IO operations"
+      ]} />
 
       <h2>Basic Concepts</h2>
 

@@ -1,20 +1,16 @@
 import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
 
 const TimeSharing = () => {
   return (
     <>
-      <Segment.Group className="objectives">
-        <Segment inverted><strong>Learning Objectives</strong></Segment>
-        <Segment style={{ backgroundColor: "#fafafa" }}>
-          <ul style={{ backgroundColor: "#fafafa" }}>
-            <li>Understand the concept of time sharing</li>
-            <li>Understand how time sharing impacts program execution times</li>
-          </ul>
-        </Segment>
-      </Segment.Group>
+      <LearningObjectives objectives={[
+        "Understand the concept of time sharing",
+        "Understand how time sharing impacts program execution times"
+      ]} />
 
       <h2>Time Sharing</h2>
 

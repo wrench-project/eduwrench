@@ -1,18 +1,23 @@
 import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
 
 const WorkAndSpeed = () => {
   return (
     <>
+      <LearningObjectives objectives={[
+        "Understand the concepts of \"work\" and of \"compute speed\"",
+        "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed",
+        "Understand the simple relationship between program execution time, work, and compute speed"
+      ]} />
+
       <Segment.Group className="objectives">
         <Segment inverted><strong>Learning Objectives</strong></Segment>
         <Segment style={{ backgroundColor: "#fafafa" }}>
           <ul style={{ backgroundColor: "#fafafa" }}>
-            <li>Understand the concepts of <i>work</i> and of <i>compute speed</i></li>
-            <li>Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed</li>
-            <li>Understand the simple relationship between program execution time, work, and compute speed</li>
+
           </ul>
         </Segment>
       </Segment.Group>

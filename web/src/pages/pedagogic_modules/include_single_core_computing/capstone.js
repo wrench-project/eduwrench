@@ -1,20 +1,15 @@
 import React, { useState } from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives"
 
 const Capstone = () => {
   return (
     <>
-      <Segment.Group className="objectives">
-        <Segment inverted><strong>Learning Objectives</strong></Segment>
-        <Segment style={{ backgroundColor: "#fafafa" }}>
-          <ul style={{ backgroundColor: "#fafafa" }}>
-            <li>Be able to apply the concepts learned in this module to reason about and optimize the performance of a
-              scenario that includes computation activities, I/O activities, and RAM constraints
-            </li>
-          </ul>
-        </Segment>
-      </Segment.Group>
+      <LearningObjectives objectives={[
+        "Be able to apply the concepts learned in this module to reason about and optimize the performance of a\n" +
+        "scenario that includes computation activities, I/O activities, and RAM constraints"
+      ]} />
 
       <h2>Production Scenario</h2>
 

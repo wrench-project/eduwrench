@@ -1,8 +1,7 @@
-import React, { useState } from "react"
+import React from "react"
 import Layout from "../../components/layout"
 import Seo from "../../components/seo"
 import { Segment, Tab } from "semantic-ui-react"
-// import { BrowserRouter as Router, Route, NavLink, Switch } from "react-router-dom"
 import "katex/dist/katex.min.css"
 import "./pedagogic_modules.css"
 
@@ -20,7 +19,7 @@ const SingleCoreComputing = () => {
         marginBottom: `30px`,
         marginTop: `50px`,
         color: "#525252"
-      }}><br />A.1. Single-core Computing </h2>
+      }}><br />A.1. Single-core Computing</h2>
 
       <Segment style={{ marginBottom: "2em" }}>
         The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a
