@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from "react"
+import React from "react"
 import { Bar } from "@iftek/react-chartjs-3"
 import { Segment } from "semantic-ui-react"
 

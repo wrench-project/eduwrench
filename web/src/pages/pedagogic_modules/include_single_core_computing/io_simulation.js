@@ -4,9 +4,9 @@ import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation_output"
 import SimulationScenario from "../../../components/simulation_scenario"
-import GanttChart from "../../../charts/gantt_chart"
-import HostUtilizationChart from "../../../charts/host_utilization_chart"
-import TasksData from "../../../charts/tasks_data"
+import GanttChart from "../../../components/gantt_chart"
+import HostUtilizationChart from "../../../components/host_utilization_chart"
+import TasksData from "../../../components/tasks_data"
 
 import IOTask from "../../../images/svgs/io_task.svg"
 
@@ -59,9 +59,6 @@ const IOSimulation = () => {
                 setSimulationResults(<></>)
                 axios.post("http://localhost:3000/run/io_operations", data).then(
                   response => {
-                    console.log(response.data.task_data)
-                    // let executionData = prepareResponseData(response.data.task_data)
-                    // console.log(executionData)
                     setSimulationResults(
                       <>
                         <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />

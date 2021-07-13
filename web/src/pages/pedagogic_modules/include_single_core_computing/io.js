@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react"
-import * as d3 from "d3"
-
-import { StaticImage } from "gatsby-plugin-image"
-
-import { Accordion, Divider, Header, Icon, Label, Segment, Table } from "semantic-ui-react"
-import axios from "axios"
+import { Accordion, Divider, Header, Icon, Segment, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import IOSimulation from "./io_simulation"
 import "./../pedagogic_modules.css"
@@ -15,297 +10,14 @@ import IOFigure3 from "../../../images/svgs/IO_figure_3.svg"
 import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
 import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
 
-
-function prepareData(data) {
-  const nullReplacement = {
-    start: 0,
-    end: 0
-  }
-  data.forEach(function(d) {
-    if (d.read === null) {
-      d.read = [nullReplacement]
-    }
-    if (d.compute === null) {
-      d.compute = nullReplacement
-    }
-    if (d.write === null) {
-      d.write = [nullReplacement]
-    }
-  })
-  return data
-}
-
-const getDuration = (d, section) => {
-  if (section === "read" || section === "write") {
-    let total = 0
-    if (d[section] !== null) {
-      d[section].forEach(t => {
-        total += t.end - t.start
-      })
-    }
-    return total
-  } else if (section === "compute" || section === "whole_task") {
-    if (d[section].start === -1) {
-      return 0
-    } else if (d[section].end === -1) {
-      if (d.terminated === -1) {
-        return d.failed - d[section].start
-      } else if (d.failed === -1) {
-        return d.terminated - d[section].start
-      }
-    } else {
-      return d[section].end - d[section].start
-    }
-  }
-}
-
-const toFiveDecimalPlaces = d3.format(".3f")
-
-function convertToTableFormat(d, section, property) {
-  let metric = 0
-  if (section === "read" || section === "write") {
-    metric = property === "start" ? Number.MAX_VALUE : 0
-    for (var i in d[section]) {
-      metric =
-        property === "start"
-          ? d[section][i][property] < metric
-          ? d[section][i][property]
-          : metric
-          : d[section][i][property] > metric
-          ? d[section][i][property]
-          : metric
-    }
-  } else {
-    metric = d[section][property]
-    if (metric === -1) {
-      if (d.failed !== -1) {
-        return "Failed"
-      }
-      if (d.terminated !== -1) {
-        return "Terminated"
-      }
-    }
-  }
-  return toFiveDecimalPlaces(metric)
-}
-
-/**
- *
- * @param data
- * @param tableID
- * @param label
- */
-function populateWorkflowTaskDataTable(data, tableID = null, label = null) {
-  let tableId = tableID ? tableID : "task-details-table"
-  const tableBodyId = tableId + "-body"
-  const tdClass = "task-details-td"
-
-  let labels = label
-    ? label
-    : {
-      read: { display: true, label: "Read Input" },
-      compute: { display: true, label: "Computation" },
-      write: { display: true, label: "Write Output" }
-    }
-
-  let tableContents = `
-      <table class="task-details-table" id="${tableId}">
-          <colgroup>
-              <col span="1"></col>`
-
-  if (labels.read.display) {
-    tableContents += `<col span="3" class="read-col"></col>`
-  }
-  if (labels.compute.display) {
-    tableContents += `<col span="3" class="compute-col"></col>`
-  }
-  if (labels.write.display) {
-    tableContents += `<col span="3" class="write-col"></col>`
-  }
-
-  tableContents += `
-              <col span="1"></col>
-          </colgroup>
-          <thead class="${tableId}">
-              <tr>
-                  <td></td>`
-
-  if (labels.read.display) {
-    tableContents +=
-      `<td colspan="3" style="background-color:powderblue; width:60%;" class="text-center ${tdClass}">` +
-      labels.read.label +
-      `</td>`
-  }
-  if (labels.compute.display) {
-    tableContents +=
-      `<td colspan="3" style="background-color:lightsalmon; width:60%;" class="text-center ${tdClass}">` +
-      labels.compute.label +
-      `</td>`
-  }
-  if (labels.write.display) {
-    tableContents +=
-      `<td colspan="3" style="background-color:palegreen; width:60%;" class="text-center ${tdClass}">` +
-      labels.write.label +
-      `</td>`
-  }
-
-  tableContents += `                  
-                  <td></td>
-              </tr>
-              <tr>
-                  <th scope="col" class="task-details-table-header">TaskID</th>`
-
-  if (labels.read.display) {
-    tableContents += `
-          <th scope="col" class="task-details-table-header">Start Time</th>
-          <th scope="col" class="task-details-table-header">End Time</th>
-          <th scope="col" class="task-details-table-header">Duration</th>`
-  }
-  if (labels.compute.display) {
-    tableContents += `
-          <th scope="col" class="task-details-table-header">Start Time</th>
-          <th scope="col" class="task-details-table-header">End Time</th>
-          <th scope="col" class="task-details-table-header">Duration</th>`
-  }
-  if (labels.write.display) {
-    tableContents += `
-          <th scope="col" class="task-details-table-header">Start Time</th>
-          <th scope="col" class="task-details-table-header">End Time</th>
-          <th scope="col" class="task-details-table-header">Duration</th>`
-  }
-  tableContents += `        
-                  <th scope="col" class="task-details-table-header">Task Duration</th>
-              </tr>
-          </thead>
-  
-          <tbody class="task-details-table" id="${tableBodyId}">
-          </tbody>
-      </table >`
-
-  document.getElementById(tableId).innerHTML = tableContents
-
-  d3.select(`#${tableId}`).style("display", "block")
-
-  let task_details_table_body = d3.select(`#${tableBodyId}`)
-
-  const TASK_DATA = Object.assign([], data).sort(function(lhs, rhs) {
-    return parseInt(lhs.compute.start) - parseInt(rhs.compute.start)
-  })
-
-  TASK_DATA.forEach(function(task) {
-    let task_id = task["task_id"]
-
-    let read_start = convertToTableFormat(task, "read", "start")
-    let read_end = convertToTableFormat(task, "read", "end")
-    let read_duration = toFiveDecimalPlaces(getDuration(task, "read"))
-
-    let compute_start = convertToTableFormat(task, "compute", "start")
-    let compute_end = convertToTableFormat(task, "compute", "end")
-    let compute_duration = toFiveDecimalPlaces(getDuration(task, "compute"))
-
-    let write_start = convertToTableFormat(task, "write", "start")
-    let write_end = convertToTableFormat(task, "write", "end")
-    let write_duration = toFiveDecimalPlaces(getDuration(task, "write"))
-
-    let task_duration = toFiveDecimalPlaces(getDuration(task, "whole_task"))
-
-    if (Number.isNaN(task_duration)) {
-      task_duration = Math.abs(task_duration)
-    }
-
-    let tr = task_details_table_body.append("tr").attr("id", task_id)
-    tr.append("td").html(task_id).attr("class", tdClass)
-
-    if (labels.read.display) {
-      tr.append("td").html(read_start).attr("class", tdClass)
-      tr.append("td").html(read_end).attr("class", tdClass)
-      tr.append("td").html(read_duration).attr("class", tdClass)
-    }
-
-    if (labels.compute.display) {
-      tr.append("td").html(compute_start).attr("class", tdClass)
-      tr.append("td").html(compute_end).attr("class", tdClass)
-      tr.append("td").html(compute_duration).attr("class", tdClass)
-    }
-
-    if (labels.write.display) {
-      tr.append("td").html(write_start).attr("class", tdClass)
-      tr.append("td").html(write_end).attr("class", tdClass)
-      tr.append("td").html(write_duration).attr("class", tdClass)
-    }
-
-    tr.append("td").html(task_duration).attr("class", tdClass)
-  })
-}
-
 const IO = () => {
   const [auth, setAuth] = useState("false")
   const [test, setTest] = useState([])
-
-  const [numTasks, setNumTasks] = useState(1)
-  const [taskGflop, setTaskGflop] = useState(100)
-  const [amountInput, setAmountInput] = useState(1)
-  const [amountOutput, setAmountOutput] = useState(1)
-  const [overlapAllowed, setOverlapAllowed] = useState(false)
-  const [numTasksError, setNumTasksError] = useState("")
-  const [taskGflopError, setTaskGflopError] = useState("")
-  const [amountInputError, setAmountInputError] = useState("")
-  const [amountOutputError, setAmountOutputError] = useState("")
-  const [simulationExecuted, setSimulationExecuted] = useState(false)
-  const [hostUtilizationChartInfo, setHostUtilizationChartInfo] = useState({})
 
   useEffect(() => {
     const authenticated = localStorage.getItem("login")
     setAuth(authenticated)
   })
-
-  const runSimulation = () => {
-    const userEmail = localStorage.getItem("currentUser")
-    const data = {
-      userName: userEmail.split("@")[0],
-      email: userEmail,
-      num_tasks: numTasks,
-      task_gflop: taskGflop,
-      task_input: amountInput,
-      task_output: amountOutput,
-      io_overlap: overlapAllowed
-    }
-
-    axios.post("http://localhost:3000/run/io_operations", data).then(
-      response => {
-        //console.log(response.data.simulation_output)
-        // let executionData = prepareResponseData(response.data.task_data)
-        // //console.log(executionData)
-        // let ganttChartInfo = generateGanttChartInfo(
-        //   executionData,
-        //   "io-graph-container"
-        // )
-        // let hostUtilizationChartInfo = generateHostUtilizationChartInfo(
-        //   executionData,
-        //   "io-host-utilization-chart",
-        //   [],
-        //   [],
-        //   false
-        // )
-        // //console.log(ganttChartInfo)
-        // setGanttChartInfo(ganttChartInfo)
-        // setHostUtilizationChartInfo(hostUtilizationChartInfo)
-        // setSimulationOutput(
-        //   response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")
-        // )
-        // let preparedData = prepareData(
-        //   response.data.task_data.workflow_execution.tasks
-        // )
-        // populateWorkflowTaskDataTable(preparedData, "io-task-details-table")
-        // setSimulationExecuted(true)
-        alert("Simulation executed")
-      },
-      error => {
-        console.log(error)
-        alert("Error executing simulation")
-      }
-    )
-  }
 
   return (
     <>
@@ -502,7 +214,7 @@ const IO = () => {
         questions to come.
       </p>
 
-      <Accordion styled style={{ backgroundColor: "#f7f7f7" }} defaultActiveIndex={-1} fluid panels={[{
+      <Accordion styled className="simulation" defaultActiveIndex={-1} fluid panels={[{
         title: "Simulation Activity",
         content: {
           content: (<IOSimulation />)
@@ -517,7 +229,6 @@ const IO = () => {
 
       {/*<Card className="main">*/}
       {/*  <Card.Body className="card">*/}
-
       {/*    <Accordion>*/}
       {/*      <Card>*/}
       {/*        <Accordion.Toggle as={Card.Header} eventKey="0">*/}
@@ -526,31 +237,6 @@ const IO = () => {
       {/*        <Accordion.Collapse eventKey="0">*/}
       {/*          <Card.Body className="card">*/}
       {/*            {auth === "true" ? (*/}
-      {/*              <div>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">*/}
-      {/*                      Host Utilization*/}
-      {/*                    </Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    {simulationExecuted && (*/}
-      {/*                      <IOHostUtilizationChart*/}
-      {/*                        chartInfo={hostUtilizationChartInfo}*/}
-      {/*                      />*/}
-      {/*                    )}*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
-      {/*                <Card className="card">*/}
-      {/*                  <Card.Body className="card">*/}
-      {/*                    <Card.Title className="card">Task Data</Card.Title>*/}
-      {/*                    <hr></hr>*/}
-      {/*                    <div*/}
-      {/*                      style={{ backgroundColor: "white" }}*/}
-      {/*                      id="io-task-details-table"*/}
-      {/*                    ></div>*/}
-      {/*                  </Card.Body>*/}
-      {/*                </Card>*/}
-      {/*              </div>*/}
       {/*            ) : (*/}
       {/*              <div className="card">*/}
       {/*                <img*/}

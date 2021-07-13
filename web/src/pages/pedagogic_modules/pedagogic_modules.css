@@ -46,125 +46,22 @@
     color: #666666 !important;
 }
 
-.nav-link {
-    color: #c78651 !important;
+.simulation {
+    border: 2px solid #c78651;
+    box-shadow: #ccc 3px 3px 3px;
+    /*border-radius: 1em !important;*/
 }
 
-.nav-link.active {
-    color: #c78651 !important;
-    background-color: #fefaec !important;
+.simulation .title {
+    color: #000 !important;
+    /*border-radius: 1em !important;*/
+    border: 0 !important;
 }
 
-.nav-link:hover {
-    background-color: #c78651 !important;
-    color: white !important;
+.simulation .active.content {
+    background-color: #f7f7f7 !important;
 }
 
-.check * {
-    background-color: white;
-}
-
-table {
-    background-color: white;
-}
-
-tr {
-    background-color: white;
-    font-size: 12px;
-}
-
-th {
-    background-color: white;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-td {
-    background-color: white;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-}
-
-.task-details-table {
-    width: 1000px;
-
-    text-align: left;
-    table-layout: fixed;
-}
-
-.error {
-    color: red;
-    background-color: white;
-}
-
-.header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 30px;
-    margin-top: 50px;
-    color: #525252;
-}
-
-.banner-div {
-    height: 50px;
-    background-color: #d3834a;
-    border-radius: 10px;
-}
-
-.banner-header {
-    margin-top: 15px;
-    color: white;
-    background-color: #d3834a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
-.highlighted {
-    background-color: #ecc099;
-}
-
-.header-small {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-    text-align: left;
-    color: #525252;
-    background: white;
-}
-
-.tlink {
-    display: inline-block;
-}
-
-MathJax > * {
-    background-color: white;
-}
-
-.formula {
-    background-color: white;
-    height: 40%;
-    width: 40%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.var {
-    background-color: white;
-    font-family: "Times New Roman", Times, serif;
-    display: inline-block;
-}
-
-.formula-inline {
-    background-color: white;
-    display: inline-block;
-}
-
-.formula-newline {
-    background-color: white;
+.simulation .active.title {
+    color: #666 !important;
 }
