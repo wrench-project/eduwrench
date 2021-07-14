@@ -51,7 +51,7 @@ const Footer = () => (
             >
               <StaticImage
                 src="../images/logo-nsf.png"
-                height="40"
+                height={40}
                 alt="NSF logo"
                 backgroundColor="#fff"
               />
@@ -66,7 +66,7 @@ const Footer = () => (
             >
               <StaticImage
                 src="../images/logo-uhm.png"
-                height="40"
+                height={40}
                 alt="UHM logo"
                 backgroundColor="#fff"
               />
@@ -82,7 +82,7 @@ const Footer = () => (
             >
               <StaticImage
                 src="../images/logo-usc.png"
-                height="40"
+                height={40}
                 alt="USC logo"
                 backgroundColor="#fff"
               />

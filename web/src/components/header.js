@@ -13,8 +13,8 @@ const Header = props => {
           <Menu.Item className="menu-logo">
             <StaticImage
               src="../images/wrench_logo.png"
-              width="30"
-              height="30"
+              width={30}
+              height={30}
               alt="eduWRENCH logo"
               backgroundColor="#fff"
               style={{ marginRight: "1em" }}

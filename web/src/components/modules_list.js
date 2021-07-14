@@ -18,7 +18,7 @@ const ModulesList = () => {
         <Segment><strong>A.1. Single-core Computing</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated href="/pedagogic_modules/single_core_computing/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/single_core_computing/">Launch</Button>
             The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a
             program on a single core).
           </p>
@@ -29,7 +29,7 @@ const ModulesList = () => {
         <Segment><strong>A.2. Multi-core Computing</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated href="/pedagogic_modules/multi_core_computing/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/multi_core_computing/">Launch</Button>
             The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple
             cores within the same computer).
           </p>
@@ -42,7 +42,7 @@ const ModulesList = () => {
           <List divided>
             <List.Item>
               <List.Content>
-                <Button size="mini" color="yellow" floated
+                <Button size="mini" color="yellow" floated="left"
                         href="/pedagogic_modules/multi_core_computing/">Launch</Button>
                 &nbsp;&nbsp;A.3.1 Networking Fundamentals
                 <br />
@@ -52,7 +52,7 @@ const ModulesList = () => {
             </List.Item>
             <List.Item>
               <List.Content>
-                <Button size="mini" color="yellow" floated
+                <Button size="mini" color="yellow" floated="left"
                         href="/pedagogic_modules/distributed_computing/client_server/">Launch</Button>
                 &nbsp;&nbsp;A.3.2 Client-Server
                 <br />
@@ -62,7 +62,7 @@ const ModulesList = () => {
             </List.Item>
             <List.Item>
               <List.Content>
-                <Button size="mini" color="yellow" floated
+                <Button size="mini" color="yellow" floated="left"
                         href="/pedagogic_modules/distributed_computing/coordinator_worker/">Launch</Button>
                 &nbsp;&nbsp;A.3.3 Coordinator-Worker
                 <br />
@@ -72,7 +72,7 @@ const ModulesList = () => {
             </List.Item>
             <List.Item>
               <List.Content>
-                <Button size="mini" color="yellow" floated
+                <Button size="mini" color="yellow" floated="left"
                         href="/pedagogic_modules/distributed_computing/workflow/">Launch</Button>
                 &nbsp;&nbsp;A.3.4 Workflows
                 <br />
@@ -90,7 +90,7 @@ const ModulesList = () => {
         <Segment><strong>C.1. Batch Scheduling</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated href="/pedagogic_modules/batch_scheduling/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/batch_scheduling/">Launch</Button>
             The goal of this module is to provide you with fundamental knowledge of and
             hands-on experience with the use of a batch scheduler.
           </p>
