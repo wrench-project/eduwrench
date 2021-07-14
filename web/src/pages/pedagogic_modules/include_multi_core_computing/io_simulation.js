@@ -32,7 +32,7 @@ const IOSimulation = () => {
                 taskInput: 100,
                 taskOutput: 100,
                 taskGflop: 100,
-                firstTask: 1
+                firstTask: "1"
               }}
 
               validate={values => {
@@ -151,7 +151,6 @@ const IOSimulation = () => {
                       checked={values.firstTask === "1"}
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      defaultChecked
                     />
                     <Form.Input
                       name="firstTask"
