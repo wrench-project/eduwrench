@@ -5,12 +5,15 @@ import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 import TaskDependencies3CoresSimulation from "./task_dependencies_3_cores_simulation"
+import TaskDependencies2CoresSimulation from "./task_dependencies_2_cores_simulation"
 
 import ExampleChainDAG from "../../../images/svgs/multicore_example_chain_dag.svg"
 import ExampleCarDAG from "../../../images/svgs/multicore_example_car_dag.svg"
 import ExampleSimulatedDAG from "../../../images/svgs/multicore_example_simulated_dag.svg"
 import PracticeQuestionDAG1 from "../../../images/svgs/multicore_practice_dag_1.svg"
 import PracticeQuestionDAG2 from "../../../images/svgs/multicore_practice_dag_2.svg"
+import QuestionDAG1 from "../../../images/svgs/multicore_question_dag_1.svg"
+import QuestionDAG2 from "../../../images/svgs/multicore_question_dag_2.svg"
 
 const TaskDependencies = () => {
   return (
@@ -221,7 +224,7 @@ const TaskDependencies = () => {
 
       <p>For our example DAG in Figure 3 above, we can determine the level of each task:</p>
 
-      <Table collapsing size="small">
+      <Table collapsing size="small" compact>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>task</Table.HeaderCell>
@@ -322,7 +325,7 @@ const TaskDependencies = () => {
           content: (
             <>
               Here is the set of DAG levels:
-              <Table collapsing size="small">
+              <Table collapsing size="small" compact>
                 <Table.Header>
                   <Table.Row>
                     <Table.HeaderCell>level</Table.HeaderCell>
@@ -371,199 +374,206 @@ const TaskDependencies = () => {
 
       <h2>Choosing which task to run next</h2>
 
+      <p>
+        In our example dataset analysis program, there was never a choice for deciding which task to run next. First, we
+        have to run "start". Then, we have three tasks that are <strong>ready</strong>, that is, whose parents have all
+        executed. Since we have 3 cores, we run all three, each on one core. In other words, since we have 3 paths in
+        the DAG and 3 cores, we just run each path on its own core.
+      </p>
+
+      <p>
+        In general however, we could have <strong>more ready tasks than idle cores, in which case we have to pick which
+        ready tasks to run</strong>. This, turns out, can be a difficult problem known as "DAG scheduling". We explore
+        this advanced topic in later modules, but for now we can get a sense for it via our example.
+      </p>
+
+      <p>
+        Let's say that we now must run the program on a 2-core computer. We have a choice after "start" completes: we
+        have 3 ready tasks and only 2 cores. Say we run "analyze" and "stats". If "analyze" completes before "stats",
+        then we have another choice: should we run "viz" or "summarize"? It turns out that some of these choices are
+        better than others. In this small example the "bad" choices are not terrible, but for larger DAGs they could
+        lead to a large performance loss.
+      </p>
+
+      <p>
+        There are some rules of thumb for selecting ready tasks. A good and popular one is: Whenever there is a choice
+        <strong>pick the task that is on the critical path</strong>. After all it is critical. But this is not
+        guaranteed to be always best. It just happens to work well for many DAGs.
+      </p>
+
+      <Header as="h3" block>
+        Simulating Execution on a 2-core Computer
+      </Header>
+
+      <p>
+        To see the impact of task selection decisions, the simulation app below allows you to simulate the execution of
+        our dataset analysis program <strong>on 2 cores</strong> while prioritizing some execution paths. For instance,
+        if you select "viz/analyze", whenever there is a choice, we always pick a visualization or an analysis task over
+        the "stats" task.
+      </p>
+
+      <p>
+        You can experiment yourself with different settings, and use the app to answer the practice questions
+        thereafter.
+      </p>
+
+      <SimulationActivity key="multicore-task-dependencies-2-cores" content={<TaskDependencies2CoresSimulation />} />
+
+      <Divider />
+
+      <PracticeQuestions questions={[
+        {
+          key: "A.2.p4.6",
+          question: "Setting the \"analyze\" task's work to 10 Gflop, does it matter which paths are prioritized " +
+            "when executing the program on 2 cores? If so, which ones should be prioritized? Can you venture an " +
+            "explanation? Show your work and reasoning.",
+          content: (
+            <>
+              <p>
+                Yes, it does matter! Not prioritizing the statistics path is a mistake. This is because the statistics
+                path is the critical path. Not counting the "start" and "display" tasks, the visualization path runs in
+                30s, the analysis path in 11s, and the stats path in 40s. This is <strong>exactly</strong> the problem
+                we looked at in the <a href="/pedagogic_modules/multi_core_computing">first tab</a>: partition a set of
+                numbers into two groups so that their sums are as close to each other as possible! The best choice for
+                this grouping here is clearly {"{"}30, 11{"}"} and {"{"}40{"}"}. In other words, on one core we should
+                run the visualization and the analysis path, and on the other we should run the statistics path.
+              </p>
+              <p>
+                So, if we prioritize both the visualization and analysis paths after task "start" completes, they will
+                run on different cores, which is a bad choice (as the groupings will be {"{"}30{"}"} and {"{"}11,
+                40{"}"}). Conclusion: the "stats" path should be part of the two prioritized paths.
+              </p>
+              <p>All this can be seen easily in the simulation app.</p>
+            </>
+          )
+        },
+        {
+          key: "A.2.p4.7",
+          question: "Say now we set the work of the \"analyze\" task to be 300 Gflop. What are the execution times " +
+            "with each of the three path prioritization options? Show your work and explain why the results are " +
+            "as they are.",
+          content: (
+            <>
+              <p>
+                All three prioritization schemes give a 76 second execution time. In other words, path prioritization
+                does not matter. With a 300 Gflop work for the "analyze" task, the visualization path takes 30 seconds,
+                and both the analysis and the statistics paths take 40 seconds. (Without counting the "start" and the
+                "display" tasks). No matter what we do, running on two cores three tasks that take 30s, 40s, and 40s
+                will take 70s.
+              </p>
+              <p>
+                If you really want to spell it out, we can just look at all possibilities. If both 40s paths start
+                first, each on a core, then the 30s path starts after that, for 70s of execution. If the 30s path starts
+                with a 40s path, each on a core, then the 2nd 40s path will start on the core that ran the 30s path,
+                since it becomes idle first. This, again, is a 70s execution. So overall, the execution will always be 5
+                + 70 + 1 = 76s.
+              </p>
+            </>
+          )
+        },
+        {
+          key: "A.2.p4.8",
+          question: "Is it possible that, for some amount of work of the \"analyze\" task, all three different " +
+            "prioritizing options lead to three different execution times (when executing the program on 2 cores)? " +
+            "Show your work and reasoning. Although you may have a rapid intuition of whether the answer is yes " +
+            "or no, deriving a convincing argument is not that easy...",
+          content: (
+            <>
+              <p>
+                This is perhaps not an easy question, as it requires to think about this abstractly (so as to avoid
+                examining all possibilities). The answer is "no". Let’s see why.
+              </p>
+              <p>
+                We can look at this question at a very abstract level: we have three "things" to run, let’s call
+                them <TeX math="A" />, <TeX math="B" />, and <TeX math="C" />. (Each of them is one of our three paths,
+                excluding the "start" and "display" tasks). Let <TeX math="a" />, <TeX math="b" />, and <TeX
+                math="c" /> be their execution times. Say, without loss of generality, that <TeX
+                math="a \leq b \leq c" />. Then, we can see what runs on each core for each option that prioritizes two
+                of them:
+              </p>
+              <Table collapsing size="small" compact>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>prioritizing</Table.HeaderCell>
+                    <Table.HeaderCell>core #1</Table.HeaderCell>
+                    <Table.HeaderCell>core #2</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell><TeX math="A" /> and <TeX math="B" /></Table.Cell>
+                    <Table.Cell><TeX math="A" /> then <TeX math="C" /></Table.Cell>
+                    <Table.Cell><TeX math="B" /></Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell><TeX math="A" /> and <TeX math="C" /></Table.Cell>
+                    <Table.Cell><TeX math="A" /> then <TeX math="B" /></Table.Cell>
+                    <Table.Cell><TeX math="C" /></Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell><TeX math="B" /> and <TeX math="C" /></Table.Cell>
+                    <Table.Cell><TeX math="B" /> then <TeX math="A" /></Table.Cell>
+                    <Table.Cell><TeX math="C" /></Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+              <p>
+                The two prioritized things start first. Then the third thing runs on the core that becomes idle first
+                (i.e., the core that was running the shortest thing).
+              </p>
+              <p>
+                We note that in the table above, the 2nd and 3rd rows are identical. That is, the cores finish computing
+                at the same time. The only thing that changes is the order in which things run on core #1 ("<TeX
+                math="A" /> then <TeX math="B" />" or "<TeX math="B" /> then <TeX math="A" />"). Therefore, two of the
+                prioritization options always produce the same outcome in terms of overall program execution time!
+              </p>
+            </>
+          )
+        }
+      ]} />
+
+      <Divider />
+
+      <Header as="h3" block>
+        Questions
+      </Header>
+
+      <p>
+        <strong>[A.2.q4.1]</strong> For the DAG below, where each task has an execution time in seconds on a core of
+        some computer, give the number of levels, the maximum level width, and the length of the critical path in
+        seconds.
+      </p>
+      <QuestionDAG1 />
+
+      <p>
+        <strong>[A.2.q4.2]</strong> For the DAG in the previous question, what would be the parallel efficiency on 3
+        cores? Show your work and reasoning.
+      </p>
+
+      <p>
+        <strong>[A.2.q4.3]</strong> We now execute this same DAG on 2 cores. Whenever there is a choice for picking a
+        ready task for execution, we always pick the ready task with the largest work (this is a "I should do the most
+        time-consuming chores first" approach). What is the execution time? Show your work. It is likely a good idea to
+        depict the execution as a Gantt chart, as seen in the simulation output.
+      </p>
+
+      <p>
+        <strong>[A.2.q4.4]</strong> Still for that same DAG on 2 cores, we now pick the ready task with the smallest
+        work first (this is a "I should do the easiest chores first" approach). What is the execution time? It is better
+        than the previous approach? Show your work. Use the same approach as in the previous question.
+      </p>
+
+      <p>
+        <strong>[A.2.q4.5]</strong> For this new DAG below, executed on 2 cores, what are the execution times of the
+        "pick the ready task with the largest work" and "pick the ready task with the smallest work" approaches? Which
+        approach is better? Show your work. For each approach it is likely a good idea to depict the Gantt chart of the
+        application execution for determining the execution time.
+      </p>
+      <QuestionDAG2 />
+
     </>
   )
 }
 
 export default TaskDependencies
-
-const text1 = `
-
-### Choosing which task to run next
-
-In our example dataset analysis program, there was never a *choice* for deciding which task
-to run next. First, we have to run "start". Then, we have three tasks that are
-**ready**, that is, whose parents have all executed. Since we have 3 cores, we run
-all three, each on one core.  In other words, since we have 3 paths in the DAG and
-3 cores, we just run each path on its own core.
-
-In general however, we could have **more ready tasks than idle cores, in which
-case  we have to pick which ready  tasks to run**. This, turns out, can be a  difficult
-problem known as  "DAG scheduling". We explore this advanced topic in later modules, but
-for now we can get a sense for it via our example.
-
-Let's say that we now must run
-the program on a *2-core* computer. We have a choice after "start" completes:
-we have 3 ready tasks
-and only 2 cores. Say we run "analyze" and "stats". If "analyze" completes before "stats",
-then we have another choice:
-should we run "viz" or "summarize"? It turns out that some of these choices are better
-than others. In this small example the "bad" choices are not terrible, but for larger
-DAGs they  could lead to a large performance loss.
-
-There are some rules of thumb for selecting ready tasks.
-A good and popular one is: Whenever there is a choice **pick the task that is
-on  the  critical path.** After all it is critical. But this is not guaranteed to
-be always best. It just happens to work well for many DAGs.
-
-#### Simulating Execution on a 2-core Computer
-
-To see the impact of task selection decisions, the simulation app below
-allows you to simulate the execution of our dataset analysis program **on 2
-cores** while prioritizing some execution paths. For instance, if you
-select "viz/analyze", whenever there is a choice, we always pick a
-visualization or an analysis task over the "stats" task.
-
-You can experiment yourself with different settings, and use the app to
-answer the practice questions thereafter.
-
-  {%
-    include
-    simulator.html
-    src = "multi_core_dependent_tasks_2_cores" %
-  }
-
-#### Practice Questions
-
-**[A.2.p4.6]** Setting the "analyze" task's work to 10 Gflop, does it matter which paths are prioritized  when  executing the program on  2 cores?
-If so, which ones should
-be prioritized? Can you venture an explanation? Show your work and reasoning.
-
-  <div class="ui accordion fluid">
-    <div class="title">
-      <i class="dropdown icon"></i>
-      (click to see answer)
-    </div>
-    <div markdown="1" class="ui segment content answer-frame">
-
-      Yes, it does matter! Not prioritizing the statistics path is a mistake.
-      This is because the statistics path is the critical path. Not counting the
-      "start" and "display" tasks, the visualization path runs in 30s, the
-      analysis path in 11s, and the stats path in 40s. This is **exactly** the
-      problem we looked at in the
-      [first tab]({{ site.baseurl }}/pedagogic_modules/pdcc/multi_core_computing/#/parallelism):
-      partition a set of numbers into two groups so that their sums are as close to
-      each other as possible! The best choice for this grouping here is clearly
-      {30, 11} and {40}. In other words, on one core we should run the
-      visualization and the analysis path, and on the other we should run the
-      statistics path.
-
-      So, if we prioritize both the visualization and analysis paths after task "start"
-      completes, they will run on different cores, which is a bad choice (as the groupings
-      will be {30} and {11, 40}). Conclusion: the "stats" path should be part of the
-      two prioritized paths.
-
-      All this can be seen easily in the simulation app.
-
-    </div>
-  </div>
-
-  <p></p>
-
-**[A.2.p4.7]** Say now  we set the work of the "analyze" task to be 300
-Gflop.  What are the execution times with each of the three path
-prioritization options? Show your work and explain why the results are as they are.
-
-  <div class="ui accordion fluid">
-    <div class="title">
-      <i class="dropdown icon"></i>
-      (click to see answer)
-    </div>
-    <div markdown="1" class="ui segment content answer-frame">
-      All three prioritization schemes give a 76 second execution time. In other words,
-      path prioritization does not matter. With a 300 Gflop work for the "analyze" task,
-      the visualization path takes 30 seconds, and both the analysis and the statistics
-      paths take 40 seconds. (Without counting the "start" and the "display"
-      tasks). No matter what we do, running on two cores three tasks that
-      take 30s, 40s, and 40s will take 70s.
-
-      If you really want to spell it out, we can just look at all possibilities. If
-      both 40s paths start first, each on a core, then the 30s path starts after
-      that, for 70s of execution. If the 30s path starts with a 40s path, each
-      on a core, then the 2nd 40s path will start on the core that ran the 30s
-      path, since it becomes idle first. This, again, is a 70s execution. So
-      overall, the execution will always be 5 + 70 + 1 = 76s.
-
-    </div>
-  </div>
-
-  <p></p>
-
-
-**[A.2.p4.8]** Is it possible that, for some  amount of work of  the "analyze"  task,
-all three different prioritizing options lead to three different execution times (when
-executing the program on 2 cores)?  Show your work and reasoning. Although you may have a rapid intuition
-of whether the answer is yes or no, deriving a convincing argument is not that easy...
-
-  <div class="ui accordion fluid">
-    <div class="title">
-      <i class="dropdown icon"></i>
-      (click to see answer)
-    </div>
-    <div markdown="1" class="ui segment content answer-frame">
-      This is perhaps not an easy question, as it requires to think about this abstractly
-      (so as to avoid examining all possibilities). The answer is "no". Let's see
-      why.
-
-      We can look at this question at a very abstract level: we have three
-      "things" to run, let's call them $A$, $B$, and $C$. (Each of them is one of
-      our three paths, excluding the "start" and "display" tasks). Let
-      $a$, $b$, and $c$ be their execution times. Say, without loss of
-      generality, that $a \leq b \leq c$. Then, we can see what runs on each core
-      for each option that prioritizes two of them:
-
-      |-------|--------|--------|
-      | prioritizing | core #1 | core #2|
-      |-------|--------|--------|
-      | $A$ and $B$ | $A$ then $C$ | $B$ |
-      | $A$ and $C$ | $A$ then $B$ | $C$ |
-      | $B$ and $C$ | $B$ then $A$ | $C$ |
-      |-------|--------|--------|
-
-      The two prioritized things start first. Then the third thing runs on the core that
-      becomes idle first (i.e., the core that was running the shortest thing).
-
-      We note that in the table above, the 2nd and 3rd rows are identical. That is, the cores
-      finish computing at the same time. The only thing that changes is the order in which
-      things run on core #1 ("$A$ then $B$" or "$B$ then $A$").
-      Therefore, two of the prioritization options always produce the same outcome in terms
-      of overall program execution time!
-
-    </div>
-  </div>
-
-  <p></p>
-
----
-
-#### Questions
-
-Answer the following questions:
-
-**[A.2.q4.1]** For the DAG below, where each task has an execution time in
-seconds on a core of some computer, give the number of levels, the maximum
-level width, and the length of the critical path in seconds.
-
-  <object class="figure" type="image/svg+xml"
-          data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_1.svg">Question DAG</object>
-  <p></p>
-
-**[A.2.q4.2]** For the DAG in the previous question, what would be the parallel
-efficiency on 3 cores? Show your work and reasoning.
-
-**[A.2.q4.3]** We now execute this same DAG on 2 cores. Whenever there is a choice for
-picking a ready task for execution, we always pick the ready task with the largest work
-(this is a "I should do the most time-consuming chores first" approach). What is the
-execution time? Show your work. It's likely a good idea to depict the execution as a Gantt
-chart, as seen in the simulation output.
-
-**[A.2.q4.4]** Still for that same DAG on 2 cores, we now pick the ready task with the
-smallest work first  (this is a "I should do the easiest chores first" approach). What
-is the execution time?  It is better than the previous approach? Show your work. Use the same
-approach as in the previous question.
-
-**[A.2.q4.5]** For this new DAG below, executed on 2 cores, what are the execution times of the "pick the ready task with the largest work" and "pick the ready task with the smallest work" approaches? Which approach is better? Show your work. For each approach it is likely a good idea to depict the Gantt chart of the application execution for determining the execution time.
-
-  <object class="figure" type="image/svg+xml"
-          data="{{ site.baseurl }}/public/img/multi_core_computing/question_dag_2.svg">Question DAG</object>
-`
