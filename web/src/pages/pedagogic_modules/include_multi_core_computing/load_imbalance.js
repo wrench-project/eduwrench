@@ -2,7 +2,7 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
-import SimulationActivity from "../../../components/simulation_activity"
+import SimulationActivity from "../../../components/simulation/simulation_activity"
 import LoadImbalanceSimulation from "./load_imbalance_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 

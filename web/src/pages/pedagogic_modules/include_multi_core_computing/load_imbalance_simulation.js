@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
-import SimulationScenario from "../../../components/simulation_scenario"
+import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation_signin"
+import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import LoadImbalanceSimulationScenario from "../../../images/svgs/multicore_load_imbalance_simulation.svg"
 
