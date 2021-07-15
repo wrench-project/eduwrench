@@ -8,6 +8,7 @@ import PracticeQuestions from "../../../components/practice_questions"
 
 import ExampleDataParallelismDAG from "../../../images/svgs/multicore_example_data_parallelism_dag.svg"
 import ExampleDataParallelismExposedDAG from "../../../images/svgs/multicore_example_data_parallelism_exposed_dag.svg"
+import Amdahl from "../../../images/svgs/multicore_amdahl.svg"
 
 const DataParallelism = () => {
   return (
@@ -93,8 +94,8 @@ const DataParallelism = () => {
       </p>
 
       <ExampleDataParallelismExposedDAG />
-      <div className="caption"><strong>Figure 2:</strong>
-        Example image processing program with data-parallelism exposed.
+      <div className="caption"><strong>Figure 2:</strong> Example image processing program with data-parallelism
+        exposed.
       </div>
 
       <p>
@@ -186,6 +187,102 @@ const DataParallelism = () => {
         example oil painting program.
       </p>
 
+      <p>
+        Consider a program that runs on 1 core in time <TeX math="T" />. This program consists of two main phases, one
+        that is inherently sequential and one that can be parallelized. Let <TeX math="\alpha" /> be the fraction of the
+        execution time spent in the parallelizable phase. We can thus write the execution time on 1 core, <TeX
+        math="T(1)" />, as:
+      </p>
+
+      <TeX math="T(1) = \alpha T(1) + (1 - \alpha) T(1)" block />
+
+      <p>
+        Now, if we run the program on <TeX math="p" /> cores, assuming perfect parallelization of the parallelizable
+        phase, we obtain the execution time on <TeX math="p" /> cores, <TeX math="T(p)" />, as:
+      </p>
+
+      <TeX math="T(p) = \alpha T(1) / p + (1 - \alpha) T(1)" block />
+
+      <p>
+        The above just says that the parallel part goes <TeX math="p" /> times faster, while the sequential part is
+        unchanged.
+      </p>
+
+      <p>
+        The parallel speedup on <TeX math="p" /> cores, <TeX math="S(p)" />, is then:
+      </p>
+
+      <TeX
+        math="S(p) = \frac{\alpha T(1) + (1 - \alpha) T(1)}{\alpha T(1) / p + (1 - \alpha) T(1)} = \frac{1}{ \alpha/p + 1 - \alpha}"
+        block />
+
+      <p>
+        As <TeX math="p" />, the number of cores, grows, <TeX math="S(p)" /> increases (as expected). Amdahl's law is
+        the observation that no matter how large <TeX math="p" /> gets, the speedup is limited by a constant:
+      </p>
+
+      <TeX math="S(p) < \frac{1}{1 - \alpha}" block />
+
+      <p>
+        So, for instance, if 90% of the sequential execution time can be parallelized, then the speedup will be at most
+        1/(1-0.9) = 10.
+      </p>
+
+      <p>
+        For instance, if running on 8 cores, the speedup would be 1/(0.9/8 + 1 - 0.9) = 4.7, for a parallel efficiency
+        below 60%.
+      </p>
+
+      <p>
+        The "non-intuitiveness" of Amdahl's law, for some people, is that having 10% of the execution sequential does
+        not seem like a lot, but seeing only a 4.7 speedup with 8 cores seems really bad. The graph below shows speedup
+        vs. number of cores for different values of <TeX math="\alpha" />:
+      </p>
+
+      <Amdahl />
+      <div className="caption"><strong>Figure 3:</strong> Speedup vs. number of cores for different values of the
+        fraction of the sequential execution time that is parallelizable.
+      </div>
+
+      <p>
+        The main message of Figure 3 is that even with seemingly small non-parallelizable portions, program speedup
+        drops well below the number of cores quickly. For instance, the data point circled in red shows that if as
+        little as 5% of the sequential execution time is non-parallelizable, running on 20 cores only affords a 10x
+        speedup (i.e., parallel efficiency is only 50%).
+      </p>
+      <p>
+        This is bad news since almost every program has inherently sequential phases. In our example program the
+        sequential phase is the "luminence" task. But even without this task, there are many parts of a program that are
+        sequential. For instance, a program typically needs to write output using sequential I/O operations. Even if
+        these parts are short, Amdahl’s law tells us that they severely limit speedup.
+      </p>
+      <p>
+        Bottom line: achieving high speedup on many cores is not easy. The ability of a program to do so is often
+        called <i>parallel scalability</i>. If a program maintains relatively high parallel efficiency as the number of
+        cores it uses increases, we say that the program "scales".
+      </p>
+
+      <PracticeQuestions questions={[
+        {
+          key: "A.2.p5.4",
+          question: "A program that consists of a sequential phase and a perfectly parallelizable phase runs on 1 " +
+            "core in 10 minutes and on 4 cores in 6 minutes. How long does the sequential phase run for? Show your " +
+            "work and reasoning.",
+          content: (
+            <>
+              Let <TeX math="\alpha" /> be the fraction of the sequential execution time that is parallelizable.
+              Amdahl’s law gives us the speedup on 4 cores as:
+              <TeX math="S(4) = \frac{1}{\alpha/4 + 1 - \alpha}" block />
+              Since we know <TeX math="S(4)" /> to be <TeX math="10/6" />, we can just solve for <TeX
+              math="\alpha" />. This gives us <TeX math="\alpha = ((6/10) - 1) / (1/4 - 1) = .53" />.
+              <p>
+                Therefore, the sequential phase lasts for <TeX math="10 \times (1 - .53) = 4.7" /> minutes.
+              </p>
+            </>
+          )
+        }
+      ]} />
+
     </>
   )
 }
@@ -194,83 +291,10 @@ export default DataParallelism
 
 const text1 = `
 
-Consider a program that runs on 1 core in time $T$. This program consists of two
-main phases, one that is inherently sequential and one that can be parallelized. Let
-$\alpha$ be the fraction of the execution time spent in the parallelizable phase. We can
-thus write the execution time on 1 core, $T(1)$, as:
 
-$$
-T(1) = \\alpha T(1) + (1 - \\alpha) T(1)
-$$
-
-Now, if we run the program on $p$ cores, assuming perfect parallelization of the 
-parallelizable phase, we obtain the execution time on $p$ cores, $T(p)$, as:
-
-$$
-T(p) & = \\alpha T(1) / p + (1 - \\alpha) T(1)
-$$
-
-The above just says that the parallel part goes $p$ times faster, while the 
-sequential part is unchanged. 
-
-The parallel speedup on $p$ cores, $S(p)$, is then:
-
-$$
-S(p) = \\frac{\\alpha T(1) + (1 - \\alpha) T(1)}{\\alpha T(1) / p + (1 - \\alpha) T(1)}
-     = \\frac{1}{ \\alpha/p + 1 - \\alpha}
-$$
-
-As $p$, the number of cores, grows, $S(p)$ increases (as expected). Amdahl's law is
-the observation that no matter how large $p$ gets, the speedup is limited by a constant:
-
-$$
-S(p) < \\frac{1}{1 - \\alpha}
-$$
-
-So, for instance, if 90% of the sequential execution time can be
-parallelized, then the speedup will be at most 1/(1-0.9) = 10.
-
-For instance, if running on 8 cores, the speedup would be
-1/(0.9/8 + 1 - 0.9) = 4.7, for a parallel efficiency below
-60%. 
-
-The "non-intuitiveness" of Amdahl's law, for some people, is that
-having 10% of the execution sequential does not seem like a lot, but
-seeing only a 4.7 speedup with 8 cores seems really bad.
-The graph below shows speedup vs. number of cores for different
-values of $\alpha$:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/amdahl.svg">Amdahl's law examples</object>
-<div class="caption"><strong>Figure 3:</strong>
-Speedup vs. number of cores for different values of the fraction of 
-the sequential execution time that is parallelizable.
-</div>
-
-
-The main message of Figure 3 is that even with seemingly small
-non-parallelizable portions, program speedup drops well below the number of
-cores quickly. For instance, the data point circled in red shows
-that if as little as 5% of the sequential execution time is non-parallelizable,
-running on 20 cores only affords a 10x speedup (i.e., parallel efficiency
-is only 50%). 
-
-This is bad news since almost every program has inherently
-sequential phases. In our example program the sequential phase is the
-"luminence" task. But even without this task, there are many parts 
-of a program that are sequential. For instance, a program typically
-needs to write output using sequential I/O operations. Even
-if these parts are short, Amdahl's law tells us that they severely
-limit speedup. 
-
-Bottom line: achieving high speedup on many cores is not easy. The ability
-of a program to do so is often called *parallel scalability*. If a program
-maintains relatively high parallel efficiency as the number of cores it
-uses increases, we say that the program "scales". 
-
-#### Practice Questions
 
 **[A.2.p5.4]** A program that consists of a sequential phase and a perfectly
-parallelizable phase runs on 1 core in 10 minutes and on  4 cores in 6 minutes. 
+parallelizable phase runs on 1 core in 10 minutes and on  4 cores in 6 minutes.
 How long does  the sequential phase run for? Show your work and reasoning.
 
 <div class="ui accordion fluid">
@@ -280,18 +304,18 @@ How long does  the sequential phase run for? Show your work and reasoning.
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $\alpha$ be the fraction of the sequential execution time that
-is parallelizable. Amdahl's law gives us the speedup on 4 cores as:
+    Let $\alpha$ be the fraction of the sequential execution time that
+    is parallelizable. Amdahl's law gives us the speedup on 4 cores as:
 
-$
-S(4) = \\frac{1}{ \\alpha/4 + 1 - \\alpha}
-$
+    $
+    
+    $
 
-Since we know $S(4)$ to be 10/6, we can just solve for $\\alpha$. This gives
-us $\\alpha = ((6/10) - 1) / (1/4 - 1) =  .53$.
+    Since we know $S(4)$ to be 10/6, we can just solve for $\\alpha$. This gives
+    us $\\alpha = ((6/10) - 1) / (1/4 - 1) = .53$.
 
-Therefore, the sequential phase lasts for $10 \\times (1 - .53)$ = 4.7
-minutes.
+    Therefore, the sequential phase lasts for $10 \\times (1 - .53)$ = 4.7
+    minutes.
 
   </div>
 </div>
@@ -310,22 +334,22 @@ this phase account for? Show your work and reasoning.
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content answer-frame">
-Let $T(1)$ be  the sequential execution time. The 
-execution time on 6 cores, $T(6)$, is:
+    Let $T(1)$ be the sequential execution time. The
+    execution time on 6 cores, $T(6)$, is:
 
-$
-T(6) = 0.08  \\times T(1) + 0.92 \\times T(1) / 6
-$
+    $
+    T(6) = 0.08 \\times T(1) + 0.92 \\times T(1) / 6
+    $
 
-and the fraction of T(6) that corresponds to the parallel phase is:
+    and the fraction of T(6) that corresponds to the parallel phase is:
 
-$
-T(6) = \\frac{0.92 \\times T(1) / 6}{0.08  \\times T(1) + 0.92 \\times T(1) / 6}
-     = \\frac{0.92 / 6} {0.08 + 0.92 / 6}
-     = .65
-$
+    $
+    T(6) = \\frac{0.92 \\times T(1) / 6}{0.08  \\times T(1) + 0.92 \\times T(1) / 6}
+    = \\frac{0.92 / 6} {0.08 + 0.92 / 6}
+    = .65
+    $
 
-So only 65% of the 6-core execution is  spent in the parallel phase.
+    So only 65% of the 6-core execution is spent in the parallel phase.
 
   </div>
 </div>
@@ -342,11 +366,11 @@ one could achieve if any number of cores  can be used? Show your work and reason
     (click to see answer)
   </div>
   <div markdown="1" class="ui segment content answer-frame">
-This is  a direct application of Amdahl's law. The upper bound on the 
-speedup is 1/(1 - 0.4) = 1.66.  There  is really no need to remember
-the  formula by heart. The bound is simply what speedup we would achieved
-with  an infinite number of cores, i.e., when the execution time of the
-parallel phase is zero. 
+    This is a direct application of Amdahl's law. The upper bound on the
+    speedup is 1/(1 - 0.4) = 1.66. There is really no need to remember
+    the formula by heart. The bound is simply what speedup we would achieved
+    with an infinite number of cores, i.e., when the execution time of the
+    parallel phase is zero.
   </div>
 </div>
 <p></p>
@@ -355,8 +379,8 @@ parallel phase is zero.
 
 ### Amdahl's law and our example
 
-For our example oil-painting program, we can of course compute the speedup analytically.  
-To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction 
+For our example oil-painting program, we can of course compute the speedup analytically.
+To apply Amdahl's  law to this program,  we need to compute $\alpha$, the fraction
 of the sequential execution time
 that is parallelizable. Still for a 100 Gflop/sec core, for a given
 radius $r$ the time spent in the "oil" task is $r^2$ seconds. The time spent
@@ -365,7 +389,13 @@ Therefore, $\alpha = (r^2) / (1 + r^2)$. So, the speedup when running on $p$
 cores with radius $r$, $S(p,r)$, is:
 
 $
-S(p,r)   = \\frac{1}{r^2/(1+r^2) / p + 1 - r^2/(1+r^2)}
+S(p,r)   = \\frac
+{
+  1
+}
+{
+  r ^ 2 / (1 + r ^ 2) / p + 1 - r ^ 2 / (1 + r ^ 2)
+}
 $
 
 You can double-check that this formula matches what we observed in
@@ -373,8 +403,14 @@ the simulation app. For instance, for $r=2$, the
 speedup using 4 cores would be:
 
 $
-S(4,2)   = \\frac{1}{(4/5)/ 4 + 1 - 4/5 }
-         =  2.5
+S(4,2)   = \\frac
+{
+  1
+}
+{
+  (4 / 5) / 4 + 1 - 4 / 5
+}
+=  2.5
 $
 
 We could then ask questions like: what is the largest number of cores
@@ -382,12 +418,20 @@ that can be used without the efficiency dropping below 50%? We just
 need to solve:
 
 $
-\\frac{1}{((4/5)/ n + 1 - 4/5)\\times n} \\geq .50 
+\\frac
+{
+  1
+}
+{
+  ((4 / 5) / n + 1 - 4 / 5)\\times
+  n
+}
+\\geq .50
 $
 
 which gives us $n \leq 5$. So as soon as we use 6 cores or more, parallel efficiency
-drops below 50%, meaning that we are "wasting" half the compute power of our computer. 
-We could use more cores effectively for larger $r$  because the application 
+drops below 50%, meaning that we are "wasting" half the compute power of our computer.
+We could use more cores effectively for larger $r$  because the application
 would have more (parallelizable) work to do.
 
 
@@ -399,7 +443,7 @@ In what  we have seen so far, the data-parallelization of a task  was
 each task has work $X/p$.
 
 This is not always the case, as there could be some overhead. This overhead
-could be a sequential portion that remains unparallelized. 
+could be a sequential portion that remains unparallelized.
 Or there could be more work to be done by the parallel tasks. We illustrate
 this in the two practice questions below.
 
@@ -421,20 +465,20 @@ be if executing the modified code on 4 cores (compared to the original
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $s$ be the core compute speed in Gflop/sec. 
+    Let $s$ be the core compute speed in Gflop/sec.
 
-The sequential program runs in time $10000/s$.
+    The sequential program runs in time $10000/s$.
 
-The data-parallel program runs in time $500/s + (10000/4)/s$.
+    The data-parallel program runs in time $500/s + (10000/4)/s$.
 
-Therefore, the speedup is:
+    Therefore, the speedup is:
 
-$
-\\text{speedup} = \\frac{10000/s}{500/s + (10000/4)/s}
-                =  \\frac{10000}{500 +  2500}
-                = 3.33
-$
- 
+    $
+    \\text{speedup} = \\frac{10000 / s}{500 / s + (10000 / 4) / s}
+    = \\frac{10000}{500 + 2500}
+    = 3.33
+    $
+
   </div>
 </div>
 
@@ -445,9 +489,9 @@ $
 10,000 Gflop. The developer of the program has an idea to expose
 data-parallelism where the code now consists of $n$ tasks, each of them
 with work $(10000+X)/n$ (i.e., there is some work overhead for exposing
-data-parallelism, but there is no sequential phase). What is the largest value of X 
+data-parallelism, but there is no sequential phase). What is the largest value of X
 for which the parallel efficiency would be above 90%
-when running on an 8-core computer? Show your work and reasoning. 
+when running on an 8-core computer? Show your work and reasoning.
 
 <div class="ui accordion fluid">
   <div class="title">
@@ -456,26 +500,26 @@ when running on an 8-core computer? Show your work and reasoning.
   </div>
   <div markdown="1" class="ui segment content answer-frame">
 
-Let $s$ be the core compute speed in Gflop/sec. The sequential program runs 
-in time $10000/s$, and the 
-data-parallel program runs in time $((10000+X)/8)/s$.
+    Let $s$ be the core compute speed in Gflop/sec. The sequential program runs
+    in time $10000/s$, and the
+    data-parallel program runs in time $((10000+X)/8)/s$.
 
-Therefore, the speedup is:
+    Therefore, the speedup is:
 
-$
+    $
 
-\\text{speedup} = \\frac{10000/s}{((10000+X)/8)/s}
-               =  8 \\times \\frac{10000}{10000+X}
+    \\text{speedup} = \\frac{10000 / s}{((10000 + X) / 8) / s}
+    = 8 \\times \\frac{10000}{10000 + X}
 
-$
- 
-The parallel efficiency is $\\frac{10000}{10000+X}$, so we need to solve:
+    $
 
-$
-\\frac{10000}{10000+X} \\geq 0.9
-$
+    The parallel efficiency is $\\frac{10000}{10000 + X}$, so we need to solve:
 
-which gives $X \leq 1111.11$ Gflop.
+    $
+    \\frac{10000}{10000 + X} \\geq 0.9
+    $
+
+    which gives $X \leq 1111.11$ Gflop.
 
   </div>
 </div>
