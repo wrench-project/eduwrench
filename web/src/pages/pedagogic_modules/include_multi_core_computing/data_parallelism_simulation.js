@@ -7,7 +7,7 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import DataParallelismSimulationScenario from "../../../images/svgs/multicore_data_parallelism.svg"
+import DataParallelismSimulationScenario from "../../../images/multi_core/multicore_data_parallelism.svg"
 
 const DataParallelismSimulation = () => {
 
@@ -21,7 +21,7 @@ const DataParallelismSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={<DataParallelismSimulationScenario />} />
+        <SimulationScenario scenario={DataParallelismSimulationScenario} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

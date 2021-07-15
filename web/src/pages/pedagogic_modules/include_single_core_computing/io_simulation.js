@@ -9,7 +9,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import IOTask from "../../../images/svgs/io_task.svg"
+import IOTask from "../../../images/single_core/io_task.svg"
 
 const IOSimulation = () => {
 
@@ -23,7 +23,7 @@ const IOSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={<IOTask />} />
+        <SimulationScenario scenario={IOTask} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

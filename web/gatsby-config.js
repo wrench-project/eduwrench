@@ -41,14 +41,6 @@ module.exports = {
         icon: `src/images/wrench_logo.png` // This path is relative to the root of the site.
       }
     },
-    `gatsby-plugin-image`,
-    {
-      resolve: 'gatsby-plugin-react-svg',
-      options: {
-        rule: {
-          include: /svgs/
-        }
-      }
-    }
+    `gatsby-plugin-image`
   ]
 }

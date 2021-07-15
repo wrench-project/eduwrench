@@ -5,6 +5,7 @@ import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
 import LatencyAndBandwidth from "./include_networking_fundamentals/latency_and_bandwidth"
+import Topologies from "./include_networking_fundamentals/topologies"
 
 const NetworkingFundamental = () => {
   return (
@@ -40,7 +41,7 @@ const NetworkingFundamental = () => {
             key: "topologies",
             content: "Topologies"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><Topologies /></Tab.Pane>
         },
         {
           menuItem: {

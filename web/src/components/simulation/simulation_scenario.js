@@ -20,7 +20,7 @@ const SimulationScenario = ({ scenario }) => {
           <strong>Simulation Scenario</strong>
         </Segment>
         <Segment style={{ textAlign: "center" }}>
-          {scenario}
+          <object className="figure" type="image/svg+xml" data={scenario} />
         </Segment>
       </Segment.Group>
     </>

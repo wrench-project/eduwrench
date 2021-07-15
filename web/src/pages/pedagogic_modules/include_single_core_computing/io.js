@@ -6,11 +6,11 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import PracticeQuestions from "../../../components/practice_questions"
 import IOSimulation from "./io_simulation"
 
-import IOFigure1 from "../../../images/svgs/IO_figure_1.svg"
-import IOFigure2 from "../../../images/svgs/IO_figure_2.svg"
-import IOFigure3 from "../../../images/svgs/IO_figure_3.svg"
-import IOFigure4 from "../../../images/svgs/IO_figure_4.svg"
-import IOFigure5 from "../../../images/svgs/IO_figure_5.svg"
+import IOFigure1 from "../../../images/single_core/IO_figure_1.svg"
+import IOFigure2 from "../../../images/single_core/IO_figure_2.svg"
+import IOFigure3 from "../../../images/single_core/IO_figure_3.svg"
+import IOFigure4 from "../../../images/single_core/IO_figure_4.svg"
+import IOFigure5 from "../../../images/single_core/IO_figure_5.svg"
 
 const IO = () => {
   return (
@@ -97,7 +97,7 @@ const IO = () => {
         below:
       </p>
 
-      <IOFigure1 />
+      <object className="figure" type="image/svg+xml" data={IOFigure1} />
       <div className="caption"><strong>Figure 1:</strong> Example execution timeline.</div>
 
       <p>
@@ -125,7 +125,7 @@ const IO = () => {
         This execution is depicted below:
       </p>
 
-      <IOFigure2 />
+      <object className="figure" type="image/svg+xml" data={IOFigure2} />
       <div className="caption"><strong>Figure 2:</strong> Example execution timeline with overlap of IO and computation.
       </div>
 
@@ -152,7 +152,7 @@ const IO = () => {
         and the program must process 3 images, then the execution would be as:
       </p>
 
-      <IOFigure3 />
+      <object className="figure" type="image/svg+xml" data={IOFigure3} />
       <div className="caption"><strong>Figure 3:</strong> Example execution timeline with overlap of IO and computation.
       </div>
 
@@ -277,7 +277,7 @@ const IO = () => {
               <p>
                 Here is a depiction of the execution:
               </p>
-              <IOFigure4 />
+              <object className="figure" type="image/svg+xml" data={IOFigure4} />
               <p>
                 The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX
                 math="n" /> tasks by identifying the repeating pattern: <TeX
@@ -306,7 +306,7 @@ const IO = () => {
           content: (
             <>
               <p>Here is a depiction of the execution:</p>
-              <IOFigure5 />
+              <object className="figure" type="image/svg+xml" data={IOFigure5} />
               <p>
                 The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX
                 math="n" /> tasks easily: <TeX math="3n + 2" />.)
