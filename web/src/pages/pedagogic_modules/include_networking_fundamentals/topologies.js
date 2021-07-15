@@ -221,7 +221,7 @@ const Topologies = () => {
         work and
         reasoning.
       </p>
-      
+
     </>
   )
 }

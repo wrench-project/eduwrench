@@ -18,7 +18,8 @@ const ModulesList = () => {
         <Segment><strong>A.1. Single-core Computing</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/single_core_computing/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left"
+                    href="/pedagogic_modules/single_core_computing/">Launch</Button>
             The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a
             program on a single core).
           </p>
@@ -29,7 +30,8 @@ const ModulesList = () => {
         <Segment><strong>A.2. Multi-core Computing</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/multi_core_computing/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left"
+                    href="/pedagogic_modules/multi_core_computing/">Launch</Button>
             The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple
             cores within the same computer).
           </p>
@@ -90,7 +92,8 @@ const ModulesList = () => {
         <Segment><strong>C.1. Batch Scheduling</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated="left" href="/pedagogic_modules/batch_scheduling/">Launch</Button>
+            <Button size="mini" color="yellow" floated="left"
+                    href="/pedagogic_modules/batch_scheduling/">Launch</Button>
             The goal of this module is to provide you with fundamental knowledge of and
             hands-on experience with the use of a batch scheduler.
           </p>

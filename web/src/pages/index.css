@@ -24,6 +24,11 @@
   background-color: #fff;
 }
 
+.module-desc .button {
+  margin-top: -0.5em !important;
+  margin-right: 1em !important;
+}
+
 .irow {
   background-color: #fefaec;
   display: flex;
