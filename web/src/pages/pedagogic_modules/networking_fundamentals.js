@@ -1,0 +1,58 @@
+import React from "react"
+import Layout from "../../components/layout"
+import Seo from "../../components/seo"
+import { Segment, Tab } from "semantic-ui-react"
+import "./pedagogic_modules.css"
+
+import LatencyAndBandwidth from "./include_networking_fundamentals/latency_and_bandwidth"
+
+const NetworkingFundamental = () => {
+  return (
+    <Layout>
+      <Seo title="A.3.1 Networking Fundamentals" />
+      <h2 style={{
+        marginBottom: `30px`,
+        marginTop: `50px`,
+        color: "#525252"
+      }}><br />A.3.1 Networking Fundamentals</h2>
+
+      <Segment style={{ marginBottom: "2em" }}>
+        The goal of this module is to provide you with knowledge of networking, as it relates to the performance of
+        distributed computing applications.
+        <br /><br />
+        The goal is <strong style={{ backgroundColor: "#fff" }}>not</strong> to teach you details of network
+        technologies and protocols, which are fascinating topics you can learn about in Networking <a
+        href="/textbooks"> textbooks < /a>.
+        <br /><br />
+        Go through the tabs below in sequence…
+      </Segment>
+
+      <Tab className="tab-panes" renderActiveOnly={true} panes={[
+        {
+          menuItem: {
+            key: "latency_and_bandwidth",
+            content: "Latency & Bandwidth"
+          },
+          render: () => <Tab.Pane><LatencyAndBandwidth /></Tab.Pane>
+        },
+        {
+          menuItem: {
+            key: "topologies",
+            content: "Topologies"
+          },
+          render: () => <Tab.Pane></Tab.Pane>
+        },
+        {
+          menuItem: {
+            key: "contention",
+            content: "Contention"
+          },
+          render: () => <Tab.Pane></Tab.Pane>
+        }
+      ]}
+      />
+    </Layout>
+  )
+}
+
+export default NetworkingFundamental

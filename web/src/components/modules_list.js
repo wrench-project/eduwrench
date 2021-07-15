@@ -43,7 +43,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/multi_core_computing/">Launch</Button>
+                        href="/pedagogic_modules/networking_fundamentals/">Launch</Button>
                 &nbsp;&nbsp;A.3.1 Networking Fundamentals
                 <br />
                 <span className="module-desc">The goal of this module is to provide you with knowledge of networking,
