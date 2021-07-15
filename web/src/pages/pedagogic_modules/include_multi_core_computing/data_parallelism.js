@@ -1,94 +1,116 @@
-import React, { useState } from "react"
-import Markdown from '../../../Components/Markdown';
-import Card from "react-bootstrap/Card"
+import React from "react"
+import { Divider, Header } from "semantic-ui-react"
+import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives"
+import SimulationActivity from "../../../components/simulation_activity"
+import PracticeQuestions from "../../../components/practice_questions"
 
+import ExampleDataParallelismDAG from "../../../images/svgs/multicore_example_data_parallelism_dag.svg"
+import ExampleDataParallelismExposedDAG from "../../../images/svgs/multicore_example_data_parallelism_exposed_dag.svg"
 
-const text0 = `
-<div class="learningObjectiveBox" markdown="1">
+const DataParallelism = () => {
+  return (
+    <>
+      <LearningObjectives objectives={[
+        "Understand the concept of data-parallelism",
+        "Understand and be able to apply Amdahl's law",
+        "Understand and be able to reason about the performance of data-parallel programs"
+      ]} />
 
-- Understand the concept of data-parallelism
+      <h2>Motivation</h2>
 
-- Understand and be able to apply Amdahl's law
+      <p>
+        In all we have seen so far in this module, a parallel program consists of a predetermined set of tasks, each of
+        them executing on a single core. Many real-world programs are structured in this way, and this is
+        called <strong>task parallelism</strong>.
+      </p>
 
-- Understand and be able to reason about the performance of data-parallel programs
+      <p>
+        Let’s now consider one task, which performs some computation on a single core. Perhaps, one can rewrite the code
+        of this task to use multiple cores to accelerate its computation. This is done by writing the task’s code so
+        that it uses multiple threads (see Operating Systems <a href="/textbooks">textbooks</a>). In other terms,
+        perhaps the task’s computation itself can be <strong>parallelized</strong>.
+      </p>
 
-</div>
-`;
+      <h2>An Example</h2>
+
+      <p>
+        Consider a transformation of the pixels of an image that makes the image resemble an oil-painting. This can be
+        done by updating each pixel’s color by some other color based on the color of neighboring pixels. The
+        oil-painting transformation has a parameter called the <i>radius</i>, which is the radius of the brush stroke.
+        The larger the radius, the more neighboring pixels are used to update the color or a pixel, and the more work is
+        required. In fact, the amount of work is <i>quadratic</i> in the radius, meaning that it grows with the square
+        of the radius. This is how "oil-painting filters" work in many open-source and commercial image processing
+        programs.
+      </p>
+
+      <p>
+        Consider now a program that is a sequence of two tasks: An "oil" task applies an oil-painting filter to an image
+        with a given radius <TeX math="r" />, followed by a "luminence" task that computes the luminence histogram for
+        the image, i.e., the statistical distribution of the brightness of its pixels. We can draw the program’s DAG as
+        follows:
+      </p>
+
+      <ExampleDataParallelismDAG />
+      <div className="caption"><strong>Figure 1:</strong> Example image processing program.</div>
+
+      <p>
+        If we were to run this program on a core that computes at speed 100 Gflop/sec, and using <TeX math="r=3" /> for
+        the "oil" task, the program would take time:
+      </p>
+
+      <TeX math="\text{T} = \frac{100 \times 3^{2} \text{Gflop}}{100 \text{Gflop/sec}} + \frac{100 \text{Gflop}}{100 \text{Gflop/sec}}
+         = 10\text{sec}" block />
+
+      <h2>Data-Parallelism</h2>
+
+      <p>
+        In the oil-painting transformation the same computation is used for each pixel of the image (with perhaps
+        special cases for the pixels close to the borders of the image). You can think of the computation applied to
+        each pixel as a "micro-task". All these micro-tasks have the same work and do the same thing (i.e., they run the
+        same code), but on different data (the neighboring pixels of different pixels). This is called <strong>data
+        parallelism</strong>. It is a bit of a strange term because it is just like <i>task parallelism</i>, but with
+        very fine granularity. Regardless, it should be straightforward to perform the transform on, say, 4 cores: just
+        give each core a quarter of the pixels to process!
+      </p>
+
+      <p>
+        A simple general model is: if the total work of the "oil" task is <TeX math="X" /> and if we have <TeX
+        math="n" /> cores, we could perform the work using <TeX math="n" /> tasks each with <TeX math="X/n" /> work.
+        This assumes <TeX math="X" /> is divisible by <TeX math="n" />. This is likely not quite the case in practice,
+        but a very good approximation if the number of pixels is much larger than the number of cores, which we will
+        assume here.
+      </p>
+
+      <Header as="h3" block>
+        Simulating Data-Parallelism
+      </Header>
+
+      <p>
+        After exposing data-parallelism in our example program, i.e., by rewriting the code of the "oil" task, the
+        program’s DAG is as follows:
+      </p>
+
+      <ExampleDataParallelismExposedDAG />
+      <div className="caption"><strong>Figure 2:</strong>
+        Example image processing program with data-parallelism exposed.
+      </div>
+
+      <p>
+        The program can run faster using multiple cores! How fast? The simulation app below simulates the execution for
+        particular values of the radius <TeX math="r" /> and a number of cores (using one "oil" task per core). You can
+        use the simulation to explore data-parallelism on your own, but also to answer some of the practice questions
+        below.
+      </p>
+
+    </>
+  )
+}
+
+export default DataParallelism
 
 const text1 = `
-### Motivation
 
-In all we have seen so far in this module, a parallel program consists of a
-predetermined set of tasks, each of them executing on a single core. Many
-real-world programs are structured in this way, and this is called **task
-parallelism**. 
-
-Let's now consider one task, which performs some computation on a single
-core.  Perhaps, one can rewrite the code of this task to use multiple cores
-to accelerate its computation. This is done by writing the task's code so that it
-uses multiple threads (see Operating Systems [textbooks](/textbooks)).
-In other terms, perhaps the task's computation itself can be **parallelized**. 
-
-### An Example
-
-Consider a transformation of the pixels of an image that makes the image
-resemble an oil-painting. This can be done by updating each pixel's color by
-some other color based on the color of neighboring pixels. The
-oil-painting transformation has a parameter called the *radius*, which is
-the radius of the brush stroke. The larger the radius, the more neighboring
-pixels are used to update the color or a pixel, and the more work is
-required. In fact, the amount of work is *quadratic* in the radius,
-meaning that it grows with the square of the radius. This is how
-"oil-painting filters" work in many open-source and commercial image
-processing programs.
-
-Consider now a program that is a sequence of two tasks: An "oil" task
-applies an oil-painting filter to an image with a given radius $r$,
-followed by a "luminence" task that computes the luminence histogram for
-the image, i.e., the statistical distribution of the brightness of its
-pixels. We can draw the program's DAG as follows:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_dag.svg">Example Image Processing Program</object>
-<div class="caption"><strong>Figure 1:</strong>
-Example image processing program.
-</div>
-
-If we were to run this program on a core that computes at
-speed 100 Gflop/sec, and using $r=3$ for the "oil" task, the program would take time:
-
-$$
-\\text{T} = \\frac{ 100 \\times 3^{2} \\;\\text{Gflop}}{100\\; \\text{Gflop/sec}} + \\frac{100\\; \\text{Gflop}}{100\; \\text{Gflop/sec}}
-         = 10\\; \\text{sec}
-$$
-
-### Data-Parallelism
-
-In the oil-painting transformation the same computation is used for each
-pixel of the image (with perhaps special cases for the pixels close to the
-borders of the image). You can think of the computation applied to each
-pixel as a "micro-task". All these micro-tasks have the same work and do the
-same thing (i.e., they run the same code), but on different data (the
-neighboring pixels of different pixels). This is called **data
-parallelism**. It is a bit of a strange term because it is just like *task
-parallelism*, but with very fine granularity. Regardless, it should be
-straightforward to perform the transform on, say, 4 cores: just give each
-core a quarter of the pixels to process!
-
-A simple general model is: if the total work of the "oil" task is $X$ and if we have
-$n$ cores, we could perform the work using $n$ tasks each with $X/n$ work.
-This assumes $X$ is divisible by $n$. This is likely not quite the case in practice,
-but a very good approximation if the number of pixels is much larger than the
-number of cores, which we will assume here.
-
-#### Simulating Data-Parallelism
-
-After exposing data-parallelism in our example program, i.e., by rewriting 
-the code of the "oil" task, the program's DAG is as follows:
-
-<object class="figure" type="image/svg+xml" data="{{ site.baseurl }}/public/img/multi_core_computing/example_data_parallelism_exposed_dag.svg">Example Image Processing Program</object>
-<div class="caption"><strong>Figure 2:</strong>
-Example image processing program with data-parallelism exposed.
-</div>
 
 The program can run faster using multiple cores! How fast? The simulation
 app below simulates the execution for particular values of the radius $r$
@@ -533,30 +555,4 @@ replace task $B$ with  two independent tasks each with  work 1900 Gflop.
 If running on a 3-core computer,  which replacement would be best in  terms
 of program execution  time? Sow your work and reasoning. For each option determine the
 execution time, and compare.
-`;
-
-const DataParallelism = () => {
-  return (
-    <>
-      <Card className="main">
-        <Card.Body className="card">
-        <div className="banner-div">
-            <h6 className="banner-header">
-              <a id="learningobjectives">Learning Objectives</a>
-            </h6>
-        </div>
-        <br />
-        <div className="highlighted">
-          <Markdown className="highlighted">{text0}</Markdown>
-        </div>
-        <hr />
-        <br />
-
-        <Markdown className="equation">{text1}</Markdown>
-        </Card.Body>
-      </Card>
-    </>
-  )
-}
-
-export default DataParallelism
+`

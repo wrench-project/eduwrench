@@ -30,6 +30,10 @@
     font-size: 1em;
 }
 
+.mord.text {
+    margin-left: 0.5em !important;
+}
+
 .vlist {
     height: 0 !important;
 }
