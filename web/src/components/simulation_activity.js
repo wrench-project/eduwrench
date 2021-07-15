@@ -1,11 +1,11 @@
 import React from "react"
 import { Accordion } from "semantic-ui-react"
 
-const SimulationActivity = ({ key, content }) => {
+const SimulationActivity = ({ panelKey, content }) => {
   return (
     <>
       <Accordion styled className="simulation" defaultActiveIndex={-1} fluid panels={[{
-        key: { key },
+        key: { panelKey },
         title: "Simulation Activity",
         content: {
           content: (content)

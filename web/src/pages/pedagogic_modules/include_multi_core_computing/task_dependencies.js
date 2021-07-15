@@ -109,7 +109,8 @@ const TaskDependencies = () => {
         all executed a <strong>ready task</strong>. The following practice questions are based on this simulation app.
       </p>
 
-      <SimulationActivity key="multicore-task-dependencies-3-cores" content={<TaskDependencies3CoresSimulation />} />
+      <SimulationActivity panelKey="multicore-task-dependencies-3-cores"
+                          content={<TaskDependencies3CoresSimulation />} />
 
       <PracticeQuestions questions={[
         {
@@ -417,7 +418,8 @@ const TaskDependencies = () => {
         thereafter.
       </p>
 
-      <SimulationActivity key="multicore-task-dependencies-2-cores" content={<TaskDependencies2CoresSimulation />} />
+      <SimulationActivity panelKey="multicore-task-dependencies-2-cores"
+                          content={<TaskDependencies2CoresSimulation />} />
 
       <Divider />
 

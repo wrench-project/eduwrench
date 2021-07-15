@@ -4,10 +4,10 @@
 
 .thumbnail-image {
     border-radius: 50%;
-    max-width: 3em !important;
-    max-height: 3em !important;
-    margin: 0;
-    padding: 0;
+    max-width: 4em !important;
+    max-height: 4em !important;
+    margin-left: 1em !important;
+    padding: 0 !important;
     background-color: #fff;
 }
 

@@ -203,7 +203,7 @@ const IO = () => {
         questions to come.
       </p>
 
-      <SimulationActivity key="io" content={<IOSimulation />} />
+      <SimulationActivity panelKey="io" content={<IOSimulation />} />
 
       <Divider />
 

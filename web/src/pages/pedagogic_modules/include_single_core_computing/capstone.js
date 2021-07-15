@@ -18,14 +18,12 @@ const Capstone = () => {
         business. The specifications of the computer and tasks are as follows:
       </p>
 
-      <p>
-        <strong>Machine</strong>
-        <ul>
-          <li>1 1-Core CPU that computes at 50 Gflop/sec</li>
-          <li>12 GB of RAM</li>
-          <li>1 HDD with 1TB capacity and 200 MB/sec R/W bandwidth</li>
-        </ul>
-      </p>
+      <p><strong>Machine</strong></p>
+      <ul>
+        <li>1 1-Core CPU that computes at 50 Gflop/sec</li>
+        <li>12 GB of RAM</li>
+        <li>1 HDD with 1TB capacity and 200 MB/sec R/W bandwidth</li>
+      </ul>
 
       <p><strong>Tasks</strong></p>
       <p>

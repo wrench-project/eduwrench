@@ -6,8 +6,8 @@ const SimulationSignIn = () => {
     <>
       <StaticImage
         src="../images/wrench_logo.png"
-        width="40"
-        height="40"
+        width={40}
+        height={40}
         alt="eduWRENCH logo"
         backgroundColor="#f7f7f7"
         style={{ marginRight: "1em", float: "left" }}

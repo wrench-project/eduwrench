@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react"
+import React, { Component } from "react"
 import { GoogleLogin, GoogleLogout } from "react-google-login"
 import { Dropdown, Menu } from "semantic-ui-react"
 import "./auth.css"
@@ -65,13 +65,11 @@ class Auth extends Component {
       <>
         <Menu.Menu position="right">
           {this.state.logged ? (
-            <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} text={
-              <div className="pull-left">
+            <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
                 <img className="thumbnail-image"
                      src={this.state.user.picture}
                      alt="user pic"
                 />
-              </div>
             }>
               <Dropdown.Menu>
                 <Dropdown.Item disabled>

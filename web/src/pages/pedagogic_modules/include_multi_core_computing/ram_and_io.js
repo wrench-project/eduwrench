@@ -54,7 +54,7 @@ const RamAndIO = () => {
         cores can be utilized simultaneously due to RAM constraints.
       </p>
 
-      <SimulationActivity key="multicore_ram" content={<RAMSimulation />} />
+      <SimulationActivity panelKey="multicore_ram" content={<RAMSimulation />} />
 
       <Divider />
 
@@ -191,7 +191,7 @@ const RamAndIO = () => {
         below.
       </p>
 
-      <SimulationActivity key="multicore_io" content={<IOSimulation />} />
+      <SimulationActivity panelKey="multicore_io" content={<IOSimulation />} />
 
       <Divider />
 

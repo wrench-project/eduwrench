@@ -105,7 +105,7 @@ const DataParallelism = () => {
         below.
       </p>
 
-      <SimulationActivity key="data-parallelism" content={<DataParallelismSimulation />} />
+      <SimulationActivity panelKey="data-parallelism" content={<DataParallelismSimulation />} />
 
       <Divider />
 

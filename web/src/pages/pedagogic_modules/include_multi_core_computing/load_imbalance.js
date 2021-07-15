@@ -79,7 +79,7 @@ const LoadImbalance = () => {
         its actual value.
       </p>
 
-      <SimulationActivity key="load_imbalance_simulation" content={<LoadImbalanceSimulation />} />
+      <SimulationActivity panelKey="load_imbalance_simulation" content={<LoadImbalanceSimulation />} />
 
       <Divider />
 
