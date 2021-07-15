@@ -3,6 +3,7 @@ import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation_activity"
+import DataParallelismSimulation from "./data_parallelism_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import ExampleDataParallelismDAG from "../../../images/svgs/multicore_example_data_parallelism_dag.svg"
@@ -103,6 +104,88 @@ const DataParallelism = () => {
         below.
       </p>
 
+      <SimulationActivity key="data-parallelism" content={<DataParallelismSimulation />} />
+
+      <Divider />
+
+      <PracticeQuestions questions={[
+        {
+          key: "A.2.p5.1",
+          question: (
+            <>
+              Analytically estimate the execution time of the oil-painting program with radius <TeX math="r=3" /> when
+              it runs on 6 cores. Show your work, then check your results with the simulation app.
+            </>
+          ),
+          content: (
+            <>
+              The execution time on 6 cores is:
+              <TeX math="T(6) = \frac{100 \times 3^2 / 6}{100} + \frac{100}{100} =  2.50 \text{sec}" block />
+            </>
+          )
+        },
+        {
+          key: "A.2.p5.2",
+          question: (
+            <>
+              Which execution has the best parallel efficiency: A) <TeX math="r=2" /> on 6 cores; or B) <TeX
+              math="r=3" /> on 8 cores? Try to formulate an intuitive answer. Then check your intuition using analytics
+              and/or the simulation. Show your work and reasoning.
+            </>
+          ),
+          content: (
+            <>
+              <p>
+                Intuitively, when going from execution A to execution B the total work grows roughly by a factor 9/4
+                while the number of cores grows by a much smaller factor 8/6. So execution B should be more efficient.
+              </p>
+              <p>The execution times for execution A on 1 and 6 cores are:</p>
+              <TeX math="T_A(1) = \frac{100 \times 2^2}{100} + \frac{100}{100} = 5 \text{sec}" block />
+              <TeX math="T_A(6) = \frac{100 \times 2^2 / 6}{100} + \frac{100}{100} = 1.66 \text{sec}" block />
+              <p>
+                You can confirm the above numbers with the simulation. The parallel efficiency
+                is <TeX math="E_A = (5.0/1.66)/6 = 50.20\%" />
+              </p>
+              <p>
+                Similarly for execution B on 1 and 8 cores: <TeX
+                math="T_B(1) = \frac{100 \times 3^2}{100} + \frac{100}{100} = 10 \text{sec}" />
+              </p>
+              <TeX math="T_B(8) = \frac{100 \times 3^2 / 8}{100} + \frac{100}{100} = 2.125 \text{sec}" block />
+              <p>
+                You can confirm the above numbers with the simulation. The parallel efficiency is <TeX
+                math="E_B = (10/2.125)/8 = 58.82\%" />. Our intuition is confirmed! Execution B has better efficiency!
+              </p>
+            </>
+          )
+        },
+        {
+          key: "A.2.p5.3",
+          question: "A program consists of two tasks that run in sequence. The first runs in 10s and the second " +
+            "in 20 seconds, on one core of a 4-core computer. A developer has an idea to expose data-parallelism " +
+            "in the second task and rewrites it so that it is replaced by 4 independent tasks each with 1/4-th of " +
+            "the original task’s work. What is the parallel efficiency on 4 cores? Show your work.",
+          content: (
+            <>
+              When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the speedup is 30/15 = 2. So, the
+              parallel efficiency is 50%.
+            </>
+          )
+        }
+      ]} />
+
+      <Divider />
+
+      <h2>Amdahl’s Law</h2>
+
+      <p>
+        The simulation and practice questions above highlight a simple phenomenon known as <strong>Amdahl’s law</strong>.
+        This law says that the overall parallel speedup that a program that has a sequential and a parallel part is
+        limited by the amount of time spent in the sequential part. This is very intuitive, since in the extreme a
+        program is purely sequential and the parallel speedup is always 1 regardless of the number of cores. But the
+        surprising thing is how severe the limit is. Let’s derive Amdahl’s law in the abstract, and then apply it to our
+        example oil painting program.
+      </p>
+
     </>
   )
 }
@@ -110,123 +193,6 @@ const DataParallelism = () => {
 export default DataParallelism
 
 const text1 = `
-
-
-The program can run faster using multiple cores! How fast? The simulation
-app below simulates the execution for particular values of the radius $r$
-and a number of cores (using one "oil" task per core). You can use the
-simulation to explore data-parallelism on your own, but also to answer some of the 
-practice questions below. 
-
-{% include simulator.html src="multi_core_data_parallelism" %}
-
-<p></p>
-
----
-
-#### Practice Questions
-
-**[A.2.p5.1]** Analytically estimate the execution time of the oil-painting
-program with radius $r = 3$ when it runs on 6 cores. Show your work, then check your
-results with the simulation app.
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content answer-frame">
-
-The execution time on 6 cores  is: 
-
-$
-T(6) = \\frac{100 \\times 3^2 / 6}{100} + \\frac{100}{100} =  2.50 \\text{sec}
-$
-
-  </div>
-</div>
-
-<p></p>
-**[A.2.p5.2]** Which execution has the best parallel efficiency: A) $r=2$ 
-on 6 cores; or B) $r=3$ on 8 cores? Try to formulate an intuitive answer. Then 
-check your intuition using analytics and/or the simulation. Show your work and reasoning.
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content answer-frame">
-
-Intuitively, when going from execution A to execution B the total work
-grows roughly by a factor 9/4 while the number of cores grows by a much
-smaller factor 8/6.  So execution B should be more efficient.
-
-The execution times for execution A on 1 and 6 cores are:
-
-$
-T_A(1) = \\frac{100 \\times 2^2}{100} + \\frac{100}{100} = 5 \\text{sec}
-$
-
-$
-T_A(6) = \\frac{100 \\times 2^2 / 6}{100} + \\frac{100}{100} = 1.66 \\text{sec}
-$
-
-You can confirm the above numbers with the simulation. The 
-parallel efficiency is  $E_A = (5.0/1.66)/6 $ = 50.20%.
-
-Similarly for execution B on 1 and 8 cores:
-$
-T_B(1) = \\frac{100 \\times 3^2}{100} + \\frac{100}{100} = 10 \\text{sec}
-$
-
-$
-T_B(8) = \\frac{100 \\times 3^2 / 8}{100} + \\frac{100}{100} = 2.125 \\text{sec}
-$
-
-You can confirm the above numbers with the simulation. The 
-parallel efficiency is  $E_B = (10/2.125)/8 $ = 58.82%. Our intuition
-is confirmed! Execution B has better efficiency!
-
-  </div>
-</div>
-
-<p></p>
-
-
-**[A.2.p5.3]** A program consists of two tasks that run in sequence. The first
-runs in 10s and the second in 20 seconds, on one core of a 4-core computer. 
-A developer has an idea to expose data-parallelism in the second task and
-rewrites it so that it is replaced by 4 independent tasks each with 1/4-th of the
-original task's work. What is the parallel efficiency on 4 cores? Show your work.
-
-<div class="ui accordion fluid">
-  <div class="title">
-    <i class="dropdown icon"></i>
-    (click to see answer)
-  </div>
-  <div markdown="1" class="ui segment content answer-frame">
-
-When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the
-speedup is 30/15 = 2. So, the parallel efficiency is 50%. 
-
-  </div>
-</div>
-
-<p></p>
-
----
-
-### Amdahl's Law
-
-The simulation and practice questions above highlight a simple phenomenon
-known as **Amdahl's law**. This law says that the overall parallel speedup
-that a program that has a sequential and a parallel part is limited by the
-amount of time spent in the sequential part. This is very intuitive,
-since in the extreme a program is purely sequential and the parallel speedup is always
-1 regardless of the number of cores. But the surprising thing is how
-severe the limit is. Let's derive Amdahl's law in the abstract, and then apply it
-to our example oil painting program. 
 
 Consider a program that runs on 1 core in time $T$. This program consists of two
 main phases, one that is inherently sequential and one that can be parallelized. Let
