@@ -65,7 +65,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/distributed_computing/coordinator_worker/">Launch</Button>
+                        href="/pedagogic_modules/coordinator_worker/">Launch</Button>
                 &nbsp;&nbsp;A.3.3 Coordinator-Worker
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the coordinator/worker
