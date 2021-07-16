@@ -1,5 +1,5 @@
 import React from "react"
-import { Divider, Header } from "semantic-ui-react"
+import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
@@ -237,7 +237,140 @@ const ClientServerPipelining = () => {
             </>
           )
         },
-        
+        {
+          key: "A.3.2.p2.3",
+          question: (
+            <>
+              Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it
+              takes for the server to <i>receive the data</i>. Discuss/explain what you observe. What would be an ideal
+              transfer time assuming no latencies whatsoever and maximum pipelining? Can we pick a good buffer size that
+              gets close? Is it easy to pick a good buffer size, or is it like finding a needle in a haystack? For all
+              these questions, show your work and reasoning.
+            </>
+          ),
+          content: (
+            <>
+              The simulation gives these results:
+              <Table collapsing compact>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>buffer size</Table.HeaderCell>
+                    <Table.HeaderCell>transfer time</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                  <Table.Row>
+                    <Table.Cell>100 KB</Table.Cell>
+                    <Table.Cell>3.05</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>500 KB</Table.Cell>
+                    <Table.Cell>2.50</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>1 MB</Table.Cell>
+                    <Table.Cell>2.50</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>5 MB</Table.Cell>
+                    <Table.Cell>2.51</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>10 MB</Table.Cell>
+                    <Table.Cell>2.52</Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>100 MB</Table.Cell>
+                    <Table.Cell>2.68</Table.Cell>
+                  </Table.Row>
+                </Table.Body>
+              </Table>
+
+              <p>
+                With a small buffer size, we do not do great, because of latencies. With a large buffer size, we do not
+                do great because of poor pipelining.
+              </p>
+
+              <p>
+                If we had no latencies, we could achieve almost perfect pipelining (buffer size of 1 byte). The transfer
+                would thus proceed at the bottleneck bandwidth, i.e., that of the disk, and we would get a transfer time
+                of 1000/400 = 2.5 seconds. So yes, we can achieve this with 1 MB buffer size!
+              </p>
+
+              <p>
+                It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best
+                possible execution time.
+              </p>
+            </>
+          )
+        },
+        {
+          key: "A.3.2.p2.4",
+          question: "Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the " +
+            "simulation, determine the data transfer time with the original 10 us latency. Say now that the latency " +
+            "is instead 20 us. What is the increase in data transfer time? For this new latency, can we lower the " +
+            "data transfer time by using a different buffer size? Show your work and reasoning.",
+          content: (
+            <>
+              <p>
+                With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55
+                seconds. If we make the latency 20 us, this jumps up to 7.85 sec. This is almost a 20% increase.
+              </p>
+
+              <p>
+                It would make sense that using a larger buffer size would be better, so as to save on latencies. For
+                instance, if we try a 200 KB buffer size, the data transfer time goes from 7.85 to 6.55, back to what it
+                was with the lower latency!
+              </p>
+
+              <p>
+                So if a client program is told the latency of the network to the server, it could likely make a good
+                decision for the buffer size.
+              </p>
+            </>
+          )
+        },
+        {
+          key: "A.3.2.p2.5",
+          question: "Going more extreme, say now that the latency to Server #1 is 1 millisecond, but that the client " +
+            "program has  not been updated and still uses a 100KB buffer. Can  you come up with a rough estimate of " +
+            "how long the data transfer will take? Show your work. Check your answer in simulation. Do the two " +
+            "numbers agree?",
+          content: (
+            <>
+              <p>
+                We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency,
+                which adds up to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55
+                seconds.
+              </p>
+
+              <p>The simulation gives us: 135.40 seconds!!!!</p>
+
+              <p>
+                No, the two numbers do not match and <strong>our estimate is way optimistic</strong>. Once again, this
+                is because our estimate fails to capture complex network behaviors. In this case, when latencies get
+                really high, the network protocol that we simulate (TCP) leads to a severe performance collapse. This is
+                something you can find out more about in Networking <a href="/textbooks">textbooks</a>, but for now,
+                let's just remember that <i>latency is bad</i> :)
+              </p>
+            </>
+          )
+        },
+        {
+          key: "A.3.2.p2.6",
+          question: "With the 1 millisecond latency to Server #1, is pipelining still useful? Answer this question " +
+            "purely experimentally (since from the previous question we see that our estimates are not useful for " +
+            "such  high latencies). Show your work and reasoning.",
+          content: (
+            <>
+              <p>If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80
+                seconds.</p>
+              <p>If we try a big buffer size of 100 MB, we get a data transfer time of 5.67 seconds! with 80 MB we get
+                5.66 seconds. This is about the best we can do.</p>
+              <p>So yes, pipelining is still useful!</p>
+            </>
+          )
+        }
       ]} />
 
       <Divider />
@@ -246,6 +379,74 @@ const ClientServerPipelining = () => {
         Questions
       </Header>
 
+      <p>
+        <strong>A.3.2.q2.1</strong> You have a laundry room with a washer and drier. The
+        washer washes a load in 30 minutes, and the drier dries a load in 45
+        minutes. You have 4 loads to do. How long until the last load is dried?
+        What fraction of the time was the washer used? Could you have gone faster
+        with two driers, and if so by how much? Show your work and reasoning.
+      </p>
+
+
+      <p><strong>A.3.2.q2.2</strong> You need to send 1 GB of data stored on disk to a remote
+        server over a single network link. The disk's read bandwidth is 500 MB/sec.
+        The network link's bandwidth is 250 MB/sec, with a latency below 100
+        microseconds. How much faster would the transfer go using pipelining with a
+        100 MB buffer compared to no pipelining? Show your work. Answer this
+        question with a back-of-the-envelope estimation of the execution time for
+        the pipelining and no pipelining cases (even though we saw in the practice
+        questions that simulation results can be different).
+      </p>
+
+
+      <p><strong>A.3.2.q2.3</strong> Your business has a client-server setup for your computing
+        needs. The client is on-site and there are two off-site servers you have
+        access to. The specifications of the client and two servers and their costs
+        are below:
+      </p>
+
+      <ul>
+        <li><strong>Client</strong>:</li>
+        <ul>
+          <li>Disk: 500 MBps R/W bandwidth</li>
+        </ul>
+      </ul>
+      <ul>
+        <li><strong>Server #1</strong>:</li>
+        <ul>
+          <li>Cost: $10/hour</li>
+          <li>CPU: 1 core with 200 Gflop/sec speed</li>
+          <li>Link: 100 MB/sec</li>
+        </ul>
+      </ul>
+      <ul>
+        <li><strong>Server #2</strong>:</li>
+        <ul>
+          <li>Cost: $20/hour</li>
+          <li>CPU: 1 core with 200 Gflop/sec speed</li>
+          <li>Link: 500 MB/sec</li>
+        </ul>
+      </ul>
+
+      <p>
+        Latency and RAM can be disregarded when considering these options. Cost
+        calculations include data transfer time as well as compute time.
+      </p>
+
+      <p>On these servers, you need to run a task that has 100 GB input and 100 Tflop work.</p>
+
+      <p>
+        Assuming no pipelining is used, which of these two servers would lead to the lowest
+        execution cost? Show you work, in which you estimate the execution time on both servers.
+      </p>
+
+      <p><strong>A.3.2.q2.4</strong> This question is for the same setup as in the previous
+        question and the same task to execute. Assume that, for each server, ideal
+        pipelining is possible used (i.e., assuming that network latency is zero
+        and a 1-byte buffer can be used). Which of these two servers would lead to
+        the lowest execution cost? Show your work, in which you estimate the
+        execution time on both servers.
+      </p>
 
     </>
   )
