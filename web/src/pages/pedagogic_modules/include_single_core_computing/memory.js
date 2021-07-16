@@ -32,8 +32,8 @@ const Memory = () => {
         spaces of 1 GB, 2 GB, and 3 GB, respectively. In this case, we cannot run all three programs at the same time,
         because 6 GB is larger than the available RAM. But we can run program A and C together as they together require
         4 GB of RAM. Note that in practice such a “tight” fit may not work because the entire RAM is not available for
-        user processes. For instance, some RAM is used to store the Operating System’s Kernel (see Operating Systems
-        <a href="/textbooks">textbooks</a>).
+        user processes. For instance, some RAM is used to store the Operating System’s Kernel
+          (see Operating Systems <a href="/textbooks">textbooks</a>).
       </p>
 
       <p>

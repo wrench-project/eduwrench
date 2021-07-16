@@ -1,19 +1,15 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives";
 
 const JobNumNodes = () => {
     return (
         <>
-            <Segment.Group className="objectives">
-                <Segment inverted><strong>Learning Objectives</strong></Segment>
-                <Segment style={{ backgroundColor: "#fafafa" }}>
-                    <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand and gains experience with how requested job
-                            number of nodes impacts job turnaround time</li>
-                    </ul>
-                </Segment>
-            </Segment.Group>
+            <LearningObjectives objectives={[
+                "Understand and gains experience with how requested job number of nodes impacts job turnaround time"
+            ]} />
+
 
             <h2>Impact of requested number of nodes</h2>
 

@@ -1,19 +1,17 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives";
 
 const JobSubmission = () => {
     return (
         <>
-            <Segment.Group className="objectives">
-                <Segment inverted><strong>Learning Objectives</strong></Segment>
-                <Segment style={{ backgroundColor: "#fafafa" }}>
-                    <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand what submitting a batch job entails</li>
-                        <li>Be able to use the <tt>sbatch</tt> command</li>
-                    </ul>
-                </Segment>
-            </Segment.Group>
+            <LearningObjectives objectives={[
+                "Understand what submitting a batch job entails",
+                "Be able to use the sbatch command",
+            ]} />
+
+
 
             <h2>The <tt>sbatch</tt> command</h2>
 
