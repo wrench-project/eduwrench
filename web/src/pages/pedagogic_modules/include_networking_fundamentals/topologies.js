@@ -4,12 +4,12 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import Topology from "../../../images/distributed_computing/networking_fundamentals/topology.svg"
-import TopologyRoutes from "../../../images/distributed_computing/networking_fundamentals/topology_routes.svg"
-import Scenario1 from "../../../images/distributed_computing/networking_fundamentals/scenario_1.svg"
-import Scenario2 from "../../../images/distributed_computing/networking_fundamentals/scenario_2.svg"
-import TopologyPractice from "../../../images/distributed_computing/networking_fundamentals/topology_practice.svg"
-import TopologyQuestion from "../../../images/distributed_computing/networking_fundamentals/topology_questions.svg"
+import Topology from "../../../images/networking_fundamentals/topology.svg"
+import TopologyRoutes from "../../../images/networking_fundamentals/topology_routes.svg"
+import Scenario1 from "../../../images/networking_fundamentals/scenario_1.svg"
+import Scenario2 from "../../../images/networking_fundamentals/scenario_2.svg"
+import TopologyPractice from "../../../images/networking_fundamentals/topology_practice.svg"
+import TopologyQuestion from "../../../images/networking_fundamentals/topology_questions.svg"
 
 const Topologies = () => {
   return (

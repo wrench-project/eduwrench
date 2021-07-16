@@ -79,3 +79,8 @@
 .simulation .active.title {
     color: #666 !important;
 }
+
+pre {
+    margin: 0 !important;
+    padding: 0 !important;
+}
