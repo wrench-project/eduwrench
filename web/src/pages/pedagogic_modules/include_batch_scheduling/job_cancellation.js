@@ -1,21 +1,16 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives";
 
 const JobCancellation = () => {
     return (
         <>
-            <Segment.Group className="objectives">
-                <Segment inverted><strong>Learning Objectives</strong></Segment>
-                <Segment style={{ backgroundColor: "#fafafa" }}>
-                    <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand what canceling a batch job entails</li>
-                        <li>Be able to use a simple <tt>scancel</tt> command</li>
-                        <li>Understand how inspecting the batch queue can help pick
-                            job parameters that reduce job turnaround time</li>
-                    </ul>
-                </Segment>
-            </Segment.Group>
+            <LearningObjectives objectives={[
+                "Understand what canceling a batch job entails",
+                "Be able to use a simple scancel command",
+                "Understand how inspecting the batch queue can help pick job parameters that reduce job turnaround time"
+            ]} />
 
             <h2>The <tt>scancel</tt> command</h2>
 

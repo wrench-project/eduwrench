@@ -1,20 +1,17 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives";
 
 const BasicConcepts = () => {
     return (
         <>
-            <Segment.Group className="objectives">
-                <Segment inverted><strong>Learning Objectives</strong></Segment>
-                <Segment style={{ backgroundColor: "#fafafa" }}>
-                    <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand the need for batch scheduling</li>
-                        <li>Understand, at a high level, what a batch scheduler does</li>
-                        <li>Be aware of the Slurm batch scheduler</li>
-                    </ul>
-                </Segment>
-            </Segment.Group>
+
+            <LearningObjectives objectives={[
+                "Understand the need for batch scheduling",
+                "Understand, at a high level, what a batch scheduler does",
+                "Be aware of the Slurm batch scheduler"
+            ]} />
 
             <h2>Batch Schedulers</h2>
 

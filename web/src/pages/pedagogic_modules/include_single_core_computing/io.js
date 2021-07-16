@@ -169,8 +169,8 @@ const IO = () => {
 
       <p>
         In practice, one can implement a program that overlaps IO and computation. This can be done by using
-        non-blocking IO operations and/or threads. These are techniques that are described in Operating Systems
-        <a href="/textbooks">textbooks</a>. The overlap may not be completely "free", as reading/writing data from disk
+        non-blocking IO operations and/or threads. These are techniques that are described in
+        Operating Systems <a href="/textbooks">textbooks</a>. The overlap may not be completely "free", as reading/writing data from disk
         can still require the CPU to perform some computation. Therefore, there can be time-sharing of the CPU between
         the IO operations and the computation, and the computation is slowed down a little bit by the IO operations
         (something we did not show in the figures above). This said, there are ways for IO operations to use almost no

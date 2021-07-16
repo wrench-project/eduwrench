@@ -1,20 +1,16 @@
 import React from "react"
 import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
+import LearningObjectives from "../../../components/learning_objectives";
 
 const BatchQueue = () => {
     return (
         <>
-            <Segment.Group className="objectives">
-                <Segment inverted><strong>Learning Objectives</strong></Segment>
-                <Segment style={{ backgroundColor: "#fafafa" }}>
-                    <ul style={{ backgroundColor: "#fafafa" }}>
-                        <li>Understand the concept of a batch queue</li>
-                        <li>Understand the concept of job turnaround time</li>
-                        <li>Be able to use the <tt>squeue</tt> command</li>
-                    </ul>
-                </Segment>
-            </Segment.Group>
+            <LearningObjectives objectives={[
+                "Understand the concept of a batch queue",
+                "Understand the concept of job turnaround time",
+                "Be able to use the squeue command"
+            ]} />
 
             <h2>The <tt>squeue</tt> command</h2>
 
