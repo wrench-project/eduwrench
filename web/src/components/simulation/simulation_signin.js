@@ -5,7 +5,7 @@ const SimulationSignIn = () => {
   return (
     <>
       <StaticImage
-        src="../images/wrench_logo.png"
+        src="../../images/wrench_logo.png"
         width={40}
         height={40}
         alt="eduWRENCH logo"

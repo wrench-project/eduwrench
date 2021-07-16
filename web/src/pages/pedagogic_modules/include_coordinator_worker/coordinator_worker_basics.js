@@ -345,15 +345,13 @@ const CoordinatorWorkerBasics = () => {
                 <li>[45.26][coordinator] Notified that Task #3 has completed</li>
                 <li>[47.67][coordinator] Notified that Task #5 has completed</li>
               </ul>
-              <p>
-                with the following task execution timeline:
-                <StaticImage
-                  src="../../../images/coordinator_worker/gantt_screenshot.jpg"
-                  alt="gantt screenshot"
-                  backgroundColor="#fff"
-                  style={{ marginRight: "1em" }}
-                />
-              </p>
+              <p>with the following task execution timeline:</p>
+              <StaticImage
+                src="../../../images/coordinator_worker/gantt_screenshot.jpg"
+                alt="gantt screenshot"
+                backgroundColor="#fff"
+                style={{ marginRight: "1em", maxWidth: "75%" }}
+              />
               <p>
                 This is a particularly good execution as Task #5 and Task #3 finish almost at the same time. There may
                 be even better options. You can double-check with the simulation that <strong>none</strong> of the other

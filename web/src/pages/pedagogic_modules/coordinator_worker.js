@@ -5,6 +5,7 @@ import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
 import CoordinatorWorkerBasics from "./include_coordinator_worker/coordinator_worker_basics"
+import CoordinatorWorkerScheduling from "./include_coordinator_worker/coordinator_worker_scheduling"
 
 const CoordinatorWorker = () => {
   return (
@@ -36,7 +37,7 @@ const CoordinatorWorker = () => {
             key: "coordinator_worker_experiments",
             content: "Scheduling Experiments"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><CoordinatorWorkerScheduling /></Tab.Pane>
         }
       ]}
       />

@@ -13,7 +13,7 @@ const SimulationOutput = ({ output }) => {
       let textColor = "rgb(" + r + "," + g + "," + b + ")"
       return (<li key={line} style={{ color: textColor }}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
     }
-    return (<li key={line}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
+    return (<li key={Math.random()}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
   })
 
   return (
