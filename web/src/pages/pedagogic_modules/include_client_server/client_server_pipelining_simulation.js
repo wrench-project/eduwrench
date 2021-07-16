@@ -5,6 +5,7 @@ import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
+import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import ClientServerDiskScenario from "../../../images/client_server/client_server_disk.svg"
@@ -13,7 +14,6 @@ const ClientServerPipeliningSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
-  const diskHostsList = ['client']
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -60,15 +60,18 @@ const ClientServerPipeliningSimulation = () => {
                     file_size: "1000",
                     buffer_size: 1000 * values.bufferSize,
                     host_select: values.hostSelect,
-                    disk_speed: 400,
+                    disk_speed: 400
                   }
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/client_server", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/client_server_disk", data).then(
                     response => {
+                      const diskHostsList = ["client"]
+                      const linkNames = [values.hostSelect === "1" ? "link1" : "link2"]
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />
+                          <SimulationOutput output={response.data.simulation_output} />
                           <HostUtilizationChart data={response.data.task_data} diskHostsList={diskHostsList} />
+                          <NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />
                         </>
                       )
                     },

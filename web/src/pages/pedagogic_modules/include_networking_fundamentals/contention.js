@@ -106,10 +106,9 @@ const Contention = () => {
       </p>
 
       <object className="figure" type="image/svg+xml" data={LinkUtilization} />
-      <div className="caption"><strong>Figure 3:</strong>
-        Bandwidth utilization of the link into host C vs. time, showing both the red and the green
-        transfers. Because the green transfer is bottlenecked by a 30 MB/sec link, 10 MB/sec of bandwidth
-        remain unused for the link into host C.
+      <div className="caption"><strong>Figure 3:</strong> Bandwidth utilization of the link into host C vs. time,
+        showing both the red and the green transfers. Because the green transfer is bottlenecked by a 30 MB/sec link, 10
+        MB/sec of bandwidth remain unused for the link into host C.
       </div>
 
       <Header as="h3" block>
@@ -184,8 +183,8 @@ const Contention = () => {
         header={(
           <>
             <p>The following practice questions pertain to this topology:</p>
-            <object class="figure" type="image/svg+xml" data={TopologyContentionPractice} />
-            <div class="caption"><strong>Figure 5:</strong> Topology for practice questions.</div>
+            <object className="figure" type="image/svg+xml" data={TopologyContentionPractice} />
+            <div className="caption"><strong>Figure 5:</strong> Topology for practice questions.</div>
           </>
         )}
         questions={[

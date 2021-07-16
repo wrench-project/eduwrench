@@ -1,3 +1,13 @@
 .simulation-output {
     line-height: 0.7em;
 }
+
+.simulation-output ul, .simulation-output li {
+    background-color: #1b1c1d;
+    margin: 0;
+}
+
+.simulation-output li {
+    list-style: none;
+    line-height: 1.3em;
+}

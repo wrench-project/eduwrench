@@ -61,7 +61,7 @@ const DataParallelismSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />
+                          <SimulationOutput output={response.data.simulation_output} />
                           <HostUtilizationChart data={response.data.task_data} />
                         </>
                       )

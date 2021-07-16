@@ -7,7 +7,6 @@ const LearningObjectives = ({ objectives }) => {
 
   objectives.forEach(function(objective) {
     objectivesList.push(<li key={objective.replace(" ", "_")} style={{ marginBottom: "0.4em" }}>{objective}</li>)
-    console.log(objectivesList)
   })
 
   return (
