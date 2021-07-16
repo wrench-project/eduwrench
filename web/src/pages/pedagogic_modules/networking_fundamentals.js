@@ -6,6 +6,7 @@ import "./pedagogic_modules.css"
 
 import LatencyAndBandwidth from "./include_networking_fundamentals/latency_and_bandwidth"
 import Topologies from "./include_networking_fundamentals/topologies"
+import Contention from "./include_networking_fundamentals/contention"
 
 const NetworkingFundamental = () => {
   return (
@@ -48,7 +49,7 @@ const NetworkingFundamental = () => {
             key: "contention",
             content: "Contention"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><Contention /></Tab.Pane>
         }
       ]}
       />

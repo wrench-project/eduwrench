@@ -55,7 +55,7 @@ const TaskDependencies2CoresSimulation = () => {
                     scheduling_scheme: values.schedulingScheme
                   }
                   setSimulationResults(<></>)
-                  axios.post("http://localhost:3000/run/multi_core_dependent_tasks", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/multi_core_dependent_tasks", data).then(
                     response => {
                       setSimulationResults(
                         <>

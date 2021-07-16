@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
-import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
+import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import TaskDependencies3CoresSimulationScenario from "../../../images/multi_core/multicore_dependencies_3_cores.svg"
+import ContentScenario from "../../../images/networking_fundamentals/networking_fundamentals_cyber_infrastructure.svg"
 
-const TaskDependencies3CoresSimulation = () => {
+const ContentionSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
@@ -21,20 +20,20 @@ const TaskDependencies3CoresSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={TaskDependencies3CoresSimulationScenario} />
+        <SimulationScenario scenario={ContentScenario} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
           <Segment>
             <Formik
               initialValues={{
-                taskGflop: 100
+                fileSizes: "10, 20"
               }}
 
               validate={values => {
                 const errors = {}
-                if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 10 || values.taskGflop > 1000) {
-                  errors.taskGflop = "ERROR"
+                if (!values.fileSizes || !/^[0-9,\ ]+$/i.test(values.fileSizes)) {
+                  errors.fileSizes = "ERROR"
                 }
                 return errors
               }}
@@ -49,17 +48,14 @@ const TaskDependencies3CoresSimulation = () => {
                   const data = {
                     userName: userEmail.split("@")[0],
                     email: userEmail,
-                    num_cores: "3",
-                    analyze_work: values.taskGflop,
-                    scheduling_scheme: "viz"
+                    file_sizes: values.fileSizes
                   }
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/multi_core_dependent_tasks", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/networking_fundamentals", data).then(
                     response => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output.replace(/\s*\<.*?\>\s*/g, "@")} />
-                          <HostUtilizationChart data={response.data.task_data} />
                         </>
                       )
                     },
@@ -83,18 +79,14 @@ const TaskDependencies3CoresSimulation = () => {
                 }) => (
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths="equal">
-                    <Form.Input fluid
-                                name="taskGflop"
-                                label="Work of 'analyze' task in Gflop"
-                                placeholder="100"
-                                type="number"
-                                min={10}
-                                max={1000}
+                    <Form.Input fluid name="fileSizes"
+                                label="List of file sizes (MB)"
+                                placeholder="1"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.taskGflop}
-                                error={errors.taskGflop && touched.taskGflop ? {
-                                  content: "Please provide the work of the \"analyze\" task in the range [10, 1000].",
+                                value={values.fileSizes}
+                                error={errors.fileSizes && touched.fileSizes ? {
+                                  content: "Please provide a comma- or space-separated list of integral file sizes.",
                                   pointing: "above"
                                 } : null}
                     />
@@ -115,4 +107,4 @@ const TaskDependencies3CoresSimulation = () => {
   )
 }
 
-export default TaskDependencies3CoresSimulation
+export default ContentionSimulation
