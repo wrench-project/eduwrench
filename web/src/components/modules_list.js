@@ -55,7 +55,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/distributed_computing/client_server/">Launch</Button>
+                        href="/pedagogic_modules/client_server/">Launch</Button>
                 &nbsp;&nbsp;A.3.2 Client-Server
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the fundamental
