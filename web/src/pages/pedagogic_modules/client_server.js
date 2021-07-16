@@ -5,6 +5,7 @@ import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
 import ClientServerBasics from "./include_client_server/client_server_basics"
+import ClientServerPipelining from "./include_client_server/client_server_pipelining"
 
 const NetworkingFundamental = () => {
   return (
@@ -35,7 +36,7 @@ const NetworkingFundamental = () => {
             key: "client_server_pipelining",
             content: "Pipelining I/O and Network"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><ClientServerPipelining /></Tab.Pane>
         }
       ]}
       />
