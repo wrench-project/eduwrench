@@ -75,7 +75,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/distributed_computing/workflow/">Launch</Button>
+                        href="/pedagogic_modules/workflows/">Launch</Button>
                 &nbsp;&nbsp;A.3.4 Workflows
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the workflow model of
