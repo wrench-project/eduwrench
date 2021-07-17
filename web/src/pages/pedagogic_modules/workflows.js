@@ -4,6 +4,7 @@ import Seo from "../../components/seo"
 import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
+import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
 
 const Workflows = () => {
   return (
@@ -28,7 +29,7 @@ const Workflows = () => {
             key: "workflows_fundamentals",
             content: "Fundamentals"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsFundamentals /></Tab.Pane>
         },
         {
           menuItem: {
