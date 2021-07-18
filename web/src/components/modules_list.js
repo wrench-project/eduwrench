@@ -100,6 +100,20 @@ const ModulesList = () => {
         </Segment>
       </SegmentGroup>
 
+      <h4 style={{ margin: 0 }}><br />D. Case Studies: Local and Cloud Computing</h4>
+
+      <SegmentGroup className="modules">
+        <Segment><strong>D.1. Local Computing</strong></Segment>
+        <Segment>
+          <p className="module-desc">
+            <Button size="mini" color="yellow" floated="left"
+                    href="/pedagogic_modules/thrustd_cloud/">Launch</Button>
+            The goal of this module is to provide you with fundamental knowledge of and
+            hands-on experience with local and cloud computing.
+          </p>
+        </Segment>
+      </SegmentGroup>
+
     </>
   )
 }
