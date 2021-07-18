@@ -10,7 +10,8 @@ import "./task_data.css"
  * @returns {JSX.Element}
  */
 function getTableHeader(display, label, className) {
-  return display ? (<Table.HeaderCell colSpan="3" textAlign="center"  className={className}>{label}</Table.HeaderCell>) : <></>
+  return display ? (
+    <Table.HeaderCell colSpan="3" textAlign="center" className={className}>{label}</Table.HeaderCell>) : <></>
 }
 
 /**
@@ -72,6 +73,10 @@ const TasksData = ({ data, label = null }) => {
       // read
       let minRead = Number.MAX_SAFE_INTEGER
       let maxRead = 0.0
+      if (element.read === null) {
+        element.read = [{ start: 0, end: 0 }]
+        minRead = element.compute.start
+      }
       element.read.forEach(function(read) {
         minRead = Math.min(minRead, read.start)
         maxRead = Math.max(maxRead, read.end)
@@ -80,6 +85,10 @@ const TasksData = ({ data, label = null }) => {
       // read
       let minWrite = Number.MAX_SAFE_INTEGER
       let maxWrite = 0.0
+      if (element.write === null) {
+        element.write = [{ start: 0, end: 0 }]
+        maxWrite = element.compute.end
+      }
       element.write.forEach(function(write) {
         minWrite = Math.min(minWrite, write.start)
         maxWrite = Math.max(maxWrite, write.end)
