@@ -6,6 +6,7 @@ import "./pedagogic_modules.css"
 
 import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
 import WorkflowsDistributedExecution from "./include_workflows/workflows_distributed_execution"
+import WorkflowsDataLocality from "./include_workflows/workflows_data_locality"
 import WorkflowsCapstone from "./include_workflows/capstone"
 
 const Workflows = () => {
@@ -45,7 +46,7 @@ const Workflows = () => {
             key: "workflows_data_locality",
             content: "Data Locality"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDataLocality /></Tab.Pane>
         },
         {
           menuItem: {
