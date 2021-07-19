@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import WorkflowDistributedExecutionSimulation from "./workflow_distributed_execution_simulation"
+import WorkflowsDistributedExecutionSimulation from "./workflows_distributed_execution_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import DistributedPlatform from "../../../images/workflows/workflow_distributed_platform.svg"
@@ -146,7 +146,7 @@ const WorkflowsDistributedExecution = () => {
       </p>
 
       <SimulationActivity panelKey="workflow-distributed-execution-simulation"
-                          content={<WorkflowDistributedExecutionSimulation />} />
+                          content={<WorkflowsDistributedExecutionSimulation />} />
 
       <PracticeQuestions questions={[
         {

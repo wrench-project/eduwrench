@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import WorkflowFundamentalsSimulation from "./workflow_fundamentals_simulation"
+import WorkflowsFundamentalsSimulation from "./workflows_fundamentals_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import ExampleWorkflow from "../../../images/workflows/example_workflow_1.svg"
@@ -99,7 +99,7 @@ const WorkflowsFundamentals = () => {
         </li>
       </ul>
 
-      <SimulationActivity panelKey="workflows-fundamentals-simulation" content={<WorkflowFundamentalsSimulation />} />
+      <SimulationActivity panelKey="workflows-fundamentals-simulation" content={<WorkflowsFundamentalsSimulation />} />
 
       <PracticeQuestions
         header={

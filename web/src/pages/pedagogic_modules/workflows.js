@@ -7,6 +7,7 @@ import "./pedagogic_modules.css"
 import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
 import WorkflowsDistributedExecution from "./include_workflows/workflows_distributed_execution"
 import WorkflowsDataLocality from "./include_workflows/workflows_data_locality"
+import WorkflowsMixedParallelism from "./include_workflows/workflows_mixed_parallelism"
 import WorkflowsCapstone from "./include_workflows/capstone"
 
 const Workflows = () => {
@@ -53,7 +54,7 @@ const Workflows = () => {
             key: "workflows_mixed_parallelsim",
             content: "Mixed Parallelism"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsMixedParallelism /></Tab.Pane>
         },
         {
           menuItem: {

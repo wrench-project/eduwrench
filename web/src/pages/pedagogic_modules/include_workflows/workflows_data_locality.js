@@ -3,7 +3,7 @@ import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import WorkflowsDataLocalitySimulation from "./workflow_data_locality_simulation"
+import WorkflowsDataLocalitySimulation from "./workflows_data_locality_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import WorkflowsDataLocalityPlatformZoom from "../../../images/workflows/workflow_data_locality_platform_zoom.svg"

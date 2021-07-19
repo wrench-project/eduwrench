@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
@@ -8,9 +8,9 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import WorkflowFundamentalsScenario from "../../../images/workflows/workflow_fundamentals.svg"
+import WorkflowsDistributedExecutionScenario from "../../../images/workflows/workflow_distributed.svg"
 
-const WorkflowFundamentalsSimulation = () => {
+const WorkflowsDistributedExecutionSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
@@ -22,7 +22,7 @@ const WorkflowFundamentalsSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowFundamentalsScenario} />
+        <SimulationScenario scenario={WorkflowsDistributedExecutionScenario} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -30,15 +30,15 @@ const WorkflowFundamentalsSimulation = () => {
             <Formik
               initialValues={{
                 numCores: 1,
-                diskBandwidth: 100
+                numHosts: 1
               }}
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 3 || values.numCores < 1) {
+                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
                   errors.numCores = "ERROR"
-                } else if (!values.diskBandwidth || !/^[0-9]+$/i.test(values.diskBandwidth) || values.diskBandwidth < 10 || values.diskBandwidth > 500) {
-                  errors.diskBandwidth = "ERROR"
+                } else if (!values.numHosts || !/^[0-9]+$/i.test(values.numHosts) || values.numHosts < 1 || values.numHosts > 20) {
+                  errors.numHosts = "ERROR"
                 }
                 return errors
               }}
@@ -53,11 +53,13 @@ const WorkflowFundamentalsSimulation = () => {
                   const data = {
                     userName: userEmail.split("@")[0],
                     email: userEmail,
+                    num_hosts: values.numHosts,
                     num_cores: values.numCores,
-                    disk_bandwidth: values.diskBandwidth
+                    link_bandwidth: "100",
+                    use_local_storage: "0",
                   }
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_fundamentals", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
                     response => {
                       setSimulationResults(
                         <>
@@ -87,32 +89,31 @@ const WorkflowFundamentalsSimulation = () => {
                 }) => (
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths="equal">
-                    <Form.Input fluid name="numCores"
-                                label="Number of cores"
+                    <Form.Input fluid name="numHosts"
+                                label="Number of compute hosts"
                                 placeholder="1"
                                 type="number"
                                 min={1}
-                                max={3}
+                                max={20}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.numHosts}
+                                error={errors.numHosts && touched.numHosts ? {
+                                  content: "Provide a number in the range of [1, 20].",
+                                  pointing: "above"
+                                } : null}
+                    />
+                    <Form.Input fluid name="numCores"
+                                label="Number of cores per compute host"
+                                placeholder="1"
+                                type="number"
+                                min={1}
+                                max={32}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.numCores}
                                 error={errors.numCores && touched.numCores ? {
-                                  content: "Please provide a number of cores in the range [1,3].",
-                                  pointing: "above"
-                                } : null}
-                    />
-                    <Form.Input fluid
-                                name="diskBandwidth"
-                                label="Disk bandwidth (MB/sec)"
-                                placeholder="100"
-                                type="number"
-                                min={10}
-                                max={500}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.diskBandwidth}
-                                error={errors.diskBandwidth && touched.diskBandwidth ? {
-                                  content: "Please provide a disk read/write bandwidth value in the range [10,500].",
+                                  content: "Provide a number in the range of [1, 32].",
                                   pointing: "above"
                                 } : null}
                     />
@@ -133,4 +134,4 @@ const WorkflowFundamentalsSimulation = () => {
   )
 }
 
-export default WorkflowFundamentalsSimulation
+export default WorkflowsDistributedExecutionSimulation

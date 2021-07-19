@@ -5,12 +5,11 @@ import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import WorkflowDistributedExecutionScenario from "../../../images/workflows/workflow_distributed.svg"
+import WorkflowsMixedParallelismScenario from "../../../images/workflows/workflow_task_data_parallelism.svg"
 
-const WorkflowDistributedExecutionSimulation = () => {
+const WorkflowsMixedParallelismSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
@@ -22,23 +21,26 @@ const WorkflowDistributedExecutionSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowDistributedExecutionScenario} />
+        <SimulationScenario scenario={WorkflowsMixedParallelismScenario} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
           <Segment>
             <Formik
               initialValues={{
-                numCores: 1,
-                numHosts: 1
+                numCoresBlue: 1,
+                numCoresYellow: 1,
+                numCoresPurple: 1
               }}
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
-                  errors.numCores = "ERROR"
-                } else if (!values.numHosts || !/^[0-9]+$/i.test(values.numHosts) || values.numHosts < 1 || values.numHosts > 20) {
-                  errors.numHosts = "ERROR"
+                if (!values.numCoresBlue || !/^[0-9]+$/i.test(values.numCoresBlue) || values.numCoresBlue > 3 || values.numCoresBlue < 1) {
+                  errors.numCoresBlue = "ERROR"
+                } else if (!values.numCoresYellow || !/^[0-9]+$/i.test(values.numCoresYellow) || values.numCoresYellow < 1 || values.numCoresYellow > 3) {
+                  errors.numCoresYellow = "ERROR"
+                } else if (!values.numCoresPurple || !/^[0-9]+$/i.test(values.numCoresPurple) || values.numCoresPurple < 1 || values.numCoresPurple > 3) {
+                  errors.numCoresPurple = "ERROR"
                 }
                 return errors
               }}
@@ -53,19 +55,17 @@ const WorkflowDistributedExecutionSimulation = () => {
                   const data = {
                     userName: userEmail.split("@")[0],
                     email: userEmail,
-                    num_hosts: values.numHosts,
-                    num_cores: values.numCores,
-                    link_bandwidth: "100",
-                    use_local_storage: "0",
+                    num_cores_blue: values.numCoresBlue,
+                    num_cores_yellow: values.numCoresYellow,
+                    num_cores_purple: values.numCoresPurple
                   }
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_task_data_parallelism", data).then(
                     response => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output} />
                           <HostUtilizationChart data={response.data.task_data} />
-                          <TasksData data={response.data.task_data} />
                         </>
                       )
                     },
@@ -89,31 +89,47 @@ const WorkflowDistributedExecutionSimulation = () => {
                 }) => (
                 <Form onSubmit={handleSubmit}>
                   <Form.Group widths="equal">
-                    <Form.Input fluid name="numHosts"
-                                label="Number of compute hosts"
+                    <Form.Input fluid name="numCoresBlue"
+                                label="Number of cores used by the blue task"
                                 placeholder="1"
                                 type="number"
                                 min={1}
-                                max={20}
+                                max={3}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.numHosts}
-                                error={errors.numHosts && touched.numHosts ? {
-                                  content: "Provide a number in the range of [1, 20].",
+                                value={values.numCoresBlue}
+                                error={errors.numCoresBlue && touched.numCoresBlue ? {
+                                  content: "Provide a number in the range of [1, 3].",
                                   pointing: "above"
                                 } : null}
                     />
-                    <Form.Input fluid name="numCores"
-                                label="Number of cores per compute host"
+                    <Form.Input fluid
+                                name="numCoresYellow"
+                                label="Number of cores used by the yellow task"
                                 placeholder="1"
                                 type="number"
                                 min={1}
-                                max={32}
+                                max={3}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                value={values.numCores}
-                                error={errors.numCores && touched.numCores ? {
-                                  content: "Provide a number in the range of [1, 32].",
+                                value={values.numCoresYellow}
+                                error={errors.numCoresYellow && touched.numCoresYellow ? {
+                                  content: "Provide a number in the range of [1, 3].",
+                                  pointing: "above"
+                                } : null}
+                    />
+                    <Form.Input fluid
+                                name="numCoresPurple"
+                                label="Number of cores used by the purple task"
+                                placeholder="1"
+                                type="number"
+                                min={1}
+                                max={3}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.numCoresPurple}
+                                error={errors.numCoresPurple && touched.numCoresPurple ? {
+                                  content: "Provide a number in the range of [1, 3].",
                                   pointing: "above"
                                 } : null}
                     />
@@ -134,4 +150,4 @@ const WorkflowDistributedExecutionSimulation = () => {
   )
 }
 
-export default WorkflowDistributedExecutionSimulation
+export default WorkflowsMixedParallelismSimulation
