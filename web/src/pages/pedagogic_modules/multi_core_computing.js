@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "../../components/layout"
-import Seo from "../../components/seo"
+import PageHeader from "../../components/page_header"
 import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
@@ -14,12 +14,7 @@ import MultiCoreCapstone from "./include_multi_core_computing/capstone"
 const MultiCoreComputing = () => {
   return (
     <Layout>
-      <Seo title="A.2. Multi-core Computing" />
-      <h2 style={{
-        marginBottom: `30px`,
-        marginTop: `50px`,
-        color: "#525252"
-      }}><br />A.2. Multi-core Computing</h2>
+      <PageHeader title="A.2. Multi-core Computing"/>
 
       <Segment style={{ marginBottom: "2em" }}>
         The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple cores

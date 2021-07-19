@@ -1,8 +1,7 @@
 import React from "react"
 import Layout from "../components/layout"
-import Seo from "../components/seo"
 import PageHeader from "../components/page_header"
-import { Header, Segment } from "semantic-ui-react"
+import { Header, Segment, Table } from "semantic-ui-react"
 
 const ForTeachers = () => (
   <Layout>
@@ -85,245 +84,245 @@ const ForTeachers = () => (
         of the SLOs therein as part of these pedagogic modules.
       </p>
 
-      <table className="table">
-        <tr className="table">
-          <th className="table">NSF/IEEE-TCPP Topic</th>
-          <th className="table">NSF/IEEE-TCPP SLO</th>
-          <th className="table">eduWRENCH Modules</th>
-        </tr>
+      <Table compact collapsing striped>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>NSF/IEEE-TCPP Topic</Table.HeaderCell>
+            <Table.HeaderCell>NSF/IEEE-TCPP SLO</Table.HeaderCell>
+            <Table.HeaderCell>eduWRENCH Modules</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell><i className="table">Architecture</i></Table.Cell>
+          <Table.Cell>Topologie</Table.Cell>
+          <Table.Cell>A.3.1</Table.Cell>
+        </Table.Row>
+
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Architecture</i>
-          </td>
-          <td className="table">Topologie</td>
-          <td className="table">A.3.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Latency</Table.Cell>
+          <Table.Cell>A.3.1</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Architecture</i>
-          </td>
-          <td className="table">Latency</td>
-          <td className="table">A.3.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Bandwidth</Table.Cell>
+          <Table.Cell>A.3.1</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Architecture</i>
-          </td>
-          <td className="table">Bandwidth</td>
-          <td className="table">A.3.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>MIPS/FLOPS</Table.Cell>
+          <Table.Cell>A.1</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Architecture</i>
-          </td>
-          <td className="table">MIPS/FLOPS</td>
-          <td className="table">A.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Power, Energy</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
-            <i className="table">Architecture</i>
-          </td>
-          <td className="table">Power, Energy</td>
-          <td className="table">Coming soon</td>
-        </tr>
-
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Load Balancing</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Load Balancing</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Scheduling and Mapping (core, advanced)</td>
-          <td className="table">A.2, A.3.3</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Scheduling and Mapping (core, advanced)</Table.Cell>
+          <Table.Cell>A.2, A.3.3</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Performance Metrics</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Performance Metrics</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Speedup</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Speedup</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Efficiency</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Efficiency</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Parallel Scalability</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Parallel Scalability</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Amdahl’s Law</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Amdahl’s Law</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Gustanfson’s Law</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Gustanfson’s Law</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Energy Efficiency vs. Load Balancing</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Energy Efficiency vs. Load Balancing</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Programming</i>
-          </td>
-          <td className="table">Power Consumption of Parallel Program</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Power Consumption of Parallel Program</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Time</td>
-          <td className="table">A.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Time</Table.Cell>
+          <Table.Cell>A.1</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Work</td>
-          <td className="table">A.1</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Work</Table.Cell>
+          <Table.Cell>A.1</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Memory and Communication Complexity</td>
-          <td className="table">A.3</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Memory and Communication Complexity</Table.Cell>
+          <Table.Cell>A.3</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Speedup</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Speedup</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Efficiency</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Efficiency</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Scalability</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Scalability</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Throughput</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Throughput</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Time vs. Space</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Time vs. Space</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Power vs. Time</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Power vs. Time</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Dependencies</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Dependencies</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Task Graphs</td>
-          <td className="table">A.2, A.3.4</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Task Graphs</Table.Cell>
+          <Table.Cell>A.2, A.3.4</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Makespan</td>
-          <td className="table">A.2</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Makespan</Table.Cell>
+          <Table.Cell>A.2</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Energy Aware Scheduling</td>
-          <td className="table">Coming soon</td>
-        </tr>
+          </Table.Cell>
+          <Table.Cell>Energy Aware Scheduling</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
 
-        <tr className="table">
-          <td className="table">
+        <Table.Row>
+          <Table.Cell>
             <i className="table">Algorithms</i>
-          </td>
-          <td className="table">Load Balancing</td>
-          <td className="table">Coming soon</td>
-        </tr>
-      </table>
+          </Table.Cell>
+          <Table.Cell>Load Balancing</Table.Cell>
+          <Table.Cell>Coming soon</Table.Cell>
+        </Table.Row>
+      </Table>
     </Segment>
 
     <Segment>
@@ -371,7 +370,7 @@ const ForTeachers = () => (
       </p>
     </Segment>
 
-    <br/><br/>
+    <br /><br />
 
   </Layout>
 )

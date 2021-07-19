@@ -2,10 +2,11 @@
     line-height: 0.7em;
     max-height: 25em;
     overflow: auto;
+    background-color: #222 !important;
 }
 
 .simulation-output ul, .simulation-output li {
-    background-color: #1b1c1d;
+    background-color: #222;
     margin: 0;
 }
 
