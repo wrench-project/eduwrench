@@ -6,6 +6,7 @@ import "./pedagogic_modules.css"
 
 import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
 import WorkflowsDistributedExecution from "./include_workflows/workflows_distributed_execution"
+import WorkflowsCapstone from "./include_workflows/capstone"
 
 const Workflows = () => {
   return (
@@ -58,7 +59,7 @@ const Workflows = () => {
             key: "workflows_capstone",
             content: "Capstone"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsCapstone /></Tab.Pane>
         }
       ]}
       />
