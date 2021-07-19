@@ -1,35 +1,26 @@
-.card {
-  background-color: white !important;
-  border-color: white !important;
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 50px;
+  color: #525252;
 }
 
-ul li::before {
-  color: black;
+.inverted {
+  background-color: #d98636 !important;
+  color: #fff !important;
 }
 
-Badge {
-  color: white !important;
-  background-color: white !important;
+.ui.block.header {
+  background-color: #d98636 !important;
+  color: #fff !important;
+  border: 0;
+  border-radius: 0.5em;
+  font-size: 1em !important;
 }
 
-.main {
-  border-color: lightgrey !important;
-  margin-bottom: 50px;
-}
-
-ul li {
-  background-color: white;
-}
-
-ul {
-  background-color: white;
-}
-
-b {
-  background-color: white;
-}
-
-.privacy {
-  background-color: white;
-  margin-top: 15px;
+.segment * {
+  background-color: #fff !important;
 }
