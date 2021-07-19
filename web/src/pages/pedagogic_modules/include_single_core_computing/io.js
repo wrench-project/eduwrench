@@ -220,7 +220,7 @@ const IO = () => {
               The compute time is much larger than the I/O time. So the total execution time will
               be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
               The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
-              core utilization is <TeX math="250/253 = 98.8%" />.
+              core utilization is <TeX math="250/253 = 98.8\%" />.
             </>
           )
         },

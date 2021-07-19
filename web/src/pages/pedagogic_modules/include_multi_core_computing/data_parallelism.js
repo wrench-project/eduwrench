@@ -240,7 +240,7 @@ const DataParallelism = () => {
         vs. number of cores for different values of <TeX math="\alpha" />:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={Amdahl} />
+      <object className="figure" type="image/svg+xml" data={Amdahl} style={{ maxWidth: "500px" }} />
       <div className="caption"><strong>Figure 3:</strong> Speedup vs. number of cores for different values of the
         fraction of the sequential execution time that is parallelizable.
       </div>

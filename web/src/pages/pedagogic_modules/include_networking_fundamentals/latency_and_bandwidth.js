@@ -124,7 +124,7 @@ const LatencyAndBandwidth = () => {
               math="B" />:
               <TeX math="1 / 1000 + ( 148 / 10^3 ) / B = 2.5," block />
               which gives:
-              <TeX math="B = (148 / 10^3) / (2.5 − 1 / 1000) \simeq .059 \text{GB/sec}." block />
+              <TeX math="B = (148 / 10^3) / (2.5 - 1 / 1000) \simeq .059 \text{GB/sec}." block />
             </>
           )
         }

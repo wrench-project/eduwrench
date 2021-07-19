@@ -11,7 +11,8 @@ import "./task_data.css"
  */
 function getTableHeader(display, label, className) {
   return display ? (
-    <Table.HeaderCell colSpan="3" textAlign="center" className={className}>{label}</Table.HeaderCell>) : <></>
+    <Table.HeaderCell colSpan="3" textAlign="center" className={className}
+                      key={label}>{label}</Table.HeaderCell>) : <></>
 }
 
 /**
@@ -21,9 +22,9 @@ function getTableHeader(display, label, className) {
  */
 function getTableSubHeader(display) {
   return display ? ([
-    <Table.HeaderCell textAlign="center">Start Time</Table.HeaderCell>,
-    <Table.HeaderCell textAlign="center">End Time</Table.HeaderCell>,
-    <Table.HeaderCell textAlign="center">Duration</Table.HeaderCell>
+    <Table.HeaderCell textAlign="center" key="start-time">Start Time</Table.HeaderCell>,
+    <Table.HeaderCell textAlign="center" key="end-time">End Time</Table.HeaderCell>,
+    <Table.HeaderCell textAlign="center" key="duration">Duration</Table.HeaderCell>
   ]) : <></>
 }
 
@@ -51,20 +52,20 @@ const TasksData = ({ data, label = null }) => {
 
     // header
     tableHeader = [
-      <Table.HeaderCell />,
+      <Table.HeaderCell key="header-taskid" />,
       getTableHeader(labels.read.display, labels.read.label, "table-read"),
       getTableHeader(labels.compute.display, labels.compute.label, "table-compute"),
       getTableHeader(labels.write.display, labels.write.label, "table-write"),
-      <Table.HeaderCell />
+      <Table.HeaderCell key="header-duration" />
     ]
 
     // sub-header
     tableSubHeader = [
-      <Table.HeaderCell>Task ID</Table.HeaderCell>,
+      <Table.HeaderCell key="subheader-id">Task ID</Table.HeaderCell>,
       getTableSubHeader(labels.read.display),
       getTableSubHeader(labels.compute.display),
       getTableSubHeader(labels.write.display),
-      <Table.HeaderCell>Task Duration</Table.HeaderCell>
+      <Table.HeaderCell key="subheader-duration">Task Duration</Table.HeaderCell>
     ]
 
     // tasks data
@@ -95,21 +96,29 @@ const TasksData = ({ data, label = null }) => {
       })
 
       let rowContents = [
-        <Table.Cell>{element.task_id}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-read">{minRead.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-read">{maxRead.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-read">{(maxRead - minRead).toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-compute">{element.compute.start.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-compute">{element.compute.end.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right"
+        <Table.Cell key={element.task_id}>{element.task_id}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-read-start"} textAlign="right"
+                    className="table-read">{minRead.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-read-end"} textAlign="right"
+                    className="table-read">{maxRead.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-read-duration"} textAlign="right"
+                    className="table-read">{(maxRead - minRead).toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-compute-start"} textAlign="right"
+                    className="table-compute">{element.compute.start.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-compute-end"} textAlign="right"
+                    className="table-compute">{element.compute.end.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-compute-duration"} textAlign="right"
                     className="table-compute">{(element.compute.end - element.compute.start).toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-write">{minWrite.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-write">{maxWrite.toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right" className="table-write">{(maxWrite - minWrite).toFixed(3)}</Table.Cell>,
-        <Table.Cell textAlign="right">{(maxWrite - minRead).toFixed(3)}</Table.Cell>
+        <Table.Cell key={element.task_id + "-write-start"} textAlign="right"
+                    className="table-write">{minWrite.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-write-end"} textAlign="right"
+                    className="table-write">{maxWrite.toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-write-duration"} textAlign="right"
+                    className="table-write">{(maxWrite - minWrite).toFixed(3)}</Table.Cell>,
+        <Table.Cell key={element.task_id + "-duration"} textAlign="right">{(maxWrite - minRead).toFixed(3)}</Table.Cell>
       ]
       tableRows.push([
-        <Table.Row>
+        <Table.Row key={element.task_id + "-row"}>
           {rowContents}
         </Table.Row>
       ])

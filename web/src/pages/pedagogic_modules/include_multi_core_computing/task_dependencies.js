@@ -14,7 +14,6 @@ import PracticeQuestionDAG1 from "../../../images/multi_core/multicore_practice_
 import PracticeQuestionDAG2 from "../../../images/multi_core/multicore_practice_dag_2.svg"
 import QuestionDAG1 from "../../../images/multi_core/multicore_question_dag_1.svg"
 import QuestionDAG2 from "../../../images/multi_core/multicore_question_dag_2.svg"
-import ExampleIODAG from "../../../images/multi_core/multicore_example_io_dag.svg"
 
 const TaskDependencies = () => {
   return (
@@ -140,7 +139,7 @@ const TaskDependencies = () => {
               <p>
                 This is a very similar question as the previous one. The sequential execution time is 126 seconds, and
                 the execution time on 3 cores is still 46 seconds. Therefore, the number of core idle seconds
-                is <TeX math="46 \times 3 − 126 = 12" /> seconds.
+                is <TeX math="46 \times 3 - 126 = 12" /> seconds.
               </p>
               <p>
                 We can double check this answer by counting the number of idle seconds as shown in the Host Utilization
@@ -300,7 +299,7 @@ const TaskDependencies = () => {
           question: (
             <>
               For the DAG below, give the number of levels, the maximum level width, and the length of the critical path
-              in seconds (name and execution time are shown for each task).
+              in seconds (name and execution time are shown for each task).<br />
               <object className="figure" type="image/svg+xml" data={PracticeQuestionDAG1} />
             </>
           ),

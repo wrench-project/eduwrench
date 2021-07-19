@@ -63,7 +63,6 @@ const WorkflowsDataLocalitySimulation = () => {
                     link_bandwidth: values.linkBandwidth,
                     use_local_storage: values.useLocalStorage ? "1" : "0"
                   }
-                  console.log(data)
                   setSimulationResults(<></>)
                   axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
                     response => {
@@ -124,8 +123,6 @@ const WorkflowsDataLocalitySimulation = () => {
                                   pointing: "above"
                                 } : null}
                     />
-                  </Form.Group>
-                  <Form.Group widths="equal">
                     <Form.Input fluid name="linkBandwidth"
                                 label="Number of cores per compute host"
                                 placeholder="1"
