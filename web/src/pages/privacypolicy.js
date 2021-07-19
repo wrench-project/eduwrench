@@ -1,17 +1,11 @@
 import React from "react"
 import Layout from "../components/layout"
-import Seo from "../components/seo"
+import PageHeader from "../components/page_header"
 import { Header, Segment } from "semantic-ui-react"
-import "./privacypolicy.css"
 
 const PrivacyPolicy = () => (
-  <Layout>
-    <Seo title="Privacy Policy" />
-    <h2 style={{
-      marginBottom: `30px`,
-      marginTop: `50px`,
-      color: "#525252"
-    }}><br />Privacy Policy</h2>
+  <Layout className="page">
+    <PageHeader title="Privacy Policy" />
 
     <Segment>
       This Privacy Policy describes Our policies and procedures on the collection, use and disclosure of Your
@@ -277,7 +271,7 @@ const PrivacyPolicy = () => (
       <p>Last updated: March 19, 2020</p>
     </Segment>
 
-    <br/><br/>
+    <br /><br />
 
   </Layout>
 )

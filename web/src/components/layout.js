@@ -4,9 +4,9 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import Footer from "./footer"
 import Glossary from "./glossary"
-import "./layout.css"
-import "bootstrap/dist/css/bootstrap.min.css"
+import { Container } from "semantic-ui-react"
 import "semantic-ui-css/semantic.min.css"
+import "./layout.css"
 
 const Layout = ({ children }) => {
   const data = useStaticQuery(graphql`
@@ -23,13 +23,9 @@ const Layout = ({ children }) => {
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <Glossary />
-      <div
-        className="container"
-        id="content"
-        style={{ backgroundColor: "#fefaec", marginTop: "4em" }}
-      >
+      <Container style={{ marginTop: "4em", backgroundColor: "#fefaec" }}>
         <main>{children}</main>
-      </div>
+      </Container>
       <Footer />
     </>
   )
