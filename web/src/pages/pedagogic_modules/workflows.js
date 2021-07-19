@@ -5,6 +5,7 @@ import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
 import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
+import WorkflowsDistributedExecution from "./include_workflows/workflows_distributed_execution"
 
 const Workflows = () => {
   return (
@@ -36,7 +37,7 @@ const Workflows = () => {
             key: "workflows_distributed_execution",
             content: "Distributed Execution"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDistributedExecution /></Tab.Pane>
         },
         {
           menuItem: {

@@ -1,5 +1,7 @@
 .simulation-output {
     line-height: 0.7em;
+    max-height: 25em;
+    overflow: auto;
 }
 
 .simulation-output ul, .simulation-output li {

@@ -120,7 +120,7 @@ const TasksData = ({ data, label = null }) => {
     <>
       <Segment.Group>
         <Segment color="blue"><strong>Tasks Data</strong></Segment>
-        <Segment>
+        <Segment className="task-data">
           <Table size="small" padded compact striped>
             <Table.Header fullWidth>
               <Table.Row>

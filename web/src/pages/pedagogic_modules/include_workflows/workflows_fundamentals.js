@@ -332,7 +332,7 @@ const WorkflowsFundamentals = () => {
 
       <p>Given the workflow below, answer the following questions:</p>
 
-      <object class="figure" type="image/svg+xml" data={WorkflowsFundamentalsQuestion}/>
+      <object className="figure" type="image/svg+xml" data={WorkflowsFundamentalsQuestion}/>
 
       <p>
         <strong>[A.2.3.q1.1]</strong> How many MB of data are read during an execution of this workflow? How many are
