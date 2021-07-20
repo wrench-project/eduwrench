@@ -27,33 +27,14 @@ const LatencyAndBandwidth = () => {
         </li>
       </ol>
 
-      <Accordion style={{ border: "1px solid #333", borderRadius: "0.2em" }} panels={[
-        {
-          key: "latency-water-pipe",
-          title: {
-            content: (
-              <strong>
-                ONE CAN THINK OF DATA FLOWING THROUGH A LINK AS WATER FLOWING THROUGH A PIPE (CLICK TO EXPAND)
-              </strong>
-            )
-          },
-          content: {
-            content: (
-              <>
-                <Segment style={{ border: 0, backgroundColor: "#f7f7f7" }}>
+      <p>
                   A popular analogy is to think of a link as a vertical physical pipe that connects a cistern (on top)
                   to a pool (on the bottom) . The latency is the time for one drop of water to travel from the top-end
                   of the pipe to the other. The bandwidth is how many liters of water can flow out of the end of the
                   pipe per second. In this analogy, the <i>latency</i> is the length of the pipe, and the bandwidth is
                   its <i>width</i>.
-                </Segment>
-              </>
-            )
-          }
-        }
-      ]} />
+      </p>
 
-      <br />
       <p>
         We assume that links are bidirectional, meaning that data can flow in both directions at the same time (which is
         unlike water in pipes). This model of a network link is not completely accurate as it abstracts away many of the
