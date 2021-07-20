@@ -2,7 +2,7 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 
-import WorkflowsCapstoneScenario from "../../../images/workflows/workflow_capstone.svg"
+import WorkflowsCapstoneScenario from "../../../images/vector_graphs/workflows/workflow_capstone.svg"
 
 const WorkflowsCapstone = () => {
   return (

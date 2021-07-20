@@ -6,8 +6,8 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsFundamentalsSimulation from "./workflows_fundamentals_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import ExampleWorkflow from "../../../images/workflows/example_workflow_1.svg"
-import WorkflowsFundamentalsQuestion from "../../../images/workflows/workflow_fundamental_question.svg"
+import ExampleWorkflow from "../../../images/vector_graphs/workflows/example_workflow_1.svg"
+import WorkflowsFundamentalsQuestion from "../../../images/vector_graphs/workflows/workflow_fundamental_question.svg"
 
 const WorkflowsFundamentals = () => {
   return (

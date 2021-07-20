@@ -6,7 +6,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import RAMSimulationScenario from "../../../images/multi_core/multicore_ram_simulation.svg"
+import RAMSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_ram_simulation.svg"
 
 const RAMSimulation = () => {
 
@@ -20,7 +20,7 @@ const RAMSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={RAMSimulationScenario} />
+        <SimulationScenario scenario={<RAMSimulationScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

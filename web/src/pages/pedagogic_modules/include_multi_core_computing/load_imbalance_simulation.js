@@ -6,7 +6,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import LoadImbalanceSimulationScenario from "../../../images/multi_core/multicore_load_imbalance_simulation.svg"
+import LoadImbalanceSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_load_imbalance_simulation.svg"
 
 const LoadImbalanceSimulation = () => {
 
@@ -20,7 +20,7 @@ const LoadImbalanceSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={LoadImbalanceSimulationScenario} />
+        <SimulationScenario scenario={<LoadImbalanceSimulationScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

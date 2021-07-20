@@ -2,16 +2,20 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
+import SimulationActivity from "../../../components/simulation/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 import ContentionSimulation from "./contention_simulation"
 
-import TopologyContention from "../../../images/networking_fundamentals/topology_contention.svg"
-import TopologyContentionSizes from "../../../images/networking_fundamentals/topology_contention_different_sizes.svg"
-import LinkUtilization from "../../../images/networking_fundamentals/link_utilization.svg"
-import TopologyContentionSimulation from "../../../images/networking_fundamentals/topology_contention_simulation.svg"
-import SimulationActivity from "../../../components/simulation/simulation_activity"
-import TopologyContentionPractice from "../../../images/networking_fundamentals/topology_contention_practice.svg"
-import TopologyContentionQuestions from "../../../images/networking_fundamentals/topology_contention_questions.svg"
+import TopologyContention from "../../../images/vector_graphs/networking_fundamentals/topology_contention.svg"
+import TopologyContentionSizes
+  from "../../../images/vector_graphs/networking_fundamentals/topology_contention_different_sizes.svg"
+import LinkUtilization from "../../../images/vector_graphs/networking_fundamentals/link_utilization.svg"
+import TopologyContentionSimulation
+  from "../../../images/vector_graphs/networking_fundamentals/topology_contention_simulation.svg"
+import TopologyContentionPractice
+  from "../../../images/vector_graphs/networking_fundamentals/topology_contention_practice.svg"
+import TopologyContentionQuestions
+  from "../../../images/vector_graphs/networking_fundamentals/topology_contention_questions.svg"
 
 const Contention = () => {
   return (
@@ -41,7 +45,8 @@ const Contention = () => {
         each were started at exactly the same time and transfer 100 MB of data.
       </p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyContention} />
+      {/*<object className="figure" type="image/svg+xml" data={TopologyContention} />*/}
+      <TopologyContention />
       <div className="caption"><strong>Figure 1:</strong> A simple example in which two data transfers contend for
         bandwidth.
       </div>
@@ -76,7 +81,8 @@ const Contention = () => {
         Consider now another scenario, with the only difference that the "red" transfer now only transfers 50 MB:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyContentionSizes} />
+      {/*<object className="figure" type="image/svg+xml" data={TopologyContentionSizes} />*/}
+      <TopologyContentionSizes />
       <div className="caption"><strong>Figure 2:</strong> A slightly more complex example in which one transfer
         operation transfers less data than the other.
       </div>
@@ -105,7 +111,8 @@ const Contention = () => {
         in the second phase above, part of that link's bandwidth is unused.
       </p>
 
-      <object className="figure" type="image/svg+xml" data={LinkUtilization} />
+      {/*<object className="figure" type="image/svg+xml" data={LinkUtilization} />*/}
+      <LinkUtilization />
       <div className="caption"><strong>Figure 3:</strong> Bandwidth utilization of the link into host C vs. time,
         showing both the red and the green transfers. Because the green transfer is bottlenecked by a 30 MB/sec link, 10
         MB/sec of bandwidth remain unused for the link into host C.
@@ -121,7 +128,8 @@ const Contention = () => {
         occur concurrently on the same three-link route:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyContentionSimulation} />
+      {/*<object className="figure" type="image/svg+xml" data={TopologyContentionSimulation} />*/}
+      <TopologyContentionSimulation />
       <div className="caption"><strong>Figure 4:</strong> Simulation scenario.</div>
 
       <p>
@@ -183,7 +191,8 @@ const Contention = () => {
         header={(
           <>
             <p>The following practice questions pertain to this topology:</p>
-            <object className="figure" type="image/svg+xml" data={TopologyContentionPractice} />
+            {/*<object className="figure" type="image/svg+xml" data={TopologyContentionPractice} />*/}
+            <TopologyContentionPractice />
             <div className="caption"><strong>Figure 5:</strong> Topology for practice questions.</div>
           </>
         )}
@@ -261,7 +270,8 @@ const Contention = () => {
 
       <p>Answer the following questions, which pertain to this topology:</p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyContentionQuestions} />
+      {/*<object className="figure" type="image/svg+xml" data={TopologyContentionQuestions} />*/}
+      <TopologyContentionQuestions />
       <div className="caption"><strong>Figure 6:</strong> Topology for questions (lat = "latency"; bw = "bandwidth").
       </div>
 

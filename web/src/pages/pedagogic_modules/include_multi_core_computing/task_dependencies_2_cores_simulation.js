@@ -7,7 +7,8 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import TaskDependencies2CoresSimulationScenario from "../../../images/multi_core/multicore_dependencies_2_cores.svg"
+import TaskDependencies2CoresSimulationScenario
+  from "../../../images/vector_graphs/multi_core/multicore_dependencies_2_cores.svg"
 
 const TaskDependencies2CoresSimulation = () => {
 
@@ -21,7 +22,7 @@ const TaskDependencies2CoresSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={TaskDependencies2CoresSimulationScenario} />
+        <SimulationScenario scenario={<TaskDependencies2CoresSimulationScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

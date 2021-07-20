@@ -6,10 +6,10 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import DataParallelismSimulation from "./data_parallelism_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import ExampleDataParallelismDAG from "../../../images/multi_core/multicore_example_data_parallelism_dag.svg"
+import ExampleDataParallelismDAG from "../../../images/vector_graphs/multi_core/multicore_example_data_parallelism_dag.svg"
 import ExampleDataParallelismExposedDAG
-  from "../../../images/multi_core/multicore_example_data_parallelism_exposed_dag.svg"
-import Amdahl from "../../../images/multi_core/multicore_amdahl.svg"
+  from "../../../images/vector_graphs/multi_core/multicore_example_data_parallelism_exposed_dag.svg"
+import Amdahl from "../../../images/vector_graphs/multi_core/multicore_amdahl.svg"
 
 const DataParallelism = () => {
   return (
@@ -54,7 +54,8 @@ const DataParallelism = () => {
         follows:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleDataParallelismDAG} />
+      {/*<object className="figure" type="image/svg+xml" data={ExampleDataParallelismDAG} />*/}
+      <ExampleDataParallelismDAG />
       <div className="caption"><strong>Figure 1:</strong> Example image processing program.</div>
 
       <p>
@@ -94,7 +95,8 @@ const DataParallelism = () => {
         program's DAG is as follows:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleDataParallelismExposedDAG} />
+      {/*<object className="figure" type="image/svg+xml" data={ExampleDataParallelismExposedDAG} />*/}
+      <ExampleDataParallelismExposedDAG />
       <div className="caption"><strong>Figure 2:</strong> Example image processing program with data-parallelism
         exposed.
       </div>
@@ -240,7 +242,8 @@ const DataParallelism = () => {
         vs. number of cores for different values of <TeX math="\alpha" />:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={Amdahl} style={{ maxWidth: "500px" }} />
+      {/*<object className="figure" type="image/svg+xml" data={Amdahl} style={{ maxWidth: "500px" }} />*/}
+      <Amdahl />
       <div className="caption"><strong>Figure 3:</strong> Speedup vs. number of cores for different values of the
         fraction of the sequential execution time that is parallelizable.
       </div>

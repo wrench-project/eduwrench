@@ -3,7 +3,7 @@ import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 
-import MultiCoreCapstoneFigure from "../../../images/multi_core/multicore_capstone.svg"
+import MultiCoreCapstoneFigure from "../../../images/vector_graphs/multi_core/multicore_capstone.svg"
 
 const MultiCoreCapstone = () => {
   return (
@@ -22,7 +22,8 @@ const MultiCoreCapstone = () => {
         RAM footprint of each task is shown in the figure below.
       </p>
 
-      <object className="figure" type="image/svg+xml" data={MultiCoreCapstoneFigure} />
+      {/*<object className="figure" type="image/svg+xml" data={MultiCoreCapstoneFigure} />*/}
+      <MultiCoreCapstoneFigure />
 
       <p>
         We have to run this program on a <strong>2-core</strong> Virtual Machine (VM) with 20 GB of RAM, where each core

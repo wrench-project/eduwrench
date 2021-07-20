@@ -6,7 +6,7 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import CoordinatorWorkerBasicsSimulation from "./coordinator_worker_basics_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import CoordinatorWorkerNarrative from "../../../images/coordinator_worker/coordinator_worker_narrative.svg"
+import CoordinatorWorkerNarrative from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_narrative.svg"
 import { StaticImage } from "gatsby-plugin-image"
 
 const CoordinatorWorkerBasics = () => {
@@ -43,7 +43,8 @@ const CoordinatorWorkerBasics = () => {
 
       <h2>Parallelism through Coordinator-Worker</h2>
 
-      <object className="figure" type="image/svg+xml" data={CoordinatorWorkerNarrative} />
+      {/*<object className="figure" type="image/svg+xml" data={CoordinatorWorkerNarrative} />*/}
+      <CoordinatorWorkerNarrative />
       <div className="caption"><strong>Figure 1:</strong> Coordinator-worker setup.</div>
 
       <p>
@@ -348,7 +349,7 @@ const CoordinatorWorkerBasics = () => {
               </ul>
               <p>with the following task execution timeline:</p>
               <StaticImage
-                src="../../../images/coordinator_worker/gantt_screenshot.jpg"
+                src="../../../images/gantt_screenshot.jpg"
                 alt="gantt screenshot"
                 backgroundColor="#fff"
                 style={{ marginRight: "1em", maxWidth: "75%" }}
@@ -539,11 +540,11 @@ const CoordinatorWorkerBasics = () => {
       <p>So the simulator input would be:</p>
       <pre>
       Workers: 100 100, 100 100, 100 100{"\n"}
-      Tasks: 2000 500, 2000 500, 2000 500, 1600 1000{"\n"}
-      Task Scheduling: Highest data{"\n"}
-      Worker Scheduling: Best-connected worker
+        Tasks: 2000 500, 2000 500, 2000 500, 1600 1000{"\n"}
+        Task Scheduling: Highest data{"\n"}
+        Worker Scheduling: Best-connected worker
       </pre>
-      <br/>
+      <br />
       <p>
         <strong>[A.3.3.q1.3]</strong> Estimate the total execution time, showing your work. Then verify your answer
         in simulation.

@@ -8,7 +8,8 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import CoordinatorWorkerBasicsScenario from "../../../images/coordinator_worker/coordinator_worker_no_output.svg"
+import CoordinatorWorkerBasicsScenario
+  from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_no_output.svg"
 
 const CoordinatorWorkerBasicsSimulation = () => {
 
@@ -22,7 +23,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={CoordinatorWorkerBasicsScenario} />
+        <SimulationScenario scenario={<CoordinatorWorkerBasicsScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

@@ -6,7 +6,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import ClientServerBasicsScenario from "../../../images/client_server/client_server_basics.svg"
+import ClientServerBasicsScenario from "../../../images/vector_graphs/client_server/client_server_basics.svg"
 
 const ClientServerBasicsSimulation = () => {
 
@@ -20,7 +20,7 @@ const ClientServerBasicsSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={ClientServerBasicsScenario} />
+        <SimulationScenario scenario={<ClientServerBasicsScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
