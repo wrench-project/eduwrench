@@ -18,6 +18,14 @@ module.exports = {
         path: `${__dirname}/src/images`
       }
     },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /vector_graphs/
+        }
+      }
+    },
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`,
     {

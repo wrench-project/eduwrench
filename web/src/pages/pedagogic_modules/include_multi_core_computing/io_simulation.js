@@ -8,7 +8,7 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import IOSimulationScenario from "../../../images/multi_core/multicore_io_simulation.svg"
+import IOSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_io_simulation.svg"
 
 const IOSimulation = () => {
 
@@ -22,7 +22,7 @@ const IOSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={IOSimulationScenario} />
+        <SimulationScenario scenario={<IOSimulationScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

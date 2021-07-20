@@ -8,7 +8,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import WorkflowsFundamentalsScenario from "../../../images/workflows/workflow_fundamentals.svg"
+import WorkflowsFundamentalsScenario from "../../../images/vector_graphs/workflows/workflow_fundamentals.svg"
 
 const WorkflowsFundamentalsSimulation = () => {
 

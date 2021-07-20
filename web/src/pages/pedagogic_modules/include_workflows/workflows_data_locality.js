@@ -6,8 +6,8 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsDataLocalitySimulation from "./workflows_data_locality_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import WorkflowsDataLocalityPlatformZoom from "../../../images/workflows/workflow_data_locality_platform_zoom.svg"
-import WorkflowsDataLocalityQuestion from "../../../images/workflows/workflow_data_locality_question.svg"
+import WorkflowsDataLocalityPlatformZoom from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"
+import WorkflowsDataLocalityQuestion from "../../../images/vector_graphs/workflows/workflow_data_locality_question.svg"
 
 const WorkflowsDataLocality = () => {
   return (

@@ -6,7 +6,7 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import LoadImbalanceSimulation from "./load_imbalance_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import Utilization from "../../../images/multi_core/multicore_utilization.svg"
+import Utilization from "../../../images/vector_graphs/multi_core/multicore_utilization.svg"
 
 const LoadImbalance = () => {
   return (
@@ -46,7 +46,8 @@ const LoadImbalance = () => {
         core computes for 20 minutes and then sits idle for 15 minutes. This execution is depicted in the figure below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={Utilization} />
+      {/*<object className="figure" type="image/svg+xml" data={Utilization} />*/}
+      <Utilization />
       <div className="caption"><strong>Figure 1:</strong> Example 35-minute execution on a 2-core computer. The white
         area is the core idle time, the yellow area is the core compute time.
       </div>

@@ -6,7 +6,8 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import ContentScenario from "../../../images/networking_fundamentals/networking_fundamentals_cyber_infrastructure.svg"
+import ContentScenario
+  from "../../../images/vector_graphs/networking_fundamentals/networking_fundamentals_cyber_infrastructure.svg"
 
 const ContentionSimulation = () => {
 
@@ -20,7 +21,7 @@ const ContentionSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={ContentScenario} />
+        <SimulationScenario scenario={<ContentScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

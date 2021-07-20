@@ -7,7 +7,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import WorkflowsMixedParallelismScenario from "../../../images/workflows/workflow_task_data_parallelism.svg"
+import WorkflowsMixedParallelismScenario from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism.svg"
 
 const WorkflowsMixedParallelismSimulation = () => {
 

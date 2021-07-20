@@ -8,7 +8,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import ClientServerDiskScenario from "../../../images/client_server/client_server_disk.svg"
+import ClientServerDiskScenario from "../../../images/vector_graphs/client_server/client_server_disk.svg"
 
 const ClientServerPipeliningSimulation = () => {
 
@@ -22,7 +22,7 @@ const ClientServerPipeliningSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={ClientServerDiskScenario} />
+        <SimulationScenario scenario={<ClientServerDiskScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

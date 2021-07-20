@@ -6,10 +6,10 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsDistributedExecutionSimulation from "./workflows_distributed_execution_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import DistributedPlatform from "../../../images/workflows/workflow_distributed_platform.svg"
-import DistributedPlatformZoom from "../../../images/workflows/workflow_distributed_platform_zoom.svg"
-import DistributedWorkflow from "../../../images/workflows/workflow_distributed_workflow.svg"
-import DistributedQuestion from "../../../images/workflows/workflow_distributed_question.svg"
+import DistributedPlatform from "../../../images/vector_graphs/workflows/workflow_distributed_platform.svg"
+import DistributedPlatformZoom from "../../../images/vector_graphs/workflows/workflow_distributed_platform_zoom.svg"
+import DistributedWorkflow from "../../../images/vector_graphs/workflows/workflow_distributed_workflow.svg"
+import DistributedQuestion from "../../../images/vector_graphs/workflows/workflow_distributed_question.svg"
 
 const WorkflowsDistributedExecution = () => {
   return (

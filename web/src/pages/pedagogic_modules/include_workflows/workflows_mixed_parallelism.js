@@ -6,9 +6,9 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsMixedParallelismSimulation from "./workflows_mixed_parallelism_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import WorkflowsMixedParallelismWorkflow from "../../../images/workflows/workflow_task_data_parallelism_workflow.svg"
+import WorkflowsMixedParallelismWorkflow from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow.svg"
 import WorkflowsMixedParallelismQuestion
-  from "../../../images/workflows/workflow_task_data_parallelism_workflow_question.svg"
+  from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow_question.svg"
 
 const WorkflowsMixedParallelism = () => {
   return (

@@ -9,7 +9,7 @@ import NetworkBandwidthUsageChart from "../../../components/charts/network_bandw
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import WorkflowsDataLocalityScenario from "../../../images/workflows/workflow_data_locality.svg"
+import WorkflowsDataLocalityScenario from "../../../images/vector_graphs/workflows/workflow_data_locality.svg"
 
 const WorkflowsDataLocalitySimulation = () => {
 
