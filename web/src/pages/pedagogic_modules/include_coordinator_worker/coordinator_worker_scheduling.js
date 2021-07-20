@@ -78,8 +78,8 @@ const CoordinatorWorkerScheduling = () => {
               <p>For this setup, let's consider the following strategies:</p>
               <ul>
                 <li>random / fastest</li>
-                <li>highest flop / fastest</li>
-                <li>lowest flop / fastest</li>
+                <li>highest work / fastest</li>
+                <li>lowest work / fastest</li>
               </ul>
               <p>How do you think these strategies rank? Explain your reasoning.</p>
               <p>
@@ -94,8 +94,8 @@ const CoordinatorWorkerScheduling = () => {
           content: (
             <>
               <p>
-                Based on what was said in previous modules, the highest flop / fastest
-                strategy should be best, and lowest flop / fastest should be worse or
+                Based on what was said in previous modules, the highest work / fastest
+                strategy should be best, and lowest work / fastest should be worse or
                 perhaps comparable to random / fastest. The random strategy should have a
                 wider min-max range, since it might find a "needle in the hay stack", but
                 might also do complete nonsense.
@@ -109,14 +109,13 @@ const CoordinatorWorkerScheduling = () => {
               </p>
               <p>The results are as follows ([min : mean : max]):</p>
               <ul>
-                <li>random / fastest: [8.03 sec : 14.90 sec : 18.84 sec]</li>
-                <li>highest flop / fastest: [8.03 sec : 11.92 : 16.18 sec]</li>
-                <li>lowest flop / fastest: [9.87 sec : 14.30 sec : 17.94 sec]</li>
+                <li>random / fastest: [9.70 sec : 14.13 sec : 17.37 sec]</li>
+                <li>highest work / fastest: [8.03 sec : 11.92 : 16.18 sec]</li>
+                <li>lowest work / fastest: [9.88 sec : 14.31 sec : 17.94 sec]</li>
               </ul>
               <p>
-                The expectations are confirmed: highest flop is best; random is a bit
-                better than lowest flop on average and, as expected, has a wider min-max
-                range, with both better minimum and worse maximum.
+                The expectations are confirmed: highest work is best; random is a bit
+                better than lowest work!
               </p>
             </>
           )
@@ -130,12 +129,12 @@ const CoordinatorWorkerScheduling = () => {
             <>
               <p>Setting worker speeds in the range [100, 1000], we obtain:</p>
               <ul>
-                <li>random / fastest: [1.42 sec : 3.60 sec : 8.33 sec]</li>
-                <li>highest flop / fastest: [1.25 sec : 3.20 sec : 7.12 sec]</li>
-                <li>lowest flop / fastest: [1.53 sec : 3.44 sec : 7.03 sec]</li>
+                <li>random / fastest: [1.33 sec : 4.00 sec : 7.97 sec]</li>
+                <li>highest work / fastest: [1.26 sec : 3.20 sec : 7.12 sec]</li>
+                <li>lowest work / fastest: [1.54 sec : 3.44 sec : 7.03 sec]</li>
               </ul>
               <p>
-                Results are very similar. It seems that the "highest flop" idea
+                Results are very similar, with the different that random is worse than "lower work". It seems that the "highest work" idea
                 is a good one even when workers are heterogeneous, provided we pick the
                 fastest workers.
               </p>
@@ -146,8 +145,8 @@ const CoordinatorWorkerScheduling = () => {
           key: "A.3.3.p2.3",
           question: (
             <>
-              Let's now consider a fully heterogeneous setup in which we have
-              <strong>20 workers</strong> and <strong>10 tasks</strong> with:
+              Let us now consider a fully heterogeneous setup in which we 
+              have <strong>20 workers</strong> and <strong>10 tasks</strong> with:
               <ul>
                 <li>worker speeds in the [100, 1000] range</li>
                 <li>worker bandwidths in the [100, 1000] range</li>
@@ -155,7 +154,7 @@ const CoordinatorWorkerScheduling = () => {
                 <li>task input data in the [100, 1000] range</li>
               </ul>
               <p>
-                Say we still select tasks based on the "highest flop" criterion. Among all
+                Say we still select tasks based on the "highest work" criterion. Among all
                 the available worker selection strategies, which one do you think would work
                 best and why? Confirm your expectation in simulation:
               </p>
@@ -172,10 +171,10 @@ const CoordinatorWorkerScheduling = () => {
               </p>
               <p>Simulation results confirm the above:</p>
               <ul>
-                <li>highest flop / random: [3.09 sec : 6.89 sec : 10.83 sec]</li>
-                <li>highest flop / fastest: [2.09 sec : 4.74 sec : 8.81 sec]</li>
-                <li>highest flop / best-connected: [2.13 sec : 4.96 sec : 8.23 sec]</li>
-                <li>highest flop / earliest completion: [1.81 sec : 2.40 sec : 3.92 sec]</li>
+                <li>highest work / random: [2.86 sec : 6.46 sec : 12.43 sec]</li>
+                <li>highest work / fastest: [2.10 sec : 4.74 sec : 8.82 sec]</li>
+                <li>highest work / best-connected: [2.14 sec : 4.97 sec : 8.24 sec]</li>
+                <li>highest work / earliest completion: [1.81 sec : 2.41 sec : 3.93 sec]</li>
               </ul>
             </>
           )
@@ -185,7 +184,7 @@ const CoordinatorWorkerScheduling = () => {
           question: "In the previous question, we purposely had more workers than tasks. What if now we were to " +
             "have, say, 4 times as many tasks as workers. Do you think the different strategies considered in the " +
             "previous question would be closer together or further apart in terms of their results? Explain. " +
-            "Verify your expectation experimentally.",
+            "Verify your expectation experimentally. <i>Note that simulation times could be a few seconds with 30 samples<i>.",
           content: (
             <>
               <p>
@@ -194,13 +193,13 @@ const CoordinatorWorkerScheduling = () => {
                 used to run the first batch of tasks. Then the faster workers will become
                 idle first, and used again. So as the number of tasks grows, we would
                 expect all strategies to behave more similarly. This is confirmed in
-                simulation using 80 tasks and 20 workers:
+                simulation using 80 tasks and 20 workers (30 samples):
               </p>
               <ul>
-                <li>highest flop / random: [9.20 sec : 12.51 sec : 21.11 sec]</li>
-                <li>highest flop / fastest: [9.32 sec : 12.85 sec : 17.95 sec]</li>
-                <li>highest flop / best-connected: [9.90 sec : 12.79 sec : 18.81 sec]</li>
-                <li>highest flop / earliest completion: [9.50 sec : 13.08 sec : 18.02 sec]</li>
+                <li>highest work / random: [9.56 sec : 12.98 sec : 18.22 sec]</li>
+                <li>highest work / fastest: [9.32 sec : 12.87 sec : 17.95 sec]</li>
+                <li>highest work / best-connected: [9.91 sec : 12.80 sec : 18.81 sec]</li>
+                <li>highest work / earliest completion: [9.51 sec : 12.96 sec : 18.03 sec]</li>
               </ul>
               <p>
                 The main observation is that random really looks as good as anything
@@ -225,15 +224,15 @@ const CoordinatorWorkerScheduling = () => {
         role than the computation, assuming that tasks have balanced input sizes
         and amounts of work (e.g., both are in range <TeX math="[x, 5\times x]" />). Verify
         experimentally that the "highest byte" task selection strategy is
-        indeed more effective than the "highest flop" strategy. What about
+        indeed more effective than the "highest work" strategy. What about
         the "lowest byte" task selection strategy? Do you think it would perform
         well? Confirm your expectation experimentally.
       </p>
 
       <p>
         <strong>[A.3.3.q.2.2]</strong> In the practice questions above, we did not consider
-        the "ratio" worker selection strategies (i.e., the "highest flop/byte" and
-        "highest byte/flop" strategies). Come up with experimental campaigns to
+        the "ratio" worker selection strategies (i.e., the "highest work/byte" and
+        "highest byte/work" strategies). Come up with experimental campaigns to
         determine whether these strategies are worthwhile.
       </p>
 

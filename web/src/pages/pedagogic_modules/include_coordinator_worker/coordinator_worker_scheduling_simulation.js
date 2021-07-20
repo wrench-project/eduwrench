@@ -275,7 +275,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                   </Form.Group>
                   <Form.Group widths="equal">
                     <Form.Input fluid name="minTaskFlop"
-                                label="Minimum Gflop Per Task"
+                                label="Minimum Work Per Task (Gflop)"
                                 placeholder="1"
                                 type="number"
                                 min={1}
@@ -290,7 +290,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                                 } : null}
                     />
                     <Form.Input fluid name="maxTaskFlop"
-                                label="Maximum Gflop Per Task"
+                                label="Maximum Work Per Task (Gflop)"
                                 placeholder="100"
                                 type="number"
                                 min={1}

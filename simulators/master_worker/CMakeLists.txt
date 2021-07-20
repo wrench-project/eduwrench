@@ -5,7 +5,7 @@ project(MASTER_WORKER_SIMULATOR)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
 find_package(Boost REQUIRED)
 
