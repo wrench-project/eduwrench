@@ -213,7 +213,7 @@ const IO = () => {
           key: "A.1.p4.1]",
           question: "Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop, " +
             "and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the simulation " +
-            "app above. What is the total execution time when I/O and computation can be overlaped? Show your work. " +
+            "app above. What is the total execution time when I/O and computation can be overlapped? Show your work. " +
             "Use the simulation app to check your answer. What is the core utilization percentage? Show your work.",
           content: (
             <>
@@ -366,7 +366,7 @@ const IO = () => {
         computation, and writes some output back to disk. A batch of fifty instances of this task is to be run on a
         computer with a processor capable of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. IO and
         computation are overlapped. How large can the task output be so that the CPU is still 100% utilized? (ignoring
-        the initial input read and final output write, during which the CPU is necessarily idle). Show your work byt
+        the initial input read and final output write, during which the CPU is necessarily idle). Show your work by
         writing (and solving) a simple inequation.
       </p>
 
