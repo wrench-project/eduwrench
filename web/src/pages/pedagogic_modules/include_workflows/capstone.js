@@ -1,4 +1,5 @@
 import React from "react"
+import TeX from "@matejmazur/react-katex"
 import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 
@@ -21,7 +22,7 @@ const WorkflowsCapstone = () => {
         The 4-task workflow needs to be executed on a 2-host platform, with all
         workflow data hosted at a remote storage site. The first task of the
         workflow is a data-parallel task; 10% of its sequential execution time
-        cannot be parallelized (i.e., $\alpha = 0.9$).
+        cannot be parallelized (i.e., <TeX math="\alpha = 0.9" />).
       </p>
       <p>
         Note that in the platform above, we give you the actual data transfer rate

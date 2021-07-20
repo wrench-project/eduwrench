@@ -87,8 +87,13 @@ const WorkflowsDistributedExecution = () => {
         on one of the compute hosts, assuming that no other task is competing with it, as:
       </p>
 
-      <TeX math="\text{Task execution time} = \text{input read} + \text{compute} + \text{output  write}
-      = 200 / 100 + 1000 / 100 + 10 / 100 = 12.1 \text{sec}" block />
+      <TeX math="\text{Task execution time} = \text{input read} + \text{compute} + \text{output  write}" block />
+
+      <p>
+      which gives us
+      </p>
+
+      <TeX math="\text{Task execution time} = 200 / 100 + 1000 / 100 + 10 / 100 = 12.1 \text{sec}" block />
 
       <p>
         The above expression assumes that data is read/written from/to the disk at 100 MB/sec,
