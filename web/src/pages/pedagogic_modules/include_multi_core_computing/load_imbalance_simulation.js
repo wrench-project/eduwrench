@@ -5,8 +5,13 @@ import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import {
+  validateFieldInRange,
+  validateFieldInMultipleRanges
+} from "../../../components/simulation/simulation_validation"
 
-import LoadImbalanceSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_load_imbalance_simulation.svg"
+import LoadImbalanceSimulationScenario
+  from "../../../images/vector_graphs/multi_core/multicore_load_imbalance_simulation.svg"
 
 const LoadImbalanceSimulation = () => {
 
@@ -34,11 +39,16 @@ const LoadImbalanceSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
+                if (!validateFieldInRange("mcit-num-cores-label", values.numCores, 1, 32, "Cores:")) {
                   errors.numCores = "ERROR"
-                } else if (!values.numTasks || !/^[0-9]+$/i.test(values.numTasks) || values.numTasks > 999 || values.numTasks < 1) {
+                }
+                if (!validateFieldInRange("mcit-num-tasks-label", values.numTasks, 1, 100, null, "Task(s)")) {
                   errors.numTasks = "ERROR"
-                } else if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 1 || values.taskGflop > 999999) {
+                }
+                if (!validateFieldInMultipleRanges("mcit-task-gflop-label", values.taskGflop, [
+                  { min: 1, max: 999, prefix: null, postfix: "GFlop", valueLambdaFunction: null },
+                  { min: 1000, max: 999999, prefix: null, postfix: "TFlop", valueLambdaFunction: (v) => v / 1000 }
+                ])) {
                   errors.taskGflop = "ERROR"
                 }
                 return errors
@@ -116,8 +126,6 @@ const LoadImbalanceSimulation = () => {
                                   pointing: "above"
                                 } : null}
                     />
-                  </Form.Group>
-                  <Form.Group widths="equal">
                     <Form.Input fluid
                                 name="taskGflop"
                                 label="Task Gflop"

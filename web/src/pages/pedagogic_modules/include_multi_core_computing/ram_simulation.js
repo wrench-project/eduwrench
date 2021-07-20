@@ -5,6 +5,10 @@ import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import {
+  validateFieldInMultipleRanges,
+  validateFieldInRange
+} from "../../../components/simulation/simulation_validation"
 
 import RAMSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_ram_simulation.svg"
 
@@ -35,13 +39,19 @@ const RAMSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
+                if (!validateFieldInRange("mcit-ram-num-cores-label", values.numCores, 1, 32, "Cores:")) {
                   errors.numCores = "ERROR"
-                } else if (!values.numTasks || !/^[0-9]+$/i.test(values.numTasks) || values.numTasks > 999 || values.numTasks < 1) {
+                }
+                if (!validateFieldInRange("mcit-ram-num-tasks-label", values.numTasks, 1, 999, null, "Task(s)")) {
                   errors.numTasks = "ERROR"
-                } else if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 1 || values.taskGflop > 999999) {
+                }
+                if (!validateFieldInMultipleRanges("mcit-ram-task-gflop-label", values.taskGflop, [
+                  { min: 1, max: 999, prefix: null, postfix: "GFlop" },
+                  { min: 1000, max: 999999, prefix: null, postfix: "TFlop", valueLambdaFunction: (v) => v / 1000 }
+                ])) {
                   errors.taskGflop = "ERROR"
-                } else if (!/^[0-9]+$/i.test(values.taskRam) || values.taskRam < 0 || values.taskRam > 32) {
+                }
+                if (!validateFieldInRange("mcit-ram-task-ram-label", values.taskRam, 0, 32, null, "GB")) {
                   errors.taskRam = "ERROR"
                 }
                 return errors

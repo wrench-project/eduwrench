@@ -65,9 +65,7 @@
                                     <span style="font-size: 13px">Cores:
                                         <b style="font-size: 13px">
                                             <span class="wf-num-cores-label">1</span>
-                                        </b>
-                                        <br style="font-size: 13px"/>
-                                    </span>
+                                        </b></span>
                                 </div>
                                 <div style="font-size: 13px">
                                     <span style="font-size: 13px">RAM: 16 GB</span>
@@ -248,9 +246,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
                                 <div>data</div>
-                                <div>500 MB
-                                    <br/>
-                                </div>
+                                <div>500 MB</div>
                             </div>
                         </div>
                     </div>
@@ -292,9 +288,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
                                 <div>finalA</div>
-                                <div>200 MB
-                                    <br/>
-                                </div>
+                                <div>200 MB</div>
                             </div>
                         </div>
                     </div>
@@ -315,9 +309,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
                                 <div>finalB</div>
-                                <div>200 MB
-                                    <br/>
-                                </div>
+                                <div>200 MB</div>
                             </div>
                         </div>
                     </div>
@@ -338,9 +330,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
                                 <div>finalC</div>
-                                <div>200 MB
-                                    <br/>
-                                </div>
+                                <div>200 MB</div>
                             </div>
                         </div>
                     </div>
@@ -393,9 +383,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
                                 <div>aggBC</div>
-                                <div>200 MB
-                                    <br/>
-                                </div>
+                                <div>200 MB</div>
                             </div>
                         </div>
                     </div>
@@ -437,12 +425,11 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 13px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 13px">Disk</div>
-                                <div style="font-size: 13px">R/W Bandwidth:
-                                    <br style="font-size: 13px"/>
-                                </div>
+                                <div style="font-size: 13px">R/W Bandwidth:</div>
                                 <div style="font-size: 13px">
                                     <b style="font-size: 13px">
-                                        <span class="wf-disk-bandwidth-label">100  MB/sec</span></b>
+                                        <span class="wf-disk-bandwidth-label">100  MB/sec</span>
+                                    </b>
                                     <br style="font-size: 13px"/>
                                 </div>
                             </div>

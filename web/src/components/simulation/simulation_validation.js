@@ -8,10 +8,10 @@ export const validateFieldInRange = (className,
 
   let label = document.getElementsByClassName(className)[0]
   let updatedText = valueLambdaFunction ? valueLambdaFunction(value) : value
-  updatedText = prefix ? prefix + " " + value : value
+  updatedText = prefix ? prefix + " " + updatedText : updatedText
   updatedText = postfix ? updatedText + " " + postfix : updatedText
 
-  if (!value || !/^[0-9]+$/i.test(value) || value < minRange || value > maxRange) {
+  if (!/^[0-9]+$/i.test(value) || value < minRange || value > maxRange) {
     label.style.backgroundColor = "#ffb7b5"
     label.innerHTML = updatedText
     return false
@@ -28,4 +28,21 @@ export const validateFieldInRange = (className,
   }
 
   return true
+}
+
+export const validateFieldInMultipleRanges = (className,
+                                              value,
+                                              ranges) => {
+
+  for (let index = 0; index < ranges.length; ++index) {
+    let range = ranges[index]
+    if (value >= range.min && value <= range.max) {
+      return validateFieldInRange(className, value, range.min, range.max, range.prefix, range.postfix, range.valueLambdaFunction)
+    }
+  }
+
+  let label = document.getElementsByClassName(className)[0]
+  label.style.backgroundColor = "#ffb7b5"
+  label.innerHTML = value
+  return false
 }

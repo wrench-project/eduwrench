@@ -22,7 +22,7 @@ const WorkflowsFundamentalsSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowsFundamentalsScenario} />
+        <SimulationScenario scenario={<WorkflowsFundamentalsScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

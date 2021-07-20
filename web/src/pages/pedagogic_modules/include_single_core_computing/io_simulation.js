@@ -8,7 +8,10 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
-import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
+import {
+  validateFieldInRange,
+  validateFieldInMultipleRanges
+} from "../../../components/simulation/simulation_validation"
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
 
@@ -43,8 +46,10 @@ const IOSimulation = () => {
                 if (!validateFieldInRange("num-tasks-label", values.numTasks, 1, 100, null, "Task(s)")) {
                   errors.numTasks = "ERROR"
                 }
-                if (!validateFieldInRange("task-gflop-label", values.taskGflop, 1, 999, null, "GFlop") &&
-                  !validateFieldInRange("task-gflop-label", values.taskGflop, 1000, 1000000, null, "TFlop")) {
+                if (!validateFieldInMultipleRanges("task-gflop-label", values.taskGflop, [
+                  { min: 1, max: 999, prefix: null, postfix: "GFlop" },
+                  { min: 1000, max: 1000000, prefix: null, postfix: "TFlop", valueLambdaFunction: (v) => v / 1000 }
+                ])) {
                   errors.taskGflop = "ERROR"
                 }
                 if (!validateFieldInRange("task-input-label", values.amountInput, 0, 999, "In:", "MB")) {

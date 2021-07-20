@@ -47,7 +47,7 @@ const WorkflowsFundamentals = () => {
 
       <p>The figure below depicts an example workflow application:</p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleWorkflow} />
+      <ExampleWorkflow />
       <div className="caption"><strong>Figure 1:</strong> Example workflow application, where each task has an
         amount of work to do (in GFlop) and a memory footprint (in GB). Some examples of real-world workflows for
         scientific applications, along with their DAG representations, can be found <a
@@ -332,7 +332,7 @@ const WorkflowsFundamentals = () => {
 
       <p>Given the workflow below, answer the following questions:</p>
 
-      <object className="figure" type="image/svg+xml" data={WorkflowsFundamentalsQuestion}/>
+      <WorkflowsFundamentalsQuestion />
 
       <p>
         <strong>[A.2.3.q1.1]</strong> How many MB of data are read during an execution of this workflow? How many are

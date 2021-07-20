@@ -7,6 +7,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import IOSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_io_simulation.svg"
 
@@ -37,11 +38,13 @@ const IOSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.taskInput || !/^[0-9]+$/i.test(values.taskInput) || values.taskInput > 1000 || values.taskInput < 100) {
+                if (!validateFieldInRange("mcit-io-task1-input-size-label", values.taskInput, 100, 1000, null, "MB")) {
                   errors.taskInput = "ERROR"
-                } else if (!values.taskOutput || !/^[0-9]+$/i.test(values.taskOutput) || values.taskOutput > 1000 || values.taskOutput < 100) {
+                }
+                if (!validateFieldInRange("mcit-io-task1-output-size-label", values.taskOutput, 100, 1000, null, "MB")) {
                   errors.taskOutput = "ERROR"
-                } else if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 100 || values.taskGflop > 1000) {
+                }
+                if (!validateFieldInRange("mcit-io-task1-work-label", values.taskGflop, 100, 1000, null, "GFlop")) {
                   errors.taskGflop = "ERROR"
                 }
                 return errors
@@ -124,8 +127,6 @@ const IOSimulation = () => {
                                   pointing: "above"
                                 } : null}
                     />
-                  </Form.Group>
-                  <Form.Group widths="equal">
                     <Form.Input name="taskOutput"
                                 label="Task #1 output size (MB)"
                                 placeholder="100"

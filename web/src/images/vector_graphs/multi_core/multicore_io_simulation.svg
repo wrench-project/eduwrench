@@ -24,7 +24,6 @@
                                 </div>
                                 <div>
                                     <span>Cores: 2
-                                        <br/>
                                     </span>
                                 </div>
                             </div>
@@ -77,9 +76,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 12px">Read Bandwidth: 100 MBps</div>
-                                <div style="font-size: 12px">Write  Bandwidth: 100 MBps
-                                    <br style="font-size: 12px"/>
-                                </div>
+                                <div style="font-size: 12px">Write  Bandwidth: 100 MBps</div>
                             </div>
                         </div>
                     </div>
@@ -137,7 +134,8 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>input file #1</div>
-                                <div><span class="mcit-io-task1-input-size-label">100 MB</span>
+                                <div>
+                                    <span class="mcit-io-task1-input-size-label">100 MB</span>
                                     <br/>
                                 </div>
                             </div>
@@ -160,9 +158,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>input file #2</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -182,7 +178,8 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>Task #1</div>
-                                <div><span class="mcit-io-task1-work-label">500 GFlop</span>
+                                <div>
+                                    <span class="mcit-io-task1-work-label">500 GFlop</span>
                                     <br/>
                                 </div>
                             </div>
@@ -205,8 +202,8 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>output file #1</div>
-                                <div><span class="mcit-io-task1-output-size-label">100 MB</span>
-                                    <br/>
+                                <div>
+                                    <span class="mcit-io-task1-output-size-label">100 MB</span>
                                 </div>
                             </div>
                         </div>
@@ -228,9 +225,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>output file #2</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
