@@ -78,7 +78,6 @@ const ClientServerPipelining = () => {
         to the network using a 200MB buffer:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={PipeliningImage} />*/}
       <PipeliningImage />
       <div className="caption"><strong>Figure 1:</strong> Pipelining example.</div>
 

@@ -62,7 +62,6 @@ const ClientServerBasics = () => {
 
       <p>The following picture depicts this setup:</p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ClientServerImage} />*/}
       <ClientServerImage />
       <div className="caption"><strong>Figure 1:</strong> Example client-server setup with two servers.</div>
 
@@ -227,7 +226,6 @@ const ClientServerBasics = () => {
         has both an input and an output file), answer the following <strong>four questions</strong>:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ClientServerQuestion} />*/}
       <ClientServerQuestion />
       <div className="caption"><strong>Figure 2:</strong> Another example client-server setup with two servers.</div>
 

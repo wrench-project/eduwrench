@@ -7,6 +7,10 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import {
+  validateFieldInRange,
+  validateFieldInMultipleRanges
+} from "../../../components/simulation/simulation_validation"
 
 import ClientServerDiskScenario from "../../../images/vector_graphs/client_server/client_server_disk.svg"
 
@@ -36,9 +40,13 @@ const ClientServerPipeliningSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.server1Latency || !/^[0-9]+$/i.test(values.server1Latency) || values.server1Latency > 10000 || values.server1Latency < 1) {
+                if (!validateFieldInRange("csd-server-1-link-latency-label", values.server1Latency, 1, 10000, "Latency:", "us")) {
                   errors.server1Latency = "ERROR"
-                } else if (!values.bufferSize || !/^[0-9]+$/i.test(values.bufferSize) || values.bufferSize > 1000000 || values.bufferSize < 50000) {
+                }
+                if (!validateFieldInMultipleRanges("csd-buffer-size-label", values.bufferSize, [
+                  { min: 50000, max: 999999, postfix: "MB", valueLambdaFunction: (v) => v / 1000 },
+                  { min: 1000000, max: 1000000, postfix: "GB", valueLambdaFunction: (v) => v / 1000000 }
+                ])) {
                   errors.bufferSize = "ERROR"
                 }
                 return errors

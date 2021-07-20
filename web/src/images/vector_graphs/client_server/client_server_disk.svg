@@ -20,7 +20,9 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 158px; height: 1px; padding-top: 162px; margin-left: 288px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                link2<br  style="font-size: 14px"/>Latency: 10 us<br style="font-size: 14px"/>Bandwidth: 600 MB/sec
+                                <div>link2</div>
+                                <div>Latency: 10 us</div>
+                                <div>Bandwidth: 600 MB/sec</div>
                             </div>
                         </div>
                     </div>
@@ -40,7 +42,11 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 156px; height: 1px; padding-top: 162px; margin-left: 147px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                link1<br style="font-size:  14px"/><span class="csd-server-1-link-latency-label">Latency: 10 us</span><br style="font-size: 14px"/>Bandwidth: 200 MB/sec
+                                <div>link1</div>
+                                <div>
+                                    <span class="csd-server-1-link-latency-label">Latency: 10 us</span>
+                                </div>
+                                <div>Bandwidth: 200 MB/sec</div>
                             </div>
                         </div>
                     </div>
@@ -183,9 +189,11 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 158px; height: 1px; padding-top: 36px; margin-left: 174px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <div>Client</div>
-                                <div>Buffer Size:
-                                    <b><span class="csd-buffer-size-label">10 MB</span></b>
+                                <div>Client Buffer Size:</div>
+                                <div>
+                                    <strong>
+                                        <span class="csd-buffer-size-label">10 MB</span>
+                                    </strong>
                                 </div>
                             </div>
                         </div>
@@ -209,7 +217,8 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 118px; height: 1px; padding-top: 31px; margin-left: 631px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                input file<br/>1 GB
+                                <div>input file</div>
+                                <div>1 GB</div>
                             </div>
                         </div>
                     </div>
@@ -230,9 +239,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #333333; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>computational</div>
                                 <div>task</div>
-                                <div>1000 Gflop
-                                    <br/>
-                                </div>
+                                <div>1000 Gflop</div>
                             </div>
                         </div>
                     </div>
