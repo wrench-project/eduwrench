@@ -80,7 +80,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
                     task_scheduling_select: values.taskScheduling,
                     compute_scheduling_select: values.computeScheduling,
                     num_invocation: 1,
-                    seed: 12345
+                    seed: Math.floor(1000*Math.random())
                   }
                   setSimulationResults(<></>)
                   axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/coordinator_worker", data).then(
