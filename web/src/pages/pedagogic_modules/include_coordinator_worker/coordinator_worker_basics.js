@@ -74,7 +74,7 @@ const CoordinatorWorkerBasics = () => {
         schedules). At the most abstract level, scheduling is about assigning work to resources throughout a time
         period. We have briefly encountered the concept of scheduling in the <a
         href="/pedagogic_modules/multi_core_computing">Task Dependencies of the Multicore computing module</a>. You
-        may also have encountered the term in Operating Systems [textbooks](/textbooks). The OS constantly makes
+        may also have encountered the term in Operating Systems <a href="/textbooks" style={{ backgroundColor: "#f7f7f7" }}>textbooks</a>. The OS constantly makes
         scheduling decisions regarding which program runs next on which core and for how long.
       </p>
 
@@ -99,12 +99,13 @@ const CoordinatorWorkerBasics = () => {
         {"    "}wait for a worker to be idle{"\n"}
       </pre>
 
+      <br></br>
       <p>
         Step a) and b) define the strategy, and it is easy to come up with a bunch of options. Here are "a few":
       </p>
 
       <ul>
-        <li>a) Task selection options:</li>
+        <li><strong>a) Task selection options:</strong></li>
         <ul>
           <li>Pick a random task</li>
           <li>Pick the task with the highest work (i.e., highest Flop)</li>
@@ -117,7 +118,7 @@ const CoordinatorWorkerBasics = () => {
       </ul>
 
       <ul>
-        <li>b) Worker selection options:</li>
+        <li><strong>b) Worker selection options:</strong></li>
         <ul>
           <li>Pick a random worker</li>
           <li>Pick the fastest worker (i.e., highest Flop/sec)</li>
