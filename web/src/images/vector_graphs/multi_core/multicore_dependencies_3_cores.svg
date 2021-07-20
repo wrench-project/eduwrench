@@ -23,10 +23,7 @@
                                     <span>Speed: 10 GFlop/sec</span>
                                 </div>
                                 <div>
-                                    <span>Cores:
-                                        <b>3</b>
-                                        <br/>
-                                    </span>
+                                    <span><strong>Cores: 3</strong></span>
                                 </div>
                                 <div>
                                     <span>RAM: 32GB</span>
@@ -65,9 +62,7 @@
                          style="display: flex; align-items: unsafe flex-start; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 106px; margin-left: 292px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: nowrap; ">
-                                <div style="text-align: left">
-                                    <br/>
-                                </div>
+                                <div style="text-align: left"></div>
                             </div>
                         </div>
                     </div>
@@ -87,9 +82,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">display</div>
-                                <div style="font-size: 11px">10 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">10 GFlop</div>
                             </div>
                         </div>
                     </div>
@@ -109,9 +102,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">start</div>
-                                <div style="font-size: 11px">50 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">50 GFlop</div>
                             </div>
                         </div>
                     </div>
@@ -135,9 +126,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">viz</div>
-                                <div style="font-size: 11px">200 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">200 GFlop</div>
                             </div>
                         </div>
                     </div>
@@ -160,9 +149,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">stats</div>
-                                <div style="font-size: 11px">400 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">400 GFlop</div>
                             </div>
                         </div>
                     </div>
@@ -186,7 +173,6 @@
                                     <div>
                                         <span class="mcdt3-analyze-work-label">100 GFlop</span>
                                     </div>
-                                    <br style="font-size: 11px"/>
                                 </div>
                             </div>
                         </div>
@@ -207,9 +193,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">summarize</div>
-                                <div style="font-size: 11px">100 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">100 GFlop</div>
                             </div>
                         </div>
                     </div>
@@ -241,9 +225,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 11px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div style="font-size: 11px">plot</div>
-                                <div style="font-size: 11px">100 GFlop
-                                    <br style="font-size: 11px"/>
-                                </div>
+                                <div style="font-size: 11px">100 GFlop</div>
                             </div>
                         </div>
                     </div>

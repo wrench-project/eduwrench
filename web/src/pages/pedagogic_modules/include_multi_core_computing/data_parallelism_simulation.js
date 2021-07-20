@@ -6,6 +6,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import DataParallelismSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_data_parallelism.svg"
 
@@ -34,9 +35,12 @@ const DataParallelismSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.oilRadius || !/^[0-9]+$/i.test(values.oilRadius) || values.oilRadius < 1 || values.oilRadius > 10) {
+                if (!validateFieldInRange("mcdp-oil-task-1-label", values.oilRadius, 1, 10, null, "GFlop") &
+                  !validateFieldInRange("mcdp-oil-task-2-label", values.oilRadius, 1, 10, null, "GFlop")) {
                   errors.oilRadius = "ERROR"
-                } else if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 100 || values.numCores < 1) {
+                }
+                if (!validateFieldInRange("mcdp-num-cores-label", values.numCores, 1, 100, "Cores:") &
+                  !validateFieldInRange("mcdp-data-parallelism-label", values.numCores, 1, 100, "Data-parallelism with", "tasks")) {
                   errors.numCores = "ERROR"
                 }
                 return errors

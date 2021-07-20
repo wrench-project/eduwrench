@@ -22,7 +22,6 @@ const MultiCoreCapstone = () => {
         RAM footprint of each task is shown in the figure below.
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={MultiCoreCapstoneFigure} />*/}
       <MultiCoreCapstoneFigure />
 
       <p>

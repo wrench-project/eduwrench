@@ -44,7 +44,6 @@ const TaskDependencies = () => {
         figure below:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ExampleChainDAG} />*/}
       <ExampleChainDAG />
       <div className="caption"><strong>Figure 1:</strong> DAG for the "chef" example.</div>
 
@@ -55,7 +54,6 @@ const TaskDependencies = () => {
         statistics need to be displayed. If we have 5 compressed pictures, the program's DAG is:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ExampleCarDAG} />*/}
       <ExampleCarDAG />
       <div className="caption"><strong>Figure 2:</strong> DAG for the "car counting" example.</div>
 
@@ -99,7 +97,6 @@ const TaskDependencies = () => {
         The program's DAG is shown below, with the work of each task (and just X for the analysis task):
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ExampleSimulatedDAG} />*/}
       <ExampleSimulatedDAG />
       <div className="caption"><strong>Figure 3:</strong> DAG for the "data set analysis" example.</div>
 
@@ -303,7 +300,6 @@ const TaskDependencies = () => {
             <>
               For the DAG below, give the number of levels, the maximum level width, and the length of the critical path
               in seconds (name and execution time are shown for each task).<br />
-              {/*<object className="figure" type="image/svg+xml" data={PracticeQuestionDAG1} />*/}
               <PracticeQuestionDAG1 />
             </>
           ),
@@ -324,7 +320,6 @@ const TaskDependencies = () => {
               For the DAG below, would it be useful to use more than 3 cores? Can the execution time be ever shorter
               than 29 seconds? Could you modify one edge's end point to increase the DAG's maximum level width? Show
               your work and reasoning.<br />
-              {/*<object className="figure" type="image/svg+xml" data={PracticeQuestionDAG2} />*/}
               <PracticeQuestionDAG2 />
             </>
           ),
@@ -551,7 +546,6 @@ const TaskDependencies = () => {
         some computer, give the number of levels, the maximum level width, and the length of the critical path in
         seconds.
       </p>
-      {/*<object className="figure" type="image/svg+xml" data={QuestionDAG1} />*/}
       <QuestionDAG1 />
 
       <p>
@@ -578,7 +572,6 @@ const TaskDependencies = () => {
         approach is better? Show your work. For each approach it is likely a good idea to depict the Gantt chart of the
         application execution for determining the execution time.
       </p>
-      {/*<object className="figure" type="image/svg+xml" data={QuestionDAG2} />*/}
       <QuestionDAG2 />
 
     </>

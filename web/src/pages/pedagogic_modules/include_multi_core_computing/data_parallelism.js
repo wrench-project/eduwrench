@@ -54,7 +54,6 @@ const DataParallelism = () => {
         follows:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ExampleDataParallelismDAG} />*/}
       <ExampleDataParallelismDAG />
       <div className="caption"><strong>Figure 1:</strong> Example image processing program.</div>
 
@@ -95,7 +94,6 @@ const DataParallelism = () => {
         program's DAG is as follows:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={ExampleDataParallelismExposedDAG} />*/}
       <ExampleDataParallelismExposedDAG />
       <div className="caption"><strong>Figure 2:</strong> Example image processing program with data-parallelism
         exposed.
@@ -242,8 +240,7 @@ const DataParallelism = () => {
         vs. number of cores for different values of <TeX math="\alpha" />:
       </p>
 
-      {/*<object className="figure" type="image/svg+xml" data={Amdahl} style={{ maxWidth: "500px" }} />*/}
-      <Amdahl />
+      <Amdahl style={{ maxHeight: "400px"}} />
       <div className="caption"><strong>Figure 3:</strong> Speedup vs. number of cores for different values of the
         fraction of the sequential execution time that is parallelizable.
       </div>
