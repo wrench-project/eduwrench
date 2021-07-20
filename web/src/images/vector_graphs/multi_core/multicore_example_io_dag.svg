@@ -58,9 +58,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 120px; margin-left: 91px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <div>Task 2
-                                    <br/>
-                                </div>
+                                <div>Task 2</div>
                                 <div>400 GFlop</div>
                             </div>
                         </div>
