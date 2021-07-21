@@ -6,7 +6,8 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import CoordinatorWorkerBasicsSimulation from "./coordinator_worker_basics_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import CoordinatorWorkerNarrative from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_narrative.svg"
+import CoordinatorWorkerNarrative
+  from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_narrative.svg"
 import { StaticImage } from "gatsby-plugin-image"
 
 const CoordinatorWorkerBasics = () => {
@@ -43,7 +44,6 @@ const CoordinatorWorkerBasics = () => {
 
       <h2>Parallelism through Coordinator-Worker</h2>
 
-      {/*<object className="figure" type="image/svg+xml" data={CoordinatorWorkerNarrative} />*/}
       <CoordinatorWorkerNarrative />
       <div className="caption"><strong>Figure 1:</strong> Coordinator-worker setup.</div>
 
@@ -75,7 +75,9 @@ const CoordinatorWorkerBasics = () => {
         schedules). At the most abstract level, scheduling is about assigning work to resources throughout a time
         period. We have briefly encountered the concept of scheduling in the <a
         href="/pedagogic_modules/multi_core_computing">Task Dependencies of the Multicore computing module</a>. You
-        may also have encountered the term in Operating Systems <a href="/textbooks" style={{ backgroundColor: "#f7f7f7" }}>textbooks</a>. The OS constantly makes
+        may also have encountered the term in Operating Systems <a href="/textbooks"
+                                                                   style={{ backgroundColor: "#f7f7f7" }}>textbooks</a>.
+        The OS constantly makes
         scheduling decisions regarding which program runs next on which core and for how long.
       </p>
 

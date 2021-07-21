@@ -5,8 +5,10 @@ import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
-import CoordinatorWorkerSchedulingScenario from "../../../images/vector_graphs/coordinator_worker/coordinator_worker.svg"
+import CoordinatorWorkerSchedulingScenario
+  from "../../../images/vector_graphs/coordinator_worker/coordinator_worker.svg"
 
 const CoordinatorWorkerSchedulingSimulation = () => {
 

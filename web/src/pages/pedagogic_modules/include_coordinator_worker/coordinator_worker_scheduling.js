@@ -6,7 +6,6 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import PracticeQuestions from "../../../components/practice_questions"
 import CoordinatorWorkerSchedulingSimulation from "./coordinator_worker_scheduling_simulation"
 
-
 const CoordinatorWorkerScheduling = () => {
   return (
     <>
@@ -134,7 +133,8 @@ const CoordinatorWorkerScheduling = () => {
                 <li>lowest work / fastest: [1.54 sec : 3.44 sec : 7.03 sec]</li>
               </ul>
               <p>
-                Results are very similar, with the different that random is worse than "lower work". It seems that the "highest work" idea
+                Results are very similar, with the different that random is worse than "lower work". It seems that the
+                "highest work" idea
                 is a good one even when workers are heterogeneous, provided we pick the
                 fastest workers.
               </p>
@@ -145,7 +145,7 @@ const CoordinatorWorkerScheduling = () => {
           key: "A.3.3.p2.3",
           question: (
             <>
-              Let us now consider a fully heterogeneous setup in which we 
+              Let us now consider a fully heterogeneous setup in which we
               have <strong>20 workers</strong> and <strong>10 tasks</strong> with:
               <ul>
                 <li>worker speeds in the [100, 1000] range</li>
