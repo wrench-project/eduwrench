@@ -18,12 +18,8 @@
                                     <br/>
                                 </div>
                                 <div>init</div>
-                                <div>500 GFlop
-                                    <br/>
-                                </div>
-                                <div>7 GB
-                                    <br/>
-                                </div>
+                                <div>500 GFlop</div>
+                                <div>7 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -48,13 +44,9 @@
                                 <div>
                                     <br/>
                                 </div>
-                                <div>t3
-                                    <br/>
-                                </div>
+                                <div>t3</div>
                                 <div>2000 GFlop</div>
-                                <div>7 GB
-                                    <br/>
-                                </div>
+                                <div>7 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -76,13 +68,9 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 78px; height: 1px; padding-top: 268px; margin-left: 1px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: normal; word-wrap: normal; ">
-                                <div>t1
-                                    <br/>
-                                </div>
+                                <div>t1</div>
                                 <div>1000 GFlop</div>
-                                <div>15 GB
-                                    <br/>
-                                </div>
+                                <div>15 GB</div>
                             </div>
                         </div>
                     </div>
@@ -131,11 +119,9 @@
                                 <div>
                                     <br/>
                                 </div>
-                                t2
+                                <div>t2</div>
                                 <div>1000 GFlop</div>
-                                <div>7 GB
-                                    <br/>
-                                </div>
+                                <div>7 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -339,9 +325,7 @@
                                 </div>
                                 <div>t4</div>
                                 <div>2000 GFlop</div>
-                                <div>7 GB
-                                    <br/>
-                                </div>
+                                <div>7 GB</div>
                                 <div>
                                     <br/>
                                 </div>

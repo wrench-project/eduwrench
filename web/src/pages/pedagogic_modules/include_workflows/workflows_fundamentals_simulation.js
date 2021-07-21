@@ -7,6 +7,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsFundamentalsScenario from "../../../images/vector_graphs/workflows/workflow_fundamentals.svg"
 
@@ -35,9 +36,10 @@ const WorkflowsFundamentalsSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 3 || values.numCores < 1) {
+                if (!validateFieldInRange("wf-num-cores-label", values.numCores, 1, 3, "Cores:")) {
                   errors.numCores = "ERROR"
-                } else if (!values.diskBandwidth || !/^[0-9]+$/i.test(values.diskBandwidth) || values.diskBandwidth < 10 || values.diskBandwidth > 500) {
+                }
+                if (!validateFieldInRange("wf-disk-bandwidth-label", values.diskBandwidth, 10, 500, null, "MB/sec")) {
                   errors.diskBandwidth = "ERROR"
                 }
                 return errors
