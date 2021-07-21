@@ -16,7 +16,7 @@ const WorkflowsCapstone = () => {
 
       <p> Consider the scenario (i.e., a workflow to be executed on a distributed platform) depicted in this
         figure: </p>
-      <object className="figure" type="image/svg+xml" data={WorkflowsCapstoneScenario} />
+      <WorkflowsCapstoneScenario />
 
       <p>
         The 4-task workflow needs to be executed on a 2-host platform, with all

@@ -6,7 +6,8 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsMixedParallelismSimulation from "./workflows_mixed_parallelism_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import WorkflowsMixedParallelismWorkflow from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow.svg"
+import WorkflowsMixedParallelismWorkflow
+  from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow.svg"
 import WorkflowsMixedParallelismQuestion
   from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow_question.svg"
 
@@ -37,7 +38,7 @@ const WorkflowsMixedParallelism = () => {
 
       <h2>An example</h2>
 
-      <object className="figure" type="image/svg+xml" data={WorkflowsMixedParallelismWorkflow} />
+      <WorkflowsMixedParallelismWorkflow />
       <div className="caption"><strong>Figure 1:</strong> A simple workflow with some data-parallel tasks (<TeX
         math="\alpha" /> is the fraction of the work that is non-parallelizable).
       </div>
@@ -192,8 +193,8 @@ const WorkflowsMixedParallelism = () => {
       </Header>
 
       <p>Considering the workflow below, answer the following questions.</p>
-      <object className="figure" type="image/svg+xml" data={WorkflowsMixedParallelismQuestion} />
-      <br/><br/>
+      <WorkflowsMixedParallelismQuestion />
+      <br /><br />
 
       <p>
         <strong>[A.3.4.q4.1]</strong> If we are given two hosts with 100 Gflop/sec hosts, where host1 has 20 cores and

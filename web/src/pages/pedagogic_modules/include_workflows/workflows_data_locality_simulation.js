@@ -8,6 +8,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDataLocalityScenario from "../../../images/vector_graphs/workflows/workflow_data_locality.svg"
 
@@ -23,7 +24,7 @@ const WorkflowsDataLocalitySimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowsDataLocalityScenario} />
+        <SimulationScenario scenario={<WorkflowsDataLocalityScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -38,11 +39,13 @@ const WorkflowsDataLocalitySimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
+                if (!validateFieldInRange("wf-locality-num-cores-label", values.numCores, 1, 32, "Cores:")) {
                   errors.numCores = "ERROR"
-                } else if (!values.numHosts || !/^[0-9]+$/i.test(values.numHosts) || values.numHosts < 1 || values.numHosts > 20) {
+                }
+                if (!validateFieldInRange("wf-locality-num-hosts-label", values.numHosts, 1, 20, "N =", "Host(s)")) {
                   errors.numHosts = "ERROR"
-                } else if (!values.linkBandwidth || !/^[0-9]+$/i.test(values.linkBandwidth) || values.linkBandwidth < 1 || values.linkBandwidth > 500) {
+                }
+                if (!validateFieldInRange("wf-locality-link-bandwidth-label", values.linkBandwidth, 1, 500, "Bandwidth:", "MB/sec")) {
                   errors.linkBandwidth = "ERROR"
                 }
                 return errors

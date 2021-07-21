@@ -15,9 +15,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>final</div>
                                 <div>1000 GFlop</div>
-                                <div>2 GB
-                                    <br/>
-                                </div>
+                                <div>2 GB</div>
                             </div>
                         </div>
                     </div>
@@ -42,9 +40,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>output</div>
-                                <div>1 MB
-                                    <br/>
-                                </div>
+                                <div>1 MB</div>
                             </div>
                         </div>
                     </div>
@@ -71,12 +67,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_20</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -108,9 +100,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_20</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -131,9 +121,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_20</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -221,9 +209,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; font-weight: bold; white-space: nowrap; ">
                                 <div>
-                                    <b>20 pre_* tasks
-                                        <br/>
-                                    </b>
+                                    <b>20 pre_* tasks</b>
                                 </div>
                             </div>
                         </div>
@@ -247,12 +233,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_02</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -284,9 +266,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_02</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -307,9 +287,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_02</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -332,12 +310,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_01</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -369,9 +343,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_01</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -392,9 +364,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_01</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -565,7 +535,7 @@
                 <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%"
                                height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
                     <div xmlns="http://www.w3.org/1999/xhtml"
-                         style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 90px; height: 1px; padding-top: 471px; margin-left: 614px;">
+                         style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 100px; height: 1px; padding-top: 471px; margin-left: 614px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: left; ">
                             <div style="display: inline-block; font-size: 14px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <b><span class="wf-locality-num-hosts-label">N = 1 Host(s)</span></b>

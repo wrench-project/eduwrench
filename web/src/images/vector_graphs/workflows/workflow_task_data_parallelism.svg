@@ -205,8 +205,7 @@
                                 <div style="font-size: 14px">
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
-                                Cores:
-                                <b>3</b>
+                                <strong>Cores: 3</strong>
                             </div>
                         </div>
                     </div>
@@ -253,8 +252,7 @@
                                 <div style="font-size: 14px">
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
-                                Cores:
-                                <b>3</b>
+                                <strong>Cores: 3</strong>
                             </div>
                         </div>
                     </div>

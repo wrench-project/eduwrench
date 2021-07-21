@@ -6,8 +6,10 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
-import WorkflowsMixedParallelismScenario from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism.svg"
+import WorkflowsMixedParallelismScenario
+  from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism.svg"
 
 const WorkflowsMixedParallelismSimulation = () => {
 
@@ -21,7 +23,7 @@ const WorkflowsMixedParallelismSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowsMixedParallelismScenario} />
+        <SimulationScenario scenario={<WorkflowsMixedParallelismScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -35,11 +37,13 @@ const WorkflowsMixedParallelismSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCoresBlue || !/^[0-9]+$/i.test(values.numCoresBlue) || values.numCoresBlue > 3 || values.numCoresBlue < 1) {
+                if (!validateFieldInRange("wf-parallel-num-cores-blue-label", values.numCoresBlue, 1, 3, null, "core(s)")) {
                   errors.numCoresBlue = "ERROR"
-                } else if (!values.numCoresYellow || !/^[0-9]+$/i.test(values.numCoresYellow) || values.numCoresYellow < 1 || values.numCoresYellow > 3) {
+                }
+                if (!validateFieldInRange("wf-parallel-num-cores-yellow-label", values.numCoresYellow, 1, 3, null, "core(s)")) {
                   errors.numCoresYellow = "ERROR"
-                } else if (!values.numCoresPurple || !/^[0-9]+$/i.test(values.numCoresPurple) || values.numCoresPurple < 1 || values.numCoresPurple > 3) {
+                }
+                if (!validateFieldInRange("wf-parallel-num-cores-purple-label", values.numCoresPurple, 1, 3, null, "core(s)")) {
                   errors.numCoresPurple = "ERROR"
                 }
                 return errors

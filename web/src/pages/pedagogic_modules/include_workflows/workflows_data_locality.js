@@ -6,7 +6,8 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import WorkflowsDataLocalitySimulation from "./workflows_data_locality_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import WorkflowsDataLocalityPlatformZoom from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"
+import WorkflowsDataLocalityPlatformZoom
+  from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"
 import WorkflowsDataLocalityQuestion from "../../../images/vector_graphs/workflows/workflow_data_locality_question.svg"
 
 const WorkflowsDataLocality = () => {
@@ -41,7 +42,7 @@ const WorkflowsDataLocality = () => {
         enhance that site with a bit more hardware!
       </p>
 
-      <object className="figure" type="image/svg+xml" data={WorkflowsDataLocalityPlatformZoom} />
+      <WorkflowsDataLocalityPlatformZoom />
       <div className="caption"><strong>Figure 1:</strong> Added storage capability at the compute site.</div>
 
       <p>
@@ -182,8 +183,8 @@ const WorkflowsDataLocality = () => {
       </Header>
 
       <p>Consider the following workflow:</p>
-      <object className="figure" type="image/svg+xml" data={WorkflowsDataLocalityQuestion} />
-      <br /><br/>
+      <WorkflowsDataLocalityQuestion />
+      <br /><br />
 
       <p>
         <strong>[A.3.4.q3.1]</strong> Say we execute this workflow at a compute site that hosts
