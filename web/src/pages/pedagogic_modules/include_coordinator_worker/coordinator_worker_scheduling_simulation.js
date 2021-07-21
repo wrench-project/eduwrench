@@ -6,7 +6,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
-import CoordinatorWorkerSchedulingScenario from "../../../images/coordinator_worker/coordinator_worker.svg"
+import CoordinatorWorkerSchedulingScenario from "../../../images/vector_graphs/coordinator_worker/coordinator_worker.svg"
 
 const CoordinatorWorkerSchedulingSimulation = () => {
 
@@ -20,7 +20,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={CoordinatorWorkerSchedulingScenario} />
+        <SimulationScenario scenario={<CoordinatorWorkerSchedulingScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -275,7 +275,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                   </Form.Group>
                   <Form.Group widths="equal">
                     <Form.Input fluid name="minTaskFlop"
-                                label="Minimum Gflop Per Task"
+                                label="Minimum Work Per Task (Gflop)"
                                 placeholder="1"
                                 type="number"
                                 min={1}
@@ -290,7 +290,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                                 } : null}
                     />
                     <Form.Input fluid name="maxTaskFlop"
-                                label="Maximum Gflop Per Task"
+                                label="Maximum Work Per Task (Gflop)"
                                 placeholder="100"
                                 type="number"
                                 min={1}

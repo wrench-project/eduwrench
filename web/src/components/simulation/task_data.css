@@ -1,3 +1,8 @@
+.task-data {
+    max-height: 30em;
+    overflow: auto;
+}
+
 .table-read {
     color: #469C76 !important;
 }

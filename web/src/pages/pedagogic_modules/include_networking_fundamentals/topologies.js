@@ -4,12 +4,12 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import Topology from "../../../images/networking_fundamentals/topology.svg"
-import TopologyRoutes from "../../../images/networking_fundamentals/topology_routes.svg"
-import Scenario1 from "../../../images/networking_fundamentals/scenario_1.svg"
-import Scenario2 from "../../../images/networking_fundamentals/scenario_2.svg"
-import TopologyPractice from "../../../images/networking_fundamentals/topology_practice.svg"
-import TopologyQuestion from "../../../images/networking_fundamentals/topology_questions.svg"
+import Topology from "../../../images/vector_graphs/networking_fundamentals/topology.svg"
+import TopologyRoutes from "../../../images/vector_graphs/networking_fundamentals/topology_routes.svg"
+import Scenario1 from "../../../images/vector_graphs/networking_fundamentals/scenario_1.svg"
+import Scenario2 from "../../../images/vector_graphs/networking_fundamentals/scenario_2.svg"
+import TopologyPractice from "../../../images/vector_graphs/networking_fundamentals/topology_practice.svg"
+import TopologyQuestion from "../../../images/vector_graphs/networking_fundamentals/topology_questions.svg"
 
 const Topologies = () => {
   return (
@@ -31,7 +31,7 @@ const Topologies = () => {
         interesting details).
       </p>
 
-      <object className="figure" type="image/svg+xml" data={Topology} />
+      <Topology />
       <div className="caption"><strong>Figure 1:</strong> An example network topology that interconnects 5 hosts.</div>
 
       <p>
@@ -42,7 +42,7 @@ const Topologies = () => {
         being communicated from one of the hosts to another.
       </p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyRoutes} />
+      <TopologyRoutes />
       <div className="caption"><strong>Figure 2:</strong> Two possible routes between host A and host C.</div>
 
       <p>
@@ -58,7 +58,7 @@ const Topologies = () => {
 
       <p>Consider two hosts connected via a 3-link route, as depicted in the figure below.</p>
 
-      <object className="figure" type="image/svg+xml" data={Scenario1} />
+      <Scenario1 />
       <div className="caption"><strong>Figure 3:</strong> An example 3-link route between two hosts.</div>
 
       <p>
@@ -79,7 +79,7 @@ const Topologies = () => {
 
       <p>Consider now a similar three-link route, but with different link bandwidths:</p>
 
-      <object className="figure" type="image/svg+xml" data={Scenario2} />
+      <Scenario2 />
       <div className="caption"><strong>Figure 4:</strong> Another example 3-link route between two hosts.</div>
 
       <p>
@@ -122,7 +122,7 @@ const Topologies = () => {
               To make sure you have understood the above, answer the following practice
               questions, which all pertain to this topology:
             </p>
-            <object className="figure" type="image/svg+xml" data={TopologyPractice} />
+            <TopologyPractice />
             <div className="caption"><strong>Figure 5:</strong> Network topology for practice questions.</div>
           </>
         )}
@@ -183,7 +183,7 @@ const Topologies = () => {
 
       <p>Answer the following questions, which all pertain to this topology:</p>
 
-      <object className="figure" type="image/svg+xml" data={TopologyQuestion} />
+      <TopologyQuestion />
       <div className="caption"><strong>Figure 6:</strong> Network topology for questions (lat = "latency"; bw =
         "bandwidth").
       </div>

@@ -8,8 +8,12 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import {
+  validateFieldInRange,
+  validateFieldInMultipleRanges
+} from "../../../components/simulation/simulation_validation"
 
-import IOTask from "../../../images/single_core/io_task.svg"
+import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
 
 const IOSimulation = () => {
 
@@ -23,7 +27,7 @@ const IOSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={IOTask} />
+        <SimulationScenario scenario={<IOTask />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -39,13 +43,19 @@ const IOSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numTasks || !/^[0-9]+$/i.test(values.numTasks) || values.numTasks > 100 || values.numTasks < 1) {
+                if (!validateFieldInRange("num-tasks-label", values.numTasks, 1, 100, null, "Task(s)")) {
                   errors.numTasks = "ERROR"
-                } else if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 1 || values.taskGflop > 999999) {
+                }
+                if (!validateFieldInMultipleRanges("task-gflop-label", values.taskGflop, [
+                  { min: 1, max: 999, prefix: null, postfix: "GFlop" },
+                  { min: 1000, max: 1000000, prefix: null, postfix: "TFlop", valueLambdaFunction: (v) => v / 1000 }
+                ])) {
                   errors.taskGflop = "ERROR"
-                } else if (!values.amountInput || !/^[0-9]+$/i.test(values.amountInput) || values.amountInput < 0 || values.amountInput > 999) {
+                }
+                if (!validateFieldInRange("task-input-label", values.amountInput, 0, 999, "In:", "MB")) {
                   errors.amountInput = "ERROR"
-                } else if (!values.amountOutput || !/^[0-9]+$/i.test(values.amountOutput) || values.amountOutput < 0 || values.amountOutput > 999) {
+                }
+                if (!validateFieldInRange("task-output-label", values.amountOutput, 0, 999, "Out:", "MB")) {
                   errors.amountOutput = "ERROR"
                 }
                 return errors

@@ -11,7 +11,7 @@ const SimulationOutput = ({ output }) => {
       let g = 255 - parseInt(colors[1].trim())
       let b = 255 - parseInt(colors[2].trim())
       let textColor = "rgb(" + r + "," + g + "," + b + ")"
-      return (<li key={line} style={{ color: textColor }}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
+      return (<li key={Math.random()} style={{ color: textColor }}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
     }
     return (<li key={Math.random()}>{line.replace(/\s*\<.*?\>\s*/g, "")}</li>)
   })

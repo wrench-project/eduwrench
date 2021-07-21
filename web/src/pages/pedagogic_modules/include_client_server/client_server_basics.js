@@ -6,8 +6,8 @@ import ClientServerBasicsSimulation from "./client_server_basics_simulation"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 
-import ClientServerImage from "../../../images/client_server/client_server.svg"
-import ClientServerQuestion from "../../../images/client_server/client_server_question.svg"
+import ClientServerImage from "../../../images/vector_graphs/client_server/client_server.svg"
+import ClientServerQuestion from "../../../images/vector_graphs/client_server/client_server_question.svg"
 
 const ClientServerBasics = () => {
   return (
@@ -62,7 +62,7 @@ const ClientServerBasics = () => {
 
       <p>The following picture depicts this setup:</p>
 
-      <object className="figure" type="image/svg+xml" data={ClientServerImage} />
+      <ClientServerImage />
       <div className="caption"><strong>Figure 1:</strong> Example client-server setup with two servers.</div>
 
       <p>
@@ -226,7 +226,7 @@ const ClientServerBasics = () => {
         has both an input and an output file), answer the following <strong>four questions</strong>:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ClientServerQuestion} />
+      <ClientServerQuestion />
       <div className="caption"><strong>Figure 2:</strong> Another example client-server setup with two servers.</div>
 
       Once again, you will answer these questions using back-of-the-envelope estimates, even though simulation

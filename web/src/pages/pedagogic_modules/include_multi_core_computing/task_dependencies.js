@@ -7,14 +7,13 @@ import PracticeQuestions from "../../../components/practice_questions"
 import TaskDependencies3CoresSimulation from "./task_dependencies_3_cores_simulation"
 import TaskDependencies2CoresSimulation from "./task_dependencies_2_cores_simulation"
 
-import ExampleChainDAG from "../../../images/multi_core/multicore_example_chain_dag.svg"
-import ExampleCarDAG from "../../../images/multi_core/multicore_example_car_dag.svg"
-import ExampleSimulatedDAG from "../../../images/multi_core/multicore_example_simulated_dag.svg"
-import PracticeQuestionDAG1 from "../../../images/multi_core/multicore_practice_dag_1.svg"
-import PracticeQuestionDAG2 from "../../../images/multi_core/multicore_practice_dag_2.svg"
-import QuestionDAG1 from "../../../images/multi_core/multicore_question_dag_1.svg"
-import QuestionDAG2 from "../../../images/multi_core/multicore_question_dag_2.svg"
-import ExampleIODAG from "../../../images/multi_core/multicore_example_io_dag.svg"
+import ExampleChainDAG from "../../../images/vector_graphs/multi_core/multicore_example_chain_dag.svg"
+import ExampleCarDAG from "../../../images/vector_graphs/multi_core/multicore_example_car_dag.svg"
+import ExampleSimulatedDAG from "../../../images/vector_graphs/multi_core/multicore_example_simulated_dag.svg"
+import PracticeQuestionDAG1 from "../../../images/vector_graphs/multi_core/multicore_practice_dag_1.svg"
+import PracticeQuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_practice_dag_2.svg"
+import QuestionDAG1 from "../../../images/vector_graphs/multi_core/multicore_question_dag_1.svg"
+import QuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_question_dag_2.svg"
 
 const TaskDependencies = () => {
   return (
@@ -45,7 +44,7 @@ const TaskDependencies = () => {
         figure below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleChainDAG} />
+      <ExampleChainDAG />
       <div className="caption"><strong>Figure 1:</strong> DAG for the "chef" example.</div>
 
       <p>
@@ -55,7 +54,7 @@ const TaskDependencies = () => {
         statistics need to be displayed. If we have 5 compressed pictures, the program's DAG is:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleCarDAG} />
+      <ExampleCarDAG />
       <div className="caption"><strong>Figure 2:</strong> DAG for the "car counting" example.</div>
 
       <p>
@@ -98,7 +97,7 @@ const TaskDependencies = () => {
         The program's DAG is shown below, with the work of each task (and just X for the analysis task):
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleSimulatedDAG} />
+      <ExampleSimulatedDAG />
       <div className="caption"><strong>Figure 3:</strong> DAG for the "data set analysis" example.</div>
 
       <p>
@@ -140,7 +139,7 @@ const TaskDependencies = () => {
               <p>
                 This is a very similar question as the previous one. The sequential execution time is 126 seconds, and
                 the execution time on 3 cores is still 46 seconds. Therefore, the number of core idle seconds
-                is <TeX math="46 \times 3 − 126 = 12" /> seconds.
+                is <TeX math="46 \times 3 - 126 = 12" /> seconds.
               </p>
               <p>
                 We can double check this answer by counting the number of idle seconds as shown in the Host Utilization
@@ -300,8 +299,8 @@ const TaskDependencies = () => {
           question: (
             <>
               For the DAG below, give the number of levels, the maximum level width, and the length of the critical path
-              in seconds (name and execution time are shown for each task).
-              <object className="figure" type="image/svg+xml" data={PracticeQuestionDAG1} />
+              in seconds (name and execution time are shown for each task).<br />
+              <PracticeQuestionDAG1 />
             </>
           ),
           content: (
@@ -321,7 +320,7 @@ const TaskDependencies = () => {
               For the DAG below, would it be useful to use more than 3 cores? Can the execution time be ever shorter
               than 29 seconds? Could you modify one edge's end point to increase the DAG's maximum level width? Show
               your work and reasoning.<br />
-              <object className="figure" type="image/svg+xml" data={PracticeQuestionDAG2} />
+              <PracticeQuestionDAG2 />
             </>
           ),
           content: (
@@ -547,7 +546,7 @@ const TaskDependencies = () => {
         some computer, give the number of levels, the maximum level width, and the length of the critical path in
         seconds.
       </p>
-      <object className="figure" type="image/svg+xml" data={QuestionDAG1} />
+      <QuestionDAG1 />
 
       <p>
         <strong>[A.2.q4.2]</strong> For the DAG in the previous question, what would be the parallel efficiency on 3
@@ -573,7 +572,7 @@ const TaskDependencies = () => {
         approach is better? Show your work. For each approach it is likely a good idea to depict the Gantt chart of the
         application execution for determining the execution time.
       </p>
-      <object className="figure" type="image/svg+xml" data={QuestionDAG2} />
+      <QuestionDAG2 />
 
     </>
   )

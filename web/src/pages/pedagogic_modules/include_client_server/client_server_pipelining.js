@@ -6,7 +6,7 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import PracticeQuestions from "../../../components/practice_questions"
 import ClientServerPipeliningSimulation from "./client_server_pipelining_simulation"
 
-import PipeliningImage from "../../../images/client_server/client_server_pipelining.svg"
+import PipeliningImage from "../../../images/vector_graphs/client_server/client_server_pipelining.svg"
 
 const ClientServerPipelining = () => {
   return (
@@ -78,7 +78,7 @@ const ClientServerPipelining = () => {
         to the network using a 200MB buffer:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={PipeliningImage} />
+      <PipeliningImage />
       <div className="caption"><strong>Figure 1:</strong> Pipelining example.</div>
 
       <p>
