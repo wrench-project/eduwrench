@@ -323,9 +323,7 @@
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>final</div>
                                 <div>1000 GFlop</div>
-                                <div>2 GB
-                                    <br/>
-                                </div>
+                                <div>2 GB</div>
                             </div>
                         </div>
                     </div>
@@ -350,9 +348,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>output</div>
-                                <div>1 MB
-                                    <br/>
-                                </div>
+                                <div>1 MB</div>
                             </div>
                         </div>
                     </div>
@@ -379,12 +375,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_20</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -416,9 +408,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_20</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -439,9 +429,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_20</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -555,12 +543,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_02</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -592,9 +576,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_02</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -615,9 +597,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_02</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>
@@ -640,12 +620,8 @@
                                     <br/>
                                 </div>
                                 <div>pre_01</div>
-                                <div>1000 GFlop
-                                    <br/>
-                                </div>
-                                <div> 8 GB
-                                    <br/>
-                                </div>
+                                <div>1000 GFlop</div>
+                                <div> 8 GB</div>
                                 <div>
                                     <br/>
                                 </div>
@@ -677,9 +653,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>in_01</div>
-                                <div>50 MB
-                                    <br/>
-                                </div>
+                                <div>50 MB</div>
                             </div>
                         </div>
                     </div>
@@ -700,9 +674,7 @@
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
                                 <div>out_01</div>
-                                <div>100 MB
-                                    <br/>
-                                </div>
+                                <div>100 MB</div>
                             </div>
                         </div>
                     </div>

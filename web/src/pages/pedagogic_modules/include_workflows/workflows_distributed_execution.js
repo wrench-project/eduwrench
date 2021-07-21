@@ -45,7 +45,7 @@ const WorkflowsDistributedExecution = () => {
 
       <p>We consider the following distributed platform with <i>three sites</i> on a wide-are network.</p>
 
-      <object className="figure" type="image/svg+xml" data={DistributedPlatform} />
+      <DistributedPlatform />
       <div className="caption"><strong>Figure 1:</strong> Example distributed computing platform.</div>
 
       <p>
@@ -71,7 +71,7 @@ const WorkflowsDistributedExecution = () => {
         connected to a switch via a high-speed network link. This setup is depicted
         in the figure below:
       </p>
-      <object className="figure" type="image/svg+xml" data={DistributedPlatformZoom} />
+      <DistributedPlatformZoom />
       <div className="caption"><strong>Figure 2:</strong> Compute resources at the compute site.</div>
       <p>
         Each compute host has 32 GB of RAM, cores that compute at 100 Gflop/sec, and up to 8 of these cores. All
@@ -90,7 +90,7 @@ const WorkflowsDistributedExecution = () => {
       <TeX math="\text{Task execution time} = \text{input read} + \text{compute} + \text{output  write}" block />
 
       <p>
-      which gives us
+        which gives us
       </p>
 
       <TeX math="\text{Task execution time} = 200 / 100 + 1000 / 100 + 10 / 100 = 12.1 \text{sec}" block />
@@ -114,7 +114,7 @@ const WorkflowsDistributedExecution = () => {
       <h2>Example Workflow</h2>
 
       <p>We consider a simple "in-tree" workflow, depicted in the figure below.</p>
-      <object className="figure" type="image/svg+xml" data={DistributedWorkflow} />
+      <DistributedWorkflow />
       <div className="caption"><strong>Figure 3:</strong> Example workflow.</div>
 
       <p>
@@ -283,7 +283,7 @@ const WorkflowsDistributedExecution = () => {
 
       <p>Consider the following workflow (all green tasks have identical specs, and so do all blue tasks):</p>
 
-      <object className="figure" type="image/svg+xml" data={DistributedQuestion} />
+      <DistributedQuestion />
 
       <p><strong>[A.3.4.q2.1]</strong> You can lease three different platforms to execute this workflow:</p>
       <ul>

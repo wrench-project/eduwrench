@@ -7,6 +7,7 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDistributedExecutionScenario from "../../../images/vector_graphs/workflows/workflow_distributed.svg"
 
@@ -22,7 +23,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={WorkflowsDistributedExecutionScenario} />
+        <SimulationScenario scenario={<WorkflowsDistributedExecutionScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -35,9 +36,10 @@ const WorkflowsDistributedExecutionSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.numCores || !/^[0-9]+$/i.test(values.numCores) || values.numCores > 32 || values.numCores < 1) {
+                if (!validateFieldInRange("wf-dist-num-hosts-label", values.numCores, 1, 32, "N=", "Hosts")) {
                   errors.numCores = "ERROR"
-                } else if (!values.numHosts || !/^[0-9]+$/i.test(values.numHosts) || values.numHosts < 1 || values.numHosts > 20) {
+                }
+                if (!validateFieldInRange("wf-dist-num-cores-label", values.numHosts, 1, 20, "Cores:")) {
                   errors.numHosts = "ERROR"
                 }
                 return errors
@@ -56,7 +58,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
                     num_hosts: values.numHosts,
                     num_cores: values.numCores,
                     link_bandwidth: "100",
-                    use_local_storage: "0",
+                    use_local_storage: "0"
                   }
                   setSimulationResults(<></>)
                   axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
