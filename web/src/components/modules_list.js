@@ -103,13 +103,16 @@ const ModulesList = () => {
       <h4 style={{ margin: 0 }}><br />D. Case Studies: Local and Cloud Computing</h4>
 
       <SegmentGroup className="modules">
-        <Segment><strong>D.1. Local Computing</strong></Segment>
+        <Segment><strong>D.1. Energy-Aware Distributed Workflow Execution</strong></Segment>
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
                     href="/pedagogic_modules/thrustd_cloud/">Launch</Button>
-            The goal of this module is to provide you with fundamental knowledge of and
-            hands-on experience with local and cloud computing.
+            The goal of this module is to expose you to a real-world case-study
+            in which a scientific workflow application from the field of
+            astronomy needs to be executed on various distributed computing
+            resources as quickly as possible while managing the overall
+            energy cost (monetary and carbon footprint) of the execution. 
           </p>
         </Segment>
       </SegmentGroup>
