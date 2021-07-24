@@ -11,12 +11,12 @@ import CloudComputing from "./include_thrustd_cloud/cloud_computing"
 const ThrustD_Cloud = () => {
     return (
         <Layout>
-            <Seo title="D.1. Thrust D" />
+            <Seo title="D.1. Energy-Aware Distributed Workflow Execution" />
             <h2 style={{
                 marginBottom: `30px`,
                 marginTop: `50px`,
                 color: "#525252"
-            }}><br />D.1. Thrust D</h2>
+            }}><br />D.1. Energy-Aware Distributed Workflow Execution</h2>
 
             <Segment style={{ marginBottom: "2em" }}>
                 The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a

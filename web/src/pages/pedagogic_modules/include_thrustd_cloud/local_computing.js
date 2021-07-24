@@ -3,6 +3,8 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg";
+import ThrustD_Simulation from "./thrustd_simulation";
+import SimulationActivity from "../../../components/simulation/simulation_activity";
 
 const LocalComputing = () => {
     return (
@@ -137,9 +139,7 @@ const LocalComputing = () => {
                 Here is the simulator:
             </p>
 
-            <p>
-                [INSERT SIMULATOR HERE]
-            </p>
+            <SimulationActivity panelKey="local_computing" content={<ThrustD_Simulation />} />
 
             <Divider />
             <Header as="h3" block>
@@ -147,14 +147,14 @@ const LocalComputing = () => {
             </Header>
 
             <p>
-                <strong>[A.1.q1.1]</strong> Using the simulator, execute the workflow on the cluster configured at
+                <strong>[D.1.q1.1]</strong> Using the simulator, execute the workflow on the cluster configured at
                 top performance: use the maximum number of nodes (128) and configure the nodes to the maximum pstate
                 (6). What is the workflow execution time? What is the speedup and parallel efficiency? What is the
                 total cost of the execution in terms of $ and CO2 emissions?
             </p>
 
             <p>
-                <strong>[A.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
+                <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
                 as possible is overkill. Instead, it is only necessary that the workflow run in under an hour
                 (e.g., running in 30 minutes bring no extra benefits when compared to running on 59 minutes). With
                 this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
@@ -171,7 +171,7 @@ const LocalComputing = () => {
             </p>
 
             <p>
-                <strong>[A.1.q1.3]</strong> Your boss says that running at parallel efficiency below 75% is just
+                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 75% is just
                 unacceptable, because they remember from a college course that low parallel efficiency means that
                 compute resources are wasted. So they ask you to first find the maximum number of nodes, with all
                 nodes configured at the maximum pstate, that leads to a parallel efficiency of 75%. Then, using
