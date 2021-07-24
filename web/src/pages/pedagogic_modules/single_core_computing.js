@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "../../components/layout"
-import Seo from "../../components/seo"
+import PageHeader from "../../components/page_header"
 import { Segment, Tab } from "semantic-ui-react"
 import "katex/dist/katex.min.css"
 import "./pedagogic_modules.css"
@@ -14,12 +14,7 @@ import Capstone from "./include_single_core_computing/capstone"
 const SingleCoreComputing = () => {
   return (
     <Layout>
-      <Seo title="A.1. Single-core Computing" />
-      <h2 style={{
-        marginBottom: `30px`,
-        marginTop: `50px`,
-        color: "#525252"
-      }}><br />A.1. Single-core Computing</h2>
+      <PageHeader title="A.1. Single-core Computing" />
 
       <Segment style={{ marginBottom: "2em" }}>
         The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a

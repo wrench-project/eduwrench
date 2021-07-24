@@ -12,14 +12,6 @@
     margin-bottom: 4em;
 }
 
-.tab-panes * {
-    background-color: #fff;
-}
-
-.objectives * {
-    background-color: #fafafa !important;
-}
-
 .objectives .inverted, .objectives strong {
     background-color: #d98636 !important;
     color: #fff !important;
@@ -68,7 +60,6 @@
 
 .simulation .title {
     color: #000 !important;
-    /*border-radius: 1em !important;*/
     border: 0 !important;
 }
 

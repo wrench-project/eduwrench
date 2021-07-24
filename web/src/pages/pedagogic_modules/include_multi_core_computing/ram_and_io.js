@@ -7,10 +7,10 @@ import PracticeQuestions from "../../../components/practice_questions"
 import RAMSimulation from "./ram_simulation"
 import IOSimulation from "./io_simulation"
 
-import ExampleIODAG from "../../../images/multi_core/multicore_example_io_dag.svg"
-import ExampleIODAG1Core from "../../../images/multi_core/multicore_example_io_dag_1_core.svg"
-import ExampleIODAG4Cores1 from "../../../images/multi_core/multicore_example_io_dag_4_cores_1.svg"
-import ExampleIODAG4Cores2 from "../../../images/multi_core/multicore_example_io_dag_4_cores_2.svg"
+import ExampleIODAG from "../../../images/vector_graphs/multi_core/multicore_example_io_dag.svg"
+import ExampleIODAG1Core from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_1_core.svg"
+import ExampleIODAG4Cores1 from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_4_cores_1.svg"
+import ExampleIODAG4Cores2 from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_4_cores_2.svg"
 
 const RamAndIO = () => {
   return (
@@ -124,7 +124,7 @@ const RamAndIO = () => {
         400Gflop of computation. The program’s tasks, showing input data files, is depicted below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleIODAG} />
+      <ExampleIODAG />
       <div className="caption"><strong>Figure 1:</strong> Example 4-task parallel program with I/IO.</div>
 
       <p>
@@ -134,7 +134,7 @@ const RamAndIO = () => {
         possible. For instance, the execution could proceed as follows:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleIODAG1Core} />
+      <ExampleIODAG1Core />
       <div className="caption"><strong>Figure 2:</strong> Execution on 1 core.</div>
 
       <p>
@@ -150,7 +150,7 @@ const RamAndIO = () => {
         runs for 8 second on the 4 cores. This execution is depicted below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleIODAG4Cores1} />
+      <ExampleIODAG4Cores1 />
       <div className="caption"><strong>Figure 3:</strong> Execution on 4 cores, with simultaneous I/O.</div>
 
       <p>
@@ -158,7 +158,7 @@ const RamAndIO = () => {
         This alternative is depicted below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={ExampleIODAG4Cores2} />
+      <ExampleIODAG4Cores2 />
       <div className="caption"><strong>Figure 4:</strong> Execution on 4 cores, with staggered I/O.</div>
 
       <p>The execution time is still 8s, so the two executions are equivalent.</p>

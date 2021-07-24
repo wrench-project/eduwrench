@@ -1,6 +1,6 @@
 import React from "react"
 import Layout from "../../components/layout"
-import Seo from "../../components/seo"
+import PageHeader from "../../components/page_header"
 import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
@@ -10,12 +10,7 @@ import ClientServerPipelining from "./include_client_server/client_server_pipeli
 const ClientServer = () => {
   return (
     <Layout>
-      <Seo title="A.3.2 Client-Server" />
-      <h2 style={{
-        marginBottom: `30px`,
-        marginTop: `50px`,
-        color: "#525252"
-      }}><br />A.3.2 Client-Server</h2>
+      <PageHeader title="A.3.2 Client-Server"/>
 
       <Segment style={{ marginBottom: "2em" }}>
         The goal of this module is to introduce you to the fundamental client/server model of computation.

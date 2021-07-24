@@ -6,11 +6,11 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import PracticeQuestions from "../../../components/practice_questions"
 import IOSimulation from "./io_simulation"
 
-import IOFigure1 from "../../../images/single_core/IO_figure_1.svg"
-import IOFigure2 from "../../../images/single_core/IO_figure_2.svg"
-import IOFigure3 from "../../../images/single_core/IO_figure_3.svg"
-import IOFigure4 from "../../../images/single_core/IO_figure_4.svg"
-import IOFigure5 from "../../../images/single_core/IO_figure_5.svg"
+import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg"
+import IOFigure2 from "../../../images/vector_graphs/single_core/IO_figure_2.svg"
+import IOFigure3 from "../../../images/vector_graphs/single_core/IO_figure_3.svg"
+import IOFigure4 from "../../../images/vector_graphs/single_core/IO_figure_4.svg"
+import IOFigure5 from "../../../images/vector_graphs/single_core/IO_figure_5.svg"
 
 const IO = () => {
   return (
@@ -97,7 +97,7 @@ const IO = () => {
         below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={IOFigure1} />
+      <IOFigure1 />
       <div className="caption"><strong>Figure 1:</strong> Example execution timeline.</div>
 
       <p>
@@ -125,7 +125,7 @@ const IO = () => {
         This execution is depicted below:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={IOFigure2} />
+      <IOFigure2 />
       <div className="caption"><strong>Figure 2:</strong> Example execution timeline with overlap of IO and computation.
       </div>
 
@@ -152,7 +152,7 @@ const IO = () => {
         and the program must process 3 images, then the execution would be as:
       </p>
 
-      <object className="figure" type="image/svg+xml" data={IOFigure3} />
+      <IOFigure3 />
       <div className="caption"><strong>Figure 3:</strong> Example execution timeline with overlap of IO and computation.
       </div>
 
@@ -170,7 +170,8 @@ const IO = () => {
       <p>
         In practice, one can implement a program that overlaps IO and computation. This can be done by using
         non-blocking IO operations and/or threads. These are techniques that are described in
-        Operating Systems <a href="/textbooks">textbooks</a>. The overlap may not be completely "free", as reading/writing data from disk
+        Operating Systems <a href="/textbooks">textbooks</a>. The overlap may not be completely "free", as
+        reading/writing data from disk
         can still require the CPU to perform some computation. Therefore, there can be time-sharing of the CPU between
         the IO operations and the computation, and the computation is slowed down a little bit by the IO operations
         (something we did not show in the figures above). This said, there are ways for IO operations to use almost no
@@ -212,7 +213,7 @@ const IO = () => {
           key: "A.1.p4.1]",
           question: "Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop, " +
             "and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the simulation " +
-            "app above. What is the total execution time when I/O and computation can be overlaped? Show your work. " +
+            "app above. What is the total execution time when I/O and computation can be overlapped? Show your work. " +
             "Use the simulation app to check your answer. What is the core utilization percentage? Show your work.",
           content: (
             <>
@@ -220,7 +221,7 @@ const IO = () => {
               The compute time is much larger than the I/O time. So the total execution time will
               be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
               The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
-              core utilization is <TeX math="250/253 = 98.8%" />.
+              core utilization is <TeX math="250/253 = 98.8\%" />.
             </>
           )
         },
@@ -277,7 +278,7 @@ const IO = () => {
               <p>
                 Here is a depiction of the execution:
               </p>
-              <object className="figure" type="image/svg+xml" data={IOFigure4} />
+              <IOFigure4 />
               <p>
                 The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX
                 math="n" /> tasks by identifying the repeating pattern: <TeX
@@ -306,7 +307,7 @@ const IO = () => {
           content: (
             <>
               <p>Here is a depiction of the execution:</p>
-              <object className="figure" type="image/svg+xml" data={IOFigure5} />
+              <IOFigure5 />
               <p>
                 The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX
                 math="n" /> tasks easily: <TeX math="3n + 2" />.)
@@ -365,7 +366,7 @@ const IO = () => {
         computation, and writes some output back to disk. A batch of fifty instances of this task is to be run on a
         computer with a processor capable of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. IO and
         computation are overlapped. How large can the task output be so that the CPU is still 100% utilized? (ignoring
-        the initial input read and final output write, during which the CPU is necessarily idle). Show your work byt
+        the initial input read and final output write, during which the CPU is necessarily idle). Show your work by
         writing (and solving) a simple inequation.
       </p>
 

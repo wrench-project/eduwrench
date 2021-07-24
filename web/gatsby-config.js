@@ -11,12 +11,19 @@ module.exports = {
   plugins: [
     `gatsby-plugin-nodejs`,
     `gatsby-plugin-react-helmet`,
-    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
         path: `${__dirname}/src/images`
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-react-svg',
+      options: {
+        rule: {
+          include: /vector_graphs/
+        }
       }
     },
     `gatsby-transformer-sharp`,

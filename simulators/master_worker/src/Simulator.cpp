@@ -225,7 +225,7 @@ retVals parse_arguments_for_individual_run(int argc, char** argv, std::mt19937 &
     bool compute_scheduling_flag = false;
     bool worker_specification_flag = false;
     int flags_removed = 0;
-    long seed = 0;
+    long seed = std::random_device{}();
     int num_invocation = 1;
 
     std::vector<std::tuple<double, double, double>> tasks;
@@ -359,8 +359,7 @@ retVals parse_arguments_for_individual_run(int argc, char** argv, std::mt19937 &
         std::cerr << "               0: Random" << std::endl;
         std::cerr << "               1: Faster Worker(Flops) First" << std::endl;
         std::cerr << "               2: Best Connected Worker(Bandwidth) First" << std::endl;
-        std::cerr << "               3: Largest Compute Time/IO Time Ratio First" << std::endl;
-        std::cerr << "               4: Earliest Completion (Estimate) First" << std::endl;
+        std::cerr << "               3: Earliest Completion (Estimate) First" << std::endl;
         std::cerr << "          '--seed' used to specify seed if random scheduling is used. [<flag> <seed>]"
                   << std::endl;
         std::cerr <<
@@ -443,6 +442,7 @@ retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rn
                 }
 
                 compute_scheduling_selection = std::stof(std::string(argv[inc + 1]));
+
                 compute_scheduling_flag = true;
 
                 arguments.erase(arguments.begin() + inc - (flags_removed),
@@ -489,13 +489,13 @@ retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rn
                                 arguments.begin() + inc + 13 - (flags_removed));
                 flags_removed += 13;
                 inc += 12;
-            } else if (std::string(argv[inc]).compare("--inv") == 0) {
+            } else if (std::string(argv[inc]) == "--inv") {
                 num_invocation = stoi(std::string(argv[inc + 1]));
                 arguments.erase(arguments.begin() + inc - (flags_removed),
                                 arguments.begin() + inc + 2 - (flags_removed));
                 flags_removed += 2;
                 ++inc;
-            } else if (std::string(argv[inc]).compare("--seed") == 0) {
+            } else if (std::string(argv[inc]) == "--seed") {
                 seed = stol(std::string(argv[inc + 1]));
                 arguments.erase(arguments.begin() + inc - (flags_removed),
                                 arguments.begin() + inc + 2 - (flags_removed));
@@ -538,6 +538,7 @@ retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rn
                 << std::endl;
     }
 
+//    std::cerr << "SEEDING WITH " << seed + xp_id << "   ";
     rng.seed(seed + xp_id);
 
     for (int i=0; i<num_workers; i++) {
@@ -553,6 +554,12 @@ retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rn
                 generate_random_double_in_range(rng, min_output, max_output)));
     }
 
+//    for (auto const &w : workers) {
+//        std::cerr << "WORKER: " << std::get<0>(w) << " " << std::get<1>(w) << "\n";
+//    }
+//    for (auto const &t : tasks) {
+//        std::cerr << "TASK: " << std::get<0>(t) << " " << std::get<1>(t) << " " << std::get<2>(t) << "\n";
+//    }
 
 
 
@@ -697,32 +704,31 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    if (std::string(argv[1]).compare("individual") == 0) {
+    if (std::string(argv[1]) == "individual") {
         try {
-            rng.seed(std::random_device{}());
             auto [workers, tasks, t_sched, c_sched] = parse_arguments_for_individual_run(argc, argv, rng);
             auto output = run_simulation(workers, tasks, t_sched, c_sched, rng, argc, argv, true);
         } catch (std::invalid_argument &e) {
             return 1;
         }
     } else {
+
+        // Find the number of invocations
         int num_invocation = 1;
-        long seed = 0;
         int inc = 0;
         while (inc < argc) {
-            if (std::string(argv[inc]).compare("--inv") == 0) {
+            if (std::string(argv[inc]) == "--inv") {
                 num_invocation = stoi(std::string(argv[inc + 1]));
-                ++inc;
-            } else if (std::string(argv[inc]).compare("--seed") == 0) {
-                seed = stol(std::string(argv[inc + 1]));
-                ++inc;
+                break;
             }
             ++inc;
         }
+
         int pipes[num_invocation][2];
         pid_t pid[num_invocation];
         char runtimes[num_invocation][100];
         for (int i = 0; i < num_invocation; i++) {
+//            std::cerr << "INVOCATION " << i << "\n";
             if (pipe(pipes[i]) != 0) {
                 printf("Could not create new pipe %d\n", i);
                 exit(1);
@@ -735,7 +741,7 @@ int main(int argc, char** argv) {
                 close(pipes[i][0]);
                 auto [workers, tasks, t_sched, c_sched] = parse_argument_for_generated_run(argc, argv, rng, i);
                 auto last_task_string = run_simulation(workers, tasks, t_sched, c_sched, rng, argc, argv);
-//                std::cerr << i << " : " << last_task_string << "\n";
+                std::cerr << i << " : " << last_task_string << "\n";
                 write(pipes[i][1], last_task_string.c_str(), strlen(last_task_string.c_str())+1);
                 close(pipes[i][1]);
                 exit(0);

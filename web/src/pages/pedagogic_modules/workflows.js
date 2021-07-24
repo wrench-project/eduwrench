@@ -1,20 +1,19 @@
 import React from "react"
 import Layout from "../../components/layout"
-import Seo from "../../components/seo"
+import PageHeader from "../../components/page_header"
 import { Segment, Tab } from "semantic-ui-react"
 import "./pedagogic_modules.css"
 
 import WorkflowsFundamentals from "./include_workflows/workflows_fundamentals"
+import WorkflowsDistributedExecution from "./include_workflows/workflows_distributed_execution"
+import WorkflowsDataLocality from "./include_workflows/workflows_data_locality"
+import WorkflowsMixedParallelism from "./include_workflows/workflows_mixed_parallelism"
+import WorkflowsCapstone from "./include_workflows/capstone"
 
 const Workflows = () => {
   return (
     <Layout>
-      <Seo title="A.3.4 Workflows" />
-      <h2 style={{
-        marginBottom: `30px`,
-        marginTop: `50px`,
-        color: "#525252"
-      }}><br />A.3.4 Workflows</h2>
+      <PageHeader title="A.3.4 Workflows" />
 
       <Segment style={{ marginBottom: "2em" }}>
         The goal of this module is to introduce you to the workflow model of computation that is used in many real-world
@@ -36,28 +35,28 @@ const Workflows = () => {
             key: "workflows_distributed_execution",
             content: "Distributed Execution"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDistributedExecution /></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_data_locality",
             content: "Data Locality"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDataLocality /></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_mixed_parallelsim",
             content: "Mixed Parallelism"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsMixedParallelism /></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_capstone",
             content: "Capstone"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsCapstone /></Tab.Pane>
         }
       ]}
       />

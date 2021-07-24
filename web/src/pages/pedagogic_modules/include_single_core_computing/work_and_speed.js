@@ -1,5 +1,5 @@
 import React from "react"
-import { Divider, Header, Segment, Table } from "semantic-ui-react"
+import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
@@ -94,42 +94,40 @@ const WorkAndSpeed = () => {
       <p>
         <strong>Make sure you know your units:</strong>
       </p>
-      <p>
-        <Table compact collapsing>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>Name</Table.HeaderCell>
-              <Table.HeaderCell>Amount</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            <Table.Row>
-              <Table.Cell><strong>K</strong>(ilo)</Table.Cell>
-              <Table.Cell><TeX math="10^3" /></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell><strong>M</strong>(ega)</Table.Cell>
-              <Table.Cell><TeX math="10^6" /></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell><strong>G</strong>(iga)</Table.Cell>
-              <Table.Cell><TeX math="10^9" /></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell><strong>T</strong>(era)</Table.Cell>
-              <Table.Cell><TeX math="10^{12}" /></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell><strong>P</strong>(eta)</Table.Cell>
-              <Table.Cell><TeX math="10^{15}" /></Table.Cell>
-            </Table.Row>
-            <Table.Row>
-              <Table.Cell><strong>E</strong>(xa)</Table.Cell>
-              <Table.Cell><TeX math="10^{18}" /></Table.Cell>
-            </Table.Row>
-          </Table.Body>
-        </Table>
-      </p>
+      <Table compact collapsing>
+        <Table.Header>
+          <Table.Row>
+            <Table.HeaderCell>Name</Table.HeaderCell>
+            <Table.HeaderCell>Amount</Table.HeaderCell>
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>
+          <Table.Row>
+            <Table.Cell><strong>K</strong>(ilo)</Table.Cell>
+            <Table.Cell><TeX math="10^3" /></Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell><strong>M</strong>(ega)</Table.Cell>
+            <Table.Cell><TeX math="10^6" /></Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell><strong>G</strong>(iga)</Table.Cell>
+            <Table.Cell><TeX math="10^9" /></Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell><strong>T</strong>(era)</Table.Cell>
+            <Table.Cell><TeX math="10^{12}" /></Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell><strong>P</strong>(eta)</Table.Cell>
+            <Table.Cell><TeX math="10^{15}" /></Table.Cell>
+          </Table.Row>
+          <Table.Row>
+            <Table.Cell><strong>E</strong>(xa)</Table.Cell>
+            <Table.Cell><TeX math="10^{18}" /></Table.Cell>
+          </Table.Row>
+        </Table.Body>
+      </Table>
 
       <PracticeQuestions questions={[
         {

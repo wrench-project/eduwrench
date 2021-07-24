@@ -6,8 +6,10 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
+import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
-import TaskDependencies3CoresSimulationScenario from "../../../images/multi_core/multicore_dependencies_3_cores.svg"
+import TaskDependencies3CoresSimulationScenario
+  from "../../../images/vector_graphs/multi_core/multicore_dependencies_3_cores.svg"
 
 const TaskDependencies3CoresSimulation = () => {
 
@@ -21,7 +23,7 @@ const TaskDependencies3CoresSimulation = () => {
   return (
     auth === "true" ? (
       <>
-        <SimulationScenario scenario={TaskDependencies3CoresSimulationScenario} />
+        <SimulationScenario scenario={<TaskDependencies3CoresSimulationScenario />} />
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -33,7 +35,7 @@ const TaskDependencies3CoresSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!values.taskGflop || !/^[0-9]+$/i.test(values.taskGflop) || values.taskGflop < 10 || values.taskGflop > 1000) {
+                if (!validateFieldInRange("mcdt3-analyze-work-label", values.taskGflop, 10, 1000, null, "GFlop")) {
                   errors.taskGflop = "ERROR"
                 }
                 return errors
