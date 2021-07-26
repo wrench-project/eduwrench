@@ -14,7 +14,7 @@ import {
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
 
-const ThrustD_Simulation = () => {
+const Thrustd_Local_Simulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
@@ -139,4 +139,4 @@ const ThrustD_Simulation = () => {
     )
 }
 
-export default ThrustD_Simulation
+export default Thrustd_Local_Simulation
