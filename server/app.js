@@ -1571,6 +1571,114 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
   }
 });
 
+// execute thrust d simulator
+app.post("/run/thrustd", authCheck, function (req, res) {
+  const PATH_PREFIX = __dirname.replace(
+      "server",
+      "simulators/thrustd/build"
+  );
+
+  const SIMULATOR = "thrustd";
+  const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+  const USERNAME = req.body.userName;
+  const EMAIL = req.body.email;
+  const NUM_HOSTS = req.body.num_hosts;
+  const PSTATE = req.body.pstate;
+
+  // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+  const LOGGING = [
+    "--log=root.thresh:critical",
+    "--log=wms.thresh:debug",
+    "--log=simple_wms.thresh:debug",
+    "--log=simple_wms_scheduler.thresh:debug",
+    "--log='root.fmt:[%.2d]%e%m%n'",
+    "--cfg=network/TCP-gamma:20000000000", // TCP Congestion Window Size!
+  ];
+
+  const json_data = {
+    "workflow_file": "../workflows/bigger-montage-workflow.json",
+    "num_hosts": NUM_HOSTS,
+    "cores": 8,
+    "min_cores_per_task": 4,
+    "max_cores_per_task": 4,
+    "pstate": PSTATE,
+    "speed": "0.5217f, 0.6087f, 0.6957f, 0.7826f, 0.8696f, 0.9565f, 1f",
+    "value": "98:120, 98:130, 98:140, 98:150, 98:160, 98:170, 98:190",
+    "energy_cost_per_mwh": 1000,
+    "energy_co2_per_mwh": 1000,
+    "use_cloud": false,
+    "num_cloud_hosts": 0,
+    "cloud_cores": 0,
+    "cloud_bandwidth": "0",
+    "cloud_pstate": 0,
+    "cloud_speed": "",
+    "cloud_value": "",
+    "cloud_cost_per_mwh": 0,
+    "num_vm_instances": 0,
+    "vm_usage_duration": 0,
+    "cloud_tasks": ""
+  }
+  // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+  let args_json = JSON.stringify(json_data);
+  // this is client side, so fs not recognized
+  const fs = require('fs');
+  fs.writeFile("/tmp/args.json", args_json, (err) => {
+    if(err) console.log('error', err);
+  });
+
+  const SIMULATION_ARGS = [
+    "/tmp/args.json"
+  ].concat(LOGGING);
+  const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+  console.log("\nRunning Simulation");
+  console.log("===================");
+  console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+  var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+  if (simulation_process.status != 0) {
+    console.log(
+        "Something went wrong with the simulation. Possibly check arguments."
+    );
+    console.log(simulation_process.stderr.toString());
+  } else {
+    var simulation_output = simulation_process.stderr.toString();
+    console.log(simulation_output);
+
+    /**
+     * Log the user running this simulation along with the
+     * simulation parameters to the data server.
+     */
+    logData({
+      user: USERNAME,
+      email: EMAIL,
+      time: Math.round(new Date().getTime() / 1000), // unix timestamp
+      activity: "thrustd",
+      num_hosts: NUM_HOSTS,
+      pstate: PSTATE
+    });
+
+    /**
+     * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+     * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+     * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+     * each line of output renders on a separate line in the browser.
+     *
+     * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+     */
+    var find = "</span>";
+    var re = new RegExp(find, "g");
+
+    res.json({
+      simulation_output: ansi_up
+          .ansi_to_html(simulation_output)
+          .replace(re, "<br>" + find),
+      task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+    });
+  }
+});
+
 function storeData(data){
   sims
   .add(data)
