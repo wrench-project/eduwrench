@@ -37,7 +37,7 @@ const BatchScheduling = () => {
             key: "basic_concepts",
             content: "Basics"
           },
-          render: () => <Tab.Pane><BasicConcepts /></Tab.Pane>
+          render: () => <Tab.Pane><BasicConcepts module="C.1" tab="basic_concepts"/></Tab.Pane>
         },
         {
           menuItem: {

@@ -1,25 +1,131 @@
 # Each SLO is identified by a unique key
 # Each page is identified by a module key and a tab index
 
+- TopSLOs:
+    - description: "Be able to explain and apply the fundamental concepts of sequential, parallel, and
+        distributed computing"
+      key: "topslo_1"
+    - description: "Be able to describe typical parallel/distributed computing (PDC) applications and the
+        platforms on which they run"
+      key: "topslo_2"
+    - description: "Be able to reason about and improve the performance of PDC applications"
+      key: "topslo_3"
+    - description: "Be comfortable with and able to use standard tools provided as part of current
+        CyberInfrastructure deployments"
+      key: "topslo_4"
+
 - SLOs:
-    - description: "some slo"
-      key: "slo_key1"
-    - description: "some other slo"
-      key: "slo_key2"
+    - description: "Understand the concepts of 'work' and of 'compute speed'"
+      key: "slo_work_speed"
+      topSLOs:
+        - "topslo_1"
+    - description: "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed"
+      key: "slo_flop"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the simple relationship between program execution time, work, and compute speed"
+      key: "slo_exec_time"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the concept of time sharing and how it can impact program execution time"
+      key: "slo_time_sharing"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the concept of memory (RAM)"
+      key: "slo_ram"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand how the amount of available memory limits program executions"
+      key: "slo_ram_constraints"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the concept of IO"
+      key: "slo_io"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the impact of IO operations on computing"
+      key: "slo_io_exec_time"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the basics of optimizing computation around IO operations"
+      key: "slo_io_optimization"
+      topSLOs:
+        - "topslo_1"
+    - description: "Be able to reason about and optimize the performance of a single-core execution that includes computation activities, I/O activities, and RAM constraints"
+      key: "slo_single_core_performance"
+      topSLOs:
+        - "topslo_1"
+    - description: "Understand the need for and the basics of multi-core computers"
+      key: "slo_multicore"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand the notion of program consisting of independent tasks"
+      key: "slo_independent_tasks"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand and apply the concepts of parallel speedup and efficiency"
+      key: "slo_speedup_efficiency"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the concept of load imbalance and how it causes idle time"
+      key: "slo_load_imbalance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and quantify the relationship between idle time, speedup, and efficiency"
+      key: "slo_idle_time_speedup_efficiency"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and be able to quantify the impact of RAM constraints on parallel performance"
+      key: "slo_ram_and_parallelism"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and be able to quantify the impact of I/O on parallel performance"
+      key: "slo_io_and_parallelism"
+      topSLOs:
+        - "top_slo_1"
 
 - Mappings:
     - module: "A.1"
       tab: "work_and_speed"
       SLOs:
-        - "slo_key1"
-        - "slo_key2"
+        - "slo_work_speed"
+        - "slo_flop"
+        - "slo_exec_time"
     - module: "A.1"
       tab: "time_sharing"
       SLOs:
-        - "slo_key2"
-#
-#- term: "bandwidth"
-#  description: Peak achievable data transfer rate across a network link/path, measured in bytes per second
-#
-#- term: "cluster"
-#  description: A set of possibly many computers (or compute nodes) interconnected via a high-speed network used as a high-capacity compute platform
+        - "slo_time_sharing"
+    - module: "A.1"
+      tab: "memory"
+      SLOs:
+        - "slo_ram"
+        - "slo_ram_constraints"
+    - module: "A.1"
+      tab: "io"
+      SLOs:
+        - "slo_io"
+        - "slo_io_exec_time"
+        - "slo_io_optimization"
+    - module: "A.1"
+      tab: "capstone"
+      SLOs:
+        - "slo_single_core_performance"
+    - module: "A.2"
+      tab: "task_parallelism"
+      SLOs:
+        - "slo_multicore"
+        - "slo_independent_tasks"
+        - "slo_speedup_efficiency"
+    - module: "A.2"
+      tab: "load_imbalance"
+      SLOs:
+        - "slo_load_imbalance"
+        - "slo_idle_time_speedup_efficiency"
+    - module: "A.2"
+      tab: "ram_and_io"
+      SLOs:
+        - "slo_ram_and_parallelism"
+        - "slo_io_and_parallelism"
+

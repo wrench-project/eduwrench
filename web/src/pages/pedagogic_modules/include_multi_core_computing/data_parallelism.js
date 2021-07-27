@@ -11,7 +11,7 @@ import ExampleDataParallelismExposedDAG
   from "../../../images/vector_graphs/multi_core/multicore_example_data_parallelism_exposed_dag.svg"
 import Amdahl from "../../../images/vector_graphs/multi_core/multicore_amdahl.svg"
 
-const DataParallelism = () => {
+const DataParallelism = ({module, tab}) => {
   return (
     <>
       <LearningObjectives objectives={[

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+// import React, {useState} from "react"
 import {useStaticQuery, graphql} from "gatsby"
 import "antd/dist/antd.css"
 
@@ -8,11 +8,15 @@ export const ListSLOs = (module, tab) => {
     query CurriculummapQuery {
       allCurriculummapYaml(sort: { order:ASC, fields: SLOs}) {
         nodes {
-            SLOs {
+            TopSLOs {
                 description
                 key
             }
-      
+            SLOs {
+                description
+                key
+                topSLOs
+            }
             Mappings {
                 module
                 tab
@@ -25,7 +29,7 @@ export const ListSLOs = (module, tab) => {
 
   // Get the SLOs and Mappings
   const SLOs = data["allCurriculummapYaml"]["nodes"][0]["SLOs"]
-  const Mappings = data["allCurriculummapYaml"]["nodes"][1]["Mappings"]
+  const Mappings = data["allCurriculummapYaml"]["nodes"][2]["Mappings"]
 
   // Determine all SLO keys relevant for the module-tab passed as arguments
   let SLOKeys = []

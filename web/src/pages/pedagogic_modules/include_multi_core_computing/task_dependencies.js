@@ -15,7 +15,7 @@ import PracticeQuestionDAG2 from "../../../images/vector_graphs/multi_core/multi
 import QuestionDAG1 from "../../../images/vector_graphs/multi_core/multicore_question_dag_1.svg"
 import QuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_question_dag_2.svg"
 
-const TaskDependencies = () => {
+const TaskDependencies = ({module, tab}) => {
   return (
     <>
       <LearningObjectives objectives={[

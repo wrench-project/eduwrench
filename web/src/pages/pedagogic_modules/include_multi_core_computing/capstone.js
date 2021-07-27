@@ -5,7 +5,7 @@ import LearningObjectives from "../../../components/learning_objectives"
 
 import MultiCoreCapstoneFigure from "../../../images/vector_graphs/multi_core/multicore_capstone.svg"
 
-const MultiCoreCapstone = () => {
+const MultiCoreCapstone = ({module, tab}) => {
   return (
     <>
       <LearningObjectives objectives={[

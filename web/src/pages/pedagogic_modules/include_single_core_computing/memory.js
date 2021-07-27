@@ -2,13 +2,12 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 
-const Memory = () => {
+const Memory = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand the concept of memory (RAM)",
-        "Understand how the amount of available memory limits program executions"
-      ]} />
+
+        <LearningObjectives module={module} tab={tab}
+        />
 
       <h2>Memory</h2>
 
