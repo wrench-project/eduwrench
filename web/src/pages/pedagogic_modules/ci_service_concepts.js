@@ -9,6 +9,9 @@ import CIServiceFundamentals from "./include_ci_service_concepts/ci_service_fund
 import CIStorageServices from "./include_ci_service_concepts/ci_storage_services"
 
 const CIServiceConcepts = () => {
+
+  const module = "B.1"
+
   return (
     <Layout>
       <PageHeader title="B.1. CI Service Concepts" />
@@ -24,22 +27,22 @@ const CIServiceConcepts = () => {
             key: "ci_service_fundamentals",
             content: "Fundamentals"
           },
-          render: () => <Tab.Pane><CIServiceFundamentals /></Tab.Pane>
+          render: () => <Tab.Pane><CIServiceFundamentals module={module} tab={"ci_service_fundamentals"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "ci_storage_services",
             content: "Managing Data"
           },
-          render: () => <Tab.Pane><CIStorageServices /></Tab.Pane>
+          render: () => <Tab.Pane><CIStorageServices module={module} tab={"ci_storage_services"}/></Tab.Pane>
         },
-        {
-          menuItem: {
-            key: "ci_compute_services",
-            content: "Managing Computations"
-          },
-          render: () => <Tab.Pane></Tab.Pane>
-        }
+        // {
+        //   menuItem: {
+        //     key: "ci_compute_services",
+        //     content: "Managing Computations"
+        //   },
+        //   render: () => <Tab.Pane></Tab.Pane>
+        // }
       ]}
       />
     </Layout>

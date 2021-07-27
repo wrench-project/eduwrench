@@ -258,6 +258,26 @@
       topSLOs:
         - "top_slo_1"
         - "top_slo_3"
+    - description: "Understand the principles of cyberinfrastructure services"
+      key: "slo_ci_service_concepts"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand the concept of overhead and how it can impact CI services performance"
+      key: "slo_ci_service_overhead"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand how data services can be used to store, copy, and access data"
+      key: "slo_ci_storage_service_concepts"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand the concept of data replicas and how data services can be used to keep track of them"
+      key: "slo_ci_storage_service_replication"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+
 
 - Mappings:
     - module: "A.1"
@@ -405,4 +425,14 @@
       tab: "job_num_nodes"
       SLOs:
         - "slo_batch_num_nodes_impact"
+    - module: "B.1"
+      tab: "ci_service_fundamentals"
+      SLOs:
+        - "slo_ci_service_concepts"
+        - "slo_ci_service_overhead"
+    - module: "B.1"
+      tab: "ci_storage_services"
+      SLOs:
+        - "slo_ci_storage_service_concepts"
+        - "slo_ci_storage_service_replication"
 

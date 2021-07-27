@@ -8,15 +8,13 @@ import PracticeQuestions from "../../../components/practice_questions"
 
 import CIBasics from "../../../images/vector_graphs/ci_service_concepts/basics.svg"
 
-const CIServiceFundamentals = () => {
+const CIServiceFundamentals = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand the principles of cyberinfrastructure services",
-        "Understand the concept of overhead and how it can impact CI services performance"
-      ]} />
 
-      <h2>Basics</h2>
+        <LearningObjectives module={module} tab={tab} />
+
+        <h2>Basics</h2>
 
       <p>
         The term <strong>cyberinfrastructure</strong> (CI) was introduced in the late 1990s, and became popular starting

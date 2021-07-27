@@ -7,15 +7,12 @@ import PracticeQuestions from "../../../components/practice_questions"
 
 import CISimpleStorage from "../../../images/vector_graphs/ci_service_concepts/simple_storage.svg"
 
-const CIStorageServices = () => {
+const CIStorageServices = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand how data services can be used to store, copy, and access data",
-        "Understand the concept of data replicas and how data services can be used to keep track of them"
-      ]} />
+        <LearningObjectives module={module} tab={tab} />
 
-      <h2>Data Services</h2>
+        <h2>Data Services</h2>
 
       <p>
         In CI, the most common type of service provided by a data service is permanent,
