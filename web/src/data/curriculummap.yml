@@ -137,6 +137,39 @@
       key: "slo_end_to_end_transfer_time"
       topSLOs:
         - "top_slo_1"
+    - description: "Understand the basics of the client/server model of computation"
+      key: "slo_client_server"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to reason about the performance of a simple client/server setup"
+      key: "slo_client_server_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the need for and the mechanics of pipelining"
+      key: "slo_pipelining"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to reason about how pipelining impacts performance"
+      key: "slo_pipelining_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the principles of coordinator-worker computing"
+      key: "slo_coordinator_worker"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand the basic concept of scheduling in the context of coordinator-worker"
+      key: "slo_coordinator_worker_scheduling"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Experience how different scheduling strategies can affect performance"
+      key: "slo_coordinator_worker_scheduling_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to use experiments to compare coordinator-worker scheduling strategies meaningfully"
+      key: "slo_coordinator_worker_scheduling_experiments"
+      topSLOs:
+        - "top_slo_1"
 
 
 - Mappings:
@@ -212,3 +245,24 @@
         - "slo_topology"
         - "slo_end_to_end"
         - "slo_end_to_end_transfer_time"
+    - module: "A.3.2"
+      tab: "client_server_basics"
+      SLOs:
+        - "slo_client_server"
+        - "slo_client_server_performance"
+    - module: "A.3.2"
+      tab: "client_server_pipelining"
+      SLOs:
+        - "slo_pipelining"
+        - "slo_pipelining_performance"
+    - module: "A.3.3"
+      tab: "coordinator_worker_basics"
+      SLOs:
+        - "slo_coordinator_worker"
+        - "slo_coordinator_worker_scheduling"
+        - "slo_coordinator_worker_scheduling_performance"
+    - module: "A.3.3"
+      tab: "coordinator_worker_experiments"
+      SLOs:
+        - "slo_coordinator_worker_scheduling_experiments"
+
