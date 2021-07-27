@@ -1,8 +1,11 @@
 import React from "react"
 import { Segment } from "semantic-ui-react"
+import { ListSLOs } from "./curriculum_map"
 
-const LearningObjectives = ({ objectives }) => {
+const LearningObjectives = ({ useless }) => {
 
+  const objectives = ListSLOs("A.1", "work_and_speed");
+  console.log(objectives)
   const objectivesList = []
 
   objectives.forEach(function(objective) {

@@ -1,0 +1,25 @@
+# Each SLO is identified by a unique key
+# Each page is identified by a module key and a tab index
+
+- SLOs:
+    - description: "some slo"
+      key: "slo_key1"
+    - description: "some other slo"
+      key: "slo_key2"
+
+- Mappings:
+    - module: "A.1"
+      tab: "work_and_speed"
+      SLOs:
+        - "slo_key1"
+        - "slo_key2"
+    - module: "A.1"
+      tab: "time_sharing"
+      SLOs:
+        - "slo_key2"
+#
+#- term: "bandwidth"
+#  description: Peak achievable data transfer rate across a network link/path, measured in bytes per second
+#
+#- term: "cluster"
+#  description: A set of possibly many computers (or compute nodes) interconnected via a high-speed network used as a high-capacity compute platform
