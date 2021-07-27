@@ -6,6 +6,7 @@ import SimulationActivity from "../../../components/simulation/simulation_activi
 import PracticeQuestions from "../../../components/practice_questions"
 
 import CIBasics from "../../../images/vector_graphs/ci_service_concepts/basics.svg"
+import CIServiceFundamentalsSimulation from "./ci_service_fundamentals_simulation"
 
 const CIServiceFundamentals = () => {
   return (
@@ -119,12 +120,101 @@ const CIServiceFundamentals = () => {
         provided the task has enough computation to do.
       </p>
 
+      <SimulationActivity panelKey="ci-service-fundamentals-simulation" content={<CIServiceFundamentalsSimulation />} />
+
+      <PracticeQuestions
+        header={
+          (<>
+            Answer the practice questions hereafter, which pertain to the setup in the above simulation (You can use
+            the simulation to double-check answers).
+          </>)
+        }
+        questions={[
+          {
+            key: "B.1.p1.1",
+            question: "Using the default values in the above setup as the base case (Server #1: 1 second; Server #2: " +
+              "5 seconds; Task: 1000 GFlop), would reducing the overhead of Server #2 by 1 second make it preferable " +
+              "to Server #1?",
+            content: "In the base setup, Server #2 completes the task 1.22 second slower than Server #1. So no, we " +
+              "would have to reduce the overhead by more than 1 second."
+          },
+          {
+            key: "B.1.p1.2",
+            question: "With the default overhead values (1 and 5 seconds), for which value of the task's work would " +
+              "both servers complete the task in the same about of time? Try to come up with an analytical answer " +
+              "first. Then use the simulation to see how close it is to the true value (by doing a by-hand binary " +
+              "search on the execution time difference!).",
+            content: (
+              <>
+                Let <TeX math="x" /> be the task's work. The execution time on each server is estimated as:
+                <TeX math="T_{server\#1} = 100 / 10 + 1 + x / 100" block />
+                and
+                <TeX math="T_{server\#2} = 100 / 100 + 5 + x / 60." block />
+                Solving
+                <TeX math="T_{server\#1}  = T_{server\#2}" block />
+                yields
+                <TeX math="x = 750 \text{GFlop}." block />
+                As we know from previous modules, such estimates can be inaccurate, especially because they cannot
+                capture the complexity of actual networks. Doing a simple binary search with the simulation app yields
+                a value of <TeX math="x = 818 \text{GFlop}" />.
+              </>
+            )
+          },
+          {
+            key: "B.1.p1.3",
+            question: (
+              <>
+                We have to run a computation on the above two-server system, where Server #1 has a 3 sec task startup
+                overhead and Server #2 has a 5 sec task startup overhead. You have a computation to run that has
+                500 GFlop of work. You have two options:
+                <ul>
+                  <li>Option #1: run the computation as a single task on one of the servers (whichever one is the
+                    fatest)
+                  </li>
+                  <li>Option #2: split the computation into to 250-GFlop tasks that each read the whole input file, and
+                    run them concurrently on the two servers
+                  </li>
+                </ul>
+                Using the simulation app figure out which option is best.
+              </>
+            ),
+            content: (
+              <>
+                <p>Using the simulation, we obtain:</p>
+                <ul>
+                  <li>Running a 500-GFlop task on Server #1: 18.50 sec</li>
+                  <li>Running a 500-GFlop task on Server #2: 14.38 sec</li>
+                  <li>Running a 250-GFlop task on Server #1: 16.00 sec</li>
+                  <li>Running a 250-GFlop task on Server #2: 10.22 sec</li>
+                </ul>
+                <p>So we obtain the execution time for each option:</p>
+                <ul>
+                  <li>Option #1: min(18.50, 14.38) = 14.38 sec</li>
+                  <li>Option #2: max(16.00, 10.22) = 10.22 sec</li>
+                </ul>
+                <p>We are better off with Option #2!</p>
+              </>
+            )
+          }
+        ]} />
+
       <Divider />
 
       <Header as="h3" block>
         Questions
       </Header>
 
+      <Divider />
+
+      <Header as="h3" block>
+        Suggested Activities
+      </Header>
+
+      {/*- IDEA: One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is*/}
+      {/*running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password. Then*/}
+      {/*type the commmand "time ssh localhost sleep 1". What is the overhead of the Ssh service in seconds?*/}
+
+      {/*- IDEA: Pick a cloud provider and measure the overhead for starting a VM instance.*/}
 
     </>
   )
