@@ -3,15 +3,11 @@ import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives";
 
-const BasicConcepts = (module, tab) => {
+const BasicConcepts = ({module, tab}) => {
     return (
         <>
 
             <LearningObjectives module={module} tab={tab} />
-
-                {/*"Understand the need for batch scheduling",*/}
-                {/*"Understand, at a high level, what a batch scheduler does",*/}
-                {/*"Be aware of the Slurm batch scheduler"*/}
 
             <h2>Batch Schedulers</h2>
 

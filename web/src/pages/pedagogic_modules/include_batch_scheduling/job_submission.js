@@ -3,14 +3,10 @@ import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives";
 
-const JobSubmission = () => {
+const JobSubmission = ({module, tab}) => {
     return (
         <>
-            <LearningObjectives objectives={[
-                "Understand what submitting a batch job entails",
-                "Be able to use the sbatch command",
-            ]} />
-
+            <LearningObjectives module={module} tab={tab} />
 
 
             <h2>The <tt>sbatch</tt> command</h2>

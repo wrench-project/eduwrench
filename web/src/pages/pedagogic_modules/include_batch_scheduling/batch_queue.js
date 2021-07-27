@@ -3,14 +3,10 @@ import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives";
 
-const BatchQueue = () => {
+const BatchQueue = ({module, tab}) => {
     return (
         <>
-            <LearningObjectives objectives={[
-                "Understand the concept of a batch queue",
-                "Understand the concept of job turnaround time",
-                "Be able to use the squeue command"
-            ]} />
+            <LearningObjectives module={module} tab={tab} />
 
             <h2>The <tt>squeue</tt> command</h2>
 
@@ -39,13 +35,13 @@ const BatchQueue = () => {
                 using the following command to start a Docker container:
             </p>
 
-                <p>
-                    <Segment raised>
-                        <tt>
-                            docker run -p 8808:8808 --rm -it wrenchproject/eduwrench-slurm-terminal ./run_it.sh tab3
-                        </tt>
-                    </Segment>
-                </p>
+            <p>
+                <Segment raised>
+                    <tt>
+                        docker run -p 8808:8808 --rm -it wrenchproject/eduwrench-slurm-terminal ./run_it.sh tab3
+                    </tt>
+                </Segment>
+            </p>
 
             <p>
                 and, in a new browser window, navigate to: <a href="http://localhost:8808">http://localhost:8808</a>.

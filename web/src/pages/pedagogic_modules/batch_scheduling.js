@@ -13,6 +13,9 @@ import JobDuration from "./include_batch_scheduling/job_duration"
 import JobNumNodes from "./include_batch_scheduling/job_num_nodes"
 
 const BatchScheduling = () => {
+
+  const module = "C.1"
+
   return (
     <Layout>
       <PageHeader title="C.1. Batch Scheduling" />
@@ -37,42 +40,42 @@ const BatchScheduling = () => {
             key: "basic_concepts",
             content: "Basics"
           },
-          render: () => <Tab.Pane><BasicConcepts module="C.1" tab="basic_concepts"/></Tab.Pane>
+          render: () => <Tab.Pane><BasicConcepts module={module} tab={"basic_concepts"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "job_submission",
             content: "Job Submission"
           },
-          render: () => <Tab.Pane><JobSubmission /></Tab.Pane>
+          render: () => <Tab.Pane><JobSubmission module={module} tab={"job_submission"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "batch_queue",
             content: "Batch Queue"
           },
-          render: () => <Tab.Pane><BatchQueue /></Tab.Pane>
+          render: () => <Tab.Pane><BatchQueue module={module} tab={"batch_queue"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "job_cancellation",
             content: "Job Cancellation"
           },
-          render: () => <Tab.Pane><JobCancellation /></Tab.Pane>
+          render: () => <Tab.Pane><JobCancellation module={module} tab={"job_cancellation"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "job_duration",
             content: "Job Duration"
           },
-          render: () => <Tab.Pane><JobDuration /></Tab.Pane>
+          render: () => <Tab.Pane><JobDuration module={module} tab={"job_duration"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "job_num_nodes",
             content: "Job Size"
           },
-          render: () => <Tab.Pane><JobNumNodes /></Tab.Pane>
+          render: () => <Tab.Pane><JobNumNodes module={module} tab={"job_num_nodes"}/></Tab.Pane>
         }
 
       ]}

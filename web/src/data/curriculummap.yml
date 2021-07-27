@@ -206,6 +206,58 @@
       key: "slo_workflow_distributed_mixed_performance"
       topSLOs:
         - "top_slo_1"
+    - description: "Understand the need for batch scheduling"
+      key: "slo_batch_scheduling_concepts"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand, at a high level, what a batch scheduler does"
+      key: "slo_batch_scheduler"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand what submitting a batch job entails"
+      key: "slo_batch_job_submission"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to use the sbatch command"
+      key: "slo_batch_sbatch_command"
+      topSLOs:
+        - "top_slo_3"
+    - description: "Understand the concept of a batch queue"
+      key: "slo_batch_queue"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the concept of job turnaround time"
+      key: "slo_batch_job_turnaround_time"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to use the squeue command"
+      key: "slo_batch_squeue_command"
+      topSLOs:
+        - "top_slo_3"
+    - description: "Understand what canceling a batch job entails"
+      key: "slo_batch_job_cancellation"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to use the scancel command"
+      key: "slo_batch_scancel_command"
+      topSLOs:
+        - "top_slo_3"
+    - description: "Understand how inspecting the batch queue can help pick job parameters that reduce job turnaround time"
+      key: "slo_batch_inspect_queue"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_3"
+    - description: "Understand and gain experience with how requested job duration impacts turnaround time"
+      key: "slo_batch_job_duration_impact"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_3"
+    - description: "Understand and gain experience with how requested job number of nodes impacts job turnaround time"
+      key: "slo_batch_num_nodes_impact"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_3"
 
 - Mappings:
     - module: "A.1"
@@ -323,4 +375,34 @@
       tab: "workflows_capstone"
       SLOs:
         - "slo_workflow_distributed_mixed_performance"
+    - module: "C.1"
+      tab: "basic_concepts"
+      SLOs:
+        - "slo_batch_scheduling_concepts"
+        - "slo_batch_scheduler"
+    - module: "C.1"
+      tab: "job_submission"
+      SLOs:
+        - "slo_batch_job_submission"
+        - "slo_batch_sbatch_command"
+    - module: "C.1"
+      tab: "batch_queue"
+      SLOs:
+        - "slo_batch_queue"
+        - "slo_batch_job_turnaround_time"
+        - "slo_batch_squeue_command"
+    - module: "C.1"
+      tab: "job_cancellation"
+      SLOs:
+        - "slo_batch_job_cancellation"
+        - "slo_batch_scancel_command"
+        - "slo_batch_inspect_queue"
+    - module: "C.1"
+      tab: "job_duration"
+      SLOs:
+        - "slo_batch_job_duration_impact"
+    - module: "C.1"
+      tab: "job_num_nodes"
+      SLOs:
+        - "slo_batch_num_nodes_impact"
 

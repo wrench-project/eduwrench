@@ -3,14 +3,11 @@ import { Accordion, Divider, Header, Icon, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives";
 
-const JobCancellation = () => {
+const JobCancellation = ({module, tab}) => {
     return (
         <>
-            <LearningObjectives objectives={[
-                "Understand what canceling a batch job entails",
-                "Be able to use a simple scancel command",
-                "Understand how inspecting the batch queue can help pick job parameters that reduce job turnaround time"
-            ]} />
+
+            <LearningObjectives module={module} tab={tab} />
 
             <h2>The <tt>scancel</tt> command</h2>
 
@@ -28,13 +25,13 @@ const JobCancellation = () => {
                 using the following command to start a Docker container:
             </p>
 
-                <p>
-                    <Segment raised>
-                        <tt>
-                            docker run -p 8808:8808 --rm -it wrenchproject/eduwrench-slurm-terminal ./run_it.sh tab4
-                        </tt>
-                    </Segment>
-                </p>
+            <p>
+                <Segment raised>
+                    <tt>
+                        docker run -p 8808:8808 --rm -it wrenchproject/eduwrench-slurm-terminal ./run_it.sh tab4
+                    </tt>
+                </Segment>
+            </p>
 
             <p>
                 and, in a new browser window, navigate to: <a href="http://localhost:8808">http://localhost:8808</a>.
