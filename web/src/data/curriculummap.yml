@@ -109,6 +109,35 @@
       key: "slo_multicore_parallel_performance"
       topSLOs:
         - "top_slo_1"
+    - description: "Understand the concepts of latency and bandwidth"
+      key: "slo_latency_bandwidth"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to estimate data transfer time through a network link"
+      key: "slo_data_transfer_time"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the concept of network contention"
+      key: "slo_contention"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to estimate data transfer times in the presence of contention"
+      key: "slo_contention_transfer_time"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the concept of network topology"
+      key: "slo_topology"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to compute end-to-end latencies and bandwidths"
+      key: "slo_end_to_end"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to compute end-to-end data transfer times"
+      key: "slo_end_to_end_transfer_time"
+      topSLOs:
+        - "top_slo_1"
+
 
 - Mappings:
     - module: "A.1"
@@ -167,3 +196,19 @@
       tab: "multicore_capstone"
       SLOs:
         - "slo_multicore_parallel_performance"
+    - module: "A.3.1"
+      tab: "latency_and_bandwidth"
+      SLOs:
+        - "slo_latency_bandwidth"
+        - "slo_data_transfer_time"
+    - module: "A.3.1"
+      tab: "contention"
+      SLOs:
+        - "slo_contention"
+        - "slo_contention_transfer_time"
+    - module: "A.3.1"
+      tab: "topologies"
+      SLOs:
+        - "slo_topology"
+        - "slo_end_to_end"
+        - "slo_end_to_end_transfer_time"
