@@ -3,10 +3,10 @@ import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
+import CIServiceFundamentalsSimulation from "./ci_service_fundamentals_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import CIBasics from "../../../images/vector_graphs/ci_service_concepts/basics.svg"
-import CIServiceFundamentalsSimulation from "./ci_service_fundamentals_simulation"
 
 const CIServiceFundamentals = () => {
   return (

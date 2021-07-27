@@ -6,6 +6,7 @@ import "katex/dist/katex.min.css"
 import "./pedagogic_modules.css"
 
 import CIServiceFundamentals from "./include_ci_service_concepts/ci_service_fundamentals"
+import CIStorageServices from "./include_ci_service_concepts/ci_storage_services"
 
 const CIServiceConcepts = () => {
   return (
@@ -30,7 +31,7 @@ const CIServiceConcepts = () => {
             key: "ci_storage_services",
             content: "Managing Data"
           },
-          render: () => <Tab.Pane></Tab.Pane>
+          render: () => <Tab.Pane><CIStorageServices /></Tab.Pane>
         },
         {
           menuItem: {
