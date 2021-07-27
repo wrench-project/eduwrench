@@ -10,15 +10,13 @@ import WorkflowsDataLocalityPlatformZoom
   from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"
 import WorkflowsDataLocalityQuestion from "../../../images/vector_graphs/workflows/workflow_data_locality_question.svg"
 
-const WorkflowsDataLocality = () => {
+const WorkflowsDataLocality = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand the concept of data locality in distributed platforms",
-        "Be able to quantify the impact of data locality on workflow execution"
-      ]} />
+        <LearningObjectives module={module} tab={tab}
+        />
 
-      <h2>The need for data locality</h2>
+        <h2>The need for data locality</h2>
 
       <p>
         In the previous tab, all workflow tasks were reading/writing data at a remote (from their perspective) storage

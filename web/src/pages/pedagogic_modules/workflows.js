@@ -11,6 +11,8 @@ import WorkflowsMixedParallelism from "./include_workflows/workflows_mixed_paral
 import WorkflowsCapstone from "./include_workflows/capstone"
 
 const Workflows = () => {
+  const module = "A.3.4"
+
   return (
     <Layout>
       <PageHeader title="A.3.4 Workflows" />
@@ -28,35 +30,35 @@ const Workflows = () => {
             key: "workflows_fundamentals",
             content: "Fundamentals"
           },
-          render: () => <Tab.Pane><WorkflowsFundamentals /></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsFundamentals module={module} tab={"workflows_fundamentals"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_distributed_execution",
             content: "Distributed Execution"
           },
-          render: () => <Tab.Pane><WorkflowsDistributedExecution /></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDistributedExecution module={module} tab={"workflows_distributed_execution"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_data_locality",
             content: "Data Locality"
           },
-          render: () => <Tab.Pane><WorkflowsDataLocality /></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsDataLocality module={module} tab={"workflows_data_locality"}/></Tab.Pane>
         },
         {
           menuItem: {
-            key: "workflows_mixed_parallelsim",
+            key: "workflows_mixed_parallelism",
             content: "Mixed Parallelism"
           },
-          render: () => <Tab.Pane><WorkflowsMixedParallelism /></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsMixedParallelism module={module} tab={"workflows_mixed_parallelism"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "workflows_capstone",
             content: "Capstone"
           },
-          render: () => <Tab.Pane><WorkflowsCapstone /></Tab.Pane>
+          render: () => <Tab.Pane><WorkflowsCapstone module={module} tab={"workflows_capstone"}/></Tab.Pane>
         }
       ]}
       />

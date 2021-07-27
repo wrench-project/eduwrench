@@ -170,7 +170,42 @@
       key: "slo_coordinator_worker_scheduling_experiments"
       topSLOs:
         - "top_slo_1"
-
+    - description: "Understand the concept of a workflow"
+      key: "slo_workflow_concepts"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Be able to reason about the performance of a workflow on a multi-core computer"
+      key: "slo_workflow_multicore_performance"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Be able to reason about workflow execution performance on distributed multi-host/multi-core platforms"
+      key: "slo_workflow_distributed_performance"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Understand the concept of data locality in distributed platforms"
+      key: "slo_workflow_distributed_data_locality"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to quantify the impact of data locality on workflow execution"
+      key: "slo_workflow_distributed_data_locality_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand how task- and data-parallelism can be mixed"
+      key: "slo_mixed_parallelism"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "Be able to reason about the performance of programs that include both task- and data-parallelism"
+      key: "slo_mixed_parallelism_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to reason about the performance of distributed executions of workflows with mixed parallelism"
+      key: "slo_workflow_distributed_mixed_performance"
+      topSLOs:
+        - "top_slo_1"
 
 - Mappings:
     - module: "A.1"
@@ -265,4 +300,27 @@
       tab: "coordinator_worker_experiments"
       SLOs:
         - "slo_coordinator_worker_scheduling_experiments"
+    - module: "A.3.4"
+      tab: "workflows_fundamentals"
+      SLOs:
+        - "slo_workflow_concepts"
+        - "slo_workflow_multicore_performance"
+    - module: "A.3.4"
+      tab: "workflows_distributed_execution"
+      SLOs:
+        - "slo_workflow_distributed_performance"
+    - module: "A.3.4"
+      tab: "workflows_data_locality"
+      SLOs:
+        - "slo_workflow_distributed_data_locality"
+        - "slo_workflow_distributed_data_locality_performance"
+    - module: "A.3.4"
+      tab: "workflows_mixed_parallelism"
+      SLOs:
+        - "slo_mixed_parallelism"
+        - "slo_mixed_parallelism_performance"
+    - module: "A.3.4"
+      tab: "workflows_capstone"
+      SLOs:
+        - "slo_workflow_distributed_mixed_performance"
 
