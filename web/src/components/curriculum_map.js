@@ -47,6 +47,10 @@ export const ListSLOs = (module, tab) => {
     }
   }
 
+  while (SLOKeys.length !== SLODescriptions.length) {
+    SLODescriptions.push("ERROR: SLO NOT FOUND")
+  }
+
   return SLODescriptions
 
 }

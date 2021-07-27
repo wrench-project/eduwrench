@@ -85,6 +85,30 @@
       key: "slo_io_and_parallelism"
       topSLOs:
         - "top_slo_1"
+    - description: "Understand the concept of task dependencies"
+      key: "slo_task_dependencies"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and quantify the impact of task dependencies on parallelism"
+      key: "slo_task_dependencies_and_parallelism"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand the concept of data-parallelism"
+      key: "slo_data_parallelism"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and be able to apply Amdahl's law"
+      key: "slo_amdahl"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Understand and be able to reason about the performance of data-parallel programs"
+      key: "slo_data_parallelism_performance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "Be able to reason about the performance of programs with both task- and data-parallelism when executed on multi-core platforms"
+      key: "slo_multicore_parallel_performance"
+      topSLOs:
+        - "top_slo_1"
 
 - Mappings:
     - module: "A.1"
@@ -128,4 +152,18 @@
       SLOs:
         - "slo_ram_and_parallelism"
         - "slo_io_and_parallelism"
-
+    - module: "A.2"
+      tab: "task_dependencies"
+      SLOs:
+        - "slo_task_dependencies"
+        - "slo_task_dependencies_and_parallelism"
+    - module: "A.2"
+      tab: "data_parallelism"
+      SLOs:
+        - "slo_data_parallelism"
+        - "slo_amdahl"
+        - "slo_data_parallelism_performance"
+    - module: "A.2"
+      tab: "multicore_capstone"
+      SLOs:
+        - "slo_multicore_parallel_performance"
