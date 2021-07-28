@@ -4,7 +4,8 @@ import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import GanttChart from "../../../components/charts/gantt_chart"
+import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
+import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
@@ -65,14 +66,13 @@ const CIStorageServicesSimulation = () => {
                     setSimulationResults(<></>)
                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/storage_service", data).then(
                       response => {
+                        const diskHostsList = ["StorageHost"]
+                        const linkNames = ["network_link"]
                         setSimulationResults(
                           <>
                             <SimulationOutput output={response.data.simulation_output} />
-                            <GanttChart data={response.data.task_data} label={{
-                              read: { display: false },
-                              compute: { display: true, label: "Performing Computation" },
-                              write: { display: false }
-                            }} />
+                            <HostUtilizationChart data={response.data.task_data} diskHostsList={diskHostsList} />
+                            <NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />
                           </>
                         )
                       },

@@ -47,6 +47,12 @@ namespace wrench {
         auto job_manager = this->createJobManager();
         auto file_registry = this->getAvailableFileRegistryService();
 
+        // Start bandwidth meters
+        const double BANDWIDTH_METER_PERIOD = 0.01;
+        std::vector<std::string> linknames;
+        linknames.emplace_back("network_link");
+        auto em = this->createBandwidthMeter(linknames, BANDWIDTH_METER_PERIOD);
+
         std::shared_ptr<StorageService> client_storage_service, server_storage_service;
         for (const auto &storage_service : this->getAvailableStorageServices()) {
             if (storage_service->getHostname() == "ClientHost") {

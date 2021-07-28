@@ -159,23 +159,11 @@ int main(int argc, char **argv) {
     auto file = workflow.getFileByID("file_copy");
     simulation.stageFile(file, client_storage_service);
 
+    simulation.getOutput().enableDiskTimestamps(true);
+    
     simulation.launch();
 
-//    // Gather the data transfer completion times
-//    auto file_copy_starts = simulation.getOutput().getTrace<wrench::SimulationTimestampFileCopyStart>();
-//
-//    std::cerr << "----------------------------------------" << std::endl;
-//    std::cerr.precision(4);
-//
-//    for (const auto &file_copy : file_copy_starts) {
-//        double start_time = file_copy->getDate();
-//        double end_time = file_copy->getContent()->getEndpoint()->getDate();
-//        double duration = end_time - start_time;
-//
-//        std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0) <<
-//                  " MB transfer completed at time " << duration << std::endl;
-//    }
-//    std::cerr << "----------------------------------------" << std::endl;
+    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, false, false, false, false, true, true);
 
     return 0;
 }

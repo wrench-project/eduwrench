@@ -1082,7 +1082,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
     if (simulation_process.status != 0) {
         console.log(
@@ -1090,7 +1090,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -1120,8 +1120,8 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -1583,6 +1583,7 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
     const FILE_SIZE = req.body.file_size
     const COMPUTE_1_STARTUP = req.body.compute_1_startup;
     const COMPUTE_2_STARTUP = req.body.compute_2_startup;
+    const TASK_WORK = req.body.task_work;
 
     //Not included in this usage of the simulator
     const SERVER_1_LINK_LATENCY = 10;
@@ -1590,11 +1591,6 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
     const BUFFER_SIZE = 1000000000;
     const DISK_TOGGLE = 0;
     const DISK_SPEED = 50;
-
-    const TASK_WORK = req.body.task_work;
-
-    console.log("TASK_WORK= " + TASK_WORK);
-
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1612,13 +1608,13 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
     if (simulation_process.status !== 0) {
         console.log("Something went wrong with the simulation. Possibly check arguments.");
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -1641,6 +1637,75 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
             "server_1_startup_overhead": COMPUTE_1_STARTUP,
             "server_2_startup_overhead": COMPUTE_2_STARTUP,
             "task_work": TASK_WORK
+        });
+
+        /**
+         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+         * each line of output renders on a separate line in the browser.
+         *
+         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
+         */
+        let find = "</span>";
+        let re = new RegExp(find, "g");
+
+        res.json({
+            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        });
+    }
+});
+
+// execute activity storage service simulation route
+app.post("/run/storage_service", authCheck, function (req, res) {
+    const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
+
+    const SIMULATOR = "storage_simulator";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const BANDWIDTH = req.body.bandwidth;
+    const FILE_SIZE = req.body.fileSize;
+    const REGISTRATION_OVERHEAD = req.body.registrationOverhead;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=wrench_core_simple_storage_service.thresh:info",
+        "--log=wrench_core_file_registry_service.thresh:info",
+        "--log='root.fmt:[%.5d][%h]%e%m%n'"
+    ];
+
+    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE, REGISTRATION_OVERHEAD].concat(LOGGING);
+    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+
+    console.log("\nRunning Simulation");
+    console.log("===================");
+    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_process.status !== 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.");
+        console.log(simulation_process.stderr.toString());
+    } else {
+        let simulation_output = simulation_process.stderr.toString();
+        console.log(simulation_output);
+
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            "user": USERNAME,
+            "email": EMAIL,
+            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
+            "activity": "storage_service",
+            "bandwidth": BANDWIDTH,
+            "file_size": FILE_SIZE
         });
 
         /**

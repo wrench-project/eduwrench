@@ -6,7 +6,7 @@ const SimulationOutput = ({ output }) => {
   const rawElements = output.includes("<br>") ? output.split("<br>") : output.split("</span>")
   const elements = rawElements.map(line => {
     let colors = line.substring(line.indexOf("(") + 1, line.indexOf(")")).split(",")
-    if (colors[0]) {
+    if (colors.length === 3) {
       let r = 255 - parseInt(colors[0].trim())
       let g = 255 - parseInt(colors[1].trim())
       let b = 255 - parseInt(colors[2].trim())
