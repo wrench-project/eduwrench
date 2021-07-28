@@ -1575,7 +1575,7 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 app.post("/run/thrustd", authCheck, function (req, res) {
   const PATH_PREFIX = __dirname.replace(
       "server",
-      "simulators/thrustd/build"
+      "simulators/thrustd/build/"
   );
 
   const SIMULATOR = "thrustd";
@@ -1593,16 +1593,15 @@ app.post("/run/thrustd", authCheck, function (req, res) {
     "--log=simple_wms.thresh:debug",
     "--log=simple_wms_scheduler.thresh:debug",
     "--log='root.fmt:[%.2d]%e%m%n'",
-    "--cfg=network/TCP-gamma:20000000000", // TCP Congestion Window Size!
   ];
 
   const json_data = {
-    "workflow_file": "../workflows/bigger-montage-workflow.json",
-    "num_hosts": NUM_HOSTS,
+    "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
+    "num_hosts": parseInt(NUM_HOSTS),
     "cores": 8,
     "min_cores_per_task": 4,
     "max_cores_per_task": 4,
-    "pstate": PSTATE,
+    "pstate": parseInt(PSTATE),
     "speed": "0.5217f, 0.6087f, 0.6957f, 0.7826f, 0.8696f, 0.9565f, 1f",
     "value": "98:120, 98:130, 98:140, 98:150, 98:160, 98:170, 98:190",
     "energy_cost_per_mwh": 1000,
@@ -1621,9 +1620,9 @@ app.post("/run/thrustd", authCheck, function (req, res) {
   }
   // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
   let args_json = JSON.stringify(json_data);
-  // this is client side, so fs not recognized
+  console.log(args_json);
   const fs = require('fs');
-  fs.writeFile("/tmp/args.json", args_json, (err) => {
+  fs.writeFile("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
     if(err) console.log('error', err);
   });
 
@@ -1645,7 +1644,7 @@ app.post("/run/thrustd", authCheck, function (req, res) {
   } else {
     var simulation_output = simulation_process.stderr.toString();
     console.log(simulation_output);
-
+  
     /**
      * Log the user running this simulation along with the
      * simulation parameters to the data server.

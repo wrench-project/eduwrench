@@ -24,9 +24,20 @@ int main(int argc, char **argv) {
     // Declaration of the top-level WRENCH simulation object
     wrench::Simulation simulation;
 
+    // Add the --wrench-energy-simulation flag in case user forgot (duplicates don't matter)
+    char **new_argv = (char **)calloc(argc+1, sizeof(char*));
+    memcpy(new_argv, argv, argc * sizeof(char*));
+    new_argv[argc] = strdup("--wrench-energy-simulation");
+
+    argv = new_argv;
+    argc++;
+
     // Initialization of the simulation
     simulation.init(&argc, argv);
 
+    std::cout << "argc: " << argc << std::endl;
+    std::cout << "argv: " << argv[1] << std::endl;
+    
     // Parsing of the command-line arguments for this WRENCH simulation
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <json file>" << std::endl;
@@ -221,6 +232,7 @@ int main(int argc, char **argv) {
     // Reading and parsing the platform description file to instantiate a simulated platform
     std::cerr << "Instantiating SimGrid platform..." << std::endl;
     simulation.instantiatePlatform(platform_file);
+    std::cerr << "SimGrid platform instantiates\n";
 
     // Get a vector of all the hosts in the simulated platform
     std::vector<std::string> hostname_list = simulation.getHostnameList();

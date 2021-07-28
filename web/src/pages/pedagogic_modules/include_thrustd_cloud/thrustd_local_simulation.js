@@ -34,17 +34,17 @@ const Thrustd_Local_Simulation = () => {
                         <Formik
                             initialValues={{
                                 numHosts: 1,
-                                pstate: 0,
+                                pstate: 0
                             }}
 
                             validate={values => {
                                 const errors = {}
-                                if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
-                                    errors.numHosts = "ERROR"
-                                }
-                                if (!validateFieldInRange("pstate-label", values.pstate, 0, 6, "pstate:", "YYY")) {
-                                    errors.pstate = "ERROR"
-                                }
+                                // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
+                                //     errors.numHosts = "ERROR"
+                                // }
+                                // if (!validateFieldInRange("pstate-label", values.pstate, 0, 6, "pstate:", "YYY")) {
+                                //     errors.pstate = "ERROR"
+                                // }
                                 return errors
                             }}
 
@@ -59,7 +59,7 @@ const Thrustd_Local_Simulation = () => {
                                         userName: userEmail.split("@")[0],
                                         email: userEmail,
                                         num_hosts: values.numHosts,
-                                        pstate: values.pstate,
+                                        pstate: values.pstate
                                     }
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd", data).then(

@@ -1,11 +1,9 @@
 cmake_minimum_required(VERSION 3.2)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
-project(%s)
+project("thrustd")
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
-
-set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CmakeModules/")
 
@@ -35,6 +33,8 @@ find_library(GTEST_LIBRARY NAMES gtest)
 
 # generating the executable
 add_executable(thrustd ${SOURCE_FILES})
+set_property(TARGET thrustd PROPERTY CXX_STANDARD 14)
+
 
 if (ENABLE_BATSCHED)
 target_link_libraries(thrustd
