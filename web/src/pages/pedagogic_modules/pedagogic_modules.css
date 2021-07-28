@@ -12,6 +12,14 @@
     margin-bottom: 4em;
 }
 
+.objectives {
+    margin-bottom: 2em !important;
+}
+
+.objectives ul {
+    margin-bottom: 0 !important;
+}
+
 .objectives .inverted, .objectives strong {
     background-color: #d98636 !important;
     color: #fff !important;
@@ -69,6 +77,13 @@
 
 .simulation .active.title {
     color: #666 !important;
+}
+
+code {
+    color: #b40867;
+    font-weight: bold;
+    padding-left: 0.3em;
+    margin-right: 0.3em;
 }
 
 pre {
