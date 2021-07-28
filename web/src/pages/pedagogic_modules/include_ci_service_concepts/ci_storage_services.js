@@ -1,18 +1,18 @@
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
-import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
+import CIStorageServicesSimulation from "./ci_storage_services_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import CISimpleStorage from "../../../images/vector_graphs/ci_service_concepts/simple_storage.svg"
 
-const CIStorageServices = ({module, tab}) => {
+const CIStorageServices = ({ module, tab }) => {
   return (
     <>
-        <LearningObjectives module={module} tab={tab} />
+      <LearningObjectives module={module} tab={tab} />
 
-        <h2>Data Services</h2>
+      <h2>Data Services</h2>
 
       <p>
         In CI, the most common type of service provided by a data service is permanent,
@@ -81,6 +81,8 @@ const CIStorageServices = ({module, tab}) => {
         using the default values, you will notice that the registration overhead nearly
         doubles the time to perform the storing operation in the data service.
       </p>
+
+      <SimulationActivity panelKey="ci-storage-services-simulation" content={<CIStorageServicesSimulation />} />
 
       <Divider />
 
