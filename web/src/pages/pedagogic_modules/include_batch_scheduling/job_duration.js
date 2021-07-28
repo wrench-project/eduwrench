@@ -22,10 +22,10 @@ const JobDuration = ({ module, tab }) => {
         needed. This is because they do not know how long their programs will run
         (for instance, the program runs shorter or longer based on its input data).
         Furthermore, users many not know the speedup behavior of their programs. So
-        although they may know how long the program would run on 1 node, they don't
+        although they may know how long the program would run on 1 node, they do not
         know how long it will run on 10 nodes. Since asking for too little time
         leads to job failures, most users are conservative and ask for more time.
-        This behavior has been studied by researchers (here is <a
+        This behavior has been studied by researchers (here is a <a
         href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.9.5068&rep=rep1&type=pdf" target="_blank">research
         article on this topic</a> if interested).
       </p>
