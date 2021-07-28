@@ -1,60 +1,67 @@
+# Each TopSLO is identified by a unique key
 # Each SLO is identified by a unique key
-# Each page is identified by a module key and a tab index
+# Each Mapping is identified by a module key and a tab index
+
+### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later)
 
 - TopSLOs:
     - description: "Be able to explain and apply the fundamental concepts of sequential, parallel, and
         distributed computing"
-      key: "topslo_1"
+      key: "top_slo_1"
     - description: "Be able to describe typical parallel/distributed computing (PDC) applications and the
         platforms on which they run"
-      key: "topslo_2"
+      key: "top_slo_2"
     - description: "Be able to reason about and improve the performance of PDC applications"
-      key: "topslo_3"
+      key: "top_slo_3"
     - description: "Be comfortable with and able to use standard tools provided as part of current
         CyberInfrastructure deployments"
-      key: "topslo_4"
+      key: "top_slo_4"
 
 - SLOs:
     - description: "Understand the concepts of 'work' and of 'compute speed'"
       key: "slo_work_speed"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
+        - "top_slo_2"
     - description: "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed"
       key: "slo_flop"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
+        - "top_slo_2"
     - description: "Understand the simple relationship between program execution time, work, and compute speed"
       key: "slo_exec_time"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
     - description: "Understand the concept of time sharing and how it can impact program execution time"
       key: "slo_time_sharing"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
     - description: "Understand the concept of memory (RAM)"
       key: "slo_ram"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
+        - "top_slo_2"
     - description: "Understand how the amount of available memory limits program executions"
       key: "slo_ram_constraints"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
     - description: "Understand the concept of IO"
       key: "slo_io"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_1"
+        - "top_slo_2"
     - description: "Understand the impact of IO operations on computing"
       key: "slo_io_exec_time"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_3"
     - description: "Understand the basics of optimizing computation around IO operations"
       key: "slo_io_optimization"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_3"
     - description: "Be able to reason about and optimize the performance of a single-core execution that includes computation activities, I/O activities, and RAM constraints"
       key: "slo_single_core_performance"
       topSLOs:
-        - "topslo_1"
+        - "top_slo_3"
     - description: "Understand the need for and the basics of multi-core computers"
       key: "slo_multicore"
       topSLOs:
@@ -76,75 +83,82 @@
     - description: "Understand and quantify the relationship between idle time, speedup, and efficiency"
       key: "slo_idle_time_speedup_efficiency"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand and be able to quantify the impact of RAM constraints on parallel performance"
       key: "slo_ram_and_parallelism"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand and be able to quantify the impact of I/O on parallel performance"
       key: "slo_io_and_parallelism"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concept of task dependencies"
       key: "slo_task_dependencies"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Understand and quantify the impact of task dependencies on parallelism"
       key: "slo_task_dependencies_and_parallelism"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concept of data-parallelism"
       key: "slo_data_parallelism"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Understand and be able to apply Amdahl's law"
       key: "slo_amdahl"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand and be able to reason about the performance of data-parallel programs"
       key: "slo_data_parallelism_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Be able to reason about the performance of programs with both task- and data-parallelism when executed on multi-core platforms"
       key: "slo_multicore_parallel_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concepts of latency and bandwidth"
       key: "slo_latency_bandwidth"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Be able to estimate data transfer time through a network link"
       key: "slo_data_transfer_time"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concept of network contention"
       key: "slo_contention"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Be able to estimate data transfer times in the presence of contention"
       key: "slo_contention_transfer_time"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concept of network topology"
       key: "slo_topology"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Be able to compute end-to-end latencies and bandwidths"
       key: "slo_end_to_end"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Be able to compute end-to-end data transfer times"
       key: "slo_end_to_end_transfer_time"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the basics of the client/server model of computation"
       key: "slo_client_server"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Be able to reason about the performance of a simple client/server setup"
       key: "slo_client_server_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the need for and the mechanics of pipelining"
       key: "slo_pipelining"
       topSLOs:
@@ -152,7 +166,7 @@
     - description: "Be able to reason about how pipelining impacts performance"
       key: "slo_pipelining_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the principles of coordinator-worker computing"
       key: "slo_coordinator_worker"
       topSLOs:
@@ -165,11 +179,11 @@
     - description: "Experience how different scheduling strategies can affect performance"
       key: "slo_coordinator_worker_scheduling_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Be able to use experiments to compare coordinator-worker scheduling strategies meaningfully"
       key: "slo_coordinator_worker_scheduling_experiments"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the concept of a workflow"
       key: "slo_workflow_concepts"
       topSLOs:
@@ -178,21 +192,20 @@
     - description: "Be able to reason about the performance of a workflow on a multi-core computer"
       key: "slo_workflow_multicore_performance"
       topSLOs:
-        - "top_slo_1"
-        - "top_slo_2"
+        - "top_slo_3"
     - description: "Be able to reason about workflow execution performance on distributed multi-host/multi-core platforms"
       key: "slo_workflow_distributed_performance"
       topSLOs:
-        - "top_slo_1"
-        - "top_slo_2"
+        - "top_slo_3"
     - description: "Understand the concept of data locality in distributed platforms"
       key: "slo_workflow_distributed_data_locality"
       topSLOs:
         - "top_slo_1"
+        - "top_slo_2"
     - description: "Be able to quantify the impact of data locality on workflow execution"
       key: "slo_workflow_distributed_data_locality_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand how task- and data-parallelism can be mixed"
       key: "slo_mixed_parallelism"
       topSLOs:
@@ -201,11 +214,11 @@
     - description: "Be able to reason about the performance of programs that include both task- and data-parallelism"
       key: "slo_mixed_parallelism_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Be able to reason about the performance of distributed executions of workflows with mixed parallelism"
       key: "slo_workflow_distributed_mixed_performance"
       topSLOs:
-        - "top_slo_1"
+        - "top_slo_3"
     - description: "Understand the need for batch scheduling"
       key: "slo_batch_scheduling_concepts"
       topSLOs:
@@ -222,7 +235,7 @@
     - description: "Be able to use the sbatch command"
       key: "slo_batch_sbatch_command"
       topSLOs:
-        - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand the concept of a batch queue"
       key: "slo_batch_queue"
       topSLOs:
@@ -234,7 +247,7 @@
     - description: "Be able to use the squeue command"
       key: "slo_batch_squeue_command"
       topSLOs:
-        - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand what canceling a batch job entails"
       key: "slo_batch_job_cancellation"
       topSLOs:
@@ -242,22 +255,22 @@
     - description: "Be able to use the scancel command"
       key: "slo_batch_scancel_command"
       topSLOs:
-        - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand how inspecting the batch queue can help pick job parameters that reduce job turnaround time"
       key: "slo_batch_inspect_queue"
       topSLOs:
-        - "top_slo_1"
         - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand and gain experience with how requested job duration impacts turnaround time"
       key: "slo_batch_job_duration_impact"
       topSLOs:
-        - "top_slo_1"
         - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand and gain experience with how requested job number of nodes impacts job turnaround time"
       key: "slo_batch_num_nodes_impact"
       topSLOs:
-        - "top_slo_1"
         - "top_slo_3"
+        - "top_slo_4"
     - description: "Understand the principles of cyberinfrastructure services"
       key: "slo_ci_service_concepts"
       topSLOs:
@@ -270,14 +283,12 @@
     - description: "Understand how data services can be used to store, copy, and access data"
       key: "slo_ci_storage_service_concepts"
       topSLOs:
-        - "top_slo_1"
         - "top_slo_2"
     - description: "Understand the concept of data replicas and how data services can be used to keep track of them"
       key: "slo_ci_storage_service_replication"
       topSLOs:
         - "top_slo_1"
         - "top_slo_2"
-
 
 - Mappings:
     - module: "A.1"
@@ -395,6 +406,16 @@
       tab: "workflows_capstone"
       SLOs:
         - "slo_workflow_distributed_mixed_performance"
+    - module: "B.1"
+      tab: "ci_service_fundamentals"
+      SLOs:
+        - "slo_ci_service_concepts"
+        - "slo_ci_service_overhead"
+    - module: "B.1"
+      tab: "ci_storage_services"
+      SLOs:
+        - "slo_ci_storage_service_concepts"
+        - "slo_ci_storage_service_replication"
     - module: "C.1"
       tab: "basic_concepts"
       SLOs:
@@ -425,14 +446,5 @@
       tab: "job_num_nodes"
       SLOs:
         - "slo_batch_num_nodes_impact"
-    - module: "B.1"
-      tab: "ci_service_fundamentals"
-      SLOs:
-        - "slo_ci_service_concepts"
-        - "slo_ci_service_overhead"
-    - module: "B.1"
-      tab: "ci_storage_services"
-      SLOs:
-        - "slo_ci_storage_service_concepts"
-        - "slo_ci_storage_service_replication"
+
 
