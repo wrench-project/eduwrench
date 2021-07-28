@@ -2,6 +2,7 @@ import React from "react"
 import Layout from "../components/layout"
 import PageHeader from "../components/page_header"
 import { Header, Segment, Table } from "semantic-ui-react"
+import HighLevelCurriculumMap from "../components/curriculum_map";
 
 const ForTeachers = () => (
   <Layout>
@@ -69,6 +70,10 @@ const ForTeachers = () => (
         Each module, and in fact each tab within each module page, lists specific SLOs, each mapping to one or more of
         the top-level SLOs. See the comprehensive SLO Map if interest.
       </p>
+    </Segment>
+
+    <Segment>
+      <HighLevelCurriculumMap />
     </Segment>
 
     <Segment>
