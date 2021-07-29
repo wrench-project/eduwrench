@@ -5,7 +5,9 @@ project("thrustd")
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CmakeModules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
+
+set(CMAKE_BUILD_TYPE Debug)
 
 find_package(SimGrid REQUIRED)
 

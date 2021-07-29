@@ -31,12 +31,9 @@ int main(int argc, char **argv) {
 
     argv = new_argv;
     argc++;
-
+    
     // Initialization of the simulation
     simulation.init(&argc, argv);
-
-    std::cout << "argc: " << argc << std::endl;
-    std::cout << "argv: " << argv[1] << std::endl;
     
     // Parsing of the command-line arguments for this WRENCH simulation
     if (argc != 2) {
@@ -192,8 +189,12 @@ int main(int argc, char **argv) {
             "   </zone>\n"
             "</platform>\n");
 
-    std::string platform_file = "/tmp/hosts.xml";
+    std::string platform_file = "/tmp/hosts" + std::to_string((int)getpid()) + ".xml";
     auto xml_file = fopen(platform_file.c_str(), "w");
+    if (xml_file == NULL) {
+        std::cerr << "Cannot open platform (.xml) file" << std::endl;
+        exit(1);
+    }
     fprintf(xml_file, "%s", xml.c_str());
     fclose(xml_file);
 

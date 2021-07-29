@@ -60,8 +60,11 @@ int ThrustDWMS::main() {
 
     auto compute_service = *(this->getAvailableComputeServices<wrench::ComputeService>().begin());
     WRENCH_INFO("NAME OF LOCAL COMPUTE_SERVICE: %s", compute_service->getName().c_str());
-    auto cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().rbegin());
-    WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
+    std::shared_ptr<wrench::CloudComputeService> cloud_service;
+    if (ThrustDWMS::getNumVmInstances() > 0) {
+        cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().rbegin());
+        WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
+    }
 
     // Get the available storage services
     auto storage_services = this->getAvailableStorageServices();
