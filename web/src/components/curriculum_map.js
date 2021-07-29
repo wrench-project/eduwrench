@@ -14,6 +14,10 @@ const GetCurriculumMapDatabase = () => {
                 description
                 key
             }
+            ModuleTitles {
+                number
+                title
+            }
             SLOs {
                 description
                 key
@@ -69,9 +73,10 @@ export const HighLevelCurriculumMap = () => {
   const data = GetCurriculumMapDatabase()
 
   // Get the SLOs and Mappings
-  const TopSLOs = data["allCurriculummapYaml"]["nodes"][1]["TopSLOs"]
   const SLOs = data["allCurriculummapYaml"]["nodes"][0]["SLOs"]
-  const Mappings = data["allCurriculummapYaml"]["nodes"][2]["Mappings"]
+  const TopSLOs = data["allCurriculummapYaml"]["nodes"][1]["TopSLOs"]
+  const ModuleTitles = data["allCurriculummapYaml"]["nodes"][2]["ModuleTitles"]
+  const Mappings = data["allCurriculummapYaml"]["nodes"][3]["Mappings"]
 
   // Compute the dict of all modules: module_dict[module] = [[tab, bool, bool, bool, bool], [tab, bool, bool, bool], ...]
   let module_dict = {}
@@ -120,16 +125,24 @@ export const HighLevelCurriculumMap = () => {
   }
   sorted.sort();
 
+  console.log(ModuleTitles)
   let tableRows = []
   for (let key of sorted) {
+    let module_title = key
+    try {
+      module_title += " " + ModuleTitles.filter(x => x.number === key)[0].title
+    } catch (error) {
+      module_title += " "
+    }
+
     let module_row = (
         <Table.Row key={Math.random()}>
-          <Table.Cell key={Math.random()} ><b>{key}</b></Table.Cell>
-          <Table.Cell key={Math.random()}> </Table.Cell>
-          <Table.Cell key={Math.random()}> </Table.Cell>
-          <Table.Cell key={Math.random()}> </Table.Cell>
-          <Table.Cell key={Math.random()}> </Table.Cell>
-          <Table.Cell key={Math.random()}> </Table.Cell>
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left"><b>{module_title}</b></Table.Cell>
+          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
+          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
+          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
+          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
+          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
         </Table.Row>
     )
     tableRows.push(module_row)
@@ -141,8 +154,7 @@ export const HighLevelCurriculumMap = () => {
         checkmarks.push(checkmark)
       }
       let row = (<Table.Row key={Math.random()}>
-        <Table.Cell key={Math.random()}> </Table.Cell>
-        <Table.Cell key={Math.random()}>{tabspec[0]}</Table.Cell>
+        <Table.Cell key={Math.random()}>tab: {tabspec[0]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[0]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[1]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[2]}</Table.Cell>
@@ -158,7 +170,7 @@ export const HighLevelCurriculumMap = () => {
           <Table collapsing>
             <Table.Header>
               <Table.Row key={Math.random()}>
-                <Table.HeaderCell>Module</Table.HeaderCell>
+                <Table.HeaderCell>Module/tabs</Table.HeaderCell>
                 <Table.HeaderCell>Tab</Table.HeaderCell>
                 <Table.HeaderCell>SLO1</Table.HeaderCell>
                 <Table.HeaderCell>SLO2</Table.HeaderCell>

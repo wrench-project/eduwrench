@@ -17,6 +17,20 @@
         CyberInfrastructure deployments"
       key: "top_slo_4"
 
+- ModuleTitles:
+    - number: "A.1"
+      title: "Single-core Computing"
+    - number: "A.2"
+      title: "Multi-core Computing"
+    - number: "A.3.1"
+      title: "Distributed Computing: Networking Fundamentals"
+    - number: "A.3.2"
+      title: "Distributed Computing: Client-Server"
+    - number: "A.3.3"
+      title: "Distributed Computing: Coordinator-Worker"
+    - number: "A.3.4"
+      title: "Distributed Computing: Workflows"
+
 - SLOs:
     - description: "Understand the concepts of 'work' and of 'compute speed'"
       key: "slo_work_speed"
