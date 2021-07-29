@@ -14,6 +14,7 @@
 #include <fstream>
 #include <chrono>
 #include <ratio>
+#include <unistd.h>
 
 static bool ends_with(const std::string& str, const std::string& suffix) {
     return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);
@@ -21,6 +22,7 @@ static bool ends_with(const std::string& str, const std::string& suffix) {
 
 int main(int argc, char **argv) {
 
+    sleep(1000000);
     // Declaration of the top-level WRENCH simulation object
     wrench::Simulation simulation;
 
