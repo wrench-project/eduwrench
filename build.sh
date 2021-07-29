@@ -28,14 +28,5 @@ for  dir in `ls simulators/`; do
     cd ../..
 done
 
-
-#DEPRECATED copy dashboard scripts into web application
-#echo "Copying WRENCH dashboard scripts into web application"
-#ln -s /usr/local/wrench/dashboard web/public/sims/scripts/dashboard
-
-#DEPRECATED bundle install jekyll application
-#echo "Installing Jekyll application"
-#cd web && sudo bundle install && cd ..
-
 echo "Installing NPM modules"
-cd web && npm install && cd ..
+cd web && npm install && gatsby build && cd ..
