@@ -128,21 +128,21 @@ export const HighLevelCurriculumMap = () => {
   console.log(ModuleTitles)
   let tableRows = []
   for (let key of sorted) {
-    let module_title = key
+    let module_title
     try {
-      module_title += " " + ModuleTitles.filter(x => x.number === key)[0].title
+      module_title = ModuleTitles.filter(x => x.number === key)[0].title
     } catch (error) {
-      module_title += " "
+      module_title = ""
     }
 
+    let background_color = "#bfbfbf"
     let module_row = (
         <Table.Row key={Math.random()}>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left"><b>{module_title}</b></Table.Cell>
-          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
-          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
-          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
-          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
-          {/*<Table.Cell key={Math.random()}> </Table.Cell>*/}
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>{key}&nbsp;&nbsp;{module_title}</b></Table.Cell>
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO1</b></Table.Cell>
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO2</b></Table.Cell>
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO3</b></Table.Cell>
+          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO4</b></Table.Cell>
         </Table.Row>
     )
     tableRows.push(module_row)
@@ -154,7 +154,7 @@ export const HighLevelCurriculumMap = () => {
         checkmarks.push(checkmark)
       }
       let row = (<Table.Row key={Math.random()}>
-        <Table.Cell key={Math.random()}>tab: {tabspec[0]}</Table.Cell>
+        <Table.Cell key={Math.random()}>&nbsp;<b>&#x21AA;</b> {tabspec[0]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[0]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[1]}</Table.Cell>
         <Table.Cell key={Math.random()}>{checkmarks[2]}</Table.Cell>
@@ -168,16 +168,15 @@ export const HighLevelCurriculumMap = () => {
         <Segment.Group className="objectives">
           <Segment inverted><strong>Curriculum Map</strong></Segment>
           <Table collapsing>
-            <Table.Header>
-              <Table.Row key={Math.random()}>
-                <Table.HeaderCell>Module/tabs</Table.HeaderCell>
-                <Table.HeaderCell>Tab</Table.HeaderCell>
-                <Table.HeaderCell>SLO1</Table.HeaderCell>
-                <Table.HeaderCell>SLO2</Table.HeaderCell>
-                <Table.HeaderCell>SLO3</Table.HeaderCell>
-                <Table.HeaderCell>SLO4</Table.HeaderCell>
-              </Table.Row>
-            </Table.Header>
+            {/*<Table.Header>*/}
+            {/*  <Table.Row key={Math.random()}>*/}
+            {/*    <Table.HeaderCell>Modules</Table.HeaderCell>*/}
+            {/*    <Table.HeaderCell>SLO1</Table.HeaderCell>*/}
+            {/*    <Table.HeaderCell>SLO2</Table.HeaderCell>*/}
+            {/*    <Table.HeaderCell>SLO3</Table.HeaderCell>*/}
+            {/*    <Table.HeaderCell>SLO4</Table.HeaderCell>*/}
+            {/*  </Table.Row>*/}
+            {/*</Table.Header>*/}
             <Table.Body>
               {tableRows}
             </Table.Body>

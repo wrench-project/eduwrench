@@ -30,6 +30,10 @@
       title: "Distributed Computing: Coordinator-Worker"
     - number: "A.3.4"
       title: "Distributed Computing: Workflows"
+    - number: "B.1"
+      title: "Cyberinfrastructure Concepts"
+    - number: "C.1"
+      title: "Batch Scheduling"
 
 - SLOs:
     - description: "Understand the concepts of 'work' and of 'compute speed'"
