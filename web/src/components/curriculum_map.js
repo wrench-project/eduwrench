@@ -8,7 +8,7 @@ import React from "react";
 const GetCurriculumMapDatabase = () => {
   const data = useStaticQuery(graphql`
     query CurriculummapQuery {
-      allCurriculummapYaml(sort: { order:ASC, fields: SLOs}) {
+      allCurriculummapYaml {
         nodes {
             TopSLOs {
                 description
@@ -41,7 +41,7 @@ export const ListSLOs = (module, tab) => {
   const data = GetCurriculumMapDatabase()
 
   // Get the SLOs and Mappings
-  const SLOs = data["allCurriculummapYaml"]["nodes"][0]["SLOs"]
+  const SLOs = data["allCurriculummapYaml"]["nodes"][2]["SLOs"]
   const Mappings = data["allCurriculummapYaml"]["nodes"][3]["Mappings"]
 
   // Determine all SLO keys relevant for the module-tab passed as arguments
@@ -73,9 +73,9 @@ export const HighLevelCurriculumMap = () => {
   const data = GetCurriculumMapDatabase()
 
   // Get the SLOs and Mappings
-  const SLOs = data["allCurriculummapYaml"]["nodes"][0]["SLOs"]
-  const TopSLOs = data["allCurriculummapYaml"]["nodes"][1]["TopSLOs"]
-  const ModuleTitles = data["allCurriculummapYaml"]["nodes"][2]["ModuleTitles"]
+  const TopSLOs = data["allCurriculummapYaml"]["nodes"][0]["TopSLOs"]
+  const ModuleTitles = data["allCurriculummapYaml"]["nodes"][1]["ModuleTitles"]
+  const SLOs = data["allCurriculummapYaml"]["nodes"][2]["SLOs"]
   const Mappings = data["allCurriculummapYaml"]["nodes"][3]["Mappings"]
 
   // Compute the dict of all modules: module_dict[module] = [[tab, bool, bool, bool, bool], [tab, bool, bool, bool], ...]
@@ -125,7 +125,6 @@ export const HighLevelCurriculumMap = () => {
   }
   sorted.sort();
 
-  console.log(ModuleTitles)
   let tableRows = []
   for (let key of sorted) {
     let module_title
@@ -138,11 +137,11 @@ export const HighLevelCurriculumMap = () => {
     let background_color = "#bfbfbf"
     let module_row = (
         <Table.Row key={Math.random()}>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>{key}&nbsp;&nbsp;{module_title}</b></Table.Cell>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO1</b></Table.Cell>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO2</b></Table.Cell>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO3</b></Table.Cell>
-          <Table.Cell key={Math.random()} colspan="1" textAlign="left" bgcolor={background_color}><b>SLO4</b></Table.Cell>
+          <Table.Cell key={Math.random()} bgcolor={background_color}><b>{key}&nbsp;&nbsp;{module_title}</b></Table.Cell>
+          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO1</b></Table.Cell>
+          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO2</b></Table.Cell>
+          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO3</b></Table.Cell>
+          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO4</b></Table.Cell>
         </Table.Row>
     )
     tableRows.push(module_row)
