@@ -33,7 +33,6 @@ const GetCurriculumMapDatabase = () => {
       }
     }
   `)
-  console.log(data)
   return data
 }
 
@@ -126,7 +125,6 @@ export const HighLevelCurriculumMap = () => {
   }
   sorted.sort();
 
-  console.log(ModuleTitles)
   let tableRows = []
   for (let key of sorted) {
     let module_title
