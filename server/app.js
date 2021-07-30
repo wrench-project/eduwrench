@@ -1622,15 +1622,10 @@ app.post("/run/thrustd", authCheck, function (req, res) {
   let args_json = JSON.stringify(json_data);
   console.log(args_json);
   const fs = require('fs');
-  const createArgs = async () => {
-    await fs.writeFile("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
-      if(err) console.log('error', err);
-    });
-  }
-  createArgs();
-  // fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
-  //   if(err) console.log('error', err);
-  // });
+  
+  fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+    if(err) console.log('error', err);
+  });
 
   const SIMULATION_ARGS = [
     "/tmp/args.json"

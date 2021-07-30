@@ -21,8 +21,7 @@ static bool ends_with(const std::string& str, const std::string& suffix) {
 }
 
 int main(int argc, char **argv) {
-
-    sleep(1000000);
+    
     // Declaration of the top-level WRENCH simulation object
     wrench::Simulation simulation;
 
