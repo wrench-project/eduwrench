@@ -16,6 +16,7 @@ const LearningObjectives = ({ module, tab }) => {
       <Segment.Group className="objectives">
         <Segment inverted><strong>Learning Objectives</strong></Segment>
         <Segment style={{ backgroundColor: "#fafafa" }}>
+          Be able to...
           <ul style={{ backgroundColor: "#fafafa", lineHeight: "1.2em" }}>
             {objectivesList}
           </ul>
