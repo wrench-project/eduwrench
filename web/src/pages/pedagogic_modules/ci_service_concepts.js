@@ -27,15 +27,15 @@ const CIServiceConcepts = () => {
             key: "ci_service_fundamentals",
             content: "Fundamentals"
           },
-          render: () => <Tab.Pane><CIServiceFundamentals module={module} tab={"ci_service_fundamentals"}/></Tab.Pane>
+          render: () => <Tab.Pane><CIServiceFundamentals module={module} tab={"ci_service_fundamentals"} /></Tab.Pane>
         },
         {
           menuItem: {
             key: "ci_storage_services",
             content: "Managing Data"
           },
-          render: () => <Tab.Pane><CIStorageServices module={module} tab={"ci_storage_services"}/></Tab.Pane>
-        },
+          render: () => <Tab.Pane><CIStorageServices module={module} tab={"ci_storage_services"} /></Tab.Pane>
+        }
         // {
         //   menuItem: {
         //     key: "ci_compute_services",

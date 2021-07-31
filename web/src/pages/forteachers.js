@@ -70,9 +70,7 @@ const ForTeachers = () => (
           Each module, and in fact each tab within each module page, lists specific SLOs, each mapping to one or more of
           the top-level SLOs. See the comprehensive SLO Map if interest.
         </p>
-      </Segment>
 
-      <Segment>
         <HighLevelCurriculumMap />
       </Segment>
 

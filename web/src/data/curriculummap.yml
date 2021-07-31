@@ -510,5 +510,3 @@
       SLOs:
         - "slo_batch_num_nodes_impact"
         - "slo_batch_optimization"
-
-

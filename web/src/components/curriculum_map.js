@@ -1,12 +1,11 @@
-// import React, {useState} from "react"
-import {useStaticQuery, graphql} from "gatsby"
+import React from "react"
+import { graphql, useStaticQuery } from "gatsby"
+import { Header, Table } from "semantic-ui-react"
 import "antd/dist/antd.css"
-import {Segment, Table} from "semantic-ui-react";
-import React from "react";
 
 // Function to retrieve the whole CurriculumMap "database"
 const GetCurriculumMapDatabase = () => {
-  const data = useStaticQuery(graphql`
+  return useStaticQuery(graphql`
     query CurriculummapQuery {
       allCurriculummapYaml {
         nodes {
@@ -33,7 +32,6 @@ const GetCurriculumMapDatabase = () => {
       }
     }
   `)
-  return data
 }
 
 // Function to retrieve the list of SLO descriptions for a module-tab pair
@@ -67,7 +65,6 @@ export const ListSLOs = (module, tab) => {
   return SLODescriptions
 }
 
-
 export const HighLevelCurriculumMap = () => {
 
   const data = GetCurriculumMapDatabase()
@@ -91,7 +88,7 @@ export const HighLevelCurriculumMap = () => {
 
     // Create a blank tab spec
     let tab_spec = [tabname]
-    for (let i=0; i < TopSLOs.length; i++) {
+    for (let i = 0; i < TopSLOs.length; i++) {
       tab_spec.push(false)
     }
 
@@ -112,18 +109,18 @@ export const HighLevelCurriculumMap = () => {
     for (let i = 0; i < TopSLOs.length; i++) {
       let topSLOKey = TopSLOs[i].key
       if (foundSLOs.includes(topSLOKey)) {
-        tab_spec[1 + i] =  tab_spec[1 + i] || true
+        tab_spec[1 + i] = tab_spec[1 + i] || true
       }
     }
     module_dict[module].push(tab_spec)
   }
 
   // Build all the rows
-  let sorted = [];
-  for(let module in module_dict) {
-    sorted[sorted.length] = module;
+  let sorted = []
+  for (let module in module_dict) {
+    sorted[sorted.length] = module
   }
-  sorted.sort();
+  sorted.sort()
 
   let tableRows = []
   for (let key of sorted) {
@@ -136,20 +133,20 @@ export const HighLevelCurriculumMap = () => {
 
     let background_color = "#bfbfbf"
     let module_row = (
-        <Table.Row key={Math.random()}>
-          <Table.Cell key={Math.random()} bgcolor={background_color}><b>{key}&nbsp;&nbsp;{module_title}</b></Table.Cell>
-          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO1</b></Table.Cell>
-          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO2</b></Table.Cell>
-          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO3</b></Table.Cell>
-          <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO4</b></Table.Cell>
-        </Table.Row>
+      <Table.Row key={Math.random()}>
+        <Table.Cell key={Math.random()} bgcolor={background_color}><b>{key}&nbsp;&nbsp;{module_title}</b></Table.Cell>
+        <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO1</b></Table.Cell>
+        <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO2</b></Table.Cell>
+        <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO3</b></Table.Cell>
+        <Table.Cell key={Math.random()} bgcolor={background_color}><b>SLO4</b></Table.Cell>
+      </Table.Row>
     )
     tableRows.push(module_row)
 
     for (let tabspec of module_dict[key]) {
       let checkmarks = []
-      for (let i=0; i < 4; i++) {
-        let checkmark = tabspec[i + 1] ? (<b>&#10003;</b>) : (<b></b>)
+      for (let i = 0; i < 4; i++) {
+        let checkmark = tabspec[i + 1] ? (<strong>&#10003;</strong>) : null
         checkmarks.push(checkmark)
       }
       let row = (<Table.Row key={Math.random()}>
@@ -163,27 +160,27 @@ export const HighLevelCurriculumMap = () => {
     }
   }
   return (
-      <>
-        <Segment.Group className="objectives">
-          <Segment inverted><strong>Curriculum Map</strong></Segment>
-          <Table collapsing>
-            {/*<Table.Header>*/}
-            {/*  <Table.Row key={Math.random()}>*/}
-            {/*    <Table.HeaderCell>Modules</Table.HeaderCell>*/}
-            {/*    <Table.HeaderCell>SLO1</Table.HeaderCell>*/}
-            {/*    <Table.HeaderCell>SLO2</Table.HeaderCell>*/}
-            {/*    <Table.HeaderCell>SLO3</Table.HeaderCell>*/}
-            {/*    <Table.HeaderCell>SLO4</Table.HeaderCell>*/}
-            {/*  </Table.Row>*/}
-            {/*</Table.Header>*/}
-            <Table.Body>
-              {tableRows}
-            </Table.Body>
-          </Table>
-        </Segment.Group>
-      </>
+    <>
+      <Header as="h3" block>
+        Curriculum Map
+      </Header>
+
+      <Table collapsing>
+        {/*<Table.Header>*/}
+        {/*  <Table.Row key={Math.random()}>*/}
+        {/*    <Table.HeaderCell>Modules</Table.HeaderCell>*/}
+        {/*    <Table.HeaderCell>SLO1</Table.HeaderCell>*/}
+        {/*    <Table.HeaderCell>SLO2</Table.HeaderCell>*/}
+        {/*    <Table.HeaderCell>SLO3</Table.HeaderCell>*/}
+        {/*    <Table.HeaderCell>SLO4</Table.HeaderCell>*/}
+        {/*  </Table.Row>*/}
+        {/*</Table.Header>*/}
+        <Table.Body>
+          {tableRows}
+        </Table.Body>
+      </Table>
+    </>
   )
 }
 
 export default HighLevelCurriculumMap
-
