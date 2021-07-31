@@ -28,5 +28,8 @@ for  dir in `ls simulators/`; do
     cd ../..
 done
 
-echo "Installing NPM modules"
+echo "Building server"
+cd server && npm install && cd ..
+
+echo "Building front-end"
 cd web && npm install && gatsby build && cd ..

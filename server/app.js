@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021. The eduWRENCH Team.
+ * Copyright (c) 2019-2021. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -13,23 +13,15 @@ const express = require("express"),
     methodOverride = require("method-override"),
     au = require("ansi_up"),
     {spawnSync} = require("child_process"),
-    fs = require("fs"),
-    passport = require("passport"),
-    passportSetup = require("./passport-setup");
+    fs = require("fs")
 
 const cors = require("cors");
 const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
-const CLIENT_ID =
-    "1043042177326-hr8cj7m89j8s8i4bopgm9pkkllr4dedf.apps.googleusercontent.com";
-
-const {OAuth2Client} = require("google-auth-library");
-const client = new OAuth2Client(CLIENT_ID);
 
 (cookieSession = require("cookie-session")),
     (request = require("request")),
     (flash = require("connect-flash"));
-// keys = require("./keys.js");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -59,47 +51,8 @@ app.use(
     })
 );
 
-
-// check if authenticated
-const authCheck = function (req, res, next) {
-    // if (!req.user) {
-    //     // if user not already logged in, redirect them to the
-    //     // homepage where they can log in
-    //     res.redirect("/");
-    // } else {
-    // the user is logged in so move on to the next middleware
-    next();
-    // }
-};
-
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
-var ansi_up = new au.default();
-
-// route to test insertion into database
-app.post("/insert", (req, res) => {
-    sims
-        .add(req.body)
-        .then((simulation) => {
-            res.status(200).json(simulation);
-        })
-        .catch((error) => {
-            res.status(500).json({message: error.message});
-        });
-});
-
-app.post("/auth/google", async (req, res) => {
-    const {token} = req.body;
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: process.env.CLIENT_ID,
-    });
-    const {name, email, picture} = ticket.getPayload();
-
-    const user = {name: name, email: email, picture: picture};
-    //req.session.userId = user.id;
-    res.status(201);
-    res.json(user);
-});
+let ansi_up = new au.default();
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
@@ -109,10 +62,8 @@ app.get("/", function (req, res) {
     });
 });
 
-app.get("/test", (req, res) => res.send({express: "Hello From Express"}));
-
 // execute networking fundamentals simulation route
-app.post("/run/networking_fundamentals", authCheck, function (req, res) {
+app.post("/run/networking_fundamentals", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/networking_fundamentals/"
@@ -142,15 +93,15 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stdout.toString();
+        let simulation_output = simulation_process.stdout.toString();
         console.log(simulation_output);
 
         /**
@@ -174,8 +125,8 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
          *
          * The simulation output is sent back to the client (see public/scripts/networking_fundamental.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output:
@@ -185,7 +136,7 @@ app.post("/run/networking_fundamentals", authCheck, function (req, res) {
 });
 
 // execute workflow execution fundamentals simulation route
-app.post("/run/workflow_execution_fundamentals", authCheck, function (
+app.post("/run/workflow_execution_fundamentals", function (
     req,
     res
 ) {
@@ -215,15 +166,15 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -247,8 +198,8 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/workflow_execution_fundamentals.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -260,7 +211,7 @@ app.post("/run/workflow_execution_fundamentals", authCheck, function (
 });
 
 // execute activity 1 simulation route
-app.post("/run/workflow_execution_data_locality", authCheck, function (
+app.post("/run/workflow_execution_data_locality", function (
     req,
     res
 ) {
@@ -274,7 +225,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (
     const USERNAME = req.body.userName;
     const EMAIL = req.body.email;
     const LINK_BANDWIDTH = req.body.link_bandwidth;
-    const STORAGE_OPTION = req.body.simulator_number == 1 ? "remote" : "local";
+    const STORAGE_OPTION = req.body.simulator_number === 1 ? "remote" : "local";
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -291,15 +242,15 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -323,8 +274,8 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -336,7 +287,7 @@ app.post("/run/workflow_execution_data_locality", authCheck, function (
 });
 
 // execute Workflow Execution and Parallelism simulation route
-app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
+app.post("/run/workflow_execution_parallelism", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/workflow_execution_parallelism/"
@@ -352,7 +303,7 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     const NUM_TASKS_TO_JOIN = 20;
     const FILE_SIZE = 2000000000;
     const RAM_REQUIRED =
-        req.body.ram_required == 1 ? "RAM_REQUIRED" : "RAM_NOT_REQUIRED";
+        req.body.ram_required === 1 ? "RAM_REQUIRED" : "RAM_NOT_REQUIRED";
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -375,15 +326,15 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -410,8 +361,8 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -423,7 +374,7 @@ app.post("/run/workflow_execution_parallelism", authCheck, function (req, res) {
 });
 
 // execute activity multi core dependent tasks simulation route
-app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
+app.post("/run/multi_core_dependent_tasks", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/multi_core_computing_dependent_tasks/"
@@ -455,15 +406,15 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -488,8 +439,8 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -501,7 +452,7 @@ app.post("/run/multi_core_dependent_tasks", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
+app.post("/run/multi_core_independent_tasks", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/multi_core_computing_independent_tasks/"
@@ -534,15 +485,15 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -568,8 +519,8 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -581,7 +532,7 @@ app.post("/run/multi_core_independent_tasks", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_independent_tasks_io", authCheck, function (
+app.post("/run/multi_core_independent_tasks_io", function (
     req,
     res
 ) {
@@ -603,7 +554,7 @@ app.post("/run/multi_core_independent_tasks_io", authCheck, function (
     const TASK2_INPUT_SIZE = req.body.task2_input_size;
     const TASK2_OUTPUT_SIZE = req.body.task2_output_size;
     const TASK2_WORK = req.body.task2_work;
-    const TASK1_BEFORE_TASK2 = req.body.first_task == 1;
+    const TASK1_BEFORE_TASK2 = req.body.first_task === 1;
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -628,15 +579,15 @@ app.post("/run/multi_core_independent_tasks_io", authCheck, function (
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -662,8 +613,8 @@ app.post("/run/multi_core_independent_tasks_io", authCheck, function (
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -675,7 +626,7 @@ app.post("/run/multi_core_independent_tasks_io", authCheck, function (
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
+app.post("/run/multi_core_data_parallelism", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/multi_core_computing_data_parallelism/"
@@ -704,15 +655,15 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -736,8 +687,8 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -749,7 +700,7 @@ app.post("/run/multi_core_data_parallelism", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_independent_tasks_ram", authCheck, function (
+app.post("/run/multi_core_independent_tasks_ram", function (
     req,
     res
 ) {
@@ -785,15 +736,15 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -819,8 +770,8 @@ app.post("/run/multi_core_independent_tasks_ram", authCheck, function (
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -837,7 +788,7 @@ app.post("/run/test/io", function (req, res) {
 
 
 // execute activity io operations simulation route
-app.post("/run/io_operations", authCheck, function (req, res) {
+app.post("/run/io_operations", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/io_operations/");
 
     const SIMULATOR = "io_simulator";
@@ -872,15 +823,15 @@ app.post("/run/io_operations", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -928,8 +879,8 @@ app.post("/run/io_operations", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: //simulation_output,
@@ -942,7 +893,7 @@ app.post("/run/io_operations", authCheck, function (req, res) {
 });
 
 // SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
-app.post("/run/client_server", authCheck, function (req, res) {
+app.post("/run/client_server", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
 
     const SIMULATOR = "client_server_simulator";
@@ -986,15 +937,15 @@ app.post("/run/client_server", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -1024,8 +975,8 @@ app.post("/run/client_server", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -1037,7 +988,7 @@ app.post("/run/client_server", authCheck, function (req, res) {
 });
 
 // FULL CLIENT SERVER (NOT SIMPLIFIED)
-app.post("/run/client_server_disk", authCheck, function (req, res) {
+app.post("/run/client_server_disk", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
 
     const SIMULATOR = "client_server_simulator";
@@ -1084,7 +1035,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
     let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
@@ -1133,7 +1084,7 @@ app.post("/run/client_server_disk", authCheck, function (req, res) {
 });
 
 // execute activity client server simulation route
-app.post("/run/coordinator_worker", authCheck, function (req, res) {
+app.post("/run/coordinator_worker", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/master_worker/");
 
     const SIMULATOR = "master_worker_simulator";
@@ -1217,8 +1168,8 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
 
     const ABBREV_LOGGING = ["--log='root.fmt:[%d][%h:%t]%e%m%n'"];
 
-    var SIMULATION_ARGS;
-    if (NUM_INVOCATION == 1) {
+    let SIMULATION_ARGS;
+    if (NUM_INVOCATION === 1) {
         SIMULATION_ARGS = INDIVIDUAL.concat(TASK_SPECS)
             .concat(WORKERS)
             .concat(TASK_SCHED_SELECT)
@@ -1237,25 +1188,25 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        if (NUM_INVOCATION == 1) {
-            var simulation_output = simulation_process.stderr.toString();
+        if (NUM_INVOCATION === 1) {
+            let simulation_output = simulation_process.stderr.toString();
             console.log(simulation_output);
         } else {
-            var simulation_output = simulation_process.stdout.toString();
+            let simulation_output = simulation_process.stdout.toString();
             console.log(simulation_output);
         }
 
         let WORKERS_STRIPPED = [];
         for (let i = 0; i < WORKERS.length; i++) {
-            if (!(WORKERS[i] == "--worker")) {
+            if (!(WORKERS[i] === "--worker")) {
                 WORKERS_STRIPPED.push(WORKERS[i]);
             }
         }
@@ -1264,7 +1215,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
          */
-        if (NUM_INVOCATION == 1) {
+        if (NUM_INVOCATION === 1) {
             logData({
                 user: USERNAME,
                 email: EMAIL,
@@ -1311,10 +1262,10 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
-        if (NUM_INVOCATION == 1) {
+        if (NUM_INVOCATION === 1) {
             res.json({
                 simulation_output: ansi_up
                     .ansi_to_html(simulation_output)
@@ -1331,7 +1282,7 @@ app.post("/run/coordinator_worker", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
+app.post("/run/workflow_fundamentals", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/workflow_fundamentals/"
@@ -1360,15 +1311,15 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -1392,8 +1343,8 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -1405,7 +1356,7 @@ app.post("/run/workflow_fundamentals", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/workflow_distributed", authCheck, function (req, res) {
+app.post("/run/workflow_distributed", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/workflow_distributed/"
@@ -1442,15 +1393,15 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
-    if (simulation_process.status != 0) {
+    if (simulation_process.status !== 0) {
         console.log(
             "Something went wrong with the simulation. Possibly check arguments."
         );
         console.log(simulation_process.stderr.toString());
     } else {
-        var simulation_output = simulation_process.stderr.toString();
+        let simulation_output = simulation_process.stderr.toString();
         console.log(simulation_output);
 
         /**
@@ -1476,8 +1427,8 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -1489,7 +1440,7 @@ app.post("/run/workflow_distributed", authCheck, function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
+app.post("/run/workflow_task_data_parallelism", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
         "simulators/workflow_task_data_parallelism/"
@@ -1524,7 +1475,7 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
     console.log("\nRunning Simulation");
     console.log("===================");
     console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    var simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
 
     if (simulation_process.status !== 0) {
         console.log(
@@ -1557,8 +1508,8 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
          *
          * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
          */
-        var find = "</span>";
-        var re = new RegExp(find, "g");
+        let find = "</span>";
+        let re = new RegExp(find, "g");
 
         res.json({
             simulation_output: ansi_up
@@ -1570,7 +1521,7 @@ app.post("/run/workflow_task_data_parallelism", authCheck, function (req, res) {
 });
 
 // SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
-app.post("/run/ci_overhead", authCheck, function (req, res) {
+app.post("/run/ci_overhead", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/ci_overhead/");
 
     const SIMULATOR = "ci_overhead_simulator";
@@ -1658,7 +1609,7 @@ app.post("/run/ci_overhead", authCheck, function (req, res) {
 });
 
 // execute activity storage service simulation route
-app.post("/run/storage_service", authCheck, function (req, res) {
+app.post("/run/storage_service", function (req, res) {
     const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
 
     const SIMULATOR = "storage_simulator";
@@ -1727,8 +1678,7 @@ app.post("/run/storage_service", authCheck, function (req, res) {
 });
 
 function storeData(data) {
-    sims
-        .add(data)
+    sims.add(data)
     //.then((simulation) => {
     //  res.status(200).json(simulation);
     //})
