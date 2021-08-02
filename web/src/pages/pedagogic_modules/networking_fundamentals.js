@@ -9,6 +9,8 @@ import Topologies from "./include_networking_fundamentals/topologies"
 import Contention from "./include_networking_fundamentals/contention"
 
 const NetworkingFundamental = () => {
+
+  const module = "A.3.1"
   return (
     <Layout>
       <PageHeader title="A.3.1 Networking Fundamentals" />
@@ -30,21 +32,21 @@ const NetworkingFundamental = () => {
             key: "latency_and_bandwidth",
             content: "Latency & Bandwidth"
           },
-          render: () => <Tab.Pane><LatencyAndBandwidth /></Tab.Pane>
+          render: () => <Tab.Pane><LatencyAndBandwidth module={module} tab={"latency_and_bandwidth"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "topologies",
             content: "Topologies"
           },
-          render: () => <Tab.Pane><Topologies /></Tab.Pane>
+          render: () => <Tab.Pane><Topologies module={module} tab={"topologies"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "contention",
             content: "Contention"
           },
-          render: () => <Tab.Pane><Contention /></Tab.Pane>
+          render: () => <Tab.Pane><Contention module={module} tab={"contention"}/></Tab.Pane>
         }
       ]}
       />

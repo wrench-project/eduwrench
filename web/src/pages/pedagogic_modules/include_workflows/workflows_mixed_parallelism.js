@@ -11,13 +11,11 @@ import WorkflowsMixedParallelismWorkflow
 import WorkflowsMixedParallelismQuestion
   from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow_question.svg"
 
-const WorkflowsMixedParallelism = () => {
+const WorkflowsMixedParallelism = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand how task- and data-parallelism can be mixed",
-        "Be able to reason about the performance of programs that include both task- and data-parallelism"
-      ]} />
+        <LearningObjectives module={module} tab={tab}
+        />
 
       <h2>Basic concept</h2>
 

@@ -1,0 +1,512 @@
+# Each TopSLO is identified by a unique key
+# Each SLO is identified by a unique key
+# Each Mapping is identified by a module key and a tab index
+
+### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later)
+
+- TopSLOs:
+    - description: "explain and apply the fundamental concepts of sequential, parallel, and
+        distributed computing"
+      key: "top_slo_1"
+    - description: "describe typical parallel/distributed computing (PDC) applications and the
+        platforms on which they run"
+      key: "top_slo_2"
+    - description: "reason about and improve the performance of PDC applications"
+      key: "top_slo_3"
+    - description: "Be comfortable with and able to use standard tools provided as part of current
+        CyberInfrastructure deployments"
+      key: "top_slo_4"
+
+- ModuleTitles:
+    - number: "A.1"
+      title: "Single-core Computing"
+    - number: "A.2"
+      title: "Multi-core Computing"
+    - number: "A.3.1"
+      title: "Distributed Computing: Networking Fundamentals"
+    - number: "A.3.2"
+      title: "Distributed Computing: Client-Server"
+    - number: "A.3.3"
+      title: "Distributed Computing: Coordinator-Worker"
+    - number: "A.3.4"
+      title: "Distributed Computing: Workflows"
+    - number: "B.1"
+      title: "Cyberinfrastructure Concepts"
+    - number: "C.1"
+      title: "Batch Scheduling"
+
+- SLOs:
+    - description: "define the concepts of 'work' and of 'compute speed'"
+      key: "slo_work_speed"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "define measures of work and of compute speed"
+      key: "slo_flop"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain the relationship between execution time, work, and compute speed"
+      key: "slo_exec_time"
+      topSLOs:
+        - "top_slo_1"
+    - description: "define the concept of time sharing and to explain its impact on execution time"
+      key: "slo_time_sharing"
+      topSLOs:
+        - "top_slo_1"
+    - description: "define the concept of memory (RAM)"
+      key: "slo_ram"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain how available memory impacts program executions"
+      key: "slo_ram_constraints"
+      topSLOs:
+        - "top_slo_1"
+    - description: "define the concept of I/O"
+      key: "slo_io"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain how I/O impacts program execution"
+      key: "slo_io_exec_time"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain and apply the basics of optimizing computation around I/O"
+      key: "slo_io_optimization"
+      topSLOs:
+        - "top_slo_3"
+    - description: "reason about and optimize the performance of a single-core program execution that includes computation and I/O, and that is subject to memory constraints"
+      key: "slo_single_core_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the need for and describe the basics of multi-core computers"
+      key: "slo_multicore"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "define the concept of a program that consists of independent tasks"
+      key: "slo_independent_tasks"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "define and quantify parallel speedup and efficiency"
+      key: "slo_speedup_efficiency"
+      topSLOs:
+        - "top_slo_1"
+    - description: "define the concept of load imbalance and explain how it causes idle time"
+      key: "slo_load_imbalance"
+      topSLOs:
+        - "top_slo_1"
+    - description: "explain and quantify the relationship between idle time, speedup, and efficiency"
+      key: "slo_idle_time_speedup_efficiency"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain and quantify the impact of memory constraints on parallel performance"
+      key: "slo_ram_and_parallelism"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain and quantify the impact of I/O on parallel performance"
+      key: "slo_io_and_parallelism"
+      topSLOs:
+        - "top_slo_3"
+    - description: "define the concept of task dependencies"
+      key: "slo_task_dependencies"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain and quantify the impact of task dependencies on parallelism"
+      key: "slo_task_dependencies_and_parallelism"
+      topSLOs:
+        - "top_slo_3"
+    - description: "define the concept of data-parallelism"
+      key: "slo_data_parallelism"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain and apply Amdahl's law"
+      key: "slo_amdahl"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_3"
+    - description: "reason about and quantify the performance of data-parallel programs"
+      key: "slo_data_parallelism_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "reason about and quantify the performance of programs with both task- and data-parallelism when executed on multi-core platforms"
+      key: "slo_multicore_parallel_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "define the concepts of latency and bandwidth"
+      key: "slo_latency_bandwidth"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "quantify data transfer time through a network link"
+      key: "slo_data_transfer_time"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the concept of network contention"
+      key: "slo_contention"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "quantify data transfer times in the presence of contention"
+      key: "slo_contention_transfer_time"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the concept of network topology"
+      key: "slo_topology"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "quantify end-to-end latencies and bandwidths"
+      key: "slo_end_to_end"
+      topSLOs:
+        - "top_slo_3"
+    - description: "quantify end-to-end data transfer times"
+      key: "slo_end_to_end_transfer_time"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the client/server model of computation"
+      key: "slo_client_server"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "reason about and quantify the performance of a client/server setup"
+      key: "slo_client_server_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the need for pipelining and its mechanics"
+      key: "slo_pipelining"
+      topSLOs:
+        - "top_slo_1"
+    - description: "quantify the impact of pipelining on performance"
+      key: "slo_pipelining_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the coordinator/worker model of computation"
+      key: "slo_coordinator_worker"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "describe the concept of scheduling in the context of coordinator-worker"
+      key: "slo_coordinator_worker_scheduling"
+      topSLOs:
+        - "top_slo_1"
+    - description: "discuss how different scheduling strategies can affect performance"
+      key: "slo_coordinator_worker_scheduling_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "use experiments to compare coordinator-worker scheduling strategies"
+      key: "slo_coordinator_worker_scheduling_experiments"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the workflow model of computation"
+      key: "slo_workflow_concepts"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "reason about and quantify the performance of a workflow on a multi-core computer"
+      key: "slo_workflow_multicore_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "describe parallel and distributed computing platforms that consists of computers over a network"
+      key: "slo_parallel_distributed_platform"
+      topSLOs:
+        - "top_slo_2"
+    - description: "reason about and quantify workflow execution performance on distributed multi-host/multi-core platforms"
+      key: "slo_workflow_distributed_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the concept of data locality in distributed platforms"
+      key: "slo_workflow_distributed_data_locality"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "explain and quantify the impact of data locality on distributed workflow execution"
+      key: "slo_workflow_distributed_data_locality_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain how task- and data-parallelism can be mixed"
+      key: "slo_mixed_parallelism"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "reason about and quantify the performance of programs that include both task- and data-parallelism"
+      key: "slo_mixed_parallelism_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "reason about and quantify the performance of distributed executions of workflows with mixed parallelism"
+      key: "slo_workflow_distributed_mixed_performance"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the need for batch scheduling"
+      key: "slo_batch_scheduling_concepts"
+      topSLOs:
+        - "top_slo_1"
+    - description: "describe, at a high level, what a batch scheduler does"
+      key: "slo_batch_scheduler"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "describe what submitting a batch job entails"
+      key: "slo_batch_job_submission"
+      topSLOs:
+        - "top_slo_1"
+    - description: "use the sbatch Slurm command"
+      key: "slo_batch_sbatch_command"
+      topSLOs:
+        - "top_slo_4"
+    - description: "explain the concept of a batch queue"
+      key: "slo_batch_queue"
+      topSLOs:
+        - "top_slo_1"
+    - description: "define the concept of job turnaround time"
+      key: "slo_batch_job_turnaround_time"
+      topSLOs:
+        - "top_slo_1"
+    - description: "submit a batch job"
+      key: "slo_batch_squeue_command"
+      topSLOs:
+        - "top_slo_4"
+    - description: "explain what canceling a batch job entails"
+      key: "slo_batch_job_cancellation"
+      topSLOs:
+        - "top_slo_1"
+    - description: "cancel a batch job"
+      key: "slo_batch_scancel_command"
+      topSLOs:
+        - "top_slo_4"
+    - description: "explain how inspecting the batch queue can help pick job parameters that reduce job turnaround time"
+      key: "slo_batch_inspect_queue"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "explain how requested job duration impacts turnaround time"
+      key: "slo_batch_job_duration_impact"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "explain how requested job number of nodes impacts job turnaround time"
+      key: "slo_batch_num_nodes_impact"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "tune batch job parameters to reduce turn-around time"
+      key: "slo_batch_optimization"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "explain the concept of cyberinfrastructure services"
+      key: "slo_ci_service_concepts"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "define the concept of overhead and explain how it impacts CI services performance"
+      key: "slo_ci_service_overhead"
+      topSLOs:
+        - "top_slo_1"
+    - description: "explain how data services can be used to store, copy, and access data"
+      key: "slo_ci_storage_service_concepts"
+      topSLOs:
+        - "top_slo_2"
+    - description: "explain the concept of data replicas and how data services are used to keep track of them"
+      key: "slo_ci_storage_service_replication"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+
+- Mappings:
+    - module: "A.1"
+      tab: "work_and_speed"
+      tabname: "Work and Speed"
+      SLOs:
+        - "slo_work_speed"
+        - "slo_flop"
+        - "slo_exec_time"
+    - module: "A.1"
+      tab: "time_sharing"
+      tabname: "Time-Sharing"
+      SLOs:
+        - "slo_time_sharing"
+    - module: "A.1"
+      tab: "memory"
+      tabname: "Memory"
+      SLOs:
+        - "slo_ram"
+        - "slo_ram_constraints"
+    - module: "A.1"
+      tab: "io"
+      tabname: "I/O"
+      SLOs:
+        - "slo_io"
+        - "slo_io_exec_time"
+        - "slo_io_optimization"
+    - module: "A.1"
+      tab: "capstone"
+      tabname: "Capstone"
+      SLOs:
+        - "slo_single_core_performance"
+    - module: "A.2"
+      tab: "task_parallelism"
+      tabname: "Task-Parallelism"
+      SLOs:
+        - "slo_multicore"
+        - "slo_independent_tasks"
+        - "slo_speedup_efficiency"
+    - module: "A.2"
+      tab: "load_imbalance"
+      tabname: "Load-Imbalance"
+      SLOs:
+        - "slo_load_imbalance"
+        - "slo_idle_time_speedup_efficiency"
+    - module: "A.2"
+      tab: "ram_and_io"
+      tabname: "RAM and I/O"
+      SLOs:
+        - "slo_ram_and_parallelism"
+        - "slo_io_and_parallelism"
+    - module: "A.2"
+      tab: "task_dependencies"
+      tabname: "Task Dependencies"
+      SLOs:
+        - "slo_task_dependencies"
+        - "slo_task_dependencies_and_parallelism"
+    - module: "A.2"
+      tab: "data_parallelism"
+      tabname: "Data Parallelism"
+      SLOs:
+        - "slo_data_parallelism"
+        - "slo_amdahl"
+        - "slo_data_parallelism_performance"
+    - module: "A.2"
+      tab: "multicore_capstone"
+      tabname: "Capstone"
+      SLOs:
+        - "slo_multicore_parallel_performance"
+    - module: "A.3.1"
+      tab: "latency_and_bandwidth"
+      tabname: "Latency & Bandwidth"
+      SLOs:
+        - "slo_latency_bandwidth"
+        - "slo_data_transfer_time"
+    - module: "A.3.1"
+      tab: "contention"
+      tabname: "Contention"
+      SLOs:
+        - "slo_contention"
+        - "slo_contention_transfer_time"
+    - module: "A.3.1"
+      tab: "topologies"
+      tabname: "Topology"
+      SLOs:
+        - "slo_topology"
+        - "slo_end_to_end"
+        - "slo_end_to_end_transfer_time"
+    - module: "A.3.2"
+      tab: "client_server_basics"
+      tabname: "Basics"
+      SLOs:
+        - "slo_parallel_distributed_platform"
+        - "slo_client_server"
+        - "slo_client_server_performance"
+    - module: "A.3.2"
+      tab: "client_server_pipelining"
+      tabname: "Pipelining"
+      SLOs:
+        - "slo_pipelining"
+        - "slo_pipelining_performance"
+    - module: "A.3.3"
+      tab: "coordinator_worker_basics"
+      tabname: "Basics"
+      SLOs:
+        - "slo_coordinator_worker"
+        - "slo_coordinator_worker_scheduling"
+        - "slo_coordinator_worker_scheduling_performance"
+        - "slo_parallel_distributed_platform"
+    - module: "A.3.3"
+      tab: "coordinator_worker_experiments"
+      tabname: "Scheduling Experiments"
+      SLOs:
+        - "slo_coordinator_worker_scheduling_experiments"
+    - module: "A.3.4"
+      tab: "workflows_fundamentals"
+      tabname: "Fundamentals"
+      SLOs:
+        - "slo_workflow_concepts"
+        - "slo_workflow_multicore_performance"
+    - module: "A.3.4"
+      tab: "workflows_distributed_execution"
+      tabname: "Distributed Execution"
+      SLOs:
+        - "slo_parallel_distributed_platform"
+        - "slo_workflow_distributed_performance"
+    - module: "A.3.4"
+      tab: "workflows_data_locality"
+      tabname: "Data Locality"
+      SLOs:
+        - "slo_workflow_distributed_data_locality"
+        - "slo_workflow_distributed_data_locality_performance"
+    - module: "A.3.4"
+      tab: "workflows_mixed_parallelism"
+      tabname: "Mixed Parallelism"
+      SLOs:
+        - "slo_mixed_parallelism"
+        - "slo_mixed_parallelism_performance"
+    - module: "A.3.4"
+      tab: "workflows_capstone"
+      tabname: "Capstone"
+      SLOs:
+        - "slo_workflow_distributed_mixed_performance"
+    - module: "B.1"
+      tab: "ci_service_fundamentals"
+      tabname: "Fundamentals"
+      SLOs:
+        - "slo_ci_service_concepts"
+        - "slo_ci_service_overhead"
+    - module: "B.1"
+      tab: "ci_storage_services"
+      tabname: "Storage Services"
+      SLOs:
+        - "slo_ci_storage_service_concepts"
+        - "slo_ci_storage_service_replication"
+    - module: "C.1"
+      tab: "basic_concepts"
+      tabname: "Basic"
+      SLOs:
+        - "slo_batch_scheduling_concepts"
+        - "slo_batch_scheduler"
+    - module: "C.1"
+      tab: "job_submission"
+      tabname: "Job Submission"
+      SLOs:
+        - "slo_batch_job_submission"
+        - "slo_batch_sbatch_command"
+    - module: "C.1"
+      tab: "batch_queue"
+      tabname: "Batch Queue"
+      SLOs:
+        - "slo_batch_queue"
+        - "slo_batch_job_turnaround_time"
+        - "slo_batch_squeue_command"
+    - module: "C.1"
+      tab: "job_cancellation"
+      tabname: "Job Cancellation"
+      SLOs:
+        - "slo_batch_job_cancellation"
+        - "slo_batch_scancel_command"
+        - "slo_batch_inspect_queue"
+        - "slo_batch_optimization"
+    - module: "C.1"
+      tab: "job_duration"
+      tabname: "Job Duration"
+      SLOs:
+        - "slo_batch_job_duration_impact"
+        - "slo_batch_optimization"
+    - module: "C.1"
+      tab: "job_num_nodes"
+      tabname: "Job Size"
+      SLOs:
+        - "slo_batch_num_nodes_impact"
+        - "slo_batch_optimization"

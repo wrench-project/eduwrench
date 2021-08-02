@@ -119,8 +119,8 @@ const HostUtilizationChart = ({
   let options = {}
 
   if (data.workflow_execution || data.disk_operations) {
-    const tasksData = data.workflow_execution.tasks
-    const diskData = data.disk_operations
+    const tasksData = data.workflow_execution ? data.workflow_execution.tasks : null
+    const diskData = data.disk_operations ? data.disk_operations : null
     chartData = {
       labels: [],
       datasets: []
@@ -129,21 +129,23 @@ const HostUtilizationChart = ({
 
     // obtain list of hosts
     let hosts = {}
-    Object.keys(tasksData).forEach(function(key) {
-      let task = tasksData[key]
-      if (hostsList.length > 0 && !hostsList.includes(task.execution_host.hostname)) {
-        return
-      }
-      if (!(task.execution_host.hostname in hosts)) {
-        hosts[task.execution_host.hostname] = {
-          cores: task.execution_host.cores,
-          tasks: {}
+    if (tasksData) {
+      Object.keys(tasksData).forEach(function(key) {
+        let task = tasksData[key]
+        if (hostsList.length > 0 && !hostsList.includes(task.execution_host.hostname)) {
+          return
         }
-        for (let i = 0; i < task.execution_host.cores; i++) {
-          hosts[task.execution_host.hostname].tasks[i] = []
+        if (!(task.execution_host.hostname in hosts)) {
+          hosts[task.execution_host.hostname] = {
+            cores: task.execution_host.cores,
+            tasks: {}
+          }
+          for (let i = 0; i < task.execution_host.cores; i++) {
+            hosts[task.execution_host.hostname].tasks[i] = []
+          }
         }
-      }
-    })
+      })
+    }
 
     // obtain additional hosts without tasks
     if (diskData) {
@@ -160,7 +162,9 @@ const HostUtilizationChart = ({
       })
     }
 
-    findTaskScheduling(tasksData, hosts)
+    if (tasksData) {
+      findTaskScheduling(tasksData, hosts)
+    }
 
     // populate data
     Object.keys(hosts).forEach(function(key) {

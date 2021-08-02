@@ -4,14 +4,11 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
 
-const WorkAndSpeed = () => {
+const WorkAndSpeed = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand the concepts of \"work\" and of \"compute speed\"",
-        "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed",
-        "Understand the simple relationship between program execution time, work, and compute speed"
-      ]} />
+      <LearningObjectives module={module} tab={tab}
+      />
 
       <h2>Measures of Work and Compute Speed</h2>
 

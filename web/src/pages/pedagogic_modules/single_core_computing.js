@@ -11,7 +11,11 @@ import Memory from "./include_single_core_computing/memory"
 import IO from "./include_single_core_computing/io"
 import Capstone from "./include_single_core_computing/capstone"
 
+
 const SingleCoreComputing = () => {
+
+  const module = "A.1"
+
   return (
     <Layout>
       <PageHeader title="A.1. Single-core Computing" />
@@ -33,35 +37,35 @@ const SingleCoreComputing = () => {
             key: "work_and_speed",
             content: "Work and Speed"
           },
-          render: () => <Tab.Pane><WorkAndSpeed /></Tab.Pane>
+          render: () => <Tab.Pane><WorkAndSpeed module={module} tab={"work_and_speed"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "time_sharing",
             content: "Time Sharing"
           },
-          render: () => <Tab.Pane><TimeSharing /></Tab.Pane>
+          render: () => <Tab.Pane><TimeSharing module={module} tab={"time_sharing"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "memory",
             content: "Memory"
           },
-          render: () => <Tab.Pane><Memory /></Tab.Pane>
+          render: () => <Tab.Pane><Memory module={module} tab={"memory"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "io",
             content: "I/O"
           },
-          render: () => <Tab.Pane><IO /></Tab.Pane>
+          render: () => <Tab.Pane><IO module={module} tab={"io"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "capstone",
             content: "Capstone"
           },
-          render: () => <Tab.Pane><Capstone /></Tab.Pane>
+          render: () => <Tab.Pane><Capstone module={module} tab={"capstone"}/></Tab.Pane>
         }
       ]}
       />

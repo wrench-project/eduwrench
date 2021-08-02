@@ -11,14 +11,11 @@ import Scenario2 from "../../../images/vector_graphs/networking_fundamentals/sce
 import TopologyPractice from "../../../images/vector_graphs/networking_fundamentals/topology_practice.svg"
 import TopologyQuestion from "../../../images/vector_graphs/networking_fundamentals/topology_questions.svg"
 
-const Topologies = () => {
+const Topologies = ({module, tab}) => {
   return (
     <>
-      <LearningObjectives objectives={[
-        "Understand the concept of network topology",
-        "Be able to compute end-to-end latencies and bandwidths",
-        "Be able to compute end-to-end data transfer times"
-      ]} />
+        <LearningObjectives module={module} tab={tab}
+        />
 
       <h2>Network Topologies</h2>
 

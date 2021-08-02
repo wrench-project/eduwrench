@@ -1,8 +1,10 @@
 import React from "react"
 import { Segment } from "semantic-ui-react"
+import { ListSLOs } from "./curriculum_map"
 
-const LearningObjectives = ({ objectives }) => {
+const LearningObjectives = ({ module, tab }) => {
 
+  const objectives = ListSLOs(module, tab);
   const objectivesList = []
 
   objectives.forEach(function(objective) {
@@ -14,6 +16,7 @@ const LearningObjectives = ({ objectives }) => {
       <Segment.Group className="objectives">
         <Segment inverted><strong>Learning Objectives</strong></Segment>
         <Segment style={{ backgroundColor: "#fafafa" }}>
+          Be able to...
           <ul style={{ backgroundColor: "#fafafa", lineHeight: "1.2em" }}>
             {objectivesList}
           </ul>

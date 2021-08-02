@@ -12,6 +12,8 @@ import DataParallelism from "./include_multi_core_computing/data_parallelism"
 import MultiCoreCapstone from "./include_multi_core_computing/capstone"
 
 const MultiCoreComputing = () => {
+  const module = "A.2"
+
   return (
     <Layout>
       <PageHeader title="A.2. Multi-core Computing"/>
@@ -29,42 +31,42 @@ const MultiCoreComputing = () => {
             key: "task_parallelism",
             content: "Task Parallelism"
           },
-          render: () => <Tab.Pane><TaskParallelism /></Tab.Pane>
+          render: () => <Tab.Pane><TaskParallelism module={module} tab={"task_parallelism"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "load_imbalance",
             content: "Load Imbalance"
           },
-          render: () => <Tab.Pane><LoadImbalance /></Tab.Pane>
+          render: () => <Tab.Pane><LoadImbalance module={module} tab={"load_imbalance"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "ram_and_io",
             content: "Ram and I/O"
           },
-          render: () => <Tab.Pane><RamAndIO /></Tab.Pane>
+          render: () => <Tab.Pane><RamAndIO module={module} tab={"ram_and_io"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "task_dependencies",
             content: "Task Dependencies"
           },
-          render: () => <Tab.Pane><TaskDependencies /></Tab.Pane>
+          render: () => <Tab.Pane><TaskDependencies module={module} tab={"task_dependencies"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "data_parallelism",
             content: "Data Parallelism"
           },
-          render: () => <Tab.Pane><DataParallelism /></Tab.Pane>
+          render: () => <Tab.Pane><DataParallelism module={module} tab={"data_parallelism"}/></Tab.Pane>
         },
         {
           menuItem: {
             key: "multicore_capstone",
             content: "Capstone"
           },
-          render: () => <Tab.Pane><MultiCoreCapstone /></Tab.Pane>
+          render: () => <Tab.Pane><MultiCoreCapstone module={module} tab={"multicore_capstone"}/></Tab.Pane>
         }
       ]}
       />
