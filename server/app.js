@@ -18,6 +18,8 @@ const express = require("express"),
 const cors = require("cors");
 const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
+// WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
+const ansiUp = new au.default();
 
 (cookieSession = require("cookie-session")),
     (request = require("request")),
@@ -51,8 +53,6 @@ app.use(
     })
 );
 
-// WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
-let ansi_up = new au.default();
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
@@ -86,24 +86,11 @@ app.post("/run/networking_fundamentals", function (req, res) {
         "--log=simple_wms_scheduler.thresh:debug",
         "--log='root.fmt:[%d][%h:%t]%e%m%n'",
     ];
-
     const SIMULATION_ARGS = FILE_SIZES.concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS, true)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stdout.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -117,21 +104,9 @@ app.post("/run/networking_fundamentals", function (req, res) {
             file_sizes: FILE_SIZES,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output is sent back to the client (see public/scripts/networking_fundamental.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output:
-                "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>",
-        });
+            simulation_output: simulation_output.replace(/[\n\r]/g, "<br>\n")
+        })
     }
 });
 
@@ -161,22 +136,10 @@ app.post("/run/workflow_execution_fundamentals", function (
     ];
 
     const SIMULATION_ARGS = [COMPUTE_SPEED].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -190,21 +153,8 @@ app.post("/run/workflow_execution_fundamentals", function (
             compute_speed: COMPUTE_SPEED,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/workflow_execution_fundamentals.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
+            simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
@@ -237,22 +187,10 @@ app.post("/run/workflow_execution_data_locality", function (
     ];
 
     const SIMULATION_ARGS = [LINK_BANDWIDTH, STORAGE_OPTION].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -266,21 +204,8 @@ app.post("/run/workflow_execution_data_locality", function (
             link_bandwidth: LINK_BANDWIDTH,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
+            simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
@@ -321,22 +246,10 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
         FILE_SIZE,
         RAM_REQUIRED,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -353,21 +266,8 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
             ram_required: RAM_REQUIRED,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
+            simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         });
     }
@@ -398,25 +298,11 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
         "--log='root.fmt:[%.2d][%h]%e%m%n'",
     ];
 
-    const SIMULATION_ARGS = [NUM_CORES, ANALYZE_WORK, SCHEDULING_SCHEME].concat(
-        LOGGING
-    );
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+    const SIMULATION_ARGS = [NUM_CORES, ANALYZE_WORK, SCHEDULING_SCHEME].concat(LOGGING);
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -431,23 +317,10 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
             scheduling_scheme: SCHEDULING_SCHEME,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
+            simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        })
     }
 });
 
@@ -480,22 +353,10 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
     const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS, TASK_GFLOP, TASK_RAM].concat(
         LOGGING
     );
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -523,11 +384,9 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
         let re = new RegExp(find, "g");
 
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
+            simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        })
     }
 });
 
@@ -574,22 +433,10 @@ app.post("/run/multi_core_independent_tasks_io", function (
         TASK2_WORK,
         TASK1_BEFORE_TASK2,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -605,23 +452,10 @@ app.post("/run/multi_core_independent_tasks_io", function (
             task1_before_task2: TASK1_BEFORE_TASK2,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -650,22 +484,10 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, OIL_RADIUS].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -679,23 +501,10 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
             oil_radius: OIL_RADIUS,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -731,22 +540,10 @@ app.post("/run/multi_core_independent_tasks_ram", function (
     const SIMULATION_ARGS = [NUM_CORES, NUM_TASKS, TASK_GFLOP, TASK_RAM].concat(
         LOGGING
     );
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -762,30 +559,12 @@ app.post("/run/multi_core_independent_tasks_ram", function (
             task_ram: TASK_RAM,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
-
-app.post("/run/test/io", function (req, res) {
-    res.send();
-});
-
 
 // execute activity io operations simulation route
 app.post("/run/io_operations", function (req, res) {
@@ -818,22 +597,10 @@ app.post("/run/io_operations", function (req, res) {
         TASK_GFLOP,
         IO_OVERLAP,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -870,25 +637,10 @@ app.post("/run/io_operations", function (req, res) {
                 res.status(500).json({message: error.message});
             });
 
-
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: //simulation_output,
-                ansi_up
-                    .ansi_to_html(simulation_output),
-            // .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -932,22 +684,10 @@ app.post("/run/client_server", function (req, res) {
         DISK_SPEED,
         FILE_SIZE,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -967,23 +707,10 @@ app.post("/run/client_server", function (req, res) {
             file_size: FILE_SIZE,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1028,22 +755,10 @@ app.post("/run/client_server_disk", function (req, res) {
         DISK_SPEED,
         FILE_SIZE,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1063,23 +778,10 @@ app.post("/run/client_server_disk", function (req, res) {
             file_size: FILE_SIZE,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1147,15 +849,7 @@ app.post("/run/coordinator_worker", function (req, res) {
         iterator += 2;
     }
 
-    /**
-     iterator = 0;
-     while(iterator+2<TASK_SPECS.length) {
-        TASK_SPECS[iterator+1] = (parseInt(TASK_SPECS[iterator+1])*1000000000).toString(); //converting to flop from Gflop
-        iterator+=3;
-    }
-     */
-
-        // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
             "--log=root.thresh:critical",
             "--log=maestro.thresh:critical",
@@ -1183,26 +877,10 @@ app.post("/run/coordinator_worker", function (req, res) {
             .concat(SEED_STATE)
             .concat(ABBREV_LOGGING);
     }
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS, NUM_INVOCATION !== 1)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        if (NUM_INVOCATION === 1) {
-            let simulation_output = simulation_process.stderr.toString();
-            console.log(simulation_output);
-        } else {
-            let simulation_output = simulation_process.stdout.toString();
-            console.log(simulation_output);
-        }
+    if (simulation_output !== null) {
 
         let WORKERS_STRIPPED = [];
         for (let i = 0; i < WORKERS.length; i++) {
@@ -1254,24 +932,11 @@ app.post("/run/coordinator_worker", function (req, res) {
             });
         }
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         if (NUM_INVOCATION === 1) {
             res.json({
-                simulation_output: ansi_up
-                    .ansi_to_html(simulation_output)
-                    .replace(re, "<br>" + find),
-                task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-            });
+                simulation_output: ansiUpSimulationOutput(simulation_output),
+                task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+            })
         } else {
             res.json({
                 simulation_output:
@@ -1306,22 +971,10 @@ app.post("/run/workflow_fundamentals", function (req, res) {
     ];
 
     const SIMULATION_ARGS = [NUM_CORES, DISK_BANDWIDTH].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1335,23 +988,10 @@ app.post("/run/workflow_fundamentals", function (req, res) {
             disk_bandwidth: DISK_BANDWIDTH,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1388,22 +1028,10 @@ app.post("/run/workflow_distributed", function (req, res) {
         LINK_BANDWIDTH,
         USE_LOCAL_STORAGE,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1417,25 +1045,12 @@ app.post("/run/workflow_distributed", function (req, res) {
             num_cores: NUM_CORES,
             link_bandwidth: LINK_BANDWIDTH,
             use_local_storage: USE_LOCAL_STORAGE,
-        });
-
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
+        })
 
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1470,22 +1085,10 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
         NUM_CORES_YELLOW,
         NUM_CORES_PURPLE,
     ].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log(
-            "Something went wrong with the simulation. Possibly check arguments."
-        );
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1500,23 +1103,10 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
             num_cores_purple: NUM_CORES_PURPLE,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            simulation_output: ansi_up
-                .ansi_to_html(simulation_output)
-                .replace(re, "<br>" + find),
-            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            simulation_output: ansiUpSimulationOutput(simulation_output),
+            task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1554,20 +1144,10 @@ app.post("/run/ci_overhead", function (req, res) {
     ];
 
     const SIMULATION_ARGS = [SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, BUFFER_SIZE, HOST_SELECT, DISK_TOGGLE, DISK_SPEED, FILE_SIZE, COMPUTE_1_STARTUP, COMPUTE_2_STARTUP, TASK_WORK].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log("Something went wrong with the simulation. Possibly check arguments.");
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1590,21 +1170,10 @@ app.post("/run/ci_overhead", function (req, res) {
             "task_work": TASK_WORK
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
-            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
-            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+            "simulation_output": ansiUpSimulationOutput(simulation_output),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
+        })
     }
 });
 
@@ -1631,21 +1200,11 @@ app.post("/run/storage_service", function (req, res) {
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
     ];
 
-    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE, REGISTRATION_OVERHEAD].concat(LOGGING);
-    const RUN_SIMULATION_COMMAND = [EXECUTABLE].concat(SIMULATION_ARGS).join(" ");
+    const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE, REGISTRATION_OVERHEAD].concat(LOGGING)
 
-    console.log("\nRunning Simulation");
-    console.log("===================");
-    console.log("Executing command: " + RUN_SIMULATION_COMMAND);
-    let simulation_process = spawnSync(EXECUTABLE, SIMULATION_ARGS);
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
-    if (simulation_process.status !== 0) {
-        console.log("Something went wrong with the simulation. Possibly check arguments.");
-        console.log(simulation_process.stderr.toString());
-    } else {
-        let simulation_output = simulation_process.stderr.toString();
-        console.log(simulation_output);
-
+    if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
          * simulation parameters to the data server.
@@ -1657,25 +1216,53 @@ app.post("/run/storage_service", function (req, res) {
             "activity": "storage_service",
             "bandwidth": BANDWIDTH,
             "file_size": FILE_SIZE
-        });
-
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
+        })
 
         res.json({
-            "simulation_output": ansi_up.ansi_to_html(simulation_output).replace(re, "<br>" + find),
+            "simulation_output": ansiUpSimulationOutput(simulation_output),
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        })
     }
-});
+})
+
+/**
+ *
+ * @param executable
+ * @param args
+ * @param stdout
+ */
+function launchSimulation(executable, args, stdout = false) {
+    const simulationCommand = [executable].concat(args).join(" ")
+    console.log("\nRunning Simulation")
+    console.log("===================")
+    console.log("Executing command: " + simulationCommand)
+    let simulation_process = spawnSync(executable, args)
+
+    if (simulation_process.status !== 0) {
+        console.log("Something went wrong with the simulation. Possibly check arguments.")
+        console.log(simulation_process.stderr.toString())
+        return null
+    }
+
+    let simulation_output = stdout ? simulation_process.stdout.toString() : simulation_process.stderr.toString()
+    console.log(simulation_output)
+    return simulation_output
+}
+
+/**
+ * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
+ * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
+ * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
+ * each line of output renders on a separate line in the browser.
+ *
+ * @param simulationOutput
+ * @returns {string}
+ */
+function ansiUpSimulationOutput(simulationOutput) {
+    let find = "</span>"
+    let re = new RegExp(find, "g")
+    return ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find)
+}
 
 function storeData(data) {
     sims.add(data)
