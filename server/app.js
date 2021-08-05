@@ -372,17 +372,6 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
             task_ram: TASK_RAM,
         });
 
-        /**
-         * The simulation output uses ansi colors and we want these colors to show up in the browser as well.
-         * Ansi up will take each line, make it into a <span> element, and edit the style so that the text color
-         * is whatever the ansi color was. Then the regular expression just adds in <br> elements so that
-         * each line of output renders on a separate line in the browser.
-         *
-         * The simulation output and the workflowtask data are sent back to the client (see public/scripts/activity_1.js)
-         */
-        let find = "</span>";
-        let re = new RegExp(find, "g");
-
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
