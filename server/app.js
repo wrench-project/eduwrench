@@ -45,11 +45,7 @@ app.use(function (req, res, next) {
 // app.use(cors()); // Enable cors for all origins
 app.use(
     cors({
-        /** Use this when web frontend / production **/
-        // origin: 'https://example.com',
-
-        /** Use this when local frontend / development **/
-        origin: "http://localhost:8000",
+        origin: "https://eduwrench.ics.hawaii.edu",
     })
 );
 
