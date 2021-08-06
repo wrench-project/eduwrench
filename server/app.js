@@ -15,15 +15,17 @@ const express = require("express"),
     {spawnSync} = require("child_process"),
     fs = require("fs")
 
-const cors = require("cors");
+const cors = require("cors")
 const sims = require("./dbHelpers");
-const PORT = process.env.EDUWRENCH_NODE_PORT || 3000;
+const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
-const ansiUp = new au.default();
+const ansiUp = new au.default()
 
-(cookieSession = require("cookie-session")),
-    (request = require("request")),
-    (flash = require("connect-flash"));
+    (cookieSession = require("cookie-session")),
+    (
+request = require("request")
+),
+(flash = require("connect-flash"));
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -42,21 +44,25 @@ app.use(function (req, res, next) {
 });
 
 /* CORS */
-// app.use(cors()); // Enable cors for all origins
-app.use(
-    cors({
-        origin: "https://eduwrench.ics.hawaii.edu",
-    })
-);
-
+let whitelist = ["https://eduwrench.ics.hawaii.edu", "http://localhost:8000"]
+let corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    }
+}
+app.use(cors(corsOptions))
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
     res.render("index", {
         user: req.user,
         messages: req.flash("error"),
-    });
-});
+    })
+})
 
 // execute networking fundamentals simulation route
 app.post("/run/networking_fundamentals", function (req, res) {
