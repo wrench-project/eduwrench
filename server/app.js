@@ -19,13 +19,11 @@ const cors = require("cors")
 const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
-const ansiUp = new au.default()
+const ansiUp = new au.default();
 
-    (cookieSession = require("cookie-session")),
-    (
-request = require("request")
-),
-(flash = require("connect-flash"));
+(cookieSession = require("cookie-session")),
+    (request = require("request")),
+    (flash = require("connect-flash"));
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
