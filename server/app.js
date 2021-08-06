@@ -64,19 +64,15 @@ app.get("/", function (req, res) {
 
 // execute networking fundamentals simulation route
 app.post("/run/networking_fundamentals", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/networking_fundamentals/"
-    );
-
-    const SIMULATOR = "networking_fundamentals_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
+    const PATH_PREFIX = getPathPrefix("networking_fundamentals")
+    const SIMULATOR = "networking_fundamentals_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
     const FILE_SIZES = req.body.file_sizes
         .replace(/,/g, " ")
         .replace(/ +/g, " ")
-        .split(" ");
+        .split(" ")
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -111,20 +107,13 @@ app.post("/run/networking_fundamentals", function (req, res) {
 });
 
 // execute workflow execution fundamentals simulation route
-app.post("/run/workflow_execution_fundamentals", function (
-    req,
-    res
-) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_execution_fundamentals/"
-    );
-
-    const SIMULATOR = "workflow_execution_fundamentals_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const COMPUTE_SPEED = req.body.compute_speed;
+app.post("/run/workflow_execution_fundamentals", function (req, res) {
+    const PATH_PREFIX = getPathPrefix("workflow_execution_fundamentals")
+    const SIMULATOR = "workflow_execution_fundamentals_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const COMPUTE_SPEED = req.body.compute_speed
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -161,21 +150,14 @@ app.post("/run/workflow_execution_fundamentals", function (
 });
 
 // execute activity 1 simulation route
-app.post("/run/workflow_execution_data_locality", function (
-    req,
-    res
-) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_execution_data_locality/"
-    );
-
-    const SIMULATOR = "workflow_execution_data_locality_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const LINK_BANDWIDTH = req.body.link_bandwidth;
-    const STORAGE_OPTION = req.body.simulator_number === 1 ? "remote" : "local";
+app.post("/run/workflow_execution_data_locality", function (req, res) {
+    const PATH_PREFIX = getPathPrefix("workflow_execution_data_locality")
+    const SIMULATOR = "workflow_execution_data_locality_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const LINK_BANDWIDTH = req.body.link_bandwidth
+    const STORAGE_OPTION = req.body.simulator_number === 1 ? "remote" : "local"
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -213,22 +195,16 @@ app.post("/run/workflow_execution_data_locality", function (
 
 // execute Workflow Execution and Parallelism simulation route
 app.post("/run/workflow_execution_parallelism", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_execution_parallelism/"
-    );
-
-    const SIMULATOR = "workflow_execution_parallelism_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_NODES = req.body.num_nodes;
-    const NUM_CORES_PER_NODE = req.body.num_cores_per_node;
-    const NUM_TASKS_TO_JOIN = 20;
-    const FILE_SIZE = 2000000000;
-    const RAM_REQUIRED =
-        req.body.ram_required === 1 ? "RAM_REQUIRED" : "RAM_NOT_REQUIRED";
+    const PATH_PREFIX = getPathPrefix("workflow_execution_parallelism")
+    const SIMULATOR = "workflow_execution_parallelism_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_NODES = req.body.num_nodes
+    const NUM_CORES_PER_NODE = req.body.num_cores_per_node
+    const NUM_TASKS_TO_JOIN = 20
+    const FILE_SIZE = 2000000000
+    const RAM_REQUIRED = req.body.ram_required === 1 ? "RAM_REQUIRED" : "RAM_NOT_REQUIRED"
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -275,19 +251,14 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
 
 // execute activity multi core dependent tasks simulation route
 app.post("/run/multi_core_dependent_tasks", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/multi_core_computing_dependent_tasks/"
-    );
-
-    const SIMULATOR = "multi_core_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES = req.body.num_cores;
-    const ANALYZE_WORK = req.body.analyze_work;
-    const SCHEDULING_SCHEME = req.body.scheduling_scheme;
+    const PATH_PREFIX = getPathPrefix("multi_core_computing_dependent_tasks")
+    const SIMULATOR = "multi_core_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES = req.body.num_cores
+    const ANALYZE_WORK = req.body.analyze_work
+    const SCHEDULING_SCHEME = req.body.scheduling_scheme
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -326,20 +297,15 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/multi_core_independent_tasks", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/multi_core_computing_independent_tasks/"
-    );
-
-    const SIMULATOR = "multi_core_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES = req.body.num_cores;
-    const NUM_TASKS = req.body.num_tasks;
-    const TASK_GFLOP = req.body.task_gflop;
-    const TASK_RAM = req.body.task_ram;
+    const PATH_PREFIX = getPathPrefix("multi_core_computing_independent_tasks")
+    const SIMULATOR = "multi_core_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES = req.body.num_cores
+    const NUM_TASKS = req.body.num_tasks
+    const TASK_GFLOP = req.body.task_gflop
+    const TASK_RAM = req.body.task_ram
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -380,29 +346,19 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_independent_tasks_io", function (
-    req,
-    res
-) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/multi_core_computing_two_tasks_with_io/"
-    );
-
-    const SIMULATOR = "multi_core_io_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    console.log(req.body);
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const TASK1_INPUT_SIZE = req.body.task1_input_size;
-    const TASK1_OUTPUT_SIZE = req.body.task1_output_size;
-    const TASK1_WORK = req.body.task1_work;
-    const TASK2_INPUT_SIZE = req.body.task2_input_size;
-    const TASK2_OUTPUT_SIZE = req.body.task2_output_size;
-    const TASK2_WORK = req.body.task2_work;
-    const TASK1_BEFORE_TASK2 = req.body.first_task === 1;
+app.post("/run/multi_core_independent_tasks_io", function (req, res) {
+    const PATH_PREFIX = getPathPrefix("multi_core_computing_two_tasks_with_io")
+    const SIMULATOR = "multi_core_io_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const TASK1_INPUT_SIZE = req.body.task1_input_size
+    const TASK1_OUTPUT_SIZE = req.body.task1_output_size
+    const TASK1_WORK = req.body.task1_work
+    const TASK2_INPUT_SIZE = req.body.task2_input_size
+    const TASK2_OUTPUT_SIZE = req.body.task2_output_size
+    const TASK2_WORK = req.body.task2_work
+    const TASK1_BEFORE_TASK2 = req.body.first_task === 1
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -450,18 +406,13 @@ app.post("/run/multi_core_independent_tasks_io", function (
 
 // execute activity multi core simulation route
 app.post("/run/multi_core_data_parallelism", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/multi_core_computing_data_parallelism/"
-    );
-
-    const SIMULATOR = "multi_core_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES = req.body.num_cores;
-    const OIL_RADIUS = req.body.oil_radius;
+    const PATH_PREFIX = getPathPrefix("multi_core_computing_data_parallelism")
+    const SIMULATOR = "multi_core_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES = req.body.num_cores
+    const OIL_RADIUS = req.body.oil_radius
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -498,24 +449,16 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
 });
 
 // execute activity multi core simulation route
-app.post("/run/multi_core_independent_tasks_ram", function (
-    req,
-    res
-) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/multi_core_computing_independent_tasks/"
-    );
-
-    const SIMULATOR = "multi_core_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES = req.body.num_cores;
-    const NUM_TASKS = req.body.num_tasks;
-    const TASK_GFLOP = req.body.task_gflop;
-    const TASK_RAM = req.body.task_ram;
+app.post("/run/multi_core_independent_tasks_ram", function (req, res) {
+    const PATH_PREFIX = getPathPrefix("multi_core_computing_independent_tasks")
+    const SIMULATOR = "multi_core_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES = req.body.num_cores
+    const NUM_TASKS = req.body.num_tasks
+    const TASK_GFLOP = req.body.task_gflop
+    const TASK_RAM = req.body.task_ram
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -557,18 +500,16 @@ app.post("/run/multi_core_independent_tasks_ram", function (
 
 // execute activity io operations simulation route
 app.post("/run/io_operations", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/io_operations/");
-
-    const SIMULATOR = "io_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_TASKS = req.body.num_tasks;
-    const TASK_GFLOP = req.body.task_gflop;
-    const TASK_INPUT = req.body.task_input;
-    const TASK_OUTPUT = req.body.task_output;
-    const IO_OVERLAP = req.body.io_overlap;
+    const PATH_PREFIX = getPathPrefix("io_operations")
+    const SIMULATOR = "io_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_TASKS = req.body.num_tasks
+    const TASK_GFLOP = req.body.task_gflop
+    const TASK_INPUT = req.body.task_input
+    const TASK_OUTPUT = req.body.task_output
+    const IO_OVERLAP = req.body.io_overlap
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -635,23 +576,21 @@ app.post("/run/io_operations", function (req, res) {
 
 // SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
 app.post("/run/client_server", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
-
-    const SIMULATOR = "client_server_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
-    const HOST_SELECT = req.body.host_select;
-    const FILE_SIZE = req.body.file_size;
+    const PATH_PREFIX = getPathPrefix("client_server")
+    const SIMULATOR = "client_server_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
+    const HOST_SELECT = req.body.host_select
+    const FILE_SIZE = req.body.file_size
 
     //Not included in this usage of the simulator
-    const SERVER_1_LINK_LATENCY = 10;
-    const SERVER_2_LINK_BANDWIDTH = 100;
-    const BUFFER_SIZE = 1000000000;
-    const DISK_TOGGLE = 0;
-    const DISK_SPEED = 50;
+    const SERVER_1_LINK_LATENCY = 10
+    const SERVER_2_LINK_BANDWIDTH = 100
+    const BUFFER_SIZE = 1000000000
+    const DISK_TOGGLE = 0
+    const DISK_SPEED = 50
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -705,21 +644,19 @@ app.post("/run/client_server", function (req, res) {
 
 // FULL CLIENT SERVER (NOT SIMPLIFIED)
 app.post("/run/client_server_disk", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/client_server/");
-
-    const SIMULATOR = "client_server_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const SERVER_1_LINK_LATENCY = req.body.server_1_link_latency;
-    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
-    const SERVER_2_LINK_BANDWIDTH = req.body.server_2_link_bandwidth;
-    const BUFFER_SIZE = req.body.buffer_size;
-    const HOST_SELECT = req.body.host_select;
-    const DISK_TOGGLE = 1;
-    const DISK_SPEED = req.body.disk_speed;
-    const FILE_SIZE = req.body.file_size;
+    const PATH_PREFIX = getPathPrefix("client_server")
+    const SIMULATOR = "client_server_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const SERVER_1_LINK_LATENCY = req.body.server_1_link_latency
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
+    const SERVER_2_LINK_BANDWIDTH = req.body.server_2_link_bandwidth
+    const BUFFER_SIZE = req.body.buffer_size
+    const HOST_SELECT = req.body.host_select
+    const DISK_TOGGLE = 1
+    const DISK_SPEED = req.body.disk_speed
+    const FILE_SIZE = req.body.file_size
 
     //Not included in this usage of the simulator
 
@@ -776,40 +713,32 @@ app.post("/run/client_server_disk", function (req, res) {
 
 // execute activity client server simulation route
 app.post("/run/coordinator_worker", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/master_worker/");
+    const PATH_PREFIX = getPathPrefix("master_worker")
+    const SIMULATOR = "master_worker_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const HOST_SPECS = req.body.host_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ")
+    const TASK_SPECS = req.body.task_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ")
+    const TASK_SCHEDULING_SELECT = req.body.task_scheduling_select
+    const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select
+    const NUM_INVOCATION = req.body.num_invocation
+    const NUM_WORKERS = req.body.num_workers
+    const MIN_FLOPS = req.body.min_worker_flops
+    const MAX_FLOPS = req.body.max_worker_flops
+    const MIN_BAND = req.body.min_worker_band
+    const MAX_BAND = req.body.max_worker_band
+    const NUM_TASKS = req.body.num_tasks
+    const MIN_INPUT = req.body.min_task_input
+    const MAX_INPUT = req.body.max_task_input
+    const MIN_FLOP = req.body.min_task_flop
+    const MAX_FLOP = req.body.max_task_flop
+    const MIN_OUTPUT = req.body.min_task_output
+    const MAX_OUTPUT = req.body.max_task_output
+    const SEED = req.body.seed
 
-    const SIMULATOR = "master_worker_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const HOST_SPECS = req.body.host_specs
-        .replace(/,/g, " ")
-        .replace(/ +/g, " ")
-        .split(" ");
-    const TASK_SPECS = req.body.task_specs
-        .replace(/,/g, " ")
-        .replace(/ +/g, " ")
-        .split(" ");
-    const TASK_SCHEDULING_SELECT = req.body.task_scheduling_select;
-    const COMPUTE_SCHEDULING_SELECT = req.body.compute_scheduling_select;
-    const NUM_INVOCATION = req.body.num_invocation;
-    const NUM_WORKERS = req.body.num_workers;
-    const MIN_FLOPS = req.body.min_worker_flops;
-    const MAX_FLOPS = req.body.max_worker_flops;
-    const MIN_BAND = req.body.min_worker_band;
-    const MAX_BAND = req.body.max_worker_band;
-    const NUM_TASKS = req.body.num_tasks;
-    const MIN_INPUT = req.body.min_task_input;
-    const MAX_INPUT = req.body.max_task_input;
-    const MIN_FLOP = req.body.min_task_flop;
-    const MAX_FLOP = req.body.max_task_flop;
-    const MIN_OUTPUT = req.body.min_task_output;
-    const MAX_OUTPUT = req.body.max_task_output;
-    const SEED = req.body.seed;
-
-    const INDIVIDUAL = ["individual"];
-    const SEED_STATE = ["--seed", SEED];
+    const INDIVIDUAL = ["individual"]
+    const SEED_STATE = ["--seed", SEED]
     const GENERATION = [
         "--generate",
         NUM_WORKERS,
@@ -824,7 +753,7 @@ app.post("/run/coordinator_worker", function (req, res) {
         MAX_FLOP,
         MIN_OUTPUT,
         MAX_OUTPUT,
-    ];
+    ]
     const TASK_SCHED_SELECT = ["--ts", TASK_SCHEDULING_SELECT];
     const COMPUTE_SCHED_SELECT = ["--cs", COMPUTE_SCHEDULING_SELECT];
     const NUM_INV = ["--inv", NUM_INVOCATION];
@@ -840,14 +769,14 @@ app.post("/run/coordinator_worker", function (req, res) {
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
-            "--log=root.thresh:critical",
-            "--log=maestro.thresh:critical",
-            "--log=wms.thresh:debug",
-            // "--log=wrench_core_workunit_executor.thresh:info",
-            "--log=simple_wms.thresh:info",
-            "--log=simple_wms_scheduler.thresh:info",
-            "--log='root.fmt:[%.2d][%h]%e%m%n'",
-        ];
+        "--log=root.thresh:critical",
+        "--log=maestro.thresh:critical",
+        "--log=wms.thresh:debug",
+        // "--log=wrench_core_workunit_executor.thresh:info",
+        "--log=simple_wms.thresh:info",
+        "--log=simple_wms_scheduler.thresh:info",
+        "--log='root.fmt:[%.2d][%h]%e%m%n'",
+    ];
 
     const ABBREV_LOGGING = ["--log='root.fmt:[%d][%h:%t]%e%m%n'"];
 
@@ -937,18 +866,13 @@ app.post("/run/coordinator_worker", function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/workflow_fundamentals", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_fundamentals/"
-    );
-
-    const SIMULATOR = "workflow_fundamentals_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES = req.body.num_cores;
-    const DISK_BANDWIDTH = req.body.disk_bandwidth;
+    const PATH_PREFIX = getPathPrefix("workflow_fundamentals")
+    const SIMULATOR = "workflow_fundamentals_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES = req.body.num_cores
+    const DISK_BANDWIDTH = req.body.disk_bandwidth
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -986,20 +910,15 @@ app.post("/run/workflow_fundamentals", function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/workflow_distributed", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_distributed/"
-    );
-
-    const SIMULATOR = "workflow_distributed_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_HOSTS = req.body.num_hosts;
-    const NUM_CORES = req.body.num_cores;
-    const LINK_BANDWIDTH = req.body.link_bandwidth;
-    const USE_LOCAL_STORAGE = req.body.use_local_storage;
+    const PATH_PREFIX = getPathPrefix("workflow_distributed")
+    const SIMULATOR = "workflow_distributed_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_HOSTS = req.body.num_hosts
+    const NUM_CORES = req.body.num_cores
+    const LINK_BANDWIDTH = req.body.link_bandwidth
+    const USE_LOCAL_STORAGE = req.body.use_local_storage
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1045,19 +964,14 @@ app.post("/run/workflow_distributed", function (req, res) {
 
 // execute activity multi core simulation route
 app.post("/run/workflow_task_data_parallelism", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/workflow_task_data_parallelism/"
-    );
-
-    const SIMULATOR = "workflow_task_data_parallelism_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const NUM_CORES_BLUE = req.body.num_cores_blue;
-    const NUM_CORES_YELLOW = req.body.num_cores_yellow;
-    const NUM_CORES_PURPLE = req.body.num_cores_purple;
+    const PATH_PREFIX = getPathPrefix("workflow_task_data_parallelism")
+    const SIMULATOR = "workflow_task_data_parallelism_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const NUM_CORES_BLUE = req.body.num_cores_blue
+    const NUM_CORES_YELLOW = req.body.num_cores_yellow
+    const NUM_CORES_PURPLE = req.body.num_cores_purple
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1101,26 +1015,24 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
 
 // SIMPLIFIED (NO DISK) CLIENT SERVER SIMULATOR
 app.post("/run/ci_overhead", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/ci_overhead/");
-
-    const SIMULATOR = "ci_overhead_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth;
-    const HOST_SELECT = req.body.host_select;
+    const PATH_PREFIX = getPathPrefix("ci_overhead")
+    const SIMULATOR = "ci_overhead_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
+    const HOST_SELECT = req.body.host_select
     const FILE_SIZE = req.body.file_size
-    const COMPUTE_1_STARTUP = req.body.compute_1_startup;
-    const COMPUTE_2_STARTUP = req.body.compute_2_startup;
-    const TASK_WORK = req.body.task_work;
+    const COMPUTE_1_STARTUP = req.body.compute_1_startup
+    const COMPUTE_2_STARTUP = req.body.compute_2_startup
+    const TASK_WORK = req.body.task_work
 
     //Not included in this usage of the simulator
-    const SERVER_1_LINK_LATENCY = 10;
-    const SERVER_2_LINK_BANDWIDTH = 100;
-    const BUFFER_SIZE = 1000000000;
-    const DISK_TOGGLE = 0;
-    const DISK_SPEED = 50;
+    const SERVER_1_LINK_LATENCY = 10
+    const SERVER_2_LINK_BANDWIDTH = 100
+    const BUFFER_SIZE = 1000000000
+    const DISK_TOGGLE = 0
+    const DISK_SPEED = 50
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1168,16 +1080,15 @@ app.post("/run/ci_overhead", function (req, res) {
 
 // execute activity storage service simulation route
 app.post("/run/storage_service", function (req, res) {
-    const PATH_PREFIX = __dirname.replace("server", "simulators/storage_interaction_data_movement/");
+    const PATH_PREFIX = getPathPrefix("storage_interaction_data_movement")
+    const SIMULATOR = "storage_simulator"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
 
-    const SIMULATOR = "storage_simulator";
-    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
-
-    const USERNAME = req.body.userName;
-    const EMAIL = req.body.email;
-    const BANDWIDTH = req.body.bandwidth;
-    const FILE_SIZE = req.body.fileSize;
-    const REGISTRATION_OVERHEAD = req.body.registrationOverhead;
+    const USERNAME = req.body.userName
+    const EMAIL = req.body.email
+    const BANDWIDTH = req.body.bandwidth
+    const FILE_SIZE = req.body.fileSize
+    const REGISTRATION_OVERHEAD = req.body.registrationOverhead
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1187,7 +1098,7 @@ app.post("/run/storage_service", function (req, res) {
         "--log=wrench_core_simple_storage_service.thresh:info",
         "--log=wrench_core_file_registry_service.thresh:info",
         "--log='root.fmt:[%.5d][%h]%e%m%n'"
-    ];
+    ]
 
     const SIMULATION_ARGS = [BANDWIDTH, FILE_SIZE, REGISTRATION_OVERHEAD].concat(LOGGING)
 
@@ -1213,6 +1124,15 @@ app.post("/run/storage_service", function (req, res) {
         })
     }
 })
+
+/**
+ *
+ * @param simulatorFolder
+ * @returns {string}
+ */
+function getPathPrefix(simulatorFolder) {
+    return __dirname.replace("server", "simulators/" + simulatorFolder + "/");
+}
 
 /**
  *
