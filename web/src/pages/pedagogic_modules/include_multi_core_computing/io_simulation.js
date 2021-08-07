@@ -56,10 +56,9 @@ const IOSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     task1_input_size: values.taskInput,
                     task1_output_size: values.taskOutput,
                     task1_work: values.taskGflop,

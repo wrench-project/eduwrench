@@ -89,10 +89,9 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                       fixed_task_specs += ","
                     }
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     host_specs: "10 100, 100 100, 1000 100",
                     task_specs: fixed_task_specs,
                     num_workers: values.numWorkers,

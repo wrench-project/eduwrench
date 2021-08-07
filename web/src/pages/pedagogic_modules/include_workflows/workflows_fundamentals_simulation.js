@@ -51,10 +51,9 @@ const WorkflowsFundamentalsSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     num_cores: values.numCores,
                     disk_bandwidth: values.diskBandwidth
                   }
