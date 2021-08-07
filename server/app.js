@@ -15,9 +15,9 @@ const express = require("express"),
     {spawnSync} = require("child_process"),
     fs = require("fs")
 
-const cors = require("cors")
-const sims = require("./dbHelpers");
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
+const cors = require("cors")
+const db = require("./data/db-config")
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 const ansiUp = new au.default();
 
@@ -67,7 +67,7 @@ app.post("/run/networking_fundamentals", function (req, res) {
     const PATH_PREFIX = getPathPrefix("networking_fundamentals")
     const SIMULATOR = "networking_fundamentals_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const FILE_SIZES = req.body.file_sizes
         .replace(/,/g, " ")
@@ -87,18 +87,15 @@ app.post("/run/networking_fundamentals", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS, true)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "networking_fundamentals",
-            simulator: SIMULATOR,
-            file_sizes: FILE_SIZES,
-        });
+            params: {
+                simulator: SIMULATOR,
+                file_sizes: FILE_SIZES
+            }
+        })
 
         res.json({
             simulation_output: simulation_output.replace(/[\n\r]/g, "<br>\n")
@@ -111,7 +108,7 @@ app.post("/run/workflow_execution_fundamentals", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_execution_fundamentals")
     const SIMULATOR = "workflow_execution_fundamentals_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const COMPUTE_SPEED = req.body.compute_speed
 
@@ -129,18 +126,15 @@ app.post("/run/workflow_execution_fundamentals", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_execution_fundamentals",
-            simulator: SIMULATOR,
-            compute_speed: COMPUTE_SPEED,
-        });
+            params: {
+                simulator: SIMULATOR,
+                compute_speed: COMPUTE_SPEED
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -154,7 +148,7 @@ app.post("/run/workflow_execution_data_locality", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_execution_data_locality")
     const SIMULATOR = "workflow_execution_data_locality_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const LINK_BANDWIDTH = req.body.link_bandwidth
     const STORAGE_OPTION = req.body.simulator_number === 1 ? "remote" : "local"
@@ -173,23 +167,20 @@ app.post("/run/workflow_execution_data_locality", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_execution_data_locality",
-            simulator: SIMULATOR,
-            link_bandwidth: LINK_BANDWIDTH,
-        });
+            params: {
+                simulator: SIMULATOR,
+                link_bandwidth: LINK_BANDWIDTH
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        })
     }
 });
 
@@ -198,7 +189,7 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_execution_parallelism")
     const SIMULATOR = "workflow_execution_parallelism_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_NODES = req.body.num_nodes
     const NUM_CORES_PER_NODE = req.body.num_cores_per_node
@@ -226,26 +217,23 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_execution_parallelism",
-            num_nodes: NUM_NODES,
-            num_cores_per_node: NUM_CORES_PER_NODE,
-            num_tasks_to_join: NUM_TASKS_TO_JOIN,
-            file_size: FILE_SIZE,
-            ram_required: RAM_REQUIRED,
-        });
+            params: {
+                num_nodes: NUM_NODES,
+                num_cores_per_node: NUM_CORES_PER_NODE,
+                num_tasks_to_join: NUM_TASKS_TO_JOIN,
+                file_size: FILE_SIZE,
+                ram_required: RAM_REQUIRED
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
             task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-        });
+        })
     }
 });
 
@@ -254,7 +242,7 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
     const PATH_PREFIX = getPathPrefix("multi_core_computing_dependent_tasks")
     const SIMULATOR = "multi_core_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES = req.body.num_cores
     const ANALYZE_WORK = req.body.analyze_work
@@ -274,19 +262,16 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "multi_core_dependent_tasks",
-            num_cores: NUM_CORES,
-            analyze_work: ANALYZE_WORK,
-            scheduling_scheme: SCHEDULING_SCHEME,
-        });
+            params: {
+                num_cores: NUM_CORES,
+                analyze_work: ANALYZE_WORK,
+                scheduling_scheme: SCHEDULING_SCHEME
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -300,7 +285,7 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
     const PATH_PREFIX = getPathPrefix("multi_core_computing_independent_tasks")
     const SIMULATOR = "multi_core_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES = req.body.num_cores
     const NUM_TASKS = req.body.num_tasks
@@ -323,20 +308,17 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
-            activity: "multi_core_machines",
-            num_cores: NUM_CORES,
-            num_tasks: NUM_TASKS,
-            task_gflop: TASK_GFLOP,
-            task_ram: TASK_RAM,
-        });
+            activity: "multi_core_independent_tasks",
+            params: {
+                num_cores: NUM_CORES,
+                num_tasks: NUM_TASKS,
+                task_gflop: TASK_GFLOP,
+                task_ram: TASK_RAM
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -350,7 +332,7 @@ app.post("/run/multi_core_independent_tasks_io", function (req, res) {
     const PATH_PREFIX = getPathPrefix("multi_core_computing_two_tasks_with_io")
     const SIMULATOR = "multi_core_io_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const TASK1_INPUT_SIZE = req.body.task1_input_size
     const TASK1_OUTPUT_SIZE = req.body.task1_output_size
@@ -382,20 +364,17 @@ app.post("/run/multi_core_independent_tasks_io", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
-            activity: "multi_core_machines",
-            task1_input_ize: TASK1_INPUT_SIZE,
-            task1_output_ize: TASK1_OUTPUT_SIZE,
-            task1_work: TASK1_WORK,
-            task1_before_task2: TASK1_BEFORE_TASK2,
-        });
+            activity: "multi_core_computing_two_tasks_with_io",
+            params: {
+                task1_input_ize: TASK1_INPUT_SIZE,
+                task1_output_ize: TASK1_OUTPUT_SIZE,
+                task1_work: TASK1_WORK,
+                task1_before_task2: TASK1_BEFORE_TASK2
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -409,7 +388,7 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
     const PATH_PREFIX = getPathPrefix("multi_core_computing_data_parallelism")
     const SIMULATOR = "multi_core_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES = req.body.num_cores
     const OIL_RADIUS = req.body.oil_radius
@@ -428,18 +407,15 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
-            activity: "multi_core_machines",
-            num_cores: NUM_CORES,
-            oil_radius: OIL_RADIUS,
-        });
+            activity: "multi_core_computing_data_parallelism",
+            params: {
+                num_cores: NUM_CORES,
+                oil_radius: OIL_RADIUS
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -453,7 +429,7 @@ app.post("/run/multi_core_independent_tasks_ram", function (req, res) {
     const PATH_PREFIX = getPathPrefix("multi_core_computing_independent_tasks")
     const SIMULATOR = "multi_core_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES = req.body.num_cores
     const NUM_TASKS = req.body.num_tasks
@@ -476,20 +452,17 @@ app.post("/run/multi_core_independent_tasks_ram", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
-            activity: "multi_core_machines",
-            num_cores: NUM_CORES,
-            num_tasks: NUM_TASKS,
-            task_gflop: TASK_GFLOP,
-            task_ram: TASK_RAM,
-        });
+            activity: "multi_core_independent_tasks_ram",
+            params: {
+                num_cores: NUM_CORES,
+                num_tasks: NUM_TASKS,
+                task_gflop: TASK_GFLOP,
+                task_ram: TASK_RAM
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -503,7 +476,7 @@ app.post("/run/io_operations", function (req, res) {
     const PATH_PREFIX = getPathPrefix("io_operations")
     const SIMULATOR = "io_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_TASKS = req.body.num_tasks
     const TASK_GFLOP = req.body.task_gflop
@@ -531,41 +504,18 @@ app.post("/run/io_operations", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
-        /*
         logData({
-          user: USERNAME,
-          email: EMAIL,
-          time: Math.round(new Date().getTime() / 1000), // unix timestamp
-          activity: "io_operations",
-          task_input: TASK_INPUT,
-          task_output: TASK_OUTPUT,
-          num_tasks: NUM_TASKS,
-          task_gflop: TASK_GFLOP,
-          io_overlap: IO_OVERLAP,
-        });
-        */
-        sims
-            .add({
-                user: USERNAME,
-                email: EMAIL,
-                time: Math.round(new Date().getTime() / 1000), // unix timestamp
-                activity: "io_operations",
+            user: USERNAME,
+            email: EMAIL,
+            activity: "io_operations",
+            params: {
                 task_input: TASK_INPUT,
                 task_output: TASK_OUTPUT,
                 num_tasks: NUM_TASKS,
                 task_gflop: TASK_GFLOP,
-                io_overlap: IO_OVERLAP,
-            })
-            .then((simulation) => {
-                res.status(200).json(simulation);
-            })
-            .catch((error) => {
-                res.status(500).json({message: error.message});
-            });
+                io_overlap: IO_OVERLAP
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -579,7 +529,7 @@ app.post("/run/client_server", function (req, res) {
     const PATH_PREFIX = getPathPrefix("client_server")
     const SIMULATOR = "client_server_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
     const HOST_SELECT = req.body.host_select
@@ -616,24 +566,21 @@ app.post("/run/client_server", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "client_server",
-            server_1_link_latency: SERVER_1_LINK_LATENCY,
-            server_1_link_bandwidth: SERVER_1_LINK_BANDWIDTH,
-            server_2_link_bandwidth: SERVER_2_LINK_BANDWIDTH,
-            buffer_size: BUFFER_SIZE,
-            host_select: HOST_SELECT,
-            disk_toggle: DISK_TOGGLE,
-            disk_speed: DISK_SPEED,
-            file_size: FILE_SIZE,
-        });
+            params: {
+                server_1_link_latency: SERVER_1_LINK_LATENCY,
+                server_1_link_bandwidth: SERVER_1_LINK_BANDWIDTH,
+                server_2_link_bandwidth: SERVER_2_LINK_BANDWIDTH,
+                buffer_size: BUFFER_SIZE,
+                host_select: HOST_SELECT,
+                disk_toggle: DISK_TOGGLE,
+                disk_speed: DISK_SPEED,
+                file_size: FILE_SIZE
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -647,7 +594,7 @@ app.post("/run/client_server_disk", function (req, res) {
     const PATH_PREFIX = getPathPrefix("client_server")
     const SIMULATOR = "client_server_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const SERVER_1_LINK_LATENCY = req.body.server_1_link_latency
     const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
@@ -685,24 +632,21 @@ app.post("/run/client_server_disk", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "client_server_disk",
-            server_1_latency: SERVER_1_LINK_LATENCY,
-            server_1_link: SERVER_1_LINK_BANDWIDTH,
-            server_2_link: SERVER_2_LINK_BANDWIDTH,
-            buffer_size: BUFFER_SIZE,
-            host_select: HOST_SELECT,
-            disk_toggle: DISK_TOGGLE,
-            disk_speed: DISK_SPEED,
-            file_size: FILE_SIZE,
-        });
+            params: {
+                server_1_latency: SERVER_1_LINK_LATENCY,
+                server_1_link: SERVER_1_LINK_BANDWIDTH,
+                server_2_link: SERVER_2_LINK_BANDWIDTH,
+                buffer_size: BUFFER_SIZE,
+                host_select: HOST_SELECT,
+                disk_toggle: DISK_TOGGLE,
+                disk_speed: DISK_SPEED,
+                file_size: FILE_SIZE
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -716,7 +660,7 @@ app.post("/run/coordinator_worker", function (req, res) {
     const PATH_PREFIX = getPathPrefix("master_worker")
     const SIMULATOR = "master_worker_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const HOST_SPECS = req.body.host_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ")
     const TASK_SPECS = req.body.task_specs.replace(/,/g, " ").replace(/ +/g, " ").split(" ")
@@ -807,59 +751,54 @@ app.post("/run/coordinator_worker", function (req, res) {
             }
         }
 
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         if (NUM_INVOCATION === 1) {
             logData({
                 user: USERNAME,
                 email: EMAIL,
-                time: Math.round(new Date().getTime() / 1000), // unix timestamp
-                activity: "master_worker",
-                tasks: TASK_SPECS,
-                workers: WORKERS_STRIPPED,
-                task_scheduling_selection: TASK_SCHED_SELECT,
-                compute_scheduling_selection: COMPUTE_SCHED_SELECT,
-                num_invocation: NUM_INVOCATION,
-                seed: SEED,
-            });
-        } else {
-            logData({
-                user: USERNAME,
-                email: EMAIL,
-                time: Math.round(new Date().getTime() / 1000), // unix timestamp
-                activity: "master_worker",
-                task_scheduling_selection: TASK_SCHED_SELECT,
-                compute_scheduling_selection: COMPUTE_SCHED_SELECT,
-                num_invocation: NUM_INVOCATION,
-                seed: SEED,
-                generated: true,
-                num_workers: NUM_WORKERS,
-                min_worker_flops: MIN_FLOPS,
-                max_worker_flops: MAX_FLOPS,
-                min_worker_band: MIN_BAND,
-                max_worker_band: MAX_BAND,
-                num_tasks: NUM_TASKS,
-                min_task_input: MIN_INPUT,
-                max_task_input: MAX_INPUT,
-                min_task_flop: MIN_FLOP,
-                max_task_flop: MAX_FLOP,
-                min_task_output: MIN_OUTPUT,
-                max_task_output: MAX_OUTPUT,
-            });
-        }
-
-        if (NUM_INVOCATION === 1) {
+                activity: "coordinator_worker",
+                params: {
+                    tasks: TASK_SPECS,
+                    workers: WORKERS_STRIPPED,
+                    task_scheduling_selection: TASK_SCHED_SELECT,
+                    compute_scheduling_selection: COMPUTE_SCHED_SELECT,
+                    num_invocation: NUM_INVOCATION,
+                    seed: SEED
+                }
+            })
             res.json({
                 simulation_output: ansiUpSimulationOutput(simulation_output),
                 task_data: JSON.parse(fs.readFileSync("/tmp/workflow_data.json"))
             })
+
         } else {
+            logData({
+                user: USERNAME,
+                email: EMAIL,
+                activity: "coordinator_worker_many_test_cases",
+                params: {
+                    task_scheduling_selection: TASK_SCHED_SELECT,
+                    compute_scheduling_selection: COMPUTE_SCHED_SELECT,
+                    num_invocation: NUM_INVOCATION,
+                    seed: SEED,
+                    generated: true,
+                    num_workers: NUM_WORKERS,
+                    min_worker_flops: MIN_FLOPS,
+                    max_worker_flops: MAX_FLOPS,
+                    min_worker_band: MIN_BAND,
+                    max_worker_band: MAX_BAND,
+                    num_tasks: NUM_TASKS,
+                    min_task_input: MIN_INPUT,
+                    max_task_input: MAX_INPUT,
+                    min_task_flop: MIN_FLOP,
+                    max_task_flop: MAX_FLOP,
+                    min_task_output: MIN_OUTPUT,
+                    max_task_output: MAX_OUTPUT
+                }
+            })
             res.json({
                 simulation_output:
                     "<h5>" + simulation_output.replace(/[\n\r]/g, "<br>\n") + "</h5>",
-            });
+            })
         }
     }
 });
@@ -869,7 +808,7 @@ app.post("/run/workflow_fundamentals", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_fundamentals")
     const SIMULATOR = "workflow_fundamentals_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES = req.body.num_cores
     const DISK_BANDWIDTH = req.body.disk_bandwidth
@@ -888,18 +827,15 @@ app.post("/run/workflow_fundamentals", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_fundamentals",
-            num_cores: NUM_CORES,
-            disk_bandwidth: DISK_BANDWIDTH,
-        });
+            params: {
+                num_cores: NUM_CORES,
+                disk_bandwidth: DISK_BANDWIDTH
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -913,7 +849,7 @@ app.post("/run/workflow_distributed", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_distributed")
     const SIMULATOR = "workflow_distributed_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_HOSTS = req.body.num_hosts
     const NUM_CORES = req.body.num_cores
@@ -940,19 +876,16 @@ app.post("/run/workflow_distributed", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_distributed",
-            num_hosts: NUM_HOSTS,
-            num_cores: NUM_CORES,
-            link_bandwidth: LINK_BANDWIDTH,
-            use_local_storage: USE_LOCAL_STORAGE,
+            params: {
+                num_hosts: NUM_HOSTS,
+                num_cores: NUM_CORES,
+                link_bandwidth: LINK_BANDWIDTH,
+                use_local_storage: USE_LOCAL_STORAGE
+            }
         })
 
         res.json({
@@ -967,7 +900,7 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
     const PATH_PREFIX = getPathPrefix("workflow_task_data_parallelism")
     const SIMULATOR = "workflow_task_data_parallelism_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const NUM_CORES_BLUE = req.body.num_cores_blue
     const NUM_CORES_YELLOW = req.body.num_cores_yellow
@@ -992,19 +925,16 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             user: USERNAME,
             email: EMAIL,
-            time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "workflow_task_data_parallelism",
-            num_cores_blue: NUM_CORES_BLUE,
-            num_cores_yellow: NUM_CORES_YELLOW,
-            num_cores_purple: NUM_CORES_PURPLE,
-        });
+            params: {
+                num_cores_blue: NUM_CORES_BLUE,
+                num_cores_yellow: NUM_CORES_YELLOW,
+                num_cores_purple: NUM_CORES_PURPLE
+            }
+        })
 
         res.json({
             simulation_output: ansiUpSimulationOutput(simulation_output),
@@ -1018,7 +948,7 @@ app.post("/run/ci_overhead", function (req, res) {
     const PATH_PREFIX = getPathPrefix("ci_overhead")
     const SIMULATOR = "ci_overhead_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const SERVER_1_LINK_BANDWIDTH = req.body.server_1_link_bandwidth
     const HOST_SELECT = req.body.host_select
@@ -1049,27 +979,24 @@ app.post("/run/ci_overhead", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
             "user": USERNAME,
             "email": EMAIL,
-            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-            "activity": "client_server",
-            "server_1_link_latency": SERVER_1_LINK_LATENCY,
-            "server_1_link_bandwidth": SERVER_1_LINK_BANDWIDTH,
-            "server_2_link_bandwidth": SERVER_2_LINK_BANDWIDTH,
-            "buffer_size": BUFFER_SIZE,
-            "host_select": HOST_SELECT,
-            "disk_toggle": DISK_TOGGLE,
-            "disk_speed": DISK_SPEED,
-            "file_size": FILE_SIZE,
-            "server_1_startup_overhead": COMPUTE_1_STARTUP,
-            "server_2_startup_overhead": COMPUTE_2_STARTUP,
-            "task_work": TASK_WORK
-        });
+            "activity": "ci_overhead",
+            params: {
+                "server_1_link_latency": SERVER_1_LINK_LATENCY,
+                "server_1_link_bandwidth": SERVER_1_LINK_BANDWIDTH,
+                "server_2_link_bandwidth": SERVER_2_LINK_BANDWIDTH,
+                "buffer_size": BUFFER_SIZE,
+                "host_select": HOST_SELECT,
+                "disk_toggle": DISK_TOGGLE,
+                "disk_speed": DISK_SPEED,
+                "file_size": FILE_SIZE,
+                "server_1_startup_overhead": COMPUTE_1_STARTUP,
+                "server_2_startup_overhead": COMPUTE_2_STARTUP,
+                "task_work": TASK_WORK
+            }
+        })
 
         res.json({
             "simulation_output": ansiUpSimulationOutput(simulation_output),
@@ -1084,7 +1011,7 @@ app.post("/run/storage_service", function (req, res) {
     const SIMULATOR = "storage_simulator"
     const EXECUTABLE = PATH_PREFIX + SIMULATOR
 
-    const USERNAME = req.body.userName
+    const USERNAME = req.body.user_name
     const EMAIL = req.body.email
     const BANDWIDTH = req.body.bandwidth
     const FILE_SIZE = req.body.fileSize
@@ -1105,17 +1032,14 @@ app.post("/run/storage_service", function (req, res) {
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
 
     if (simulation_output !== null) {
-        /**
-         * Log the user running this simulation along with the
-         * simulation parameters to the data server.
-         */
         logData({
-            "user": USERNAME,
-            "email": EMAIL,
-            "time": Math.round(new Date().getTime() / 1000),  // unix timestamp
-            "activity": "storage_service",
-            "bandwidth": BANDWIDTH,
-            "file_size": FILE_SIZE
+            user: USERNAME,
+            email: EMAIL,
+            activity: "ci_storage_service",
+            params: {
+                "bandwidth": BANDWIDTH,
+                "file_size": FILE_SIZE
+            }
         })
 
         res.json({
@@ -1173,75 +1097,45 @@ function ansiUpSimulationOutput(simulationOutput) {
     return ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find)
 }
 
-function storeData(data) {
-    sims.add(data)
-    //.then((simulation) => {
-    //  res.status(200).json(simulation);
-    //})
-    //.catch((error) => {
-    //  res.status(500).json({ message: error.message });
-    //});
-}
-
-
 /**
- * Log the data into the JSON file
- * @param received_data
+ * Log the user running this simulation along with the
+ * simulation parameters to the data server.
+ *
+ * @param data
  * @returns {boolean}
  */
-function logData(received_data) {
-    let time_now = new Date().toLocaleString("en-US", {
-        timeZone: "America/Los_Angeles",
-    });
-    console.log(time_now + ": received data");
-    const DATA_FILE =
-        __dirname.replace("server", "data_server") + "/data_file.json";
-    fs.readFile(DATA_FILE, function (err, data) {
-        let current_json_data = [];
+function logData(data) {
+    db.registerUser(data.email, data.user).then((userID => {
+        let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
+        db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
+            return true
 
-        // if the file was able to be read, update the json list with new data
-        if (!err) {
-            current_json_data = JSON.parse(data);
-            current_json_data.push(received_data);
-        } else {
-            // if the file was not able to be read, append the new data to the empty json list
-            current_json_data.push(received_data);
-        }
-
-        // write the resulting json object to the file (overwriting the old file);
-        // cannot simply append since we are writing as json
-        fs.writeFile(DATA_FILE, JSON.stringify(current_json_data), function (err) {
-            if (err) {
-                console.log(
-                    "app.post('" +
-                    received_data.activity +
-                    "') callback: there was a problem writing the json file"
-                );
-                console.log(err);
-                return false;
-            }
-        });
-    });
-    return true;
+        })).catch((error => {
+            console.log("[ERROR]: " + error)
+            return false
+        }))
+    })).catch((error => {
+        console.log("[ERROR]: " + error)
+        return false
+    }))
+    // const DATA_FILE = __dirname.replace("server", "data_server") + "/data_file.json";
 }
 
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
-    const https = require("https");
-    const fs = require("fs");
+    const https = require("https")
+    const fs = require("fs")
     const options = {
         key: fs.readFileSync("./ssl/" + process.env.EDUWRENCH_SSL_PRIVATE_KEY),
         cert: fs.readFileSync("./ssl/" + process.env.EDUWRENCH_SSL_CERTIFICATE),
-    };
+    }
     https.createServer(options, app).listen(PORT, function () {
         console.log(
-            "eduWRENCH Backend server is running on port " +
-            PORT +
-            " with SSL-enabled mode"
-        );
-    });
+            "eduWRENCH backend server is running on port " + PORT + " with SSL-enabled mode"
+        )
+    })
 } else {
     app.listen(PORT, function () {
-        console.log("eduWRENCH Backend server is running on port " + PORT);
-    });
+        console.log("eduWRENCH backend server is running on port " + PORT)
+    })
 }

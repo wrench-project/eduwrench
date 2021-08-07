@@ -7,15 +7,14 @@
  * (at your option) any later version.
  */
 
-module.exports = {
-    development: {
-        client: "sqlite3",
-        connection: {
-            filename: "./eduwrench-server.db"
-        },
-        useNullAsDefault: true,
-        migrations: {
-            directory: "./data/migrations"
-        }
-    }
+exports.up = function (knex) {
+    return knex.schema.createTable("users", tbl => {
+        tbl.increments("id")
+        tbl.text("email").unique().notNullable()
+        tbl.text("name").notNullable()
+    })
+}
+
+exports.down = function (knex) {
+    return knex.schema.dropTableIfExists("users")
 }
