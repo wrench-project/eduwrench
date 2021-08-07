@@ -20,6 +20,7 @@ VOLUME /home/wrench/eduwrench/data_server
 
 # run build script
 WORKDIR /home/wrench/eduwrench
+RUN mkdir db
 RUN bash build.sh -j 2
 
 # run applications
