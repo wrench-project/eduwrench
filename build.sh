@@ -45,6 +45,7 @@ done
 printf "${CYAN}\n"
 echo "[2/3] BUILDING SERVER"
 printf "${NC}\n"
+mkdir db
 cd server && npm install && npm audit fix && npx knex migrate:latest && cd ..
 
 printf "${CYAN}\n"
