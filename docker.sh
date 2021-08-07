@@ -22,7 +22,7 @@ node app.js &
 
 # Start Gatsby server
 printf "${CYAN}\n"
-echo "[2/3] START GATSBY SERVER"
+echo "[2/2] START GATSBY SERVER"
 printf "${NC}\n"
 
 cd /home/wrench/eduwrench/web
