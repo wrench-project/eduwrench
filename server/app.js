@@ -21,16 +21,11 @@ const db = require("./data/db-config")
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 const ansiUp = new au.default();
 
-(cookieSession = require("cookie-session")),
-    (request = require("request")),
-    (flash = require("connect-flash"));
-
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
-app.use(flash());
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -56,10 +51,7 @@ app.use(cors(corsOptions))
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
-    res.render("index", {
-        user: req.user,
-        messages: req.flash("error"),
-    })
+    res.send("eduWRENCH Pedagogic Modules")
 })
 
 // execute networking fundamentals simulation route
@@ -1118,7 +1110,6 @@ function logData(data) {
         console.log("[ERROR]: " + error)
         return false
     }))
-    // const DATA_FILE = __dirname.replace("server", "data_server") + "/data_file.json";
 }
 
 // Enable SSL server connection
