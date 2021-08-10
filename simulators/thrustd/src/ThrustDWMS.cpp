@@ -38,6 +38,11 @@ int ThrustDWMS::main() {
 
     wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::COLOR_GREEN);
 
+    // Instantiate a Bandwidth Meter
+    if (this->getNumVmInstances() > 0) {
+      this->createBandwidthMeter({"WIDE_AREA_LINK"}, 10.0);
+    }
+
     // Check whether the WMS has a deferred start time
     checkDeferredStart();
 
@@ -61,7 +66,7 @@ int ThrustDWMS::main() {
     auto compute_service = *(this->getAvailableComputeServices<wrench::ComputeService>().begin());
     WRENCH_INFO("NAME OF LOCAL COMPUTE_SERVICE: %s", compute_service->getName().c_str());
     std::shared_ptr<wrench::CloudComputeService> cloud_service;
-    if (ThrustDWMS::getNumVmInstances() > 0) {
+    if (this->getNumVmInstances() > 0) {
         cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().rbegin());
         WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
     }
@@ -75,7 +80,7 @@ int ThrustDWMS::main() {
     vector<std::string> cloud_vm;
     std::set<std::shared_ptr<wrench::ComputeService>> vm_css;
 
-    if (ThrustDWMS::getNumVmInstances() > 0) {
+    if (this->getNumVmInstances() > 0) {
         for (int i = 0; i < num_vm_instances; i++) {
             cloud_vm.push_back(cloud_service->createVM(4, 500000));
             // start vms and add the baremetal services from the vms to compute_services
@@ -83,7 +88,7 @@ int ThrustDWMS::main() {
             vm_css.insert(cloud_service->startVM(cloud_vm.at(i)));
         }
 
-        this->ss_job_scheduler->setNumVmInstances(ThrustDWMS::getNumVmInstances());
+        this->ss_job_scheduler->setNumVmInstances(this->getNumVmInstances());
         this->convertCloudTasks(cloud_tasks);
         this->ss_job_scheduler->setCloudTasks(cloud_tasks_set);
 

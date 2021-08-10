@@ -14,7 +14,6 @@
 #include <fstream>
 #include <chrono>
 #include <ratio>
-#include <unistd.h>
 
 static bool ends_with(const std::string& str, const std::string& suffix) {
     return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);
@@ -190,7 +189,8 @@ int main(int argc, char **argv) {
             "   </zone>\n"
             "</platform>\n");
 
-    std::string platform_file = "/tmp/hosts" + std::to_string((int)getpid()) + ".xml";
+    char const* username = std::getenv("USER");
+    std::string platform_file = "/tmp/hosts_" + std::to_string(getuid()) + ".xml";
     auto xml_file = fopen(platform_file.c_str(), "w");
     if (xml_file == NULL) {
         std::cerr << "Cannot open platform (.xml) file" << std::endl;
@@ -290,6 +290,7 @@ int main(int argc, char **argv) {
                            compute_services, storage_services, wms_host));
     wms->addWorkflow(workflow);
 
+
     if (use_cloud) {
         // number of cloud vm instances
         int num_vm_instances = j.at("num_vm_instances").get<int>();
@@ -301,7 +302,7 @@ int main(int argc, char **argv) {
         wms->setNumVmInstances(0);
         wms->setCloudTasks("");
     }
-
+    
     // Instantiate a file registry service
     std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
     std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
@@ -335,7 +336,7 @@ int main(int argc, char **argv) {
     std::cerr << "Simulation done!" << std::endl;
 
     for (auto const &t : workflow->getTasks()) {
-        std::cerr << t->getID() << " RAN ON " << t->getExecutionHost() << "\n";
+        std::cerr << t->getID() << " RAN ON " << t->getPhysicalExecutionHost() << "\n";
     }
 
     auto exit_tasks = workflow->getExitTaskMap();
@@ -376,6 +377,16 @@ int main(int argc, char **argv) {
             };
 
     std::cout << output_json.dump() << std::endl;
+
+    // simulation.getOutput().enableDiskTimestamps(true);
+    simulation.getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json",
+                                           false,
+                                           true,
+                                           false,
+                                           false,
+                                           false,
+                                           false,
+                                           true);
 
     return 0;
 }
