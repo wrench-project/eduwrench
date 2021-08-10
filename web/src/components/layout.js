@@ -19,6 +19,8 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const gtag = require("./gtag")
+
   return (
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />

@@ -9,33 +9,7 @@ module.exports = {
     url: "http://localhost:3000"
   },
   plugins: [
-    `gatsby-plugin-nodejs`,
-    `gatsby-plugin-react-helmet`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`
-      }
-    },
-    {
-      resolve: 'gatsby-plugin-react-svg',
-      options: {
-        rule: {
-          include: /vector_graphs/
-        }
-      }
-    },
-    `gatsby-transformer-sharp`,
-    `gatsby-transformer-yaml`,
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        path: `./src/data/`
-      }
-    },
-    `gatsby-transformer-remark`,
-    `gatsby-plugin-sharp`,
+    `gatsby-plugin-image`,
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -48,6 +22,32 @@ module.exports = {
         icon: `src/images/wrench_logo.png` // This path is relative to the root of the site.
       }
     },
-    `gatsby-plugin-image`
+    `gatsby-plugin-nodejs`,
+    `gatsby-plugin-react-helmet`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `images`,
+        path: `${__dirname}/src/images`
+      }
+    },
+    {
+      resolve: "gatsby-plugin-react-svg",
+      options: {
+        rule: {
+          include: /vector_graphs/
+        }
+      }
+    },
+    `gatsby-plugin-sharp`,
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `./src/data/`
+      }
+    },
+    `gatsby-transformer-remark`,
+    `gatsby-transformer-sharp`,
+    `gatsby-transformer-yaml`
   ]
 }
