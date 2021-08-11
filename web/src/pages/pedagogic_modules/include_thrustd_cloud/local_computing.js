@@ -15,7 +15,7 @@ const LocalComputing = () => {
                 "Understand the simple relationship between program execution time, work, and compute speed"
             ]} />
 
-            <h2>Measures of Work and Compute Speed</h2>
+            <h2>Local Computing</h2>
 
             <p>
                 You are an employee at a space agency that needs to run a well-known Astronomy workflow application
@@ -165,7 +165,8 @@ const LocalComputing = () => {
                     <li>Option 2: Downclock all the cluster nodes to a lower pstate. Using a binary search, find the
                         smallest pstate that satisfies the 1-hour time limit.</li>
                 </ul>
-                <br />
+            </p>
+            <p>
                 For both these options give the $ cost, the CO2 emission, and the parallel efficiency. What should
                 you tell your boss regarding which option is more desirable?
             </p>

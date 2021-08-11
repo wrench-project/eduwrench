@@ -3,6 +3,8 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg";
+import Thrustd_Local_Simulation from "./thrustd_local_simulation";
+import SimulationActivity from "../../../components/simulation/simulation_activity";
 
 const CloudComputing = () => {
     return (
@@ -13,133 +15,46 @@ const CloudComputing = () => {
                 "Understand the simple relationship between program execution time, work, and compute speed"
             ]} />
 
-            <h2>Measures of Work and Compute Speed</h2>
+            <h2>Cloud Computing</h2>
 
             <p>
-                You are an employee at a space agency that needs to run a well-known Astronomy workflow application
-                called <a href="http://montage.ipac.caltech.edu/">Montage</a>. The objective of Montage is to
-                assemble telescope images into a mosaic of the sky (see a <a href="http://montage.ipac.caltech.edu/gallery.html">gallery</a> of
-                such mosaics). As part of the operation of your agency, Montage has to be executed often and
-                regularly. Therefore, it is crucial that its execution be efficient.
+                Your boss mentions that your company now has access to a commercial cloud. The
+                advantage this provides over local computing is that the cloud is CO2 efficient
+                because of renewables so that saves some cost in the CO2 department.
             </p>
 
             <p>
-                The structure of a Montage workflow looks like this:
-            </p>
-
-            <object className="figure" type="image/svg+xml" data={IOFigure1} />
-
-            <p>
-                [DESCRIPTION OF TASKS]
+                On the cloud you can request any number of VMs, each costing $XX/hour and you can
+                use each VM for up to 10 hours.
             </p>
 
             <p>
-                At work, you have access to a 128-node cluster with 8 cores on each node. Each montage task,
-                the way you have compiled them, uses 4 cores on a node. You have decided to never oversubscribe
-                nodes. That is, at most two Montage tasks can run at the same time on a node of your cluster.
+                You can now combine the local cluster with the cloud to distribute the tasks of
+                the workflow via horizontal/vertical partitioning, meaning tasks are grouped via
+                rows/columns where each group can be assigned to the local cluster or the cloud.
+                The task distribution needs to be done while trying to maintain cost and CO2
+                efficiency.
             </p>
 
             <p>
-                Executing Montage on this cluster has energy costs in terms of money and CO2 emissions. In particular,
-                given the power company your agency uses, one MWh of energy costs $XXX and produces XXX grams of
-                CO2 emissions.
+                The bandwidth to the cloud is XXX GB/sec, meaning that it's low, so you don't want
+                to send a lot of data back and forth.
             </p>
 
             <p>
-                The nodes of your cluster can be configured to operate in different power states, or "pstates". Each
-                pstate corresponds to a particular frequency used by the processor, which is directly correlated to
-                the performance of the processor and to its energy consumption. By decreasing the pstate, you are
-                lowering the frequency at which the processor operates, thus making the tasks on that processor compute
-                at a slower rate. Conversely, increasing the pstate increases the frequency, which leads to faster
-                rates of computation. You can think of the pstate as being the dial on a stove: by cranking up the
-                stove dial from low to high, you are increasing its power, thus allowing food to cook faster. Of
-                course, operating at a higher pstate increases power consumption.
-            </p>
-
-            <p>
-                The processors on your cluster's nodes have 7 pstate values (0 to 6). Each value corresponds to a
-                particular clock rate and power consumption.
-            </p>
-
-            <p>
-                <strong>Below is the table of GHz vs speed:</strong>
-            </p>
-            <p>
-                <Table compact collapsing>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>pstate</Table.HeaderCell>
-                            <Table.HeaderCell>GHz</Table.HeaderCell>
-                            <Table.HeaderCell>Compute Speed (flops)</Table.HeaderCell>
-                            <Table.HeaderCell>Power Consumption</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>0</Table.Cell>
-                            <Table.Cell>1.2</Table.Cell>
-                            <Table.Cell>0.5217</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>1</Table.Cell>
-                            <Table.Cell>1.4</Table.Cell>
-                            <Table.Cell>0.6087</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>2</Table.Cell>
-                            <Table.Cell>1.6</Table.Cell>
-                            <Table.Cell>0.6957</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>3</Table.Cell>
-                            <Table.Cell>1.8</Table.Cell>
-                            <Table.Cell>0.7826</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>4</Table.Cell>
-                            <Table.Cell>2.0</Table.Cell>
-                            <Table.Cell>0.8696</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>5</Table.Cell>
-                            <Table.Cell>2.2</Table.Cell>
-                            <Table.Cell>0.9565</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>6</Table.Cell>
-                            <Table.Cell>2.3</Table.Cell>
-                            <Table.Cell>1</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                    </Table.Body>
-                </Table>
-            </p>
-
-            <p>
-                You can pick the pstate value of the nodes at will, and we'll assume that all nodes are always set
-                to the same pstate.
-            </p>
-
-            <p>
-                Furthermore, you can decide to power off some of the compute nodes. This is because an idling compute
-                node still consumes power. Specifically, these compute nodes consume 98 Watts when idling. It thus may
-                be preferable to turn some of them off, since your Montage workflow may not be able to use all 128
-                compute nodes (due to limited parallelism in the workflow).
+                What you need to do is figure out:
+                <br /><br />
+                <ul>
+                    <li>How many VMs to ask for on the cloud</li>
+                    <li>Which tasks should run on the cloud</li>
+                </ul>
             </p>
 
             <p>
                 Here is the simulator:
             </p>
 
-            <p>
-                [INSERT SIMULATOR HERE]
-            </p>
+            <SimulationActivity panelKey="local_computing" content={<Thrustd_Local_Simulation />} />
 
             <Divider />
             <Header as="h3" block>
