@@ -274,7 +274,7 @@
       key: "slo_batch_job_cancellation"
       topSLOs:
         - "top_slo_1"
-    - description: "cancel a batch job"
+    - description: "cancel a batch job with the scancel command"
       key: "slo_batch_scancel_command"
       topSLOs:
         - "top_slo_4"
