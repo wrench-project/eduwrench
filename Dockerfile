@@ -20,10 +20,11 @@ VOLUME /home/wrench/eduwrench/data_server
 
 # run build script
 WORKDIR /home/wrench/eduwrench
+RUN mkdir db
 RUN bash build.sh -j 2
 
 # run applications
-WORKDIR /home/wrench/eduwrench/web
+WORKDIR /home/wrench/eduwrench
 USER root
 COPY ./docker.sh .
 RUN chown wrench:users docker.sh

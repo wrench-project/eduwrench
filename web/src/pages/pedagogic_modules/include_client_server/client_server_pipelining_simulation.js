@@ -58,10 +58,9 @@ const ClientServerPipeliningSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     server_1_link_latency: values.server1Latency,
                     server_1_link_bandwidth: 200,
                     server_2_link_bandwidth: 600,

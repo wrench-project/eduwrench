@@ -55,10 +55,9 @@ const CIServiceFundamentalsSimulation = () => {
                       setSimulationResults(<></>)
                       return
                     }
-                    const userEmail = localStorage.getItem("currentUser")
                     const data = {
-                      userName: userEmail.split("@")[0],
-                      email: userEmail,
+                      user_name: localStorage.getItem("userName"),
+                      email: localStorage.getItem("currentUser"),
                       compute_1_startup: values.compute1Startup,
                       compute_2_startup: values.compute2Startup,
                       server_1_link_bandwidth: "10",

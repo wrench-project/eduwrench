@@ -55,10 +55,9 @@ const WorkflowsMixedParallelismSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     num_cores_blue: values.numCoresBlue,
                     num_cores_yellow: values.numCoresYellow,
                     num_cores_purple: values.numCoresPurple

@@ -6,7 +6,7 @@ services:
       - "${EDUWRENCH_JEKYLL_PORT}:4000"
       - "${EDUWRENCH_NODE_PORT}:3000"
     volumes:
-      - ./data_server:/home/wrench/eduwrench/data_server
+      - ${EDUWRENCH_DB_DIR}:/home/wrench/eduwrench/db
       - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/web/ssl
       - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/server/ssl
     environment:

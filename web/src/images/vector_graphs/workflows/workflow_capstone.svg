@@ -355,7 +355,7 @@
                                 <span class="MathJax_Preview" style=""></span>
                                 <div class="MathJax_SVG_Display" style="text-align: center;">
                                     <span style="font-size: 100%; display: inline-block;" class="MathJax_SVG"
-                                          id="MathJax-Element-1-Frame" tabindex="0">
+                                          id="MathJax-Element-1-Frame" tabIndex="0">
                                         <svg xmlns="http://www.w3.org/2000/svg"
                                              xmlns:xlink="http://www.w3.org/1999/xlink" width="7.558ex" height="2.059ex"
                                              style="vertical-align: -0.278ex;" viewBox="0 -767 3254.1 886.7" role="img"

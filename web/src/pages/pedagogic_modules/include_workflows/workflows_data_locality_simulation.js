@@ -57,10 +57,9 @@ const WorkflowsDataLocalitySimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     num_hosts: values.numHosts,
                     num_cores: values.numCores,
                     link_bandwidth: values.linkBandwidth,

@@ -49,10 +49,9 @@ const ClientServerBasicsSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     server_1_link_bandwidth: values.server1Bandwidth,
                     server_2_link_bandwidth: "100",
                     server_1_link_latency: "10",

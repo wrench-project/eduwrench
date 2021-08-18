@@ -55,10 +55,9 @@ const CIStorageServicesSimulation = () => {
                       setSimulationResults(<></>)
                       return
                     }
-                    const userEmail = localStorage.getItem("currentUser")
                     const data = {
-                      userName: userEmail.split("@")[0],
-                      email: userEmail,
+                      user_name: localStorage.getItem("userName"),
+                      email: localStorage.getItem("currentUser"),
                       bandwidth: values.bandwidth,
                       fileSize: values.fileSize,
                       registrationOverhead: values.registrationOverhead

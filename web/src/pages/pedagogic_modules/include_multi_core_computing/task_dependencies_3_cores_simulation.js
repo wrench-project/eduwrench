@@ -47,10 +47,9 @@ const TaskDependencies3CoresSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
-                  const userEmail = localStorage.getItem("currentUser")
                   const data = {
-                    userName: userEmail.split("@")[0],
-                    email: userEmail,
+                    user_name: localStorage.getItem("userName"),
+                    email: localStorage.getItem("currentUser"),
                     num_cores: "3",
                     analyze_work: values.taskGflop,
                     scheduling_scheme: "viz"

@@ -53,7 +53,7 @@ namespace wrench {
         // Get the compute service
         auto cs = *((this->getAvailableComputeServices<ComputeService>()).begin());
 
-        std::map<std::string, int> idle_cores = {{"host1", 3}, {"host2", 3}};
+        std::map<std::string, unsigned long> idle_cores = {{"host1", 3}, {"host2", 3}};
 
         // Submit green task on host1
         {
