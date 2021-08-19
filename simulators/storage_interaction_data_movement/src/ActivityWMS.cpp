@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020. The WRENCH Team.
+ * Copyright (c) 2020-2021. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -55,14 +55,14 @@ namespace wrench {
 
         std::shared_ptr<StorageService> client_storage_service, server_storage_service;
         for (const auto &storage_service : this->getAvailableStorageServices()) {
-            if (storage_service->getHostname() == "ClientHost") {
+            if (storage_service->getHostname() == "Client") {
                 client_storage_service = storage_service;
             } else {
                 server_storage_service = storage_service;
             }
         }
 
-        auto input_file = this->getWorkflow()->getFileByID("file_copy");
+        auto input_file = this->getWorkflow()->getFileByID("data_file");
 
         WRENCH_INFO("Sending the file over to the server running on host %s",
                     server_storage_service->getHostname().c_str());
