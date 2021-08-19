@@ -73,13 +73,12 @@ const CIStorageServices = ({ module, tab }) => {
       </Header>
 
       <p>
-        The simulation app below simulates the execution of the simple data service scenario
-        shown in Figure 1. For this simulation, the File Registry Service has an <i>overhead</i>
-        value represented as the time (in seconds) for performing an insert operation
-        (i.e., registering a file), and storing a file in the data service involves the
-        steps shown in the sequence diagram (Figure 1 right side). If you run the simulation
-        using the default values, you will notice that the registration overhead nearly
-        doubles the time to perform the storing operation in the data service.
+        The simulation app below simulates the execution of the simple data service scenario shown in Figure 1. For this
+        simulation, the File Registry Service has an <i>overhead</i> value represented as the time (in seconds) for
+        performing an insert operation (i.e., registering a file), and storing a file in the data service involves the
+        steps shown in the sequence diagram (Figure 1 right side). If you run the simulation using the default values,
+        you will notice that the registration overhead nearly doubles the time to perform the storing operation in the
+        data service.
       </p>
 
       <SimulationActivity panelKey="ci-storage-services-simulation" content={<CIStorageServicesSimulation />} />

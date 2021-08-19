@@ -6,6 +6,7 @@ import ModulesList from "../components/modules_list"
 const Modules = () => (
   <Layout>
     <Seo title="Modules" />
+    <p>&nbsp;</p>
     <ModulesList />
     <br/><br/>
   </Layout>

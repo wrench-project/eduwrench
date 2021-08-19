@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
     <>
       <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
       <Glossary />
-      <Container style={{ marginTop: "4em", backgroundColor: "#fefaec" }}>
+      <Container style={{ mawrginTop: "4em", backgroundColor: "#fefaec" }}>
         <main>{children}</main>
       </Container>
       <Footer />
