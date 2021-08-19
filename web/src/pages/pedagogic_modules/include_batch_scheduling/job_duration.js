@@ -78,6 +78,7 @@ const JobDuration = ({ module, tab }) => {
         <li>Feel free to inspect the state of the queue, which will show that all nodes are currently busy.</li>
         <li>Submit a job asking for 16 nodes and just enough time to run <code>myprogram</code>.</li>
         <li>What is the job's turnaround time?</li>
+        <li>Could you have expected this behavior based on the state of the batch queue?</li>
       </ul>
 
       <p><strong>[C.1.q5.2] Asking for too much time:</strong></p>
@@ -88,6 +89,7 @@ const JobDuration = ({ module, tab }) => {
           conservatively asks for the sequential time.
         </li>
         <li>What is the job's turnaround time?</li>
+        <li>Could you have expected this behavior based on the state of the batch queue?</li>
       </ul>
 
       <p><strong>[C.1.q5.3] Exploring other options:</strong></p>
