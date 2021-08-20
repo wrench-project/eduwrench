@@ -16,7 +16,8 @@ import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
-import CIStorageServicesScenario from "../../../images/vector_graphs/ci_service_concepts/cic_storage_service.svg"
+import CIStorageNetworkProximityScenario
+  from "../../../images/vector_graphs/ci_service_concepts/ci_network_proximity.svg"
 
 const CIStorageNetworkProximitySimulation = () => {
 
@@ -30,7 +31,7 @@ const CIStorageNetworkProximitySimulation = () => {
   return (
     auth === "true" ? (
         <>
-          <SimulationScenario scenario={<CIStorageServicesScenario />} />
+          <SimulationScenario scenario={<CIStorageNetworkProximityScenario />} />
 
           <Segment.Group>
             <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -48,15 +49,27 @@ const CIStorageNetworkProximitySimulation = () => {
 
                 validate={values => {
                   const errors = {}
-                  // if (!validateFieldInRange("client-bandwidth-label", values.bandwidth, 1, 1000, null, "Mbps")) {
-                  //   errors.fileSize = "ERROR"
-                  // }
-                  // if (values.fileSize < 1 || values.fileSize > 100) {
-                  //   errors.fileSize = "ERROR"
-                  // }
-                  // if (!validateFieldInRange("registration-overhead-label", values.registrationOverhead, 0, 5, null, "sec")) {
-                  //   errors.registrationOverhead = "ERROR"
-                  // }
+                  if (values.fileSize < 1 || values.fileSize > 100) {
+                    errors.fileSize = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server1bandwidth", values.server1Bandwidth, 1, 1000, "Bandwidth:", "Mbps")) {
+                    errors.server1Bandwidth = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server1latency", values.server1Latency, 1, 100, "Latency:", "μs")) {
+                    errors.server1Latency = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server2bandwidth", values.server2Bandwidth, 1, 1000, "Bandwidth:", "Mbps")) {
+                    errors.server2Bandwidth = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server2latency", values.server2Latency, 1, 100, "Latency:", "μs")) {
+                    errors.server2Latency = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server3bandwidth", values.server3Bandwidth, 1, 1000, "Bandwidth:", "Mbps")) {
+                    errors.server3Bandwidth = "ERROR"
+                  }
+                  if (!validateFieldInRange("ci-np-server3latency", values.server3Latency, 1, 100, "Latency:", "μs")) {
+                    errors.server3Latency = "ERROR"
+                  }
                   return errors
                 }}
 
@@ -75,7 +88,7 @@ const CIStorageNetworkProximitySimulation = () => {
                       server2Bandwidth: values.server2Bandwidth,
                       server2Latency: values.server2Latency,
                       server3Bandwidth: values.server3Bandwidth,
-                      server3Latency: values.server3Latency,
+                      server3Latency: values.server3Latency
                     }
                     setSimulationResults(<></>)
                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/storage_network_proximity", data).then(
@@ -187,7 +200,7 @@ const CIStorageNetworkProximitySimulation = () => {
                                       } : null}
                           />
                         </Form.Group>
-                        <Form.Group className="grouped-forms" grouped>
+                        <Form.Group className="grouped-forms grouped-forms-last" grouped>
                           <strong>Server 3:</strong>
                           <Form.Input fluid name="server3Bandwidth"
                                       label="Bandwidth (MB/sec)"
