@@ -1041,6 +1041,58 @@ app.post("/run/storage_service", function (req, res) {
     }
 })
 
+// execute activity storage network proximity simulation route
+app.post("/run/storage_network_proximity", function (req, res) {
+    const PATH_PREFIX = getPathPrefix("storage_network_proximity")
+    const SIMULATOR = "storage_network_proximity"
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR
+
+    const USERNAME = req.body.user_name
+    const EMAIL = req.body.email
+    const FILE_SIZE = req.body.fileSize
+    const SERVER1_BANDWIDTH = req.body.server1Bandwidth
+    const SERVER1_LATENCY = req.body.server1Latency
+    const SERVER2_BANDWIDTH = req.body.server2Bandwidth
+    const SERVER2_LATENCY = req.body.server2Latency
+    const SERVER3_BANDWIDTH = req.body.server3Bandwidth
+    const SERVER3_LATENCY = req.body.server3Latency
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=simple_wms.thresh:info",
+        "--log=main.thresh:info",
+        "--log='root.fmt:[%.5d][%h]%e%m%n'"
+    ]
+
+    const SIMULATION_ARGS = [FILE_SIZE, SERVER1_BANDWIDTH, SERVER1_LATENCY, SERVER2_BANDWIDTH, SERVER2_LATENCY,
+        SERVER3_BANDWIDTH, SERVER3_LATENCY].concat(LOGGING)
+
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS)
+
+    if (simulation_output !== null) {
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            activity: "ci_storage_network_proximity",
+            params: {
+                "file_size": FILE_SIZE,
+                "server_1_bandwidth": SERVER1_BANDWIDTH,
+                "server_1_latency": SERVER1_LATENCY,
+                "server_2_bandwidth": SERVER2_BANDWIDTH,
+                "server_2_latency": SERVER2_LATENCY,
+                "server_3_bandwidth": SERVER3_BANDWIDTH,
+                "server_3_latency": SERVER3_LATENCY
+            }
+        })
+
+        res.json({
+            "simulation_output": ansiUpSimulationOutput(simulation_output),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        })
+    }
+})
+
 /**
  *
  * @param simulatorFolder

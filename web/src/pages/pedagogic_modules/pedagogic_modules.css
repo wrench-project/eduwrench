@@ -95,3 +95,13 @@ pre {
     color: #aaa;
     font-size: 0.9em;
 }
+
+.grouped-forms {
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 0.3em;
+    margin-left: 0.5em !important;
+    width: 100%;
+    min-height: 13em;
+    max-height: 13em;
+}

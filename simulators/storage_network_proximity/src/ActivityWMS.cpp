@@ -65,8 +65,8 @@ namespace wrench {
         }
         file_registry->removeEntry(input_file, FileLocation::LOCATION(client_storage_service));
 
-        WRENCH_INFO("Sleep for 1 minute so Network Proximity Service has time to ping and find proximity");
-        Simulation::sleep(60.0);
+        WRENCH_INFO("Sleep for 30 minutes so Network Proximity Service has time to ping and find proximity");
+        Simulation::sleep(1800.0);
 
         // using network proximity service
         WRENCH_INFO("Using Network Proximity Service to find closest storage unit...");
@@ -82,6 +82,8 @@ namespace wrench {
                 double proximity = np_service->getHostPairDistance(
                         {"Client", storage_service->getHostname()}).first;
 
+                TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_GREEN);
+
                 WRENCH_INFO("Proximity between Client and host %s is %e",
                             storage_service->getHostname().c_str(), proximity);
 
@@ -91,9 +93,12 @@ namespace wrench {
                 }
             }
         }
-        std::cerr << "----------------------------------------" << std::endl;
-        std::cerr << "Nearest Storage Service: " << chosen_storage_service->getHostname() << std::endl;
-        std::cerr << "----------------------------------------" << std::endl;
+
+        WRENCH_INFO("Nearest Storage Service: %s", chosen_storage_service->getHostname().c_str());
+
+        WRENCH_INFO("----------------------------------------");
+
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
 
         //Copy from chosen server storage back to client
         WRENCH_INFO("Receiving the file stored in %s", chosen_storage_service->getHostname().c_str());

@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2019-2021. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -6,6 +15,7 @@ import CIStorageServicesSimulation from "./ci_storage_services_simulation"
 import PracticeQuestions from "../../../components/practice_questions"
 
 import CISimpleStorage from "../../../images/vector_graphs/ci_service_concepts/simple_storage.svg"
+import CIStorageNetworkProximitySimulation from "./ci_storage_network_proximity_simulation"
 
 const CIStorageServices = ({ module, tab }) => {
   return (
@@ -82,6 +92,16 @@ const CIStorageServices = ({ module, tab }) => {
       </p>
 
       <SimulationActivity panelKey="ci-storage-services-simulation" content={<CIStorageServicesSimulation />} />
+
+      <Divider />
+
+      <h2>Network Proximity</h2>
+
+      <Header as="h3" block>
+        Simulating Data Retrieval with Network Proximity
+      </Header>
+
+      <SimulationActivity panelKey="ci-storage-network-proximity" content={<CIStorageNetworkProximitySimulation />} />
 
       <Divider />
 

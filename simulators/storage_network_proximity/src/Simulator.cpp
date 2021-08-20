@@ -18,6 +18,8 @@
 
 #include "ActivityWMS.h"
 
+XBT_LOG_NEW_DEFAULT_CATEGORY(main, "Log category for Simple WMS");
+
 /**
  * @brief Generates a platform with a single multi-core host
  * @param platform_file_path: path to write the platform file to
@@ -201,18 +203,16 @@ int main(int argc, char **argv) {
 
     std::cerr.precision(4);
 
-    std::cerr << "----------------------------------------" << std::endl;
     for (const auto &file_copy : file_copy_starts) {
         if (file_copy->getContent()->getDestination()->getStorageService()->getHostname() == "Client") {
             double duration = file_copy->getContent()->getEndpoint()->getDate() - file_copy->getDate();
 
-            std::cerr << file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0 * 1000.0) <<
-                      " GB transfer from " <<
-                      file_copy->getContent()->getSource()->getStorageService()->getHostname() <<
-                      " completed at time " << duration << std::endl;
+            WRENCH_INFO("%.2f GB transfer from %s completed at time %.2f",
+                        file_copy->getContent()->getFile()->getSize() / (1000.0 * 1000.0 * 1000.0),
+                        file_copy->getContent()->getSource()->getStorageService()->getHostname().c_str(),
+                        duration);
         }
     }
-    std::cerr << "----------------------------------------" << std::endl;
 
     return 0;
 }
