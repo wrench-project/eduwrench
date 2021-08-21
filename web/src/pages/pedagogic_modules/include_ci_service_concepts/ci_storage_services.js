@@ -97,6 +97,23 @@ const CIStorageServices = ({ module, tab }) => {
 
       <h2>Network Proximity</h2>
 
+      <p>
+        In the <a href="/pedagogic_modules/networking_fundamentals">network fundamentals module</a>, we have discussed
+        the concepts of latency and bandwidth, and experienced how network topologies and congestion could impact
+        data transfer times. In a CI deployment, it is common to have copies of data files (or <i>replicas</i>) stored
+        on (geographically) distributed storage services. For example, an image captured with the Daniel K. Inouye
+        Solar Telescope in Haleakalā, Maui, will certainly have a copy of the file on a local storage service, but
+        could also distribute replicas of it to storage services worldwide. The goal of creating distributed replicas
+        is to reduce the latency when accessing resources over the wide-area network (e.g., Internet), as well as
+        to reduce potential network contention when having multiple users accessing a single resource.
+      </p>
+
+      <p>
+        In order to overcome the above issues, CI deployments typically use <strong>Network Proximity</strong> services
+        to identify the "nearest" resource that could provide the service efficiently. By nearest, we do not merely
+        mean the geographical distance, instead we define it as the lowest time-to-response (TTR).
+      </p>
+
       <Header as="h3" block>
         Simulating Data Retrieval with Network Proximity
       </Header>
