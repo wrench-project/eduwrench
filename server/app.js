@@ -1080,6 +1080,96 @@ app.post("/run/thrustd", function (req, res) {
   }
 });
 
+// execute thrust d cloud simulator
+app.post("/run/thrustd_cloud", function (req, res) {
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/thrustd/build/"
+    );
+
+    const SIMULATOR = "thrustd";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_HOSTS = req.body.num_hosts;
+    const PSTATE = req.body.pstate;
+    const USE_CLOUD = req.body.useCloud;
+    const NUM_CLOUD_HOSTS = req.body.cloudHosts;
+    const NUM_VM_INSTANCES = req.body.numVmInstances;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:debug",
+        "--log=simple_wms.thresh:debug",
+        "--log=simple_wms_scheduler.thresh:debug",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
+
+    const json_data = {
+        "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
+        "num_hosts": parseInt(NUM_HOSTS),
+        "cores": 8,
+        "min_cores_per_task": 4,
+        "max_cores_per_task": 4,
+        "pstate": parseInt(PSTATE),
+        "speed": "0.5217f, 0.6087f, 0.6957f, 0.7826f, 0.8696f, 0.9565f, 1f",
+        "value": "98:120, 98:130, 98:140, 98:150, 98:160, 98:170, 98:190",
+        "energy_cost_per_mwh": 1000,
+        "energy_co2_per_mwh": 1000,
+        "use_cloud": USE_CLOUD,
+        "num_cloud_hosts": parseInt(NUM_CLOUD_HOSTS),
+        "cloud_cores": 16,
+        "cloud_bandwidth": "1000EBps",
+        "cloud_pstate": 1,
+        "cloud_speed": "100Gf, 200Gf",
+        "cloud_value": "10.00:10.00:100.00,10.00:10.00:250.00",
+        "cloud_cost_per_mwh": 1000,
+        "num_vm_instances": parseInt(NUM_VM_INSTANCES),
+        "vm_usage_duration": 10,
+        // to be changed later
+        "cloud_tasks": "mProject_00000001,mProject_00000002,mProject_00000003,mProject_00000004,mProject_00000005,mProject_00000006,mProject_00000007,mProject_00000008,mProject_00000009,mProject_00000010,mProject_00000011,mProject_00000012,mProject_00000013,mProject_00000014,mProject_00000015"
+    }
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    let args_json = JSON.stringify(json_data);
+    console.log(args_json);
+    const fs = require('fs');
+
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if(err) console.log('error', err);
+    });
+
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            activity: "thrustd",
+            num_hosts: NUM_HOSTS,
+            pstate: PSTATE,
+            useCloud: USE_CLOUD,
+            cloudHosts: NUM_CLOUD_HOSTS,
+            numVmInstances: NUM_VM_INSTANCES
+        });
+
+        res.json({
+            "simulation_output": ansiUpSimulationOutput(simulation_output),
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        })
+    }
+});
+
 // execute activity storage service simulation route
 app.post("/run/storage_service", function (req, res) {
     const PATH_PREFIX = getPathPrefix("storage_interaction_data_movement")

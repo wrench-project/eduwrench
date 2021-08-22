@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg";
-import Thrustd_Local_Simulation from "./thrustd_local_simulation";
+import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 
 const CloudComputing = () => {
@@ -54,7 +54,7 @@ const CloudComputing = () => {
                 Here is the simulator:
             </p>
 
-            <SimulationActivity panelKey="local_computing" content={<Thrustd_Local_Simulation />} />
+            <SimulationActivity panelKey="cloud_computing" content={<Thrustd_Cloud_Simulation />} />
 
             <Divider />
             <Header as="h3" block>
