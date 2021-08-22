@@ -210,11 +210,15 @@ const CIServiceFundamentals = ({ module, tab }) => {
         Questions
       </Header>
 
-      <Divider />
+      <p>
+        TBD
+      </p>
 
-      <Header as="h3" block>
-        Suggested Activities
-      </Header>
+      {/*<Divider />*/}
+
+      {/*<Header as="h3" block>*/}
+      {/*  Suggested Activities*/}
+      {/*</Header>*/}
 
       {/*- IDEA: One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is*/}
       {/*running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password. Then*/}

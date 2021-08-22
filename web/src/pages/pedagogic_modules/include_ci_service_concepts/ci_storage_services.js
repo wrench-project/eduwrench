@@ -100,26 +100,39 @@ const CIStorageServices = ({ module, tab }) => {
       <p>
         In the <a href="/pedagogic_modules/networking_fundamentals">network fundamentals module</a>, we have discussed
         the concepts of latency and bandwidth, and experienced how network topologies and contention could impact
-        data transfer times. In a CI deployment, it is common to have copies of data files (a.k.a. <i>replicas</i>)
-        stored on (potentially geographically) distributed storage services. For example, an image captured with the
-        Daniel K. Inouye Solar Telescope in Haleakalā, Maui, will certainly have a copy of the file on a local storage
-        service, but could also distribute replicas of it to storage services worldwide. The goal of creating
-        distributed replicas is to reduce the latency when accessing resources over the wide-area network (e.g.,
-        Internet), as well as to reduce potential network contention when having multiple users accessing a single
-        resource.
+        data transfer times. A key issue in effectively utilizing network resources and services is efficiently and
+        quickly locating the desired resources or services in specific network locations. These kinds of location
+        services allow a service provider to construct efficient <i>service overlay networks</i>, which for example
+        could be used to distribute rich media content, enable a client to identify the closest cache/proxy that has the
+        desired data or service, enable a client to quickly locate a well provisioned nearby server for participating
+        in a massive multiple-user online game, etc.
+      </p>
+      <p>
+        In a CI deployment, it is common to have copies of data files (a.k.a. <i>replicas</i>) stored on (potentially
+        geographically) distributed storage services. For example, an image captured with the Daniel K. Inouye Solar
+        Telescope in Haleakalā, Maui, will certainly have a copy of the file on a local storage service, but could also
+        distribute replicas of it to storage services worldwide. The goal of creating distributed replicas is to reduce
+        the latency when accessing resources over the wide-area network (e.g., Internet), as well as to reduce potential
+        network contention when having multiple users accessing a single resource.
       </p>
 
       <p>
         In order to overcome the above issues, CI deployments typically use <strong>Network Proximity</strong> services
-        to identify the "nearest" resource that could perform the service efficiently. By nearest, we do not simply
-        mean the geographical distance between resources, instead we define it as the lowest time-to-response (TTR),
-        which may be affected by:
+        to identify the "nearest" resource that could perform a particular service efficiently. By nearest, we do not
+        simply mean the geographical distance between resources, instead we define it as the lowest time-to-response
+        (TTR), which may be affected by:
       </p>
       <ul>
         <li>The network topology, the links bandwidth, and latencies;</li>
         <li>The overhead for performing an operation (e.g., disk speed, number of concurrent requests, etc.);</li>
         <li>among others.</li>
       </ul>
+
+      <p>
+        Traditional network proximity services compute proximity based on pairwise distance estimate between any two
+        given nodes. Such schemes find the node closest to a client from a given set of potential targets by estimating
+        the distance to each candidate and picking the minimum.
+      </p>
 
       <Header as="h3" block>
         Simulating Data Retrieval with Network Proximity
