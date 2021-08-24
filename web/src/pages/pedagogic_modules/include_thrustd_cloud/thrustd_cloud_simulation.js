@@ -79,7 +79,7 @@ const Thrustd_Cloud_Simulation = () => {
                                             />
                                         </Form.Group>;
                                 } else {
-                                    cloud_components = null;
+                                    // cloud_components = null;
                                 }
                                 // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
                                 //     errors.numHosts = "ERROR"
