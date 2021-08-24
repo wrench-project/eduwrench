@@ -42,6 +42,45 @@ const Thrustd_Cloud_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
+                                let cloud_components = null;
+                                if (values.useCloud == true) {
+                                    cloud_components =
+                                        <Form.Group widths="equal">
+                                            <Form.Input fluid name="cloudHosts"
+                                                        label="Number of Cloud Hosts"
+                                                        placeholder="0"
+                                                        type="number"
+                                                        min={0}
+                                                // not sure how many is the max for cloud hosts
+                                                        max={128}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.cloudHosts}
+                                                        error={errors.cloudHosts && touched.cloudHosts ? {
+                                                            content: "Please provide the number of cloud hosts in the range of [0, 128].",
+                                                            pointing: "above"
+                                                        } : null}
+                                            />
+                                            <Form.Input fluid
+                                                        name="numVmInstances"
+                                                        label="Number of VM Instances"
+                                                        placeholder="0"
+                                                        type="number"
+                                                        min={0}
+                                                // again not sure of the max value
+                                                        max={128}
+                                                        onChange={handleChange}
+                                                        onBlur={handleBlur}
+                                                        value={values.numVmInstances}
+                                                        error={errors.numVmInstances && touched.numVmInstances ? {
+                                                            content: "Please provide the pstate in the range of [0, 128].",
+                                                            pointing: "above"
+                                                        } : null}
+                                            />
+                                        </Form.Group>;
+                                } else {
+                                    cloud_components = null;
+                                }
                                 // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
                                 //     errors.numHosts = "ERROR"
                                 // }
@@ -138,39 +177,7 @@ const Thrustd_Cloud_Simulation = () => {
                                         onBlur={handleBlur}
                                         value={values.useCloud}
                                     />
-                                    <Form.Group widths="equal">
-                                        <Form.Input fluid name="cloudHosts"
-                                                    label="Number of Cloud Hosts"
-                                                    placeholder="0"
-                                                    type="number"
-                                                    min={0}
-                                                    // not sure how many is the max for cloud hosts
-                                                    max={128}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.cloudHosts}
-                                                    error={errors.cloudHosts && touched.cloudHosts ? {
-                                                        content: "Please provide the number of cloud hosts in the range of [0, 128].",
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                        <Form.Input fluid
-                                                    name="numVmInstances"
-                                                    label="Number of VM Instances"
-                                                    placeholder="0"
-                                                    type="number"
-                                                    min={0}
-                                                    // again not sure of the max value
-                                                    max={128}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.numVmInstances}
-                                                    error={errors.numVmInstances && touched.numVmInstances ? {
-                                                        content: "Please provide the pstate in the range of [0, 128].",
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                    </Form.Group>
+                                    <cloud_components/>
                                     <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
                                 </Form>
                             )}
