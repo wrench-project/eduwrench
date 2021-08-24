@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2019-2021. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
@@ -8,13 +17,13 @@ import PracticeQuestions from "../../../components/practice_questions"
 
 import CIBasics from "../../../images/vector_graphs/ci_service_concepts/basics.svg"
 
-const CIServiceFundamentals = ({module, tab}) => {
+const CIServiceFundamentals = ({ module, tab }) => {
   return (
     <>
 
-        <LearningObjectives module={module} tab={tab} />
+      <LearningObjectives module={module} tab={tab} />
 
-        <h2>Basics</h2>
+      <h2>Basics</h2>
 
       <p>
         The term <strong>cyberinfrastructure</strong> (CI) was introduced in the late 1990s, and became popular starting
@@ -23,7 +32,7 @@ const CIServiceFundamentals = ({module, tab}) => {
         a <i>cyberinfrastructure</i> can be composed of (but not limited to) the following elements:
       </p>
       <ul>
-        <li>Computational systems (e.g., grids, clouds, clusters, supercomputers, etc.)</li>
+        <li>Computational systems (e.g., grids, clouds, edge devices, clusters, supercomputers, etc.)</li>
         <li>Data and information management systems (e.g., databases, data repositories, etc.)</li>
         <li>Advanced instruments (e.g., telescopes, detectors, etc.)</li>
         <li>Visualization environments (e.g., scientific visualization, data analytics, etc.)</li>
@@ -32,10 +41,9 @@ const CIServiceFundamentals = ({module, tab}) => {
         <li>People (e.g., researchers, developers, etc.)</li>
       </ul>
       <p>
-        Typically, cyberinfrastructures leverage several parallel and distributed
-        computing technologies for creating solutions organized into sets of <strong>services</strong>
-        tailored to support a specific scientific domain or general-purpose scientific
-        needs.
+        Typically, cyberinfrastructures leverage several parallel and distributed computing technologies for creating
+        solutions organized into sets of <strong>services</strong> tailored to support a specific scientific domain or
+        general-purpose scientific needs.
       </p>
 
       <h2>Cyberinfrastructure Services</h2>
@@ -43,10 +51,10 @@ const CIServiceFundamentals = ({module, tab}) => {
       <p>
         A CI is typically composed of several services that together provide the fundamental abstractions for executing
         application workloads conveniently and efficiently. Common CI services target data storage and management, data
-        movements over the network, computation on bare-metal or virtualized compute nodes, web sites that serve as
+        movements over the network, computation on bare-metal or virtualized compute nodes, and web sites that serve as
         portals for the CI. In this module, we explore different approaches and techniques commonly used for using these
         services in a view to executing various application workloads. Note that we do not target any specific CI
-        service implementations, but instead the main concepts in different service categories.
+        service implementation, but instead the main concepts in different service categories.
       </p>
       <p>
         The figure below shows an example of a CI composed of four different services: a <i>website</i>, from where
@@ -67,24 +75,24 @@ const CIServiceFundamentals = ({module, tab}) => {
         data or visualization). CI services are often connected to each other by a network topology with high-speed
         network links with small latencies, while connection to the users (client) are usually subjected to ISP
         (internet service provider) bandwidths and latencies (see the <a
-        href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a>) for a discussion of
+        href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a> for a discussion of
         network latencies, bandwidths, and topologies; and see the <a href="/pedagogic_modules/client_server">Client-Server
-        module</a>) to see the implications of low network bandwidth on a distributed computation).
+        module</a> to see the implications of low network bandwidth on a distributed computation).
       </p>
 
       <h2>CI Service Overhead</h2>
 
       <p>
-        In the <a href="/modules">Distributed Computing module</a> you have learned how to reason about the performance
+        In the <a href="/modules">Distributed Computing module</a>, you have learned how to reason about the performance
         of distributed programs and how to estimate their execution times based on network, I/O, and compute times. This
         is certainly a foundation on which we can build to estimate the execution times of an application running on a
         set of CI services, but it does not account for the fact that we are now using a possibly complicate software
-        infrastructure. In this infrastructure using each CI service comes with an <strong>overhead</strong>, i.e.,
+        infrastructure. In this infrastructure, using each CI service comes with an <strong>overhead</strong>, i.e.,
         there is a delay for processing each request to the service.
       </p>
       <p>
         For example, a File Registry service may need to execute a search algorithm on some large, possible distributed,
-        data structure for finding all storage services on which a copy of particular file is located. A Compute service
+        data structure for finding all storage services on which a copy of a particular file is located. A Compute service
         may need to allocate and/or boot virtual machines (VMs) or containers to perform the requested computation. In
         addition, overheads compound as services can interact with each other. For instance, a storage service may need
         to interact with a Web server and a File Registry service when a new file is stored.
@@ -169,7 +177,7 @@ const CIServiceFundamentals = ({module, tab}) => {
                   <li>Option #1: run the computation as a single task on one of the servers (whichever one is the
                     fatest)
                   </li>
-                  <li>Option #2: split the computation into to 250-GFlop tasks that each read the whole input file, and
+                  <li>Option #2: split the computation into two 250-GFlop tasks that each read the whole input file, and
                     run them concurrently on the two servers
                   </li>
                 </ul>
@@ -182,13 +190,13 @@ const CIServiceFundamentals = ({module, tab}) => {
                 <ul>
                   <li>Running a 500-GFlop task on Server #1: 18.50 sec</li>
                   <li>Running a 500-GFlop task on Server #2: 14.38 sec</li>
-                  <li>Running a 250-GFlop task on Server #1: 16.00 sec</li>
+                  <li>Running a 250-GFlop task on Server #1: 14.00 sec</li>
                   <li>Running a 250-GFlop task on Server #2: 10.22 sec</li>
                 </ul>
-                <p>So we obtain the execution time for each option:</p>
+                <p>So, we obtain the execution time for each option:</p>
                 <ul>
                   <li>Option #1: min(18.50, 14.38) = 14.38 sec</li>
-                  <li>Option #2: max(16.00, 10.22) = 10.22 sec</li>
+                  <li>Option #2: max(14.00, 10.22) = 14.00 sec</li>
                 </ul>
                 <p>We are better off with Option #2!</p>
               </>
@@ -202,11 +210,15 @@ const CIServiceFundamentals = ({module, tab}) => {
         Questions
       </Header>
 
-      <Divider />
+      <p>
+        TBD
+      </p>
 
-      <Header as="h3" block>
-        Suggested Activities
-      </Header>
+      {/*<Divider />*/}
+
+      {/*<Header as="h3" block>*/}
+      {/*  Suggested Activities*/}
+      {/*</Header>*/}
 
       {/*- IDEA: One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is*/}
       {/*running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password. Then*/}

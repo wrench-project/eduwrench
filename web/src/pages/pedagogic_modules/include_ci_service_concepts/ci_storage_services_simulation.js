@@ -1,11 +1,18 @@
+/**
+ * Copyright (c) 2019-2021. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
@@ -70,8 +77,6 @@ const CIStorageServicesSimulation = () => {
                         setSimulationResults(
                           <>
                             <SimulationOutput output={response.data.simulation_output} />
-                            <HostUtilizationChart data={response.data.task_data} diskHostsList={diskHostsList} />
-                            <NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />
                           </>
                         )
                       },

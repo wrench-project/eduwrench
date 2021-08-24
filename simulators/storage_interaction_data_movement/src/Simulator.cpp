@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020. The WRENCH Team.
+ * Copyright (c) 2020-2021. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,29 +32,29 @@ void generatePlatform(std::string &platform_file_path, int link_bandwidth) {
                              "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                              "<platform version=\"4.1\">\n"
                              "   <zone id=\"AS0\" routing=\"Full\">\n"
-                             "       <host id=\"FileRegistryHost\" speed=\"1f\" core=\"1\">\n"
+                             "       <host id=\"FileRegistryService\" speed=\"1f\" core=\"1\">\n"
                              "       </host>\n"
-                             "       <host id=\"StorageHost\" speed=\"100Gf\" core=\"1\">\n"
+                             "       <host id=\"StorageService\" speed=\"100Gf\" core=\"1\">\n"
                              "           <prop id=\"ram\" value=\"32GB\"/>\n"
                              "           <disk id=\"large_disk\" read_bw=\"50MBps\" write_bw=\"50MBps\">\n"
                              "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                              "                            <prop id=\"mount\" value=\"/\"/>\n"
                              "           </disk>\n"
                              "       </host>\n"
-                             "       <host id=\"ClientHost\" speed=\"100f\" core=\"1\">\n"
+                             "       <host id=\"Client\" speed=\"100f\" core=\"1\">\n"
                              "           <disk id=\"hard_disk\" read_bw=\"100000TBps\" write_bw=\"100000TBps\">\n"
                              "                            <prop id=\"size\" value=\"5000GiB\"/>\n"
                              "                            <prop id=\"mount\" value=\"/\"/>\n"
                              "           </disk>\n"
                              "       </host>\n"
                              "       <link id=\"network_link\" bandwidth=\"20MBps\" latency=\"20us\"/>\n"
-                             "       <route src=\"FileRegistryHost\" dst=\"ClientHost\">"
+                             "       <route src=\"FileRegistryService\" dst=\"Client\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
-                             "       <route src=\"FileRegistryHost\" dst=\"StorageHost\">"
+                             "       <route src=\"FileRegistryService\" dst=\"StorageService\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
-                             "       <route src=\"ClientHost\" dst=\"StorageHost\">"
+                             "       <route src=\"Client\" dst=\"StorageService\">"
                              "           <link_ctn id=\"network_link\"/>"
                              "       </route>\n"
                              "   </zone>\n"
@@ -123,16 +123,16 @@ int main(int argc, char **argv) {
 
     // create workflow
     wrench::Workflow workflow;
-    workflow.addFile("file_copy", FILE_SIZE * MB);
+    workflow.addFile("data_file", FILE_SIZE * MB);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, SERVER_LINK_BANDWIDTH);
     simulation.instantiatePlatform(platform_file_path);
 
-    const std::string CLIENT("ClientHost");
-    const std::string FILEREGISTRY("FileRegistryHost");
-    const std::string SERVER("StorageHost");
+    const std::string CLIENT("Client");
+    const std::string FILEREGISTRY("FileRegistryService");
+    const std::string SERVER("StorageService");
 
     //adding and instantiating storage services and file registry
     auto client_storage_service = simulation.add(new wrench::SimpleStorageService(
@@ -156,11 +156,11 @@ int main(int argc, char **argv) {
     wms->addWorkflow(&workflow);
 
     //staging file to be copied on client storage service
-    auto file = workflow.getFileByID("file_copy");
+    auto file = workflow.getFileByID("data_file");
     simulation.stageFile(file, client_storage_service);
 
     simulation.getOutput().enableDiskTimestamps(true);
-    
+
     simulation.launch();
 
     simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, false, false, false, false, true, true);

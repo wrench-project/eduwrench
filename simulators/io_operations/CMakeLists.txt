@@ -7,9 +7,10 @@ add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
 set(CMAKE_CXX_STANDARD 14)
 
-# CHANGE ALL
+find_package(Boost REQUIRED)
+
 # include directories for dependencies and WRENCH libraries
-include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include /opt/simgrid/include)
+include_directories(src/ include/  /usr/local/include /usr/local/include/wrench /opt/local/include /opt/simgrid/include ${Boost_INCLUDE_DIR})
 
 # CHANGE ALL
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/simgrid/lib)
