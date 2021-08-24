@@ -1,0 +1,16 @@
+.simulation-output {
+    line-height: 0.7em;
+    max-height: 25em;
+    overflow: auto;
+    background-color: #222 !important;
+}
+
+.simulation-output ul, .simulation-output li {
+    background-color: #222;
+    margin: 0;
+}
+
+.simulation-output li {
+    list-style: none;
+    line-height: 1.3em;
+}

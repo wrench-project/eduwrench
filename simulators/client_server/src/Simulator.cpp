@@ -234,9 +234,9 @@ int main(int argc, char** argv) {
         std::cerr << "   server_1_link_latency: Latency must be in range [1,1000000] us  (microsecs)" << std::endl;
         std::cerr << "   server_1_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
         std::cerr << "   server_2_link_speed: Speed must be in range [1,10000] MBps" << std::endl;
-        std::cerr << "   buffer: buffer size must be inn range [1,1000000000] bytes" << std::endl;
+        std::cerr << "   buffer: buffer size must be in range [1,1000000000] bytes" << std::endl;
         std::cerr << "   host select: host selection should be either 1 or 2" << std::endl;
-        std::cerr << "   disk toggle: disk toggle should be either 0 or 1" << std::endl;
+        std::cerr << "   disk toggle: disk toggle should be either 0 (disk has infinited speed) or 1 (disk is simulated realistically)" << std::endl;
         std::cerr << "   disk speed: Speed must be in range [1,100000] MBps" << std::endl;
         std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
         std::cerr << "" << std::endl;

@@ -7,8 +7,13 @@ add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
 set(CMAKE_CXX_STANDARD 14)
 
+find_package(Boost REQUIRED)
+
 # include directories for dependencies and WRENCH libraries
-include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include)
+include_directories(src/ include/  /usr/local/include /usr/local/include/wrench /opt/local/include /opt/simgrid/include ${Boost_INCLUDE_DIR})
+
+# CHANGE ALL
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/simgrid/lib)
 
 # source files
 set(SOURCE_FILES
@@ -21,7 +26,7 @@ set(SOURCE_FILES
 
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(SIMGRID_LIBRARY NAMES simgrid)
+find_library(SIMGRID_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(io_simulator ${SOURCE_FILES})

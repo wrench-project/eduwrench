@@ -1,0 +1,21 @@
+.glossary * {
+    background-color: #d3834a;
+    color: white;
+    border-color: #d3834a;
+}
+
+.glossary {
+    transform: rotate(270deg);
+}
+
+.glossary-item p {
+    color: #333;
+    line-height: 1.4em;
+    font-size: 0.9em;
+}
+
+.glossary-item h5 {
+    font-weight: bold;
+    font-size: 1.1em;
+    color: orangered;
+}
