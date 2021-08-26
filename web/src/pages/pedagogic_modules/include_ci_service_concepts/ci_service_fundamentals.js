@@ -211,7 +211,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
             </Header>
 
             <p>
-                <strong>[C.1.q1.1]</strong> Your company needs to execute a particular workload that is a
+                <strong>[B.1.q1.1]</strong> Your company needs to execute a particular workload that is a
                 "chain" of <TeX math="n" /> tasks that must be executed in sequence (this is also called a "linear workflow").
                 Each task consists of 10 Tflop of work,
                 and reads as input and writes as output a negligible about of data.
@@ -227,7 +227,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
             </p>
 
             <p>
-                <strong>[C.1.q1.2]</strong> Consider the same setup as in the previous section, but now you have the option of executing some tasks
+                <strong>[B.1.q1.2]</strong> Consider the same setup as in the previous section, but now you have the option of executing some tasks
                 locally while running some tasks remotely. How many tasks should be run remotely to minimize execution time.
                 Give your answer as a function of <TeX math="n" /> and <TeX math="h" />. It's ok if that function does not
                 produce an integer value for all <TeX math="n" /> and <TeX math="h" />, that is it can give a fractional approximation
@@ -244,7 +244,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
             </p>
 
             <p>
-                <strong>[C.1.q1.3]</strong> You have access to a CI deployment that consists of a file registry service, two compute services,
+                <strong>[B.1.q1.3]</strong> You have access to a CI deployment that consists of a file registry service, two compute services,
                 and some storage services, all accessed via a Web site. The overheads of these services are as follow:
 
                 <ul>
