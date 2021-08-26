@@ -44,7 +44,7 @@ const IOSimulation = () => {
                 if (!validateFieldInRange("mcit-io-task1-output-size-label", values.taskOutput, 100, 1000, null, "MB")) {
                   errors.taskOutput = "ERROR"
                 }
-                if (!validateFieldInRange("mcit-io-task1-work-label", values.taskGflop, 100, 1000, null, "GFlop")) {
+                if (!validateFieldInRange("mcit-io-task1-work-label", values.taskGflop, 100, 1000, null, "Gflop")) {
                   errors.taskGflop = "ERROR"
                 }
                 return errors

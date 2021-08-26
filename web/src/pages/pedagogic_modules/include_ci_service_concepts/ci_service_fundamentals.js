@@ -139,7 +139,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
           {
             key: "B.1.p1.1",
             question: "Using the default values in the above setup as the base case (Server #1: 1 second; Server #2: " +
-              "5 seconds; Task: 1000 GFlop), reason on whether reducing the overhead of Server #2 by 1 second would make it preferable " +
+              "5 seconds; Task: 1000 Gflop), reason on whether reducing the overhead of Server #2 by 1 second would make it preferable " +
               "to Server #1. Then double-check your answer in the simulation.",
             content: "In the base setup, Server #2 completes the task 1.22 second slower than Server #1. So no, we " +
               "would have to reduce the overhead by more than 1 second. This can be "
@@ -159,10 +159,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
                 Solving
                 <TeX math="T_{server\#1}  = T_{server\#2}" block />
                 yields
-                <TeX math="x = 750 \text{GFlop}." block />
+                <TeX math="x = 750 \text{Gflop}." block />
                 As we know from previous modules, such estimates can be inaccurate, especially because they cannot
                 capture the complexity of actual networks. Doing a simple binary search with the simulation app yields
-                a value of <TeX math="x = 818 \text{GFlop}" />.
+                a value of <TeX math="x = 818 \text{Gflop}" />.
               </>
             )
           },
@@ -172,12 +172,12 @@ const CIServiceFundamentals = ({ module, tab }) => {
               <>
                 We have to run a computation on the above two-server system, where Server #1 has a 3 sec task startup
                 overhead and Server #2 has a 5 sec task startup overhead. The computation consists in 
-                500 GFlop of work. You have two options:
+                500 Gflop of work. You have two options:
                 <ul>
                   <li>Option #1: run the computation as a single task on one of the servers (whichever one is the
                     fastest)
                   </li>
-                  <li>Option #2: split the computation into two 250-GFlop tasks that each read the whole input file, and
+                  <li>Option #2: split the computation into two 250-Gflop tasks that each read the whole input file, and
                     run them concurrently on the two servers
                   </li>
                 </ul>
@@ -188,10 +188,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
               <>
                 <p>Using the simulation, we obtain:</p>
                 <ul>
-                  <li>Running a 500-GFlop task on Server #1: 18.50 sec</li>
-                  <li>Running a 500-GFlop task on Server #2: 14.38 sec</li>
-                  <li>Running a 250-GFlop task on Server #1: 14.00 sec</li>
-                  <li>Running a 250-GFlop task on Server #2: 10.22 sec</li>
+                  <li>Running a 500-Gflop task on Server #1: 18.50 sec</li>
+                  <li>Running a 500-Gflop task on Server #2: 14.38 sec</li>
+                  <li>Running a 250-Gflop task on Server #1: 14.00 sec</li>
+                  <li>Running a 250-Gflop task on Server #2: 10.22 sec</li>
                 </ul>
                 <p>So, we obtain the execution time for each option:</p>
                 <ul>

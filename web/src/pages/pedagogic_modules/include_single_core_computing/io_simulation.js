@@ -47,8 +47,8 @@ const IOSimulation = () => {
                   errors.numTasks = "ERROR"
                 }
                 if (!validateFieldInMultipleRanges("task-gflop-label", values.taskGflop, [
-                  { min: 1, max: 999, prefix: null, postfix: "GFlop" },
-                  { min: 1000, max: 1000000, prefix: null, postfix: "TFlop", valueLambdaFunction: (v) => v / 1000 }
+                  { min: 1, max: 999, prefix: null, postfix: "Gflop" },
+                  { min: 1000, max: 1000000, prefix: null, postfix: "Tflop", valueLambdaFunction: (v) => v / 1000 }
                 ])) {
                   errors.taskGflop = "ERROR"
                 }

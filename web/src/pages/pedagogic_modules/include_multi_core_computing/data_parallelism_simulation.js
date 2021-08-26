@@ -35,8 +35,8 @@ const DataParallelismSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("mcdp-oil-task-1-label", values.oilRadius, 1, 10, null, "GFlop") &
-                  !validateFieldInRange("mcdp-oil-task-2-label", values.oilRadius, 1, 10, null, "GFlop")) {
+                if (!validateFieldInRange("mcdp-oil-task-1-label", values.oilRadius, 1, 10, null, "Gflop") &
+                  !validateFieldInRange("mcdp-oil-task-2-label", values.oilRadius, 1, 10, null, "Gflop")) {
                   errors.oilRadius = "ERROR"
                 }
                 if (!validateFieldInRange("mcdp-num-cores-label", values.numCores, 1, 100, "Cores:") &

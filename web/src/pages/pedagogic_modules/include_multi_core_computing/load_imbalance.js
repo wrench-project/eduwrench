@@ -143,7 +143,7 @@ const LoadImbalance = ({module, tab}) => {
                                 reduced by a factor 5/3 = 1.66.
                             </p>
                             <p>
-                                This is seen easily in simulation by setting the task work to 100 GFlop.
+                                This is seen easily in simulation by setting the task work to 100 Gflop.
                             </p>
                         </>
                     )

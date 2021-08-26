@@ -52,7 +52,7 @@ const CIServiceFundamentalsSimulation = () => {
                   if (!validateFieldInRange("server-2-overhead-label", values.compute2Startup, 0, 10, "Startup overhead", "sec")) {
                     errors.compute2Startup = "ERROR"
                   }
-                  if (!validateFieldInRange("task-work-label", values.taskWork, 100, 2000, null, "GFlop")) {
+                  if (!validateFieldInRange("task-work-label", values.taskWork, 100, 2000, null, "Gflop")) {
                     errors.taskWork = "ERROR"
                   }
                   return errors
@@ -162,7 +162,7 @@ const CIServiceFundamentalsSimulation = () => {
                                     } : null}
                         />
                         <Form.Input fluid name="taskWork"
-                                    label="Task work (GFlop)"
+                                    label="Task work (Gflop)"
                                     placeholder="1000"
                                     type="number"
                                     min={100}
