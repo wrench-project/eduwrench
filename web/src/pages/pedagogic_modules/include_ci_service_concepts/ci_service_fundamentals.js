@@ -288,6 +288,8 @@ const CIServiceFundamentals = ({ module, tab }) => {
 
             {/*- IDEA: Pick a cloud provider and measure the overhead for starting a VM instance.*/}
 
+            {/*- IDEA: Curl REST API request overhead.*/}
+
         </>
     )
 }
