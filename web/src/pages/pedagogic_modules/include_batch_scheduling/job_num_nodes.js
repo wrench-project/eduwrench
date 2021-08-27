@@ -11,7 +11,7 @@ const JobNumNodes = ({ module, tab }) => {
       <h2>Impact of requested number of nodes</h2>
 
       <p>
-        Because we know that <code>myprogram</code> runs in <TeX math="2 + 2/n" /> hours on <TeX math="n" /> nodes, we
+        Because we know that <code>myprogram</code> runs in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes, we
         can always ask for the exact duration needed,
         which is never detrimental and often beneficial.
         But what about the number of nodes? When submitting a job, should we ask
