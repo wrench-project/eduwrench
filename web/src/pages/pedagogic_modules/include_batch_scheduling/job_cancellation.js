@@ -19,7 +19,7 @@ const JobCancellation = ({ module, tab }) => {
 
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
         using the following command to start a Docker container:
       </p>
@@ -80,7 +80,7 @@ const JobCancellation = ({ module, tab }) => {
         <li> Reset the time to zero, to pretend the above never happened.</li>
         <li> Inspect the state of the queue and answer the following questions:
           <ul>
-            <li> How many nodes are currently in used by running jobs?</li>
+            <li> How many nodes are currently in use by running jobs?</li>
             <li> How many nodes are currently idle?</li>
           </ul>
         </li>

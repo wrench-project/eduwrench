@@ -40,7 +40,7 @@ const JobDuration = ({ module, tab }) => {
 
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
         using the following command to start a Docker container:
       </p>

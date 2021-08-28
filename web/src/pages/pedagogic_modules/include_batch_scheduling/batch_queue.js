@@ -14,7 +14,7 @@ const BatchQueue = ({ module, tab }) => {
         The main goal of a batch scheduler is to place job requests in a <strong>batch queue</strong>, in which they
         wait for available
         resources. This is because resources are <i>space-shared</i>, i.e.,
-        not two jobs run can use the same compute node.
+        no two jobs run can use the same compute node.
         Note that Slurm can be configured not to enforce this requirement,
         but in all that follows we assume that it does
         (which is typical in production systems).
@@ -31,7 +31,7 @@ const BatchQueue = ({ module, tab }) => {
 
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
         using the following command to start a Docker container:
       </p>

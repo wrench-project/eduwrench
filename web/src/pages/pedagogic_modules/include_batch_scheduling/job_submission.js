@@ -122,7 +122,7 @@ const JobSubmission = ({ module, tab }) => {
         </li>
         <li> Did the job fail?</li>
         <li> At what time did it fail?</li>
-        <li> Did the job file about when you thought it would?</li>
+        <li> Did the job fail about when you thought it would?</li>
       </ul>
 
       <Header as="h3" block>
