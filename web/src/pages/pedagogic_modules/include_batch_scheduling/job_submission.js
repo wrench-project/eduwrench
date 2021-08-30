@@ -47,9 +47,9 @@ const JobSubmission = ({ module, tab }) => {
             executed on <TeX math="n" /> nodes</strong> (typical Amdahl Law behavior). So for instance, running
           <code>myprogram</code> on 5 nodes takes 6 hours.
         </li>
-        <li>A batch script, stored in file <code>batch.slurm</code>, which is to be
-          passed to the Slurm <code>sbatch</code> command. This batch script specifies the desired
-          number nodes and duration for running <code>myprogram</code> as a job on the cluster.
+        <li>A batch script, stored in file <code>batch.slurm</code>. This script is to be
+          passed to the Slurm <code>sbatch</code> command. It specifies the desired
+          number of nodes and duration for running <code>myprogram</code> as a job on the cluster.
         </li>
       </ul>
 
@@ -57,7 +57,7 @@ const JobSubmission = ({ module, tab }) => {
         For our purposes, when executed successfully, <code>myprogram</code> simply
         prints some success message on standard output.
         In the real world, <code>myprogram</code> would generate additional meaningful output
-        files. Not that in the activity below you will submit multiple jobs to run
+        files. Note that in the activity below you will submit multiple jobs to run
         <code>myprogram.</code> In the real world, the program would take in some input files,
         and you would be running these jobs for different input files.
       </p>

@@ -91,7 +91,7 @@ const JobCancellation = ({ module, tab }) => {
         </li>
         <li> Inspect the state of the queue. Is your job running?</li>
         <li> Advance time until your job completes.</li>
-        <li> Compare an contrast your job turnaround time with that in the previous question.</li>
+        <li> Compare and contrast your job turnaround time with that in the previous question.</li>
       </ul>
 
       <Header as="h3" block>
