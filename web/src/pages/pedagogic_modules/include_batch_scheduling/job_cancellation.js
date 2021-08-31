@@ -89,6 +89,11 @@ const JobCancellation = ({ module, tab }) => {
           possible so that your job can run right now (unless another competing
           job shows up in the nick of time!)
         </li>
+            <li> Note that it's not because <TeX math="n" /> nodes are idle right now that any job
+                 that asks for <TeX math="n" /> nodes will start right now. If the job requests too much
+                 time, then starting it right now may postpone previously submitted jobs, which in our
+                 cluster is disallowed. So answering this question is not as simple as it seems.
+            </li>
         <li> Inspect the state of the queue. Is your job running?</li>
         <li> Advance time until your job completes.</li>
         <li> Compare and contrast your job turnaround time with that in the previous question.</li>
