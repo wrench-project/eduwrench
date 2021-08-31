@@ -93,6 +93,33 @@ const CIStorageServices = ({ module, tab }) => {
 
       <SimulationActivity panelKey="ci-storage-services-simulation" content={<CIStorageServicesSimulation />} />
 
+      <PracticeQuestions
+                header={
+                    (<>
+                        Answer the practice questions hereafter, which pertain to the setup in the above simulation (You can use
+                        the simulation to determine or double-check answers).
+                    </>)
+                }
+                questions={[
+                    {
+                        key: "B.1.p2.1",
+                        question: "Keep the file registration overhead at 1 second and the bandwidth at 10 MB/sec in the simulation above.You need to continuously store blocks of data to the above data service, and you must choose the size of these blocks. Doing " +
+                            "as small blocks as possible is good for your business because the blocks can then be grabbed quickly from the data service by a " +
+                            "third-party compute service. But doing as large blocks as possible is also good because then the data service overhead is not " +
+                            "as punishing. What is the smallest block size so that at the end of the day less than 10% of the time was spent " +
+                            "experiencing the file registration overhead.  " +
+                            "You can come up with a rough estimate of the block size, and then use the simulation to refine this estimate.",
+                        content: "We want the total execution of a block transfer to take 10s, so that the 1 second file registry overhead accounts for 10% of the " +
+                            "elapsed time. Roughly, sending n MB of data over to the data service takes n/10 seconds (if fact it takes more due to disk overhead, network effects, etc). " +
+                            "So n = 90 MB should be getting us close-ish to 10s in total. The simulation shows that with a data size of 90 MB the overall time is 11.54 second. Doing a simple " +
+                            "binary search between, for instance, 70 MB and 90 MB gives us the answer: 78 MB. With a block size of 78 MB, the overall time is 10.00605 sec, while with " +
+                            "77 MB, the overall time is below 10 seconds, meaning that the file registration overhead would then be more than 10% of the overall time."
+                    }
+                ]} />
+
+            <Divider />
+
+
       <Divider />
 
       <h2>Network Proximity</h2>
