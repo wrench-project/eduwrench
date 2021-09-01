@@ -64,22 +64,22 @@ const JobNumNodes = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <code>myprogram</code> runs
         in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes).
       </p>
 
       <p><strong>[C.1.q6.1] Trying multiple job sizes:</strong></p>
       <ul>
         <li> Inspect the state of the queue. You should see that only 1 node is available right now.</li>
-        <li> If you were to submit a 1-node job right now, what turnaround time would you experience?</li>
+        <li> <b>Question:</b> If you were to submit a 1-node job right now, what turnaround time would you experience?</li>
         <li> Submit a 2-node job, asking for just enough time for <code>myprogram</code> to complete successfully.</li>
-        <li> What is this job's turnaround time?</li>
+        <li> <b>Question:</b> What is this job's turnaround time?</li>
         <li> Reset the simulation and submit a 4-node job, asking for just enough time for <code>myprogram</code> to
           complete successfully.
         </li>
-        <li> When is this job's turnaround time?</li>
-        <li> Which option was better: using 1 node, 2 nodes, or 4 nodes?</li>
-        <li> Is there any way you could have predicted this based on initial state of the batch queue?</li>
+        <li> <b>Question:</b> What is this job's turnaround time?</li>
+        <li> <b>Question:</b> Which option was better: using 1 node, 2 nodes, or 4 nodes?</li>
+        <li> <b>Question:</b> Is there any way you could have predicted this based on initial state of the batch queue?</li>
         <li> Feel free to experiment with different numbers of nodes, so see which one is best.</li>
       </ul>
 

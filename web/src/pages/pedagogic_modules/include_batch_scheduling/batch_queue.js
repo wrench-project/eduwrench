@@ -57,7 +57,7 @@ const BatchQueue = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <tt>myprogram</tt> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <tt>myprogram</tt> runs
         in <TeX math="2 + 20/n " /> hours on <TeX math="n" /> nodes).
       </p>
 
@@ -74,15 +74,15 @@ const BatchQueue = ({ module, tab }) => {
         <li> Use <code>squeue</code> to inspect the state of the batch queue. You should see that your second job is
           "stuck" in the queue, waiting for the first job to complete.
         </li>
-        <li> Without advancing time, estimate the following:
+        <li> <b>Question:</b> Without advancing time, estimate the following:
           <ul>
             <li> the turnaround time of the first job.</li>
             <li> the turnaround time of the second job.</li>
           </ul>
         </li>
-        <li> Verify your answers to the above questions by advancing the clock and checking the content of the
-          generated .out files.
+        <li> <b>Question</b>: Verify your answers to the above questions by advancing the clock and checking the content of the generated .out files. How accurate were your estimates?
         </li>
+
       </ul>
 
       <Header as="h3" block>

@@ -51,14 +51,14 @@ const JobCancellation = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <code>myprogram</code> runs
         in <TeX math="2 + 20/n " /> hours on <TeX math="n" /> nodes).
       </p>
 
       <p><strong>[C.1.q4.1] Job submission and cancellation:</strong></p>
       <ul>
         <li>Submit a job to run <code>myprogram</code> on <strong>16</strong> nodes with enough requested time.</li>
-        <li>Soon after submission, inspect the state of the batch queue and answer the following questions:
+        <li><b>Question</b>: Soon after submission, inspect the state of the batch queue and answer the following questions:
           <ul>
             <li>How many jobs are currently pending?</li>
             <li>How many jobs are currently running?</li>
@@ -70,7 +70,7 @@ const JobCancellation = ({ module, tab }) => {
           advance time by quite a lot. Imagine what it would be in the real world where, unlike in simulation, you
           cannot fast-forward time (if you can, contact us immediately!)
         </li>
-        <li>What was your job's wait time? (you can infer it based on the time of submission and the time of
+        <li><b>Question</b>: What was your job's wait time? (you can infer it based on the time of submission and the time of
           completion, since you know the execution time)
         </li>
       </ul>
@@ -78,7 +78,7 @@ const JobCancellation = ({ module, tab }) => {
       <p><strong>[C.1.q4.2] Sneaky job submission:</strong></p>
       <ul>
         <li> Reset the time to zero, to pretend the above never happened.</li>
-        <li> Inspect the state of the queue and answer the following questions:
+        <li> <b>Question:</b> Inspect the state of the queue and answer the following questions:
           <ul>
             <li> How many nodes are currently in use by running jobs?</li>
             <li> How many nodes are currently idle?</li>
@@ -96,9 +96,10 @@ const JobCancellation = ({ module, tab }) => {
                  cluster is disallowed. So answering this question is not as simple as it seems.
             </li>
             </ul>
-        <li> Inspect the state of the queue. Is your job running?</li>
+        <li> Inspect the state of the queue to make sure that your job runs right away</li>
+        <li> <b>Question:</b> How many nodes did you end up using?</li>
         <li> Advance time until your job completes.</li>
-        <li> Compare and contrast your job turnaround time with that in the previous question.</li>
+        <li> <b>Question:</b> Compare and contrast your job turnaround time with that in the previous question.</li>
       </ul>
 
       <Header as="h3" block>
