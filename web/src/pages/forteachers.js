@@ -25,6 +25,7 @@ const ForTeachers = () => (
         <ul>
           <li><a href="#targetaudience"> What is the target audience?</a></li>
           <li><a href="#objectives"> What are the learning objectives?</a></li>
+          <li><a href="#curriculummap"> What is the curriculum map?</a></li>
           <li><a href="#curriculum"> What is the relationship to the NSF/IEEE-TCPP Curriculum?</a></li>
           <li><a href="#integration"> How can these modules be integrated into courses?</a></li>
           <li><a href="#server"> How to run your own EduWRENCH server?</a></li>
