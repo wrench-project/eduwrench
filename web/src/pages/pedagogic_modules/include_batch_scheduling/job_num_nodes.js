@@ -34,12 +34,19 @@ const JobNumNodes = ({ module, tab }) => {
         this in simulation...
       </p>
 
+      <p>
+      Once again, we assume that <b>all other users, with whom you are competing,
+      ask for <i>exactly</i> the time they need when submitting a job</b>.
+      </p>
+
+
       <h2>Simulated scenario</h2>
       <p>
         As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
         using the following command to start a Docker container:
       </p>
+
 
       <Segment raised>
         <code>
