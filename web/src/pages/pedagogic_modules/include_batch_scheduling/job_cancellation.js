@@ -42,7 +42,7 @@ const JobCancellation = ({ module, tab }) => {
         <strong>User competition:</strong> In the previous tab, you were the only user on the cluster.
         Now, instead, <strong>you are competing with other users!</strong> These other users
         submit whatever jobs whenever they want, which is out of your control. <b>All these other users,
-        when submitting a job, ask for <i>exactly</i> the time they need</b>.
+        when submitting a job, ask for <i>exactly</i> the time they need</b>. (This won't be the case in real-life, but we're using this simplifying assumption here.)
       </p>
 
 

@@ -37,6 +37,7 @@ const JobNumNodes = ({ module, tab }) => {
       <p>
       Once again, we assume that <b>all other users, with whom you are competing,
       ask for <i>exactly</i> the time they need when submitting a job</b>.
+      (This won't be the case in real-life, but we're using this simplifying assumption here.)
       </p>
 
 

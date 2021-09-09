@@ -23,17 +23,23 @@ const BatchQueue = ({ module, tab }) => {
             </p>
 
             <p>
-            The diagram below shows an example scenario, or "batch schedule", for a hypothetical 5-node
-            cluster. Two jobs, shown in red, are currently running. They both use 2 compute nodes, one of them
-                with still 3 hours to go, and the other with still 4h to go.  Two jobs are "stuck" in the
-                batch queue. The first job in the batch queue (which will likely run next) is depicted in green. This
-                job has requested 4 nodes and plans to use them for 3 hours. Since there is only one node available
-                right now, it cannot run and has to wait in the queue. The second job in the queue, meaning that it
-                arrived after the green job, is depicted in yellow. The green and the yellow job will never be able to
-                run at the same time since together they request more than 5 compute nodes. If, right now, you were
-                to submit a job that requests one compute node for less than 4 hours, then this job would run right away. That is
-                most batch schedulers allow jobs to jump ahead in the queue provided they don't delay jobs that are already
-                in the queue.
+	    <b>The diagram below</b> shows an example scenario, or "batch
+	    schedule", for a hypothetical 5-node cluster. Two jobs, shown
+	    in red, are currently running. They both use 2 compute nodes,
+	    one of them with still 3 hours to go, and the other with still
+	    4h to go.  Two jobs are "stuck" in the batch queue. The first
+	    job in the batch queue (which will likely run next) is depicted
+	    in green. This job has requested 4 nodes and plans to use them
+	    for 3 hours. Since there is only one node available right now,
+	    it cannot run and has to wait in the queue. The second job in
+	    the queue, meaning that it arrived after the green job, is
+	    depicted in yellow. The green and the yellow job will never be
+	    able to run at the same time since together they request more
+	    than 5 compute nodes. <b>If, right now, you were submit a job that
+	    requests one compute node for less an 4 hours, then this job
+	    would run right away.</b> Most batch schedulers allow jobs to <i>jump ahead in the queue</i> provided they don't delay jobs that are
+	    already in the queue. This is called "backfilling".
+
             </p>
 
             <p style={{ textAlign: "center" }}>
