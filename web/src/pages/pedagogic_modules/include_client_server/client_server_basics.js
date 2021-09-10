@@ -231,25 +231,25 @@ const ClientServerBasics = ({module, tab}) => {
             would produce slightly different results.
 
             <p>
-                <strong>A.3.2.q1.1</strong> Assuming that the task can use only 1 core, which server should be used? Show your
+                <strong>[A.3.2.q1.1]</strong> Assuming that the task can use only 1 core, which server should be used? Show your
                 work.
             </p>
 
             <p>
-                <strong>A.3.2.q1.2</strong> Assuming now that the task is data-parallel and can run on
+                <strong>[A.3.2.q1.2]</strong> Assuming now that the task is data-parallel and can run on
                 any number of cores, always with 100% parallel efficiency, which server
                 would be used? Show your work.
             </p>
 
             <p>
-                <strong>A.3.2.q1.3</strong> It turns out the parallel efficiency of the data-parallel
+                <strong>[A.3.2.q1.3]</strong> It turns out the parallel efficiency of the data-parallel
                 task is not 100%. You observe that on Server #1 the execution, using all 4
                 cores, takes 15 sec. What is the task's parallel efficiency? Show your work. Write
                 an equation where the parallel efficiency is the unknown and solve it.
             </p>
 
             <p>
-                <strong>A.3.2.q1.4</strong> Assuming that the task's parallel efficiency is 60%
+                <strong>[A.3.2.q1.4]</strong> Assuming that the task's parallel efficiency is 60%
                 regardless of the number of cores, what should the network bandwidth to
                 Server #1 be for both servers to complete the task in the same amount of
                 time (including the time to get the task's input data)? Show your work.

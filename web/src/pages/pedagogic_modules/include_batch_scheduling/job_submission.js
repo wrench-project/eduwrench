@@ -107,9 +107,9 @@ const JobSubmission = ({ module, tab }) => {
           until after the job should have completed.
         </li>
         <li> Check the content of the generated <code>.out</code> or <code>.err</code> file produced by the job.</li>
-        <li> <b>Question:</b>: Did the job complete successfully?</li>
-        <li> <b>Question:</b>: At what time did it complete?</li>
-        <li> <b>Question:</b>: Did it complete about when you thought it would and why?</li>
+        <li> <b>Question:</b> Did the job complete successfully?</li>
+        <li> <b>Question:</b> At what time did it complete?</li>
+        <li> <b>Question:</b> Did it complete about when you thought it would and why?</li>
       </ul>
 
       <p><strong>[C.1.q2.2] Failed job execution:</strong></p>
@@ -120,9 +120,9 @@ const JobSubmission = ({ module, tab }) => {
         <li> Once enough time has passed, check the content of the
           generated <code>.out</code> or <code>.err</code> file.
         </li>
-        <li> <b>Question:</b>: Did the job fail?</li>
-        <li> <b>Question:</b>: At what time did it fail?</li>
-        <li> <b>Question:</b>: Did the job fail about when you thought it would and why?</li>
+        <li> <b>Question:</b> Did the job fail?</li>
+        <li> <b>Question:</b> At what time did it fail?</li>
+        <li> <b>Question:</b> Did the job fail about when you thought it would and why?</li>
       </ul>
 
       <Header as="h3" block>
