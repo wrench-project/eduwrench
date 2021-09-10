@@ -63,7 +63,7 @@ const JobSubmission = ({ module, tab }) => {
       </p>
 
       <p>
-        On your computer, use the following command to run a Docker container (this may take a while):
+        Run the following command on your computer in a terminal (a.k.a. command prompt) to run a Docker container (this may take a while):
       </p>
 
       <Segment raised>

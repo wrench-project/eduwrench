@@ -59,7 +59,7 @@ const BatchQueue = ({ module, tab }) => {
             <p>
                 As with the simulated scenario in the previous tab, you can access
                 a simulated terminal on the 32-node cluster's head node by
-                using the following command to start a Docker container:
+                running the following command on your computer in a terminal (a.k.a. command prompt) to start a Docker container:
             </p>
 
             <Segment raised>
