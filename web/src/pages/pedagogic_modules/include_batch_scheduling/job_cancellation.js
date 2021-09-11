@@ -68,13 +68,7 @@ const JobCancellation = ({ module, tab }) => {
           </ul>
         </li>
 
-        <li> Advance the time until your job has completed (using the <code>sleep</code> command). You will have to
-          advance time by quite a lot. Imagine what it would be in the real world where, unlike in simulation, you
-          cannot fast-forward time (if you can, contact us immediately!)
-        </li>
-        <li><b>Question</b>: What was your job's wait time? (you can infer it based on the time of submission and the time of
-          completion, since you know the execution time)
-        </li>
+        <li> Since it is not running, cancel your job using the <tt>scancel</tt> command!</li>
       </ul>
 
       <p><strong>[C.1.q4.2] Sneaky job submission:</strong></p>
@@ -87,21 +81,24 @@ const JobCancellation = ({ module, tab }) => {
           </ul>
         </li>
 
-        <li> Submit a job to run <code>myprogram</code> successfully, asking for as many nodes as
-          possible so that your job can run right now (unless another competing
-          job shows up in the nick of time!)
-        </li>
-            <ul>
-            <li> Note that it's not because <TeX math="n" /> nodes are idle right now that any job
+        <li> Your goal is to submit a job to run <code>myprogram</code> successfully asking for as many nodes as
+          possible so that your job can run right now!  Note that it's not because <TeX math="n" /> nodes are idle right now that any job
                  that asks for <TeX math="n" /> nodes will start right now. If the job requests too much
                  time, then starting it right now may postpone previously submitted jobs, which in our
-                 cluster is disallowed. So answering this question is not as simple as it seems.
-            </li>
+                 cluster is disallowed. So answering this question is not as simple as it seems.</li>
+        <li> To achieve this goal, use the following "algorithm":</li>
+            <ul>
+                <li>Submit a job asking for 1 node and just enough time to run the program successfully.</li>
+                <li>Check wether the job starts running right away.</li>
+                <li>If yes, then remember that 1 node "works".</li>
+                <li>Cancel the job using `scancel`.</li>
+                <li>Repeat, but now asking for 2 nodes.</li>
+                <li>And then for 3 nodes, and so on... </li>
             </ul>
-        <li> Inspect the state of the queue to make sure that your job runs right away</li>
-        <li> <b>Question:</b> How many nodes did you end up using?</li>
+        <li> <b>Question:</b> What was the maximum number of nodes that you could use so that your job runs immediately?</li>
+        <li> Reset the time to zero, and submit your job using this maximum number of nodes.</li>
         <li> Advance time until your job completes.</li>
-        <li> <b>Question:</b> Compare and contrast your job turnaround time with that in the previous question.</li>
+        <li> <b>Question:</b> Compare and contrast your job's turnaround time with that in the previous question.</li>
       </ul>
 
       <Header as="h3" block>
