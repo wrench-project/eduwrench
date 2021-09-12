@@ -2,7 +2,7 @@ import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
-import GanttChart from "../../../components/charts/gantt_chart.js"
+import GanttChart from "../../../images/vector_graphs/batch_scheduling/gantt_chart.svg"
 import Basics from "../../../images/vector_graphs/batch_scheduling/basics.svg";
 
 const BatchQueue = ({ module, tab }) => {
