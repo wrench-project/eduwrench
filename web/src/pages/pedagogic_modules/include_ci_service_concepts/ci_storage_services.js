@@ -9,6 +9,7 @@
 
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
+import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import CIStorageServicesSimulation from "./ci_storage_services_simulation"
@@ -25,55 +26,63 @@ const CIStorageServices = ({ module, tab }) => {
       <h2>Data Services</h2>
 
       <p>
-        In CI, the most common type of service provided by a data service is permanent,
-        reliable, and efficient data storage. In addition to storing data in a remote server,
-        data services may also provide a number of different capabilities, e.g.
+        A common type of CI service is a "data service". A data service provide
+        permanent,
+        reliable, and efficient data storage. In addition to storing data in a (remote) server,
+        a data service can also provide other capabilities, e.g.,
         support for registering metadata for data description, backups, search mechanisms,
         data integrity checks, etc.
       </p>
       <p>
-        A data service is basically composed of the following elements: storage devices
-        (e.g, HDD, SSD, RAM, etc.), a file system, and databases (e.g., for keeping track of
-        file locations and recording metadata). While a data service can be fully set up into
-        a single machine, typical CI deployments follow a distributed approach – i.e.,
-        multiple data servers or <i>data nodes</i>, dedicated nodes for processing query requests,
-        etc.; in which services are part of the same local network (LAN) or are distributed
-        into physical remote sites (connected via WAN). The figure below shows an example of
-        a data service with a single data node and a file registry, each configured to run on
-        different machines, but all part of the same local network.
+        Let us consider a data service that comprises at least the following components: storage devices (e.g., HDD,
+        SSD, RAM, etc.), a file system to access data on these devices, and a "file registry" databases (for keeping
+        track of file locations and recording metadata). While a data service can reside on a single machine, typical CI
+        deployments follow a distributed approach. That is, multiple data servers or <i>data nodes</i>, dedicated nodes
+        for processing query requests, etc., in which services are part of the same local network (LAN) or are
+        distributed into physically remote sites (connected via WAN). The figure below shows an example of
+        a data service with a single data node (that runs a storage service) and a single database node (that runs a
+        file registry service), each configured to run on different machines, but all part of the same local network.
       </p>
 
       <CISimpleStorage />
       <div className="caption"><strong>Figure 1:</strong> Example of a simple CI data service deployment.</div>
 
       <p>
-        In the figure above, the simply fact of storing a file into the data service involves
-        interaction with two services: the storage service, and the file registry service.
-        The sequence diagram shown on the right side of Figure 1, depicts the sequence of
-        operations and time elapsed to store the file in the storage service, and registering
-        the file location in the file registry. Note that several overheads are incurred
+        In the figure above, storing a file into the data service involves
+        interaction with two services: the storage service and the file registry service.
+        The sequence diagram shown on the bottom of Figure 1 depicts the sequence of
+        operations necessary for storing the file in the storage service and registering
+        the file location in the file registry. Several overheads are incurred
         in this operation:
       </p>
-      <ol>
-        <li><i>Client Disk Overhead</i>: Time to read the file from the client disk into memory
-          - defined by the client's disk read bandwidth.
+      <ol start={0}>
+        <li><i>Client Disk Overhead</i>: Time to read the file from the client disk into memory (depends on the client's
+          disk read bandwidth).
         </li>
         <li><i>Transfer Overhead</i>: Time to transfer the file from the client to the storage
-          service - defined by the network bandwidth and latency between the client and
-          the storage service.
+          service (depends on the network bandwidth and latency between the client and
+          the storage service).
         </li>
-        <li><i>Writing Overhead</i>: Time to write the file contents to the storage server disk
-          - defined by the storage service's disk write bandwidth.
+        <li><i>Writing Overhead</i>: Time to write the file contents to the storage server's disk (depends on the
+          storage service's disk write bandwidth).
         </li>
-        <li><i>Registration Overhead</i>: Time to perform a registration operation in the File
-          Registry Service - defined by the network bandwidth and latency between the
-          Storage Service and File Registry Service, and any overhead to process the
-          registration operation on the File Registry Service.
+        <li><i>Registration Overhead</i>: Time to perform a registration operation in the file
+          registry service (depends on the network bandwidth and latency between the
+          storage service and file registry service, and any overhead to process the
+          registration operation on the file registry service).
+        </li>
+        <li><i>Registration Notification Overhead</i>: Time to notify the storage service that the registration was
+          successful (depends on the network bandwidth and latency between the storage service and file registry
+          service).
+        </li>
+        <li><i>Client Notification Overhead</i>: Time to notify the client (by providing the path to the file location)
+          the file has been successfully stored (depends on the network bandwidth and latency between the storage
+          service and the client).
         </li>
       </ol>
       <p>
-        The steps for retrieving the file from the data service are similar to the above
-        ones but in the reverse order - instead of an overhead for registering the file
+        The steps for retrieving the file from the data service are similar to the ones
+        above but in the reverse order. Also, instead of an overhead for registering the file
         in the file registry, now the overhead would be to resolve the query for finding the
         location(s) of the stored file, and then transmit it through the network.
       </p>
@@ -84,14 +93,48 @@ const CIStorageServices = ({ module, tab }) => {
 
       <p>
         The simulation app below simulates the execution of the simple data service scenario shown in Figure 1. For this
-        simulation, the File Registry Service has an <i>overhead</i> value represented as the time (in seconds) for
+        simulation, the file registry service has an <i>overhead</i> value represented as the time (in seconds) for
         performing an insert operation (i.e., registering a file), and storing a file in the data service involves the
-        steps shown in the sequence diagram (Figure 1 right side). If you run the simulation using the default values,
+        steps shown in the sequence diagram (Figure 1, bottom). If you run the simulation using the default values,
         you will notice that the registration overhead nearly doubles the time to perform the storing operation in the
         data service.
       </p>
 
       <SimulationActivity panelKey="ci-storage-services-simulation" content={<CIStorageServicesSimulation />} />
+
+      <PracticeQuestions
+        header={
+          (<>
+            Answer the practice questions hereafter, which pertain to the setup in the above simulation (You can use
+            the simulation to determine or double-check answers).
+          </>)
+        }
+        questions={[
+          {
+            key: "B.1.p2.1",
+            question: "Keep the file registration overhead at 1 second and the bandwidth at 10 MB/sec in the " +
+              "simulation above. You need to continuously store blocks of data to the above data service, and you " +
+              "must choose the size of these blocks. Doing as small blocks as possible is good for your business " +
+              "because the blocks can then be grabbed quickly from the data service by a third-party compute service. " +
+              "But doing as large blocks as possible is also good because then the data service overhead is not " +
+              "as punishing. What is the smallest block size so that at the end of the day less than 10% of the time " +
+              "was spent experiencing the file registration overhead? " +
+              "You can come up with a rough estimate of the block size, and then use the simulation to refine this " +
+              "estimate.",
+            content: (
+              <>
+                We want the total execution of a block transfer to take 10s, so that the 1 second file registry overhead
+                accounts for 10% of the elapsed time. Roughly, sending <TeX math="n" /> MB of data over to the data
+                service takes <TeX math="n/10" /> seconds (in fact it takes more due to disk overhead, network effects,
+                etc). So <TeX math="n = 90" /> MB should be getting us close-ish to 10s in total. The simulation shows
+                that with a data size of 90 MB the overall time is 11.54 seconds. Doing a simple binary search between,
+                for instance, 70 MB and 90 MB gives us the answer: 78 MB. With a block size of 78 MB, the overall time
+                is 10.00605 sec, while with 77 MB, the overall time is below 10 seconds, meaning that the file
+                registration overhead would then be more than 10% of the overall time.
+              </>
+            )
+          }
+        ]} />
 
       <Divider />
 

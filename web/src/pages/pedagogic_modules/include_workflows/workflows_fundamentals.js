@@ -48,7 +48,7 @@ const WorkflowsFundamentals = ({module, tab}) => {
 
             <ExampleWorkflow />
             <div className="caption"><strong>Figure 1:</strong> Example workflow application, where each task has an
-                amount of work to do (in GFlop) and a memory footprint (in GB). Some examples of real-world workflows for
+                amount of work to do (in Gflop) and a memory footprint (in GB). Some examples of real-world workflows for
                 scientific applications, along with their DAG representations, can be found <a
                     href="https://pegasus.isi.edu/application-showcase/" target="_blank">here</a>.
             </div>

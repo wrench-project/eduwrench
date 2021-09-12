@@ -378,7 +378,7 @@ const ClientServerPipelining = ({module, tab}) => {
             </Header>
 
             <p>
-                <strong>A.3.2.q2.1</strong> You have a laundry room with a washer and drier. The
+                <strong>[A.3.2.q2.1]</strong> You have a laundry room with a washer and drier. The
                 washer washes a load in 30 minutes, and the drier dries a load in 45
                 minutes. You have 4 loads to do. How long until the last load is dried?
                 What fraction of the time was the washer used? Could you have gone faster
@@ -386,7 +386,7 @@ const ClientServerPipelining = ({module, tab}) => {
             </p>
 
 
-            <p><strong>A.3.2.q2.2</strong> You need to send 1 GB of data stored on disk to a remote
+            <p><strong>[A.3.2.q2.2]</strong> You need to send 1 GB of data stored on disk to a remote
                 server over a single network link. The disk's read bandwidth is 500 MB/sec.
                 The network link's bandwidth is 250 MB/sec, with a latency below 100
                 microseconds. How much faster would the transfer go using pipelining with a
@@ -397,7 +397,7 @@ const ClientServerPipelining = ({module, tab}) => {
             </p>
 
 
-            <p><strong>A.3.2.q2.3</strong> Your business has a client-server setup for your computing
+            <p><strong>[A.3.2.q2.3]</strong> Your business has a client-server setup for your computing
                 needs. The client is on-site and there are two off-site servers you have
                 access to. The specifications of the client and two servers and their costs
                 are below:
@@ -438,7 +438,7 @@ const ClientServerPipelining = ({module, tab}) => {
                 execution cost? Show you work, in which you estimate the execution time on both servers.
             </p>
 
-            <p><strong>A.3.2.q2.4</strong> This question is for the same setup as in the previous
+            <p><strong>[A.3.2.q2.4]</strong> This question is for the same setup as in the previous
                 question and the same task to execute. Assume that, for each server, ideal
                 pipelining is possible used (i.e., assuming that network latency is zero
                 and a 1-byte buffer can be used). Which of these two servers would lead to

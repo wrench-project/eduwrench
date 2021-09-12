@@ -11,7 +11,7 @@ const JobNumNodes = ({ module, tab }) => {
       <h2>Impact of requested number of nodes</h2>
 
       <p>
-        Because we know that <code>myprogram</code> runs in <TeX math="2 + 2/n" /> hours on <TeX math="n" /> nodes, we
+        Because we know that <code>myprogram</code> runs in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes, we
         can always ask for the exact duration needed,
         which is never detrimental and often beneficial.
         But what about the number of nodes? When submitting a job, should we ask
@@ -34,12 +34,20 @@ const JobNumNodes = ({ module, tab }) => {
         this in simulation...
       </p>
 
+      <p>
+      Once again, we assume that <b>all other users, with whom you are competing,
+      ask for <i>exactly</i> the time they need when submitting a job</b>.
+      (This won't be the case in real-life, but we're using this simplifying assumption here.)
+      </p>
+
+
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
-        using the following command to start a Docker container:
+        running the following command on your computer in a terminal (a.k.a. command prompt) to start a Docker container:
       </p>
+
 
       <Segment raised>
         <code>
@@ -64,22 +72,22 @@ const JobNumNodes = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <code>myprogram</code> runs
         in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes).
       </p>
 
       <p><strong>[C.1.q6.1] Trying multiple job sizes:</strong></p>
       <ul>
         <li> Inspect the state of the queue. You should see that only 1 node is available right now.</li>
-        <li> If you were to submit a 1-node job right now, what turnaround time would you experience?</li>
+        <li> <b>Question:</b> If you were to submit a 1-node job right now, what turnaround time would you experience?</li>
         <li> Submit a 2-node job, asking for just enough time for <code>myprogram</code> to complete successfully.</li>
-        <li> What is this job's turnaround time?</li>
+        <li> <b>Question:</b> What is this job's turnaround time?</li>
         <li> Reset the simulation and submit a 4-node job, asking for just enough time for <code>myprogram</code> to
           complete successfully.
         </li>
-        <li> When is this job's turnaround time?</li>
-        <li> Which option was better: using 1 node, 2 nodes, or 4 nodes?</li>
-        <li> Is there any way you could have predicted this based on initial state of the batch queue?</li>
+        <li> <b>Question:</b> What is this job's turnaround time?</li>
+        <li> <b>Question:</b> Which option was better: using 1 node, 2 nodes, or 4 nodes?</li>
+        <li> <b>Question:</b> Is there any way you could have predicted this based on initial state of the batch queue?</li>
         <li> Feel free to experiment with different numbers of nodes, so see which one is best.</li>
       </ul>
 

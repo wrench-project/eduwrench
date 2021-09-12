@@ -21,7 +21,7 @@ const JobDuration = ({ module, tab }) => {
         It turns out that many users, in practice ask for much more time than
         needed. This is because they do not know how long their programs will run
         (for instance, the program runs shorter or longer based on its input data).
-        Furthermore, users many not know the speedup behavior of their programs. So
+        Furthermore, users may not know the speedup behavior of their programs. So
         although they may know how long the program would run on 1 node, they do not
         know how long it will run on 10 nodes. Since asking for too little time
         leads to job failures, most users are conservative and ask for more time.
@@ -40,9 +40,9 @@ const JobDuration = ({ module, tab }) => {
 
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
-        using the following command to start a Docker container:
+        running the following command on your computer in a terminal (a.k.a. command prompt) to start a Docker container:
       </p>
 
       <Segment raised>
@@ -69,7 +69,7 @@ const JobDuration = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <code>myprogram</code> runs
         in <TeX math="2 + 20/n " /> hours on <TeX math="n" /> nodes).
       </p>
 
@@ -77,8 +77,8 @@ const JobDuration = ({ module, tab }) => {
       <ul>
         <li>Feel free to inspect the state of the queue, which will show that all nodes are currently busy.</li>
         <li>Submit a job asking for 16 nodes and just enough time to run <code>myprogram</code>.</li>
-        <li>What is the job's turnaround time?</li>
-        <li>Could you have expected this behavior based on the state of the batch queue?</li>
+        <li><b>Question:</b> What is the job's turnaround time?</li>
+        <li><b>Question:</b> Could you have expected this behavior based on the state of the batch queue?</li>
       </ul>
 
       <p><strong>[C.1.q5.2] Asking for too much time:</strong></p>
@@ -88,8 +88,8 @@ const JobDuration = ({ module, tab }) => {
           be a user who does not know the program's speedup behavior and
           conservatively asks for the sequential time.
         </li>
-        <li>What is the job's turnaround time?</li>
-        <li>Could you have expected this behavior based on the state of the batch queue?</li>
+        <li><b>Question:</b> What is the job's turnaround time?</li>
+        <li><b>Question:</b> Could you have expected this behavior based on the state of the batch queue?</li>
       </ul>
 
       <p><strong>[C.1.q5.3] Exploring other options:</strong></p>

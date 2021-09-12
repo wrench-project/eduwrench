@@ -47,9 +47,9 @@ const JobSubmission = ({ module, tab }) => {
             executed on <TeX math="n" /> nodes</strong> (typical Amdahl Law behavior). So for instance, running
           <code>myprogram</code> on 5 nodes takes 6 hours.
         </li>
-        <li>A batch script, stored in file <code>batch.slurm</code>, which is to be
-          passed to the Slurm <code>sbatch</code> command. This batch script specifies the desired
-          number nodes and duration for running <code>myprogram</code> as a job on the cluster.
+        <li>A batch script, stored in file <code>batch.slurm</code>. This script is to be
+          passed to the Slurm <code>sbatch</code> command. It specifies the desired
+          number of nodes and duration for running <code>myprogram</code> as a job on the cluster.
         </li>
       </ul>
 
@@ -57,13 +57,13 @@ const JobSubmission = ({ module, tab }) => {
         For our purposes, when executed successfully, <code>myprogram</code> simply
         prints some success message on standard output.
         In the real world, <code>myprogram</code> would generate additional meaningful output
-        files. Not that in the activity below you will submit multiple jobs to run
+        files. Note that in the activity below you will submit multiple jobs to run
         <code>myprogram.</code> In the real world, the program would take in some input files,
         and you would be running these jobs for different input files.
       </p>
 
       <p>
-        On your computer, use the following command to run a Docker container (this may take a while):
+        Run the following command on your computer in a terminal (a.k.a. command prompt) to run a Docker container (this may take a while):
       </p>
 
       <Segment raised>
@@ -91,8 +91,8 @@ const JobSubmission = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
-        in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes).
+        Interact with the simulated terminal to perform the following steps and answer the questions (recall that <code>myprogram</code> runs
+        in <TeX math="2 + 20/n" /> hours on <TeX math="n" /> nodes). 
       </p>
 
       <p><strong>[C.1.q2.1] Successful job execution:</strong></p>
@@ -107,9 +107,9 @@ const JobSubmission = ({ module, tab }) => {
           until after the job should have completed.
         </li>
         <li> Check the content of the generated <code>.out</code> or <code>.err</code> file produced by the job.</li>
-        <li> Did the job complete successfully?</li>
-        <li> At what time did it complete?</li>
-        <li> Did it complete about when you thought it would?</li>
+        <li> <b>Question:</b> Did the job complete successfully?</li>
+        <li> <b>Question:</b> At what time did it complete?</li>
+        <li> <b>Question:</b> Did it complete about when you thought it would and why?</li>
       </ul>
 
       <p><strong>[C.1.q2.2] Failed job execution:</strong></p>
@@ -120,9 +120,9 @@ const JobSubmission = ({ module, tab }) => {
         <li> Once enough time has passed, check the content of the
           generated <code>.out</code> or <code>.err</code> file.
         </li>
-        <li> Did the job fail?</li>
-        <li> At what time did it fail?</li>
-        <li> Did the job file about when you thought it would?</li>
+        <li> <b>Question:</b> Did the job fail?</li>
+        <li> <b>Question:</b> At what time did it fail?</li>
+        <li> <b>Question:</b> Did the job fail about when you thought it would and why?</li>
       </ul>
 
       <Header as="h3" block>

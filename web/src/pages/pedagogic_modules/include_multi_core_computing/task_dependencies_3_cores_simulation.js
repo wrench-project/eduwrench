@@ -35,7 +35,7 @@ const TaskDependencies3CoresSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("mcdt3-analyze-work-label", values.taskGflop, 10, 1000, null, "GFlop")) {
+                if (!validateFieldInRange("mcdt3-analyze-work-label", values.taskGflop, 10, 1000, null, "Gflop")) {
                   errors.taskGflop = "ERROR"
                 }
                 return errors

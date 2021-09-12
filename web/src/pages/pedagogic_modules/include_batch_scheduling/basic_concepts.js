@@ -72,7 +72,7 @@ const BasicConcepts = ({ module, tab }) => {
       </p>
 
       <p>
-        <strong>Disclaimer</strong>: This module does not provides comprehensive Slurm training, but is instead
+        <strong>Disclaimer</strong>: This module does not provide comprehensive Slurm training, but is instead
         a gentle introduction to batch scheduling, using Slurm
         as an example. You will only be exposed to a small and simplified subset of
         the Slurm functionality. This module is thus a first step towards

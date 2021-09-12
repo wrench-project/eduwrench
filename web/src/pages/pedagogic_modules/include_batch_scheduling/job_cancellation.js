@@ -19,9 +19,9 @@ const JobCancellation = ({ module, tab }) => {
 
       <h2>Simulated scenario</h2>
       <p>
-        As for the simulated scenario in the previous tab, you can access
+        As with the simulated scenario in the previous tab, you can access
         a simulated terminal on the 32-node cluster's head node by
-        using the following command to start a Docker container:
+        running the following command on your computer in a terminal (a.k.a. command prompt) to start a Docker container:
       </p>
 
       <Segment raised>
@@ -41,8 +41,10 @@ const JobCancellation = ({ module, tab }) => {
       <p>
         <strong>User competition:</strong> In the previous tab, you were the only user on the cluster.
         Now, instead, <strong>you are competing with other users!</strong> These other users
-        submit whatever jobs whenever they want, which is out of your control.
+        submit whatever jobs whenever they want, which is out of your control. <b>All these other users,
+        when submitting a job, ask for <i>exactly</i> the time they need</b>. (This won't be the case in real-life, but we're using this simplifying assumption here.)
       </p>
+
 
       <Divider />
 
@@ -51,14 +53,14 @@ const JobCancellation = ({ module, tab }) => {
       </Header>
 
       <p>
-        Interact with the simulated terminal to answer the following questions (recall that <code>myprogram</code> runs
+        Interact with the simulated terminal to perform the following steps and answer the questions answer the questions (recall that <code>myprogram</code> runs
         in <TeX math="2 + 20/n " /> hours on <TeX math="n" /> nodes).
       </p>
 
       <p><strong>[C.1.q4.1] Job submission and cancellation:</strong></p>
       <ul>
         <li>Submit a job to run <code>myprogram</code> on <strong>16</strong> nodes with enough requested time.</li>
-        <li>Soon after submission, inspect the state of the batch queue and answer the following questions:
+        <li><b>Question</b>: Soon after submission, inspect the state of the batch queue and answer the following questions:
           <ul>
             <li>How many jobs are currently pending?</li>
             <li>How many jobs are currently running?</li>
@@ -66,32 +68,37 @@ const JobCancellation = ({ module, tab }) => {
           </ul>
         </li>
 
-        <li> Advance the time until your job has completed (using the <code>sleep</code> command). You will have to
-          advance time by quite a lot. Imagine what it would be in the real world where, unlike in simulation, you
-          cannot fast-forward time (if you can, contact us immediately!)
-        </li>
-        <li>What was your job's wait time? (you can infer it based on the time of submission and the time of
-          completion, since you know the execution time)
-        </li>
+        <li> Since it is not running, cancel your job using the <tt>scancel</tt> command!</li>
       </ul>
 
       <p><strong>[C.1.q4.2] Sneaky job submission:</strong></p>
       <ul>
         <li> Reset the time to zero, to pretend the above never happened.</li>
-        <li> Inspect the state of the queue and answer the following questions:
+        <li> <b>Question:</b> Inspect the state of the queue and answer the following questions:
           <ul>
-            <li> How many nodes are currently in used by running jobs?</li>
+            <li> How many nodes are currently in use by running jobs?</li>
             <li> How many nodes are currently idle?</li>
           </ul>
         </li>
 
-        <li> Submit a job to run <code>myprogram</code> successfully, asking for as many nodes as
-          possible so that your job can run right now (unless another competing
-          job shows up in the nick of time!)
-        </li>
-        <li> Inspect the state of the queue. Is your job running?</li>
+        <li> Your goal is to submit a job to run <code>myprogram</code> successfully asking for as many nodes as
+          possible so that your job can run right now!  Note that it's not because <TeX math="n" /> nodes are idle right now that any job
+                 that asks for <TeX math="n" /> nodes will start right now. If the job requests too much
+                 time, then starting it right now may postpone previously submitted jobs, which in our
+                 cluster is disallowed. So answering this question is not as simple as it seems.</li>
+        <li> To achieve this goal, use the following "algorithm":</li>
+            <ul>
+                <li>Submit a job asking for 1 node and just enough time to run the program successfully.</li>
+                <li>Check wether the job starts running right away.</li>
+                <li>If yes, then remember that 1 node "works".</li>
+                <li>Cancel the job using `scancel`.</li>
+                <li>Repeat, but now asking for 2 nodes.</li>
+                <li>And then for 3 nodes, and so on... </li>
+            </ul>
+        <li> <b>Question:</b> What was the maximum number of nodes that you could use so that your job runs immediately?</li>
+        <li> Reset the time to zero, and submit your job using this maximum number of nodes.</li>
         <li> Advance time until your job completes.</li>
-        <li> Compare an contrast your job turnaround time with that in the previous question.</li>
+        <li> <b>Question:</b> Compare and contrast your job's turnaround time with that in the previous question.</li>
       </ul>
 
       <Header as="h3" block>

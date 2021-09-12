@@ -26,8 +26,8 @@ const BatchScheduling = () => {
         <br />
         <br />
         This module assumes
-        that you have basic knowledge of the Linux command-line, and that you
-        have <a href="https://www.docker.com">Docker</a> installed on your computer.
+        that you have basic knowledge of the Linux command-line, <b>and that you
+        have <a href="https://www.docker.com">Docker</a> installed</b> on your computer.
         <br />
         <br />
 

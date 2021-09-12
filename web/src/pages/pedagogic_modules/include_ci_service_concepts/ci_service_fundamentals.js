@@ -20,7 +20,6 @@ import CIBasics from "../../../images/vector_graphs/ci_service_concepts/basics.s
 const CIServiceFundamentals = ({ module, tab }) => {
   return (
     <>
-
       <LearningObjectives module={module} tab={tab} />
 
       <h2>Basics</h2>
@@ -35,13 +34,15 @@ const CIServiceFundamentals = ({ module, tab }) => {
         <li>Computational systems (e.g., grids, clouds, edge devices, clusters, supercomputers, etc.)</li>
         <li>Data and information management systems (e.g., databases, data repositories, etc.)</li>
         <li>Advanced instruments (e.g., telescopes, detectors, etc.)</li>
-        <li>Visualization environments (e.g., scientific visualization, data analytics, etc.)</li>
+        <li>Visualization environments (e.g., scientific data visualization tools, immersive VR, etc.)</li>
         <li>Advanced networks (e.g., high-bandwidth networks, collaborative networks, etc.)</li>
-        <li>Software (e.g., applications, resource scheduling and provisioning, monitoring, fault-tolerance, etc.)</li>
+        <li>Software (e.g., application codes, resource scheduling and provisioning frameworks, resource monitoring
+          systems, etc.)
+        </li>
         <li>People (e.g., researchers, developers, etc.)</li>
       </ul>
       <p>
-        Typically, cyberinfrastructures leverage several parallel and distributed computing technologies for creating
+        Typically, CIs leverage several parallel and distributed computing technologies for creating
         solutions organized into sets of <strong>services</strong> tailored to support a specific scientific domain or
         general-purpose scientific needs.
       </p>
@@ -52,9 +53,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
         A CI is typically composed of several services that together provide the fundamental abstractions for executing
         application workloads conveniently and efficiently. Common CI services target data storage and management, data
         movements over the network, computation on bare-metal or virtualized compute nodes, and web sites that serve as
-        portals for the CI. In this module, we explore different approaches and techniques commonly used for using these
+        portals for users to use all the above services. In this module, we explore different approaches and techniques
+        commonly used for using these
         services in a view to executing various application workloads. Note that we do not target any specific CI
-        service implementation, but instead the main concepts in different service categories.
+        service implementation, but instead we target the main concepts in different service categories.
       </p>
       <p>
         The figure below shows an example of a CI composed of four different services: a <i>website</i>, from where
@@ -77,7 +79,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
         (internet service provider) bandwidths and latencies (see the <a
         href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a> for a discussion of
         network latencies, bandwidths, and topologies; and see the <a href="/pedagogic_modules/client_server">Client-Server
-        module</a> to see the implications of low network bandwidth on a distributed computation).
+        module</a> to see the implications of low network bandwidth on the performance of a distributed computation).
       </p>
 
       <h2>CI Service Overhead</h2>
@@ -86,13 +88,14 @@ const CIServiceFundamentals = ({ module, tab }) => {
         In the <a href="/modules">Distributed Computing module</a>, you have learned how to reason about the performance
         of distributed programs and how to estimate their execution times based on network, I/O, and compute times. This
         is certainly a foundation on which we can build to estimate the execution times of an application running on a
-        set of CI services, but it does not account for the fact that we are now using a possibly complicate software
+        set of CI services, but it does not account for the fact that we are now using a possibly complicated software
         infrastructure. In this infrastructure, using each CI service comes with an <strong>overhead</strong>, i.e.,
         there is a delay for processing each request to the service.
       </p>
       <p>
-        For example, a File Registry service may need to execute a search algorithm on some large, possible distributed,
-        data structure for finding all storage services on which a copy of a particular file is located. A Compute service
+        For example, a File Registry service may need to execute a search algorithm on some large, possibly distributed,
+        data structure for finding all storage services on which a copy of a particular file is located. A Compute
+        service
         may need to allocate and/or boot virtual machines (VMs) or containers to perform the requested computation. In
         addition, overheads compound as services can interact with each other. For instance, a storage service may need
         to interact with a Web server and a File Registry service when a new file is stored.
@@ -139,8 +142,8 @@ const CIServiceFundamentals = ({ module, tab }) => {
           {
             key: "B.1.p1.1",
             question: "Using the default values in the above setup as the base case (Server #1: 1 second; Server #2: " +
-              "5 seconds; Task: 1000 GFlop), would reducing the overhead of Server #2 by 1 second make it preferable " +
-              "to Server #1?",
+              "5 seconds; Task: 1000 Gflop), reason on whether reducing the overhead of Server #2 by 1 second would make it preferable " +
+              "to Server #1. Then double-check your answer in the simulation.",
             content: "In the base setup, Server #2 completes the task 1.22 second slower than Server #1. So no, we " +
               "would have to reduce the overhead by more than 1 second."
           },
@@ -159,10 +162,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
                 Solving
                 <TeX math="T_{server\#1}  = T_{server\#2}" block />
                 yields
-                <TeX math="x = 750 \text{GFlop}." block />
+                <TeX math="x = 750 \text{Gflop}." block />
                 As we know from previous modules, such estimates can be inaccurate, especially because they cannot
                 capture the complexity of actual networks. Doing a simple binary search with the simulation app yields
-                a value of <TeX math="x = 818 \text{GFlop}" />.
+                a value of <TeX math="x = 818 \text{Gflop}" />.
               </>
             )
           },
@@ -171,13 +174,13 @@ const CIServiceFundamentals = ({ module, tab }) => {
             question: (
               <>
                 We have to run a computation on the above two-server system, where Server #1 has a 3 sec task startup
-                overhead and Server #2 has a 5 sec task startup overhead. You have a computation to run that has
-                500 GFlop of work. You have two options:
+                overhead and Server #2 has a 5 sec task startup overhead. The computation consists in
+                500 Gflop of work. You have two options:
                 <ul>
                   <li>Option #1: run the computation as a single task on one of the servers (whichever one is the
-                    fatest)
+                    fastest)
                   </li>
-                  <li>Option #2: split the computation into two 250-GFlop tasks that each read the whole input file, and
+                  <li>Option #2: split the computation into two 250-Gflop tasks that each read the whole input file, and
                     run them concurrently on the two servers
                   </li>
                 </ul>
@@ -188,10 +191,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
               <>
                 <p>Using the simulation, we obtain:</p>
                 <ul>
-                  <li>Running a 500-GFlop task on Server #1: 18.50 sec</li>
-                  <li>Running a 500-GFlop task on Server #2: 14.38 sec</li>
-                  <li>Running a 250-GFlop task on Server #1: 14.00 sec</li>
-                  <li>Running a 250-GFlop task on Server #2: 10.22 sec</li>
+                  <li>Running a 500-Gflop task on Server #1: 18.50 sec</li>
+                  <li>Running a 500-Gflop task on Server #2: 14.38 sec</li>
+                  <li>Running a 250-Gflop task on Server #1: 14.00 sec</li>
+                  <li>Running a 250-Gflop task on Server #2: 10.22 sec</li>
                 </ul>
                 <p>So, we obtain the execution time for each option:</p>
                 <ul>
@@ -211,20 +214,76 @@ const CIServiceFundamentals = ({ module, tab }) => {
       </Header>
 
       <p>
-        TBD
+        <strong>[B.1.q1.1]</strong> Your company needs to execute a particular workload that is a
+        "chain" of <TeX math="n" /> tasks that must be executed in sequence (this is also called a "linear workflow").
+        Each task consists of 10 Tflop of work,
+        and reads as input and writes as output a negligible about of data.
+        You consider two options:
+      </p>
+      <ul style={{ marginBottom: 0 }}>
+        <li><b>Option #1: </b> Run all tasks on your local computer that computes at 200 Gflop/sec;</li>
+        <li><b>Option #2: </b> Run all tasks on a remote CI service that computes at 500 Gflop/sec.
+          Your connection to the remote service is via a fast network with negligible latency but the
+          service has <TeX math="h" /> seconds of overhead.
+        </li>
+      </ul>
+      <p>
+        <strong>Question:</strong> How low should the overhead <TeX math="h" /> be so that using Option #2 is at least
+        as good as using Option #1?
+      </p>
+
+      <p>
+        <strong>[B.1.q1.2]</strong> Consider the same setup as in the previous section, but now you have the option of
+        executing some tasks locally while running some tasks remotely. How many tasks should be run remotely to
+        minimize execution time?
+        Give your answer as a function of <TeX math="n" /> and <TeX math="h" />. It is ok if that function does not
+        produce an integer value for all <TeX math="n" /> and <TeX math="h" />, that is it can give a fractional
+        approximation of the optimal number of tasks to run locally.
+      </p>
+      <p>
+        Say now that <TeX math="n = 100" /> and that <TeX math="h = 10" />. How many tasks should we run locally?
+        (your answer must be an integer).
+      </p>
+
+      <p>
+        <strong>[B.1.q1.3]</strong> You have access to a CI deployment that consists of a file registry service, two
+        compute services, and some storage services, all accessed via a Web site. The overheads of these services are as
+        follow:
+      </p>
+      <ul>
+        <li><b>File Registry service:</b> 2 seconds for a "give me a file's location" request and 1 second for a "here
+          is a new file location" request;
+        </li>
+        <li><b>Compute service #1:</b> 10 seconds for a "start task" request;</li>
+        <li><b>Compute service #2:</b> 20 seconds for a "start task" request;</li>
+        <li><b>Storage services:</b> 5 seconds for a "read a file" or a "write a file" request;</li>
+        <li><b>Web site:</b> negligible overhead.</li>
+      </ul>
+      <p>
+        On this CI deployment, you need to run a workload that consist of 600 tasks (all with the same work in Gflop).
+        Each task must read two input files from a Storage service, after making sure that the files are there
+        by querying the File Registry service. Each task produces one output file that it writes to a Storage service,
+        and then sends a request to the File Registry service to make it aware of the new file and its location.
+      </p>
+      <p>
+        Compute service #2 has higher overhead, but once a task starts on it it
+        runs twice as fast as on Computes service #1. The software system you use to
+        execute your workload on the CI deployment performs static (i.e., ahead of
+        time) load balancing by considering only the compute speeds of the compute services.
+      </p>
+      <p>
+        How many seconds of CI service overhead are being experienced in this whole execution?
       </p>
 
       {/*<Divider />*/}
-
       {/*<Header as="h3" block>*/}
       {/*  Suggested Activities*/}
       {/*</Header>*/}
-
       {/*- IDEA: One service that one uses often is ssh (Secure Shell). On Linux machine on which the Ssh daemon is*/}
       {/*running, setup passwordless authentication, such that typing "ssh localhost" does not ask for your password. Then*/}
-      {/*type the commmand "time ssh localhost sleep 1". What is the overhead of the Ssh service in seconds?*/}
-
+      {/*type the command "time ssh localhost sleep 1". What is the overhead of the Ssh service in seconds?*/}
       {/*- IDEA: Pick a cloud provider and measure the overhead for starting a VM instance.*/}
+      {/*- IDEA: Curl REST API request overhead.*/}
 
     </>
   )

@@ -41,7 +41,7 @@ const IndexPage = () => (
           The goal of eduWRENCH is to achieve various <strong>learning objectives</strong> in the areas of parallel
           computing, distributed computing, and cyberinfrastructure computing. This is achieved via pedagogic modules
           that explore, at first elementary and later sophisticated, relevant concepts. Most modules include hands-on
-          "activities" in which students explore and experiment with simulated application executions using
+          activities in which students explore and experiment with simulated application executions using
           the <strong><a target="_blank" className="link"
                          href="https://wrench-project.org/"> WRENCH </a></strong> simulation framework. These modules
           can be used to enhance/augment existing courses, such as university or on-line courses, or can simply be done
@@ -75,10 +75,10 @@ const IndexPage = () => (
           Teaching computer programming skills is not an objective of these
           pedagogic modules, and no computer programming is required. This
           said, the content often makes reference to particular computing
-          programming techniques, and sometimes even suggests programming
+          programming techniques, and sometimes suggests programming
           activities or projects. This is because many of the learning
           objectives target concepts that are fundamental for developing
-          (efficient) programs that execute or parallel and distributed
+          (efficient) programs that execute on PDC
           platforms. As a result, these modules can be used effectively as
           part of a course that does include programming learning objectives.
         </p>
