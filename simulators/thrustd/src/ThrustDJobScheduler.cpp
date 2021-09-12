@@ -88,7 +88,7 @@ unsigned long ThrustDJobScheduler::getNumCoresAvailable(std::shared_ptr<wrench::
 void ThrustDJobScheduler::createCoresTracker(std::set<std::shared_ptr<wrench::ComputeService>> &compute_services) {
     for (auto const &cs : compute_services) {
         this->numCoresAvailable.insert({std::dynamic_pointer_cast<wrench::BareMetalComputeService>(cs),
-                cs->getTotalNumCores()});
+                                        cs->getTotalNumCores()});
     }
 }
 
@@ -121,7 +121,7 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
 
     // Keep track of the local_cluster_cs
     auto local_cluster_cs = std::dynamic_pointer_cast<wrench::BareMetalComputeService>(local_cs);
-    WRENCH_INFO("1---> %s", local_cluster_cs->getName().c_str());
+//    WRENCH_INFO("1---> %s", local_cluster_cs->getName().c_str());
     // Keep track of the cloud VM cs-s
     std::set<std::shared_ptr<wrench::BareMetalComputeService>> vm_css;
     for (auto const &cs : vm_created_cs) {
@@ -130,7 +130,7 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
             continue;
         }
         vm_css.insert(vm_cs);
-        WRENCH_INFO("2---> %s", vm_cs->getName().c_str());
+//        WRENCH_INFO("2---> %s", vm_cs->getName().c_str());
     }
 //    vm_css.erase(local_cluster_cs);
 
@@ -168,8 +168,8 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
         if (isCloudTask(task->getID())) {
             for (auto cs : vm_css) {
                 WRENCH_INFO("CS %s: %ld cores (task min: %ld)",
-                    cs->getName().c_str(),
-                    this->getNumCoresAvailable(cs), task->getMinNumCores());
+                            cs->getName().c_str(),
+                            this->getNumCoresAvailable(cs), task->getMinNumCores());
                 if (this->getNumCoresAvailable(cs) >= task->getMinNumCores()) {
                     selected_cs = cs;
 //                    std::cout << "here: " << getNumCoresAvailable(selected_cs) << std::endl;

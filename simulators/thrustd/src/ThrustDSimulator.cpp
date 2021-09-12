@@ -224,11 +224,6 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    // Fix the min/max #cores for each task, in case the Workflow's JSON specified core numbers (which we don't want)
-    for (auto const &t : workflow->getTasks()) {
-
-    }
-
     std::cerr << "The workflow has " << workflow->getNumberOfTasks() << " tasks " << std::endl;
 
     // Reading and parsing the platform description file to instantiate a simulated platform

@@ -2,7 +2,6 @@ import React from "react"
 import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
-import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg";
 import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 

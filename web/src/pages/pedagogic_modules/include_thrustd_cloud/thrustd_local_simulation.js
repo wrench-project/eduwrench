@@ -12,7 +12,7 @@ import {
     validateFieldInRange
 } from "../../../components/simulation/simulation_validation"
 
-import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
+import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg"
 
 const Thrustd_Local_Simulation = () => {
 
@@ -26,7 +26,7 @@ const Thrustd_Local_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                <SimulationScenario scenario={<IOTask />} />
+                <SimulationScenario scenario={<MontageWorkflow/>} />
 
                 <Segment.Group>
                     <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

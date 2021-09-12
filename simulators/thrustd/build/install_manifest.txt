@@ -1,1 +1,2 @@
 /usr/local/bin/thrustd
+/usr/local/bin/fbl

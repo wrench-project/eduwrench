@@ -57,17 +57,27 @@ int ThrustDWMS::main() {
     // Create a data movement manager
     std::shared_ptr<wrench::DataMovementManager> data_movement_manager = this->createDataMovementManager();
 
-    // Get the available compute services
-    auto compute_services = this->getAvailableComputeServices<wrench::ComputeService>();
-    if (compute_services.empty()) {
+    // Check that we have at least one compute service
+    if (this->getAvailableComputeServices<wrench::ComputeService>().size() < 1) {
         throw std::runtime_error("WMS needs at least one compute service to run!");
     }
 
-    auto compute_service = *(this->getAvailableComputeServices<wrench::ComputeService>().begin());
+    // Check that we have exactly  one BM compute service
+    if (this->getAvailableComputeServices<wrench::BareMetalComputeService>().size() != 1) {
+        throw std::runtime_error("WMS needs exactly  one BareMetal compute service to run!");
+    }
+
+    // Get the bare-metal compute service
+    auto compute_service = *(this->getAvailableComputeServices<wrench::BareMetalComputeService>().begin());
     WRENCH_INFO("NAME OF LOCAL COMPUTE_SERVICE: %s", compute_service->getName().c_str());
+
+    // Get the cloud compute service
     std::shared_ptr<wrench::CloudComputeService> cloud_service;
     if (this->getNumVmInstances() > 0) {
-        cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().rbegin());
+        if (this->getAvailableComputeServices<wrench::CloudComputeService>().size() != 1) {
+            throw std::runtime_error("WMS needs exactly one cloud service to run!");
+        }
+        cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().begin());
         WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
     }
 

@@ -23,6 +23,13 @@ set(SOURCE_FILES
         src/ThrustDSimulator.cpp
        )
 
+# script files
+set(SCRIPT_FILES
+        src/ThrustDJobScheduler.h
+        src/ThrustDJobScheduler.cpp
+        script/files_between_levels.cpp
+        )
+
 # test files
 set(TEST_FILES
        )
@@ -35,6 +42,7 @@ find_library(GTEST_LIBRARY NAMES gtest)
 
 # generating the executable
 add_executable(thrustd ${SOURCE_FILES})
+add_executable(fbl ${SCRIPT_FILES})
 set_property(TARGET thrustd PROPERTY CXX_STANDARD 14)
 
 
@@ -45,6 +53,12 @@ target_link_libraries(thrustd
                        ${SimGrid_LIBRARY}
                        ${PUGIXML_LIBRARY}
                       -lzmq )
+target_link_libraries(fbl
+                        ${WRENCH_LIBRARY}
+                        ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
+                        ${SimGrid_LIBRARY}
+                        ${PUGIXML_LIBRARY}
+                        -lzmq )
 else()
 target_link_libraries(thrustd
                        ${WRENCH_LIBRARY}
@@ -52,9 +66,16 @@ target_link_libraries(thrustd
                        ${SimGrid_LIBRARY}
                        ${PUGIXML_LIBRARY}
                       )
+target_link_libraries(fbl
+                        ${WRENCH_LIBRARY}
+                        ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
+                        ${SimGrid_LIBRARY}
+                        ${PUGIXML_LIBRARY}
+                        )
 endif()
 
 install(TARGETS thrustd DESTINATION bin)
+install(TARGETS fbl DESTINATION bin)
 
 # generating unit tests
 add_executable(unit_tests EXCLUDE_FROM_ALL
