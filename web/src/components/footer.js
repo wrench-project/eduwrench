@@ -16,6 +16,7 @@ const Footer = () => (
             rel="noreferrer"
             className="link"
             href="https://github.com/wrench-project/eduwrench/blob/master/LICENSE"
+            style={{ fontWeight: "bold" }}
           >
             GNU General Public License v3.0.{" "}
           </a>{" "}
@@ -35,6 +36,7 @@ const Footer = () => (
             target="_blank"
             rel="noreferrer"
             className="slink"
+            style={{ color: "#d98636 !important", fontWeight: "bold" }}
           >
             WRENCH Project
           </a>
@@ -47,7 +49,7 @@ const Footer = () => (
               target="_blank"
               rel="noreferrer"
               className="link m-lg-2"
-              style={{ marginLeft: "1em !important"}}
+              style={{ marginLeft: "1em !important" }}
             >
               <StaticImage
                 src="../images/logo-nsf.png"
@@ -57,7 +59,7 @@ const Footer = () => (
               />
             </a>
           </div>
-          <div className="inline-block">
+          <div className="inline-block" style={{ marginLeft: "1em" }}>
             <a
               href="https://www.ics.hawaii.edu/"
               target="_blank"
@@ -72,7 +74,7 @@ const Footer = () => (
               />
             </a>
           </div>
-          <div className="inline-block">
+          <div className="inline-block" style={{ marginLeft: "1em", marginTop: "0.2em" }}>
             {" "}
             <a
               href="https://www.isi.edu/"
@@ -82,7 +84,7 @@ const Footer = () => (
             >
               <StaticImage
                 src="../images/logo-usc.png"
-                height={40}
+                height={38}
                 alt="USC logo"
                 backgroundColor="#fff"
               />
