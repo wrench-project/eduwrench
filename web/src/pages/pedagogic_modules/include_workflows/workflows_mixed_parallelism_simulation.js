@@ -69,7 +69,11 @@ const WorkflowsMixedParallelismSimulation = () => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output} />
-                          <GanttChart data={response.data.task_data} />
+                          <GanttChart data={response.data.task_data} label={{
+                              read: { display: false },
+                              compute: { display: true, label: "performing computation" },
+                              write: { display: false }
+                          }} />
                           <HostUtilizationChart data={response.data.task_data} />
                         </>
                       )
