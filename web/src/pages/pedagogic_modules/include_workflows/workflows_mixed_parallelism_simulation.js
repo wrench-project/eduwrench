@@ -4,6 +4,7 @@ import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
+import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
@@ -68,6 +69,11 @@ const WorkflowsMixedParallelismSimulation = () => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output} />
+                          <GanttChart data={response.data.task_data} label={{
+                              read: { display: false },
+                              compute: { display: true, label: "performing computation" },
+                              write: { display: false }
+                          }} />
                           <HostUtilizationChart data={response.data.task_data} />
                         </>
                       )
