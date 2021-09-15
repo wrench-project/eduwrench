@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment, Checkbox, Label, Grid, Container } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
@@ -9,6 +9,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import CloudComponent from "./cloud_component";
+import TaskSlider from "./task_slider"
 import {
     validateFieldInRange
 } from "../../../components/simulation/simulation_validation"
@@ -140,6 +141,40 @@ const Thrustd_Cloud_Simulation = () => {
                                         value={values.useCloud}
                                     />
                                     <CloudComponent useCloud={values.useCloud} handleChange={handleChange} handleBlur={handleBlur} values={values} errors={errors} touched={touched}/>
+                                    <Segment>
+                                        <Segment><strong>Task Distribution</strong></Segment>
+                                        <Grid>
+                                            <Grid.Row>
+                                                <TaskSlider color="blue"/>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <TaskSlider color="pink"/>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Checkbox slider/>
+                                                <Label horizontal color="orange"> </Label>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Checkbox slider/>
+                                                <Label horizontal color="green"> </Label>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <TaskSlider color="yellow"/>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Checkbox slider/>
+                                                <Label horizontal color="blue"> </Label>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Checkbox slider/>
+                                                <Label horizontal color="violet"> </Label>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Checkbox slider/>
+                                                <Label horizontal color="red"> </Label>
+                                            </Grid.Row>
+                                        </Grid>
+                                    </Segment>
                                     <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
                                 </Form>
                             )}

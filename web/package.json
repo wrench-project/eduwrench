@@ -35,6 +35,7 @@
     "react-mathjax2": "^0.0.2",
     "react-router-dom": "^5.2.0",
     "react-script-tag": "^1.1.2",
+    "react-semantic-ui-range": "^0.7.1",
     "react-sidebar": "^3.0.2",
     "reactstrap": "^8.9.0",
     "rehype-katex": "^5.0.0",
