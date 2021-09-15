@@ -88,7 +88,7 @@ const GanttChart = ({ data, label = null }) => {
 
         // compute
         chartData.datasets[1].data.push([task.compute.start.toFixed(3), task.compute.end.toFixed(3)])
-        chartData.datasets[1].backgroundColor.push(colors.compute)
+        chartData.datasets[1].backgroundColor.push(task.color ? task.color : colors.compute)
         chartData.datasets[1].host.push(task.execution_host.hostname)
 
         // write

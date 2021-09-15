@@ -4,6 +4,7 @@ import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
+import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
@@ -65,6 +66,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output} />
+                          <GanttChart data={response.data.task_data} />
                           <HostUtilizationChart data={response.data.task_data} />
                           <TasksData data={response.data.task_data} />
                         </>
