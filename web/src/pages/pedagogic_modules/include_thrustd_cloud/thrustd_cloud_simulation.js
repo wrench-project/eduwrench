@@ -8,7 +8,6 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
-import CloudComponent from "./cloud_component";
 import TaskSlider from "./task_slider"
 import {
     validateFieldInRange
@@ -37,9 +36,16 @@ const Thrustd_Cloud_Simulation = () => {
                             initialValues={{
                                 numHosts: 1,
                                 pstate: 0,
-                                useCloud: false,
                                 cloudHosts: 0,
-                                numVmInstances: 0
+                                numVmInstances: 0,
+                                mProjectLocal: 0,
+                                mDiffFitLocal: 0,
+                                mConcatFitLocal: "",
+                                mBgModelLocal: "",
+                                mBackgroundLocal: 0,
+                                mImgtblLocal: "",
+                                mAddLocal: "",
+                                mViewerLocal: ""
                             }}
 
                             validate={values => {
@@ -65,9 +71,16 @@ const Thrustd_Cloud_Simulation = () => {
                                         email: userEmail,
                                         num_hosts: values.numHosts,
                                         pstate: values.pstate,
-                                        useCloud: values.useCloud,
                                         cloudHosts: values.cloudHosts,
-                                        numVmInstances: values.numVmInstances
+                                        numVmInstances: values.numVmInstances,
+                                        mProjectLocal: values.mProjectLocal,
+                                        mDiffFitLocal: values.mDiffFitLocal,
+                                        mConcatFitLocal: values.mConcatFitLocal,
+                                        mBgModelLocal: values.mBgModelLocal,
+                                        mBackgroundLocal: values.mBackgroundLocal,
+                                        mImgtblLocal: values.mImgtblLocal,
+                                        mAddLocal: values.mAddLocal,
+                                        mViewerLocal: values.mViewerLocal
                                     }
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
@@ -131,46 +144,69 @@ const Thrustd_Cloud_Simulation = () => {
                                                     } : null}
                                         />
                                     </Form.Group>
-                                    <Form.Field
-                                        type="checkbox"
-                                        control="input"
-                                        label="Use Cloud"
-                                        name="useCloud"
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        value={values.useCloud}
-                                    />
-                                    <CloudComponent useCloud={values.useCloud} handleChange={handleChange} handleBlur={handleBlur} values={values} errors={errors} touched={touched}/>
+                                    <Form.Group widths="equal">
+                                        <Form.Input fluid name="cloudHosts"
+                                                    label="Number of Cloud Hosts"
+                                                    placeholder="0"
+                                                    type="number"
+                                                    min={0}
+                                            // not sure how many is the max for cloud hosts
+                                                    max={128}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.cloudHosts}
+                                                    error={errors.cloudHosts && touched.cloudHosts ? {
+                                                        content: "Please provide the number of cloud hosts in the range of [0, 128].",
+                                                        pointing: "above"
+                                                    } : null}
+                                        />
+                                        <Form.Input fluid
+                                                    name="numVmInstances"
+                                                    label="Number of VM Instances"
+                                                    placeholder="0"
+                                                    type="number"
+                                                    min={0}
+                                            // again not sure of the max value
+                                                    max={128}
+                                                    onChange={handleChange}
+                                                    onBlur={handleBlur}
+                                                    value={values.numVmInstances}
+                                                    error={errors.numVmInstances && touched.numVmInstances ? {
+                                                        content: "Please provide the number of VM instances in the range of [0, 128].",
+                                                        pointing: "above"
+                                                    } : null}
+                                        />
+                                    </Form.Group>
                                     <Segment>
                                         <Segment><strong>Task Distribution</strong></Segment>
                                         <Grid>
                                             <Grid.Row>
-                                                <TaskSlider color="blue"/>
+                                                <TaskSlider name="mProjectLocal" color="blue" onChange={handleChange} onBlur={handleBlur} value={values.mProjectLocal}/>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <TaskSlider color="pink"/>
+                                                <TaskSlider name="mDiffFitLocal" color="pink" onChange={handleChange} onBlur={handleBlur} value={values.mDiffFitLocal}/>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <Checkbox slider/>
+                                                <Checkbox slider name="mConcatFitLocal" onChange={handleChange} onBlur={handleBlur} value={values.mConcatFitLocal}/>
                                                 <Label horizontal color="orange"> </Label>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <Checkbox slider/>
+                                                <Checkbox slider name="mBgModelLocal" onChange={handleChange} onBlur={handleBlur} value={values.mBgModelLocal}/>
                                                 <Label horizontal color="green"> </Label>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <TaskSlider color="yellow"/>
+                                                <TaskSlider name="mBackgroundLocal" color="yellow" onChange={handleChange} onBlur={handleBlur} value={values.mBackgroundLocal}/>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <Checkbox slider/>
+                                                <Checkbox slider name="mImgtblLocal" onChange={handleChange} onBlur={handleBlur} value={values.mImgtblLocal}/>
                                                 <Label horizontal color="blue"> </Label>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <Checkbox slider/>
+                                                <Checkbox slider name="mAddLocal" onChange={handleChange} onBlur={handleBlur} value={values.mAddLocal}/>
                                                 <Label horizontal color="violet"> </Label>
                                             </Grid.Row>
                                             <Grid.Row>
-                                                <Checkbox slider/>
+                                                <Checkbox slider name="mViewerLocal" onChange={handleChange} onBlur={handleBlur} value={values.mViewerLocal}/>
                                                 <Label horizontal color="red"> </Label>
                                             </Grid.Row>
                                         </Grid>

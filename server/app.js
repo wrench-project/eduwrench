@@ -1094,9 +1094,21 @@ app.post("/run/thrustd_cloud", function (req, res) {
     const EMAIL = req.body.email;
     const NUM_HOSTS = req.body.num_hosts;
     const PSTATE = req.body.pstate;
-    const USE_CLOUD = req.body.useCloud;
     const NUM_CLOUD_HOSTS = req.body.cloudHosts;
     const NUM_VM_INSTANCES = req.body.numVmInstances;
+    const MPROJECT_LOCAL = req.body.mProjectLocal;
+    const MDIFFFIT_LOCAL = req.body.mDiffFitLocal;
+    const MCONCATFIT_LOCAL = req.body.mConcatFitLocal;
+    const MBGMODEL_LOCAL = req.body.mBgModelLocal;
+    const MBACKGROUND_LOCAL = req.body.mBackgroundLocal;
+    const MIMGBTL_LOCAL = req.body.mImgtblLocal;
+    const MADD_LOCAL = req.body.mAddLocal;
+    const MVIEWER_LOCAL = req.body.mViewerLocal;
+
+    let USE_CLOUD = true;
+    if (NUM_CLOUD_HOSTS == 0 || NUM_VM_INSTANCES == 0) {
+        USE_CLOUD = false;
+    }
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -1106,6 +1118,16 @@ app.post("/run/thrustd_cloud", function (req, res) {
         "--log=simple_wms_scheduler.thresh:debug",
         "--log='root.fmt:[%.2d]%e%m%n'",
     ];
+
+    console.log(MPROJECT_LOCAL);
+    console.log(MDIFFFIT_LOCAL);
+    console.log(MCONCATFIT_LOCAL);
+    console.log(MBGMODEL_LOCAL);
+    console.log(MBACKGROUND_LOCAL);
+    console.log(MIMGBTL_LOCAL);
+    console.log(MADD_LOCAL);
+    console.log(MVIEWER_LOCAL);
+    console.log(USE_CLOUD);
 
     const json_data = {
         "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
