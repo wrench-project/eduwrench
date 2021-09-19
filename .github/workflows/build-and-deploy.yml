@@ -1,4 +1,4 @@
-name: Build eduWRENCH and publish Docker image
+name: Build
 
 on:
   push:

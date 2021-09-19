@@ -1,7 +1,7 @@
 version: '3'
 services:
   eduwrench:
-    build: .
+    image: wrenchproject/eduwrench:latest
     ports:
       - "${EDUWRENCH_JEKYLL_PORT}:4000"
       - "${EDUWRENCH_NODE_PORT}:3000"
