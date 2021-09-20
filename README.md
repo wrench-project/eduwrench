@@ -1,4 +1,4 @@
-[![Build Status][travis-badge]][travis-link]
+[![Build Status][action-badge]][action-link]
 [![License: LGPL v3][license-badge]](LICENSE)
 [![CodeFactor][codefactor-badge]][codefactor-link]
 
@@ -89,8 +89,8 @@ eduWRENCH has been funded by the National Science Foundation (NSF).
 [![NSF Funding 20191][nsf-20191-badge]][nsf-20191-link]
 [![NSF Funding 20192][nsf-20192-badge]][nsf-20192-link]
 
-[travis-badge]:             https://travis-ci.org/wrench-project/eduwrench.svg?branch=master
-[travis-link]:              https://travis-ci.org/wrench-project/eduwrench
+[action-badge]:             https://github.com/wrench-project/eduwrench/actions/workflows/build-and-deploy.yml/badge.svg
+[action-link]:              https://github.com/wrench-project/eduwrench/actions/workflows/build-and-deploy.yml
 [license-badge]:            https://img.shields.io/badge/License-LGPL%20v3-blue.svg
 [codefactor-badge]:         https://www.codefactor.io/repository/github/wrench-project/eduwrench/badge
 [codefactor-link]:          https://www.codefactor.io/repository/github/wrench-project/eduwrench
