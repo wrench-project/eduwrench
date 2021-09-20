@@ -60,7 +60,7 @@ const JobCancellation = ({ module, tab }) => {
       <p><strong>[C.1.q4.1] Job submission and cancellation:</strong></p>
       <ul>
         <li>Submit a job to run <code>myprogram</code> on <strong>16</strong> nodes with enough requested time.</li>
-        <li>Soon after submission, inspect the state of the batch queue.
+        <li>Soon after submission, inspect the state of the batch queue.</li>
         <li> <b>Question:</b> Is your job pending or running? (your username is <code>slurm_user</code>)</li>
 
         <li> Advance time until your job completes</li>
