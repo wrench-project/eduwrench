@@ -11,7 +11,7 @@ const BasicConcepts = ({ module, tab }) => {
       <h2>Batch Schedulers</h2>
 
       <p>
-        Large parallel platforms are expensive, not only for initial hardware
+        Large parallel platforms are expensive, not only for the initial hardware
         purchases and ongoing maintenance, but also in terms of electrical power
         consumption. This is why in most organizations these platforms
         are <strong>shared</strong> among users. This sharing can be done in different ways depending
