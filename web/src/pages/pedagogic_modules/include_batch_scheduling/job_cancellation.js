@@ -94,7 +94,7 @@ const JobCancellation = ({ module, tab }) => {
         <li> <b>Question:</b> What was the maximum number of nodes that you could use so that your job runs immediately?</li>
         <li> Advance time until your job completes.</li>
         <li> <b>Question:</b> Compare and contrast your job's turnaround time with that in the previous question.</li>
-        <li> <b>Question:</b> By looking at the initial state of the batch queue, would it have been possible to use reasoning to determine the largest number of nodes that allows for the job to start right away? If so, how? 
+        <li> <b>Question:</b> By looking at the initial state of the batch queue, would it have been possible to use reasoning to determine the largest number of nodes that allows for the job to start right away? If so, how? </li>
       </ul>
 
       <Header as="h3" block>
