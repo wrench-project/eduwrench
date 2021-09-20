@@ -68,7 +68,8 @@ const JobCancellation = ({ module, tab }) => {
           </ul>
         </li>
 
-        <li> Since it is not running, cancel your job using the <tt>scancel</tt> command!</li>
+        <li> Advance time until your job completes</li>
+        <li> <b>Question:</b> What was your job's turn-around time?</li>
       </ul>
 
       <p><strong>[C.1.q4.2] Sneaky job submission:</strong></p>
