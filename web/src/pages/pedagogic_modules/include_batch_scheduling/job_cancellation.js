@@ -60,15 +60,11 @@ const JobCancellation = ({ module, tab }) => {
       <p><strong>[C.1.q4.1] Job submission and cancellation:</strong></p>
       <ul>
         <li>Submit a job to run <code>myprogram</code> on <strong>16</strong> nodes with enough requested time.</li>
-        <li><b>Question</b>: Soon after submission, inspect the state of the batch queue and answer the following questions:
-          <ul>
-            <li>How many jobs are currently pending?</li>
-            <li>How many jobs are currently running?</li>
-            <li>Is your job pending or running? (your username is <code>slurm_user</code>)</li>
-          </ul>
-        </li>
+        <li>Soon after submission, inspect the state of the batch queue.</li>
+        <li> <b>Question:</b> Is your job pending or running? (your username is <code>slurm_user</code>)</li>
 
-        <li> Since it is not running, cancel your job using the <tt>scancel</tt> command!</li>
+        <li> Advance time until your job completes</li>
+        <li> <b>Question:</b> What was your job's turn-around time?</li>
       </ul>
 
       <p><strong>[C.1.q4.2] Sneaky job submission:</strong></p>
@@ -82,30 +78,30 @@ const JobCancellation = ({ module, tab }) => {
         </li>
 
         <li> Your goal is to submit a job to run <code>myprogram</code> successfully asking for as many nodes as
-          possible so that your job can run right now!  Note that it's not because <TeX math="n" /> nodes are idle right now that any job
-                 that asks for <TeX math="n" /> nodes will start right now. If the job requests too much
+          possible so that your job can run right away!  Note that it's not because <TeX math="n" /> nodes are idle right now that any job
+                 that asks for <TeX math="n" /> nodes will start right away. If the job requests too much
                  time, then starting it right now may postpone previously submitted jobs, which in our
                  cluster is disallowed. So answering this question is not as simple as it seems.</li>
         <li> To achieve this goal, use the following "algorithm":</li>
             <ul>
                 <li>Submit a job asking for 1 node and just enough time to run the program successfully.</li>
-                <li>Check wether the job starts running right away.</li>
-                <li>If yes, then remember that 1 node "works".</li>
+                <li>Check whether the job starts running right away.</li>
+                <li>If yes, then remember that 1 node "works", if not remember that 1 node "does not work".</li>
                 <li>Cancel the job using `scancel`.</li>
-                <li>Repeat, but now asking for 2 nodes.</li>
-                <li>And then for 3 nodes, and so on... </li>
+                <li>Repeat, but now asking for 2 nodes, 3 nodes, and so on....</li>
+                <li>Eventually, submit your job using the largest number of nodes that "works".</li>
             </ul>
         <li> <b>Question:</b> What was the maximum number of nodes that you could use so that your job runs immediately?</li>
-        <li> Reset the time to zero, and submit your job using this maximum number of nodes.</li>
         <li> Advance time until your job completes.</li>
         <li> <b>Question:</b> Compare and contrast your job's turnaround time with that in the previous question.</li>
+        <li> <b>Question:</b> By looking at the initial state of the batch queue, would it have been possible to use reasoning to determine the largest number of nodes that allows for the job to start right away? If so, how? </li>
       </ul>
 
       <Header as="h3" block>
         Take-Away
       </Header>
       <p><strong>
-        Cancelling a job is easy, and often a good idea if the job is "stuck" in the batch queue and
+        Canceling a job is easy, and often a good idea if the job is "stuck" in the batch queue and
         should be resubmitted with different parameters (requested numbers of node, requested duration).
       </strong></p>
 

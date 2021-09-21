@@ -36,7 +36,7 @@ const BatchQueue = ({ module, tab }) => {
 	    depicted in yellow. The green and the yellow job will never be
 	    able to run at the same time since together they request more
 	    than 5 compute nodes. <b>If, right now, you were submit a job that
-	    requests one compute node for less an 4 hours, then this job
+	    requests one compute node for less than 4 hours, then this job
 	    would run right away.</b> Most batch schedulers allow jobs to <i>jump ahead in the queue</i> provided they don't delay jobs that are
 	    already in the queue. This is called "backfilling".
 
