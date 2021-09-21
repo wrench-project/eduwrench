@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
 import { Form, Segment, Checkbox, Label, Grid, Container } from "semantic-ui-react"
-import { Formik } from "formik"
+import { Formik, Field } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import GanttChart from "../../../components/charts/gantt_chart"
@@ -9,6 +9,7 @@ import HostUtilizationChart from "../../../components/charts/host_utilization_ch
 import TasksData from "../../../components/simulation/tasks_data"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import TaskSlider from "./task_slider"
+import CheckboxSlider from "./checkbox_slider"
 import {
     validateFieldInRange
 } from "../../../components/simulation/simulation_validation"
@@ -32,7 +33,7 @@ const Thrustd_Cloud_Simulation = () => {
                 <Segment.Group>
                     <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
                     <Segment>
-                        <Formik
+                        <Formik enableReinitialize={true}
                             initialValues={{
                                 numHosts: 1,
                                 pstate: 0,
@@ -40,12 +41,12 @@ const Thrustd_Cloud_Simulation = () => {
                                 numVmInstances: 0,
                                 mProjectLocal: 0,
                                 mDiffFitLocal: 0,
-                                mConcatFitLocal: "",
-                                mBgModelLocal: "",
+                                mConcatFitLocal: false,
+                                mBgModelLocal: false,
                                 mBackgroundLocal: 0,
-                                mImgtblLocal: "",
-                                mAddLocal: "",
-                                mViewerLocal: ""
+                                mImgtblLocal: false,
+                                mAddLocal: false,
+                                mViewerLocal: false
                             }}
 
                             validate={values => {
@@ -82,6 +83,7 @@ const Thrustd_Cloud_Simulation = () => {
                                         mAddLocal: values.mAddLocal,
                                         mViewerLocal: values.mViewerLocal
                                     }
+                                    console.log(data)
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
                                         response => {
@@ -105,6 +107,7 @@ const Thrustd_Cloud_Simulation = () => {
                         >
                             {({
                                   values,
+                                  setFieldValue,
                                   errors,
                                   touched,
                                   handleChange,
@@ -177,40 +180,32 @@ const Thrustd_Cloud_Simulation = () => {
                                                     } : null}
                                         />
                                     </Form.Group>
-                                    <Segment>
-                                        <Segment><strong>Task Distribution</strong></Segment>
-                                        <Grid>
-                                            <Grid.Row>
-                                                <TaskSlider name="mProjectLocal" color="blue" onChange={handleChange} onBlur={handleBlur} value={values.mProjectLocal}/>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <TaskSlider name="mDiffFitLocal" color="pink" onChange={handleChange} onBlur={handleBlur} value={values.mDiffFitLocal}/>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Checkbox slider name="mConcatFitLocal" onChange={handleChange} onBlur={handleBlur} value={values.mConcatFitLocal}/>
-                                                <Label horizontal color="orange"> </Label>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Checkbox slider name="mBgModelLocal" onChange={handleChange} onBlur={handleBlur} value={values.mBgModelLocal}/>
-                                                <Label horizontal color="green"> </Label>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <TaskSlider name="mBackgroundLocal" color="yellow" onChange={handleChange} onBlur={handleBlur} value={values.mBackgroundLocal}/>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Checkbox slider name="mImgtblLocal" onChange={handleChange} onBlur={handleBlur} value={values.mImgtblLocal}/>
-                                                <Label horizontal color="blue"> </Label>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Checkbox slider name="mAddLocal" onChange={handleChange} onBlur={handleBlur} value={values.mAddLocal}/>
-                                                <Label horizontal color="violet"> </Label>
-                                            </Grid.Row>
-                                            <Grid.Row>
-                                                <Checkbox slider name="mViewerLocal" onChange={handleChange} onBlur={handleBlur} value={values.mViewerLocal}/>
-                                                <Label horizontal color="red"> </Label>
-                                            </Grid.Row>
-                                        </Grid>
-                                    </Segment>
+                                    {/*https://stackoverflow.com/questions/63774577/how-to-define-setfieldvalue-in-react*/}
+                                    <Segment><strong>Task Distribution</strong></Segment>
+                                    <Form.Field fluid value={values.mProjectLocal}>
+                                        <TaskSlider color="blue" name="mProjectLocal" set={setFieldValue}/>
+                                    </Form.Field>
+                                    <Form.Field fluid value={values.mDiffFitLocal}>
+                                        <TaskSlider color="pink" name="mDiffFitLocal" set={setFieldValue}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="orange" name="mConcatFitLocal" set={setFieldValue} value={values.mConcatFitLocal}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="green" name="mBgModelLocal" set={setFieldValue} value={values.mBgModelLocal}/>
+                                    </Form.Field>
+                                    <Form.Field fluid value={values.mBackgroundLocal}>
+                                        <TaskSlider color="yellow" name="mBackgroundLocal" set={setFieldValue}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="blue" name="mImgtblLocal" set={setFieldValue} value={values.mImgtblLocal}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="violet" name="mAddLocal" set={setFieldValue} value={values.mAddLocal}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="red" name="mViewerLocal" set={setFieldValue} value={values.mViewerLocal}/>
+                                    </Form.Field>
                                     <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
                                 </Form>
                             )}
