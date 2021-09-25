@@ -58,13 +58,12 @@ const Footer = () => (
                 backgroundColor="#fff"
               />
             </a>
-          </div>
-          <div className="inline-block" style={{ marginLeft: "1em" }}>
             <a
               href="https://www.ics.hawaii.edu/"
               target="_blank"
               rel="noreferrer"
               className="link m-lg-2"
+              style={{marginLeft: "1em", verticalAlign: "top"}}
             >
               <StaticImage
                 src="../images/logo-uhm.png"
@@ -73,19 +72,31 @@ const Footer = () => (
                 backgroundColor="#fff"
               />
             </a>
-          </div>
-          <div className="inline-block" style={{ marginLeft: "1em", marginTop: "0.2em" }}>
-            {" "}
             <a
               href="https://www.isi.edu/"
               target="_blank"
               rel="noreferrer"
               className="link m-lg-2"
+              style={{marginLeft: "0.5em", verticalAlign: "bottom"}}
             >
               <StaticImage
                 src="../images/logo-usc.png"
-                height={38}
+                height={35}
                 alt="USC logo"
+                backgroundColor="#fff"
+              />
+            </a>
+            <a
+              href="https://www.ornl.gov/group/dlsw"
+              target="_blank"
+              rel="noreferrer"
+              className="link m-lg-2"
+              style={{marginLeft: "0.5em", verticalAlign: "bottom"}}
+            >
+              <StaticImage
+                src="../images/logo-ornl.png"
+                height={30}
+                alt="ORNL logo"
                 backgroundColor="#fff"
               />
             </a>
