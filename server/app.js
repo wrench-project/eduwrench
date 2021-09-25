@@ -1119,16 +1119,6 @@ app.post("/run/thrustd_cloud", function (req, res) {
         "--log='root.fmt:[%.2d]%e%m%n'",
     ];
 
-    console.log(MPROJECT_LOCAL);
-    console.log(MDIFFFIT_LOCAL);
-    console.log(MCONCATFIT_LOCAL);
-    console.log(MBGMODEL_LOCAL);
-    console.log(MBACKGROUND_LOCAL);
-    console.log(MIMGBTL_LOCAL);
-    console.log(MADD_LOCAL);
-    console.log(MVIEWER_LOCAL);
-    console.log(USE_CLOUD);
-
     const json_data = {
         "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
         "num_hosts": parseInt(NUM_HOSTS),

@@ -83,7 +83,6 @@ const Thrustd_Cloud_Simulation = () => {
                                         mAddLocal: values.mAddLocal,
                                         mViewerLocal: values.mViewerLocal
                                     }
-                                    console.log(data)
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
                                         response => {
