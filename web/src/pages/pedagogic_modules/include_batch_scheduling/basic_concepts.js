@@ -41,9 +41,9 @@ const BasicConcepts = ({ module, tab }) => {
       <p>
         The diagram below depicts the operation of a batch scheduler. A job (orange) is running using 6 compute nodes.
         Another job (blue)
-        was waiting in the queue but, due to the availability of compute nodes, was just started on 8 compute nodes. No
+        was waiting in the queue but, due to the availability of compute nodes, was just started on 7 compute nodes. No
         other job
-        is running, leaving 6 compute nodes idle. Another job (green) is still waiting in the queue, likely because it
+        is running, leaving 7 compute nodes idle. Another job (green) is still waiting in the queue, likely because it
         needs
         more than 6 compute nodes. Finally, a new job (purple) was just submitted by a user, and has been placed in the
         queue.
