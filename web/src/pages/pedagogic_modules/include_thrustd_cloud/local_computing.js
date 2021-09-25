@@ -1,6 +1,5 @@
 import React from "react"
-import { Divider, Header, Table } from "semantic-ui-react"
-import TeX from "@matejmazur/react-katex"
+import {Divider, Header, Table} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg";
 import Thrustd_Local_Simulation from "./thrustd_local_simulation";
@@ -13,14 +12,15 @@ const LocalComputing = () => {
                 "TO BE CHANGED",
                 "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed",
                 "Understand the simple relationship between program execution time, work, and compute speed"
-            ]} />
+            ]}/>
 
             <h2>Local Computing</h2>
 
             <p>
                 You are an employee at a space agency that needs to run a well-known Astronomy workflow application
                 called <a href="http://montage.ipac.caltech.edu/">Montage</a>. The objective of Montage is to
-                assemble telescope images into a mosaic of the sky (see a <a href="http://montage.ipac.caltech.edu/gallery.html">gallery</a> of
+                assemble telescope images into a mosaic of the sky (see a <a
+                href="http://montage.ipac.caltech.edu/gallery.html">gallery</a> of
                 such mosaics). As part of the operation of your agency, Montage has to be executed often and
                 regularly. Therefore, it is crucial that its execution be efficient.
             </p>
@@ -66,62 +66,61 @@ const LocalComputing = () => {
             <p>
                 <strong>Below is the table of GHz vs speed:</strong>
             </p>
-            <p>
-                <Table compact collapsing>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>pstate</Table.HeaderCell>
-                            <Table.HeaderCell>GHz</Table.HeaderCell>
-                            <Table.HeaderCell>Compute Speed (flops)</Table.HeaderCell>
-                            <Table.HeaderCell>Power Consumption</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-                    <Table.Body>
-                        <Table.Row>
-                            <Table.Cell>0</Table.Cell>
-                            <Table.Cell>1.2</Table.Cell>
-                            <Table.Cell>0.5217</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>1</Table.Cell>
-                            <Table.Cell>1.4</Table.Cell>
-                            <Table.Cell>0.6087</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>2</Table.Cell>
-                            <Table.Cell>1.6</Table.Cell>
-                            <Table.Cell>0.6957</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>3</Table.Cell>
-                            <Table.Cell>1.8</Table.Cell>
-                            <Table.Cell>0.7826</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>4</Table.Cell>
-                            <Table.Cell>2.0</Table.Cell>
-                            <Table.Cell>0.8696</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>5</Table.Cell>
-                            <Table.Cell>2.2</Table.Cell>
-                            <Table.Cell>0.9565</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                        <Table.Row>
-                            <Table.Cell>6</Table.Cell>
-                            <Table.Cell>2.3</Table.Cell>
-                            <Table.Cell>1</Table.Cell>
-                            <Table.Cell>XXX</Table.Cell>
-                        </Table.Row>
-                    </Table.Body>
-                </Table>
-            </p>
+
+            <Table compact collapsing>
+                <Table.Header>
+                    <Table.Row>
+                        <Table.HeaderCell>pstate</Table.HeaderCell>
+                        <Table.HeaderCell>GHz</Table.HeaderCell>
+                        <Table.HeaderCell>Compute Speed (flops)</Table.HeaderCell>
+                        <Table.HeaderCell>Power Consumption</Table.HeaderCell>
+                    </Table.Row>
+                </Table.Header>
+                <Table.Body>
+                    <Table.Row>
+                        <Table.Cell>0</Table.Cell>
+                        <Table.Cell>1.2</Table.Cell>
+                        <Table.Cell>0.5217</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>1</Table.Cell>
+                        <Table.Cell>1.4</Table.Cell>
+                        <Table.Cell>0.6087</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>2</Table.Cell>
+                        <Table.Cell>1.6</Table.Cell>
+                        <Table.Cell>0.6957</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>3</Table.Cell>
+                        <Table.Cell>1.8</Table.Cell>
+                        <Table.Cell>0.7826</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>4</Table.Cell>
+                        <Table.Cell>2.0</Table.Cell>
+                        <Table.Cell>0.8696</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>5</Table.Cell>
+                        <Table.Cell>2.2</Table.Cell>
+                        <Table.Cell>0.9565</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                    <Table.Row>
+                        <Table.Cell>6</Table.Cell>
+                        <Table.Cell>2.3</Table.Cell>
+                        <Table.Cell>1</Table.Cell>
+                        <Table.Cell>XXX</Table.Cell>
+                    </Table.Row>
+                </Table.Body>
+            </Table>
 
             <p>
                 You can pick the pstate value of the nodes at will, and we'll assume that all nodes are always set
@@ -139,9 +138,9 @@ const LocalComputing = () => {
                 Here is the simulator:
             </p>
 
-            <SimulationActivity panelKey="local_computing" content={<Thrustd_Local_Simulation />} />
+            <SimulationActivity panelKey="local_computing" content={<Thrustd_Local_Simulation/>}/>
 
-            <Divider />
+            <Divider/>
             <Header as="h3" block>
                 Questions
             </Header>
@@ -158,14 +157,16 @@ const LocalComputing = () => {
                 as possible is overkill. Instead, it is only necessary that the workflow run in under an hour
                 (e.g., running in 30 minutes bring no extra benefits when compared to running on 59 minutes). With
                 this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
-                <br /><br />
-                <ul>
-                    <li>Option 1: Turn off some of the cluster nodes and simply not use them. Using a binary search,
-                        find the smallest number of nodes that satisfies the 1-hour time limit.</li>
-                    <li>Option 2: Downclock all the cluster nodes to a lower pstate. Using a binary search, find the
-                        smallest pstate that satisfies the 1-hour time limit.</li>
-                </ul>
+                <br/>
             </p>
+            <ul>
+                <li>Option 1: Turn off some of the cluster nodes and simply not use them. Using a binary search,
+                    find the smallest number of nodes that satisfies the 1-hour time limit.
+                </li>
+                <li>Option 2: Downclock all the cluster nodes to a lower pstate. Using a binary search, find the
+                    smallest pstate that satisfies the 1-hour time limit.
+                </li>
+            </ul>
             <p>
                 For both these options give the $ cost, the CO2 emission, and the parallel efficiency. What should
                 you tell your boss regarding which option is more desirable?
@@ -178,7 +179,7 @@ const LocalComputing = () => {
                 nodes configured at the maximum pstate, that leads to a parallel efficiency of 75%. Then, using
                 that number of nodes, you're supposed to find which pstate you can downclock to so as to save energy,
                 while still remaining under the 1-hour time limit.
-                <br /><br />
+                <br/><br/>
                 Report on the number of nodes and pstate that you end up using. It turns out that the optimal cluster
                 configuration in terms of number of nodes used and pstate leads to a $ cost of $X with an execution
                 of XXX minutes. How far is your answer from the optimal?

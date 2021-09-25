@@ -1096,26 +1096,85 @@ app.post("/run/thrustd_cloud", function (req, res) {
     const PSTATE = req.body.pstate;
     const NUM_CLOUD_HOSTS = req.body.cloudHosts;
     const NUM_VM_INSTANCES = req.body.numVmInstances;
-    const MPROJECT_LOCAL = req.body.mProjectLocal;
-    const MDIFFFIT_LOCAL = req.body.mDiffFitLocal;
-    const MCONCATFIT_LOCAL = req.body.mConcatFitLocal;
-    const MBGMODEL_LOCAL = req.body.mBgModelLocal;
-    const MBACKGROUND_LOCAL = req.body.mBackgroundLocal;
-    const MIMGBTL_LOCAL = req.body.mImgtblLocal;
-    const MADD_LOCAL = req.body.mAddLocal;
-    const MVIEWER_LOCAL = req.body.mViewerLocal;
+    let MPROJECT_CLOUD = Math.round(((parseInt(req.body.mProjectCloud) * 1.0) / 100) * 117);
+    let MDIFFFIT_CLOUD = Math.round(((parseInt(req.body.mDiffFitCloud) * 1.0) / 100) * 499);
+    let MCONCATFIT_CLOUD = req.body.mConcatFitCloud;
+    let MBGMODEL_CLOUD = req.body.mBgModelCloud;
+    let MBACKGROUND_CLOUD = Math.round(((parseInt(req.body.mBackgroundCloud) * 1.0) / 100) * 117);
+    let MIMGTBL_CLOUD = req.body.mImgtblCloud;
+    let MADD_CLOUD = req.body.mAddCloud;
+    let MVIEWER_CLOUD = req.body.mViewerCloud;
 
     let USE_CLOUD = true;
+
     if (NUM_CLOUD_HOSTS == 0 || NUM_VM_INSTANCES == 0) {
         USE_CLOUD = false;
+        MPROJECT_CLOUD = 0;
+        MDIFFFIT_CLOUD = 0;
+        MCONCATFIT_CLOUD = false;
+        MBGMODEL_CLOUD = false;
+        MBACKGROUND_CLOUD = 0;
+        MIMGTBL_CLOUD = false;
+        MADD_CLOUD = false;
+        MVIEWER_CLOUD = false;
+    }
+
+    // mProject = 1 - 117
+    // mDiffFit = 118 - 616
+    // mConcatFit = 617
+    // mBgModel = 618
+    // mBackground = 619 - 735
+    // mImgBtl = 736
+    // mAdd = 737
+    // mViewer = 738
+
+    let CLOUD_TASKS = "";
+
+    for (let i = 1; i < MPROJECT_CLOUD + 1; i++) {
+        let task = "";
+        if (i / 100 == 1) {
+            task = "mProject_00000" + i.toString() + ",";
+        } else if (i / 10 >= 1) {
+            task = "mProject_000000" + i.toString() + ",";
+        } else {
+            task = "mProject_0000000" + i.toString() + ",";
+        }
+        CLOUD_TASKS += task;
+    }
+    for (let i = 118; i < MDIFFFIT_CLOUD + 118; i++) {
+        const task = "mDiffFit_00000" + i.toString() + ",";
+        CLOUD_TASKS += task;
+    }
+    if (MCONCATFIT_CLOUD === true) {
+        CLOUD_TASKS += "mConcatFit_00000617,";
+    }
+    if (MBGMODEL_CLOUD === true) {
+        CLOUD_TASKS += "mBgModel_00000618,";
+    }
+    for (let i = 619; i < MBACKGROUND_CLOUD + 619; i++) {
+        const task = "mBackground_00000" + i.toString() + ",";
+        CLOUD_TASKS += task;
+    }
+    if (MIMGTBL_CLOUD === true) {
+        CLOUD_TASKS += "mImgtbl_00000736,";
+    }
+    if (MADD_CLOUD === true) {
+        CLOUD_TASKS += "mAdd_00000737,";
+    }
+    if (MVIEWER_CLOUD === true) {
+        CLOUD_TASKS += "mViewer_00000738,";
+    }
+
+    if (CLOUD_TASKS != "") {
+        CLOUD_TASKS = CLOUD_TASKS.substring(0, CLOUD_TASKS.length - 1);
     }
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
         "--log=root.thresh:critical",
-        "--log=wms.thresh:debug",
-        "--log=simple_wms.thresh:debug",
-        "--log=simple_wms_scheduler.thresh:debug",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
         "--log='root.fmt:[%.2d]%e%m%n'",
     ];
 
@@ -1140,14 +1199,13 @@ app.post("/run/thrustd_cloud", function (req, res) {
         "cloud_cost_per_mwh": 1000,
         "num_vm_instances": parseInt(NUM_VM_INSTANCES),
         "vm_usage_duration": 10,
-        // to be changed later
-        "cloud_tasks": "mProject_00000001,mProject_00000002,mProject_00000003,mProject_00000004,mProject_00000005,mProject_00000006,mProject_00000007,mProject_00000008,mProject_00000009,mProject_00000010,mProject_00000011,mProject_00000012,mProject_00000013,mProject_00000014,mProject_00000015"
+        "cloud_tasks": CLOUD_TASKS
     }
+
     // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
     let args_json = JSON.stringify(json_data);
     console.log(args_json);
     const fs = require('fs');
-
     fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
         if(err) console.log('error', err);
     });

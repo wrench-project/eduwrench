@@ -24,7 +24,8 @@ const TaskSlider = ({color, name, set}) => {
                     <Slider value={uiValue} color={color} settings={settings}/>
                 </Grid.Column>
                 <Grid.Column width={16}>
-                    <Label color={color}>{uiValue}</Label>
+                    <Label color={color}>Cloud: {uiValue}%</Label>
+                    <Label color={color}>Local: {100 - uiValue}%</Label>
                 </Grid.Column>
             </Grid>
         </Container>

@@ -1,6 +1,5 @@
 import React from "react"
-import { Divider, Header, Table } from "semantic-ui-react"
-import TeX from "@matejmazur/react-katex"
+import { Divider, Header} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
@@ -42,12 +41,12 @@ const CloudComputing = () => {
 
             <p>
                 What you need to do is figure out:
-                <br /><br />
-                <ul>
-                    <li>How many VMs to ask for on the cloud</li>
-                    <li>Which tasks should run on the cloud</li>
-                </ul>
+                <br />
             </p>
+            <ul>
+                <li>How many VMs to ask for on the cloud</li>
+                <li>Which tasks should run on the cloud</li>
+            </ul>
 
             <p>
                 Here is the simulator:
@@ -72,14 +71,7 @@ const CloudComputing = () => {
                 as possible is overkill. Instead, it is only necessary that the workflow run in under an hour
                 (e.g., running in 30 minutes bring no extra benefits when compared to running on 59 minutes). With
                 this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
-                <br /><br />
-                <ul>
-                    <li>Option 1: Turn off some of the cluster nodes and simply not use them. Using a binary search,
-                        find the smallest number of nodes that satisfies the 1-hour time limit.</li>
-                    <li>Option 2: Downclock all the cluster nodes to a lower pstate. Using a binary search, find the
-                        smallest pstate that satisfies the 1-hour time limit.</li>
-                </ul>
-                <br /><br />
+                <br />
                 For both these options give the $ cost, the CO2 emission, and the parallel efficiency. What should
                 you tell your boss regarding which option is more desirable?
             </p>

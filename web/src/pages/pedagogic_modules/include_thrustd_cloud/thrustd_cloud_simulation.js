@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Segment, Checkbox, Label, Grid, Container } from "semantic-ui-react"
-import { Formik, Field } from "formik"
+import { Form, Segment} from "semantic-ui-react"
+import { Formik} from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import GanttChart from "../../../components/charts/gantt_chart"
@@ -39,14 +39,14 @@ const Thrustd_Cloud_Simulation = () => {
                                 pstate: 0,
                                 cloudHosts: 0,
                                 numVmInstances: 0,
-                                mProjectLocal: 0,
-                                mDiffFitLocal: 0,
-                                mConcatFitLocal: false,
-                                mBgModelLocal: false,
-                                mBackgroundLocal: 0,
-                                mImgtblLocal: false,
-                                mAddLocal: false,
-                                mViewerLocal: false
+                                mProjectCloud: 0,
+                                mDiffFitCloud: 0,
+                                mConcatFitCloud: false,
+                                mBgModelCloud: false,
+                                mBackgroundCloud: 0,
+                                mImgtblCloud: false,
+                                mAddCloud: false,
+                                mViewerCloud: false
                             }}
 
                             validate={values => {
@@ -74,14 +74,14 @@ const Thrustd_Cloud_Simulation = () => {
                                         pstate: values.pstate,
                                         cloudHosts: values.cloudHosts,
                                         numVmInstances: values.numVmInstances,
-                                        mProjectLocal: values.mProjectLocal,
-                                        mDiffFitLocal: values.mDiffFitLocal,
-                                        mConcatFitLocal: values.mConcatFitLocal,
-                                        mBgModelLocal: values.mBgModelLocal,
-                                        mBackgroundLocal: values.mBackgroundLocal,
-                                        mImgtblLocal: values.mImgtblLocal,
-                                        mAddLocal: values.mAddLocal,
-                                        mViewerLocal: values.mViewerLocal
+                                        mProjectCloud: values.mProjectCloud,
+                                        mDiffFitCloud: values.mDiffFitCloud,
+                                        mConcatFitCloud: values.mConcatFitCloud,
+                                        mBgModelCloud: values.mBgModelCloud,
+                                        mBackgroundCloud: values.mBackgroundCloud,
+                                        mImgtblCloud: values.mImgtblCloud,
+                                        mAddCloud: values.mAddCloud,
+                                        mViewerCloud: values.mViewerCloud
                                     }
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
@@ -181,29 +181,29 @@ const Thrustd_Cloud_Simulation = () => {
                                     </Form.Group>
                                     {/*https://stackoverflow.com/questions/63774577/how-to-define-setfieldvalue-in-react*/}
                                     <Segment><strong>Task Distribution</strong></Segment>
-                                    <Form.Field fluid value={values.mProjectLocal}>
-                                        <TaskSlider color="blue" name="mProjectLocal" set={setFieldValue}/>
+                                    <Form.Field fluid value={values.mProjectCloud}>
+                                        <TaskSlider color="blue" name="mProjectCloud" set={setFieldValue}/>
                                     </Form.Field>
-                                    <Form.Field fluid value={values.mDiffFitLocal}>
-                                        <TaskSlider color="pink" name="mDiffFitLocal" set={setFieldValue}/>
-                                    </Form.Field>
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="orange" name="mConcatFitLocal" set={setFieldValue} value={values.mConcatFitLocal}/>
+                                    <Form.Field fluid value={values.mDiffFitCloud}>
+                                        <TaskSlider color="pink" name="mDiffFitCloud" set={setFieldValue}/>
                                     </Form.Field>
                                     <Form.Field fluid>
-                                        <CheckboxSlider color="green" name="mBgModelLocal" set={setFieldValue} value={values.mBgModelLocal}/>
-                                    </Form.Field>
-                                    <Form.Field fluid value={values.mBackgroundLocal}>
-                                        <TaskSlider color="yellow" name="mBackgroundLocal" set={setFieldValue}/>
+                                        <CheckboxSlider color="orange" name="mConcatFitCloud" set={setFieldValue} value={values.mConcatFitCloud}/>
                                     </Form.Field>
                                     <Form.Field fluid>
-                                        <CheckboxSlider color="blue" name="mImgtblLocal" set={setFieldValue} value={values.mImgtblLocal}/>
+                                        <CheckboxSlider color="green" name="mBgModelCloud" set={setFieldValue} value={values.mBgModelCloud}/>
+                                    </Form.Field>
+                                    <Form.Field fluid value={values.mBackgroundCloud}>
+                                        <TaskSlider color="yellow" name="mBackgroundCloud" set={setFieldValue}/>
                                     </Form.Field>
                                     <Form.Field fluid>
-                                        <CheckboxSlider color="violet" name="mAddLocal" set={setFieldValue} value={values.mAddLocal}/>
+                                        <CheckboxSlider color="blue" name="mImgtblCloud" set={setFieldValue} value={values.mImgtblCloud}/>
                                     </Form.Field>
                                     <Form.Field fluid>
-                                        <CheckboxSlider color="red" name="mViewerLocal" set={setFieldValue} value={values.mViewerLocal}/>
+                                        <CheckboxSlider color="violet" name="mAddCloud" set={setFieldValue} value={values.mAddCloud}/>
+                                    </Form.Field>
+                                    <Form.Field fluid>
+                                        <CheckboxSlider color="red" name="mViewerCloud" set={setFieldValue} value={values.mViewerCloud}/>
                                     </Form.Field>
                                     <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
                                 </Form>
