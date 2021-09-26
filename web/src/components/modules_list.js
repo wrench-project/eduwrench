@@ -92,9 +92,10 @@ const ModulesList = () => {
         <Segment><strong>B.1. CI Service Concepts</strong></Segment>
         <Segment>
           <p className="module-desc">
-            <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/ci_service_concepts/">Launch</Button>
-            The goal of this module is to provide you with basic knowledge about cyberinfrastructure (CI) services.
+            Under development
+            {/*<Button size="mini" color="yellow" floated="left"*/}
+            {/*        href="/pedagogic_modules/ci_service_concepts/">Launch</Button>*/}
+            {/*The goal of this module is to provide you with basic knowledge about cyberinfrastructure (CI) services.*/}
           </p>
         </Segment>
       </SegmentGroup>
