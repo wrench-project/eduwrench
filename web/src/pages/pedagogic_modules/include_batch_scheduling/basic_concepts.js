@@ -23,19 +23,15 @@ const BasicConcepts = ({ module, tab }) => {
 
       <p>
         Consider a cluster of homogeneous compute nodes (or just "nodes"). A batch
-        scheduler is a software service that allows users to submit <strong>jobs</strong> to the
+        scheduler is to the cluster what the host at the entrance is to a restaurant. 
+        More specifically, it is a software service that allows users to submit <strong>jobs</strong> to the
         cluster. Submitting jobs is typically the only way for users to access the
         cluster's nodes. Each job specifies a desired <i>number of nodes</i>, a
         desired <i>duration</i>, and a program to run on these nodes. For instance, a job can
         say: "I need 4 nodes for 2 hours". These job requests are placed in
         a <strong>queue</strong>, where they wait until the nodes they need are available.
         After waiting in the queue, a job is allocated to and started on available
-        nodes. A
-        decent real-world analogy is parties of diners waiting for tables at a busy
-        restaurant, where the host person is the batch scheduler. The difference
-        is that in addition to saying "we need a table with 4 seats" (in our case
-        seats are nodes) parties would also need to give a time limit ("we need 2
-        hours to eat").
+        nodes. 
       </p>
 
       <p>
