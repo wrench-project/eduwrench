@@ -1015,9 +1015,9 @@ app.post("/run/thrustd", function (req, res) {
   // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
   const LOGGING = [
     "--log=root.thresh:critical",
-    "--log=wms.thresh:debug",
-    "--log=simple_wms.thresh:debug",
-    "--log=simple_wms_scheduler.thresh:debug",
+    "--log=wms.thresh:critical",
+    "--log=simple_wms.thresh:critical",
+    "--log=simple_wms_scheduler.thresh:critical",
     "--log='root.fmt:[%.2d]%e%m%n'",
   ];
 
@@ -1059,6 +1059,15 @@ app.post("/run/thrustd", function (req, res) {
 
   var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
 
+    let sim_output_start = simulation_output.indexOf("Total");
+    let trimmed_sim_output = simulation_output.substring(sim_output_start);
+    let output_array = trimmed_sim_output.split("\n");
+    let printed_sim_output = "";
+    for(let i = 0; i < output_array.length; i++){
+        printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+            + output_array[i] + "<br></span>";
+    }
+
   if (simulation_output !== null) {
       /**
        * Log the user running this simulation along with the
@@ -1074,7 +1083,7 @@ app.post("/run/thrustd", function (req, res) {
       });
 
       res.json({
-          "simulation_output": ansiUpSimulationOutput(simulation_output),
+          "simulation_output": printed_sim_output,
           "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
       })
   }
@@ -1132,7 +1141,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
 
     for (let i = 1; i < MPROJECT_CLOUD + 1; i++) {
         let task = "";
-        if (i / 100 == 1) {
+        if (i / 100 >= 1) {
             task = "mProject_00000" + i.toString() + ",";
         } else if (i / 10 >= 1) {
             task = "mProject_000000" + i.toString() + ",";
@@ -1216,6 +1225,15 @@ app.post("/run/thrustd_cloud", function (req, res) {
 
     var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
 
+    let sim_output_start = simulation_output.indexOf("Total");
+    let trimmed_sim_output = simulation_output.substring(sim_output_start);
+    let output_array = trimmed_sim_output.split("\n");
+    let printed_sim_output = "";
+    for(let i = 0; i < output_array.length; i++){
+    printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+        + output_array[i] + "<br></span>";
+    }
+
     if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
@@ -1234,7 +1252,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
         });
 
         res.json({
-            "simulation_output": ansiUpSimulationOutput(simulation_output),
+            "simulation_output": printed_sim_output,
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         })
     }
@@ -1381,6 +1399,7 @@ function launchSimulation(executable, args, stdout = false) {
 function ansiUpSimulationOutput(simulationOutput) {
     let find = "</span>"
     let re = new RegExp(find, "g")
+    console.log(ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find))
     return ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find)
 }
 
