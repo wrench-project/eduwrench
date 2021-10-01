@@ -37,7 +37,6 @@ const Thrustd_Cloud_Simulation = () => {
                             initialValues={{
                                 numHosts: 1,
                                 pstate: 0,
-                                cloudHosts: 0,
                                 numVmInstances: 0,
                                 mProjectCloud: 0,
                                 mDiffFitCloud: 0,
@@ -72,7 +71,6 @@ const Thrustd_Cloud_Simulation = () => {
                                         email: userEmail,
                                         num_hosts: values.numHosts,
                                         pstate: values.pstate,
-                                        cloudHosts: values.cloudHosts,
                                         numVmInstances: values.numVmInstances,
                                         mProjectCloud: values.mProjectCloud,
                                         mDiffFitCloud: values.mDiffFitCloud,
@@ -142,23 +140,6 @@ const Thrustd_Cloud_Simulation = () => {
                                                     value={values.pstate}
                                                     error={errors.pstate && touched.pstate ? {
                                                         content: "Please provide the pstate in the range of [0, 6].",
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group widths="equal">
-                                        <Form.Input fluid name="cloudHosts"
-                                                    label="Number of Cloud Hosts"
-                                                    placeholder="0"
-                                                    type="number"
-                                                    min={0}
-                                            // not sure how many is the max for cloud hosts
-                                                    max={128}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.cloudHosts}
-                                                    error={errors.cloudHosts && touched.cloudHosts ? {
-                                                        content: "Please provide the number of cloud hosts in the range of [0, 128].",
                                                         pointing: "above"
                                                     } : null}
                                         />

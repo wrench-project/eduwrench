@@ -1103,7 +1103,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
     const EMAIL = req.body.email;
     const NUM_HOSTS = req.body.num_hosts;
     const PSTATE = req.body.pstate;
-    const NUM_CLOUD_HOSTS = req.body.cloudHosts;
+    const NUM_CLOUD_HOSTS = req.body.numVmInstances;
     const NUM_VM_INSTANCES = req.body.numVmInstances;
     let MPROJECT_CLOUD = Math.round(((parseInt(req.body.mProjectCloud) * 1.0) / 100) * 117);
     let MDIFFFIT_CLOUD = Math.round(((parseInt(req.body.mDiffFitCloud) * 1.0) / 100) * 499);
@@ -1116,7 +1116,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
 
     let USE_CLOUD = true;
 
-    if (NUM_CLOUD_HOSTS == 0 || NUM_VM_INSTANCES == 0) {
+    if (NUM_VM_INSTANCES == 0) {
         USE_CLOUD = false;
         MPROJECT_CLOUD = 0;
         MDIFFFIT_CLOUD = 0;
@@ -1202,9 +1202,9 @@ app.post("/run/thrustd_cloud", function (req, res) {
         "num_cloud_hosts": parseInt(NUM_CLOUD_HOSTS),
         "cloud_cores": 16,
         "cloud_bandwidth": "1000EBps",
-        "cloud_pstate": 1,
-        "cloud_speed": "100Gf, 200Gf",
-        "cloud_value": "10.00:10.00:100.00,10.00:10.00:250.00",
+        "cloud_pstate": 0,
+        "cloud_speed": "100Gf",
+        "cloud_value": "10.00:10.00:100.00",
         "cloud_cost_per_mwh": 1000,
         "num_vm_instances": parseInt(NUM_VM_INSTANCES),
         "vm_usage_duration": 10,
