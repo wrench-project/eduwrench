@@ -49,5 +49,8 @@ module.exports = {
     `gatsby-transformer-remark`,
     `gatsby-transformer-sharp`,
     `gatsby-transformer-yaml`
-  ]
+  ],
+  flags: {
+    FAST_DEV: true
+  }
 }
