@@ -37,12 +37,16 @@ const WorkflowsDistributedExecutionSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("wf-dist-num-hosts-label", values.numCores, 1, 32, "N=", "Hosts")) {
+                if (!validateFieldInRange("wf-dist-num-cores-label-1", values.numCores, 1, 32, "Cores: ", "")) {
                   errors.numCores = "ERROR"
                 }
-                if (!validateFieldInRange("wf-dist-num-cores-label", values.numHosts, 1, 20, "Cores:")) {
+                if (!validateFieldInRange("wf-dist-num-cores-label-2", values.numCores, 1, 32, "Cores: ", "")) {
+                  errors.numCores = "ERROR"
+                }
+                if (!validateFieldInRange("wf-dist-num-hosts-label", values.numHosts, 1, 20, "N= ", "Hosts")) {
                   errors.numHosts = "ERROR"
                 }
+
                 return errors
               }}
 

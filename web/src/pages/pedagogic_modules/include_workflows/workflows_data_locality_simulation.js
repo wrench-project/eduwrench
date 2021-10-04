@@ -40,7 +40,10 @@ const WorkflowsDataLocalitySimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("wf-locality-num-cores-label", values.numCores, 1, 32, "Cores:")) {
+                if (!validateFieldInRange("wf-locality-num-cores-label-1", values.numCores, 1, 32, "Cores:")) {
+                  errors.numCores = "ERROR"
+                }
+                if (!validateFieldInRange("wf-locality-num-cores-label-2", values.numCores, 1, 32, "Cores:")) {
                   errors.numCores = "ERROR"
                 }
                 if (!validateFieldInRange("wf-locality-num-hosts-label", values.numHosts, 1, 20, "N =", "Host(s)")) {
@@ -128,7 +131,7 @@ const WorkflowsDataLocalitySimulation = () => {
                                 } : null}
                     />
                     <Form.Input fluid name="linkBandwidth"
-                                label="Number of cores per compute host"
+                                label="Wide-area link bandwidth"
                                 placeholder="1"
                                 type="number"
                                 min={1}
