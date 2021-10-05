@@ -148,9 +148,7 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
     // TODO: Update the "keeping track of available cores" to work for the local BMService
     //  and all the remote BMServices (This Scheduler never knows about the CloudComputeService)
 
-    auto storage_service = this->default_storage_service;
-
-    WRENCH_INFO("About to submit jobs for %ld ready tasks", tasks.size());
+    WRENCH_INFO("Trying to schedule %ld ready tasks", tasks.size());
 
 //    auto tasks_run = 0;
 
@@ -167,9 +165,9 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
         // if one is found, set selected_cs to it and break; if not, continue to next task
         if (isCloudTask(task->getID())) {
             for (auto cs : vm_css) {
-                WRENCH_INFO("CS %s: %ld cores (task min: %ld)",
-                            cs->getName().c_str(),
-                            this->getNumCoresAvailable(cs), task->getMinNumCores());
+//                WRENCH_INFO("CS %s: %ld cores (task min: %ld)",
+//                            cs->getName().c_str(),
+//                            this->getNumCoresAvailable(cs), task->getMinNumCores());
                 if (this->getNumCoresAvailable(cs) >= task->getMinNumCores()) {
                     selected_cs = cs;
 //                    std::cout << "here: " << getNumCoresAvailable(selected_cs) << std::endl;
@@ -177,14 +175,14 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
                 }
             }
             if (selected_cs == nullptr) {
-                WRENCH_INFO("The task was a cloud task, but couldn't be scheduled [skipping it]");
+//                WRENCH_INFO("The task was a cloud task, but couldn't be scheduled [skipping it]");
                 continue;
             }
         }
         else {
             // if not enough cores available (oversubscribing), go on to next task
             if (this->getNumCoresAvailable(local_cluster_cs) < task->getMinNumCores()) {
-                WRENCH_INFO("The task was NOT a cloud task, but couldn't be scheduled [skipping it]");
+//                WRENCH_INFO("The task was NOT a cloud task, but couldn't be scheduled [skipping it]");
                 continue;
             }
             selected_cs = local_cluster_cs;
@@ -202,10 +200,26 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
          * where is should be read/written */
         std::map<wrench::WorkflowFile *, std::shared_ptr<wrench::FileLocation>> file_locations;
         for (auto const &f : task->getInputFiles()) {
-            file_locations[f] = wrench::FileLocation::LOCATION(storage_service);
+            if (isCloudTask(task->getID())) {
+                if (this->cloud_storage_service->lookupFile(f, wrench::FileLocation::LOCATION(this->cloud_storage_service))) {
+                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+                } else {
+                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+                }
+            } else {
+                if (this->default_storage_service->lookupFile(f, wrench::FileLocation::LOCATION(this->default_storage_service))) {
+                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+                } else {
+                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+                }
+            }
         }
         for (auto const &f : task->getOutputFiles()) {
-            file_locations[f] = wrench::FileLocation::LOCATION(storage_service);
+            if (isCloudTask(task->getID())) {
+                file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+            } else {
+                file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+            }
         }
 
         /* Create the job  */

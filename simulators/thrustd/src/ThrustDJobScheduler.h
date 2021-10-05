@@ -16,8 +16,8 @@
 class ThrustDJobScheduler {
 
 public:
-  ThrustDJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service) :
-          default_storage_service(default_storage_service) {}
+  ThrustDJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service, std::shared_ptr<wrench::StorageService> cloud_storage_service) :
+          default_storage_service(default_storage_service), cloud_storage_service(cloud_storage_service) {}
 
   void scheduleTasks(const std::shared_ptr<wrench::ComputeService> &local_cs,
                      const std::set<std::shared_ptr<wrench::ComputeService>> &vm_created_cs,
@@ -35,6 +35,7 @@ public:
   void setJobManager(std::shared_ptr<wrench::JobManager> job_manager);
 private:
   std::shared_ptr<wrench::StorageService> default_storage_service;
+  std::shared_ptr<wrench::StorageService> cloud_storage_service;
 
   std::map<std::shared_ptr<wrench::BareMetalComputeService>, long> numCoresAvailable;
   std::set<std::string> cloud_tasks_set;

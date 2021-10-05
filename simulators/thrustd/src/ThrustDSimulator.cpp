@@ -20,7 +20,7 @@ static bool ends_with(const std::string& str, const std::string& suffix) {
 }
 
 int main(int argc, char **argv) {
-    
+
     // Declaration of the top-level WRENCH simulation object
     wrench::Simulation simulation;
 
@@ -31,10 +31,10 @@ int main(int argc, char **argv) {
 
     argv = new_argv;
     argc++;
-    
+
     // Initialization of the simulation
     simulation.init(&argc, argv);
-    
+
     // Parsing of the command-line arguments for this WRENCH simulation
     if (argc != 2) {
         std::cerr << "Usage: " << argv[0] << " <json file>" << std::endl;
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
                       "       </host>\n\n"
                       "       <host id=\"storage_host\" speed=\"1Gf\" pstate=\"0\" core=\"1\">\n"
                       "           <disk id=\"hard_drive\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
-                      "               <prop id=\"size\" value=\"5000GiB\"/>\n"
+                      "               <prop id=\"size\" value=\"500GB\"/>\n"
                       "               <prop id=\"mount\" value=\"/\"/>\n"
                       "           </disk>\n"
                       "           <prop id=\"wattage_per_state\" value=\"10.00:100.00\"/>\n"
@@ -102,7 +102,7 @@ int main(int argc, char **argv) {
     if (use_cloud == true) {
         xml.append("       <host id=\"cloud_provider_host\" speed=\"1Gf\" pstate=\"0\" core=\"1\">\n"
                    "           <disk id=\"hard_drive\" read_bw=\"100MBps\" write_bw=\"100MBps\">\n"
-                   "               <prop id=\"size\" value=\"5000GiB\"/>\n"
+                   "               <prop id=\"size\" value=\"500GB\"/>\n"
                    "               <prop id=\"mount\" value=\"/\"/>\n"
                    "           </disk>\n"
                    "           <prop id=\"wattage_per_state\" value=\"10.00:100.00\"/>\n"
@@ -146,7 +146,7 @@ int main(int argc, char **argv) {
                        + "\" bandwidth=\"5000GBps\" latency=\"0us\"/>\n");
         }
         // WIDE_AREA_LINK
-        xml.append("       <link id=\"WIDE_AREA_LINK\" bandwidth=\"" + cloud_bandwidth + "\" latency=\"30ms\"/>\n");
+        xml.append("       <link id=\"WIDE_AREA_LINK\" bandwidth=\"" + cloud_bandwidth + "\" latency=\"0ms\"/>\n");
         // link between Storage Host and Cloud Provider Host
 //        xml.append("       <link id=\"" + std::to_string(num_hosts + num_cloud_hosts + 3)
 //                   + "\" bandwidth=\"" + cloud_bandwidth + "\" latency=\"0us\"/>\n");
@@ -168,6 +168,11 @@ int main(int argc, char **argv) {
         for (int i = num_hosts + 2; i < num_hosts + num_cloud_hosts + 2; i++) {
             xml.append("       <route src=\"cloud_host_" + std::to_string(i - num_hosts - 1) +
                        "\" dst=\"cloud_provider_host\"> <link_ctn id=\"" + std::to_string(i) + "\"/> </route>\n");
+        }
+        // routes between each compute host and cloud provider host
+        for (int i = 1; i < num_hosts + 1; i++) {
+            xml.append("       <route src=\"compute_host_" + std::to_string(i) +
+                       "\" dst=\"cloud_provider_host\"> <link_ctn id=\"" + std::to_string(i) + "\"/> <link_ctn id=\"WIDE_AREA_LINK\"/> </route>\n");
         }
         // routes between each cloud compute host and Storage Host host
         for (int i = num_hosts + 2; i < num_hosts + num_cloud_hosts + 2; i++) {
@@ -234,15 +239,31 @@ int main(int argc, char **argv) {
     // Get a vector of all the hosts in the simulated platform
     std::vector<std::string> hostname_list = simulation.getHostnameList();
 
-    // Instantiate a storage service
+    // Instantiate a storage service on the local
     std::string storage_host = "storage_host";
     // in xml file, need storage_host w/ disk
     std::cerr << "Instantiating a SimpleStorageService on " << storage_host << "..." << std::endl;
-    auto storage_service = simulation.add(new wrench::SimpleStorageService(storage_host, {"/"}));
+    auto storage_service = simulation.add(new wrench::SimpleStorageService(storage_host, {"/"}, {},
+                                                                           {
+                                                                                   {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
+                                                                                   {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
+                                                                           }));
+
+    // Instantiate a storage service on the cloud host
+    std::string cloud_provider_host = "cloud_provider_host";
+    // in xml file, need storage_host w/ disk
+    std::cerr << "Instantiating a SimpleStorageService on " << cloud_provider_host << "..." << std::endl;
+    auto cloud_storage_service = simulation.add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
+                                                                                 {
+                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
+                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
+                                                                                 }));
+
 
     // Create a list of storage services that will be used by the WMS
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     storage_services.insert(storage_service);
+    storage_services.insert(cloud_storage_service);
 
     // wms host
     std::string wms_host = storage_host;
@@ -270,7 +291,7 @@ int main(int argc, char **argv) {
                 cloud_hosts.push_back("cloud_host_" + std::to_string(i));
             }
             auto cloud_service = new wrench::CloudComputeService(
-                "cloud_provider_host", cloud_hosts, "", {}, {});
+                    "cloud_provider_host", cloud_hosts, "", {}, {});
             compute_services.insert(simulation.add(cloud_service));
         } catch (std::invalid_argument &e) {
             std::cerr << "Error: " << e.what() << std::endl;
@@ -281,7 +302,7 @@ int main(int argc, char **argv) {
     // Instantiate a WMS
     auto wms = simulation.add(
             new ThrustDWMS(std::unique_ptr<ThrustDJobScheduler>(
-                    new ThrustDJobScheduler(storage_service)),
+                    new ThrustDJobScheduler(storage_service, cloud_storage_service)),
                            compute_services, storage_services, wms_host));
     wms->addWorkflow(workflow);
 
@@ -297,7 +318,7 @@ int main(int argc, char **argv) {
         wms->setNumVmInstances(0);
         wms->setCloudTasks("");
     }
-    
+
     // Instantiate a file registry service
     std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
     std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
@@ -365,10 +386,10 @@ int main(int argc, char **argv) {
 
     nlohmann::json output_json =
             {
-                {"energy_consumption", total_energy},
-                {"energy_cost", total_cost},
-                {"energy_co2", total_co2},
-                {"exec_time", workflow_finish_time}
+                    {"energy_consumption", total_energy},
+                    {"energy_cost", total_cost},
+                    {"energy_co2", total_co2},
+                    {"exec_time", workflow_finish_time}
             };
 
     std::cout << output_json.dump() << std::endl;
