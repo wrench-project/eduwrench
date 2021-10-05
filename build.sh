@@ -1,5 +1,4 @@
 #!/bin/bash
-
 #
 #  Usage  ./build.sh [-jX]
 #  Example: ./build.sh -j10 (make will run with 10 threads)
