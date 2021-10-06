@@ -20,6 +20,7 @@ const Thrustd_Cloud_Simulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
+    const [numVmsError, setNumVmsError] = useState("false")
 
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
@@ -50,12 +51,21 @@ const Thrustd_Cloud_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
-                                // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
-                                //     errors.numHosts = "ERROR"
-                                // }
-                                // if (!validateFieldInRange("pstate-label", values.pstate, 0, 6, "pstate:", "YYY")) {
-                                //     errors.pstate = "ERROR"
-                                // }
+                                if (values.numHosts < 1 || values.numHosts > 128) {
+                                    errors.numHosts = "ERROR"
+                                }
+                                if (values.pstate < 0 || values.pstate > 6) {
+                                    errors.pstate = "ERROR"
+                                }
+                                if ((values.mProjectCloud > 0 || values.mDiffFitCloud > 0 || values.mConcatFitCloud === true ||
+                                    values.mBgModelCloud === true || values.mBackgroundCloud > 0 || values.mImgtblCloud === true
+                                    || values.mAddCloud === true || values.mViewerCloud === true) && values.numVmInstances <= 0) {
+                                    setNumVmsError("Please provide the number of VM instances in the range of [1, 500] to use the cloud sliders.")
+                                    errors.numVmInstances = "ERROR"
+                                } else if (values.numVmInstances < 0 || values.numVmInstances > 500) {
+                                    setNumVmsError("Please provide the number of VM instances in the range of [0, 500].")
+                                    errors.numVmInstances = "ERROR"
+                                }
                                 return errors
                             }}
 
@@ -149,13 +159,12 @@ const Thrustd_Cloud_Simulation = () => {
                                                     placeholder="0"
                                                     type="number"
                                                     min={0}
-                                            // again not sure of the max value
-                                                    max={128}
+                                                    max={500}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.numVmInstances}
                                                     error={errors.numVmInstances && touched.numVmInstances ? {
-                                                        content: "Please provide the number of VM instances in the range of [0, 128].",
+                                                        content: numVmsError,
                                                         pointing: "above"
                                                     } : null}
                                         />
