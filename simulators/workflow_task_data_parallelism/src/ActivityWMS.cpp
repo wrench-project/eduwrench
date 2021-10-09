@@ -27,7 +27,7 @@ namespace wrench {
 
     void ActivityWMS::submitTask(std::string task_name, std::string host_name) {
         auto cs = *((this->getAvailableComputeServices<ComputeService>()).begin());
-        auto job = this->job_manager->createStandardJob(this->getWorkflow()->getTaskByID(task_name), {});
+        auto job = this->job_manager->createStandardJob(this->getWorkflow()->getTaskByID(task_name));
         this->job_manager->submitJob(job, cs, {{task_name, host_name}});
         WRENCH_INFO("%s task starting on %lu cores on %s",
                     task_name.c_str(),
