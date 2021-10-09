@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Segment} from "semantic-ui-react"
+import { Form, Segment, Grid} from "semantic-ui-react"
 import { Formik} from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
@@ -15,6 +15,12 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg"
+import MProjectInput from "../../../images/vector_graphs/thrustd/split_montage/mProject/files_0.svg"
+import MProjectLevel from "../../../images/vector_graphs/thrustd/split_montage/mProject/level_0.svg"
+import MProjectTasks from "../../../images/vector_graphs/thrustd/split_montage/mProject/tasks_0.svg"
+import MDiffFitInput from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/files_1.svg"
+import MDiffFitLevel from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/level_1.svg"
+import MDiffFitTasks from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/tasks_1.svg"
 
 const Thrustd_Cloud_Simulation = () => {
 
@@ -171,12 +177,45 @@ const Thrustd_Cloud_Simulation = () => {
                                     </Form.Group>
                                     {/*https://stackoverflow.com/questions/63774577/how-to-define-setfieldvalue-in-react*/}
                                     <Segment><strong>Task Distribution</strong></Segment>
-                                    <Form.Field fluid value={values.mProjectCloud}>
-                                        <TaskSlider color="blue" name="mProjectCloud" set={setFieldValue}/>
-                                    </Form.Field>
-                                    <Form.Field fluid value={values.mDiffFitCloud}>
-                                        <TaskSlider color="pink" name="mDiffFitCloud" set={setFieldValue}/>
-                                    </Form.Field>
+                                    <Grid>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MProjectInput/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <MProjectTasks/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MProjectLevel/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <Form.Field fluid value={values.mProjectCloud}>
+                                                    <TaskSlider color="blue" name="mProjectCloud" set={setFieldValue}/>
+                                                </Form.Field>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MDiffFitInput/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <MDiffFitTasks/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MDiffFitLevel/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <Form.Field fluid value={values.mDiffFitCloud}>
+                                                    <TaskSlider color="pink" name="mDiffFitCloud" set={setFieldValue}/>
+                                                </Form.Field>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                    </Grid>
+
                                     <Form.Field fluid>
                                         <CheckboxSlider color="orange" name="mConcatFitCloud" set={setFieldValue} value={values.mConcatFitCloud}/>
                                     </Form.Field>

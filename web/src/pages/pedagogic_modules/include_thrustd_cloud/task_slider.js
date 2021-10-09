@@ -20,13 +20,15 @@ const TaskSlider = ({color, name, set}) => {
     return (
         <Container>
             <Grid>
-                <Grid.Column width={16}>
-                    <Slider value={uiValue} color={color} settings={settings}/>
-                </Grid.Column>
-                <Grid.Column width={16}>
-                    <Label color={color}>Cloud: {uiValue}%</Label>
-                    <Label color={color}>Local: {100 - uiValue}%</Label>
-                </Grid.Column>
+                <Grid.Row>
+                    <Grid.Column width={12}>
+                        <Slider value={uiValue} color={color} settings={settings}/>
+                    </Grid.Column>
+                    <Grid.Column width={4}>
+                        <Label color={color}>Cloud: {uiValue}%</Label>
+                        <Label color={color}>Local: {100 - uiValue}%</Label>
+                    </Grid.Column>
+                </Grid.Row>
             </Grid>
         </Container>
     );
