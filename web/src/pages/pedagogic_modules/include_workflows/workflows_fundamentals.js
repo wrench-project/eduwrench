@@ -346,14 +346,13 @@ const WorkflowsFundamentals = ({module, tab}) => {
 
             <p>
                 <strong>[A.2.3.q1.3]</strong> Say now this computer has 2 cores, and the workflow execution strategy is,
-                whenever there is a choice, to start the task with the **highest work**. What is the execution time? What is the
+                whenever there is a choice, to start the task with the <b>highest work</b>. What is the execution time? What is the
                 parallel efficiency? Show your work. It is likely a good idea to draw the Gantt chart of the execution to
                 estimate the execution time as a sum of terms.
             </p>
 
             <p>
-                <strong>[A.2.3.q1.4]</strong> Would the result be different if we instead picked the tasks with the **lowest
-                work** first? Explain why or why not.
+                <strong>[A.2.3.q1.4]</strong> Would the result be different if we instead picked the tasks with the <b>lowest work</b> first? Explain why or why not.
             </p>
 
             <p>
