@@ -21,6 +21,12 @@ import MProjectTasks from "../../../images/vector_graphs/thrustd/split_montage/m
 import MDiffFitInput from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/files_1.svg"
 import MDiffFitLevel from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/level_1.svg"
 import MDiffFitTasks from "../../../images/vector_graphs/thrustd/split_montage/mDiffFit/tasks_1.svg"
+import MConcatFitInput from "../../../images/vector_graphs/thrustd/split_montage/mConcatFit/files_2.svg"
+import MConcatFitLevel from "../../../images/vector_graphs/thrustd/split_montage/mConcatFit/level_2.svg"
+import MConcatFitTasks from "../../../images/vector_graphs/thrustd/split_montage/mConcatFit/tasks_2.svg"
+import MBgModelInput from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/files_3.svg"
+import MBgModelLevel from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/level_3.svg"
+import MBgModelTasks from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/tasks_3.svg"
 
 const Thrustd_Cloud_Simulation = () => {
 
@@ -196,6 +202,7 @@ const Thrustd_Cloud_Simulation = () => {
                                                 </Form.Field>
                                             </Grid.Column>
                                         </Grid.Row>
+
                                         <Grid.Row>
                                             <Grid.Column>
                                                 <MDiffFitInput/>
@@ -214,14 +221,47 @@ const Thrustd_Cloud_Simulation = () => {
                                                 </Form.Field>
                                             </Grid.Column>
                                         </Grid.Row>
+
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MConcatFitInput/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <MConcatFitTasks/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MConcatFitLevel/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <Form.Field fluid>
+                                                    <CheckboxSlider color="orange" name="mConcatFitCloud" set={setFieldValue} value={values.mConcatFitCloud}/>
+                                                </Form.Field>
+                                            </Grid.Column>
+                                        </Grid.Row>
+
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MBgModelInput/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <MBgModelTasks/>
+                                            </Grid.Column>
+                                        </Grid.Row>
+                                        <Grid.Row>
+                                            <Grid.Column>
+                                                <MBgModelLevel/>
+                                            </Grid.Column>
+                                            <Grid.Column>
+                                                <Form.Field fluid>
+                                                    <CheckboxSlider color="green" name="mBgModelCloud" set={setFieldValue} value={values.mBgModelCloud}/>
+                                                </Form.Field>
+                                            </Grid.Column>
+                                        </Grid.Row>
+
                                     </Grid>
 
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="orange" name="mConcatFitCloud" set={setFieldValue} value={values.mConcatFitCloud}/>
-                                    </Form.Field>
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="green" name="mBgModelCloud" set={setFieldValue} value={values.mBgModelCloud}/>
-                                    </Form.Field>
                                     <Form.Field fluid value={values.mBackgroundCloud}>
                                         <TaskSlider color="yellow" name="mBackgroundCloud" set={setFieldValue}/>
                                     </Form.Field>
