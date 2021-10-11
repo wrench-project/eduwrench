@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, {useEffect, useState} from "react"
 import axios from "axios"
-import { Form, Segment, Grid} from "semantic-ui-react"
-import { Formik} from "formik"
+import {Form, Segment, Grid, Container} from "semantic-ui-react"
+import {Formik} from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import GanttChart from "../../../components/charts/gantt_chart"
@@ -27,6 +27,18 @@ import MConcatFitTasks from "../../../images/vector_graphs/thrustd/split_montage
 import MBgModelInput from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/files_3.svg"
 import MBgModelLevel from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/level_3.svg"
 import MBgModelTasks from "../../../images/vector_graphs/thrustd/split_montage/mBgModel/tasks_3.svg"
+import MBackgroundInput from "../../../images/vector_graphs/thrustd/split_montage/mBackground/files_4.svg"
+import MBackgroundLevel from "../../../images/vector_graphs/thrustd/split_montage/mBackground/level_4.svg"
+import MBackgroundTasks from "../../../images/vector_graphs/thrustd/split_montage/mBackground/tasks_4.svg"
+import MImgtblInput from "../../../images/vector_graphs/thrustd/split_montage/mImgtbl/files_5.svg"
+import MImgtblLevel from "../../../images/vector_graphs/thrustd/split_montage/mImgtbl/level_5.svg"
+import MImgtblTasks from "../../../images/vector_graphs/thrustd/split_montage/mImgtbl/tasks_5.svg"
+import MAddInput from "../../../images/vector_graphs/thrustd/split_montage/mAdd/files_6.svg"
+import MAddLevel from "../../../images/vector_graphs/thrustd/split_montage/mAdd/level_6.svg"
+import MAddTasks from "../../../images/vector_graphs/thrustd/split_montage/mAdd/tasks_6.svg"
+import MViewerInput from "../../../images/vector_graphs/thrustd/split_montage/mViewer/files_7.svg"
+import MViewerLevel from "../../../images/vector_graphs/thrustd/split_montage/mViewer/level_7.svg"
+import MViewerTasks from "../../../images/vector_graphs/thrustd/split_montage/mViewer/tasks_7.svg"
 
 const Thrustd_Cloud_Simulation = () => {
 
@@ -41,88 +53,88 @@ const Thrustd_Cloud_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                <SimulationScenario scenario={<MontageWorkflow/>} />
+                <SimulationScenario scenario={<MontageWorkflow/>}/>
 
                 <Segment.Group>
                     <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
                     <Segment>
                         <Formik enableReinitialize={true}
-                            initialValues={{
-                                numHosts: 1,
-                                pstate: 0,
-                                numVmInstances: 0,
-                                mProjectCloud: 0,
-                                mDiffFitCloud: 0,
-                                mConcatFitCloud: false,
-                                mBgModelCloud: false,
-                                mBackgroundCloud: 0,
-                                mImgtblCloud: false,
-                                mAddCloud: false,
-                                mViewerCloud: false
-                            }}
+                                initialValues={{
+                                    numHosts: 1,
+                                    pstate: 0,
+                                    numVmInstances: 0,
+                                    mProjectCloud: 0,
+                                    mDiffFitCloud: 0,
+                                    mConcatFitCloud: false,
+                                    mBgModelCloud: false,
+                                    mBackgroundCloud: 0,
+                                    mImgtblCloud: false,
+                                    mAddCloud: false,
+                                    mViewerCloud: false
+                                }}
 
-                            validate={values => {
-                                const errors = {}
-                                if (values.numHosts < 1 || values.numHosts > 128) {
-                                    errors.numHosts = "ERROR"
-                                }
-                                if (values.pstate < 0 || values.pstate > 6) {
-                                    errors.pstate = "ERROR"
-                                }
-                                if ((values.mProjectCloud > 0 || values.mDiffFitCloud > 0 || values.mConcatFitCloud === true ||
-                                    values.mBgModelCloud === true || values.mBackgroundCloud > 0 || values.mImgtblCloud === true
-                                    || values.mAddCloud === true || values.mViewerCloud === true) && values.numVmInstances <= 0) {
-                                    setNumVmsError("Please provide the number of VM instances in the range of [1, 500] to use the cloud sliders.")
-                                    errors.numVmInstances = "ERROR"
-                                } else if (values.numVmInstances < 0 || values.numVmInstances > 500) {
-                                    setNumVmsError("Please provide the number of VM instances in the range of [0, 500].")
-                                    errors.numVmInstances = "ERROR"
-                                }
-                                return errors
-                            }}
+                                validate={values => {
+                                    const errors = {}
+                                    if (values.numHosts < 1 || values.numHosts > 128) {
+                                        errors.numHosts = "ERROR"
+                                    }
+                                    if (values.pstate < 0 || values.pstate > 6) {
+                                        errors.pstate = "ERROR"
+                                    }
+                                    if ((values.mProjectCloud > 0 || values.mDiffFitCloud > 0 || values.mConcatFitCloud === true ||
+                                        values.mBgModelCloud === true || values.mBackgroundCloud > 0 || values.mImgtblCloud === true
+                                        || values.mAddCloud === true || values.mViewerCloud === true) && values.numVmInstances <= 0) {
+                                        setNumVmsError("Please provide the number of VM instances in the range of [1, 500] to use the cloud sliders.")
+                                        errors.numVmInstances = "ERROR"
+                                    } else if (values.numVmInstances < 0 || values.numVmInstances > 500) {
+                                        setNumVmsError("Please provide the number of VM instances in the range of [0, 500].")
+                                        errors.numVmInstances = "ERROR"
+                                    }
+                                    return errors
+                                }}
 
-                            onSubmit={(values, { setSubmitting }) => {
-                                setTimeout(() => {
-                                    if (localStorage.getItem("login") !== "true") {
-                                        setSimulationResults(<></>)
-                                        return
-                                    }
-                                    const userEmail = localStorage.getItem("currentUser")
-                                    const data = {
-                                        userName: userEmail.split("@")[0],
-                                        email: userEmail,
-                                        num_hosts: values.numHosts,
-                                        pstate: values.pstate,
-                                        numVmInstances: values.numVmInstances,
-                                        mProjectCloud: values.mProjectCloud,
-                                        mDiffFitCloud: values.mDiffFitCloud,
-                                        mConcatFitCloud: values.mConcatFitCloud,
-                                        mBgModelCloud: values.mBgModelCloud,
-                                        mBackgroundCloud: values.mBackgroundCloud,
-                                        mImgtblCloud: values.mImgtblCloud,
-                                        mAddCloud: values.mAddCloud,
-                                        mViewerCloud: values.mViewerCloud
-                                    }
-                                    setSimulationResults(<></>)
-                                    axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
-                                        response => {
-                                            setSimulationResults(
-                                                <>
-                                                    <SimulationOutput output={response.data.simulation_output} />
-                                                    <GanttChart data={response.data.task_data} />
-                                                    <HostUtilizationChart data={response.data.task_data} />
-                                                    <TasksData data={response.data.task_data} />
-                                                </>
-                                            )
-                                        },
-                                        error => {
-                                            console.log(error)
-                                            alert("Error executing simulation.")
+                                onSubmit={(values, {setSubmitting}) => {
+                                    setTimeout(() => {
+                                        if (localStorage.getItem("login") !== "true") {
+                                            setSimulationResults(<></>)
+                                            return
                                         }
-                                    )
-                                    setSubmitting(false)
-                                }, 400)
-                            }}
+                                        const userEmail = localStorage.getItem("currentUser")
+                                        const data = {
+                                            userName: userEmail.split("@")[0],
+                                            email: userEmail,
+                                            num_hosts: values.numHosts,
+                                            pstate: values.pstate,
+                                            numVmInstances: values.numVmInstances,
+                                            mProjectCloud: values.mProjectCloud,
+                                            mDiffFitCloud: values.mDiffFitCloud,
+                                            mConcatFitCloud: values.mConcatFitCloud,
+                                            mBgModelCloud: values.mBgModelCloud,
+                                            mBackgroundCloud: values.mBackgroundCloud,
+                                            mImgtblCloud: values.mImgtblCloud,
+                                            mAddCloud: values.mAddCloud,
+                                            mViewerCloud: values.mViewerCloud
+                                        }
+                                        setSimulationResults(<></>)
+                                        axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd_cloud", data).then(
+                                            response => {
+                                                setSimulationResults(
+                                                    <>
+                                                        <SimulationOutput output={response.data.simulation_output}/>
+                                                        <GanttChart data={response.data.task_data}/>
+                                                        <HostUtilizationChart data={response.data.task_data}/>
+                                                        <TasksData data={response.data.task_data}/>
+                                                    </>
+                                                )
+                                            },
+                                            error => {
+                                                console.log(error)
+                                                alert("Error executing simulation.")
+                                            }
+                                        )
+                                        setSubmitting(false)
+                                    }, 400)
+                                }}
                         >
                             {({
                                   values,
@@ -183,98 +195,177 @@ const Thrustd_Cloud_Simulation = () => {
                                     </Form.Group>
                                     {/*https://stackoverflow.com/questions/63774577/how-to-define-setfieldvalue-in-react*/}
                                     <Segment><strong>Task Distribution</strong></Segment>
-                                    <Grid>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MProjectInput/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <MProjectTasks/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MProjectLevel/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <Form.Field fluid value={values.mProjectCloud}>
-                                                    <TaskSlider color="blue" name="mProjectCloud" set={setFieldValue}/>
-                                                </Form.Field>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                    <Container>
+                                        <Grid>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MProjectInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MProjectTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MProjectLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid value={values.mProjectCloud}>
+                                                        <TaskSlider color="blue" name="mProjectCloud"
+                                                                    set={setFieldValue}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MDiffFitInput/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <MDiffFitTasks/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MDiffFitLevel/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <Form.Field fluid value={values.mDiffFitCloud}>
-                                                    <TaskSlider color="pink" name="mDiffFitCloud" set={setFieldValue}/>
-                                                </Form.Field>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MDiffFitInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MDiffFitTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MDiffFitLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid value={values.mDiffFitCloud}>
+                                                        <TaskSlider color="pink" name="mDiffFitCloud"
+                                                                    set={setFieldValue}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MConcatFitInput/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <MConcatFitTasks/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MConcatFitLevel/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <Form.Field fluid>
-                                                    <CheckboxSlider color="orange" name="mConcatFitCloud" set={setFieldValue} value={values.mConcatFitCloud}/>
-                                                </Form.Field>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MConcatFitInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MConcatFitTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MConcatFitLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid>
+                                                        <CheckboxSlider color="orange" name="mConcatFitCloud"
+                                                                        set={setFieldValue}
+                                                                        value={values.mConcatFitCloud}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MBgModelInput/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <MBgModelTasks/>
-                                            </Grid.Column>
-                                        </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column>
-                                                <MBgModelLevel/>
-                                            </Grid.Column>
-                                            <Grid.Column>
-                                                <Form.Field fluid>
-                                                    <CheckboxSlider color="green" name="mBgModelCloud" set={setFieldValue} value={values.mBgModelCloud}/>
-                                                </Form.Field>
-                                            </Grid.Column>
-                                        </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MBgModelInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MBgModelTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MBgModelLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid>
+                                                        <CheckboxSlider color="green" name="mBgModelCloud"
+                                                                        set={setFieldValue}
+                                                                        value={values.mBgModelCloud}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                    </Grid>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MBackgroundInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MBackgroundTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MBackgroundLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid value={values.mBackgroundCloud}>
+                                                        <TaskSlider color="yellow" name="mBackgroundCloud"
+                                                                    set={setFieldValue}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
 
-                                    <Form.Field fluid value={values.mBackgroundCloud}>
-                                        <TaskSlider color="yellow" name="mBackgroundCloud" set={setFieldValue}/>
-                                    </Form.Field>
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="blue" name="mImgtblCloud" set={setFieldValue} value={values.mImgtblCloud}/>
-                                    </Form.Field>
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="violet" name="mAddCloud" set={setFieldValue} value={values.mAddCloud}/>
-                                    </Form.Field>
-                                    <Form.Field fluid>
-                                        <CheckboxSlider color="red" name="mViewerCloud" set={setFieldValue} value={values.mViewerCloud}/>
-                                    </Form.Field>
-                                    <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MImgtblInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MImgtblTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MImgtblLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid>
+                                                        <CheckboxSlider color="brown" name="mImgtblCloud"
+                                                                        set={setFieldValue}
+                                                                        value={values.mImgtblCloud}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
+
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MAddInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MAddTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MAddLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid>
+                                                        <CheckboxSlider color="violet" name="mAddCloud"
+                                                                        set={setFieldValue} value={values.mAddCloud}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
+
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MViewerInput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <MViewerTasks/>
+                                                </Grid.Column>
+                                            </Grid.Row>
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MViewerLevel/>
+                                                </Grid.Column>
+                                                <Grid.Column>
+                                                    <Form.Field fluid>
+                                                        <CheckboxSlider color="red" name="mViewerCloud"
+                                                                        set={setFieldValue}
+                                                                        value={values.mViewerCloud}/>
+                                                    </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
+
+                                        </Grid>
+                                    </Container>
+                                    <br/>
+                                    <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run
+                                        Simulation</Form.Button>
                                 </Form>
                             )}
                         </Formik>
@@ -285,7 +376,7 @@ const Thrustd_Cloud_Simulation = () => {
 
             </>
         ) : (
-            <SimulationSignIn />
+            <SimulationSignIn/>
         )
     )
 }
