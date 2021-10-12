@@ -5,14 +5,11 @@ import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workf
 import Thrustd_Local_Simulation from "./thrustd_local_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 
-const LocalComputing = () => {
+const LocalComputing = ({module, tab}) => {
     return (
         <>
-            <LearningObjectives objectives={[
-                "TO BE CHANGED",
-                "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed",
-                "Understand the simple relationship between program execution time, work, and compute speed"
-            ]}/>
+            <LearningObjectives module={module} tab={tab}
+            />
 
             <h2>Local Computing</h2>
 

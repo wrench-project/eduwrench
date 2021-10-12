@@ -35,7 +35,7 @@
     - number: "C.1"
       title: "Batch Scheduling"
     - number: "D.1"
-      title: "Case Study: Energy-Aware Workflow Execution "
+      title: "Case Study: Energy-Aware Workflow Execution"
 
 - SLOs:
     - description: "define the concepts of 'work' and of 'compute speed'"
@@ -318,6 +318,19 @@
       topSLOs:
         - "top_slo_1"
         - "top_slo_2"
+    - description: "define the concept of processor power states"
+      key: "slo_processor_power_state"
+      topSLOs:
+        - "top_slo_1"
+    - description: "explain the concept of cluster power management and how it can be done by powering hosts on and off and/or changing power states"
+      key: "slo_cluster_power_management"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "reason about and optimize a PDC application's execution in terms of performance, energy consumption, and carbon footprint"
+      key: "slo_optimizing_performance_and_energy"
+      topSLOs:
+        - "top_slo_3"
 
 - Mappings:
     - module: "A.1"
@@ -512,3 +525,18 @@
       SLOs:
         - "slo_batch_num_nodes_impact"
         - "slo_batch_optimization"
+    - module: "D.1"
+      tab: "local_computing"
+      tabname: "Local cluster"
+      SLOs:
+        - "slo_workflow_distributed_performance"
+        - "slo_processor_power_state"
+        - "slo_cluster_power_management"
+        - "slo_optimizing_performance_and_energy"
+    - module: "D.1"
+      tab: "cloud_computing"
+      tabname: "Local cluster and remote cloud"
+      SLOs:
+        - "slo_workflow_distributed_performance"
+        - "slo_workflow_distributed_data_locality"
+        - "slo_optimizing_performance_and_energy"

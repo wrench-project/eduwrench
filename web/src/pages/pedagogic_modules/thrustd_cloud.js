@@ -9,6 +9,9 @@ import LocalComputing from "./include_thrustd_cloud/local_computing"
 import CloudComputing from "./include_thrustd_cloud/cloud_computing"
 
 const ThrustD_Cloud = () => {
+
+    const module = "D.1"
+
     return (
         <Layout>
             <Seo title="D.1. Case Study: Energy-Aware Workflow Execution" />
@@ -24,8 +27,6 @@ const ThrustD_Cloud = () => {
                 can configure in various ways to trade-off performance for electrical power efficiency. You then execute it by using the local cluster
                 in a low-power configuration as well as a remove cloud whose power source is green(er). 
                 <br /><br />
-                performance.
-                <br /><br />
                 Go through the two tabs below in sequence…
             </Segment>
 
@@ -35,14 +36,14 @@ const ThrustD_Cloud = () => {
                         key: "local_computing",
                         content: "Local cluster"
                     },
-                    render: () => <Tab.Pane><LocalComputing /></Tab.Pane>
+                    render: () => <Tab.Pane><LocalComputing module={module} tab={"local_computing"}/></Tab.Pane>
                 },
                 {
                     menuItem: {
                         key: "cloud_computing",
                         content: "Local cluster and remote cloud"
                     },
-                    render: () => <Tab.Pane><CloudComputing /></Tab.Pane>
+                    render: () => <Tab.Pane><CloudComputing module={module} tab={"cloud_computing"}/></Tab.Pane>
                 }
             ]}
             />

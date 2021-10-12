@@ -4,14 +4,12 @@ import LearningObjectives from "../../../components/learning_objectives"
 import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 
-const CloudComputing = () => {
+const CloudComputing = ({module, tab}) => {
     return (
         <>
-            <LearningObjectives objectives={[
-                "TO BE CHANGED",
-                "Be familiar with Flop as a measure of work and with Flop/sec as a measure of compute speed",
-                "Understand the simple relationship between program execution time, work, and compute speed"
-            ]} />
+
+            <LearningObjectives module={module} tab={tab}
+            />
 
             <h2>Cloud Computing</h2>
 
