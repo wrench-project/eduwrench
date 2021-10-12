@@ -25,7 +25,7 @@ namespace wrench {
         //  Schedule all  ready tasks (this is  always possible)
         for (auto const &t : ready_tasks) {
             WRENCH_INFO("Starting task %s on a core!", t->getID().c_str());
-            auto job = this->getJobManager()->createStandardJob(t, {});
+            auto job = this->getJobManager()->createStandardJob(t);
             this->getJobManager()->submitJob(job, compute_service, {});
             idle_core_count--;
         }

@@ -249,21 +249,25 @@ int main(int argc, char **argv) {
                                                                                    {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
                                                                            }));
 
-    // Instantiate a storage service on the cloud host
-    std::string cloud_provider_host = "cloud_provider_host";
-    // in xml file, need storage_host w/ disk
-    std::cerr << "Instantiating a SimpleStorageService on " << cloud_provider_host << "..." << std::endl;
-    auto cloud_storage_service = simulation.add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
-                                                                                 {
-                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
-                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
-                                                                                 }));
 
 
     // Create a list of storage services that will be used by the WMS
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     storage_services.insert(storage_service);
-    storage_services.insert(cloud_storage_service);
+
+    std::shared_ptr<wrench::StorageService> cloud_storage_service = nullptr;
+    if (use_cloud) {
+        // Instantiate a storage service on the cloud host
+        std::string cloud_provider_host = "cloud_provider_host";
+        // in xml file, need storage_host w/ disk
+        std::cerr << "Instantiating a SimpleStorageService on " << cloud_provider_host << "..." << std::endl;
+        cloud_storage_service = simulation.add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
+                                                                                {
+                                                                                        {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD,  0.0},
+                                                                                        {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
+                                                                                }));
+        storage_services.insert(cloud_storage_service);
+    }
 
     // wms host
     std::string wms_host = storage_host;
@@ -298,6 +302,8 @@ int main(int argc, char **argv) {
             std::exit(1);
         }
     }
+
+
 
     // Instantiate a WMS
     auto wms = simulation.add(

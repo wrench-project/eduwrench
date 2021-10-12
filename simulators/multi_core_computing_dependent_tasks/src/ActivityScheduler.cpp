@@ -60,7 +60,7 @@ namespace wrench {
             ready_task_set.erase(lucky_winner);
 
             WRENCH_INFO("Starting task %s on a core!", lucky_winner->getID().c_str());
-            auto job = this->getJobManager()->createStandardJob(lucky_winner, {});
+            auto job = this->getJobManager()->createStandardJob(lucky_winner);
             this->getJobManager()->submitJob(job, compute_service, {});
             idle_core_count--;
             num_scheduled++;

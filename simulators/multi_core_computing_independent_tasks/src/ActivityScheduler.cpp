@@ -31,7 +31,7 @@ namespace wrench {
             if (ram_capacity < task_memory) {
                 break;
             }
-            auto job = this->getJobManager()->createStandardJob(ready_task, {});
+            auto job = this->getJobManager()->createStandardJob(ready_task);
             this->getJobManager()->submitJob(job, compute_service, {});
             idle_core_count--;
             ram_capacity = ram_capacity - task_memory;
