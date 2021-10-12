@@ -1201,7 +1201,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
         "use_cloud": USE_CLOUD,
         "num_cloud_hosts": parseInt(NUM_CLOUD_HOSTS),
         "cloud_cores": 16,
-        "cloud_bandwidth": "20MBps",
+        "cloud_bandwidth": "15MBps",
         "cloud_pstate": 0,
         "cloud_speed": "0.8f",
         "cloud_value": "10.00:10.00:80.00",

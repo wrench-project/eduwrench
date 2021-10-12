@@ -34,6 +34,8 @@
       title: "Cyberinfrastructure Concepts"
     - number: "C.1"
       title: "Batch Scheduling"
+    - number: "D.1"
+      title: "Case Study: Energy-Aware Workflow Execution "
 
 - SLOs:
     - description: "define the concepts of 'work' and of 'compute speed'"

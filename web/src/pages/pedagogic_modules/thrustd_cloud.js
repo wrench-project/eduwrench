@@ -11,36 +11,36 @@ import CloudComputing from "./include_thrustd_cloud/cloud_computing"
 const ThrustD_Cloud = () => {
     return (
         <Layout>
-            <Seo title="D.1. Energy-Aware Distributed Workflow Execution" />
+            <Seo title="D.1. Case Study: Energy-Aware Workflow Execution" />
             <h2 style={{
                 marginBottom: `30px`,
                 marginTop: `50px`,
                 color: "#525252"
-            }}><br />D.1. Energy-Aware Distributed Workflow Execution</h2>
+            }}><br />D.1. Case Study: Energy-Aware Workflow Execution</h2>
 
             <Segment style={{ marginBottom: "2em" }}>
-                The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a
-                program on a single core).
+                The goal of this module is to have you go through a case-study for a real-world workflow application that must be executed
+                while paying attention both to  performance and carbon footprint.  You first execute the app on a local cluster that you
+                can configure in various ways to trade-off performance for electrical power efficiency. You then execute it by using the local cluster
+                in a low-power configuration as well as a remove cloud whose power source is green(er). 
                 <br /><br />
-                There is a lot of complexity under the cover, which belongs in Computer Architecture and Operating Systems{" "}
-                <a className="link" href="/textbooks"> textbooks </a> . Instead, we take a high-level approach, with a focus on
                 performance.
                 <br /><br />
-                Go through the tabs below in sequence…
+                Go through the two tabs below in sequence…
             </Segment>
 
             <Tab className="tab-panes" renderActiveOnly={true} panes={[
                 {
                     menuItem: {
                         key: "local_computing",
-                        content: "Local Computing"
+                        content: "Local cluster"
                     },
                     render: () => <Tab.Pane><LocalComputing /></Tab.Pane>
                 },
                 {
                     menuItem: {
                         key: "cloud_computing",
-                        content: "Cloud Computing"
+                        content: "Local cluster and remote cloud"
                     },
                     render: () => <Tab.Pane><CloudComputing /></Tab.Pane>
                 }
