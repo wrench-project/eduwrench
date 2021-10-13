@@ -39,7 +39,7 @@ const Thrustd_Local_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
-                                // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 128, "XXX", "Host(s)")) {
+                                // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 64, "XXX", "Host(s)")) {
                                 //     errors.numHosts = "ERROR"
                                 // }
                                 // if (!validateFieldInRange("pstate-label", values.pstate, 0, 6, "pstate:", "YYY")) {
@@ -68,8 +68,8 @@ const Thrustd_Local_Simulation = () => {
                                                 <>
                                                     <SimulationOutput output={response.data.simulation_output} />
                                                     <GanttChart data={response.data.task_data} />
-                                                    <HostUtilizationChart data={response.data.task_data} />
-                                                    <TasksData data={response.data.task_data} />
+                                                    {/*<HostUtilizationChart data={response.data.task_data} />*/}
+                                                    {/*<TasksData data={response.data.task_data} />*/}
                                                 </>
                                             )
                                         },
@@ -94,16 +94,16 @@ const Thrustd_Local_Simulation = () => {
                                 <Form onSubmit={handleSubmit}>
                                     <Form.Group widths="equal">
                                         <Form.Input fluid name="numHosts"
-                                                    label="Number of Hosts"
+                                                    label="Number of nodes powered on"
                                                     placeholder="1"
                                                     type="number"
                                                     min={1}
-                                                    max={128}
+                                                    max={64}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.numHosts}
                                                     error={errors.numHosts && touched.numHosts ? {
-                                                        content: "Please provide the number of hosts in the range of [1, 128].",
+                                                        content: "Please provide the number of nodes in the range of [1, 64].",
                                                         pointing: "above"
                                                     } : null}
                                         />

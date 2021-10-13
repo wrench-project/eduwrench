@@ -126,7 +126,7 @@ const Thrustd_Cloud_Simulation = () => {
                                                     <>
                                                         <SimulationOutput output={response.data.simulation_output}/>
                                                         <GanttChart data={response.data.task_data}/>
-                                                        <HostUtilizationChart data={response.data.task_data}/>
+                                                        {/*<HostUtilizationChart data={response.data.task_data}/>*/}
                                                         {/*<TasksData data={response.data.task_data}/>*/}
                                                     </>
                                                 )

@@ -40,7 +40,7 @@ const LocalComputing = ({module, tab}) => {
             <h3>Your local cluster</h3>
 
             <p>
-                Your agency has access to an in-house, <b>128-node cluster with 8 cores on each node</b>. Each montage task,
+                Your agency has access to an in-house, <b>64-node cluster with 8 cores on each node</b>. Each montage task,
                 the way you have compiled them, uses 4 cores on a node. You have decided to never oversubscribe
                 nodes. That is, <b>at most two Montage tasks can run at the same time on a node of your cluster</b>.
             </p>
@@ -140,7 +140,7 @@ const LocalComputing = ({module, tab}) => {
             <p>
                 Furthermore, you can decide to <b>power off some of the nodes</b>. This is because an idling 
                 node still consumes power. Specifically, the cluster nodes consume 98 Watts when idling. It thus may
-                be preferable to power some of them off, since your Montage workflow may not be able to use all 128
+                be preferable to power some of them off, since your Montage workflow may not be able to use all 64
                 compute nodes anyway (due to limited parallelism).
             </p>
 
@@ -162,40 +162,47 @@ const LocalComputing = ({module, tab}) => {
             </Header>
 
             <p>
-                <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 128 hosts are powered on and all are at p-state 6.
-                Using the simulation answer the following questions.  What is the parallel speedup? what is the parallel efficiency? What is the
+                <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
+                Using the simulation answer the following questions.  What is the parallel speedup? What is the parallel efficiency? What is the
                 total CO2 emission?
             </p>
 
             <p>
                 <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
-                as possible is overkill. Instead, it is only necessary that the workflow run in under an hour
-                (e.g., running in 30 minutes bring no extra benefits when compared to running on 59 minutes). With
+                as possible is overkill. Instead, it is only necessary that the workflow run in under 3 minutes
+                (e.g., running in 2 minutes bring no extra benefits when compared to running in 3 minutes). With
                 this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
                 <br/>
             </p>
             <ul>
-                <li>Option 1: Turn off some of the cluster nodes and simply not use them. Using a binary search,
-                    find the smallest number of nodes that satisfies the 1-hour time limit.
+                <li>Option 1: Turn off some of the  nodes and simply not use them. Using a binary search,
+                    find the smallest number of nodes that satisfies the 3-minute time limit.
                 </li>
-                <li>Option 2: Downclock all the cluster nodes to a lower p-state. Using a binary search, find the
-                    smallest p-state that satisfies the 1-hour time limit.
+                <li>Option 2: Downclock all 64 nodes to a lower p-state. Using a binary search, find the
+                    smallest p-state that satisfies the 3-minute time limit.
                 </li>
             </ul>
             <p>
                 For both these options give the CO2 emission and the parallel efficiency. What should
-                you tell your boss regarding which option is more desirable?
+                you tell your boss regarding which option is more desirable? Explain why the
+                less desirable option has a much higher carbon footprint.
+
             </p>
 
             <p>
-                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 75% is just
+                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 50% is just
                 unacceptable, because they remember from a college course that low parallel efficiency means that
                 compute resources are wasted. So they ask you to first find the maximum number of nodes, with all
-                nodes configured at the maximum p-state, that leads to a parallel efficiency of 75%. Then, using
+                nodes configured at the maximum p-state, that leads to a parallel efficiency of 50%. Then, using
                 that number of nodes, you're supposed to find to which p-state you can downclock to so as to save energy,
                 while still remaining under the 1-hour time limit.
                 <br/><br/>
-                Report on the number of nodes and p-state that you end up using. It turns out that the optimal cluster
+                Report on the number of nodes and p-state that you end up using and the CO2 cost. How does it compare
+                to that obtained with the best option in question [D.1.q1.2]? Do you conclude that it is useful or not useful
+                to use both power-management techniques (powering hosts off and lowering the p-state) in combination?
+
+                <br></br>
+                It turns out that the optimal cluster
                 configuration in terms of number of nodes used and p-state leads to a carbon emission of XXX and an execution
                 time of XXX minutes. How far is your answer from the optimal?
             </p>
