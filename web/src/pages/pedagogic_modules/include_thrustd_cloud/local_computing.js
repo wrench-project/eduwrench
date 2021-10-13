@@ -40,7 +40,7 @@ const LocalComputing = ({module, tab}) => {
             <h3>Your local cluster</h3>
 
             <p>
-                Your agency has access to an in-house, 128-node cluster with 8 cores on each node. Each montage task,
+                Your agency has access to an in-house, <b>128-node cluster with 8 cores on each node</b>. Each montage task,
                 the way you have compiled them, uses 4 cores on a node. You have decided to never oversubscribe
                 nodes. That is, <b>at most two Montage tasks can run at the same time on a node of your cluster</b>.
             </p>
@@ -78,52 +78,52 @@ const LocalComputing = ({module, tab}) => {
                 <Table.Header>
                     <Table.Row>
                         <Table.HeaderCell>pstate</Table.HeaderCell>
-                        <Table.HeaderCell>GHz</Table.HeaderCell>
-                        <Table.HeaderCell>Compute Speed (flops)</Table.HeaderCell>
-                        <Table.HeaderCell>Power Consumption (watts)</Table.HeaderCell>
+                        <Table.HeaderCell>Clock rate (GHz)</Table.HeaderCell>
+                        <Table.HeaderCell>Core speed (Gflops)</Table.HeaderCell>
+                        <Table.HeaderCell>Power consumption (watts)</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
                     <Table.Row>
                         <Table.Cell>0</Table.Cell>
                         <Table.Cell>1.8</Table.Cell>
-                        <Table.Cell>0.5217</Table.Cell>
+                        <Table.Cell>22.43</Table.Cell>
                         <Table.Cell>120</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>1</Table.Cell>
                         <Table.Cell>2.1</Table.Cell>
-                        <Table.Cell>2.6087</Table.Cell>
+                        <Table.Cell>26.17</Table.Cell>
                         <Table.Cell>130</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>2</Table.Cell>
                         <Table.Cell>2.4</Table.Cell>
-                        <Table.Cell>0.6957</Table.Cell>
+                        <Table.Cell>29.91</Table.Cell>
                         <Table.Cell>140</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>3</Table.Cell>
                         <Table.Cell>2.7</Table.Cell>
-                        <Table.Cell>0.7826</Table.Cell>
+                        <Table.Cell>33.65</Table.Cell>
                         <Table.Cell>150</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>4</Table.Cell>
                         <Table.Cell>3.0</Table.Cell>
-                        <Table.Cell>0.8696</Table.Cell>
+                        <Table.Cell>37.39</Table.Cell>
                         <Table.Cell>160</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>5</Table.Cell>
                         <Table.Cell>3.3</Table.Cell>
-                        <Table.Cell>0.9565</Table.Cell>
+                        <Table.Cell>41.13</Table.Cell>
                         <Table.Cell>170</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>6</Table.Cell>
                         <Table.Cell>3.5</Table.Cell>
-                        <Table.Cell>1</Table.Cell>
+                        <Table.Cell>43.00</Table.Cell>
                         <Table.Cell>190</Table.Cell>
                     </Table.Row>
                 </Table.Body>

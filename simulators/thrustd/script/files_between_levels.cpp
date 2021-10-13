@@ -3,6 +3,8 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
+#define GFLOPS (1000.0*1000.0*1000.0)
+
 int main(int argc, char **argv) {
 
     if (argc != 2) {
@@ -12,8 +14,10 @@ int main(int argc, char **argv) {
 
     auto workflow_file = argv[1];
 
+    std::string reference_speed = "43Gf";
+
     wrench::Workflow *workflow;
-    workflow = wrench::PegasusWorkflowParser::createWorkflowFromJSON(workflow_file, "1f", false,
+    workflow = wrench::PegasusWorkflowParser::createWorkflowFromJSON(workflow_file, reference_speed, false,
                                                                      4, 4, true);
 
     std::vector<wrench::WorkflowFile*> files[8];
@@ -40,7 +44,7 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < 8; i++) {
         std::cerr << "Before level " << i << ": " << numFiles[i] << " files, total size: " << sizes[i] / 1000000 << " MB" << std::endl;
-        std::cerr << "At level " << i << ": " << numTasks[i] << " tasks, total Flops: " << numFlops[i] << " Flops" << std::endl;
+        std::cerr << "At level " << i << ": " << numTasks[i] << " tasks, total work: " << (numFlops[i]/GFLOPS) << " GFlops" << std::endl;
     }
 }
 
