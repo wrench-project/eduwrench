@@ -11,8 +11,6 @@ const LocalComputing = ({module, tab}) => {
             <LearningObjectives module={module} tab={tab}
             />
 
-            <h2>Local Computing</h2>
-
             <p>
                 You are an employee at a space agency that needs to run a well-known Astronomy workflow application
                 called <a href="http://montage.ipac.caltech.edu/">Montage</a>. The objective of Montage is to
@@ -148,7 +146,7 @@ const LocalComputing = ({module, tab}) => {
             <p>
                 To experiment with different cluster power management option, you need to run experiments. To do so we
                 provide you with the simulation application below. You can experiment with the simulation yourself if you
-                want, but you should use it while answering the questions hereafter.
+                want, but you should use it for answering the questions hereafter.
             </p>
 
 

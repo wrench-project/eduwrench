@@ -11,44 +11,54 @@ const CloudComputing = ({module, tab}) => {
             <LearningObjectives module={module} tab={tab}
             />
 
-            <h2>Cloud Computing</h2>
+            <p>
+                <b>Your company has decided that a low carbon footprint is a high priority</b>. As a result, 
+                from now on, the local cluster is configured by powering on only <b>12 nodes</b>
+                all at <b>p-state 0</b>. Other nodes are simply turned off for the day-to-day business. 
+            </p>
+
+
+            <h3>A remote cloud to the rescue</h3>
 
             <p>
-                Your boss mentions that your company now has access to a commercial cloud. The
-                advantage this provides over local computing is that the cloud is CO2 efficient
-                because of renewables so that saves some cost in the CO2 department.
+                To still make it possible to run the workflow quickly, your boss has secured access to a <b>remote cloud platform</b>, on 
+                which your company has <b>16 virtual machines (VMs)</b> available for running workflow
+                tasks. Each VM has XX cores that compute at speed XX GHz. The cloud is accessible via
+                the wide-area network, and the data transfer rate is 15 MBps. The good thing about this cloud
+                is that it is powered by a green energy source, and thus has very low carbon footprint. 
+                This setup is depicted in the figure below, with relevant data. 
+            </p>
+                
+            <p>
+                <b>ADD A FIGURE</b>
+            </p>
+
+            <h3>Allocating tasks to resources</h3>
+
+
+            <p>
+                Now that you have access to both the 12-node local cluster and the 16-VM cloud, 
+                you need to decide which tasks run locally and which tasks run remotely, knowing that
+                workflow data may then have to be communicated on the wide-area. 
             </p>
 
             <p>
-                On the cloud you can request any number of VMs, each costing $XX/hour and you can
-                use each VM for up to 10 hours.
+		You can now combine the local cluster with the cloud to
+		distribute the tasks of the workflow. That is, you can
+		decide, for each level of the workflow, what fraction of
+		the tasks will be executed on the local cluster and what
+		fraction of the tasks will be executed on the remote cloud.
+		Different resource allocation schemes will lead to
+		different workflow execution times and carbon footprint.
             </p>
 
-            <p>
-                You can now combine the local cluster with the cloud to distribute the tasks of
-                the workflow via horizontal/vertical partitioning, meaning tasks are grouped via
-                rows/columns where each group can be assigned to the local cluster or the cloud.
-                The task distribution needs to be done while trying to maintain cost and CO2
-                efficiency.
-            </p>
+            <h3> Running Experiments!</h3>
+            
 
-            <p>
-                The bandwidth to the cloud is XXX GB/sec, meaning that it's low, so you don't want
-                to send a lot of data back and forth.
-            </p>
-
-            <p>
-                What you need to do is figure out:
-                <br />
-            </p>
-            <ul>
-                <li>How many VMs to ask for on the cloud</li>
-                <li>Which tasks should run on the cloud</li>
-            </ul>
-
-            <p>
-                Here is the simulator:
-            </p>
+            The simulation app below allows you to experiment with different resource allocation
+            schemes. Use the sliders to set, for each workflow level, the fraction of its tasks
+            that should run on the remote cluster. You can explore diferent options yourself, but you 
+            should also use the simulation to answer the questions hereafter. 
 
             <SimulationActivity panelKey="cloud_computing" content={<Thrustd_Cloud_Simulation />} />
 
@@ -58,34 +68,9 @@ const CloudComputing = ({module, tab}) => {
             </Header>
 
             <p>
-                <strong>[D.1.q1.1]</strong> Using the simulator, execute the workflow on the cluster configured at
-                top performance: use the maximum number of nodes (128) and configure the nodes to the maximum pstate
-                (6). What is the workflow execution time? What is the speedup and parallel efficiency? What is the
-                total cost of the execution in terms of $ and CO2 emissions?
+                <strong>[D.1.q2.1]</strong> TBD
             </p>
 
-            <p>
-                <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
-                as possible is overkill. Instead, it is only necessary that the workflow run in under an hour
-                (e.g., running in 30 minutes bring no extra benefits when compared to running on 59 minutes). With
-                this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
-                <br />
-                For both these options give the $ cost, the CO2 emission, and the parallel efficiency. What should
-                you tell your boss regarding which option is more desirable?
-            </p>
-
-            <p>
-                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 75% is just
-                unacceptable, because they remember from a college course that low parallel efficiency means that
-                compute resources are wasted. So they ask you to first find the maximum number of nodes, with all
-                nodes configured at the maximum pstate, that leads to a parallel efficiency of 75%. Then, using
-                that number of nodes, you're supposed to find which pstate you can downclock to so as to save energy,
-                while still remaining under the 1-hour time limit.
-                <br />
-                Report on the number of nodes and pstate that you end up using. It turns out that the optimal cluster
-                configuration in terms of number of nodes used and pstate leads to a $ cost of $X with an execution
-                of XXX minutes. How far is your answer from the optimal?
-            </p>
         </>
     )
 }
