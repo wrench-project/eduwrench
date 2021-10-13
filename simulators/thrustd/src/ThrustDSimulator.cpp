@@ -15,6 +15,10 @@
 #include <chrono>
 #include <ratio>
 
+XBT_LOG_NEW_DEFAULT_CATEGORY(simple_simulator, "Log category for Simple WMS");
+
+
+
 static bool ends_with(const std::string& str, const std::string& suffix) {
     return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);
 }
@@ -209,7 +213,7 @@ int main(int argc, char **argv) {
     char *workflow_file = &s[0];
 
     // Reading and parsing the workflow description file to create a wrench::Workflow object
-    std::cerr << "Loading workflow..." << std::endl;
+    WRENCH_INFO("Loading workflow...");
     wrench::Workflow *workflow;
 
     // min number of cores per task
@@ -230,12 +234,12 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    std::cerr << "The workflow has " << workflow->getNumberOfTasks() << " tasks " << std::endl;
+    WRENCH_INFO("The workflow has %ld tasks", workflow->getNumberOfTasks());
 
     // Reading and parsing the platform description file to instantiate a simulated platform
-    std::cerr << "Instantiating SimGrid platform..." << std::endl;
+    WRENCH_INFO("Instantiating SimGrid platform...");
     simulation.instantiatePlatform(platform_file);
-    std::cerr << "SimGrid platform instantiates\n";
+    WRENCH_INFO("SimGrid platform instantiated");
 
     // Get a vector of all the hosts in the simulated platform
     std::vector<std::string> hostname_list = simulation.getHostnameList();
@@ -243,7 +247,8 @@ int main(int argc, char **argv) {
     // Instantiate a storage service on the local
     std::string storage_host = "storage_host";
     // in xml file, need storage_host w/ disk
-    std::cerr << "Instantiating a SimpleStorageService on " << storage_host << "..." << std::endl;
+    WRENCH_INFO("Instantiating a SimpleStorageService on %s", storage_host.c_str());
+
     auto storage_service = simulation.add(new wrench::SimpleStorageService(storage_host, {"/"}, {},
                                                                            {
                                                                                    {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
@@ -261,7 +266,7 @@ int main(int argc, char **argv) {
         // Instantiate a storage service on the cloud host
         std::string cloud_provider_host = "cloud_provider_host";
         // in xml file, need storage_host w/ disk
-        std::cerr << "Instantiating a SimpleStorageService on " << cloud_provider_host << "..." << std::endl;
+        WRENCH_INFO("Instantiating a SimpleStorageService on %s", cloud_provider_host.c_str());
         cloud_storage_service = simulation.add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
                                                                                 {
                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD,  0.0},
@@ -290,7 +295,7 @@ int main(int argc, char **argv) {
 
     if (use_cloud) {
         try {
-            std::cerr << "Instantiating a CloudComputeService on CloudProviderHost..." << std::endl;
+            WRENCH_INFO("Instantiating a CloudComputeService on CloudProviderHost...");
             std::vector<std::string> cloud_hosts;
             for (int i = 1; i < num_cloud_hosts + 1; i++) {
                 cloud_hosts.push_back("cloud_host_" + std::to_string(i));
@@ -328,13 +333,13 @@ int main(int argc, char **argv) {
 
     // Instantiate a file registry service
     std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
-    std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
+    WRENCH_INFO("Instantiating a FileRegistryService on %s", file_registry_service_host.c_str());
     auto file_registry_service =
             new wrench::FileRegistryService(file_registry_service_host);
     simulation.add(file_registry_service);
 
     // It is necessary to store, or "stage", input files
-    std::cerr << "Staging input files..." << std::endl;
+    WRENCH_INFO("Staging input files...");
     auto input_files = workflow->getInputFiles();
     try {
         for (auto const &f : input_files) {
@@ -346,7 +351,7 @@ int main(int argc, char **argv) {
     }
 
     // Launch the simulation
-    std::cerr << "Launching the Simulation..." << std::endl;
+    WRENCH_INFO("Launching the Simulation...");
     auto start = std::chrono::high_resolution_clock::now();
     try {
         simulation.launch();
@@ -356,11 +361,11 @@ int main(int argc, char **argv) {
     }
     auto end = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cerr << "Simulation done!" << std::endl;
+    WRENCH_INFO("Simulation done!");
 
-    for (auto const &t : workflow->getTasks()) {
-        std::cerr << t->getID() << " RAN ON " << t->getPhysicalExecutionHost() << "\n";
-    }
+//    for (auto const &t : workflow->getTasks()) {
+//        std::cerr << t->getID() << " RAN ON " << t->getPhysicalExecutionHost() << "\n";
+//    }
 
     auto exit_tasks = workflow->getExitTaskMap();
     double workflow_finish_time = 0.0;
@@ -384,12 +389,11 @@ int main(int argc, char **argv) {
     sprintf(cost_buf, "%.2f", total_cost);
     sprintf(co2_buf, "%.2f", total_co2);
 
-    std::cerr << "Total Energy Consumption: " << total_energy << " joules" << std::endl;
-    std::cerr << "Total Energy Monetary Cost: $" << cost_buf << std::endl;
-    std::cerr << "Total Energy CO2 Cost: " << co2_buf << " CO2" << std::endl;
-
-    std::cerr << "Simulated workflow execution time: " << workflow_finish_time << " seconds" << std::endl;
-    std::cerr << "(Simulation time: " << duration.count() << " microseconds)" << std::endl;
+    std::cerr << "Energy Consumption: " << total_energy << " Joule" << std::endl;
+//    std::cerr << "Total Energy Monetary Cost: $" << cost_buf << std::endl;
+    std::cerr << "Energy CO2 Cost:    " << co2_buf << " gCO2e" << std::endl;
+    std::cerr << "Execution time:     " << workflow_finish_time << " sec" << std::endl;
+//    std::cerr << "(Simulation time: " << duration.count() << " microseconds)" << std::endl;
 
     nlohmann::json output_json =
             {

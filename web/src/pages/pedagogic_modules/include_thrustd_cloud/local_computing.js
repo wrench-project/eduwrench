@@ -46,9 +46,14 @@ const LocalComputing = ({module, tab}) => {
             </p>
 
             <p>
-                Executing Montage on this cluster has an energy costs in terms of money and CO2 emissions. In particular,
-                given the power company your agency uses, one MWh of energy costs <b>$XXX</b> and produces <b>XXX grams of
-                CO2 emissions</b>.
+            The cluster has a storage system with read/write bandwidth of 100 MBps. The storage system holds all workflow data, that is,
+                all input files and all files generated
+            </p>
+
+            <p>
+                Executing Montage on this cluster has an energy cost in terms of CO2 emissions. In particular,
+                given the power company your agency uses, one MWh of energy produces <b>291 gCO2e</b> (gram CO2 equivalent) per
+                kWh.
             </p>
 
             <p>
@@ -60,7 +65,7 @@ const LocalComputing = ({module, tab}) => {
                 at a slower rate. Conversely, increasing the p-state increases the frequency, which leads to faster
                 rates of computation. You can think of the p-state as being the dial on a stove: by cranking up the
                 stove dial from low to high, you are increasing its power, thus allowing food to cook faster.  But then
-                the higher power consumption has a cost (both monetary and environmental).
+                the higher power consumption has an environmental cost.
             </p>
 
             <p>
@@ -71,8 +76,6 @@ const LocalComputing = ({module, tab}) => {
             <p>
                 <strong>Below is the table of GHz vs speed:</strong>
             </p>
-
-            <b>TODO: CHANGE FLOPS TO GFLOPS AND SCALE EVERYTHING</b>
 
             <Table compact collapsing>
                 <Table.Header>
@@ -159,10 +162,9 @@ const LocalComputing = ({module, tab}) => {
             </Header>
 
             <p>
-                <strong>[D.1.q1.1]</strong> Using the simulator, execute the workflow on the cluster configured at
-                top performance: use the maximum number of nodes (128) and configure the nodes to the maximum p-state
-                (6). What is the workflow execution time? What is the speedup and parallel efficiency? What is the
-                total cost of the execution in terms of $ and CO2 emissions?
+                <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 128 hosts are powered on and all are at p-state 6.
+                Using the simulation answer the following questions.  What is the parallel speedup? what is the parallel efficiency? What is the
+                total CO2 emission?
             </p>
 
             <p>
@@ -181,7 +183,7 @@ const LocalComputing = ({module, tab}) => {
                 </li>
             </ul>
             <p>
-                For both these options give the $ cost, the CO2 emission, and the parallel efficiency. What should
+                For both these options give the CO2 emission and the parallel efficiency. What should
                 you tell your boss regarding which option is more desirable?
             </p>
 
@@ -190,12 +192,12 @@ const LocalComputing = ({module, tab}) => {
                 unacceptable, because they remember from a college course that low parallel efficiency means that
                 compute resources are wasted. So they ask you to first find the maximum number of nodes, with all
                 nodes configured at the maximum p-state, that leads to a parallel efficiency of 75%. Then, using
-                that number of nodes, you're supposed to find which p-state you can downclock to so as to save energy,
+                that number of nodes, you're supposed to find to which p-state you can downclock to so as to save energy,
                 while still remaining under the 1-hour time limit.
                 <br/><br/>
                 Report on the number of nodes and p-state that you end up using. It turns out that the optimal cluster
-                configuration in terms of number of nodes used and p-state leads to a $ cost of $X with an execution
-                of XXX minutes. How far is your answer from the optimal?
+                configuration in terms of number of nodes used and p-state leads to a carbon emission of XXX and an execution
+                time of XXX minutes. How far is your answer from the optimal?
             </p>
         </>
     )

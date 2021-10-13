@@ -62,7 +62,7 @@ const Topologies = ({module, tab}) => {
         In this example, all network links have the same bandwidth, 100 MB/sec.
         When transferring data from host A to host B, this transfer thus experiences
         a bandwidth of 100 MB/sec but a latency of 50 + 100 + 50 = 200 us, that is,
-        the **sum of the link latencies**. Remember that in the "water in pipes" analogy in
+          the <strong>sum of the link latencies</strong>. Remember that in the "water in pipes" analogy in
         the <a href="/pedagogic_modules/networking_fundamentals">previous tab</a>,
         the latency is the length of a pipe. And so it
         makes sense that the length of a sequence of pipes is the sum of the

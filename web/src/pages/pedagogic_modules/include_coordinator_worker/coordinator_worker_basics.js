@@ -213,7 +213,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                         <>
                             No, it does not matter. Since every task looks like every other task and every worker looks like
                             every other worker, all options will lead to the same schedule. If a task runs on a worker in
-                            10 seconds, and if we have $n$ tasks and $m$ workers, then the total execution time will
+                            10 seconds, and if we have <strong>n</strong> tasks and <strong>m</strong> workers, then the total execution time will
                             be <TeX math="\lceil n/m \rceil \times 10" /> for all scheduling strategies. You can verify this with the
                             simulation app.
                         </>
