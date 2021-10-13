@@ -53,16 +53,17 @@ const Thrustd_Cloud_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                <SimulationScenario scenario={<MontageWorkflow/>}/>
+                {/*<SimulationScenario scenario={<MontageWorkflow/>}/>*/}
 
                 <Segment.Group>
-                    <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
+                    {/*<Segment color="teal"><strong>Simulation Parameters</strong></Segment>*/}
+                    <Segment raised size="large" color="teal"><strong>Use the sliders to allocate tasks to cluster or cloud</strong></Segment>
                     <Segment>
                         <Formik enableReinitialize={true}
                                 initialValues={{
-                                    numHosts: 1,
+                                    numHosts: 12,
                                     pstate: 0,
-                                    numVmInstances: 0,
+                                    numVmInstances: 16,
                                     mProjectCloud: 0,
                                     mDiffFitCloud: 0,
                                     mConcatFitCloud: false,
@@ -103,9 +104,12 @@ const Thrustd_Cloud_Simulation = () => {
                                         const data = {
                                             userName: userEmail.split("@")[0],
                                             email: userEmail,
-                                            num_hosts: values.numHosts,
-                                            pstate: values.pstate,
-                                            numVmInstances: values.numVmInstances,
+                                            // num_hosts: values.numHosts,
+                                            num_hosts: 12,
+                                            // pstate: values.pstate,
+                                            pstate: 0,
+                                            // numVmInstances: values.numVmInstances,
+                                            numVmInstances: 16,
                                             mProjectCloud: values.mProjectCloud,
                                             mDiffFitCloud: values.mDiffFitCloud,
                                             mConcatFitCloud: values.mConcatFitCloud,
@@ -123,7 +127,7 @@ const Thrustd_Cloud_Simulation = () => {
                                                         <SimulationOutput output={response.data.simulation_output}/>
                                                         <GanttChart data={response.data.task_data}/>
                                                         <HostUtilizationChart data={response.data.task_data}/>
-                                                        <TasksData data={response.data.task_data}/>
+                                                        {/*<TasksData data={response.data.task_data}/>*/}
                                                     </>
                                                 )
                                             },
@@ -147,54 +151,54 @@ const Thrustd_Cloud_Simulation = () => {
                                   isSubmitting
                               }) => (
                                 <Form onSubmit={handleSubmit}>
-                                    <Form.Group widths="equal">
-                                        <Form.Input fluid name="numHosts"
-                                                    label="Number of Hosts"
-                                                    placeholder="1"
-                                                    type="number"
-                                                    min={1}
-                                                    max={128}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.numHosts}
-                                                    error={errors.numHosts && touched.numHosts ? {
-                                                        content: "Please provide the number of hosts in the range of [1, 128].",
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                        <Form.Input fluid
-                                                    name="pstate"
-                                                    label="Pstate Value"
-                                                    placeholder="0"
-                                                    type="number"
-                                                    min={0}
-                                                    max={6}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.pstate}
-                                                    error={errors.pstate && touched.pstate ? {
-                                                        content: "Please provide the pstate in the range of [0, 6].",
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                        <Form.Input fluid
-                                                    name="numVmInstances"
-                                                    label="Number of VM Instances"
-                                                    placeholder="0"
-                                                    type="number"
-                                                    min={0}
-                                                    max={500}
-                                                    onChange={handleChange}
-                                                    onBlur={handleBlur}
-                                                    value={values.numVmInstances}
-                                                    error={errors.numVmInstances && touched.numVmInstances ? {
-                                                        content: numVmsError,
-                                                        pointing: "above"
-                                                    } : null}
-                                        />
-                                    </Form.Group>
+                                    {/*<Form.Group widths="equal">*/}
+                                    {/*    <Form.Input fluid name="numHosts"*/}
+                                    {/*                label="Number of Hosts"*/}
+                                    {/*                placeholder="1"*/}
+                                    {/*                type="number"*/}
+                                    {/*                min={1}*/}
+                                    {/*                max={128}*/}
+                                    {/*                onChange={handleChange}*/}
+                                    {/*                onBlur={handleBlur}*/}
+                                    {/*                value={values.numHosts}*/}
+                                    {/*                error={errors.numHosts && touched.numHosts ? {*/}
+                                    {/*                    content: "Please provide the number of hosts in the range of [1, 128].",*/}
+                                    {/*                    pointing: "above"*/}
+                                    {/*                } : null}*/}
+                                    {/*    />*/}
+                                    {/*    <Form.Input fluid*/}
+                                    {/*                name="pstate"*/}
+                                    {/*                label="Pstate Value"*/}
+                                    {/*                placeholder="0"*/}
+                                    {/*                type="number"*/}
+                                    {/*                min={0}*/}
+                                    {/*                max={6}*/}
+                                    {/*                onChange={handleChange}*/}
+                                    {/*                onBlur={handleBlur}*/}
+                                    {/*                value={values.pstate}*/}
+                                    {/*                error={errors.pstate && touched.pstate ? {*/}
+                                    {/*                    content: "Please provide the pstate in the range of [0, 6].",*/}
+                                    {/*                    pointing: "above"*/}
+                                    {/*                } : null}*/}
+                                    {/*    />*/}
+                                    {/*    <Form.Input fluid*/}
+                                    {/*                name="numVmInstances"*/}
+                                    {/*                label="Number of VM Instances"*/}
+                                    {/*                placeholder="0"*/}
+                                    {/*                type="number"*/}
+                                    {/*                min={0}*/}
+                                    {/*                max={500}*/}
+                                    {/*                onChange={handleChange}*/}
+                                    {/*                onBlur={handleBlur}*/}
+                                    {/*                value={values.numVmInstances}*/}
+                                    {/*                error={errors.numVmInstances && touched.numVmInstances ? {*/}
+                                    {/*                    content: numVmsError,*/}
+                                    {/*                    pointing: "above"*/}
+                                    {/*                } : null}*/}
+                                    {/*    />*/}
+                                    {/*</Form.Group>*/}
                                     {/*https://stackoverflow.com/questions/63774577/how-to-define-setfieldvalue-in-react*/}
-                                    <Segment><strong>Task Distribution</strong></Segment>
+                                    {/*<Segment><strong>Task Distribution</strong></Segment>*/}
                                     <Container>
                                         <Grid>
                                             <Grid.Row>
