@@ -373,16 +373,25 @@ int main(int argc, char **argv) {
         workflow_finish_time = std::max<double>(t.second->getEndDate(), workflow_finish_time);
     }
 
-    auto total_energy = 0;
-    total_energy += simulation.getEnergyConsumed("WMSHost");
-    total_energy += simulation.getEnergyConsumed("storage_host");
+    auto total_energy_cluster = 0;
+    total_energy_cluster += simulation.getEnergyConsumed("WMSHost");
+    total_energy_cluster += simulation.getEnergyConsumed("storage_host");
     for (int i = 1; i < num_hosts + 1; i++) {
-        total_energy += simulation.getEnergyConsumed("compute_host_" + std::to_string(i));
+        total_energy_cluster += simulation.getEnergyConsumed("compute_host_" + std::to_string(i));
     }
+    auto total_energy_cloud = 0;
+    if (use_cloud) {
+        total_energy_cloud += simulation.getEnergyConsumed("cloud_provider_host");
+        total_energy_cloud += simulation.getEnergyConsumed("cloud_storage_host");
+        for (int i = 1; i < num_cloud_hosts + 1; i++) {
+            total_energy_cloud += simulation.getEnergyConsumed("cloud_host_" + std::to_string(i));
+        }
+    }
+    auto total_energy = total_energy_cluster + total_energy_cloud;
 
     // 1 MWh = 3,600 MJ = 3,600,000,000 J
-    auto total_cost = (cost / 3600000000) * total_energy;
-    auto total_co2 = (co2 / 3600000000) * total_energy;
+    auto total_cost = (cost / 3600000000) * total_energy_cluster;
+    auto total_co2 = (co2 / 3600000000) * total_energy_cluster;
 
     char cost_buf[25];
     char co2_buf[25];

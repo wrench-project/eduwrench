@@ -95,7 +95,7 @@ const CloudComputing = ({module, tab}) => {
                 its cores are slower that that of the cloud VMs, and the local cluster has only <TeX math="12\times 8=96"/> cores
                 while the cloud VMs have a total of <TeX math="16\times 16 = 256"/> cores.  Let's use the "run all on the cloud" option as a starting point and
                 think of having some portion of that tasks in <strong>one level</strong> running on the local cluster. Say we consider doing this
-                for either Level 1 or Level 2. For which level do you think this would pay off the most and why?
+                for either Level 1 or Level 2. For which of these two levels do you think this would pay off the most and why?
             </p>
 
             <p>
@@ -104,7 +104,8 @@ const CloudComputing = ({module, tab}) => {
             </p>
 
             <p>
-                <strong>[D.1.q2.5]></strong>
+                <strong>[D.1.q2.5]</strong> Experiment with running tasks in other levels on the cluster. Can you take the execution time even lower?
+                     What is the corresponding increase in CO2, if any?
             </p>
 
         </>
