@@ -185,14 +185,14 @@ const LocalComputing = ({module, tab}) => {
             <p>
                 For both these options give the CO2 emission and the parallel efficiency. What should
                 you tell your boss regarding which option is more desirable? Explain why the
-                less desirable option has a much higher carbon footprint.
+                less desirable option has a much higher CO2 footprint.
 
             </p>
 
             <p>
                 <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 50% is just
                 unacceptable, because they remember from a college course that low parallel efficiency means that
-                compute resources are wasted. So they ask you to first find the maximum number of nodes, with all
+                compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
                 nodes configured at the maximum p-state, that leads to a parallel efficiency of 50%. Then, using
                 that number of nodes, you're supposed to find to which p-state you can downclock to so as to save energy,
                 while still remaining under the 1-hour time limit.
@@ -203,8 +203,8 @@ const LocalComputing = ({module, tab}) => {
 
                 <br></br>
                 It turns out that the optimal cluster
-                configuration in terms of number of nodes used and p-state leads to a carbon emission of XXX and an execution
-                time of XXX minutes. How far is your answer from the optimal?
+                configuration in terms of number of nodes powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
+                time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?
             </p>
         </>
     )

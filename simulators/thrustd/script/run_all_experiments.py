@@ -6,9 +6,7 @@ from pymongo import MongoClient
 
 
 l_pstate = range(0,7);
-l_num_hosts = range(1,129);
-#l_pstate = range(0,5);
-#l_num_hosts = range(1,20);
+l_num_hosts = reversed(range(1,65));
 
 if __name__ == '__main__':
 
@@ -60,6 +58,8 @@ if __name__ == '__main__':
 #            print(str(pstate) + "," + str(num_hosts) + "," + str(json_output["exec_time"]) + "," + str(json_output["energy_cost"]) + "," + str(json_output["energy_co2"]))
             if (json_output["exec_time"] < 180.0):
                 print(str(pstate) + "," + str(num_hosts) + "," + str(json_output["exec_time"]) + "," +  str(json_output["energy_co2"]))
+            else: 
+                break
 
             # Save to MongoDB
             json_output["pstate"] = pstate
