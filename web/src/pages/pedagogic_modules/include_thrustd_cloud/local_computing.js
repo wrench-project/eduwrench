@@ -195,16 +195,20 @@ const LocalComputing = ({module, tab}) => {
                 compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
                 nodes configured at the maximum p-state, that leads to a parallel efficiency of 50%. Then, using
                 that number of nodes, you're supposed to find to which p-state you can downclock to so as to save energy,
-                while still remaining under the 1-hour time limit.
-                <br/><br/>
+                while still remaining under the 3-minute time limit.
+                <br/>
                 Report on the number of nodes and p-state that you end up using and the CO2 cost. How does it compare
                 to that obtained with the best option in question [D.1.q1.2]? Do you conclude that it is useful or not useful
                 to use both power-management techniques (powering hosts off and lowering the p-state) in combination?
 
-                <br></br>
+                <br/>
                 It turns out that the optimal cluster
                 configuration in terms of number of nodes powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
                 time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?
+
+                <br/><br/>
+                    (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we
+                used the simulator - from a script - to perform a systematic search. The optimal configuration uses 29 nodes at p-state 5.)
             </p>
         </>
     )
