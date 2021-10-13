@@ -1,8 +1,10 @@
 FROM wrenchproject/wrench:unstable
 
-# install Node and Gatsby client
 USER root
 
+# install Node and Gatsby client
+RUN apt-get update
+RUN apt-get upgrade ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs
 RUN npm install -g gatsby-cli --unsafe-perm
@@ -21,7 +23,7 @@ VOLUME /home/wrench/eduwrench/data_server
 # run build script
 WORKDIR /home/wrench/eduwrench
 RUN mkdir db
-RUN bash build.sh -j 2
+RUN bash build.sh -j2
 
 # run applications
 WORKDIR /home/wrench/eduwrench
