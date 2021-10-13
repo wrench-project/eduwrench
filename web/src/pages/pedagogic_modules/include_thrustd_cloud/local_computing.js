@@ -86,43 +86,43 @@ const LocalComputing = ({module, tab}) => {
                 <Table.Body>
                     <Table.Row>
                         <Table.Cell>0</Table.Cell>
-                        <Table.Cell>1.2</Table.Cell>
+                        <Table.Cell>1.8</Table.Cell>
                         <Table.Cell>0.5217</Table.Cell>
                         <Table.Cell>120</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>1</Table.Cell>
-                        <Table.Cell>1.4</Table.Cell>
-                        <Table.Cell>0.6087</Table.Cell>
+                        <Table.Cell>2.1</Table.Cell>
+                        <Table.Cell>2.6087</Table.Cell>
                         <Table.Cell>130</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>2</Table.Cell>
-                        <Table.Cell>1.6</Table.Cell>
+                        <Table.Cell>2.4</Table.Cell>
                         <Table.Cell>0.6957</Table.Cell>
                         <Table.Cell>140</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>3</Table.Cell>
-                        <Table.Cell>1.8</Table.Cell>
+                        <Table.Cell>2.7</Table.Cell>
                         <Table.Cell>0.7826</Table.Cell>
                         <Table.Cell>150</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>4</Table.Cell>
-                        <Table.Cell>2.0</Table.Cell>
+                        <Table.Cell>3.0</Table.Cell>
                         <Table.Cell>0.8696</Table.Cell>
                         <Table.Cell>160</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>5</Table.Cell>
-                        <Table.Cell>2.2</Table.Cell>
+                        <Table.Cell>3.3</Table.Cell>
                         <Table.Cell>0.9565</Table.Cell>
                         <Table.Cell>170</Table.Cell>
                     </Table.Row>
                     <Table.Row>
                         <Table.Cell>6</Table.Cell>
-                        <Table.Cell>2.3</Table.Cell>
+                        <Table.Cell>3.5</Table.Cell>
                         <Table.Cell>1</Table.Cell>
                         <Table.Cell>190</Table.Cell>
                     </Table.Row>
