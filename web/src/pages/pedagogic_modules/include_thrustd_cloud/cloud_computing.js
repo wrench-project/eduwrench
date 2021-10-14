@@ -32,9 +32,6 @@ const CloudComputing = ({module, tab}) => {
                 This setup is depicted in the figure below, with relevant data.
             </p>
 
-            <p>
-                <b>ADD A FIGURE</b>
-            </p>
 
             <h3>Allocating tasks to resources</h3>
 
