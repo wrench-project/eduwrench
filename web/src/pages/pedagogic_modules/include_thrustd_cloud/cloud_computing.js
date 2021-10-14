@@ -13,8 +13,8 @@ const CloudComputing = ({module, tab}) => {
             />
 
             <p>
-                <b>Your company has decided that a low carbon footprint is a high priority</b>. As a result,
-                from now on, the local cluster is configured by powering on <b>12 8-core nodes all at p-state 0</b>.
+                <b>Your agency has decided that a low carbon footprint is a high priority</b>. As a result,
+                from now on, the local cluster is configured by powering on <b>only 12 of the 8-core nodes, all at the lowest p-state 0</b>.
                 Other nodes are simply turned off for the day-to-day business.
             </p>
 
@@ -25,7 +25,7 @@ const CloudComputing = ({module, tab}) => {
                 To still make it possible to run the workflow quickly, your boss has secured access to a <b>remote cloud platform</b>, on
                 which your company has <b>16 virtual machines (VMs)</b> available for running workflow
                 tasks. <b>Each VM has 16 cores that compute at speed 34.4 GHz</b>. The cloud is accessible via
-                the wide-area network, and the data transfer rate is 15 MBps.  The cloud has a storage system with read/write bandwidth of 100 MBps just
+                the wide-area network, and the data transfer rate is 15 MBps.  The cloud has a storage system with read/write bandwidth of 100 MBps, just
                 like your local cluster.
                 The good thing about this cloud
                 is that it is powered by a green energy source, and thus has very low carbon footprint.
@@ -42,7 +42,9 @@ const CloudComputing = ({module, tab}) => {
             <p>
                 Now that you have access to both the 12-node local cluster and the 16-VM cloud,
                 you need to decide which tasks run locally and which tasks run remotely, knowing that
-                workflow data may then have to be communicated on the wide-area.
+                workflow data may then have to be communicated on the wide-area. Recall that each task
+                runs on exactly 4 cores, and that we never oversubscribe the cores of the cluster node or
+                or a VM.
             </p>
 
             <p>
@@ -81,9 +83,9 @@ const CloudComputing = ({module, tab}) => {
             <p>
                 <strong>[D.1.q2.2]</strong> Most of the computation in the workflow happens in the first two levels. Let's consider the following three options:
                 <ul>
-                    Option #1: Run all of Level 1 (the first level) on the cloud, and all other levels on the local cluster;
-                    Option #1: Run all of Level 2 on the cloud, and all other levels on the local cluster;
-                    Option #2: Run all of Levels 1 and 2 on the cloud, and all other levels on the local cluster;
+                    <li>Option #1: Run all of Level 1 (the first level) on the cloud, and all other levels on the local cluster;</li>
+                    <li>Option #2: Run all of Level 2 on the cloud, and all other levels on the local cluster; or</li>
+                    <li>Option #3: Run all of Levels 1 and 2 on the cloud, and all other levels on the local cluster.</li>
                 </ul>
                 Explain why one of these options, and say which one, should be better than the other two. Use the simulation to precisely compare these options.
                 Are any of these options better than the "run everything on the cloud" options?
@@ -99,7 +101,7 @@ const CloudComputing = ({module, tab}) => {
             </p>
 
             <p>
-                <strong>[D.1.q2.4]</strong> Say we decide to run some fraction of the tasks in Level 2 on the local cluster. Which fraction of the tasks running on the local cluster is best?
+                <strong>[D.1.q2.4]</strong> Say we decide to run some fraction of the tasks in Level 2 on the local cluster. Which fraction of the tasks running on the local cluster is best in term of performance?
                 How much faster then is the whole execution than the cloud-only execution? What about the carbon footprint?
             </p>
 
