@@ -382,7 +382,6 @@ int main(int argc, char **argv) {
     auto total_energy_cloud = 0;
     if (use_cloud) {
         total_energy_cloud += simulation.getEnergyConsumed("cloud_provider_host");
-        total_energy_cloud += simulation.getEnergyConsumed("cloud_storage_host");
         for (int i = 1; i < num_cloud_hosts + 1; i++) {
             total_energy_cloud += simulation.getEnergyConsumed("cloud_host_" + std::to_string(i));
         }
@@ -400,7 +399,7 @@ int main(int argc, char **argv) {
     sprintf(co2_buf, "%.2f", total_co2);
     sprintf(exec_time_buf, "%.2f", workflow_finish_time);
 
-    std::cerr << "Energy Consumption: " << total_energy << " Joule" << std::endl;
+    std::cerr << "Energy Consumption: " << total_energy << " Joules" << std::endl;
 //    std::cerr << "Total Energy Monetary Cost: $" << cost_buf << std::endl;
     std::cerr << "Energy CO2 Cost:    " << co2_buf << " gCO2e" << std::endl;
     std::cerr << "Execution time:     " << exec_time_buf << " sec" << std::endl;
