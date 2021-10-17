@@ -30,10 +30,10 @@ const LocalComputing = ({module, tab}) => {
             <MontageWorkflow/>
 
             <p>
-                This workflow takes 234 input files as input, for a total of 129.29 MB, and consists of 8 levels. Some levels have single task and others have hundreds of tasks. All tasks
+                This workflow takes 234 input files as input, for a total of 129.29 MB, and consists of 8 levels. Some levels have a single task and others have hundreds of tasks. All tasks
                 in a level perform the same kind of computation on different data. The task
                 dependency structure is relatively straightforward, with each task at a level depending on some (or all) of
-                the tasks in the previous level.  For each level, the figure above indicates the number of tasks, the total work (in GFlop) of these tasks. The number of input/output
+                the tasks in the previous level.  For each level, the figure above indicates the number of tasks and the total work (in GFlop) of these tasks. The number of input/output
                 files and their total size in MB are indicated in between each workflow level.  
             </p>
 
@@ -47,7 +47,7 @@ const LocalComputing = ({module, tab}) => {
 
             <p>
             The cluster has a storage system with read/write bandwidth of 100 MBps. The storage system holds all workflow data, that is,
-                all input files and all files generated
+                all input files and all files generated.
             </p>
 
             <p>
@@ -57,7 +57,7 @@ const LocalComputing = ({module, tab}) => {
             </p>
 
             <p>
-                You can perform <b>power management</b> on your cluster. This is because the nodes
+                You can perform <b>power management</b> on your cluster. This is because the nodes can
                 be configured to operate in different power states, or <b>p-states</b>. Each
                 p-state corresponds to a particular frequency used by the processor, which is directly correlated to
                 the performance of the processor and to its energy consumption. By decreasing the p-state, you are
@@ -163,14 +163,14 @@ const LocalComputing = ({module, tab}) => {
 
             <p>
                 <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
-                Using the simulation answer the following questions.  What is the parallel speedup? What is the parallel efficiency? What is the
+                Using the simulation, answer the following questions: What is the parallel speedup? What is the parallel efficiency? What is the
                 total CO2 emission?
             </p>
 
             <p>
                 <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
                 as possible is overkill. Instead, it is only necessary that the workflow run in under 3 minutes
-                (e.g., running in 2 minutes bring no extra benefits when compared to running in 3 minutes). With
+                (e.g., running in 2 minutes brings no extra benefits when compared to running in 3 minutes). With
                 this is mind, you can reconfigure the cluster to save on energy. You have two options to choose from:
                 <br/>
             </p>
@@ -194,14 +194,14 @@ const LocalComputing = ({module, tab}) => {
                 unacceptable, because they remember from a college course that low parallel efficiency means that
                 compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
                 nodes configured at the maximum p-state, that leads to a parallel efficiency of 50%. Then, using
-                that number of nodes, you're supposed to find to which p-state you can downclock to so as to save energy,
+                that number of nodes, you're supposed to find to which p-state you can downclock to so that you can save energy,
                 while still remaining under the 3-minute time limit.
-                <br/>
+                <br/><br/>
                 Report on the number of nodes and p-state that you end up using and the CO2 cost. How does it compare
                 to that obtained with the best option in question [D.1.q1.2]? Do you conclude that it is useful or not useful
                 to use both power-management techniques (powering hosts off and lowering the p-state) in combination?
 
-                <br/>
+                <br/><br/>
                 It turns out that the optimal cluster
                 configuration in terms of number of nodes powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
                 time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?

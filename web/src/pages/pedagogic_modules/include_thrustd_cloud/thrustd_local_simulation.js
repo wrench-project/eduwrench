@@ -39,12 +39,12 @@ const Thrustd_Local_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
-                                // if (!validateFieldInRange("num-hosts-label", values.numHosts, 1, 64, "XXX", "Host(s)")) {
-                                //     errors.numHosts = "ERROR"
-                                // }
-                                // if (!validateFieldInRange("pstate-label", values.pstate, 0, 6, "pstate:", "YYY")) {
-                                //     errors.pstate = "ERROR"
-                                // }
+                                if (values.numHosts < 1 || values.numHosts > 64) {
+                                    errors.numHosts = "ERROR"
+                                }
+                                if (values.pstate < 0 || values.pstate > 6) {
+                                    errors.pstate = "ERROR"
+                                }
                                 return errors
                             }}
 

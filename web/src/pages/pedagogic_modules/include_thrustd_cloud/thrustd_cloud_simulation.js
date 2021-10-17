@@ -76,7 +76,7 @@ const Thrustd_Cloud_Simulation = () => {
 
                                 validate={values => {
                                     const errors = {}
-                                    if (values.numHosts < 1 || values.numHosts > 128) {
+                                    if (values.numHosts < 1 || values.numHosts > 64) {
                                         errors.numHosts = "ERROR"
                                     }
                                     if (values.pstate < 0 || values.pstate > 6) {
