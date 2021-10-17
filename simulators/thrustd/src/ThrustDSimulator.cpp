@@ -395,13 +395,15 @@ int main(int argc, char **argv) {
 
     char cost_buf[25];
     char co2_buf[25];
+    char exec_time_buf[25];
     sprintf(cost_buf, "%.2f", total_cost);
     sprintf(co2_buf, "%.2f", total_co2);
+    sprintf(exec_time_buf, "%.2f", workflow_finish_time);
 
     std::cerr << "Energy Consumption: " << total_energy << " Joule" << std::endl;
 //    std::cerr << "Total Energy Monetary Cost: $" << cost_buf << std::endl;
     std::cerr << "Energy CO2 Cost:    " << co2_buf << " gCO2e" << std::endl;
-    std::cerr << "Execution time:     " << workflow_finish_time << " sec" << std::endl;
+    std::cerr << "Execution time:     " << exec_time_buf << " sec" << std::endl;
 //    std::cerr << "(Simulation time: " << duration.count() << " microseconds)" << std::endl;
 
     nlohmann::json output_json =

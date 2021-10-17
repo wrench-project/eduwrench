@@ -21,8 +21,8 @@
               pointer-events="stroke"/>
         <path d="M 190.91 107.96 L 190.53 99.02 L 193.37 102.48 L 197.83 102.29 Z" fill="#000000" stroke="#000000"
               stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
-        <ellipse cx="190" cy="130" rx="20" ry="20" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
-        <ellipse cx="110" cy="130" rx="20" ry="20" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+        <ellipse cx="190" cy="130" rx="20" ry="20" fill="#2185d0" stroke="#2185d0" pointer-events="all"/>
+        <ellipse cx="110" cy="130" rx="20" ry="20" fill="#2185d0" stroke="#2185d0" pointer-events="all"/>
         <rect x="250" y="100" width="40" height="20" fill="none" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -41,8 +41,8 @@
                 </text>
             </switch>
         </g>
-        <ellipse cx="350" cy="130" rx="20" ry="20" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
-        <ellipse cx="430" cy="130" rx="20" ry="20" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all"/>
+        <ellipse cx="350" cy="130" rx="20" ry="20" fill="#2185d0" stroke="#2185d0" pointer-events="all"/>
+        <ellipse cx="430" cy="130" rx="20" ry="20" fill="#2185d0" stroke="#2185d0" pointer-events="all"/>
         <path d="M 320 43 L 346.63 102.48" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10"
               pointer-events="stroke"/>
         <path d="M 349.09 107.96 L 342.17 102.29 L 346.63 102.48 L 349.47 99.02 Z" fill="#000000" stroke="#000000"
@@ -79,26 +79,26 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 130px; margin-left: 541px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">117 tasks: 288085 GFlop</font>
+                                <font style="font-size: 20px">117 tasks: 288,085 GFlop</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="680" y="134" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">117
-                    tasks: 288085 GFlop
+                    tasks: 288,085 GFlop
                 </text>
             </switch>
         </g>
-        <ellipse cx="220" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="170" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="120" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="70" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="20" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="320" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="370" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="420" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="470" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
-        <ellipse cx="520" cy="240" rx="20" ry="20" fill="#f8cecc" stroke="#b85450" pointer-events="all"/>
+        <ellipse cx="220" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="170" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="120" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="70" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="20" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="320" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="370" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="420" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="470" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
+        <ellipse cx="520" cy="240" rx="20" ry="20" fill="#e03997" stroke="#e03997" pointer-events="all"/>
         <rect x="250" y="220" width="40" height="40" fill="none" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -174,13 +174,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 240px; margin-left: 541px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">499 tasks: 675541 GFlop</font>
+                                <font style="font-size: 20px">499 tasks: 675,541 GFlop</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="680" y="244" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">499
-                    tasks: 675541 GFlop
+                    tasks: 675,541 GFlop
                 </text>
             </switch>
         </g>
@@ -204,7 +204,7 @@
               pointer-events="stroke"/>
         <path d="M 303.61 338.48 L 310.52 330.42 L 310.17 335.72 L 314.21 339.17 Z" fill="#000000" stroke="#000000"
               stroke-width="3.5" stroke-miterlimit="10" pointer-events="all"/>
-        <ellipse cx="270" cy="355" rx="20" ry="20" fill="#ffe6cc" stroke="#d79b00" pointer-events="all"/>
+        <ellipse cx="270" cy="355" rx="20" ry="20" fill="#f2711c" stroke="#f2711c" pointer-events="all"/>
         <rect x="555" y="340" width="190" height="30" fill="none" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -214,7 +214,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 188px; height: 1px; padding-top: 355px; margin-left: 556px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 53.27 GFlop</font>
+                                <font style="font-size: 20px">1 task: 53.27 GFlop</font>
                             </div>
                         </div>
                     </div>
@@ -231,7 +231,7 @@
         <path d="M 270 375 L 270 423.63" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
         <path d="M 270 428.88 L 266.5 421.88 L 270 423.63 L 273.5 421.88 Z" fill="#000000" stroke="#000000"
               stroke-miterlimit="10" pointer-events="all"/>
-        <ellipse cx="270" cy="450" rx="20" ry="20" fill="#d5e8d4" stroke="#82b366" pointer-events="all"/>
+        <ellipse cx="270" cy="450" rx="20" ry="20" fill="#21ba45" stroke="#21ba45" pointer-events="all"/>
         <rect x="195" y="383" width="170" height="30" fill="#ffffff" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -260,7 +260,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 228px; height: 1px; padding-top: 440px; margin-left: 541px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 475.28 GFlop</font>
+                                <font style="font-size: 20px">1 task: 475.28 GFlop</font>
                             </div>
                         </div>
                     </div>
@@ -308,10 +308,10 @@
                 </text>
             </switch>
         </g>
-        <ellipse cx="350" cy="550" rx="20" ry="20" fill="#fff2cc" stroke="#d6b656" pointer-events="all"/>
-        <ellipse cx="430" cy="550" rx="20" ry="20" fill="#fff2cc" stroke="#d6b656" pointer-events="all"/>
-        <ellipse cx="190" cy="550" rx="20" ry="20" fill="#fff2cc" stroke="#d6b656" pointer-events="all"/>
-        <ellipse cx="110" cy="550" rx="20" ry="20" fill="#fff2cc" stroke="#d6b656" pointer-events="all"/>
+        <ellipse cx="350" cy="550" rx="20" ry="20" fill="#fbbd08" stroke="#fbbd08" pointer-events="all"/>
+        <ellipse cx="430" cy="550" rx="20" ry="20" fill="#fbbd08" stroke="#fbbd08" pointer-events="all"/>
+        <ellipse cx="190" cy="550" rx="20" ry="20" fill="#fbbd08" stroke="#fbbd08" pointer-events="all"/>
+        <ellipse cx="110" cy="550" rx="20" ry="20" fill="#fbbd08" stroke="#fbbd08" pointer-events="all"/>
         <rect x="180" y="480" width="200" height="30" fill="#ffffff" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -340,13 +340,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 258px; height: 1px; padding-top: 550px; margin-left: 556px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">117 tasks: 180920 GFlop</font>
+                                <font style="font-size: 20px">117 tasks: 180,920 GFlop</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="685" y="554" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">117
-                    tasks: 180920 GFlop
+                    tasks: 180,920 GFlop
                 </text>
             </switch>
         </g>
@@ -386,7 +386,7 @@
                 </text>
             </switch>
         </g>
-        <ellipse cx="270" cy="650" rx="20" ry="20" fill="#1ba1e2" stroke="#006eaf" pointer-events="all"/>
+        <ellipse cx="270" cy="650" rx="20" ry="20" fill="#a5673f" stroke="#a5673f" pointer-events="all"/>
         <rect x="540" y="625" width="230" height="30" fill="none" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -396,7 +396,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 228px; height: 1px; padding-top: 640px; margin-left: 541px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 62.78 GFlop</font>
+                                <font style="font-size: 20px">1 task: 62.78 GFlop</font>
                             </div>
                         </div>
                     </div>
@@ -422,7 +422,7 @@
               stroke-width="2" stroke-miterlimit="10" pointer-events="stroke"/>
         <path d="M 301.24 718.14 L 302.35 709.26 L 304.57 713.15 L 309.01 713.7 Z" fill="#000000" stroke="#000000"
               stroke-width="2" stroke-miterlimit="10" pointer-events="all"/>
-        <ellipse cx="270" cy="740" rx="20" ry="20" fill="#6a00ff" stroke="#3700cc" pointer-events="all"/>
+        <ellipse cx="270" cy="740" rx="20" ry="20" fill="#6a00ff" stroke="#6a00ff" pointer-events="all"/>
         <rect x="545" y="725" width="230" height="30" fill="none" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -432,7 +432,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 228px; height: 1px; padding-top: 740px; margin-left: 546px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 475.53 GFlop</font>
+                                <font style="font-size: 20px">1 task: 475.53 GFlop</font>
                             </div>
                         </div>
                     </div>
@@ -445,7 +445,7 @@
         <path d="M 270 760 L 270 813.63" fill="none" stroke="#000000" stroke-miterlimit="10" pointer-events="stroke"/>
         <path d="M 270 818.88 L 266.5 811.88 L 270 813.63 L 273.5 811.88 Z" fill="#000000" stroke="#000000"
               stroke-miterlimit="10" pointer-events="all"/>
-        <ellipse cx="270" cy="842" rx="20" ry="20" fill="#a20025" stroke="#6f0000" pointer-events="all"/>
+        <ellipse cx="270" cy="842" rx="20" ry="20" fill="#db2828" stroke="#db2828" pointer-events="all"/>
         <rect x="190" y="770" width="175" height="30" fill="#ffffff" stroke="none" pointer-events="all"/>
         <g transform="translate(-0.5 -0.5)">
             <switch>
@@ -474,7 +474,7 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 228px; height: 1px; padding-top: 840px; margin-left: 548px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 1345.04 GFlop</font>
+                                <font style="font-size: 20px">1 task: 1345.04 GFlop</font>
                             </div>
                         </div>
                     </div>
