@@ -79,13 +79,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 278px; height: 1px; padding-top: 130px; margin-left: 541px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">117 tasks, 288085 GFlop</font>
+                                <font style="font-size: 22px">117 tasks: 288085 GFlop</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="680" y="134" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">117
-                    tasks, 288085 GFlop
+                    tasks: 288085 GFlop
                 </text>
             </switch>
         </g>
@@ -241,13 +241,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 168px; height: 1px; padding-top: 398px; margin-left: 196px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 file, 0.04 MB</font>
+                                <font style="font-size: 22px">1 file: 0.04 MB</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="280" y="402" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">1
-                    file, 0.04 MB
+                    file: 0.04 MB
                 </text>
             </switch>
         </g>
@@ -321,13 +321,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 198px; height: 1px; padding-top: 495px; margin-left: 181px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">351 files,  654 MB</font>
+                                <font style="font-size: 22px">351 files: 654 MB</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="280" y="499" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">351
-                    files,  654 MB
+                    files: 654 MB
                 </text>
             </switch>
         </g>
@@ -376,13 +376,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 218px; height: 1px; padding-top: 601px; margin-left: 161px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">118 files, 334.42 MB</font>
+                                <font style="font-size: 22px">118 files: 334.42 MB</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="270" y="605" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">118
-                    files, 334.42 MB
+                    files: 334.42 MB
                 </text>
             </switch>
         </g>
@@ -432,13 +432,13 @@
                          style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 228px; height: 1px; padding-top: 740px; margin-left: 546px;">
                         <div style="box-sizing: border-box; font-size: 0; text-align: center; ">
                             <div style="display: inline-block; font-size: 12px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
-                                <font style="font-size: 22px">1 task: 475.53 GFlops</font>
+                                <font style="font-size: 22px">1 task: 475.53 GFlop</font>
                             </div>
                         </div>
                     </div>
                 </foreignObject>
                 <text x="660" y="744" fill="#000000" font-family="Helvetica" font-size="12px" text-anchor="middle">1
-                    task: 475.53 GFlops
+                    task: 475.53 GFlop
                 </text>
             </switch>
         </g>
