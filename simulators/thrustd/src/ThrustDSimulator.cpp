@@ -368,7 +368,7 @@ int main(int argc, char **argv) {
 //    }
 
     auto exit_tasks = workflow->getExitTaskMap();
-    double workflow_finish_time = 0.0;
+    auto workflow_finish_time = 0.0;
     for (auto const &t : exit_tasks) {
         workflow_finish_time = std::max<double>(t.second->getEndDate(), workflow_finish_time);
     }
@@ -411,7 +411,7 @@ int main(int argc, char **argv) {
                     {"energy_consumption", total_energy},
                     {"energy_cost", total_cost},
                     {"energy_co2", total_co2},
-                    {"exec_time", workflow_finish_time}
+                    {"exec_time", exec_time_buf}
             };
 
     std::cout << output_json.dump() << std::endl;
