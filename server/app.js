@@ -1001,7 +1001,7 @@ app.post("/run/ci_overhead", function (req, res) {
 app.post("/run/thrustd", function (req, res) {
   const PATH_PREFIX = __dirname.replace(
       "server",
-      "simulators/thrustd/build/"
+      "simulators/thrustd/"
   );
 
   const SIMULATOR = "thrustd";
@@ -1022,7 +1022,7 @@ app.post("/run/thrustd", function (req, res) {
   ];
 
   const json_data = {
-    "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
+    "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
     "num_hosts": parseInt(NUM_HOSTS),
     "cores": 8,
     "min_cores_per_task": 4,
@@ -1077,9 +1077,8 @@ app.post("/run/thrustd", function (req, res) {
           user: USERNAME,
           email: EMAIL,
           time: Math.round(new Date().getTime() / 1000), // unix timestamp
-          activity: "thrustd",
-          num_hosts: NUM_HOSTS,
-          pstate: PSTATE
+          params: json_data,
+          activity: "thrustd"
       });
 
       res.json({
@@ -1093,7 +1092,7 @@ app.post("/run/thrustd", function (req, res) {
 app.post("/run/thrustd_cloud", function (req, res) {
     const PATH_PREFIX = __dirname.replace(
         "server",
-        "simulators/thrustd/build/"
+        "simulators/thrustd/"
     );
 
     const SIMULATOR = "thrustd";
@@ -1188,7 +1187,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
     ];
 
     const json_data = {
-        "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
+        "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
         "num_hosts": parseInt(NUM_HOSTS),
         "cores": 8,
         "min_cores_per_task": 4,
@@ -1244,11 +1243,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
             email: EMAIL,
             time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "thrustd",
-            num_hosts: NUM_HOSTS,
-            pstate: PSTATE,
-            useCloud: USE_CLOUD,
-            cloudHosts: NUM_CLOUD_HOSTS,
-            numVmInstances: NUM_VM_INSTANCES
+            params: json_data
         });
 
         res.json({
