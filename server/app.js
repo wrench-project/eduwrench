@@ -999,93 +999,93 @@ app.post("/run/ci_overhead", function (req, res) {
 
 // execute thrust d simulator
 app.post("/run/thrustd", function (req, res) {
-  const PATH_PREFIX = __dirname.replace(
-      "server",
-      "simulators/thrustd/"
-  );
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/thrustd/"
+    );
 
-  const SIMULATOR = "thrustd";
-  const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+    const SIMULATOR = "thrustd";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
 
-  const USERNAME = req.body.userName;
-  const EMAIL = req.body.email;
-  const NUM_HOSTS = req.body.num_hosts;
-  const PSTATE = req.body.pstate;
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_HOSTS = req.body.num_hosts;
+    const PSTATE = req.body.pstate;
 
-  // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
-  const LOGGING = [
-    "--log=root.thresh:critical",
-    "--log=wms.thresh:critical",
-    "--log=simple_wms.thresh:critical",
-    "--log=simple_wms_scheduler.thresh:critical",
-    "--log='root.fmt:[%.2d]%e%m%n'",
-  ];
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
 
-  const json_data = {
-    "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
-    "num_hosts": parseInt(NUM_HOSTS),
-    "cores": 8,
-    "min_cores_per_task": 4,
-    "max_cores_per_task": 4,
-    "pstate": parseInt(PSTATE),
-    "speed": "22.43Gf, 26.17Gf, 29.91Gf, 33.65Gf, 37.39Gf, 41.13Gf, 43Gf",
-    "value": "98:98:120, 98:98:130, 98:98:140, 98:98:150, 98:98:160, 98:98:170, 98:98:190",
-    "energy_cost_per_mwh": 1000,
-    "energy_co2_per_mwh": 291000,
-    "use_cloud": false,
-    "num_cloud_hosts": 0,
-    "cloud_cores": 0,
-    "cloud_bandwidth": "15MBps",
-    "cloud_pstate": 0,
-    "cloud_speed": "",
-    "cloud_value": "",
-    "cloud_cost_per_mwh": 0,
-    "num_vm_instances": 0,
-    "vm_usage_duration": 0,
-    "cloud_tasks": ""
-  }
-  // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
-  let args_json = JSON.stringify(json_data);
-  console.log(args_json);
-  const fs = require('fs');
-  
-  fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
-    if(err) console.log('error', err);
-  });
+    const json_data = {
+        "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
+        "num_hosts": parseInt(NUM_HOSTS),
+        "cores": 8,
+        "min_cores_per_task": 4,
+        "max_cores_per_task": 4,
+        "pstate": parseInt(PSTATE),
+        "speed": "22.43Gf, 26.17Gf, 29.91Gf, 33.65Gf, 37.39Gf, 41.13Gf, 43Gf",
+        "value": "98:98:120, 98:98:130, 98:98:140, 98:98:150, 98:98:160, 98:98:170, 98:98:190",
+        "energy_cost_per_mwh": 1000,
+        "energy_co2_per_mwh": 291000,
+        "use_cloud": false,
+        "num_cloud_hosts": 0,
+        "cloud_cores": 0,
+        "cloud_bandwidth": "15MBps",
+        "cloud_pstate": 0,
+        "cloud_speed": "",
+        "cloud_value": "",
+        "cloud_cost_per_mwh": 0,
+        "num_vm_instances": 0,
+        "vm_usage_duration": 0,
+        "cloud_tasks": ""
+    }
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    let args_json = JSON.stringify(json_data);
+    console.log(args_json);
+    const fs = require('fs');
 
-  const SIMULATION_ARGS = [
-    "/tmp/args.json"
-  ].concat(LOGGING);
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if (err) console.log('error', err);
+    });
 
-  var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
 
     let sim_output_start = simulation_output.indexOf("Total");
     let trimmed_sim_output = simulation_output.substring(sim_output_start);
     let output_array = trimmed_sim_output.split("\n");
     let printed_sim_output = "";
-    for(let i = 0; i < output_array.length; i++){
+    for (let i = 0; i < output_array.length; i++) {
         printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
             + output_array[i] + "<br></span>";
     }
 
-  if (simulation_output !== null) {
-      /**
-       * Log the user running this simulation along with the
-       * simulation parameters to the data server.
-       */
-      logData({
-          user: USERNAME,
-          email: EMAIL,
-          time: Math.round(new Date().getTime() / 1000), // unix timestamp
-          params: json_data,
-          activity: "thrustd"
-      });
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            params: json_data,
+            activity: "thrustd"
+        });
 
-      res.json({
-          "simulation_output": printed_sim_output,
-          "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
-      })
-  }
+        res.json({
+            "simulation_output": printed_sim_output,
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        })
+    }
 });
 
 // execute thrust d cloud simulator
@@ -1215,7 +1215,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
     console.log(args_json);
     const fs = require('fs');
     fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
-        if(err) console.log('error', err);
+        if (err) console.log('error', err);
     });
 
     const SIMULATION_ARGS = [
@@ -1228,9 +1228,9 @@ app.post("/run/thrustd_cloud", function (req, res) {
     let trimmed_sim_output = simulation_output.substring(sim_output_start);
     let output_array = trimmed_sim_output.split("\n");
     let printed_sim_output = "";
-    for(let i = 0; i < output_array.length; i++){
-    printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
-        + output_array[i] + "<br></span>";
+    for (let i = 0; i < output_array.length; i++) {
+        printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+            + output_array[i] + "<br></span>";
     }
 
     if (simulation_output !== null) {
@@ -1347,6 +1347,19 @@ app.post("/run/storage_network_proximity", function (req, res) {
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
         })
     }
+})
+
+// get usage statistics
+app.post("/get/usage_statistics", function (req, res) {
+
+    db.getUsageStatistics().then((usage => {
+        res.json({
+            usage_data: usage
+        })
+
+    })).catch((error => {
+        console.log("[ERROR]: " + error)
+    }))
 })
 
 /**

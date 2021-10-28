@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2021. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 import React from "react"
 import PropTypes from "prop-types"
 import { Menu } from "semantic-ui-react"
@@ -52,6 +61,10 @@ const Header = props => {
 
           <Menu.Item href="/forteachers" className="menu-item">
             For Teachers
+          </Menu.Item>
+
+          <Menu.Item href="/about" className="menu-item">
+            About
           </Menu.Item>
 
           <Auth />

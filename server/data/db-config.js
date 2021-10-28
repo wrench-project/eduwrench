@@ -35,7 +35,13 @@ const addSimulationRun = (userID, time, activity, params) => db.transaction(asyn
     return simID[0]
 })
 
+const getUsageStatistics = () => db.transaction(async trx => {
+    const usage = await trx("simulation_runs").select('time', 'activity')
+    return usage
+})
+
 module.exports = {
     registerUser,
-    addSimulationRun
+    addSimulationRun,
+    getUsageStatistics
 }

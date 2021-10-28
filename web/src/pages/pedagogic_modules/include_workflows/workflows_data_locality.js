@@ -1,3 +1,12 @@
+/**
+ * Copyright (c) 2019-2021. The WRENCH Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ */
+
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
@@ -10,13 +19,12 @@ import WorkflowsDataLocalityPlatformZoom
   from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"
 import WorkflowsDataLocalityQuestion from "../../../images/vector_graphs/workflows/workflow_data_locality_question.svg"
 
-const WorkflowsDataLocality = ({module, tab}) => {
+const WorkflowsDataLocality = ({ module, tab }) => {
   return (
     <>
-        <LearningObjectives module={module} tab={tab}
-        />
+      <LearningObjectives module={module} tab={tab} />
 
-        <h2>The need for data locality</h2>
+      <h2>The need for data locality</h2>
 
       <p>
         In the previous tab, all workflow tasks were reading/writing data at a remote (from their perspective) storage
