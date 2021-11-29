@@ -190,10 +190,10 @@ const LocalComputing = ({module, tab}) => {
             </p>
 
             <p>
-                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 50% is just
+                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 65% is just
                 unacceptable, because they remember from a college course that low parallel efficiency means that
                 compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
-                nodes configured at the maximum p-state, that leads to a parallel efficiency of 50%. Then, using
+                nodes configured at the maximum p-state, that leads to a parallel efficiency of 65%. Then, using
                 that number of nodes, you're supposed to find to which p-state you can downclock to so that you can save energy,
                 while still remaining under the 3-minute time limit.
                 <br/><br/>
