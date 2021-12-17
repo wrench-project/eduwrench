@@ -163,7 +163,8 @@ const LocalComputing = ({module, tab}) => {
 
             <p>
                 <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
-                Using the simulation, answer the following questions: What is the parallel speedup? What is the parallel efficiency? What is the
+                Using the simulation, answer the following questions:  What is the
+                <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>? What is the parallel efficiency? What is the
                 total CO2 emission?
             </p>
 
