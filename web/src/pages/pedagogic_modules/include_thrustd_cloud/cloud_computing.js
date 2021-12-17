@@ -25,9 +25,19 @@ const CloudComputing = ({module, tab}) => {
                 To still make it possible to run the workflow quickly, your boss has secured access to a <b>remote cloud platform</b>, on
                 which your company has <b>16 virtual machines (VMs)</b> available for running workflow
                 tasks. <b>Each VM has 16 cores that compute at speed 34.4 Gflop/sec</b>. The cloud is accessible via
-                the wide-area network, and the data transfer rate is 15 MBps.  The cloud has a storage system with read/write bandwidth of 100 MBps, just
-                like your local cluster.
-                The good thing about this cloud
+                the wide-area network, and the data transfer rate is 15 MBps.  
+            </p>
+            <p>
+                The cloud has a storage system with read/write bandwidth of 100 MBps, just
+                like your local cluster. This storage system can store *intermediate data* during the
+                workflow execution. For instance, if a task is executed on the cloud and produces some output
+                file, a subsequent task that needs this file, if it runs on the cloud, will access
+                the file from cloud storage (which is much faster than remotely accessing the storage on the local
+                cluster). In other words, **the cloud storage can "keep around" data to avoid unnecessarily remotely
+                using the local cluster's storage if possible**. 
+            </p>
+            <p>
+                The good thing about the cloud
                 is that it is powered by a green energy source, and thus has very low carbon footprint.
                 This setup is depicted in the figure below, with relevant data.
             </p>
