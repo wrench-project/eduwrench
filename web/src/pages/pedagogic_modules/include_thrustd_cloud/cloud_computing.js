@@ -82,10 +82,14 @@ const CloudComputing = ({module, tab}) => {
             <p>
                 <strong>[D.1.q2.1]</strong> The two "extreme" options are to either run all tasks on the local cluster or run all tasks on the remote cloud.
                 Note that the input data to the workflow initially resides on the storage system of the local cluster. Use
-                the simulation to evaluate both these options in terms of workflow execution time. Considering total execution time and carbon footprint, is one option
-                strictly better than the other, and if so which one? If the wide-area link
-                were of infinite bandwidth, how much faster would the cloud-only execution be?
+                the simulation to evaluate both these options in terms of workflow execution time.
             </p>
+            <ol type="a">
+                <li>Considering total execution time and carbon footprint, is one option
+                    strictly better than the other, and if so which one?</li>
+                <li>If the wide-area link were of infinite bandwidth, how much faster
+                    would the cloud-only execution be?</li>
+            </ol>
 
             <p>
                 <strong>[D.1.q2.2]</strong> Most of the computation in the workflow happens in the first two levels. Let's consider the following three options:
@@ -95,11 +99,12 @@ const CloudComputing = ({module, tab}) => {
                     <li>Option #2: Run all of Level 2 on the cloud, and all other levels on the local cluster; or</li>
                     <li>Option #3: Run all of Levels 1 and 2 on the cloud, and all other levels on the local cluster.</li>
                 </ul>
-                <br/>
-                Explain why one of these options, and say which one, should be better than the other two. Use the simulation to precisely compare these options.
-                Are any of these options better than the "run everything on the cloud" option?
-
             </p>
+            <ol type="a">
+                <li>Explain why one of these options, and say which one, should be better than the other two.</li>
+                <li>Use the simulation to precisely compare these options.</li>
+                <li>Are any of these options better than the "run everything on the cloud" option?</li>
+            </ol>
 
             <p>
                 <strong>[D.1.q2.3]</strong> So now you're on a mission to determine whether using the local cluster at all is a good idea. After all,
@@ -110,14 +115,21 @@ const CloudComputing = ({module, tab}) => {
             </p>
 
             <p>
-                <strong>[D.1.q2.4]</strong> Say we decide to run some fraction of the tasks in Level 2 on the local cluster. What fraction of the tasks running on the local cluster is best in terms of performance?
-                How much faster then is the whole execution than the cloud-only execution? What about the carbon footprint?
+                <strong>[D.1.q2.4]</strong> Say we decide to run some fraction of the tasks in Level 2 on the local cluster.
             </p>
+            <ol type="a">
+                <li>What fraction of the tasks running on the local cluster is best in terms of performance?</li>
+                <li>How much faster then is the whole execution than the cloud-only execution?</li>
+                <li>What about the carbon footprint?</li>
+            </ol>
 
             <p>
-                <strong>[D.1.q2.5]</strong> Experiment with running tasks in other levels on the cluster. Can you take the execution time even lower?
-                     What is the corresponding increase in CO2, if any?
+                <strong>[D.1.q2.5]</strong> Experiment with running tasks in other levels on the cluster.
             </p>
+            <ol type="a">
+                <li>Can you take the execution time even lower?</li>
+                <li>What is the corresponding increase in CO2, if any?</li>
+            </ol>
 
         </>
     )

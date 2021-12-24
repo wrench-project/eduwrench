@@ -163,10 +163,16 @@ const LocalComputing = ({module, tab}) => {
 
             <p>
                 <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
-                Using the simulation, answer the following questions:  What is the
-                <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>? What is the parallel efficiency? What is the
-                total CO2 emission?
+                Using the simulation, answer the following questions:
             </p>
+            <ol type="a">
+                <li>
+                    What is the <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>?
+                </li>
+                <li>What is the parallel efficiency?</li>
+                <li>What is the total CO2 emission?</li>
+            </ol>
+
 
             <p>
                 <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
@@ -183,12 +189,13 @@ const LocalComputing = ({module, tab}) => {
                     smallest p-state that satisfies the 3-minute time limit.
                 </li>
             </ul>
-            <p>
-                For both these options give the CO2 emission and the parallel efficiency. What should
-                you tell your boss regarding which option is more desirable? Explain why the
-                less desirable option has a much higher CO2 footprint.
-
-            </p>
+            <ol type="a">
+                <li>
+                    For both these options give the CO2 emission and the parallel efficiency.
+                </li>
+                <li>What should you tell your boss regarding which option is more desirable?</li>
+                <li>Explain why the less desirable option has a much higher CO2 footprint.</li>
+            </ol>
 
             <p>
                 <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 65% is just
@@ -197,17 +204,19 @@ const LocalComputing = ({module, tab}) => {
                 nodes configured at the maximum p-state, that leads to a parallel efficiency of 65%. Then, using
                 that number of nodes, you're supposed to find to which p-state you can downclock to so that you can save energy,
                 while still remaining under the 3-minute time limit.
-                <br/><br/>
-                Report on the number of nodes and p-state that you end up using and the CO2 cost. How does it compare
-                to that obtained with the best option in question [D.1.q1.2]? Do you conclude that it is useful or not useful
-                to use both power-management techniques (powering hosts off and lowering the p-state) in combination?
-
-                <br/><br/>
-                It turns out that the optimal cluster
-                configuration in terms of number of nodes powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
-                time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?
-
-                <br/><br/>
+            </p>
+            <ol type="a">
+                <li>
+                    Report on the number of nodes and p-state that you end up using and the CO2 cost.
+                </li>
+                <li>How does it compare to that obtained with the best option in question [D.1.q1.2]?</li>
+                <li>Do you conclude that it is useful or not useful to use both power-management
+                    techniques (powering hosts off and lowering the p-state) in combination?</li>
+                <li>It turns out that the optimal cluster configuration in terms of number of nodes
+                    powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
+                    time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?</li>
+            </ol>
+            <p>
                     (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we
                 used the simulator - from a script - to perform a systematic search. The optimal configuration uses 29 nodes at p-state 5.)
             </p>

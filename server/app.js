@@ -1022,7 +1022,7 @@ app.post("/run/thrustd", function (req, res) {
     ];
 
     const json_data = {
-        "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
+        "workflow_file": PATH_PREFIX + "workflows/bigger-montage-workflow.json",
         "num_hosts": parseInt(NUM_HOSTS),
         "cores": 8,
         "min_cores_per_task": 4,
@@ -1187,7 +1187,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
     ];
 
     const json_data = {
-        "workflow_file": PATH_PREFIX + "/workflows/bigger-montage-workflow.json",
+        "workflow_file": PATH_PREFIX + "workflows/bigger-montage-workflow.json",
         "num_hosts": parseInt(NUM_HOSTS),
         "cores": 8,
         "min_cores_per_task": 4,

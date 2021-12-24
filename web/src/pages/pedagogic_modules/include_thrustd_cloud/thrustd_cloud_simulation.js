@@ -39,6 +39,7 @@ import MAddTasks from "../../../images/vector_graphs/thrustd/split_montage/mAdd/
 import MViewerInput from "../../../images/vector_graphs/thrustd/split_montage/mViewer/files_7.svg"
 import MViewerLevel from "../../../images/vector_graphs/thrustd/split_montage/mViewer/level_7.svg"
 import MViewerTasks from "../../../images/vector_graphs/thrustd/split_montage/mViewer/tasks_7.svg"
+import MOutput from "../../../images/vector_graphs/thrustd/split_montage/files_8.svg"
 
 const Thrustd_Cloud_Simulation = () => {
 
@@ -362,6 +363,14 @@ const Thrustd_Cloud_Simulation = () => {
                                                                         set={setFieldValue}
                                                                         value={values.mViewerCloud}/>
                                                     </Form.Field>
+                                                </Grid.Column>
+                                            </Grid.Row>
+
+                                            <Grid.Row>
+                                                <Grid.Column>
+                                                    <MOutput/>
+                                                </Grid.Column>
+                                                <Grid.Column>
                                                 </Grid.Column>
                                             </Grid.Row>
 
