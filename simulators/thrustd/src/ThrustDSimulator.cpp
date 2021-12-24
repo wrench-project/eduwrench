@@ -363,9 +363,25 @@ int main(int argc, char **argv) {
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
     WRENCH_INFO("Simulation done!");
 
-//    for (auto const &t : workflow->getTasks()) {
-//        std::cerr << t->getID() << " RAN ON " << t->getPhysicalExecutionHost() << "\n";
-//    }
+    // get num hosts powered on and actually used
+    map<std::string, int> used_physical_hosts;
+    for (std::string x : simulation.getHostnameList()) {
+        used_physical_hosts[x] = 0;
+    }
+    for (auto const &t : workflow->getTasks()) {
+        if (used_physical_hosts[t->getPhysicalExecutionHost()] == 0) {
+            used_physical_hosts[t->getPhysicalExecutionHost()] = 1;
+        }
+    }
+    int num_used_hosts = 0;
+    for (std::string x : simulation.getHostnameList()) {
+        if (used_physical_hosts[x] == 1) {
+            num_used_hosts++;
+        }
+    }
+
+    std::cerr << "Num Hosts Powered On: " << num_hosts + num_cloud_hosts << " Hosts" << std::endl;
+    std::cerr << "Num Hosts Actually Used: " << num_used_hosts << " Hosts" << std::endl;
 
     auto exit_tasks = workflow->getExitTaskMap();
     auto workflow_finish_time = 0.0;
