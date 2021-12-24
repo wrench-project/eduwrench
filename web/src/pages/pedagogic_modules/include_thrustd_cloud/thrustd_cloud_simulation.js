@@ -136,6 +136,7 @@ const Thrustd_Cloud_Simulation = () => {
                                             error => {
                                                 console.log(error)
                                                 alert("Error executing simulation.")
+                                                setSubmitting(false)
                                             }
                                         )
                                     }, 400)
