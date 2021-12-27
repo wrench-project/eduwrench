@@ -1102,7 +1102,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
     const EMAIL = req.body.email;
     const NUM_HOSTS = req.body.num_hosts;
     const PSTATE = req.body.pstate;
-    const NUM_CLOUD_HOSTS = req.body.numVmInstances;
+    const NUM_CLOUD_HOSTS = 4;
     const NUM_VM_INSTANCES = req.body.numVmInstances;
     let MPROJECT_CLOUD = Math.round(((parseInt(req.body.mProjectCloud) * 1.0) / 100) * 117);
     let MDIFFFIT_CLOUD = Math.round(((parseInt(req.body.mDiffFitCloud) * 1.0) / 100) * 499);

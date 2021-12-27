@@ -364,22 +364,25 @@ int main(int argc, char **argv) {
     WRENCH_INFO("Simulation done!");
 
     // get num hosts powered on and actually used
-    map<std::string, bool> used_physical_hosts;
-    for (std::string x : simulation.getHostnameList()) {
-        used_physical_hosts[x] = false;
-    }
+    std::set<std::string> used_physical_hosts;
     for (auto const &t : workflow->getTasks()) {
-        used_physical_hosts[t->getPhysicalExecutionHost()] = true;
+        used_physical_hosts.insert(t->getPhysicalExecutionHost());
     }
-    int num_used_hosts = 0;
-    for (std::string x : simulation.getHostnameList()) {
-        if (used_physical_hosts[x]) {
-            num_used_hosts++;
+    int num_used_local_hosts = 0;
+    int num_used_cloud_hosts = 0;
+    for (const auto &hostname : used_physical_hosts) {
+        if (hostname.find("cloud_host_") != std::string::npos) {
+            num_used_cloud_hosts++;
+        } else {
+            num_used_local_hosts++;
         }
+
     }
 
-    std::cerr << "Num Hosts Powered On: " << num_hosts + num_cloud_hosts << " Hosts" << std::endl;
-    std::cerr << "Num Hosts Actually Used: " << num_used_hosts << " Hosts" << std::endl;
+    std::cerr << "Num Local Cluster hosts powered on:     " << num_hosts << std::endl;
+    std::cerr << "Num Local Clusters hosts actually used: " << num_used_local_hosts << std::endl;
+    std::cerr << "Num Remote Cloud hosts powered on:      " << num_cloud_hosts << std::endl;
+    std::cerr << "Num Remote Cloud hosts actually used:   " << num_used_cloud_hosts << std::endl;
 
     auto exit_tasks = workflow->getExitTaskMap();
     auto workflow_finish_time = 0.0;
