@@ -23,8 +23,8 @@ const CloudComputing = ({module, tab}) => {
 
             <p>
                 To still make it possible to run the workflow quickly, your boss has secured access to a <b>remote cloud platform</b>, on
-                which your company has <b>16 virtual machines (VMs)</b> available for running workflow
-                tasks. <b>Each VM has 16 cores that compute at speed 34.4 Gflop/sec</b>. The cloud is accessible via
+                which your company has <b>16 4-core virtual machines (VMs)</b>, that run on 4 physical hosts in the cloud infrastructure. These VMs are available for running workflow
+                tasks and <b>each VM computes at speed 34.4 Gflop/sec</b>. The cloud is accessible via
                 the wide-area network, and the data transfer rate is 15 MBps.  
             </p>
             <p>
