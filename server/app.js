@@ -1064,8 +1064,10 @@ app.post("/run/thrustd", function (req, res) {
     let output_array = trimmed_sim_output.split("\n");
     let printed_sim_output = "";
     for (let i = 0; i < output_array.length; i++) {
-        printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
-            + output_array[i] + "<br></span>";
+        if (!output_array[i].startsWith('Num')) {
+            printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+                + output_array[i] + "<br></span>";
+        }
     }
 
     if (simulation_output !== null) {
