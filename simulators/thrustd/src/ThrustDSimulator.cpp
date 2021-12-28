@@ -380,7 +380,7 @@ int main(int argc, char **argv) {
     }
 
     std::cerr << "Num Local Cluster hosts powered on:     " << num_hosts << std::endl;
-    std::cerr << "Num Local Clusters hosts actually used: " << num_used_local_hosts << std::endl;
+    std::cerr << "Num Local Cluster hosts actually used: " << num_used_local_hosts << std::endl;
     std::cerr << "Num Remote Cloud hosts powered on:      " << num_cloud_hosts << std::endl;
     std::cerr << "Num Remote Cloud hosts actually used:   " << num_used_cloud_hosts << std::endl;
 
