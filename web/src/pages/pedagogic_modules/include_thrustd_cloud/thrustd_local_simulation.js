@@ -3,7 +3,7 @@ import axios from "axios"
 import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import SimulationScenario from "../../../components/simulation/simulation_scenario"
+import SimulationScenarioTwo from "../../../components/simulation/simulation_scenario_two"
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
@@ -13,6 +13,7 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg"
+import LocalComputingScenario from "../../../images/vector_graphs/thrustd/thrustd_local.svg"
 
 const Thrustd_Local_Simulation = () => {
 
@@ -26,7 +27,7 @@ const Thrustd_Local_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                <SimulationScenario scenario={<MontageWorkflow/>} />
+                <SimulationScenarioTwo scenario={<MontageWorkflow/>} scenario2={<LocalComputingScenario/>} />
 
                 <Segment.Group>
                     <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -39,6 +40,15 @@ const Thrustd_Local_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
+                                if (!validateFieldInRange("td-pstate-label-1", values.pstate, 0, 6, "Pstate: ", "")) {
+                                    errors.pstate = "ERROR"
+                                }
+                                if (!validateFieldInRange("td-pstate-label-N", values.pstate, 0, 6, "Pstate: ", "")) {
+                                    errors.pstate = "ERROR"
+                                }
+                                if (!validateFieldInRange("td-num-hosts-label", values.numHosts, 1, 64, "N=", "Hosts")) {
+                                    errors.numHosts = "ERROR"
+                                }
                                 if (values.numHosts < 1 || values.numHosts > 64) {
                                     errors.numHosts = "ERROR"
                                 }
@@ -95,7 +105,7 @@ const Thrustd_Local_Simulation = () => {
                                 <Form onSubmit={handleSubmit}>
                                     <Form.Group widths="equal">
                                         <Form.Input fluid name="numHosts"
-                                                    label="Number of nodes powered on"
+                                                    label="Number of hosts powered on"
                                                     placeholder="1"
                                                     type="number"
                                                     min={1}
@@ -104,7 +114,7 @@ const Thrustd_Local_Simulation = () => {
                                                     onBlur={handleBlur}
                                                     value={values.numHosts}
                                                     error={errors.numHosts && touched.numHosts ? {
-                                                        content: "Please provide the number of nodes in the range of [1, 64].",
+                                                        content: "Please provide the number of hosts in the range of [1, 64].",
                                                         pointing: "above"
                                                     } : null}
                                         />
