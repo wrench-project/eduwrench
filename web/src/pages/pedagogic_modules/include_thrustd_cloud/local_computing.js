@@ -169,7 +169,7 @@ const LocalComputing = ({module, tab}) => {
                 <li>
                     What is the <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>?
                 </li>
-                <li>What is the parallel efficiency?</li>
+                <li>What is the <a href="/pedagogic_modules/multi_core_computing">parallel efficiency?</a></li>
                 <li>What is the total CO2 emission?</li>
             </ol>
 
