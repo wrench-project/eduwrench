@@ -3,7 +3,7 @@ import axios from "axios"
 import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import SimulationScenarioTwo from "../../../components/simulation/simulation_scenario_two"
+import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
@@ -27,7 +27,13 @@ const Thrustd_Local_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                <SimulationScenarioTwo scenario={<MontageWorkflow/>} scenario2={<LocalComputingScenario/>} />
+                <Segment.Group>
+                    <Segment raised size="large" color="teal"><strong>Montage Workflow</strong></Segment>
+                    <Segment>
+                        <MontageWorkflow/>
+                    </Segment>
+                </Segment.Group>
+                <SimulationScenario scenario={<LocalComputingScenario/>} />
 
                 <Segment.Group>
                     <Segment color="teal"><strong>Simulation Parameters</strong></Segment>

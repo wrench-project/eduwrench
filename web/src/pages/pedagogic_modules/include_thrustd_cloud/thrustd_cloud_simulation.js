@@ -15,6 +15,7 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg"
+import CloudComputingScenario from "../../../images/vector_graphs/thrustd/thrustd_cloud.svg"
 import MProjectInput from "../../../images/vector_graphs/thrustd/split_montage/mProject/files_0.svg"
 import MProjectLevel from "../../../images/vector_graphs/thrustd/split_montage/mProject/level_0.svg"
 import MProjectTasks from "../../../images/vector_graphs/thrustd/split_montage/mProject/tasks_0.svg"
@@ -54,8 +55,6 @@ const Thrustd_Cloud_Simulation = () => {
     return (
         auth === "true" ? (
             <>
-                {/*<SimulationScenario scenario={<MontageWorkflow/>}/>*/}
-
                 <Segment.Group>
                     {/*<Segment color="teal"><strong>Simulation Parameters</strong></Segment>*/}
                     <Segment raised size="large" color="teal"><strong>Use the sliders to allocate tasks to cluster or cloud</strong></Segment>
@@ -378,6 +377,7 @@ const Thrustd_Cloud_Simulation = () => {
                                         </Grid>
                                     </Container>
                                     <br/>
+                                    <SimulationScenario scenario={<CloudComputingScenario/>}/>
                                     <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run
                                         Simulation</Form.Button>
                                 </Form>
@@ -385,7 +385,6 @@ const Thrustd_Cloud_Simulation = () => {
                         </Formik>
                     </Segment>
                 </Segment.Group>
-
                 {simulationResults}
 
             </>
