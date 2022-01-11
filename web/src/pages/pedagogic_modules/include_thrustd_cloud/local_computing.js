@@ -182,10 +182,10 @@ const LocalComputing = ({module, tab}) => {
                 <br/>
             </p>
             <ul>
-                <li>Option 1: Turn off some of the  nodes and simply not use them. Using a binary search,
+                <li>Option 1: Turn off some of the nodes and have all powered on nodes operate in the highest p-state. Using a binary search,
                     find the smallest number of nodes that satisfies the 3-minute time limit.
                 </li>
-                <li>Option 2: Downclock all 64 nodes to a lower p-state. Using a binary search, find the
+                <li>Option 2: Power on all 64 nodes but downclock them to a lower p-state. Using a binary search, find the
                     smallest p-state that satisfies the 3-minute time limit.
                 </li>
             </ul>
