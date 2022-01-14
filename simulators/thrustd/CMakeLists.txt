@@ -12,7 +12,7 @@ set(CMAKE_BUILD_TYPE Debug)
 find_package(SimGrid REQUIRED)
 
 # include directories for dependencies and WRENCH libraries
-include_directories(src/ ${SimGrid_INCLUDE_DIR}/include /usr/local/include /opt/local/include /usr/local/include/wrench)
+include_directories(src/ ${SimGrid_INCLUDE_DIR} /usr/local/include /opt/local/include /usr/local/include/wrench)
 
 # source files
 set(SOURCE_FILES
