@@ -9,7 +9,7 @@
     "@iftek/react-chartjs-3": "^1.1.0",
     "@matejmazur/react-katex": "^3.1.3",
     "antd": "^4.16.6",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "chart.js": "^3.4.1",
     "formik": "^2.2.9",
     "gatsby": "3.7.2",
