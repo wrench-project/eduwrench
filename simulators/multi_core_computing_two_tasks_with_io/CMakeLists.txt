@@ -27,12 +27,12 @@ set(SOURCE_FILES
 
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(SIMGRID_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
+find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(multi_core_io_simulator ${SOURCE_FILES})
 target_link_libraries(multi_core_io_simulator
         ${WRENCH_LIBRARY}
-        ${SIMGRID_LIBRARY}
+        ${SimGrid_LIBRARY}
         ${PUGIXML_LIBRARY}
         )
