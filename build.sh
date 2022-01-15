@@ -18,6 +18,8 @@ ORANGE='\033[0;33m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
+TOPDIR=`pwd`
+
 printf "${ORANGE}"
 echo "======================================"
 echo "  eduWRENCH - Build"
@@ -38,16 +40,20 @@ for  dir in `ls simulators/`; do
             exit 1
         fi
     fi
-    cd ../..
+    cd $TOPDIR
 done
 
 printf "${CYAN}\n"
 echo "[2/3] BUILDING SERVER"
 printf "${NC}\n"
 mkdir db
-cd server && npm install && npm audit fix && npx knex migrate:latest && cd ..
+cd server 
+npm install && npm audit fix && npx knex migrate:latest
+cd $TOPDIR
 
 printf "${CYAN}\n"
 echo "[3/3] BULDING FRONT-END"
 printf "${NC}\n"
-cd web && npm install && gatsby build && cd ..
+cd web 
+npm install && gatsby build
+cd $TOPDIR
