@@ -25,7 +25,7 @@ Start the backend server:
 
 ```bash
 $ cd server
-$ npx nodemon app.js
+$ node app.js
 ```
 
 Start the frontend application:
