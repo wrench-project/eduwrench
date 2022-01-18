@@ -8,7 +8,7 @@ import "./pedagogic_modules.css"
 import LocalComputing from "./include_thrustd_cloud/local_computing"
 import CloudComputing from "./include_thrustd_cloud/cloud_computing"
 
-const ThrustD_Cloud = () => {
+const Workflow_co2 = () => {
 
     const module = "D.1"
 
@@ -51,4 +51,4 @@ const ThrustD_Cloud = () => {
     )
 }
 
-export default ThrustD_Cloud
+export default Workflow_co2

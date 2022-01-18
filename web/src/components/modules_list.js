@@ -121,7 +121,7 @@ const ModulesList = () => {
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/thrustd_cloud/">Launch</Button>
+                    href="/pedagogic_modules/workflow_co2/">Launch</Button>
             The goal of this module is to expose you to a real-world case-study
             in which a scientific workflow application from the field of
             astronomy needs to be executed on various distributed computing
