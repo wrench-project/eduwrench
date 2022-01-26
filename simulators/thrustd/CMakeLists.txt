@@ -10,6 +10,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
 set(CMAKE_BUILD_TYPE Debug)
 
 find_package(SimGrid REQUIRED)
+find_package(Boost REQUIRED)
+
 
 # include directories for dependencies and WRENCH libraries
 include_directories(src/ ${SimGrid_INCLUDE_DIR} ${Boost_INCLUDE_DIR} /usr/local/include /opt/local/include /usr/local/include/wrench)
