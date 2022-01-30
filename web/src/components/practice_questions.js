@@ -1,5 +1,5 @@
 import React from "react"
-import {  Header, Segment } from "semantic-ui-react"
+import { Header, Segment } from "semantic-ui-react"
 import Textbox from "./practice-questions/textbox";
 
 const PracticeQuestions = ({ header = null, questions }) => {
@@ -11,7 +11,7 @@ const PracticeQuestions = ({ header = null, questions }) => {
     questionsHeader = (<>{header}</>)
   }
 
-  for (const value of questions.entries()) {
+  for (const [index, value] of questions.entries()) {
     panels.push({
       key: value.key,
       title: {
