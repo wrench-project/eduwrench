@@ -11,6 +11,7 @@ const PracticeQuestions = ({ header = null, questions }) => {
     questionsHeader = (<>{header}</>)
   }
 
+  /* Indexing to go through entries of questions */
   for (const [index, value] of questions.entries()) {
     panels.push({
       key: value.key,
