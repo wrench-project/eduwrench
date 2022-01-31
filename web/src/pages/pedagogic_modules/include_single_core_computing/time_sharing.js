@@ -61,7 +61,8 @@ const TimeSharing = ({module, tab}) => {
                             2 Tflop/sec. Therefore, it completes at time:
                             <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
                         </>
-                    )
+                    ),
+                    type: "textbox"
                 },
                 {
                     key: "A.1.p2.2",
@@ -71,7 +72,8 @@ const TimeSharing = ({module, tab}) => {
                         <TeX
                             math="\text{speed} = 2 \times \frac{800000 \text{Gflop}}{ 3600 \text{sec}} \simeq 444.44 \text{Gflop/sec}"
                             block />
-                    )
+                    ),
+                    type: "radio"
                 }
             ]}
             />

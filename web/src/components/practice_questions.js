@@ -1,6 +1,7 @@
 import React from "react"
 import { Header, Segment } from "semantic-ui-react"
 import Textbox from "./practice-questions/textbox";
+import MultiChoice from "./practice-questions/multichoice"
 
 const PracticeQuestions = ({ header = null, questions }) => {
 
@@ -19,10 +20,10 @@ const PracticeQuestions = ({ header = null, questions }) => {
         content: (<><strong>[{value.key}]</strong> {value.question}</>)
       },
       content: {
-        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>),
-        textbox: (<Textbox/>)}
-    })
-  }
+        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>)},
+      type: value.type
+      },)
+    }
 
   return (
     <>
@@ -32,8 +33,8 @@ const PracticeQuestions = ({ header = null, questions }) => {
 
       {questionsHeader}
       <div>
-        {panels.map(({ title, key, content}) => (
-            <><p key={key}>{title.content}</p> {content.textbox}</>
+        {panels.map(({ title, key, type }) => (
+            <><p key={key}>{title.content}</p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} </>
         ))}
       </div>
 
@@ -41,4 +42,4 @@ const PracticeQuestions = ({ header = null, questions }) => {
   )
 }
 
-export default PracticeQuestions
+export default PracticeQuestions;

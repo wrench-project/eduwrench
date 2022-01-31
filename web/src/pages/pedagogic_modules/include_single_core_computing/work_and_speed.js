@@ -133,7 +133,8 @@ const WorkAndSpeed = ({module, tab}) => {
             "Tflop/sec. How long will the program run for in seconds?",
           content: (
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
-          )
+          ),
+            type: "textbox"
         },
         {
           key: "A.1.p1.2",
@@ -141,7 +142,8 @@ const WorkAndSpeed = ({module, tab}) => {
             "program perform?",
           content: (
             <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
-          )
+          ),
+            type: "mutlichoice"
         }
       ]}
       />

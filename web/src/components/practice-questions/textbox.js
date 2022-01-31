@@ -3,7 +3,7 @@ import { Input, Button } from "semantic-ui-react"
 
 const Textbox = () => {
     let [text, setText] = useState('');
-    let [correct, setCorrect] = useState('Blank');
+    let [correct, setCorrect] = useState('');
     let outputText;
 
 
