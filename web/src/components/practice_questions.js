@@ -2,6 +2,7 @@ import React from "react"
 import { Header, Segment } from "semantic-ui-react"
 import Textbox from "./practice-questions/textbox";
 import MultiChoice from "./practice-questions/multichoice"
+import Hint from "./practice-questions/hint"
 
 const PracticeQuestions = ({ header = null, questions }) => {
 
@@ -20,7 +21,7 @@ const PracticeQuestions = ({ header = null, questions }) => {
         content: (<><strong>[{value.key}]</strong> {value.question}</>)
       },
       content: {
-        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>)},
+        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>), hint: (<Hint/>)},
       type: value.type
       },)
     }
@@ -33,12 +34,11 @@ const PracticeQuestions = ({ header = null, questions }) => {
 
       {questionsHeader}
       <div>
-        {panels.map(({ title, key, type }) => (
-            <><p key={key}>{title.content}</p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} </>
+        {panels.map(({ title, key, type, content }) => (
+            <><p key={key}>{title.content} {content.hint}</p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} </>
         ))}
       </div>
-
-    </>
+    </> 
   )
 }
 
