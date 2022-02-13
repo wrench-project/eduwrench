@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { Input, Button, Form } from "semantic-ui-react"
 
-const Textbox = () => {
+const Numeric = () => {
   let [text, setText] = useState("")
   let [correct, setCorrect] = useState("")
   let outputText
@@ -37,4 +37,4 @@ const Textbox = () => {
   )
 }
 
-export default Textbox
+export default Numeric

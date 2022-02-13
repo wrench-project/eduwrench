@@ -1,6 +1,6 @@
 import React from "react"
 import { Header, Segment } from "semantic-ui-react"
-import Textbox from "./practice-questions/textbox";
+import Numeric from "./practice-questions/numeric";
 import MultiChoice from "./practice-questions/multichoice"
 import Hint from "./practice-questions/hint"
 import GiveUp from "./practice-questions/giveup"
@@ -36,7 +36,7 @@ const PracticeQuestions = ({ header = null, questions }) => {
       {questionsHeader}
       <div>
         {panels.map(({ title, key, type }) => (
-            <><p key={key}>{title.content} <Hint/></p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} <GiveUp/></>
+            <><p key={key}>{title.content} <Hint/></p> {(type === "textbox") ? <Numeric/> : <MultiChoice/>} <GiveUp/></>
         ))}
       </div>
       
