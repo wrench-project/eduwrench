@@ -1436,6 +1436,25 @@ function logData(data) {
     }))
 }
 
+function logQuestion(data) {
+    let time = Math.round(new Date().getTime() / 1000)
+    db.updatePracticeQuestion(data.question_key, time, data.completed, data.attempts).then ((questionId => {
+        return true
+    })).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+    console.log(data.question_key, time, data.completed, data.attempts);
+}
+
+app.post('/update/question', function (req, res) {
+    logQuestion({
+        "question_key": req.body.question_key,
+        "completed": req.body.completed,
+        "attempts": req.body.attempts
+    });
+})
+
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")

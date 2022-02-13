@@ -34,7 +34,7 @@ const PracticeQuestions = ({ header = null, questions }) => {
       {questionsHeader}
       <div>
         {panels.map(({ title, key, type }) => (
-            <><p key={key}>{title.content}</p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} </>
+            <><p key={key}>{title.content}</p> {(type === "textbox") ? <Textbox question_key={key}/> : <MultiChoice question_key={key}/>} </>
         ))}
       </div>
 
