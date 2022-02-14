@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable("practice_questions", tbl => {
-        tbl.text("question_key").notNullable().primary()
+        tbl.text("question_key").notNullable()
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
         tbl.integer("attempts").notNullable()
