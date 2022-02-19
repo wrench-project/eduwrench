@@ -1425,7 +1425,6 @@ function logData(data) {
         let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
         db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
             return true
-
         })).catch((error => {
             console.log("[ERROR]: " + error)
             return false
@@ -1448,11 +1447,17 @@ function logQuestion(data) {
 }
 
 app.post('/update/question', function (req, res) {
-    logQuestion({
-        "question_key": req.body.question_key,
-        "completed": req.body.completed,
-        "attempts": req.body.attempts
-    });
+    try {
+        let loggedQuestion = logQuestion({
+            "question_key": req.body.question_key,
+            "completed": req.body.completed,
+            "attempts": req.body.attempts
+        });
+        res.status(201).send(loggedQuestion);
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
 })
 
 // Enable SSL server connection
