@@ -61,8 +61,15 @@ const updatePracticeQuestion = (question_key, time, completed, attempts) => db.t
                 completed: completed,
                 attempts:attempts
             })
-        return question;
+        return question
     }
+})
+
+const getPracticeQuestion = (question_key) => db.transaction(async trx => {
+    const questionInfo = await trx("practice_questions")
+        .where({question_key:question_key})
+        .select('attempts', 'completed')
+    return questionInfo[0]
 })
 
 module.exports = {
@@ -70,4 +77,5 @@ module.exports = {
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
+    getPracticeQuestion
 }

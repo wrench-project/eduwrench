@@ -1362,6 +1362,7 @@ app.post("/get/usage_statistics", function (req, res) {
     })).catch((error => {
         console.log("[ERROR]: " + error)
     }))
+    console.log(res.body);
 })
 
 /**
@@ -1446,18 +1447,30 @@ function logQuestion(data) {
     console.log(data.question_key, time, data.completed, data.attempts);
 }
 
+
 app.post('/update/question', function (req, res) {
     try {
-        let loggedQuestion = logQuestion({
+        logQuestion({
             "question_key": req.body.question_key,
             "completed": req.body.completed,
             "attempts": req.body.attempts
-        });
-        res.status(201).send(loggedQuestion);
+        })
+        res.status(201).send();
     } catch(e) {
         console.log(e);
         res.status(400).send(e);
     }
+})
+
+app.post('/get/question', function (req, res) {
+        db.getPracticeQuestion(req.body.question_key).then(question => {
+            res.json({
+                attempts: question.attempts,
+                completed: question.completed,
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+            }))
 })
 
 // Enable SSL server connection
