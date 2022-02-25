@@ -9,55 +9,60 @@ const Textbox = ({question_key}) => {
     const [completed, setCompleted] = useState(false);
     let outputText;
 
-
+    /* Input from the textbox */
     const handleInput = (e, data) => {
         e.preventDefault();
         setText(data);
     }
 
+    /* Check if value in textbox is correct */
     const handleSubmit = (e) => {
         e.preventDefault();
         if (text.value === 'Hello') {
+            setAttempts(attempts + 1);
             setCorrect('Correct');
             setCompleted(true);
         } else {
             setAttempts(attempts + 1);
             setCorrect('Incorrect');
         }
-        const question = {
-            question_key,
-            attempts,
-            completed,
-        }
-        console.log(question);
-        axios
-            .post('http://localhost:3000/update/question', question)
-            .then((response) => response)
-            .catch(err => {
-                console.error(err);
-            });
     }
-
-    useEffect(() => {
-        if (attempts > 0) {
-            axios
-                .post('http://localhost:3000/get/question', {question_key: question_key})
-                .then((response) => {
-                    setCompleted(response.data.completed);
-                    setAttempts(response.data.attempts + 1);
-                    return response;
-                })
-                .catch(err => {
-                    console.log(err);
-                });
-        }
-    }, [])
 
     if (correct === 'Correct') {
         outputText = <p>The answer is correct</p>;
     } else if (correct === 'Incorrect') {
         outputText = <p>The answer is incorrect</p>;
     }
+
+    /* Pull the question information from the database for persistence */
+    useEffect(() => {
+        axios
+            .post('http://localhost:3000/get/question', {question_key: question_key})
+            .then((response) => {
+                setCompleted(response.data.completed);
+                setAttempts(response.data.attempts);
+                return response;
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }, [])
+
+    /* Get the callback of the questions parameters */
+    useEffect(() => {
+        const question = {
+            question_key,
+            attempts,
+            completed,
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.error(err);
+            });
+    }, [attempts, completed])
+
 
     return (
         <>
