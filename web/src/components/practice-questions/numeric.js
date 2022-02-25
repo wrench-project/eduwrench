@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import { Input, Button } from "semantic-ui-react"
 import axios from "axios";
 
-const Textbox = ({question_key}) => {
+const Numeric = ({question_key}) => {
     const [text, setText] = useState('');
     const [correct, setCorrect] = useState('');
     const [attempts, setAttempts] = useState(0);
@@ -73,4 +73,4 @@ const Textbox = ({question_key}) => {
     );
 }
 
-export default Textbox;
+export default Numeric;
