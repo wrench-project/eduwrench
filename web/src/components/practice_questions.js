@@ -22,7 +22,10 @@ const PracticeQuestions = ({ header = null, questions }) => {
         content: (<><strong>[{value.key}]</strong> {value.question}</>)
       },
       content: {
-        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>), hint: (<Hint/>), giveup: (<GiveUp/>)}, 
+        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>)
+      },
+      hint: value.hintText,
+      giveUp: value.giveUp,
       type: value.type,
       },)
     }
@@ -35,8 +38,10 @@ const PracticeQuestions = ({ header = null, questions }) => {
 
       {questionsHeader}
       <div>
-        {panels.map(({ title, key, type }) => (
-            <><p key={key}>{title.content} <Hint/></p> {(type === "textbox") ? <Textbox/> : <MultiChoice/>} <GiveUp/></>
+        {panels.map(({ title, key, type, hint, giveUp }) => (
+            <><p key={key}>{title.content} {(hint) ? <Hint/> : ''} </p>
+              {(type === "textbox") ? <Textbox/> : <MultiChoice/>}
+              {(giveUp) ? <GiveUp/> : ''}</>
         ))}
       </div>
       
