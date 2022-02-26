@@ -40,8 +40,42 @@ const getUsageStatistics = () => db.transaction(async trx => {
     return usage
 })
 
+const updatePracticeQuestion = (question_key, time, completed, attempts) => db.transaction(async trx => {
+    const question = await trx("practice_questions")
+        .where({question_key:question_key})
+        .first()
+    if (!question) {
+        const questionID = await trx("practice_questions").insert({
+            question_key: question_key,
+            time: time,
+            completed: completed,
+            attempts: attempts
+        })
+        console.log('creating practice questions')
+        return questionID[0]
+    } else {
+        console.log("updating practice quesitons")
+        const question = await trx("practice_questions").update({
+                question_key: question_key,
+                time: time,
+                completed: completed,
+                attempts:attempts
+            })
+        return question
+    }
+})
+
+const getPracticeQuestion = (question_key) => db.transaction(async trx => {
+    const questionInfo = await trx("practice_questions")
+        .where({question_key:question_key})
+        .select('attempts', 'completed')
+    return questionInfo[0]
+})
+
 module.exports = {
     registerUser,
     addSimulationRun,
-    getUsageStatistics
+    getUsageStatistics,
+    updatePracticeQuestion,
+    getPracticeQuestion
 }
