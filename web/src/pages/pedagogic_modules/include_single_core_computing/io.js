@@ -208,7 +208,7 @@ const IO = ({module, tab}) => {
 
             <PracticeQuestions questions={[
                 {
-                    key: "A.1.p4.1]",
+                    key: "A.1.p4.1",
                     question: "Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop, " +
                         "and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the simulation " +
                         "app above. What is the total execution time when I/O and computation can be overlapped? Show your work. " +
@@ -221,7 +221,8 @@ const IO = ({module, tab}) => {
                             The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
                             core utilization is <TeX math="250/253 = 98.8\%" />.
                         </>
-                    )
+                    ),
+                    type: "textbox"
                 },
                 {
                     key: "A.1.p4.2",

@@ -1362,6 +1362,7 @@ app.post("/get/usage_statistics", function (req, res) {
     })).catch((error => {
         console.log("[ERROR]: " + error)
     }))
+    console.log(res.body);
 })
 
 /**
@@ -1425,7 +1426,6 @@ function logData(data) {
         let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
         db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
             return true
-
         })).catch((error => {
             console.log("[ERROR]: " + error)
             return false
@@ -1435,6 +1435,43 @@ function logData(data) {
         return false
     }))
 }
+
+function logQuestion(data) {
+    let time = Math.round(new Date().getTime() / 1000)
+    db.updatePracticeQuestion(data.question_key, time, data.completed, data.attempts).then ((questionId => {
+        return true
+    })).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+    console.log(data.question_key, time, data.completed, data.attempts);
+}
+
+
+app.post('/update/question', function (req, res) {
+    try {
+        logQuestion({
+            "question_key": req.body.question_key,
+            "completed": req.body.completed,
+            "attempts": req.body.attempts
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+app.post('/get/question', function (req, res) {
+        db.getPracticeQuestion(req.body.question_key).then(question => {
+            res.json({
+                attempts: question.attempts,
+                completed: question.completed,
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+            }))
+})
 
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
