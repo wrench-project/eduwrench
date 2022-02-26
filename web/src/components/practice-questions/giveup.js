@@ -1,12 +1,19 @@
-import React from "react"
+import React, { useState } from 'react';
+import Modal from './modal';
 
 const GiveUp = () => {
-  const clickMe = () => {
-    // document.location.href("/")
+  const [modalOpen, setModalOpen] = useState(false)
+  const modalClose = () => {
+    setModalOpen(!modalOpen)
   }
+
   return (
-    <><button class="ui primary button" onClick={clickMe}>Give Up</button></>
+    <>
+      <button class="ui primary button" onClick={modalClose}>
+        Don't Konw
+      </button>
+      {modalOpen && <Modal modalClose={modalClose}></Modal>}
+    </>
   )
 }
-
 export default GiveUp

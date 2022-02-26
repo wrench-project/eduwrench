@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Input, Button, Form } from "semantic-ui-react"
+import { Input, Button } from "semantic-ui-react"
 
 const Numeric = () => {
   let [text, setText] = useState("")
@@ -28,10 +28,8 @@ const Numeric = () => {
 
   return (
     <>
-      <Form>
         <Input type="text" onChange={handleInput} placeholder="Input Answer" />
         <Button content="Submit" onClick={handleClick} />
-      </Form>
       {outputText}
     </>
   )

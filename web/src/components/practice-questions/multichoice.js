@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Form, Radio} from "semantic-ui-react";
+import {Form, Radio, Button} from "semantic-ui-react";
 
 const MultiChoice = () => {
     const [selected, setSelected] = useState('');
@@ -49,8 +49,8 @@ const MultiChoice = () => {
                         onChange={handleChange}
                         />
                 </Form.Field>
-                <Form.Button content="Submit" onClick={handleClick} />
             </Form>
+            <Button content="Submit" onClick={handleClick} />
             {outputText}
         </>
     )
