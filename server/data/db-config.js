@@ -55,7 +55,7 @@ const updatePracticeQuestion = (question_key, time, completed, attempts) => db.t
         return questionID[0]
     } else {
         console.log("updating practice quesitons")
-        const question = await trx("practice_questions").update({
+        const question = await trx("practice_questions").where({question_key:question_key}).update({
                 question_key: question_key,
                 time: time,
                 completed: completed,
