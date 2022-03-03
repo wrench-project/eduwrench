@@ -67,7 +67,7 @@ const MultiChoice = ({question_key, choices, answer}) => {
             break;
     }
 
-    useEffect(() => {
+    /* useEffect(() => {
         axios
             .post('http://localhost:3000/get/question', {question_key:question_key})
             .then((response) => {
@@ -78,10 +78,10 @@ const MultiChoice = ({question_key, choices, answer}) => {
             .catch(err => {
                 console.log(err);
             })
-    }, []);
+    }, []); */
 
     /* Get the callback of the questions parameters */
-    useEffect(() => {
+    /* useEffect(() => {
         const question = {
             question_key,
             attempts,
@@ -93,7 +93,7 @@ const MultiChoice = ({question_key, choices, answer}) => {
             .catch(err => {
                 console.error(err);
             });
-    }, [attempts, completed, correct])
+    }, [attempts, completed, correct]) */
 
     return (
         <>

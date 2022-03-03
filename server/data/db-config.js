@@ -40,36 +40,58 @@ const getUsageStatistics = () => db.transaction(async trx => {
     return usage
 })
 
-const updatePracticeQuestion = (question_key, time, completed, attempts) => db.transaction(async trx => {
+/*  */
+const updatePracticeQuestion = (question_key, time, answer, correctAnswer) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key})
         .first()
+    const correct = answer === correctAnswer;
+    let completed = (question) ? await trx("practice_questions")
+        .where({question_key:question_key})
+        .select('completed')
+        .first()
+        .then((completed) => completed.completed)
+    : false
     if (!question) {
+        console.log('creating practice questions')
         const questionID = await trx("practice_questions").insert({
             question_key: question_key,
             time: time,
-            completed: completed,
-            attempts: attempts
+            completed: correct,
+            attempts: 1
         })
-        console.log('creating practice questions')
         return questionID[0]
-    } else {
+    }
+    if (!completed) {
         console.log("updating practice quesitons")
+        const attempts = await trx("practice_questions")
+            .where({question_key: question_key})
+            .select('attempts')
+            .first()
+            .then((attempts) => attempts.attempts);
         const question = await trx("practice_questions").where({question_key:question_key}).update({
                 question_key: question_key,
                 time: time,
-                completed: completed,
-                attempts:attempts
+                completed: correct,
+                attempts:attempts + 1
             })
+        return question
+    } else {
+        console.log("Answer is correct " + question_key + " is disabled now")
         return question
     }
 })
 
 const getPracticeQuestion = (question_key) => db.transaction(async trx => {
-    const questionInfo = await trx("practice_questions")
+    const question = await trx("practice_questions")
         .where({question_key:question_key})
-        .select('attempts', 'completed')
-    return questionInfo[0]
+        .first()
+    const completed = (question) ? await trx("practice_questions")
+            .where({question_key:question_key})
+            .select('completed')
+            .first()
+        : false
+    return completed
 })
 
 module.exports = {

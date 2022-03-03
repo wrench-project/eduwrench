@@ -1436,24 +1436,29 @@ function logData(data) {
     }))
 }
 
+/**
+ * Log the practice question parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
 function logQuestion(data) {
     let time = Math.round(new Date().getTime() / 1000)
-    db.updatePracticeQuestion(data.question_key, time, data.completed, data.attempts).then ((questionId => {
+    db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer).then ((questionId => {
         return true
     })).catch((error => {
         console.log("[ERROR: " + error)
         return false
     }))
-    console.log(data.question_key, time, data.completed, data.attempts);
 }
 
-
+/* Post request to call function to update the practice question database */
 app.post('/update/question', function (req, res) {
     try {
         logQuestion({
             "question_key": req.body.question_key,
-            "completed": req.body.completed,
-            "attempts": req.body.attempts
+            "answer" : req.body.answer,
+            "correctAnswer": req.body.correctAnswer
         })
         res.status(201).send();
     } catch(e) {
@@ -1462,10 +1467,10 @@ app.post('/update/question', function (req, res) {
     }
 })
 
+/* POST request to call function to respond with "completed" status */
 app.post('/get/question', function (req, res) {
         db.getPracticeQuestion(req.body.question_key).then(question => {
             res.json({
-                attempts: question.attempts,
                 completed: question.completed,
             })
         }).catch((error => {
