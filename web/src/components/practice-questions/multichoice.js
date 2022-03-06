@@ -1,111 +1,102 @@
-import React, {useState, useEffect} from "react";
-import {Form, Radio} from "semantic-ui-react";
-import axios from "axios";
+import React, {useState, useEffect} from "react"
+import {Form, Message, Loader} from "semantic-ui-react"
+import {Formik} from 'formik'
+import axios from "axios"
 
 const MultiChoice = ({question_key, choices, answer}) => {
-    const [selected, setSelected] = useState('');
-    const [correct, setCorrect] = useState('');
-    const [attempts, setAttempts] = useState(0);
-    const [completed, setCompleted] = useState(false);
-    let input;
-    let submit;
-    let outputText;
+    const [correct, setCorrect] = useState('')
+    const [completed, setCompleted] = useState(false)
+    let message
 
-    const handleChange = (e, value) => {
-        e.preventDefault();
-        setSelected(value);
-    }
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (selected.value === answer) {
-            setCorrect("Correct");
-            setAttempts(attempts + 1);
-            setCompleted(true);
-        } else {
-            setAttempts(attempts + 1);
-            setCorrect("Incorrect");
-        }
-    }
-
-    switch (correct) {
-        case 'Correct':
-            outputText = <p>The answer is correct</p>;
-            input = choices.map((choice) => <Form.Field>
-                <Radio
-                    disabled
-                    label={choice}
-                    name='radioGroup'
-                    value={choice}
-                    checked={selected.value === choice}
-                    onChange={handleChange} />
-            </Form.Field>)
-            submit = <Form.Button disablecontent="Submit" onClick={handleSubmit} />
-            break;
-        case 'Incorrect':
-            outputText = <p>The answer is incorrect</p>;
-            input = choices.map((choice) => <Form.Field error>
-                <Radio
-                    label={choice}
-                    name='radioGroup'
-                    value={choice}
-                    checked={selected.value === choice}
-                    onChange={handleChange} />
-            </Form.Field>)
-            submit = <Form.Button content="Submit" onClick={handleSubmit} />
-            break;
-        default:
-            outputText = '';
-            input = choices.map((choice) => <Form.Field>
-                <Radio
-                    label={choice}
-                    name='radioGroup'
-                    value={choice}
-                    checked={selected.value === choice}
-                    onChange={handleChange} />
-            </Form.Field>)
-            submit = <Form.Button content="Submit" onClick={handleSubmit} />
-            break;
-    }
-
-    /* useEffect(() => {
+    useEffect(() => {
         axios
             .post('http://localhost:3000/get/question', {question_key:question_key})
-            .then((response) => {
-                setCompleted(response.data.completed);
-                setAttempts(response.data.attempts);
-                return response
-            })
+            .then((response) => setCompleted(response.data.completed))
             .catch(err => {
                 console.log(err);
             })
-    }, []); */
+    }, []);
 
-    /* Get the callback of the questions parameters */
-    /* useEffect(() => {
-        const question = {
-            question_key,
-            attempts,
-            completed,
-        }
-        axios
-            .post('http://localhost:3000/update/question', question)
-            .then((response) => response)
-            .catch(err => {
-                console.error(err);
-            });
-    }, [attempts, completed, correct]) */
+    switch (correct) {
+        case 'Correct':
+            message = <Message positive content='Answer is correct!' />
+            break;
+        case 'Incorrect':
+            message = <Message negative content='Answer is incorrect... Try again!' />
+            break;
+        default:
+            message = ''
+            break;
+    }
 
     return (
         <>
-            <Form>
-                Selected value: {selected.value}
-                {input}
-                {submit}
-            </Form>
-            {outputText}
+            <Formik
+                initialValues={{selected: ''}}
+                validateOnBlur={false}
+                validateOnChange={false}
+                onSubmit={(values, { setSubmitting }) =>{
+                    setTimeout(() => {
+                        if (values.selected === answer) {
+                            setCorrect("Correct")
+                            setCompleted(true)
+                        } else {
+                            setCorrect("Incorrect")
+                        }
+                        const question = {
+                            question_key: question_key,
+                            answer: values.selected,
+                            correctAnswer: answer,
+                            type: 'multichoice'
+                        }
+                        axios
+                            .post('http://localhost:3000/update/question', question)
+                            .then((response) => response)
+                            .catch(err => {
+                                console.error(err);
+                            })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+            >
+                {({
+                    values,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                    isSubmitting
+                }) => (
+                    <Form onSubmit={handleSubmit}>
+                        {choices.map((choice) =>
+                            <Form.Field>
+                                <Form.Radio name="selected"
+                                            label={choice}
+                                            id={choice}
+                                            value={choice}
+                                            checked={values.selected === choice}
+                                            onChange={handleChange}
+                                            onBlur={handleBlur}
+                                            disabled={completed || isSubmitting}
+                                />
+                            </Form.Field>
+                        )}
+
+                        {touched ? message : null}
+                        <Form.Button
+                            color="teal"
+                            type="submit"
+                            content="Submit"
+                            disabled={completed || isSubmitting}
+                        />
+
+                        {isSubmitting ? <Loader active inline /> : null}
+                    </Form>
+                )}
+            </Formik>
         </>
     )
 }
 
 
-export default MultiChoice;
+export default MultiChoice

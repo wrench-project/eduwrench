@@ -135,7 +135,7 @@ const WorkAndSpeed = ({module, tab}) => {
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
           ),
             type: "textbox",
-            answer: 'Hello'
+            answer: [0, 5]
         },
         {
           key: "A.1.p1.2",

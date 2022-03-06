@@ -41,11 +41,12 @@ const getUsageStatistics = () => db.transaction(async trx => {
 })
 
 /*  */
-const updatePracticeQuestion = (question_key, time, answer, correctAnswer) => db.transaction(async trx => {
+const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key})
         .first()
-    const correct = answer === correctAnswer;
+    const correct = (type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
+    console.log(answer, correctAnswer)
     let completed = (question) ? await trx("practice_questions")
         .where({question_key:question_key})
         .select('completed')

@@ -1444,7 +1444,7 @@ function logData(data) {
  */
 function logQuestion(data) {
     let time = Math.round(new Date().getTime() / 1000)
-    db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer).then ((questionId => {
+    db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
         return true
     })).catch((error => {
         console.log("[ERROR: " + error)
@@ -1458,7 +1458,8 @@ app.post('/update/question', function (req, res) {
         logQuestion({
             "question_key": req.body.question_key,
             "answer" : req.body.answer,
-            "correctAnswer": req.body.correctAnswer
+            "correctAnswer": req.body.correctAnswer,
+            "type": req.body.type
         })
         res.status(201).send();
     } catch(e) {

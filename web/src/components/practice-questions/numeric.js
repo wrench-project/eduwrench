@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react"
-import { Input, Button } from "semantic-ui-react"
-import axios from "axios";
+import { Formik } from "formik"
+import {Form, Message, Loader} from "semantic-ui-react"
+import axios from "axios"
 
 const Numeric = ({question_key, answer}) => {
-    const [text, setText] = useState('');
-    const [correct, setCorrect] = useState('');
-    const [completed, setCompleted] = useState(false);
-    let input;
-    let submit
-    let outputText;
+    const [correct, setCorrect] = useState('')
+    const [completed, setCompleted] = useState(false)
+    let message
 
     useEffect(() => {
         axios
@@ -19,56 +17,80 @@ const Numeric = ({question_key, answer}) => {
             });
     }, [])
 
-    /* Input from the textbox */
-    const handleInput = (e, data) => {
-        e.preventDefault();
-        setText(data);
-    }
 
-
-    /* Check if value in textbox is correct */
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (text.value === answer) {
-            setCorrect('Correct');
-        } else {
-            setCorrect('Incorrect');
-        }
-        const question = {
-            question_key: question_key,
-            answer: text.value,
-            correctAnswer: answer
-        }
-        axios
-            .post('http://localhost:3000/update/question', question)
-            .then((response) => response)
-            .catch(err => {
-                console.error(err);
-            });
-    }
-
-    if (correct === 'Correct' || completed) {
-        outputText = <p>The answer is correct</p>;
-        input = <Input disabled placeholder="Hello" />;
-        submit = <Button disabled content="Submit" />;
-    } else if (correct === 'Incorrect') {
-        outputText = <p style={{color:'FF0000'}}>The answer is incorrect</p>;
-        input = <Input type='text' error onChange={handleInput} placeholder='Input Answer'/>;
-        submit = <Button content='Submit' onClick={handleSubmit}/>;
-    } else {
-        outputText = ''
-        input = <Input type='text' onChange={handleInput} placeholder='Input Answer'/>
-        submit = <Button content='Submit' onClick={handleSubmit}/>
+    switch (correct) {
+        case 'Correct':
+            message = <Message positive content='Answer is correct!'/>
+            break
+        case 'Incorrect':
+            message = <Message negative content='Answer is incorrect... Try again!'/>
+            break
+        default:
+            message = ''
+            break
     }
 
     return (
         <>
-            {input}
-            {submit}
-            {outputText}
+            <Formik
+                initialValues={{input: ''}}
+                validateOnBlur={false}
+                validateOnChange={false}
+                onSubmit={(values, { setSubmitting }) =>{
+                    setTimeout(() => {
+                        if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
+                            setCorrect("Correct")
+                            setCompleted(true)
+                        } else {
+                            setCorrect("Incorrect")
+                        }
+                        const question = {
+                            question_key: question_key,
+                            answer: values.input,
+                            correctAnswer: answer,
+                            type: 'numeric'
+                        }
+                        axios
+                            .post('http://localhost:3000/update/question', question)
+                            .then((response) => response)
+                            .catch(err => {
+                                console.error(err);
+                            })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+                >
+                {({ values,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      isSubmitting
+                }) => (
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Input fluid name="input"
+                                    label="Input"
+                                    type="number"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.input}
+                                    disabled={completed || isSubmitting}
+                                    placeholder={(completed) ? answer[0] : 'Enter Answer Here'}
+                        />
+                        {touched ? message : null}
+                        <Form.Button
+                            color="teal"
+                            type='submit'
+                            content='Submit'
+                            disabled={completed || isSubmitting}
+                        />
+                        {isSubmitting ? <Loader active inline /> : null}
+                    </Form>
+                )}
+            </Formik>
         </>
         )
 }
 
 
-export default Numeric;
+export default Numeric
