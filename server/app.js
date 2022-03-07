@@ -1472,6 +1472,7 @@ app.post('/update/question', function (req, res) {
 app.post('/get/question', function (req, res) {
         db.getPracticeQuestion(req.body.question_key).then(question => {
             res.json({
+                previous_answer: question.previous_answer,
                 completed: question.completed,
             })
         }).catch((error => {

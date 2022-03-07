@@ -59,7 +59,8 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
             question_key: question_key,
             time: time,
             completed: correct,
-            attempts: 1
+            attempts: 1,
+            previous_answer: answer
         })
         return questionID[0]
     }
@@ -74,7 +75,8 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
                 question_key: question_key,
                 time: time,
                 completed: correct,
-                attempts:attempts + 1
+                attempts:attempts + 1,
+                previous_answer: answer
             })
         return question
     } else {
@@ -87,12 +89,12 @@ const getPracticeQuestion = (question_key) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key})
         .first()
-    const completed = (question) ? await trx("practice_questions")
+    const questionData = (question) ? await trx("practice_questions")
             .where({question_key:question_key})
-            .select('completed')
+            .select('completed', 'previous_answer')
             .first()
         : false
-    return completed
+    return questionData
 })
 
 module.exports = {

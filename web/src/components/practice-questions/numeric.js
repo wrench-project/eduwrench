@@ -6,12 +6,17 @@ import axios from "axios"
 const Numeric = ({question_key, answer}) => {
     const [correct, setCorrect] = useState('')
     const [completed, setCompleted] = useState(false)
+    const [prevAnswer, setPrevAnswer] = useState('')
     let message
+    const placeholder = (completed) ? prevAnswer : "Enter answer here..."
 
     useEffect(() => {
         axios
             .post('http://localhost:3000/get/question', {question_key: question_key})
-            .then((response) => setCompleted(response.data.completed))
+            .then((response) => {
+                setCompleted(response.data.completed)
+                setPrevAnswer(response.data.previous_answer)
+            })
             .catch(err => {
                 console.log(err);
             });
@@ -74,16 +79,22 @@ const Numeric = ({question_key, answer}) => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.input}
-                                    disabled={completed || isSubmitting}
-                                    placeholder={(completed) ? answer[0] : 'Enter Answer Here'}
+                                    placeholder={placeholder}
+                                    disabled={completed}
                         />
                         {touched ? message : null}
+                        {isSubmitting ?
                         <Form.Button
                             color="teal"
-                            type='submit'
                             content='Submit'
-                            disabled={completed || isSubmitting}
-                        />
+                            loading
+                            /> :
+                            <Form.Button
+                                color="teal"
+                                type='submit'
+                                content='Submit'
+                                disabled={completed}
+                            />}
                         {isSubmitting ? <Loader active inline /> : null}
                     </Form>
                 )}

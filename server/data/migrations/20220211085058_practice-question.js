@@ -5,6 +5,7 @@ exports.up = function(knex) {
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
         tbl.integer("attempts")
+        tbl.text("previous_answer")
     })
 };
 

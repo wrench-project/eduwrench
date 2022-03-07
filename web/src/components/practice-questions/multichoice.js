@@ -74,7 +74,7 @@ const MultiChoice = ({question_key, choices, answer}) => {
                                             label={choice}
                                             id={choice}
                                             value={choice}
-                                            checked={values.selected === choice}
+                                            checked={(completed) ? choice === answer : values.selected === choice}
                                             onChange={handleChange}
                                             onBlur={handleBlur}
                                             disabled={completed || isSubmitting}
@@ -83,14 +83,19 @@ const MultiChoice = ({question_key, choices, answer}) => {
                         )}
 
                         {touched ? message : null}
-                        <Form.Button
-                            color="teal"
-                            type="submit"
-                            content="Submit"
-                            disabled={completed || isSubmitting}
-                        />
 
-                        {isSubmitting ? <Loader active inline /> : null}
+                        {isSubmitting ?
+                            <Form.Button
+                                color="teal"
+                                content="Submit'"
+                                loading
+                            /> :
+                            <Form.Button
+                                color="teal"
+                                type="submit"
+                                content="Submit"
+                                disabled={completed}
+                            />}
                     </Form>
                 )}
             </Formik>
