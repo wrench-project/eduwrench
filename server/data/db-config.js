@@ -72,10 +72,32 @@ const getPracticeQuestion = (question_key) => db.transaction(async trx => {
     return questionInfo[0]
 })
 
+const updateHintGU = (hint, giveup) => db.transaction (async trx => {
+    const question = await trx("practice_questions")
+        .where({question_key:question_key})
+        .first()
+    if (!question) {
+        const questionID = await trx("practice_question").insert({
+            question_key: question_key,
+            hint: hint,
+            giveUp: giveup
+        })
+        return questionID[0]
+    } else {
+        const question = await trx("practice_questions").update({
+            question_key: question_key,
+            hint: hint,
+            giveup: giveup
+        })
+    return question
+    } 
+})
+
 module.exports = {
     registerUser,
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
-    getPracticeQuestion
+    getPracticeQuestion,
+    updateHintGU,
 }

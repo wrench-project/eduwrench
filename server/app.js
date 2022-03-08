@@ -1464,13 +1464,37 @@ app.post('/update/question', function (req, res) {
 
 app.post('/get/question', function (req, res) {
         db.getPracticeQuestion(req.body.question_key).then(question => {
+            console.log(question);
             res.json({
-                attempts: question.attempts,
-                completed: question.completed,
+                hint: question.hint,
+                giveup: question.giveup,
             })
         }).catch((error => {
             console.log("ERROR " + error)
             }))
+})
+
+function updateHint(data) {
+    db.updateHintGU(data.question_key, data.hint, data.giveup).then ((questionId => {
+    /* db.updateHintGU(data.hint, data.giveup).then ((questionId => {
+        return true */
+    })).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+    console.log(data.hint, data.giveup);
+}
+
+app.post('/update/hint', function (req, res) {
+    try {
+        updateHint({
+            "hint": req.body.hint
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
 })
 
 // Enable SSL server connection
