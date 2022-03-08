@@ -3,20 +3,17 @@ import Modal from './modal';
 
 const GiveUp = () => {
   const [modalOpen, setModalOpen] = useState(false)
-  const openModal = () => {
-    setModalOpen(true)
+  const modalClose = () => {
+    setModalOpen(!modalOpen)
   }
-  const closeModal = () => {
-    setModalOpen(false)
-  }
+
   return (
     <>
-      <button class="ui primary button" onClick={openModal}>Don't Know</button>
-      <Modal open={modalOpen} close={closeModal}>
-        answer..?
-      </Modal>
+      <button class="ui primary button" onClick={modalClose}>
+        Don't Konw
+      </button>
+      {modalOpen && <Modal modalClose={modalClose}></Modal>}
     </>
   )
 }
-
 export default GiveUp

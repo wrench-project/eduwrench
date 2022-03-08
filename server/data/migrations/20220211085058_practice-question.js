@@ -5,8 +5,6 @@ exports.up = function(knex) {
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
         tbl.integer("attempts").notNullable()
-        tbl.boolean("hint").notNullable()
-        tbl.boolean("giveup").notNullable()
     })
 };
 

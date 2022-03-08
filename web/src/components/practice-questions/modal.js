@@ -1,22 +1,13 @@
-import React from "react"
-import "./modal.css"
+import React from 'react';
+import './modal.css';
 
-const Modal = props => {
-  const { open, close } = props
-
+const Modal = ({modalClose}) => {
   return (
-    <div className={open ? "openModal modal" : "modal"}>
-      {open ? (
-        <section>
-          <main>{props.children}</main>
-          <footer>
-            <button className="close" onClick={close}>
-              close
-            </button>
-          </footer>
-        </section>
-      ) : null}
-    </div>
+      <div className="modalContainer" onClick={modalClose}>
+          <div className="modal">
+              <button className="modalButton" onClick={modalClose}>Close</button>
+          </div>
+      </div>
   )
 }
 
