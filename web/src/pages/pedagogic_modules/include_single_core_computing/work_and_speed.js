@@ -3,6 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
+import Feedback from "../../../components/feedback"
 
 const WorkAndSpeed = ({module, tab}) => {
   return (
@@ -135,8 +136,10 @@ const WorkAndSpeed = ({module, tab}) => {
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
           ),
             type: "textbox",
+            answer: [0, 5],
             hintText: "This is the first hint",
-            giveUp: true
+            giveUp: true,
+            feddback: false,
         },
         {
           key: "A.1.p1.2",
@@ -146,13 +149,16 @@ const WorkAndSpeed = ({module, tab}) => {
             <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
           ),
             type: "mutlichoice",
+            choices: ['test1', 'test2', 'test3', 'test4'],
+            answer: 'test2',
             hintText: false,
-            giveUp: false
-        }
+            giveUp: false,   
+            feddback: false, 
+        },
       ]}
       />
 
-      <Divider />
+      <Divider />      
 
       <Header as="h3" block>
         Questions
@@ -195,6 +201,27 @@ const WorkAndSpeed = ({module, tab}) => {
         operations and use it to perform your own benchmarking of your machine. Implement this program in different
         languages and observe whether the Gflop/sec measurement varies across languages.
       </p>
+
+      <Divider />   
+
+      <Feedback feedbacks={[
+        {
+          key: "A.1.f1.1",
+          question: "How useful did you find the modules in learning the topic?",
+          feedback: "feedback",
+        },
+        {
+          key: "A.1.f1.2",
+          question: "Rate the quality of the modules?",
+          feedback: "feedback",
+        },
+        {
+          key: "A.1.f1.3",
+          question: "Provide constructing comments to improve the content",
+          feedback: "feedback",
+        },
+      ]}   
+      />
     </>
   )
 }
