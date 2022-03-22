@@ -1,32 +1,79 @@
 import React, {useState, useEffect} from "react"
-import {Form, Message, Loader} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
-const MultiChoice = ({question_key, choices, answer}) => {
-    const [correct, setCorrect] = useState('')
+const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
+    const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
+    const [gaveUp, setGaveUp] = useState(false)
     let message
 
     useEffect(() => {
         axios
             .post('http://localhost:3000/get/question', {question_key:question_key})
-            .then((response) => setCompleted(response.data.completed))
+            .then((response) => {
+                setCompleted(response.data.completed)
+                setGaveUp(response.data.giveup)
+            })
             .catch(err => {
                 console.log(err);
             })
     }, []);
 
-    switch (correct) {
+    const onHint = () => {
+        const question = {
+            question_key: question_key,
+            button: 'hint'
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    const onGiveup = () => {
+        setGaveUp(true)
+        setState('GaveUp')
+        setCompleted(true)
+        const question = {
+            question_key: question_key,
+            button: 'giveup'
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    switch (state) {
         case 'Correct':
-            message = <Message positive content='Answer is correct!' />
-            break;
+            message = <Message icon='check'color='green' content='Answer is correct!'/>
+            break
         case 'Incorrect':
-            message = <Message negative content='Answer is incorrect... Try again!' />
-            break;
+            message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
+            break
+        case 'GaveUp':
+            message = <Message icon='frown outline' color='yellow' content='You gave up... Try again later!' />
+            break
         default:
             message = ''
-            break;
+            break
+    }
+    if (completed) {
+        return (
+            <>
+                Your Answer:
+                {(gaveUp) ?
+                    <Label color='red' size='large'>{answer}</Label>
+                    :   <Label color='green' size='large'>{answer}</Label>}
+                {message}
+            </>
+        )
     }
 
     return (
@@ -38,10 +85,10 @@ const MultiChoice = ({question_key, choices, answer}) => {
                 onSubmit={(values, { setSubmitting }) =>{
                     setTimeout(() => {
                         if (values.selected === answer) {
-                            setCorrect("Correct")
+                            setState("Correct")
                             setCompleted(true)
                         } else {
-                            setCorrect("Incorrect")
+                            setState("Incorrect")
                         }
                         const question = {
                             question_key: question_key,
@@ -82,8 +129,6 @@ const MultiChoice = ({question_key, choices, answer}) => {
                             </Form.Field>
                         )}
 
-                        {touched ? message : null}
-
                         {isSubmitting ?
                             <Form.Button
                                 color="teal"
@@ -99,6 +144,13 @@ const MultiChoice = ({question_key, choices, answer}) => {
                     </Form>
                 )}
             </Formik>
+            {message}
+            {(giveup && !gaveUp) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
+            {(hint) ? <Modal
+                trigger={<Button onClick={onHint} content="Hint" />}
+                header='Hint'
+                content={hint}
+                actions={[{ key: 'done', content: 'Done'}]} /> : ''}
         </>
     )
 }

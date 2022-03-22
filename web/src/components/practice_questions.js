@@ -22,10 +22,12 @@ const PracticeQuestions = ({ header = null, questions }) => {
         content: (<><strong>[{value.key}]</strong> {value.question}</>)
       },
       content: {
-        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>), hint: (<Hint/>), giveup: (<GiveUp/>)}, 
+        content: (<Segment style={{ borderLeft: "3px solid #999" }}>{value.content}</Segment>) },
       type: value.type,
       choices: value.choices,
       answer: value.answer,
+      hint: value.hint,
+      giveup: value.giveup
       },)
     }
 
@@ -37,8 +39,8 @@ const PracticeQuestions = ({ header = null, questions }) => {
 
       {questionsHeader}
       <div>
-        {panels.map(({ title, key, type, choices, answer }) => (
-            <><p key={key}>{title.content} <Hint/></p> {(type === "textbox") ? <Numeric question_key={key} answer={answer}/> : <MultiChoice question_key={key} choices={choices} answer={answer}/>} <GiveUp/></>
+        {panels.map(({ title, key, type, choices, answer, hint, giveup }) => (
+            <><p key={key}>{title.content}</p> {(type === "textbox") ? <Numeric question_key={key} answer={answer} giveup={giveup} hint={hint}/> : <MultiChoice question_key={key} choices={choices} answer={answer} giveup={giveup} hint={hint}/>}</>
         ))}
       </div>
       

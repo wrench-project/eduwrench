@@ -1444,22 +1444,34 @@ function logData(data) {
  */
 function logQuestion(data) {
     let time = Math.round(new Date().getTime() / 1000)
-    db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
-        return true
-    })).catch((error => {
-        console.log("[ERROR: " + error)
-        return false
-    }))
+    console.log(data)
+    if (data.button) {
+        db.setUpdateGiveUp(data.question_key, time, data.button, data.answer).then ((questionId => {
+            return true
+        })).catch((error => {
+            console.log("[ERROR: " + error)
+            return false
+        }))
+    } else {
+        db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
+            return true
+        })).catch((error => {
+            console.log("[ERROR: " + error)
+            return false
+        }))
+    }
 }
 
 /* Post request to call function to update the practice question database */
 app.post('/update/question', function (req, res) {
+    console.log(req.body);
     try {
         logQuestion({
             "question_key": req.body.question_key,
             "answer" : req.body.answer,
             "correctAnswer": req.body.correctAnswer,
-            "type": req.body.type
+            "type": req.body.type,
+            "button": req.body.button,
         })
         res.status(201).send();
     } catch(e) {
@@ -1474,6 +1486,7 @@ app.post('/get/question', function (req, res) {
             res.json({
                 previous_answer: question.previous_answer,
                 completed: question.completed,
+                giveup: question.giveup
             })
         }).catch((error => {
             console.log("ERROR " + error)

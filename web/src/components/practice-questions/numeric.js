@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Message, Loader} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label, Icon} from "semantic-ui-react"
 import axios from "axios"
 
-const Numeric = ({question_key, answer}) => {
-    const [correct, setCorrect] = useState('')
+const Numeric = ({question_key, answer, hint, giveup}) => {
+    const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
+    const [gaveup, setGaveup] = useState(false)
     const [prevAnswer, setPrevAnswer] = useState('')
     let message
     const placeholder = (completed) ? prevAnswer : "Enter answer here..."
@@ -16,23 +17,68 @@ const Numeric = ({question_key, answer}) => {
             .then((response) => {
                 setCompleted(response.data.completed)
                 setPrevAnswer(response.data.previous_answer)
+                setGaveup(response.data.giveup)
             })
             .catch(err => {
                 console.log(err);
             });
     }, [])
 
+    const onHint = () => {
+        const question = {
+            question_key: question_key,
+            button: 'hint'
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.log(err);
+            })
+    }
 
-    switch (correct) {
+    const onGiveup = () => {
+        setCompleted(true);
+        setState('GaveUp');
+        setGaveup(true);
+        setPrevAnswer(`${answer[0]} - ${answer[1]}`)
+        const question = {
+            question_key: question_key,
+            button: 'giveup',
+            answer: `${answer[0]} - ${answer[1]}`
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    switch (state) {
         case 'Correct':
-            message = <Message positive content='Answer is correct!'/>
+            message = <Message icon='check'color='green' content='Answer is correct!'/>
             break
         case 'Incorrect':
-            message = <Message negative content='Answer is incorrect... Try again!'/>
+            message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
+            break
+        case 'GaveUp':
+            message = <Message icon='frown outline' color='yellow' content='You gave up... Try again later!' />
             break
         default:
             message = ''
             break
+    }
+    if (completed) {
+        return (
+            <>
+                Your Answer:
+                {(gaveup) ?
+                    <Label color='red' size='large'>{prevAnswer}</Label>
+                :   <Label color='green' size='large'>{prevAnswer}</Label>}
+                {message}
+            </>
+        )
     }
 
     return (
@@ -44,10 +90,10 @@ const Numeric = ({question_key, answer}) => {
                 onSubmit={(values, { setSubmitting }) =>{
                     setTimeout(() => {
                         if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
-                            setCorrect("Correct")
+                            setState("Correct")
                             setCompleted(true)
                         } else {
-                            setCorrect("Incorrect")
+                            setState("Incorrect")
                         }
                         const question = {
                             question_key: question_key,
@@ -55,6 +101,7 @@ const Numeric = ({question_key, answer}) => {
                             correctAnswer: answer,
                             type: 'numeric'
                         }
+                        setPrevAnswer(values.input)
                         axios
                             .post('http://localhost:3000/update/question', question)
                             .then((response) => response)
@@ -82,7 +129,6 @@ const Numeric = ({question_key, answer}) => {
                                     placeholder={placeholder}
                                     disabled={completed}
                         />
-                        {touched ? message : null}
                         {isSubmitting ?
                         <Form.Button
                             color="teal"
@@ -95,10 +141,16 @@ const Numeric = ({question_key, answer}) => {
                                 content='Submit'
                                 disabled={completed}
                             />}
-                        {isSubmitting ? <Loader active inline /> : null}
                     </Form>
                 )}
             </Formik>
+            {message}
+            {(giveup && !completed) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
+            {(hint && !completed) ? <Modal
+                trigger={<Button onClick={onHint} content="Hint" />}
+                header='Hint'
+                content={hint}
+                actions={[{ key: 'done', content: 'Done'}]} /> : ''}
         </>
         )
 }

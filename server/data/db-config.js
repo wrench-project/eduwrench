@@ -85,13 +85,37 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
     }
 })
 
+const setUpdateGiveUp = (question_key, time, button, answer) => db.transaction(async trx => {
+    const question = await trx("practice_questions")
+        .where({question_key:question_key})
+        .first()
+    const questionInfo = {
+        question_key: question_key,
+        time: time,
+        completed: false,
+        previous_answer: '',
+    };
+    (button === 'hint') ? (questionInfo['hint'] = true)
+        : (questionInfo['giveup'] = true,
+            questionInfo["completed"] = true,
+            questionInfo["previous_answer"] = answer)
+    if (!question) {
+        console.log('creating practice questions')
+        const questionID = await trx("practice_questions").insert(questionInfo)
+        return questionID[0]
+    } else {
+        const question = await trx('practice_questions').where({question_key:question_key}).update(questionInfo)
+        return question
+    }
+})
+
 const getPracticeQuestion = (question_key) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key})
         .first()
     const questionData = (question) ? await trx("practice_questions")
             .where({question_key:question_key})
-            .select('completed', 'previous_answer')
+            .select('completed', 'previous_answer', 'giveup')
             .first()
         : false
     return questionData
@@ -102,5 +126,6 @@ module.exports = {
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
-    getPracticeQuestion
+    getPracticeQuestion,
+    setUpdateGiveUp
 }
