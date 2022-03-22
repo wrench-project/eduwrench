@@ -9,7 +9,7 @@
  */
 #include <iostream>
 
-#include "SimpleWMS.h"
+#include "GcfWMS.h"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms, "Log category for Simple WMS");
 

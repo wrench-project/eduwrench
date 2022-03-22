@@ -8,8 +8,8 @@
  * (at your option) any later version.
  */
 #include <wrench.h>
-#include "SimpleStandardJobScheduler.h"
-#include "SimpleWMS.h"
+#include "GcfJobScheduler.h"
+#include "GcfWMS.h"
 
 static bool ends_with(const std::string& str, const std::string& suffix) {
   return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);

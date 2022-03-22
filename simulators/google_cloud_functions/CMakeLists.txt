@@ -17,11 +17,11 @@ include_directories(src/ ${SimGrid_INCLUDE_DIR}/include /usr/local/include /opt/
 
 # source files
 set(SOURCE_FILES
-       src/SimpleWMS.h
-       src/SimpleWMS.cpp
-       src/SimpleStandardJobScheduler.h
-       src/SimpleStandardJobScheduler.cpp
-       src/SimpleSimulator.cpp
+        src/GcfWMS.h
+        src/GcfWMS.cpp
+        src/GcfJobScheduler.h
+        src/GcfJobScheduler.cpp
+        src/GcfSimulator.cpp
        )
 
 # test files
