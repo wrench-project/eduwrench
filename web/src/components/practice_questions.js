@@ -2,8 +2,6 @@ import React from "react"
 import { Header, Segment } from "semantic-ui-react"
 import Numeric from "./practice-questions/numeric";
 import MultiChoice from "./practice-questions/multichoice"
-import Hint from "./practice-questions/hint"
-import GiveUp from "./practice-questions/giveup"
 
 const PracticeQuestions = ({ header = null, questions }) => {
 

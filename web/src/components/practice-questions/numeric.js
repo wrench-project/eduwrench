@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Message, Button, Modal, Label, Icon} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import axios from "axios"
 
 const Numeric = ({question_key, answer, hint, giveup}) => {
