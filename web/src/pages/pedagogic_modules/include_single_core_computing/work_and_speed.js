@@ -135,8 +135,9 @@ const WorkAndSpeed = ({module, tab}) => {
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
           ),
             type: "textbox",
-            hintText: "This is the first hint",
-            giveUp: true
+            answer: [0, 5],
+            hint: "this is hint",
+            giveup: true
         },
         {
           key: "A.1.p1.2",
@@ -146,8 +147,10 @@ const WorkAndSpeed = ({module, tab}) => {
             <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
           ),
             type: "mutlichoice",
-            hintText: false,
-            giveUp: false
+            choices: ['test1', 'test2', 'test3', 'test4'],
+            answer: 'test2',
+            hint: "this is another hint",
+            giveup: true
         }
       ]}
       />

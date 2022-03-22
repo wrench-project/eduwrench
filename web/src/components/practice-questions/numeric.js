@@ -1,76 +1,159 @@
 import React, { useState, useEffect } from "react"
-import { Input, Button } from "semantic-ui-react"
-import axios from "axios";
+import { Formik } from "formik"
+import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
+import axios from "axios"
 
-const Numeric = ({question_key}) => {
-    const [text, setText] = useState('');
-    const [correct, setCorrect] = useState('');
-    const [attempts, setAttempts] = useState(0);
-    const [completed, setCompleted] = useState(false);
-    let outputText;
+const Numeric = ({question_key, answer, hint, giveup}) => {
+    const [state, setState] = useState('')
+    const [completed, setCompleted] = useState(false)
+    const [gaveup, setGaveup] = useState(false)
+    const [prevAnswer, setPrevAnswer] = useState('')
+    let message
+    const placeholder = (completed) ? prevAnswer : "Enter answer here..."
 
-    /* Input from the textbox */
-    const handleInput = (e, data) => {
-        e.preventDefault();
-        setText(data);
-    }
-
-    /* Check if value in textbox is correct */
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (text.value === 'Hello') {
-            setAttempts(attempts + 1);
-            setCorrect('Correct');
-            setCompleted(true);
-        } else {
-            setAttempts(attempts + 1);
-            setCorrect('Incorrect');
-        }
-    }
-
-    if (correct === 'Correct') {
-        outputText = <p>The answer is correct</p>;
-    } else if (correct === 'Incorrect') {
-        outputText = <p>The answer is incorrect</p>;
-    }
-
-    /* Pull the question information from the database for persistence */
     useEffect(() => {
         axios
             .post('http://localhost:3000/get/question', {question_key: question_key})
             .then((response) => {
-                setCompleted(response.data.completed);
-                setAttempts(response.data.attempts);
-                return response;
+                setCompleted(response.data.completed)
+                setPrevAnswer(response.data.previous_answer)
+                setGaveup(response.data.giveup)
             })
             .catch(err => {
                 console.log(err);
             });
     }, [])
 
-    /* Get the callback of the questions parameters */
-    useEffect(() => {
+    const onHint = () => {
         const question = {
-            question_key,
-            attempts,
-            completed,
+            question_key: question_key,
+            button: 'hint'
         }
         axios
             .post('http://localhost:3000/update/question', question)
             .then((response) => response)
             .catch(err => {
-                console.error(err);
-            });
-    }, [attempts, completed])
+                console.log(err);
+            })
+    }
 
+    const onGiveup = () => {
+        setCompleted(true);
+        setState('GaveUp');
+        setGaveup(true);
+        setPrevAnswer(`${answer[0]} - ${answer[1]}`)
+        const question = {
+            question_key: question_key,
+            button: 'giveup',
+            answer: `${answer[0]} - ${answer[1]}`
+        }
+        axios
+            .post('http://localhost:3000/update/question', question)
+            .then((response) => response)
+            .catch(err => {
+                console.log(err);
+            })
+    }
+
+    switch (state) {
+        case 'Correct':
+            message = <Message icon='check'color='green' content='Answer is correct!'/>
+            break
+        case 'Incorrect':
+            message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
+            break
+        case 'GaveUp':
+            message = <Message icon='frown outline' color='yellow' content='You gave up... Try again later!' />
+            break
+        default:
+            message = ''
+            break
+    }
+    if (completed) {
+        return (
+            <>
+                Your Answer:
+                {(gaveup) ?
+                    <Label color='red' size='large'>{prevAnswer}</Label>
+                :   <Label color='green' size='large'>{prevAnswer}</Label>}
+                {message}
+            </>
+        )
+    }
 
     return (
         <>
-            <Input type='text' onChange={handleInput} placeholder='Input Answer'/>
-            <Button content='Submit' onClick={handleSubmit}/>
-            {outputText}
+            <Formik
+                initialValues={{input: ''}}
+                validateOnBlur={false}
+                validateOnChange={false}
+                onSubmit={(values, { setSubmitting }) =>{
+                    setTimeout(() => {
+                        if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
+                            setState("Correct")
+                            setCompleted(true)
+                        } else {
+                            setState("Incorrect")
+                        }
+                        const question = {
+                            question_key: question_key,
+                            answer: values.input,
+                            correctAnswer: answer,
+                            type: 'numeric'
+                        }
+                        setPrevAnswer(values.input)
+                        axios
+                            .post('http://localhost:3000/update/question', question)
+                            .then((response) => response)
+                            .catch(err => {
+                                console.error(err);
+                            })
+                        setSubmitting(false)
+                    }, 400)
+                }}
+                >
+                {({ values,
+                      touched,
+                      handleChange,
+                      handleBlur,
+                      handleSubmit,
+                      isSubmitting
+                }) => (
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Input fluid name="input"
+                                    label="Input"
+                                    type="number"
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    value={values.input}
+                                    placeholder={placeholder}
+                                    disabled={completed}
+                        />
+                        {isSubmitting ?
+                        <Form.Button
+                            color="teal"
+                            content='Submit'
+                            loading
+                            /> :
+                            <Form.Button
+                                color="teal"
+                                type='submit'
+                                content='Submit'
+                                disabled={completed}
+                            />}
+                    </Form>
+                )}
+            </Formik>
+            {message}
+            {(giveup && !completed) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
+            {(hint && !completed) ? <Modal
+                trigger={<Button onClick={onHint} content="Hint" />}
+                header='Hint'
+                content={hint}
+                actions={[{ key: 'done', content: 'Done'}]} /> : ''}
         </>
-    );
+        )
 }
 
-export default Numeric;
+
+export default Numeric
