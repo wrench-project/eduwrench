@@ -6,6 +6,8 @@ exports.up = function(knex) {
         tbl.boolean("completed").notNullable()
         tbl.integer("attempts")
         tbl.text("previous_answer")
+        tbl.boolean("hint")
+        tbl.boolean("giveup")
     })
 };
 
