@@ -90,6 +90,9 @@ int main(int argc, char **argv) {
                   new SimpleStandardJobScheduler(storage_service)),
                         nullptr, compute_services, storage_services, wms_host));
   wms->addWorkflow(workflow);
+  // TO BE CHANGED BASED ON ARGS
+  wms->setNumInstances(100);
+  wms->setSleepTime(100, 20);
 
   // Instantiate a file registry service
   std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];

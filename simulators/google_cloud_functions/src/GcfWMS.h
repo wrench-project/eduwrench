@@ -24,12 +24,20 @@ public:
               const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
               const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
               const std::string &hostname);
+    setNumInstances(int num_instances);
+    setSleepTime(double max_sleep_time, double min_sleep_time);
 
 private:
     int main() override;
 
     /** @brief The job manager */
     std::shared_ptr<wrench::JobManager> job_manager;
+    int num_free_instances;
+    double sleep_time;
+    double max_sleep_time;
+    double min_sleep_time;
+    int direction; // +1 or -1
+    int failures;
 };
 
 #endif //MY_SIMPLEWMS_H

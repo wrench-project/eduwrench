@@ -13,6 +13,20 @@
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms, "Log category for Simple WMS");
 
+void SimpleWMS::setNumInstances(int num_instances) {
+    this->num_free_instances = num_instances;
+}
+
+void SimpleWMS::setSleepTime(double max_sleep_time, double min_sleep_time) {
+    this->max_sleep_time = max_sleep_time;
+    this->min_sleep_time = min_sleep_time;
+    this->sleep_time = (max_sleep_time - min_sleep_time) / 2;
+}
+
+int coinToss() {
+  return rand() % 2; // should return 0 or 1, 0 is yes & 1 is no
+}
+
 /**
  * @brief Create a Simple WMS with a workflow instance, a scheduler implementation, and a list of compute services
  */
@@ -73,6 +87,43 @@ int SimpleWMS::main() {
 
     if (this->getWorkflow()->isDone()) {
       break;
+    }
+  }
+
+  // initial sleep time and num free instances set in simulator
+  direction = 1;
+  failures = 0;
+  while (1 week has not passed) { // not sure how to code that
+    bool free_instance = false;
+    // Wait for a workflow execution event, and process it
+    try {
+      free_instance = this->waitForAndProcessNextEvent(10); // wait for 10 seconds to see if instance is available
+    } catch (wrench::WorkflowExecutionException &e) {
+      WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
+                  (e.getCause()->toString().c_str()));
+      continue;
+    }
+
+    if (free_instance) {
+      // submit job
+      num_free_instances--;
+    }
+    else {
+      failures++;
+    }
+    wrench::Simulation::sleep(sleep_time);
+
+    // flip a coin
+    if (coinToss() == 0) {
+      sleep_time = direction * U(0, max increment);
+    }
+    if (direction == 1 && sleep_time >= max_sleep_time) {
+      sleep_time = max_sleep_time;
+      direction = -1;
+    }
+    else if (direction == -1 && sleep_time >= min_sleep_time) {
+      sleep_time = min_sleep_time;
+      direction = 1;
     }
   }
 
