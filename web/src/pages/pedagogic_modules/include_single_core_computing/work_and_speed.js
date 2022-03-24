@@ -137,8 +137,8 @@ const WorkAndSpeed = ({module, tab}) => {
           ),
             type: "textbox",
             answer: [0, 5],
-            hintText: "This is the first hint",
-            giveUp: true,
+            hint: "this is hint",
+            giveup: true
         },
         {
           key: "A.1.p1.2",
@@ -150,9 +150,9 @@ const WorkAndSpeed = ({module, tab}) => {
             type: "mutlichoice",
             choices: ['test1', 'test2', 'test3', 'test4'],
             answer: 'test2',
-            hintText: false,
-            giveUp: false, 
-        },
+            hint: "this is another hint",
+            giveup: true
+        }
       ]}
       />
 

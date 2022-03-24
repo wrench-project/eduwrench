@@ -40,36 +40,85 @@ const getUsageStatistics = () => db.transaction(async trx => {
     return usage
 })
 
-const updatePracticeQuestion = (question_key, time, completed, attempts) => db.transaction(async trx => {
+/*  */
+const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key})
         .first()
+    const correct = (type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
+    console.log(answer, correctAnswer)
+    let completed = (question) ? await trx("practice_questions")
+        .where({question_key:question_key})
+        .select('completed')
+        .first()
+        .then((completed) => completed.completed)
+    : false
     if (!question) {
+        console.log('creating practice questions')
         const questionID = await trx("practice_questions").insert({
             question_key: question_key,
             time: time,
-            completed: completed,
-            attempts: attempts
+            completed: correct,
+            attempts: 1,
+            previous_answer: answer
         })
-        console.log('creating practice questions')
         return questionID[0]
-    } else {
+    }
+    if (!completed) {
         console.log("updating practice quesitons")
-        const question = await trx("practice_questions").update({
+        const attempts = await trx("practice_questions")
+            .where({question_key: question_key})
+            .select('attempts')
+            .first()
+            .then((attempts) => attempts.attempts);
+        const question = await trx("practice_questions").where({question_key:question_key}).update({
                 question_key: question_key,
                 time: time,
-                completed: completed,
-                attempts:attempts
+                completed: correct,
+                attempts:attempts + 1,
+                previous_answer: answer
             })
+        return question
+    } else {
+        console.log("Answer is correct " + question_key + " is disabled now")
+        return question
+    }
+})
+
+const setUpdateGiveUp = (question_key, time, button, answer) => db.transaction(async trx => {
+    const question = await trx("practice_questions")
+        .where({question_key:question_key})
+        .first()
+    const questionInfo = {
+        question_key: question_key,
+        time: time,
+        completed: false,
+        previous_answer: '',
+    };
+    (button === 'hint') ? (questionInfo['hint'] = true)
+        : (questionInfo['giveup'] = true,
+            questionInfo["completed"] = true,
+            questionInfo["previous_answer"] = answer)
+    if (!question) {
+        console.log('creating practice questions')
+        const questionID = await trx("practice_questions").insert(questionInfo)
+        return questionID[0]
+    } else {
+        const question = await trx('practice_questions').where({question_key:question_key}).update(questionInfo)
         return question
     }
 })
 
 const getPracticeQuestion = (question_key) => db.transaction(async trx => {
-    const questionInfo = await trx("practice_questions")
+    const question = await trx("practice_questions")
         .where({question_key:question_key})
-        .select('attempts', 'completed')
-    return questionInfo[0]
+        .first()
+    const questionData = (question) ? await trx("practice_questions")
+            .where({question_key:question_key})
+            .select('completed', 'previous_answer', 'giveup')
+            .first()
+        : false
+    return questionData
 })
 
 module.exports = {
@@ -77,5 +126,6 @@ module.exports = {
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
-    getPracticeQuestion
+    getPracticeQuestion,
+    setUpdateGiveUp
 }
