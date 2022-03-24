@@ -16,7 +16,7 @@ const Feedback = ({ header = null, feedbacks }) => {
       key: value.key,
       title: {
         content: (
-          <><strong>[{value.key}]</strong> {value.question}</>
+          <><strong>[{value.key}]</strong></>
         ),
       },
       feedback: value.feedback,

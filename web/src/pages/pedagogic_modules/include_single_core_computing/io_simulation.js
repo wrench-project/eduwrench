@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Label, Popup, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
@@ -14,15 +14,21 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
+import SimulationPopup from "../../../components/simulation/simulation_popup"
 
 const IOSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [buttonPopup, setButtonPopup] = useState(false)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
   })
+
+  const handleClick = (e) => {
+    e.preventDefault();
+  }
 
   return (
     auth === "true" ? (
@@ -194,7 +200,15 @@ const IOSimulation = () => {
                     onBlur={handleBlur}
                     value={values.overlapAllowed}
                   />
-                  <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
+                  {/* <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button> */}
+                  <Form.Button color="teal" type="submit" onClick={() => setButtonPopup(true)} disabled={isSubmitting}>Run Simulation</Form.Button>
+                
+                <SimulationPopup trigger={buttonPopup} setTrigger={setButtonPopup}>
+                  <h3>Feedback</h3>
+                  <p>Are you a student/professor/other?</p>
+                  <Form.TextArea placeholder='answer' rows="2" cols="70"/>
+                  <Form.Button content='Submit' onClick={handleClick}/>
+                </SimulationPopup>
                 </Form>
               )}
             </Formik>
