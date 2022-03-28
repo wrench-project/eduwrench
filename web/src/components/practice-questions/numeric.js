@@ -9,11 +9,15 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
     const [gaveup, setGaveup] = useState(false)
     const [prevAnswer, setPrevAnswer] = useState('')
     let message
-    const placeholder = (completed) ? prevAnswer : "Enter answer here..."
 
     useEffect(() => {
+        const userEmail = localStorage.getItem("currentUser")
         axios
-            .post('http://localhost:3000/get/question', {question_key: question_key})
+            .post('http://localhost:3000/get/question', {
+                userName: userEmail.split("@")[0],
+                email: userEmail,
+                question_key: question_key,
+            })
             .then((response) => {
                 setCompleted(response.data.completed)
                 setPrevAnswer(response.data.previous_answer)
@@ -21,11 +25,14 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
             })
             .catch(err => {
                 console.log(err);
-            });
+            })
     }, [])
 
     const onHint = () => {
+        const userEmail = localStorage.getItem("currentUser")
         const question = {
+            userName: userEmail.split("@")[0],
+            email: userEmail,
             question_key: question_key,
             button: 'hint'
         }
@@ -42,7 +49,10 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
         setState('GaveUp');
         setGaveup(true);
         setPrevAnswer(`${answer[0]} - ${answer[1]}`)
+        const userEmail = localStorage.getItem("currentUser")
         const question = {
+            userName: userEmail.split("@")[0],
+            email: userEmail,
             question_key: question_key,
             button: 'giveup',
             answer: `${answer[0]} - ${answer[1]}`
@@ -84,10 +94,12 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
     return (
         <>
             <Formik
+                key={question_key}
                 initialValues={{input: ''}}
                 validateOnBlur={false}
                 validateOnChange={false}
                 onSubmit={(values, { setSubmitting }) =>{
+                    const userEmail = localStorage.getItem("currentUser");
                     setTimeout(() => {
                         if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
                             setState("Correct")
@@ -96,6 +108,8 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
                             setState("Incorrect")
                         }
                         const question = {
+                            userName: userEmail.split("@")[0],
+                            email: userEmail,
                             question_key: question_key,
                             answer: values.input,
                             correctAnswer: answer,
@@ -126,8 +140,6 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     value={values.input}
-                                    placeholder={placeholder}
-                                    disabled={completed}
                         />
                         {isSubmitting ?
                         <Form.Button
@@ -139,7 +151,6 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
                                 color="teal"
                                 type='submit'
                                 content='Submit'
-                                disabled={completed}
                             />}
                     </Form>
                 )}

@@ -10,8 +10,13 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
     let message
 
     useEffect(() => {
+        const userEmail = localStorage.getItem("currentUser");
         axios
-            .post('http://localhost:3000/get/question', {question_key:question_key})
+            .post('http://localhost:3000/get/question', {
+                user: userEmail.split("@")[0],
+                email: userEmail,
+                question_key:question_key,
+            })
             .then((response) => {
                 setCompleted(response.data.completed)
                 setGaveUp(response.data.giveup)
@@ -22,7 +27,10 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
     }, []);
 
     const onHint = () => {
+        const userEmail = localStorage.getItem("currentUser")
         const question = {
+            userName: userEmail.split("@")[0],
+            email: userEmail,
             question_key: question_key,
             button: 'hint'
         }
@@ -38,7 +46,10 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
         setGaveUp(true)
         setState('GaveUp')
         setCompleted(true)
+        const userEmail = localStorage.getItem("currentUser")
         const question = {
+            userName: userEmail.split("@")[0],
+            email: userEmail,
             question_key: question_key,
             button: 'giveup'
         }
@@ -79,11 +90,13 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
     return (
         <>
             <Formik
+                key={question_key}
                 initialValues={{selected: ''}}
                 validateOnBlur={false}
                 validateOnChange={false}
                 onSubmit={(values, { setSubmitting }) =>{
                     setTimeout(() => {
+                        const userEmail = localStorage.getItem("currentUser");
                         if (values.selected === answer) {
                             setState("Correct")
                             setCompleted(true)
@@ -91,6 +104,8 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
                             setState("Incorrect")
                         }
                         const question = {
+                            user: userEmail.split("@")[0],
+                            email: userEmail,
                             question_key: question_key,
                             answer: values.selected,
                             correctAnswer: answer,
@@ -116,15 +131,15 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
                 }) => (
                     <Form onSubmit={handleSubmit}>
                         {choices.map((choice) =>
-                            <Form.Field>
-                                <Form.Radio name="selected"
-                                            label={choice}
-                                            id={choice}
-                                            value={choice}
-                                            checked={(completed) ? choice === answer : values.selected === choice}
-                                            onChange={handleChange}
-                                            onBlur={handleBlur}
-                                            disabled={completed || isSubmitting}
+                            <Form.Field key={choice}>
+                                <Form.Radio
+                                    name="selected"
+                                    label={choice}
+                                    id={choice}
+                                    value={choice}
+                                    checked={(completed) ? choice === answer : values.selected === choice}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
                             </Form.Field>
                         )}
@@ -139,7 +154,6 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
                                 color="teal"
                                 type="submit"
                                 content="Submit"
-                                disabled={completed}
                             />}
                     </Form>
                 )}

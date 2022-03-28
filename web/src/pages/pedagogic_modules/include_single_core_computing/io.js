@@ -222,7 +222,8 @@ const IO = ({module, tab}) => {
                             core utilization is <TeX math="250/253 = 98.8\%" />.
                         </>
                     ),
-                    type: "textbox"
+                    type: "textbox",
+                    choices: ''
                 },
                 {
                     key: "A.1.p4.2",
@@ -241,7 +242,9 @@ const IO = ({module, tab}) => {
                             </ul>
                             Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
                         </>
-                    )
+                    ),
+                    type: "textbox",
+                    choices: ''
                 },
                 {
                     key: "A.1.p4.3",
@@ -291,7 +294,9 @@ const IO = ({module, tab}) => {
                                 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.
                             </p>
                         </>
-                    )
+                    ),
+                    type: "textbox",
+                    choices: ''
                 },
                 {
                     key: "A.1.p4.4",
@@ -319,7 +324,9 @@ const IO = ({module, tab}) => {
                                 increases, the CPU utilization tends to 100%.
                             </p>
                         </>
-                    )
+                    ),
+                    type: "textbox",
+                    choices: ''
                 }
             ]}
             />
