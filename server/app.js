@@ -1443,23 +1443,27 @@ function logData(data) {
  * @returns {boolean}
  */
 function logQuestion(data) {
-    let time = Math.round(new Date().getTime() / 1000)
-    console.log(data)
-    if (data.button) {
-        db.setUpdateGiveUp(data.question_key, time, data.button, data.answer).then ((questionId => {
-            return true
-        })).catch((error => {
-            console.log("[ERROR: " + error)
-            return false
-        }))
-    } else {
-        db.updatePracticeQuestion(data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
-            return true
-        })).catch((error => {
-            console.log("[ERROR: " + error)
-            return false
-        }))
-    }
+    db.registerUser(data.email, data.user).then((userID) => {
+        let time = Math.round(new Date().getTime() / 1000)
+        if (data.button) {
+            db.setUpdateGiveUp(userID, data.question_key, time, data.button, data.answer).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else {
+            db.updatePracticeQuestion(userID, data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        }
+    }).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
 }
 
 /* Post request to call function to update the practice question database */
@@ -1467,11 +1471,13 @@ app.post('/update/question', function (req, res) {
     console.log(req.body);
     try {
         logQuestion({
-            "question_key": req.body.question_key,
-            "answer" : req.body.answer,
-            "correctAnswer": req.body.correctAnswer,
-            "type": req.body.type,
-            "button": req.body.button,
+            user: req.body.userName,
+            email: req.body.email,
+            question_key: req.body.question_key,
+            answer : req.body.answer,
+            correctAnswer: req.body.correctAnswer,
+            type: req.body.type,
+            button: req.body.button,
         })
         res.status(201).send();
     } catch(e) {
@@ -1482,7 +1488,9 @@ app.post('/update/question', function (req, res) {
 
 /* POST request to call function to respond with "completed" status */
 app.post('/get/question', function (req, res) {
-        db.getPracticeQuestion(req.body.question_key).then(question => {
+    console.log(req.body);
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getPracticeQuestion(userID, req.body.question_key).then(question => {
             res.json({
                 previous_answer: question.previous_answer,
                 completed: question.completed,
@@ -1490,7 +1498,8 @@ app.post('/get/question', function (req, res) {
             })
         }).catch((error => {
             console.log("ERROR " + error)
-            }))
+        }))
+    })
 })
 
 /**
