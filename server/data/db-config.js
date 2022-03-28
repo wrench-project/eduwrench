@@ -41,12 +41,11 @@ const getUsageStatistics = () => db.transaction(async trx => {
 })
 
 /*  */
-const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type) => db.transaction(async trx => {
+const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswer, type) => db.transaction(async trx => {
     const question = await trx("practice_questions")
-        .where({question_key:question_key})
+        .where({question_key:question_key, user_id: userID})
         .first()
     const correct = (type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
-    console.log(answer, correctAnswer)
     let completed = (question) ? await trx("practice_questions")
         .where({question_key:question_key})
         .select('completed')
@@ -56,6 +55,7 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
     if (!question) {
         console.log('creating practice questions')
         const questionID = await trx("practice_questions").insert({
+            user_id: userID,
             question_key: question_key,
             time: time,
             completed: correct,
@@ -67,16 +67,17 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
     if (!completed) {
         console.log("updating practice quesitons")
         const attempts = await trx("practice_questions")
-            .where({question_key: question_key})
+            .where({question_key: question_key, user_id: userID})
             .select('attempts')
             .first()
             .then((attempts) => attempts.attempts);
-        const question = await trx("practice_questions").where({question_key:question_key}).update({
-                question_key: question_key,
-                time: time,
-                completed: correct,
-                attempts:attempts + 1,
-                previous_answer: answer
+        const question = await trx("practice_questions").where({question_key:question_key, user_id: userID}).update({
+            user_id: userID,
+            question_key: question_key,
+            time: time,
+            completed: correct,
+            attempts:attempts + 1,
+            previous_answer: answer
             })
         return question
     } else {
@@ -85,11 +86,12 @@ const updatePracticeQuestion = (question_key, time, answer, correctAnswer, type)
     }
 })
 
-const setUpdateGiveUp = (question_key, time, button, answer) => db.transaction(async trx => {
+const setUpdateGiveUp = (userID, question_key, time, button, answer) => db.transaction(async trx => {
     const question = await trx("practice_questions")
-        .where({question_key:question_key})
+        .where({question_key:question_key, user_id: userID})
         .first()
     const questionInfo = {
+        user_id: userID,
         question_key: question_key,
         time: time,
         completed: false,
@@ -109,12 +111,12 @@ const setUpdateGiveUp = (question_key, time, button, answer) => db.transaction(a
     }
 })
 
-const getPracticeQuestion = (question_key) => db.transaction(async trx => {
+const getPracticeQuestion = (userID, question_key) => db.transaction(async trx => {
     const question = await trx("practice_questions")
-        .where({question_key:question_key})
+        .where({question_key:question_key, user_id: userID})
         .first()
     const questionData = (question) ? await trx("practice_questions")
-            .where({question_key:question_key})
+            .where({question_key:question_key, user_id: userID})
             .select('completed', 'previous_answer', 'giveup')
             .first()
         : false
