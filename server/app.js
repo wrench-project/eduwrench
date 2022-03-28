@@ -1493,6 +1493,50 @@ app.post('/get/question', function (req, res) {
             }))
 })
 
+/**
+ * Log the feedback parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
+function logFeedback(data) {
+    let time = Math.round(new Date().getTime() / 1000)
+    console.log(data)
+
+    db.updateFeedback(data.feedback_key, time, data.useful, data.quality, data.comments).then ((feedbackId => {
+        return true
+    })).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+}
+
+app.post('/update/feedback', function (req, res) {
+    console.log(req.body);
+    try {
+        logFeedback({
+            "feedback_key": req.body.feedback_key,
+            "useful" : req.body.useful,
+            "quality" : req.body.quality,
+            "comments" : req.body.comments,
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+app.post('/get/feedback', function (req, res) {
+    db.getFeedback(req.body.feedback_key).then(feedback => {
+        res.json({
+            feedbackMsg: feedback.feedbackMsg,
+        })
+    }).catch((error => {
+        console.log("ERROR " + error)
+        }))
+})
+
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")

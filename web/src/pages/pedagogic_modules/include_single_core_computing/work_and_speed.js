@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
-import Feedback from "../../../components/feedback"
+import Feedback from "../../../components/feedback_questions"
 
 const WorkAndSpeed = ({module, tab}) => {
   return (
@@ -204,7 +204,7 @@ const WorkAndSpeed = ({module, tab}) => {
 
       <Feedback feedbacks={[
         {
-          key: "Feedback Questions",
+          key: "Feedback A.1",
           feedback: "feedback",
         },
       ]}   

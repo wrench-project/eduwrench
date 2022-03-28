@@ -1,8 +1,8 @@
 import React from "react"
-import { Header, Segment } from "semantic-ui-react"
-import FeedbackQuestion from "./feedback/feedback_question";
+import { Header } from "semantic-ui-react"
+import Feedback from "./feedback/feedback";
 
-const Feedback = ({ header = null, feedbacks }) => {
+const FeedbackQuestions = ({ header = null, feedbacks }) => {
   let feedbackHeader = <></>
   const panels = []
 
@@ -10,14 +10,12 @@ const Feedback = ({ header = null, feedbacks }) => {
     feedbackHeader = <>{header}</>
   }
 
-  /* Indexing to go through entries of questions */
+  /* Indexing to go through entries of feedback questions */
   for (const [index, value] of feedbacks.entries()) {
     panels.push({
       key: value.key,
       title: {
-        content: (
-          <><strong>[{value.key}]</strong></>
-        ),
+        content: (<><strong>[{value.key}]</strong></>),
       },
       feedback: value.feedback,
     })
@@ -26,17 +24,17 @@ const Feedback = ({ header = null, feedbacks }) => {
   return (
     <>
       <Header as="h3" block>
-        Feedback
+        Feedback Questions
       </Header>
 
       {feedbackHeader}
       <div>
         {panels.map(({ title, key, feedback }) => (
-          <><p key={key}>{title.content}</p><FeedbackQuestion /></>
+          <><p key={key}>{title.content}</p><Feedback feedback_key={key} feedback={feedback}/></>
         ))}
       </div>
     </>
   )
 }
 
-export default Feedback;
+export default FeedbackQuestions;
