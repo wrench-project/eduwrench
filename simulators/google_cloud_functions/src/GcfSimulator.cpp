@@ -24,29 +24,71 @@ int main(int argc, char **argv) {
   simulation.init(&argc, argv);
 
   // Parsing of the command-line arguments for this WRENCH simulation
-  if (argc != 3) {
-    std::cerr << "Usage: " << argv[0] << " <xml platform file> <workflow file>" << std::endl;
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " <json file>" << std::endl;
     exit(1);
   }
 
-  // The first argument is the platform description file, written in XML following the SimGrid-defined DTD
-  char *platform_file = argv[1];
-  // The second argument is the workflow description file, written in XML using the DAX DTD
-  char *workflow_file = argv[2];
+  // parse json input file
+  std::ifstream i(argv[1]);
+  nlohmann::json j;
+  try {
+    j = nlohmann::json::parse(i);
+  } catch (std::invalid_argument &e) {
+    std::cerr << "Problem parsing JSON input file: " + std::string(e.what()) + "\n";
+  }
 
-  // Reading and parsing the workflow description file to create a wrench::Workflow object
-  std::cerr << "Loading workflow..." << std::endl;
-  wrench::Workflow *workflow;
+  // time for function exec
+  double func_exec_time = j.at("func_exec_time").get<double>();
+  // num instances
+  int num_instances = j.at("num_instances").get<int>();
+  // min & max num requests that arrive per min (max / min sleep time)
+  int max_req = j.at("max_req").get<int>();
+  int min_req = j.at("min_req").get<int>();
+  // probability of change
+  double change_probability = j.at("change_probability").get<double>();
+  // maximum change
+  int max_change = j.at("max_change").get<int>();
 
-  if (ends_with(workflow_file, "dax")) {
-    workflow = wrench::PegasusWorkflowParser::createWorkflowFromDAX(workflow_file, "1000Gf");
-  } else if (ends_with(workflow_file,"json")) {
-    workflow = wrench::PegasusWorkflowParser::createWorkflowFromJSON(workflow_file, "1000Gf");
-  } else {
-    std::cerr << "Workflow file name must end with '.dax' or '.json'" << std::endl;
+  // platform description file, written in XML following the SimGrid-defined DTD
+  std::string xml = "<?xml version='1.0'?>\n"
+                    "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
+                    "<platform version=\"4.1\">\n"
+                    "   <zone id=\"AS0\" routing=\"Full\">\n\n"
+                    "       <host id=\"WMSHost\" speed=\"1Gf\" core=\"1\">\n"
+                    "       </host>\n\n";
+
+  // creation of hosts aka instances
+  for (int i = 1; i < num_instances + 1; i++) {
+    xml.append("       <host id=\"instance_" + std::to_string(i) + "\" speed=\"1f\" core=\"1\">\n" +
+               "       </host>\n");
+  }
+  xml.append("\n");
+
+  // create WIDE AREA LINK, for use between WMSHost and all instance hosts
+  xml.append("       <link id=\"WIDE_AREA_LINK\" bandwidth=\"5000GBps\" latency=\"0ms\"/>\n");
+  xml.append("\n");
+
+  // routes between each instance and WMSHost
+  for (int i = 1; i < num_instances + 1; i++) {
+    xml.append("       <route src=\"instance_" + std::to_string(i) +
+               "\" dst=\"WMSHost\"> <link_ctn id=\\\"WIDE_AREA_LINK\\\"/> </route>\n");
+  }
+  xml.append("\n");
+
+  xml.append(
+      "   </zone>\n"
+      "</platform>\n");
+
+  char const* username = std::getenv("USER");
+  std::string platform_file = "/tmp/hosts_" + std::to_string(getuid()) + ".xml";
+  auto xml_file = fopen(platform_file.c_str(), "w");
+  if (xml_file == NULL) {
+    std::cerr << "Cannot open platform (.xml) file" << std::endl;
     exit(1);
   }
-  std::cerr << "The workflow has " << workflow->getNumberOfTasks() << " tasks " << std::endl;
+  fprintf(xml_file, "%s", xml.c_str());
+  fclose(xml_file);
 
   // Reading and parsing the platform description file to instantiate a simulated platform
   std::cerr << "Instantiating SimGrid platform..." << std::endl;
@@ -55,30 +97,24 @@ int main(int argc, char **argv) {
   // Get a vector of all the hosts in the simulated platform
   std::vector<std::string> hostname_list = simulation.getHostnameList();
 
-  // Instantiate a storage service
-  std::string storage_host = hostname_list[(hostname_list.size() > 2) ? 2 : 1];
-  std::cerr << "Instantiating a SimpleStorageService on " << storage_host << "..." << std::endl;
-  auto storage_service = simulation.add(new wrench::SimpleStorageService(storage_host, {"/"}));
-
-  // Construct a list of hosts (in this example only one host)
+  // Construct a list of hosts
   std::string executor_host = hostname_list[(hostname_list.size() > 1) ? 1 : 0];
   std::vector<std::string> execution_hosts = {executor_host};
-
-  // Create a list of storage services that will be used by the WMS
-  std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-  storage_services.insert(storage_service);
 
   // Create a list of compute services that will be used by the WMS
   std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
 
-  std::string wms_host = hostname_list[0];
-  // Instantiate a cloud service and add it to the simulation
+  std::string wms_host = "WMSHost";
+  // Create a list of compute services that will be used by the WMS
+  std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
   try {
-    auto cloud_service = new wrench::CloudComputeService(
-          wms_host, execution_hosts, "", {},
-          {{wrench::CloudComputeServiceMessagePayload::STOP_DAEMON_MESSAGE_PAYLOAD, 1024}});
-
-    compute_services.insert(simulation.add(cloud_service));
+    std::vector<std::string> execution_hosts;
+    for (int i = 1; i < num_instances + 1; i++) {
+      instances.push_back("instance_" + std::to_string(i));
+    }
+    auto baremetal_service = new wrench::BareMetalComputeService(
+        wms_host, execution_hosts, "", {}, {});
+    compute_services.insert(simulation.add(baremetal_service));
   } catch (std::invalid_argument &e) {
     std::cerr << "Error: " << e.what() << std::endl;
     std::exit(1);
@@ -86,12 +122,11 @@ int main(int argc, char **argv) {
 
   // Instantiate a WMS
   auto wms = simulation.add(
-          new SimpleWMS(std::unique_ptr<SimpleStandardJobScheduler>(
-                  new SimpleStandardJobScheduler(storage_service)),
+          new GcfWMS(std::unique_ptr<GcfJobScheduler>(
+                  new GcfJobScheduler(storage_service)),
                         nullptr, compute_services, storage_services, wms_host));
-  wms->addWorkflow(workflow);
   // TO BE CHANGED BASED ON ARGS
-  wms->setNumInstances(100);
+  wms->setNumInstances(num_instances);
   wms->setSleepTime(100, 20);
 
   // Instantiate a file registry service
