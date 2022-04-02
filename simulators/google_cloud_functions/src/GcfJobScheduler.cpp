@@ -9,7 +9,7 @@
  */
 #include "GcfJobScheduler.h"
 
-XBT_LOG_NEW_DEFAULT_CATEGORY(simple_scheduler, "Log category for Simple Scheduler");
+XBT_LOG_NEW_DEFAULT_CATEGORY(Gcf_scheduler, "Log category for Gcf Scheduler");
 
 /**
  * @brief Schedule and run a set of ready tasks on available cloud resources
@@ -19,12 +19,12 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(simple_scheduler, "Log category for Simple Schedule
  *
  * @throw std::runtime_error
  */
-void SimpleStandardJobScheduler::scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
+void GcfJobScheduler::scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
                                                const std::vector<wrench::WorkflowTask *> &tasks) {
 
   // Check that the right compute_services is passed
   if (compute_services.size() != 1) {
-    throw std::runtime_error("This example Simple Scheduler requires a single compute service");
+    throw std::runtime_error("This Gcf Scheduler requires a single compute service");
   }
 
   auto compute_service = *compute_services.begin();

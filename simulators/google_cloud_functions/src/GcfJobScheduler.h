@@ -7,14 +7,14 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-#ifndef MY_SIMPLESCHEDULER_H
-#define MY_SIMPLESCHEDULER_H
+#ifndef MY_GCFSCHEDULER_H
+#define MY_GCFSCHEDULER_H
 
 #include <wrench-dev.h>
 
-class SimpleStandardJobScheduler : public wrench::StandardJobScheduler {
+class GcfJobScheduler : public wrench::StandardJobScheduler {
 public:
-  SimpleStandardJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service) :
+  GcfJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service) :
           default_storage_service(default_storage_service) {}
 
   void scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
@@ -25,5 +25,5 @@ private:
   std::vector<std::shared_ptr<wrench::BareMetalComputeService>> compute_services_running_on_vms;
 };
 
-#endif //MY_SIMPLESCHEDULER_H
+#endif //MY_GCFSCHEDULER_H
 

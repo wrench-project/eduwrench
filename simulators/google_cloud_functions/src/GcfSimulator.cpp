@@ -42,13 +42,13 @@ int main(int argc, char **argv) {
   double func_exec_time = j.at("func_exec_time").get<double>();
   // num instances
   int num_instances = j.at("num_instances").get<int>();
-  // min & max num requests that arrive per min (max / min sleep time)
+  // min & max num requests that arrive per sec (max / min sleep time)
   int max_req = j.at("max_req").get<int>();
   int min_req = j.at("min_req").get<int>();
   // probability of change
   double change_probability = j.at("change_probability").get<double>();
   // maximum change
-  int max_change = j.at("max_change").get<int>();
+  double max_change = j.at("max_change").get<double>();
 
   // platform description file, written in XML following the SimGrid-defined DTD
   std::string xml = "<?xml version='1.0'?>\n"
@@ -95,11 +95,7 @@ int main(int argc, char **argv) {
   simulation.instantiatePlatform(platform_file);
 
   // Get a vector of all the hosts in the simulated platform
-  std::vector<std::string> hostname_list = simulation.getHostnameList();
-
-  // Construct a list of hosts
-  std::string executor_host = hostname_list[(hostname_list.size() > 1) ? 1 : 0];
-  std::vector<std::string> execution_hosts = {executor_host};
+  // std::vector<std::string> hostname_list = simulation.getHostnameList();
 
   // Create a list of compute services that will be used by the WMS
   std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
@@ -107,46 +103,49 @@ int main(int argc, char **argv) {
   std::string wms_host = "WMSHost";
   // Create a list of compute services that will be used by the WMS
   std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
-  try {
-    std::vector<std::string> execution_hosts;
-    for (int i = 1; i < num_instances + 1; i++) {
+  std::vector <std::string> instances;
+  for (int i = 1; i < num_instances + 1; i++) {
+    try {
+      instances.clear();
       instances.push_back("instance_" + std::to_string(i));
+      auto baremetal_service = new wrench::BareMetalComputeService(
+          wms_host, instances, "", {}, {});
+      compute_services.insert(simulation.add(baremetal_service));
+    } catch (std::invalid_argument &e) {
+      std::cerr << "Error: " << e.what() << std::endl;
+      std::exit(1);
     }
-    auto baremetal_service = new wrench::BareMetalComputeService(
-        wms_host, execution_hosts, "", {}, {});
-    compute_services.insert(simulation.add(baremetal_service));
-  } catch (std::invalid_argument &e) {
-    std::cerr << "Error: " << e.what() << std::endl;
-    std::exit(1);
   }
 
   // Instantiate a WMS
   auto wms = simulation.add(
           new GcfWMS(std::unique_ptr<GcfJobScheduler>(
-                  new GcfJobScheduler(storage_service)),
-                        nullptr, compute_services, storage_services, wms_host));
+                  new GcfJobScheduler(nullptr)),
+                        nullptr, compute_services, nullptr, wms_host));
   // TO BE CHANGED BASED ON ARGS
   wms->setNumInstances(num_instances);
-  wms->setSleepTime(100, 20);
+  wms->setSleepTime(1.0 / min_req, 1.0 / max_req);
+  wms->setChangeProb(change_probability);
+  wms->setMaxChange(max_change);
 
   // Instantiate a file registry service
-  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
-  std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
-  auto file_registry_service =
-          new wrench::FileRegistryService(file_registry_service_host);
-  simulation.add(file_registry_service);
+//  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
+//  std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
+//  auto file_registry_service =
+//          new wrench::FileRegistryService(file_registry_service_host);
+//  simulation.add(file_registry_service);
 
   // It is necessary to store, or "stage", input files
-  std::cerr << "Staging input files..." << std::endl;
-  auto input_files = workflow->getInputFiles();
-  try {
-     for (auto const &f : input_files) {
-         simulation.stageFile(f, storage_service);
-     }
-  } catch (std::runtime_error &e) {
-    std::cerr << "Exception: " << e.what() << std::endl;
-    return 0;
-  }
+//  std::cerr << "Staging input files..." << std::endl;
+//  auto input_files = workflow->getInputFiles();
+//  try {
+//     for (auto const &f : input_files) {
+//         simulation.stageFile(f, storage_service);
+//     }
+//  } catch (std::runtime_error &e) {
+//    std::cerr << "Exception: " << e.what() << std::endl;
+//    return 0;
+//  }
 
   // Launch the simulation
   std::cerr << "Launching the Simulation..." << std::endl;

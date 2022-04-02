@@ -7,8 +7,8 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  */
-#ifndef MY_SIMPLEWMS_H
-#define MY_SIMPLEWMS_H
+#ifndef MY_GCFWMS_H
+#define MY_GCFWMS_H
 
 #include <wrench-dev.h>
 
@@ -17,9 +17,9 @@ class Simulation;
 /**
  *  @brief A simple WMS implementation
  */
-class SimpleWMS : public wrench::WMS {
+class GcfWMS : public wrench::WMS {
 public:
-    SimpleWMS(std::unique_ptr<wrench::StandardJobScheduler> standard_job_scheduler,
+    GcfWMS(std::unique_ptr<wrench::StandardJobScheduler> standard_job_scheduler,
               std::unique_ptr<wrench::PilotJobScheduler> pilot_job_scheduler,
               const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
               const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
@@ -38,7 +38,9 @@ private:
     double min_sleep_time;
     int direction; // +1 or -1
     int failures;
+    double change_prob;
+    int max_change;
 };
 
-#endif //MY_SIMPLEWMS_H
+#endif //MY_GCFWMS_H
 
