@@ -33,8 +33,10 @@ public:
 
 private:
     int main() override;
+    void processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) override;
 
-    /** @brief The job manager */
+
+        /** @brief The job manager */
     std::shared_ptr<wrench::JobManager> job_manager;
     int num_free_instances;
     double sleep_time;

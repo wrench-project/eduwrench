@@ -126,6 +126,7 @@ int main(int argc, char **argv) {
   wms->setSleepTime(1.0 / min_req, 1.0 / max_req);
   wms->setChangeProb(change_probability);
   wms->setMaxChange(max_change);
+  wms->addWorkflow(new wrench::Workflow());
 
   // Instantiate a file registry service
 //  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
