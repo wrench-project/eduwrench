@@ -24,8 +24,12 @@ public:
               const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
               const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
               const std::string &hostname);
-    setNumInstances(int num_instances);
-    setSleepTime(double max_sleep_time, double min_sleep_time);
+    void setNumInstances(int num_instances);
+    void setSleepTime(double max_sleep_time, double min_sleep_time);
+    double getChangeProb();
+    void setChangeProb(double change_prob);
+    void setMaxChange(double max_change);
+    int coinToss();
 
 private:
     int main() override;

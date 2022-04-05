@@ -10,6 +10,8 @@
 #include <wrench.h>
 #include "GcfJobScheduler.h"
 #include "GcfWMS.h"
+#include <nlohmann/json.hpp>
+#include <fstream>
 
 static bool ends_with(const std::string& str, const std::string& suffix) {
   return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);
@@ -72,7 +74,7 @@ int main(int argc, char **argv) {
   // routes between each instance and WMSHost
   for (int i = 1; i < num_instances + 1; i++) {
     xml.append("       <route src=\"instance_" + std::to_string(i) +
-               "\" dst=\"WMSHost\"> <link_ctn id=\\\"WIDE_AREA_LINK\\\"/> </route>\n");
+               "\" dst=\"WMSHost\"> <link_ctn id=\"WIDE_AREA_LINK\"/> </route>\n");
   }
   xml.append("\n");
 
@@ -97,9 +99,6 @@ int main(int argc, char **argv) {
   // Get a vector of all the hosts in the simulated platform
   // std::vector<std::string> hostname_list = simulation.getHostnameList();
 
-  // Create a list of compute services that will be used by the WMS
-  std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
-
   std::string wms_host = "WMSHost";
   // Create a list of compute services that will be used by the WMS
   std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
@@ -120,8 +119,8 @@ int main(int argc, char **argv) {
   // Instantiate a WMS
   auto wms = simulation.add(
           new GcfWMS(std::unique_ptr<GcfJobScheduler>(
-                  new GcfJobScheduler(nullptr)),
-                        nullptr, compute_services, nullptr, wms_host));
+                  new GcfJobScheduler({})),
+                        nullptr, compute_services, {}, wms_host));
   // TO BE CHANGED BASED ON ARGS
   wms->setNumInstances(num_instances);
   wms->setSleepTime(1.0 / min_req, 1.0 / max_req);

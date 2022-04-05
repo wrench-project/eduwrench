@@ -31,8 +31,8 @@ void GcfWMS::setMaxChange(double max_change) {
   this->max_change = max_change;
 }
 
-int coinToss() {
-  double val = (double) rand() % 2; // gives val between 0 or 1
+int GcfWMS::coinToss() {
+  double val = (double) (rand() % 2); // gives val between 0 or 1
   // 0 is yes & 1 is no
   if (val < this->change_prob) {
     return 0;
