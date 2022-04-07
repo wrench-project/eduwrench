@@ -123,36 +123,58 @@ const getPracticeQuestion = (userID, question_key) => db.transaction(async trx =
     return questionData
 })
 
-const updateFeedback = (feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
+const updateFeedback = (user_name, email, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
         .where({feedback_key:feedback_key})
-        .select('feedbacks')
         .first()
+    /* let completed = (feedback) ? await trx("feedbacks")
+    .where({feedback_key:feedback_key})
+    .select('completed')
+    .first()
+    .then((completed) => completed.completed)
+    : false */
     if (!feedback) {
         console.log('creating feedbacks')
         const feedbackID = await trx("feedbacks").insert({
+            user_name: user_name,
+            email: email,
             feedback_key: feedback_key,
             time: time,
             useful: useful,
             quality: quality,
             comments: comments,
         })
-        return feedbackID[0]
+        return feedbackID
     }
+    /* if (!completed) {
+        console.log("updating feedbacks")
+        const feedback = await trx("feedbacks")
+        .where({feedback_key:feedback_key})
+        .update({
+            user_name: user_name,
+            email: email,
+            feedback_key: feedback_key,
+            time: time,
+            useful: useful,
+            quality: quality,
+            comments: comments,
+        })
+        return feedback
+    } */
 })
 
-const getFeedback = (feedback_key) => db.transaction(async trx => {
+/* const getFeedback = (feedback_key) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
         .where({feedback_key:feedback_key})
         .select('feedbacks')
         .first()
     const feedbackData = (feedback) ? await trx("feedbacks")
         .where({feedback_key:feedback_key})
-        //.select('feedbackMsg')
+        .select('feedbackMsg', 'completed')
         .first()
     : false
     return feedbackData
-})
+}) */
 
 module.exports = {
     registerUser,
@@ -162,5 +184,5 @@ module.exports = {
     getPracticeQuestion,
     setUpdateGiveUp,
     updateFeedback,
-    getFeedback
+    // getFeedback
 }

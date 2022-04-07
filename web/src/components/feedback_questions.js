@@ -1,6 +1,5 @@
-import React from "react"
-import { Header } from "semantic-ui-react"
-import Feedback from "./feedback/feedback";
+import React,{ useEffect, useState } from "react"
+import Feedback from "./feedback/feedback"
 
 const FeedbackQuestions = ({ header = null, feedbacks }) => {
   let feedbackHeader = <></>
@@ -17,20 +16,17 @@ const FeedbackQuestions = ({ header = null, feedbacks }) => {
       title: {
         content: (<><strong>[{value.key}]</strong></>),
       },
-      feedback: value.feedback,
+      useful: value.useful,
+      quality: value.quality,
     })
   }
 
   return (
     <>
-      <Header as="h3" block>
-        Feedback Questions
-      </Header>
-
       {feedbackHeader}
       <div>
-        {panels.map(({ title, key, feedback }) => (
-          <><p key={key}>{title.content}</p><Feedback feedback_key={key} feedback={feedback}/></>
+        {panels.map(({ title, key, useful, quality }) => (
+          <><p key={key}>{title.content}</p><Feedback feedback_key={key} useful={useful} quality={quality}/></>
         ))}
       </div>
     </>

@@ -1510,8 +1510,6 @@ app.post('/get/question', function (req, res) {
  */
 function logFeedback(data) {
     let time = Math.round(new Date().getTime() / 1000)
-    console.log(data)
-
     db.updateFeedback(data.feedback_key, time, data.useful, data.quality, data.comments).then ((feedbackId => {
         return true
     })).catch((error => {
@@ -1524,10 +1522,12 @@ app.post('/update/feedback', function (req, res) {
     console.log(req.body);
     try {
         logFeedback({
-            "feedback_key": req.body.feedback_key,
-            "useful" : req.body.useful,
-            "quality" : req.body.quality,
-            "comments" : req.body.comments,
+            user_name: req.body.user_name,
+            email: req.body.email,
+            feedback_key: req.body.feedback_key,
+            useful : req.body.useful,
+            quality : req.body.quality,
+            comments : req.body.comments,
         })
         res.status(201).send();
     } catch(e) {
@@ -1536,15 +1536,19 @@ app.post('/update/feedback', function (req, res) {
     }
 })
 
-app.post('/get/feedback', function (req, res) {
-    db.getFeedback(req.body.feedback_key).then(feedback => {
-        res.json({
-            feedbackMsg: feedback.feedbackMsg,
-        })
-    }).catch((error => {
-        console.log("ERROR " + error)
-        }))
-})
+// app.post('/get/feedback', function (req, res) {
+//     console.log(req.body);
+//     // db.registerUser(req.body.email, req.body.user_name).then(userID => {
+//         db.getFeedback(req.body.feedback_key).then(feedback => {
+//             res.json({
+//                 feedbackMsg: feedback.feedbackMsg,
+//                 completed: question.completed,
+//             })
+//         // })
+//     }).catch((error => {
+//         console.log("ERROR " + error)
+//         }))
+// })
 
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
