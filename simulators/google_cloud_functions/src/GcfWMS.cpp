@@ -86,6 +86,9 @@ int GcfWMS::main() {
     direction = 1;
     failures = 0;
 
+    int n = 0;
+    std::set<std::shared_ptr<wrench::ComputeService>> idle = this->getAvailableComputeServices<wrench::ComputeService>();
+    std::set<std::shared_ptr<wrench::ComputeService>> busy = {};
     while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
 
         // Insert into the queue
@@ -116,9 +119,34 @@ int GcfWMS::main() {
             //    IF CURRENT DATE < DEQUEUE VALUE THEN SUBMIT JOB, NUM_FREE_INSTANCES--
             //    ELSE NUMBER_FAILURE++
 
+            std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = idle.begin();
+            std::shared_ptr<wrench::ComputeService> it_value = *it;
+            int busy_index = 0;
+            while (num_free_instances > 0 && !sorted_queue_of_request_arrival_times.empty()) {
+              double deque_val = sorted_queue_of_request_arrival_times[0];
+              sorted_queue_of_request_arrival_times.pop_front();
+              if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
+                wrench::WorkflowTask * task =
+                    this->getWorkflow()->addTask("task_" + std::to_string(n),
+                                                 deque_val - wrench::Simulation::getCurrentSimulatedDate(),
+                                                 1, 1, 1000);
+                n++;
+                auto standard_job = this->job_manager->createStandardJob(task);
+                this->job_manager->submitJob(standard_job, it_value, {});
+                idle.erase(it);
+                auto busy_inserted = busy.insert(it_value);
+                num_free_instances--;
+              }
+              else {
+                failures++;
+              }
+            }
+
             double time_to_sleep = arrival_date_of_next_request - wrench::Simulation::getCurrentSimulatedDate();
             if (time_to_sleep < 0.000001) time_to_sleep = 0.000001;
             this->waitForAndProcessNextEvent(time_to_sleep);
+            idle.insert(*busy.begin());
+            busy.erase(busy.begin());
         }
 
     }
