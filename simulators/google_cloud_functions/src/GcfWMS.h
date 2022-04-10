@@ -46,6 +46,8 @@ private:
     int failures;
     double change_prob;
     int max_change;
+    std::set<std::shared_ptr<wrench::ComputeService>> idle;
+    std::set<std::shared_ptr<wrench::ComputeService>> busy;
 };
 
 #endif //MY_GCFWMS_H

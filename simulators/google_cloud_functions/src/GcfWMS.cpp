@@ -87,8 +87,8 @@ int GcfWMS::main() {
     failures = 0;
 
     int n = 0;
-    std::set<std::shared_ptr<wrench::ComputeService>> idle = this->getAvailableComputeServices<wrench::ComputeService>();
-    std::set<std::shared_ptr<wrench::ComputeService>> busy = {};
+    idle = this->getAvailableComputeServices<wrench::ComputeService>();
+    busy = {};
     while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
 
         // Insert into the queue
@@ -145,8 +145,6 @@ int GcfWMS::main() {
             double time_to_sleep = arrival_date_of_next_request - wrench::Simulation::getCurrentSimulatedDate();
             if (time_to_sleep < 0.000001) time_to_sleep = 0.000001;
             this->waitForAndProcessNextEvent(time_to_sleep);
-            idle.insert(*busy.begin());
-            busy.erase(busy.begin());
         }
 
     }
@@ -157,5 +155,10 @@ int GcfWMS::main() {
 }
 
 void GcfWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) {
+    std::cerr << "do something..." << std::endl;
+    auto cs = e->compute_service;
+    idle.insert(cs);
+    std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = busy.find(cs);
+    busy.erase(it);
     num_free_instances++;
 }
