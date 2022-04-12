@@ -119,10 +119,9 @@ int GcfWMS::main() {
             //    IF CURRENT DATE < DEQUEUE VALUE THEN SUBMIT JOB, NUM_FREE_INSTANCES--
             //    ELSE NUMBER_FAILURE++
 
-            std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = idle.begin();
-            std::shared_ptr<wrench::ComputeService> it_value = *it;
-            int busy_index = 0;
             while (num_free_instances > 0 && !sorted_queue_of_request_arrival_times.empty()) {
+              std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = idle.begin();
+              std::shared_ptr<wrench::ComputeService> it_value = *it;
               double deque_val = sorted_queue_of_request_arrival_times[0];
               sorted_queue_of_request_arrival_times.pop_front();
               if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
@@ -155,7 +154,6 @@ int GcfWMS::main() {
 }
 
 void GcfWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) {
-    std::cerr << "do something..." << std::endl;
     auto cs = e->compute_service;
     idle.insert(cs);
     std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = busy.find(cs);
