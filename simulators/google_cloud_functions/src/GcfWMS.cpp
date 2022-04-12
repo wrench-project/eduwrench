@@ -89,8 +89,10 @@ int GcfWMS::main() {
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
     busy = {};
-    while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
+//    while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
+    while (wrench::Simulation::getCurrentSimulatedDate() < 1.0 * .25 * 3600) {
 
+        WRENCH_INFO("IN LOOP");
         // Insert into the queue
         double requests_arrival_time = wrench::Simulation::getCurrentSimulatedDate();
         sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + 10.0);
@@ -102,7 +104,7 @@ int GcfWMS::main() {
         if (direction == 1 && sleep_time >= max_sleep_time) {
             sleep_time = max_sleep_time;
             direction = -1;
-        } else if (direction == -1 && sleep_time >= min_sleep_time) {
+        } else if (direction == -1 && sleep_time <= min_sleep_time) {
             sleep_time = min_sleep_time;
             direction = 1;
         }
@@ -110,9 +112,10 @@ int GcfWMS::main() {
         // Compute the arrival date of the next request
         double arrival_date_of_next_request = wrench::Simulation::getCurrentSimulatedDate() + sleep_time;
 
+        WRENCH_INFO("ARRIVAL DATE OF NEXT REQUEST: %.2lf", arrival_date_of_next_request);
         // Until that request arrives, deal with job completions and perhaps serve more requests
         while (wrench::Simulation::getCurrentSimulatedDate() < arrival_date_of_next_request) {
-
+            WRENCH_INFO("IN SECOND LOOP");
             // WHILE THERE IS A FREE INSTANCE AND THE QUEUE IS NOT EMPTY:
             // GO THROUGH THE DEQUEUE FROM OLDEST TIME TO NEWEST TIME
             //    REMOVE ITEM
@@ -120,14 +123,14 @@ int GcfWMS::main() {
             //    ELSE NUMBER_FAILURE++
 
             while (num_free_instances > 0 && !sorted_queue_of_request_arrival_times.empty()) {
-              std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = idle.begin();
-              std::shared_ptr<wrench::ComputeService> it_value = *it;
+              auto it = idle.begin();
+              auto it_value = *it;
               double deque_val = sorted_queue_of_request_arrival_times[0];
               sorted_queue_of_request_arrival_times.pop_front();
               if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
                 wrench::WorkflowTask * task =
                     this->getWorkflow()->addTask("task_" + std::to_string(n),
-                                                 deque_val - wrench::Simulation::getCurrentSimulatedDate(),
+                                                 TASK_FLOPS,
                                                  1, 1, 1000);
                 n++;
                 auto standard_job = this->job_manager->createStandardJob(task);
@@ -140,6 +143,8 @@ int GcfWMS::main() {
                 failures++;
               }
             }
+
+            WRENCH_INFO("DONE WITH SECOND LOOP");
 
             double time_to_sleep = arrival_date_of_next_request - wrench::Simulation::getCurrentSimulatedDate();
             if (time_to_sleep < 0.000001) time_to_sleep = 0.000001;
