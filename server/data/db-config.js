@@ -123,11 +123,46 @@ const getPracticeQuestion = (userID, question_key) => db.transaction(async trx =
     return questionData
 })
 
+const updateFeedback = (userID, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
+    const feedback = await trx("feedbacks")
+        .where({feedback_key:feedback_key, user_id: userID})
+        .first()
+    const feedbackInfo = {
+        user_id: userID,
+        feedback_key: feedback_key,
+        time: time,
+        completed: false,
+        useful: useful,
+        quality: quality,
+        comments: comments,
+    };
+    feedbackInfo["completed"] = true
+    if (!feedback) {
+        console.log('creating feedbacks')
+        const feedbackID = await trx("feedbacks").insert(feedbackInfo)
+        return feedbackID[0]
+    }
+})
+
+const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
+    const feedback = await trx("feedbacks")
+        .where({user_id: userID, feedback_key:feedback_key})
+        .first()
+    const feedbackData = (feedback) ? await trx("feedbacks")
+        .where({user_id: userID, feedback_key:feedback_key})
+        .select('completed')
+        .first()
+    : false
+    return feedbackData
+})
+
 module.exports = {
     registerUser,
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
     getPracticeQuestion,
-    setUpdateGiveUp
+    setUpdateGiveUp,
+    updateFeedback,
+    getFeedback
 }
