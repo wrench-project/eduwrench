@@ -123,58 +123,38 @@ const getPracticeQuestion = (userID, question_key) => db.transaction(async trx =
     return questionData
 })
 
-const updateFeedback = (user_name, email, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
+const updateFeedback = (userID, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
-        .where({feedback_key:feedback_key})
+        .where({feedback_key:feedback_key, user_id: userID})
         .first()
-    /* let completed = (feedback) ? await trx("feedbacks")
-    .where({feedback_key:feedback_key})
-    .select('completed')
-    .first()
-    .then((completed) => completed.completed)
-    : false */
+    const feedbackInfo = {
+        user_id: userID,
+        feedback_key: feedback_key,
+        time: time,
+        completed: false,
+        useful: useful,
+        quality: quality,
+        comments: comments,
+    };
+    feedbackInfo["completed"] = true
     if (!feedback) {
         console.log('creating feedbacks')
-        const feedbackID = await trx("feedbacks").insert({
-            user_name: user_name,
-            email: email,
-            feedback_key: feedback_key,
-            time: time,
-            useful: useful,
-            quality: quality,
-            comments: comments,
-        })
-        return feedbackID
+        const feedbackID = await trx("feedbacks").insert(feedbackInfo)
+        return feedbackID[0]
     }
-    /* if (!completed) {
-        console.log("updating feedbacks")
-        const feedback = await trx("feedbacks")
-        .where({feedback_key:feedback_key})
-        .update({
-            user_name: user_name,
-            email: email,
-            feedback_key: feedback_key,
-            time: time,
-            useful: useful,
-            quality: quality,
-            comments: comments,
-        })
-        return feedback
-    } */
 })
 
-/* const getFeedback = (feedback_key) => db.transaction(async trx => {
+const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
-        .where({feedback_key:feedback_key})
-        .select('feedbacks')
+        .where({user_id: userID, feedback_key:feedback_key})
         .first()
     const feedbackData = (feedback) ? await trx("feedbacks")
-        .where({feedback_key:feedback_key})
-        .select('feedbackMsg', 'completed')
+        .where({user_id: userID, feedback_key:feedback_key})
+        .select('completed')
         .first()
     : false
     return feedbackData
-}) */
+})
 
 module.exports = {
     registerUser,
@@ -184,5 +164,5 @@ module.exports = {
     getPracticeQuestion,
     setUpdateGiveUp,
     updateFeedback,
-    // getFeedback
+    getFeedback
 }

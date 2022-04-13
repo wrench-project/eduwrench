@@ -1,35 +1,36 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Radio} from "semantic-ui-react"
+import {Form, Radio, Message} from "semantic-ui-react"
 import axios from "axios"
 import FeedbackSignIn from "./feedback_signin"
 
 const Feedback = ({feedback_key, useful, quality}) => {
   const [auth, setAuth] = useState("false")
+  const [completed, setCompleted] = useState(false)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
-
-//   useEffect(() => {
-//     setAuth(localStorage.getItem("login"))
-//     axios
-//         .post('http://localhost:3000/get/feedback', {
-//           // user_name: localStorage.getItem("userName"),
-//           // email: localStorage.getItem("currentUser"),
-//           feedback_key: feedback_key,
-//         })
-//         .then((response) => {
-//           setFeedbakMsg(response.data.feedbackMsg)
-//           setCompleted(response.data.completed)
-//         })
-//         .catch(err => {
-//             console.log(err);
-//         });
-// }, [])
+    axios
+        .post('http://localhost:3000/get/feedback', {
+          user_name: localStorage.getItem("userName"),
+          email: localStorage.getItem("currentUser"),
+          feedback_key: feedback_key,
+        })
+        .then((response) => {
+          setCompleted(response.data.completed)
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}, [])
   
+if (completed) {
+  return ( 
+    <Message size='big' color='brown' content='Thank you for your feedback!'/> 
+  )
+}
   return (
-    auth === "true" ? (
+    auth === "true" ? ( 
     <>
         <Formik
           initialValues={{
@@ -41,6 +42,7 @@ const Feedback = ({feedback_key, useful, quality}) => {
           validateOnChange={false}
           onSubmit={(values, { setSubmitting }) => {
             setTimeout(() => {
+              setCompleted(true)
               const feedback = {
                 user_name: localStorage.getItem("userName"),
                 email: localStorage.getItem("currentUser"),
@@ -69,8 +71,7 @@ const Feedback = ({feedback_key, useful, quality}) => {
           }) => (
             <Form onSubmit={handleSubmit}>
               <p>
-                <strong>[#1]</strong> How useful did you find the modules in
-                learning the topic?
+                <strong>[#1]</strong> How useful did you find the modules in learning the topic?
               </p>
             {useful.map((choice) =>
                 <Form.Field key={choice}>
@@ -102,8 +103,7 @@ const Feedback = ({feedback_key, useful, quality}) => {
                 </Form.Field>
             )}
               <p>
-                <strong>[#3]</strong> Please provide constructing comments to
-                improve the content
+                <strong>[#3]</strong> Please provide constructing comments to improve the content.
               </p>
               <Form.TextArea
                 fluid

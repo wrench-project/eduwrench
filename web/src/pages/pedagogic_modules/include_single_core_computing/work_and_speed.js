@@ -212,8 +212,8 @@ const WorkAndSpeed = ({module, tab}) => {
           {
             key: "Feedback A.1.1",
             feedback: "feedback",
-            useful: ['Very useful', 'Useful', 'Pair', 'Useless', 'Very useless'],
-            quality: ['Very good', 'Good', 'Pair', 'Poor', 'Very poor'],
+            useful: ['Very useful', 'Useful', 'Neutral', 'Useless'],
+            quality: ['Very good', 'Good', 'Fair', 'Poor'],
           },
         ]} />
       } />
