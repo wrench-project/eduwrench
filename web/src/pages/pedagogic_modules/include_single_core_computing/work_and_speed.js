@@ -3,6 +3,8 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 const WorkAndSpeed = ({module, tab}) => {
   return (
@@ -198,6 +200,23 @@ const WorkAndSpeed = ({module, tab}) => {
         operations and use it to perform your own benchmarking of your machine. Implement this program in different
         languages and observe whether the Gflop/sec measurement varies across languages.
       </p>
+
+      <Divider />
+
+      <Header as="h3" block>
+        Feedback Questions
+      </Header>
+      
+      <FeedbackActivity content={
+        <FeedbackQuestions feedbacks={[
+          {
+            key: "Feedback A.1.1",
+            feedback: "feedback",
+            useful: ['Very useful', 'Useful', 'Neutral', 'Useless'],
+            quality: ['Very good', 'Good', 'Fair', 'Poor'],
+          },
+        ]} />
+      } />
     </>
   )
 }
