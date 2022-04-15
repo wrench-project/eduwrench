@@ -1527,6 +1527,10 @@ app.post('/get/simfeedback', function (req, res) {
         }).catch((error => {
             console.log("[ERROR]" + error)
             return false
+        }))
+    })
+})
+
 /**
  * Log the feedback parameters to database.
  *
