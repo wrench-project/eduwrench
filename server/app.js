@@ -1502,6 +1502,35 @@ app.post('/get/question', function (req, res) {
     })
 })
 
+app.post('/insert/simfeedback', function (req, res) {
+    let time = Math.round(new Date().getTime() / 1000)
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.logSimulationFeedback(userID, time, req.body.simID, req.body.rating, req.body.feedback).then(simFeedbackID => {
+            return true
+        }).catch(error => {
+            console.log("[ERROR1]: " + error)
+            return false
+        })
+    }).catch(error => {
+        console.log("[ERROR2]: " + error)
+        return false
+    })
+})
+
+app.post('/get/simfeedback', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getSimulationFeedback(userID, req.body.simID).then(feedback => {
+            console.log(feedback)
+            res.json({
+                completed: feedback.completed
+            })
+        }).catch((error => {
+            console.log("[ERROR]" + error)
+            return false
+        }))
+    })
+})
+
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")

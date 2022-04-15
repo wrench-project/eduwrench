@@ -123,11 +123,37 @@ const getPracticeQuestion = (userID, question_key) => db.transaction(async trx =
     return questionData
 })
 
+const logSimulationFeedback = (userID, time, simID, rating, feedback) => db.transaction(async trx => {
+        const simFeedbackID = await trx("simulation_feedback").insert({
+            user_id: userID,
+            sim_id: simID,
+            time: time,
+            rating: rating,
+            feedback: feedback,
+            completed: true
+        })
+        return simFeedbackID
+})
+
+const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
+    const feedback = await trx("simulation_feedback")
+        .where({sim_id: simID, user_id: userID})
+        .first()
+    const feedbackData = (feedback) ? await trx("simulation_feedback")
+        .where({sim_id: simID, user_id: userID})
+        .select('completed')
+        .first()
+        : false
+    return feedbackData
+})
+
 module.exports = {
     registerUser,
     addSimulationRun,
     getUsageStatistics,
     updatePracticeQuestion,
     getPracticeQuestion,
-    setUpdateGiveUp
+    setUpdateGiveUp,
+    logSimulationFeedback,
+    getSimulationFeedback
 }
