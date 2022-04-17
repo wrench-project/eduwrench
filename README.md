@@ -11,7 +11,7 @@
 ### Local installation
 
 Dependencies:
-- [WRENCH 1.7-dev](https://github.com/wrench-project/wrench)
+- [WRENCH 1.10](https://github.com/wrench-project/wrench)
 - [Node.js](https://nodejs.org/en/)
 
 
@@ -44,7 +44,7 @@ Dependencies:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ```bash
-$ docker pull wrenchproject/wrench:1.6
+$ docker pull wrenchproject/wrench:1.10
 $ mkdir data_server
 $ docker-compose build --no-cache
 $ docker-compose up -d
@@ -57,8 +57,8 @@ support can be enabled by editing the `.env` file. The following variables
 need to be defined to enable SSL support:
 
 ```bash
-# Port number for Jekyll application (frontend)
-EDUWRENCH_JEKYLL_PORT=443
+# Port number for Gatsby application (frontend)
+EDUWRENCH_GATSBY_PORT=443
 # Enable SSL connection (true|false)
 EDUWRENCH_ENABLE_SSL=true
 # Folder where certificates are stored in the local system
