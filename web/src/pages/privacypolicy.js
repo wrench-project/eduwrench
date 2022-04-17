@@ -48,8 +48,8 @@ const PrivacyPolicy = () => (
         <li>
           <strong>eduWRENCH.org</strong> (referred to as either "We", "Us" or "Our" in this Agreement) refers to
           eduWRENCH.org project funded by the National Science Foundation under grants
-          number <a target="_blank" href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923539">1923539</a>,
-          and <a target="_blank" href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923621">1923621</a> .
+          number <a target="_blank" href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923539" rel="noreferrer">1923539</a>,
+          and <a target="_blank" href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923621" rel="noreferrer">1923621</a> .
         </li>
         <li>
           <strong>Account</strong> means a unique account created for You to access our eduWRENCH.org or parts of
