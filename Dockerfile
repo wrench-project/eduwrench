@@ -1,4 +1,4 @@
-FROM wrenchproject/wrench:unstable
+FROM wrenchproject/wrench:1.11
 
 USER root
 
