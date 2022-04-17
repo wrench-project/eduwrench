@@ -19,7 +19,7 @@ const ModulesList = () => {
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/single_core_computing/">Launch</Button>
+              href="/pedagogic_modules/single_core_computing/">Launch</Button>
             The goal of this module is to provide you with basic knowledge about sequential computing (i.e., running a
             program on a single core).
           </p>
@@ -31,7 +31,7 @@ const ModulesList = () => {
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/multi_core_computing/">Launch</Button>
+              href="/pedagogic_modules/multi_core_computing/">Launch</Button>
             The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple
             cores within the same computer).
           </p>
@@ -45,7 +45,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/networking_fundamentals/">Launch</Button>
+                  href="/pedagogic_modules/networking_fundamentals/">Launch</Button>
                 &nbsp;&nbsp;A.3.1 Networking Fundamentals
                 <br />
                 <span className="module-desc">The goal of this module is to provide you with knowledge of networking,
@@ -55,7 +55,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/client_server/">Launch</Button>
+                  href="/pedagogic_modules/client_server/">Launch</Button>
                 &nbsp;&nbsp;A.3.2 Client-Server
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the fundamental
@@ -65,7 +65,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/coordinator_worker/">Launch</Button>
+                  href="/pedagogic_modules/coordinator_worker/">Launch</Button>
                 &nbsp;&nbsp;A.3.3 Coordinator-Worker
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the coordinator/worker
@@ -75,7 +75,7 @@ const ModulesList = () => {
             <List.Item>
               <List.Content>
                 <Button size="mini" color="yellow" floated="left"
-                        href="/pedagogic_modules/workflows/">Launch</Button>
+                  href="/pedagogic_modules/workflows/">Launch</Button>
                 &nbsp;&nbsp;A.3.4 Workflows
                 <br />
                 <span className="module-desc">The goal of this module is to introduce you to the workflow model of
@@ -92,10 +92,9 @@ const ModulesList = () => {
         <Segment><strong>B.1. CI Service Concepts</strong></Segment>
         <Segment>
           <p className="module-desc">
-            Under development
-            {/*<Button size="mini" color="yellow" floated="left"*/}
-            {/*        href="/pedagogic_modules/ci_service_concepts/">Launch</Button>*/}
-            {/*The goal of this module is to provide you with basic knowledge about cyberinfrastructure (CI) services.*/}
+            <Button size="mini" color="yellow" floated="left"
+              href="/pedagogic_modules/ci_service_concepts/">Launch</Button>
+            The goal of this module is to provide you with basic knowledge about cyberinfrastructure (CI) services.
           </p>
         </Segment>
       </SegmentGroup>
@@ -107,7 +106,7 @@ const ModulesList = () => {
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/batch_scheduling/">Launch</Button>
+              href="/pedagogic_modules/batch_scheduling/">Launch</Button>
             The goal of this module is to provide you with fundamental knowledge of and
             hands-on experience with the use of a batch scheduler.
           </p>
@@ -121,7 +120,7 @@ const ModulesList = () => {
         <Segment>
           <p className="module-desc">
             <Button size="mini" color="yellow" floated="left"
-                    href="/pedagogic_modules/workflow_co2/">Launch</Button>
+              href="/pedagogic_modules/workflow_co2/">Launch</Button>
             The goal of this module is to expose you to a real-world case-study
             in which a scientific workflow application from the field of
             astronomy needs to be executed on various distributed computing

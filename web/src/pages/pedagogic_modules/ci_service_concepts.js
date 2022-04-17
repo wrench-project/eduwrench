@@ -6,7 +6,7 @@ import "katex/dist/katex.min.css"
 import "./pedagogic_modules.css"
 
 import CIServiceFundamentals from "./include_ci_service_concepts/ci_service_fundamentals"
-import CIStorageServices from "./include_ci_service_concepts/ci_storage_services"
+// import CIStorageServices from "./include_ci_service_concepts/ci_storage_services"
 
 const CIServiceConcepts = () => {
 
@@ -29,19 +29,21 @@ const CIServiceConcepts = () => {
           },
           render: () => <Tab.Pane><CIServiceFundamentals module={module} tab={"ci_service_fundamentals"} /></Tab.Pane>
         },
-        {
-          menuItem: {
-            key: "ci_storage_services",
-            content: "Managing Data"
-          },
-          render: () => <Tab.Pane><CIStorageServices module={module} tab={"ci_storage_services"} /></Tab.Pane>
-        }
+        // {
+        //   menuItem: {
+        //     key: "ci_storage_services",
+        //     content: "Managing Data"
+        //   },
+        //   render: () => <Tab.Pane>Under development</Tab.Pane>
+        //   // render: () => <Tab.Pane><CIStorageServices module={module} tab={"ci_storage_services"} /></Tab.Pane>
+        // },
         // {
         //   menuItem: {
         //     key: "ci_compute_services",
         //     content: "Managing Computations"
         //   },
-        //   render: () => <Tab.Pane></Tab.Pane>
+        //   render: () => <Tab.Pane>Under development</Tab.Pane>
+        //   // render: () => <Tab.Pane></Tab.Pane>
         // }
       ]}
       />
