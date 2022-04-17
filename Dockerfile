@@ -1,4 +1,4 @@
-FROM wrenchproject/wrench:1.11
+FROM wrenchproject/wrench:1.10
 
 USER root
 
