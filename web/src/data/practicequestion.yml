@@ -1,0 +1,18 @@
+- PractionQuestions:
+      - tab: "Work and Speed"
+        question:
+            - "A.1p1.1"
+            - "A.1p1.2"
+      - tab: "Time Sharing"
+        question:
+            - "A.1p2.1"
+            - "A.1p2.2"
+      - tab: "I/O"
+        question:
+            - "A.1p4.1"
+            - "A.1p4.2"
+            - "A.1p4.3"
+            - "A.1p4.4"
+
+- Modules :
+    - name: "A.1 Single Core Computing"

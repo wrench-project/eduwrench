@@ -140,11 +140,12 @@ const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
         .where({sim_id: simID, user_id: userID})
         .first()
     const feedbackData = (feedback) ? await trx("simulation_feedback")
-        .where({sim_id: simID, user_id: userID})
-        .select('completed')
-        .first()
+            .where({sim_id: simID, user_id: userID})
+            .select('completed')
+            .first()
         : false
-    
+})
+
 const updateFeedback = (userID, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
         .where({feedback_key:feedback_key, user_id: userID})
@@ -178,6 +179,20 @@ const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
     return feedbackData
 })
 
+const getUserData = (userID) => db.transaction(async trx => {
+    const questionData = await trx("practice_questions")
+        .where({user_id: userID})
+        .select('question_key', 'time', 'completed')
+    const feedbackData = await trx("feedbacks")
+        .where({user_id: userID})
+        .select('feedback_key', 'time', 'completed')
+    const userData = {
+        questionData: questionData,
+        feedbackData: feedbackData
+    }
+    return userData
+})
+
 module.exports = {
     registerUser,
     addSimulationRun,
@@ -186,7 +201,8 @@ module.exports = {
     getPracticeQuestion,
     setUpdateGiveUp,
     logSimulationFeedback,
-    getSimulationFeedback
+    getSimulationFeedback,
     updateFeedback,
-    getFeedback
+    getFeedback,
+    getUserData
 }

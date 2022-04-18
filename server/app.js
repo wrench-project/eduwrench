@@ -1508,11 +1508,11 @@ app.post('/insert/simfeedback', function (req, res) {
         db.logSimulationFeedback(userID, time, req.body.simID, req.body.rating, req.body.feedback).then(simFeedbackID => {
             return true
         }).catch(error => {
-            console.log("[ERROR1]: " + error)
+            console.log("[ERROR]: " + error)
             return false
         })
     }).catch(error => {
-        console.log("[ERROR2]: " + error)
+        console.log("[ERROR]: " + error)
         return false
     })
 })
@@ -1578,6 +1578,21 @@ app.post('/get/feedback', function (req, res) {
             console.log("ERROR " + error)
         }))
     })
+})
+
+app.post('/get/userdata', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getUserData(userID).then(userData => {
+            res.json({
+                questionData: userData.questionData,
+                feedbackData: userData.feedbackData
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
 })
 
 // Enable SSL server connection
