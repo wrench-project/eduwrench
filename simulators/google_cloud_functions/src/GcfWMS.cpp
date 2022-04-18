@@ -34,6 +34,10 @@ void GcfWMS::setMaxChange(double max_change) {
     this->max_change = max_change;
 }
 
+void GcfWMS::setTaskFlops(double flops) {
+  this->task_flops = flops;
+}
+
 int GcfWMS::coinToss() {
     double val = (double) (rand() % 2); // gives val between 0 or 1
     // 0 is yes & 1 is no
@@ -130,7 +134,7 @@ int GcfWMS::main() {
               if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
                 wrench::WorkflowTask * task =
                     this->getWorkflow()->addTask("task_" + std::to_string(n),
-                                                 TASK_FLOPS,
+                                                 task_flops,
                                                  1, 1, 1000);
                 n++;
                 auto standard_job = this->job_manager->createStandardJob(task);

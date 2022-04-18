@@ -13,10 +13,6 @@
 #include <nlohmann/json.hpp>
 #include <fstream>
 
-static bool ends_with(const std::string& str, const std::string& suffix) {
-  return str.size() >= suffix.size() && 0 == str.compare(str.size()-suffix.size(), suffix.size(), suffix);
-}
-
 int main(int argc, char **argv) {
 
   // Declaration of the top-level WRENCH simulation object
@@ -127,6 +123,7 @@ int main(int argc, char **argv) {
   wms->setChangeProb(change_probability);
   wms->setMaxChange(max_change);
   wms->addWorkflow(new wrench::Workflow());
+  wms->setTaskFlops(func_exec_time);
 
   // Instantiate a file registry service
 //  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];

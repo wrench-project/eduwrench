@@ -29,6 +29,7 @@ public:
     double getChangeProb();
     void setChangeProb(double change_prob);
     void setMaxChange(double max_change);
+    void setTaskFlops(double flops);
     int coinToss();
 
 private:
@@ -45,6 +46,7 @@ private:
     int direction; // +1 or -1
     int failures;
     double change_prob;
+    double task_flops;
     int max_change;
     std::set<std::shared_ptr<wrench::ComputeService>> idle;
     std::set<std::shared_ptr<wrench::ComputeService>> busy;

@@ -1,8 +1,8 @@
 {
-  "func_exec_time": 10.0,
-  "num_instances": 2,
+  "func_exec_time": 15.0,
+  "num_instances": 3,
   "max_req": 10,
-  "min_req": 1,
-  "change_probability": 0.5,
-  "max_change": 20
+  "min_req": 2,
+  "change_probability": 0.75,
+  "max_change": 15
 }
