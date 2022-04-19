@@ -30,6 +30,7 @@ public:
     void setChangeProb(double change_prob);
     void setMaxChange(double max_change);
     void setTaskFlops(double flops);
+    void setTimeout(double timeout);
     int coinToss();
 
 private:
@@ -44,10 +45,14 @@ private:
     double max_sleep_time;
     double min_sleep_time;
     int direction; // +1 or -1
+    int num_requests_arrived;
+    int submitted;
+    int succeeded;
     int failures;
     double change_prob;
     double task_flops;
     int max_change;
+    double timeout;
     std::set<std::shared_ptr<wrench::ComputeService>> idle;
     std::set<std::shared_ptr<wrench::ComputeService>> busy;
 };

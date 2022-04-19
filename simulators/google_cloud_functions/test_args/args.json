@@ -1,8 +1,9 @@
 {
-  "func_exec_time": 15.0,
-  "num_instances": 3,
+  "func_exec_time": 10.0,
+  "num_instances": 6,
   "max_req": 10,
   "min_req": 2,
   "change_probability": 0.75,
-  "max_change": 15
+  "max_change": 2,
+  "timeout": 10.0
 }

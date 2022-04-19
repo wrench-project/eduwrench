@@ -38,6 +38,10 @@ void GcfWMS::setTaskFlops(double flops) {
   this->task_flops = flops;
 }
 
+void GcfWMS::setTimeout(double timeout) {
+  this->timeout = timeout;
+}
+
 int GcfWMS::coinToss() {
     double val = (double) (rand() % 2); // gives val between 0 or 1
     // 0 is yes & 1 is no
@@ -82,12 +86,15 @@ int GcfWMS::main() {
     this->job_manager = this->createJobManager();
 
     // Referenced from https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
+    // mention in narrative that every time you run, you will get different results due to random device seed
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
     std::uniform_real_distribution<> dis(0.0, max_change);
 
     // initial sleep time and num free instances set in simulator
     direction = 1;
+    num_requests_arrived = 0;
+    succeeded = 0;
     failures = 0;
 
     int n = 0;
@@ -99,7 +106,8 @@ int GcfWMS::main() {
         WRENCH_INFO("IN LOOP");
         // Insert into the queue
         double requests_arrival_time = wrench::Simulation::getCurrentSimulatedDate();
-        sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + 10.0);
+        // add 10.0 to args file (timeout time)
+        sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + timeout);
 
         // Compute the next sleep time
         if (coinToss() == 0) {
@@ -131,6 +139,7 @@ int GcfWMS::main() {
               auto it_value = *it;
               double deque_val = sorted_queue_of_request_arrival_times[0];
               sorted_queue_of_request_arrival_times.pop_front();
+              num_requests_arrived++;
               if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
                 wrench::WorkflowTask * task =
                     this->getWorkflow()->addTask("task_" + std::to_string(n),
@@ -142,6 +151,7 @@ int GcfWMS::main() {
                 idle.erase(it);
                 auto busy_inserted = busy.insert(it_value);
                 num_free_instances--;
+                submitted++;
               }
               else {
                 failures++;
@@ -157,6 +167,10 @@ int GcfWMS::main() {
 
     }
 
+    std::cerr << "Arrived: " << num_requests_arrived << std::endl;
+    std::cerr << "Submitted: " << submitted << std::endl;
+    std::cerr << "Succeeded: " << succeeded << std::endl;
+    std::cerr << "Failures: " << failures << std::endl;
     this->job_manager.reset();
 
     return 0;
@@ -167,5 +181,6 @@ void GcfWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJ
     idle.insert(cs);
     std::set<std::shared_ptr<wrench::ComputeService>>::iterator it = busy.find(cs);
     busy.erase(it);
+    succeeded++;
     num_free_instances++;
 }

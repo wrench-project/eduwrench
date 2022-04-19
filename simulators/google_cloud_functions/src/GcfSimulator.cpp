@@ -47,6 +47,8 @@ int main(int argc, char **argv) {
   double change_probability = j.at("change_probability").get<double>();
   // maximum change
   double max_change = j.at("max_change").get<double>();
+  // timeout time
+  double timeout = j.at("timeout").get<double>();
 
   // platform description file, written in XML following the SimGrid-defined DTD
   std::string xml = "<?xml version='1.0'?>\n"
@@ -124,6 +126,7 @@ int main(int argc, char **argv) {
   wms->setMaxChange(max_change);
   wms->addWorkflow(new wrench::Workflow());
   wms->setTaskFlops(func_exec_time);
+  wms->setTimeout(timeout);
 
   // Instantiate a file registry service
 //  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
