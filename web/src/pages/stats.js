@@ -7,165 +7,56 @@
  * (at your option) any later version.
  */
 
-import React, {useEffect} from "react"
+import React, {useEffect, useState} from "react"
 import Layout from "../components/layout";
 import PageHeader from "../components/page_header";
-import { Segment, Header}  from "semantic-ui-react";
+import { Segment, Header, Loader}  from "semantic-ui-react";
 import ModuleInfo from "../components/stats/module_info";
 import axios from "axios";
 import {useStaticQuery, graphql} from "gatsby";
 
 const Stats = () => {
-    const moduleList = [
-        {
-            name: 'test module 1',
-            feedback: true,
-            feedbackTime: '2:57pm',
-            questions: [
-                {
-                    key: 'A.1p1.1',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.2',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.3',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.1',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.2',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-            ]
-        },
-        {
-            name: 'test module 2',
-            feedback: false,
-            feedbackTime: null,
-            questions: [
-                {
-                    key: 'A.1p1.1',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.2',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.3',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.1',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.2',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-            ]
-        },
-        {
-            name: 'test module 3',
-            feedback: false,
-            feedbackTime: null,
-            questions: [
-                {
-                    key: 'A.1p1.1',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.2',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.3',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.1',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.2',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-            ]
-        },
-        {
-            name: 'test module 4',
-            feedback: true,
-            feedbackTime: '2:57pm',
-            questions: [
-                {
-                    key: 'A.1p1.1',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.2',
-                    completed: true,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p1.3',
-                    completed: true,
-                    gaveup: true,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.1',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-                {
-                    key: 'A.1p2.2',
-                    completed: false,
-                    gaveup: false,
-                    time:'12:00pm',
-                },
-            ]
+    const [userData, setUserData] = useState({})
+    const [isLoading, setLoading] = useState(true)
+    const data = useStaticQuery(graphql`
+    query MyQuery {
+        practicequestionYaml {
+            PracticeQuestions {
+                module
+                question
+            }
         }
-        ]
+    }
+    `)
+
+    let practiceQuestions = data["practicequestionYaml"]["PracticeQuestions"]
+
+    useEffect(() => {
+        const userEmail = localStorage.getItem("currentUser")
+        axios
+            .post('http://localhost:3000/get/userdata', {
+                userName: userEmail.split("@")[0],
+                email: userEmail,
+            })
+            .then((response) => {
+                setUserData(response.data)
+                for (let i = 0; i < practiceQuestions.length; i++) {
+                    if (response.data.feedbackData[i]) {
+                        practiceQuestions[i].feedback = response.data.feedbackData[i]
+                    } else {
+                        practiceQuestions[i].feedback = {
+                            completed: false
+                        }
+                    }
+                }
+                console.log(response.data)
+                setLoading(false)
+            })
+    }, [])
+
+    if (isLoading) {
+        return <Loader>Loading</Loader>
+    }
 
     return (
     <Layout>
@@ -174,9 +65,9 @@ const Stats = () => {
             <Header as="h3" block>
                 <a id="modules">Modules</a>
             </Header>
-            {moduleList.map((module, index) => <ModuleInfo key={index} module={module} listIndex={index}/>)}
-        </Segment>
 
+        </Segment>
+        {practiceQuestions.map((module, index) => <ModuleInfo userData={userData} key={index} module={module} listIndex={index}/>)}
         <Segment>
             <Header as="h3" block>
                 <a id="simulations">Simulations</a>
