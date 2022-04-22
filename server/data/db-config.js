@@ -41,7 +41,7 @@ const getUsageStatistics = () => db.transaction(async trx => {
 })
 
 /*  */
-const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswer, type) => db.transaction(async trx => {
+const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswer, type, module) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key, user_id: userID})
         .first()
@@ -60,7 +60,8 @@ const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswe
             time: time,
             completed: correct,
             attempts: 1,
-            previous_answer: answer
+            previous_answer: answer,
+            module: module
         })
         return questionID[0]
     }
@@ -146,7 +147,7 @@ const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
         : false
 })
 
-const updateFeedback = (userID, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
+const updateFeedback = (userID, feedback_key, time, useful, quality, comments, module) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
         .where({feedback_key:feedback_key, user_id: userID})
         .first()
@@ -154,12 +155,12 @@ const updateFeedback = (userID, feedback_key, time, useful, quality, comments) =
         user_id: userID,
         feedback_key: feedback_key,
         time: time,
-        completed: false,
+        completed: true,
         useful: useful,
         quality: quality,
         comments: comments,
+        module: module
     };
-    feedbackInfo["completed"] = true
     if (!feedback) {
         console.log('creating feedbacks')
         const feedbackID = await trx("feedbacks").insert(feedbackInfo)
