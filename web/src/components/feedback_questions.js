@@ -16,8 +16,6 @@ const FeedbackQuestions = ({ header = null, feedbacks }) => {
       title: {
         content: (<><strong>[{value.key}]</strong></>),
       },
-      useful: value.useful,
-      quality: value.quality,
     })
   }
 
@@ -25,8 +23,8 @@ const FeedbackQuestions = ({ header = null, feedbacks }) => {
     <>
       {feedbackHeader}
       <div>
-        {panels.map(({ title, key, useful, quality }) => (
-          <><p key={key}>{title.content}</p><Feedback feedback_key={key} useful={useful} quality={quality}/></>
+        {panels.map(({ title, key}) => (
+          <><p key={key}>{title.content}</p><Feedback feedback_key={key}/></>
         ))}
       </div>
     </>

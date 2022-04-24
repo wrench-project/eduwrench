@@ -4,9 +4,11 @@ import {Form, Radio, Message} from "semantic-ui-react"
 import axios from "axios"
 import FeedbackSignIn from "./feedback_signin"
 
-const Feedback = ({feedback_key, useful, quality}) => {
+const Feedback = ({feedback_key}) => {
   const [auth, setAuth] = useState("false")
   const [completed, setCompleted] = useState(false)
+  const useful = ['Very Useful', 'Useful', 'Neutral', 'Useless']
+  const quality = ['Very Good', 'Good', 'Fair', 'Poor']
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -23,10 +25,10 @@ const Feedback = ({feedback_key, useful, quality}) => {
             console.log(err);
         });
 }, [])
-  
+
 if (completed) {
   return ( 
-    <Message size='big' color='brown' content='Thank you for your feedback!'/> 
+    <Message size='big' color='brown' content='Thanks for your feedback!'/> 
   )
 }
   return (
@@ -79,6 +81,7 @@ if (completed) {
                       name="useful"
                       label={choice}
                       id={choice}
+                      // id={choice === 'Neutral' ? 'test' : choice}
                       value={choice}
                       checked={values.useful === choice}
                       onChange={handleChange}

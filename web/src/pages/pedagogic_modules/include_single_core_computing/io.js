@@ -5,6 +5,8 @@ import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 import IOSimulation from "./io_simulation"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg"
 import IOFigure2 from "../../../images/vector_graphs/single_core/IO_figure_2.svg"
@@ -394,6 +396,21 @@ const IO = ({module, tab}) => {
                 <strong>[Programming #2]</strong> Modify your program so that it determines which byte value is the most
                 frequent in the file. Is this modified program more or less I/O-intensive? By how much?
             </p>
+
+            <Divider />
+
+            <Header as="h3" block>
+                Feedback Questions
+            </Header>
+            
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                {
+                    key: "Feedback A.1.4",
+                    feedback: "feedback",
+                },
+                ]} />
+            } />
 
         </>
     )

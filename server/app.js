@@ -1580,6 +1580,20 @@ app.post('/get/feedback', function (req, res) {
     })
 })
 
+app.post('/get/global_statistics', function (req, res) {
+    db.getGlobalStatistics().then(global => {
+        res.json({
+            globalQuestion: global.globalQuestion,
+            globalFeedback: global.globalFeedback
+        })
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+    .catch((error => {
+        console.log("ERROR " + error)
+    }))
+})
+
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")
