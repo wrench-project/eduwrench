@@ -181,12 +181,15 @@ const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
 
 const getGlobalStatistics = () => db.transaction(async trx => {
     const globalQuestion = await trx("practice_questions")
-        .select('time', 'completed', 'attempts')
+        .select('time', 'completed', 'attempts', 'giveup')
     const globalFeedback = await trx("feedbacks")
         .select('time', 'completed', 'useful', 'quality')
+    const globalSimulationFeedback = await trx("simulation_feedback")
+        .select('time', 'rating')
     const global = {
         globalQuestion: globalQuestion,
-        globalFeedback: globalFeedback
+        globalFeedback: globalFeedback,
+        globalSimulationFeedback: globalSimulationFeedback
     }
     return global
 })

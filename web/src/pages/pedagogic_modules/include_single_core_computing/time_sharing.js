@@ -65,6 +65,9 @@ const TimeSharing = ({module, tab}) => {
                         </>
                     ),
                     type: "textbox",
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 },
                 {
                     key: "A.1.p2.2",
@@ -76,6 +79,9 @@ const TimeSharing = ({module, tab}) => {
                             block />
                     ),
                     type: "textbox",
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 }
             ]}
             />

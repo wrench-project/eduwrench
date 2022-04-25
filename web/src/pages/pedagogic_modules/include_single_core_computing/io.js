@@ -225,7 +225,10 @@ const IO = ({module, tab}) => {
                         </>
                     ),
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 },
                 {
                     key: "A.1.p4.2",
@@ -246,7 +249,10 @@ const IO = ({module, tab}) => {
                         </>
                     ),
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 },
                 {
                     key: "A.1.p4.3",
@@ -298,7 +304,10 @@ const IO = ({module, tab}) => {
                         </>
                     ),
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 },
                 {
                     key: "A.1.p4.4",
@@ -328,7 +337,10 @@ const IO = ({module, tab}) => {
                         </>
                     ),
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    answer: [0, 5],
+                    hint: "this is hint",
+                    giveup: true
                 }
             ]}
             />
