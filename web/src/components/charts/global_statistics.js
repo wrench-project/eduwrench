@@ -32,21 +32,59 @@ const GlobalStatistics = ({ data }) => {
     },
   }
 
-  let feedbackMap = {
-    "Feedbacks": {
-      feedback: ["completed"],
+  let usefulMap = {
+    "Very Useful": {
+      feedback: ["Very Useful"],
       count: 0,
     },
-    "Useful of Modules": {
-      feedback: ["Very Useful", "Useful"],
+    "Kinda Useful": {
+      feedback: ["Useful"],
       count: 0,
     },
-    "Good Quality of Modules": {
-      feedback: ["Very Good", "Good"],
+    "Sorta Useful": {
+      feedback: ["Neutral"],
       count: 0,
     },
-    "Good Quality of Simulations": {
-      feedback: ["Perfect", "Good"],
+    "Useless": {
+      feedback: ["Useless"],
+      count: 0,
+    },
+  }
+
+  let qualityMap = {
+    "Excellent Quality": {
+      feedback: ["Excellent Quality"],
+      count: 0,
+    },
+    "Good Quality": {
+      feedback: ["Good Quality"],
+      count: 0,
+    },
+    "Fair Quality": {
+      feedback: ["Fair Quality"],
+      count: 0,
+    },
+    "Poor Quality": {
+      feedback: ["Poor Quality"],
+      count: 0,
+    },
+  }
+
+  let simFeedbackMap = {
+    "Perfect Experience": {
+      feedback: ["Perfect"],
+      count: 0,
+    },
+    "Good Experience": {
+      feedback: ["Good"],
+      count: 0,
+    },
+    "Poor Experience": {
+      feedback: ["Poor"],
+      count: 0,
+    },
+    "Bad Experience": {
+      feedback: ["Bad"],
       count: 0,
     },
   }
@@ -55,7 +93,6 @@ const GlobalStatistics = ({ data }) => {
   let minYear = 9999
 
   const globalQuestion = data.globalQuestion
-
   for (let idx in globalQuestion) {
     let global = globalQuestion[idx]
     let time = new Date(global["time"] * 1000)
@@ -64,10 +101,10 @@ const GlobalStatistics = ({ data }) => {
 
     for (let p in practiceQuesionMap) {
       let module = practiceQuesionMap[p]
-      if (module["practiceQuestion"].includes(global['completed'] === 1 ? 'completed' : 0)) {
+      if (module["practiceQuestion"].includes(global["completed"] === 1 ? "completed" : 0)) {
         module["count"]++
       }
-      if (module["practiceQuestion"].includes(global['giveup'] === 1 ? 'giveup' : 0)) {
+      if (module["practiceQuestion"].includes(global["giveup"] === 1 ? "giveup" : 0)) {
         module["count"]++
       }
     }
@@ -98,60 +135,40 @@ const GlobalStatistics = ({ data }) => {
     ],
     borderWidth: 1,
   })
-
+  
   const globalFeedback = data.globalFeedback
-
   for (let idx in globalFeedback) {
     let global = globalFeedback[idx]
     let time = new Date(global["time"] * 1000)
     minMonth = Math.min(minMonth, time.getMonth())
     minYear = Math.min(minYear, time.getFullYear())
 
-    for (let f in feedbackMap) {
-      let module = feedbackMap[f]
-      if (module["feedback"].includes(global["completed"] === 1 ? "completed" : 0)) {
-        module["count"]++
-      }
+    for (let u in usefulMap) {
+      let module = usefulMap[u]
       if (module["feedback"].includes(global["useful"])) {
         module["count"]++
       }
+    }
+    for (let q in qualityMap) {
+      let module = qualityMap[q]
       if (module["feedback"].includes(global["quality"])) {
         module["count"]++
       }
-      if (module["feedback"].includes(global["rating"])) {
-        module["count"]++
-      }
     }
   }
 
-  const globalSimulationFeedback = data.globalSimulationFeedback
-
-  for (let idx in globalSimulationFeedback) {
-    let global = globalSimulationFeedback[idx]
-    let time = new Date(global["time"] * 1000)
-    minMonth = Math.min(minMonth, time.getMonth())
-    minYear = Math.min(minYear, time.getFullYear())
-
-    for (let f in feedbackMap) {
-      let module = feedbackMap[f]
-      if (module["feedback"].includes(global["rating"])) {
-        module["count"]++
-      }
-    }
-  }
-
-  let feedbackChartData = {
+  let usefulChartData = {
     labels: [],
     datasets: [],
   }
-  let feedbackValues = []
-  for (let f in feedbackMap) {
-    feedbackChartData.labels.push(f)
-    feedbackValues.push(feedbackMap[f]["count"])
+  let usefulValues = []
+  for (let u in usefulMap) {
+    usefulChartData.labels.push(u)
+    usefulValues.push(usefulMap[u]["count"])
   }
 
-  feedbackChartData.datasets.push({
-    data: feedbackValues,
+  usefulChartData.datasets.push({
+    data: usefulValues,
     backgroundColor: [
       "rgba(75, 192, 192, 0.2)",
       "rgba(153, 102, 255, 0.2)",
@@ -167,7 +184,76 @@ const GlobalStatistics = ({ data }) => {
     borderWidth: 1,
   })
 
-  let options = {
+  let qualityChartData = {
+    labels: [],
+    datasets: [],
+  }
+  let qualityValues = []
+  for (let q in qualityMap) {
+    qualityChartData.labels.push(q)
+    qualityValues.push(qualityMap[q]["count"])
+  }
+
+  qualityChartData.datasets.push({
+    data: qualityValues,
+    backgroundColor: [
+      "rgba(75, 192, 192, 0.2)",
+      "rgba(153, 102, 255, 0.2)",
+      "rgba(255, 159, 64, 0.2)",
+      "rgba(255, 99, 132, 0.2)",
+    ],
+    borderColor: [
+      "rgba(75, 192, 192, 1)",
+      "rgba(153, 102, 255, 1)",
+      "rgba(255, 159, 64, 1)",
+      "rgba(255, 99, 132, 1)",
+    ],
+    borderWidth: 1,
+  })
+
+  const globalSimFeedback = data.globalSimFeedback
+  for (let idx in globalSimFeedback) {
+    let global = globalSimFeedback[idx]
+    let time = new Date(global["time"] * 1000)
+    minMonth = Math.min(minMonth, time.getMonth())
+    minYear = Math.min(minYear, time.getFullYear())
+
+    for (let s in simFeedbackMap) {
+      let module = simFeedbackMap[s]
+      if (module["feedback"].includes(global["rating"])) {
+        module["count"]++
+      }
+    }
+  }
+
+  let simFeedbackChartData = {
+    labels: [],
+    datasets: [],
+  }
+  let simFeedbackValues = []
+  for (let s in simFeedbackMap) {
+    simFeedbackChartData.labels.push(s)
+    simFeedbackValues.push(simFeedbackMap[s]["count"])
+  }
+
+  simFeedbackChartData.datasets.push({
+    data: simFeedbackValues,
+    backgroundColor: [
+      "rgba(75, 192, 192, 0.2)",
+      "rgba(153, 102, 255, 0.2)",
+      "rgba(255, 159, 64, 0.2)",
+      "rgba(255, 99, 132, 0.2)",
+    ],
+    borderColor: [
+      "rgba(75, 192, 192, 1)",
+      "rgba(153, 102, 255, 1)",
+      "rgba(255, 159, 64, 1)",
+      "rgba(255, 99, 132, 1)",
+    ],
+    borderWidth: 1,
+  })
+
+  let option = {
     indexAxis: "y",
     scales: {
       x: {
@@ -182,7 +268,25 @@ const GlobalStatistics = ({ data }) => {
         position: "none",
       },
     },
-    maintainAspectRatio: false
+    maintainAspectRatio: false,
+  }
+
+  let options = {
+    indexAxis: "y",
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Number of People",
+        },
+      },
+    },
+    plugins: {
+      legend: {
+        position: "none",
+      },
+    },
+    maintainAspectRatio: false,
   }
 
   return (
@@ -192,14 +296,35 @@ const GlobalStatistics = ({ data }) => {
           <strong>Practice Questions</strong> (since {minMonth}/{minYear})
         </Segment>
         <Segment>
-          <Bar type="bar" width={100} height={250} data={questionChartData} options={options} />
+          <Bar type="bar" width={100} height={200} data={questionChartData} options={option} />
         </Segment>
         <Segment color="green">
           <strong>Feedbacks</strong> (since {minMonth}/{minYear})
         </Segment>
-        <Segment>
-          <Bar type="bar" width={100} height={320} data={feedbackChartData} options={options} />
-        </Segment>
+        <div class="ui segments">
+          <div class="ui segment">
+            <strong>Usefulness Rating of Modules</strong>
+          </div>
+          <Segment>
+            <Bar type="bar" width={100} height={250} data={usefulChartData} options={options} />
+          </Segment>
+        </div>
+        <div class="ui segments">
+          <div class="ui segment">
+            <strong>Quality Rating of Modules</strong>
+          </div>
+          <Segment>
+            <Bar type="bar" width={100} height={250} data={qualityChartData} options={options} />
+          </Segment>
+        </div>
+        <div class="ui segments">
+          <div class="ui segment">
+            <strong>Experience Rating of Simulations</strong>
+          </div>
+          <Segment>
+            <Bar type="bar" width={100} height={250} data={simFeedbackChartData} options={options} />
+          </Segment>
+        </div>
       </Segment.Group>
     </>
   )

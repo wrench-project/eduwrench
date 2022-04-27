@@ -1585,7 +1585,7 @@ app.post('/get/global_statistics', function (req, res) {
         res.json({
             globalQuestion: global.globalQuestion,
             globalFeedback: global.globalFeedback,
-            globalSimulationFeedback: global.globalSimulationFeedback
+            globalSimFeedback: global.globalSimFeedback
         })
     }).catch((error => {
         console.log("ERROR " + error)

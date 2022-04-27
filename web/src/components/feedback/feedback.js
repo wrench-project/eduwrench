@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Radio, Message} from "semantic-ui-react"
+import {Form, Message} from "semantic-ui-react"
 import axios from "axios"
 import FeedbackSignIn from "./feedback_signin"
 
@@ -8,7 +8,7 @@ const Feedback = ({feedback_key}) => {
   const [auth, setAuth] = useState("false")
   const [completed, setCompleted] = useState(false)
   const useful = ['Very Useful', 'Useful', 'Neutral', 'Useless']
-  const quality = ['Very Good', 'Good', 'Fair', 'Poor']
+  const quality = ['Excellent Quality', 'Good Quality', 'Fair Quality', 'Poor Quality']
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -28,7 +28,7 @@ const Feedback = ({feedback_key}) => {
 
 if (completed) {
   return ( 
-    <Message size='big' color='brown' content='Thanks for your feedback!'/> 
+    <Message size='big' color='brown' content='Feedback Completed!'/> 
   )
 }
   return (
@@ -75,15 +75,14 @@ if (completed) {
               <p>
                 <strong>[#1]</strong> How useful did you find the modules in learning the topic?
               </p>
-            {useful.map((choice) =>
-                <Form.Field key={choice}>
-                  <Radio
+            {useful.map((useful) =>
+                <Form.Field key={useful}>
+                  <Form.Radio
                       name="useful"
-                      label={choice}
-                      id={choice}
-                      // id={choice === 'Neutral' ? 'test' : choice}
-                      value={choice}
-                      checked={values.useful === choice}
+                      label={useful}
+                      id={useful}
+                      value={useful}
+                      checked={values.useful === useful }
                       onChange={handleChange}
                       onBlur={handleBlur}
                   />
@@ -92,14 +91,14 @@ if (completed) {
               <p>
                 <strong>[#2]</strong> Rate the quality of the modules?
               </p>
-              {quality.map((choice) =>
-                <Form.Field key={choice}>
-                  <Radio
+              {quality.map((quality) =>
+                <Form.Field key={quality}>
+                  <Form.Radio
                       name="quality"
-                      label={choice}
-                      id={choice}
-                      value={choice}
-                      checked={values.quality === choice}
+                      label={quality}
+                      id={quality}
+                      value={quality}
+                      checked={values.quality === quality}
                       onChange={handleChange}
                       onBlur={handleBlur}
                   />

@@ -143,7 +143,8 @@ const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
         .where({sim_id: simID, user_id: userID})
         .select('completed')
         .first()
-        : false
+    : false
+    return feedbackData
 })
 
 const updateFeedback = (userID, feedback_key, time, useful, quality, comments) => db.transaction(async trx => {
@@ -184,12 +185,12 @@ const getGlobalStatistics = () => db.transaction(async trx => {
         .select('time', 'completed', 'attempts', 'giveup')
     const globalFeedback = await trx("feedbacks")
         .select('time', 'completed', 'useful', 'quality')
-    const globalSimulationFeedback = await trx("simulation_feedback")
+    const globalSimFeedback = await trx("simulation_feedback")
         .select('time', 'rating')
     const global = {
         globalQuestion: globalQuestion,
         globalFeedback: globalFeedback,
-        globalSimulationFeedback: globalSimulationFeedback
+        globalSimFeedback: globalSimFeedback
     }
     return global
 })
