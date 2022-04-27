@@ -222,8 +222,10 @@ const IO = ({module, tab}) => {
                             core utilization is <TeX math="250/253 = 98.8\%" />.
                         </>
                     ),
+                    answer: [2.3, 4.0],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.2",
@@ -243,8 +245,10 @@ const IO = ({module, tab}) => {
                             Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
                         </>
                     ),
+                    answer: [1.2, 2.3],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.3",
@@ -295,8 +299,10 @@ const IO = ({module, tab}) => {
                             </p>
                         </>
                     ),
+                    answer: [1.3, 2.0],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.4",
@@ -325,8 +331,10 @@ const IO = ({module, tab}) => {
                             </p>
                         </>
                     ),
+                    answer: [4.2, 10],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 }
             ]}
             />

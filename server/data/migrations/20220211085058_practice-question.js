@@ -2,7 +2,8 @@
 exports.up = function(knex) {
     return knex.schema.createTable("practice_questions", tbl => {
         tbl.integer("user_id").references("id").inTable("users").onDelete("CASCADE")
-        tbl.text("question_key").notNullable().primary()
+        tbl.text("module").notNullable()
+        tbl.text("question_key").notNullable()
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
         tbl.integer("attempts")

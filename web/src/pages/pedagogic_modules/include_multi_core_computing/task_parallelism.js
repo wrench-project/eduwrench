@@ -150,7 +150,11 @@ const TaskParallelism = ({module, tab}) => {
                             to <TeX math="S/6" />, we have <TeX math="S/6 = 0.8" />, which gives us <TeX math="S = 4.8" />.
                             Therefore, the program runs in <TeX math="60/4.8 = 12.5" /> minutes.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p1.2",
@@ -168,7 +172,11 @@ const TaskParallelism = ({module, tab}) => {
                             <p>Therefore, <TeX math="T(3) = T(1) / 1.6 - 10" /></p>
                             <p>which we can rewrite as: <TeX math="T(1) = 1.6 \times (T(3) + 10)" /></p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 

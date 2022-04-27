@@ -4,7 +4,7 @@ import {Form, Radio, Message} from "semantic-ui-react"
 import axios from "axios"
 import FeedbackSignIn from "./feedback_signin"
 
-const Feedback = ({feedback_key, useful, quality}) => {
+const Feedback = ({feedback_key, useful, quality, module}) => {
   const [auth, setAuth] = useState("false")
   const [completed, setCompleted] = useState(false)
 
@@ -50,6 +50,7 @@ if (completed) {
                 useful: values.useful,
                 quality: values.quality,
                 comments: values.comments,
+                module: module
               }
               axios
                 .post("http://localhost:3000/update/feedback", feedback)

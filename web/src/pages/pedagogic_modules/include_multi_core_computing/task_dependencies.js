@@ -126,7 +126,11 @@ const TaskDependencies = ({module, tab}) => {
                                 So the parallel efficiency is <TeX math="E(3) = (96 / 46) / 3 =" /> <strong>69.56%</strong>.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p4.2",
@@ -144,7 +148,11 @@ const TaskDependencies = ({module, tab}) => {
                                 graph of the simulation app.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p4.3",
@@ -200,7 +208,11 @@ const TaskDependencies = ({module, tab}) => {
                                 For <TeX math="x = 300" /> the efficiency is 84.05%, which is the best this program can ever achieve.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -309,7 +321,11 @@ const TaskDependencies = ({module, tab}) => {
                                 <li>Length of the critical path: 30s (A 1s, D 20s, F 7s, and H 2s)</li>
                             </ul>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p4.5",
@@ -365,7 +381,11 @@ const TaskDependencies = ({module, tab}) => {
                                 have 4 tasks in it).
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -445,7 +465,11 @@ const TaskDependencies = ({module, tab}) => {
                             </p>
                             <p>All this can be seen easily in the simulation app.</p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p4.7",
@@ -469,7 +493,11 @@ const TaskDependencies = ({module, tab}) => {
                                 + 70 + 1 = 76s.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p4.8",
@@ -529,7 +557,11 @@ const TaskDependencies = ({module, tab}) => {
                                 prioritization options always produce the same outcome in terms of overall program execution time!
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 

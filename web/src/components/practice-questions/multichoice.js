@@ -3,7 +3,7 @@ import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
-const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
+const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
     const [gaveUp, setGaveUp] = useState(false)
@@ -109,7 +109,8 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup}) => {
                             question_key: question_key,
                             answer: values.selected,
                             correctAnswer: answer,
-                            type: 'multichoice'
+                            type: 'multichoice',
+                            module: module
                         }
                         axios
                             .post('http://localhost:3000/update/question', question)

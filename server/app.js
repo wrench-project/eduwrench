@@ -1453,7 +1453,7 @@ function logQuestion(data) {
                 return false
             }))
         } else {
-            db.updatePracticeQuestion(userID, data.question_key, time, data.answer, data.correctAnswer, data.type).then ((questionId => {
+            db.updatePracticeQuestion(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
                 return true
             })).catch((error => {
                 console.log("[ERROR: " + error)
@@ -1478,6 +1478,7 @@ app.post('/update/question', function (req, res) {
             correctAnswer: req.body.correctAnswer,
             type: req.body.type,
             button: req.body.button,
+            module: req.body.module
         })
         res.status(201).send();
     } catch(e) {
@@ -1508,11 +1509,11 @@ app.post('/insert/simfeedback', function (req, res) {
         db.logSimulationFeedback(userID, time, req.body.simID, req.body.rating, req.body.feedback).then(simFeedbackID => {
             return true
         }).catch(error => {
-            console.log("[ERROR1]: " + error)
+            console.log("[ERROR]: " + error)
             return false
         })
     }).catch(error => {
-        console.log("[ERROR2]: " + error)
+        console.log("[ERROR]: " + error)
         return false
     })
 })
@@ -1540,7 +1541,7 @@ app.post('/get/simfeedback', function (req, res) {
  function logFeedback(data) {
     db.registerUser(data.email, data.user).then((userID) => {
         let time = Math.round(new Date().getTime() / 1000)
-        db.updateFeedback(userID, data.feedback_key, time, data.useful, data.quality, data.comments).then ((feedbackId => {
+        db.updateFeedback(userID, data.feedback_key, time, data.useful, data.quality, data.comments, data.module).then ((feedbackId => {
             return true
         })).catch((error => {
             console.log("[ERROR: " + error)
@@ -1559,6 +1560,7 @@ app.post('/update/feedback', function (req, res) {
             useful : req.body.useful,
             quality : req.body.quality,
             comments : req.body.comments,
+            module : req.body.module
         })
         res.status(201).send();
     } catch(e) {
@@ -1578,6 +1580,21 @@ app.post('/get/feedback', function (req, res) {
             console.log("ERROR " + error)
         }))
     })
+})
+
+app.post('/get/userdata', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getUserData(userID).then(userData => {
+            res.json({
+                questionData: userData.questionData,
+                feedbackData: userData.feedbackData
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
 })
 
 // Enable SSL server connection

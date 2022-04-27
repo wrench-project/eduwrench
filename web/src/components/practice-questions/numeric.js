@@ -3,7 +3,7 @@ import { Formik } from "formik"
 import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import axios from "axios"
 
-const Numeric = ({question_key, answer, hint, giveup}) => {
+const Numeric = ({question_key, answer, hint, giveup, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
     const [gaveup, setGaveup] = useState(false)
@@ -16,7 +16,7 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
             .post('http://localhost:3000/get/question', {
                 userName: userEmail.split("@")[0],
                 email: userEmail,
-                question_key: question_key,
+                question_key: question_key
             })
             .then((response) => {
                 setCompleted(response.data.completed)
@@ -113,7 +113,8 @@ const Numeric = ({question_key, answer, hint, giveup}) => {
                             question_key: question_key,
                             answer: values.input,
                             correctAnswer: answer,
-                            type: 'numeric'
+                            type: 'numeric',
+                            module: module
                         }
                         setPrevAnswer(values.input)
                         axios
