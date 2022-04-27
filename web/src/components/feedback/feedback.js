@@ -52,6 +52,7 @@ if (completed) {
                 useful: values.useful,
                 quality: values.quality,
                 comments: values.comments,
+                module: module
               }
               axios
                 .post("http://localhost:3000/update/feedback", feedback)

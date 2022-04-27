@@ -139,7 +139,8 @@ const WorkAndSpeed = ({module, tab}) => {
             type: "textbox",
             answer: [0, 5],
             hint: "this is hint",
-            giveup: true
+            giveup: true,
+            module: "A.1"
         },
         {
           key: "A.1.p1.2",
@@ -152,7 +153,8 @@ const WorkAndSpeed = ({module, tab}) => {
             choices: ['test1', 'test2', 'test3', 'test4'],
             answer: 'test2',
             hint: "this is another hint",
-            giveup: true
+            giveup: true,
+            module: "A.1"
         }
       ]}
       />
@@ -212,6 +214,7 @@ const WorkAndSpeed = ({module, tab}) => {
           {
             key: "Feedback A.1.1",
             feedback: "feedback",
+            module: "A.1"
           },
         ]} />
       } />
