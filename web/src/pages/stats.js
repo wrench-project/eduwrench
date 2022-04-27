@@ -22,6 +22,7 @@ const Stats = () => {
     query MyQuery {
         practicequestionYaml {
             PracticeQuestions {
+                moduleNumber
                 module
                 question
             }
@@ -40,16 +41,36 @@ const Stats = () => {
             })
             .then((response) => {
                 setUserData(response.data)
+                const feedbackData = response.data.feedbackData
+                const questionData = response.data.questionData
                 for (let i = 0; i < practiceQuestions.length; i++) {
-                    if (response.data.feedbackData[i]) {
-                        practiceQuestions[i].feedback = response.data.feedbackData[i]
+                    if (feedbackData[i] && feedbackData[i].module === practiceQuestions[i].moduleNumber) {
+                        practiceQuestions[i].feedback = feedbackData[i]
                     } else {
                         practiceQuestions[i].feedback = {
                             completed: false
                         }
                     }
                 }
-                console.log(response.data)
+                for (let i = 0; i < practiceQuestions.length; i++) {
+                    practiceQuestions[i].feedback = []
+                    for (const feedback of feedbackData) {
+                        if (feedback.module === practiceQuestions[i].moduleNumber) {
+                            practiceQuestions[i].feedback.push(feedback)
+                        }
+                    }
+                }
+                for (let i = 0; i < practiceQuestions.length; i++) {
+                    practiceQuestions[i].completedQuestions = []
+                    for (const question of questionData) {
+                        if (question.module === practiceQuestions[i].moduleNumber && question.completed) {
+                            practiceQuestions[i].completedQuestions.push(question)
+                        } else if (!practiceQuestions[i].completedQuestions) {
+                            practiceQuestions[i].completedQuestions = []
+                        }
+                    }
+                }
+                console.log(practiceQuestions)
                 setLoading(false)
             })
     }, [])

@@ -80,7 +80,11 @@ const RamAndIO = ({module, tab}) => {
                             <TeX math="\text{Efficiency}(5) = \frac{2.5}{5} = 50\%" block />
                             <p>We would have been better off with a 4-core computer (since, likely, it would cost less).</p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p3.2",
@@ -103,7 +107,11 @@ const RamAndIO = ({module, tab}) => {
                                 (the order of the three steps above does not matter).
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -223,7 +231,11 @@ const RamAndIO = ({module, tab}) => {
                                 running Task #1 first is 0.8 seconds faster than running Task #2 first.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p3.4",
@@ -263,7 +275,11 @@ const RamAndIO = ({module, tab}) => {
                                 seconds, which is <TeX math="5 / 9.4 = 53.2\%" /> of the execution time.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p3.5",
@@ -304,7 +320,11 @@ const RamAndIO = ({module, tab}) => {
                                 <li>Task #1 work at 321 Gflop: 7.01 seconds (increase)</li>
                             </ul>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p3.6",
@@ -355,7 +375,11 @@ const RamAndIO = ({module, tab}) => {
                                 The "Task #2 first" option has the highest parallel efficiency, at 63.3%.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 

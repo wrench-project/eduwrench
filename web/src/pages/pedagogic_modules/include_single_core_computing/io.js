@@ -224,7 +224,8 @@ const IO = ({module, tab}) => {
                     ),
                     answer: [2.3, 4.0],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.2",
@@ -246,7 +247,8 @@ const IO = ({module, tab}) => {
                     ),
                     answer: [1.2, 2.3],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.3",
@@ -299,7 +301,8 @@ const IO = ({module, tab}) => {
                     ),
                     answer: [1.3, 2.0],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.4",
@@ -330,7 +333,8 @@ const IO = ({module, tab}) => {
                     ),
                     answer: [4.2, 10],
                     type: "textbox",
-                    choices: ''
+                    choices: '',
+                    module: "A.1"
                 }
             ]}
             />

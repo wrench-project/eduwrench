@@ -183,10 +183,10 @@ const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
 const getUserData = (userID) => db.transaction(async trx => {
     const questionData = await trx("practice_questions")
         .where({user_id: userID})
-        .select('question_key', 'time', 'completed')
+        .select('question_key', 'time', 'completed', 'module')
     const feedbackData = await trx("feedbacks")
         .where({user_id: userID})
-        .select('feedback_key', 'time', 'completed')
+        .select('feedback_key', 'time', 'completed', 'module')
     const userData = {
         questionData: questionData,
         feedbackData: feedbackData

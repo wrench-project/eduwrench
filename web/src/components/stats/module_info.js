@@ -3,27 +3,26 @@ import {Accordion, Icon, Table, Grid, Divider, Popup} from "semantic-ui-react";
 import InfoRow from "./info_row";
 
 
-const ModuleInfo = ({userData, module, listIndex}) => {
-    // {question_key, time, completed}
-    const questionData = userData.questionData
+const ModuleInfo = ({module, listIndex}) => {
+    const completedQuestions = module.completedQuestions
+    const numberCompleted = module.completedQuestions.length
     // ["A.1p1.1", "A.1p1.2", "A.1p1.3" ...]
     const questionArr = module.question
-    const feedbackTime = new Date(module.feedback.time * 1000).toLocaleString()
+    const numberFeedback = module.feedback.length
 
     const augmentQuestionData = () => {
         for (let i = 0; i < questionArr.length; i++) {
-            for (const question in questionData) {
-                if (questionData[question].question_key === questionArr[i]) {
-                    questionArr[i] = questionData[question]
+            for (const question in completedQuestions) {
+                if (completedQuestions[question].question_key === questionArr[i]) {
+                    questionArr[i] = completedQuestions[question]
                 }
             }
         }
         return questionArr
     }
 
-
-    const checkComplete = () => {
-        return (questionData.length === questionArr.length) && module.feedback.completed
+     const checkComplete = () => {
+        return (numberCompleted === questionArr.length) && numberFeedback > 0
     }
 
     const [activeIndex, setActiveIndex] = useState(-1)
@@ -45,7 +44,7 @@ const ModuleInfo = ({userData, module, listIndex}) => {
                     <Grid.Column width={4}>
                         <Icon name='dropdown'/>
                         {module.module}
-                        {checkComplete(module.questions, userData.questionData, module.feedback) ?
+                        {checkComplete() ?
                             <Popup
                                 content='You have completed this module!'
                                 trigger={<Icon color='green' name='check'/>}
@@ -56,19 +55,19 @@ const ModuleInfo = ({userData, module, listIndex}) => {
                             />}
                     </Grid.Column>
                     <Grid.Column width={1}>
-                        Questions: {questionData.length} / {questionArr.length}
+                        Questions: {numberCompleted} / {questionArr.length}
                     </Grid.Column>
                     <Grid.Column width={1}>
-                        Feedback:  {module.feedback.completed ?
+                        {numberFeedback} Feedback
+                        {numberFeedback > 0 ?
                             <Popup
                                 content='Thanks for your feedback'
-                                trigger={<Icon color='green' name='comment'/>}
+                                trigger={<Icon style={{paddingLeft: '5px'}} color='green' name='comment'/>}
                                 />
                             : <Popup
                             content='Please give feedback!'
-                            trigger={<Icon color='red' name='comment'/>}
+                            trigger={<Icon style={{paddingLeft: '5px'}} color='red' name='comment'/>}
                             />}
-                        {module.feedback.completed ? feedbackTime : ''}
                     </Grid.Column>
                 </Grid>
             </Accordion.Title>

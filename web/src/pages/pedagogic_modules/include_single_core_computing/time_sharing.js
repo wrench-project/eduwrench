@@ -64,6 +64,7 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [1.3, 2.3],
                     type: "textbox",
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p2.2",
@@ -76,6 +77,7 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [2.3, 4.9],
                     type: "textbox",
+                    module: "A.1"
                 }
             ]}
             />
