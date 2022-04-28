@@ -6,9 +6,9 @@ exports.up = function(knex) {
         tbl.text("feedback_key").notNullable()
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
-        tbl.string("useful")
-        tbl.string("quality")
-        tbl.text("comments")
+        tbl.text("useful").notNullable()
+        tbl.text("quality").notNullable()
+        tbl.text("comments").notNullable()
     })
 };
 

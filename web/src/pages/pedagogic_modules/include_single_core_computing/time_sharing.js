@@ -3,6 +3,8 @@ import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 const TimeSharing = ({module, tab}) => {
     return (
@@ -64,6 +66,8 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [1.3, 2.3],
                     type: "textbox",
+                    hint: "this is hint",
+                    giveup: true,
                     module: "A.1"
                 },
                 {
@@ -77,6 +81,8 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [2.3, 4.9],
                     type: "textbox",
+                    hint: "this is hint",
+                    giveup: true,
                     module: "A.1"
                 }
             ]}
@@ -104,6 +110,21 @@ const TimeSharing = ({module, tab}) => {
                 seconds later another program B, is started. Both programs finish at the same time. What is the work of B in
                 Tflop? Show your work.
             </p>
+
+            <Divider />
+
+            <Header as="h3" block>
+                Feedback Questions
+            </Header>
+            
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                {
+                    key: "Feedback A.1.2",
+                    feedback: "feedback",
+                },
+                ]} />
+            } />
         </>
     )
 }

@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Radio, Message} from "semantic-ui-react"
+import {Form, Message} from "semantic-ui-react"
 import axios from "axios"
 import FeedbackSignIn from "./feedback_signin"
 
-const Feedback = ({feedback_key, useful, quality, module}) => {
+const Feedback = ({feedback_key}) => {
   const [auth, setAuth] = useState("false")
   const [completed, setCompleted] = useState(false)
+  const useful = ['Very Useful', 'Useful', 'Neutral', 'Useless']
+  const quality = ['Excellent Quality', 'Good Quality', 'Fair Quality', 'Poor Quality']
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -23,10 +25,10 @@ const Feedback = ({feedback_key, useful, quality, module}) => {
             console.log(err);
         });
 }, [])
-  
+
 if (completed) {
   return ( 
-    <Message size='big' color='brown' content='Thank you for your feedback!'/> 
+    <Message size='big' color='brown' content='Feedback Completed!'/> 
   )
 }
   return (
@@ -61,10 +63,24 @@ if (completed) {
               setSubmitting(false)
             }, 400)
           }}
+          validate={values => {
+            const errors = {}
+            if (!values.useful) {
+                errors.useful = 'Required'
+            }
+            if (!values.quality) {
+                errors.quality = 'Required'
+            }
+            if (!values.comments) {
+              errors.comments = 'Required'
+          }
+            return errors
+        }}
         >
           {({
             values,
-            checked,
+            errors,
+            touched,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -74,35 +90,41 @@ if (completed) {
               <p>
                 <strong>[#1]</strong> How useful did you find the modules in learning the topic?
               </p>
-            {useful.map((choice) =>
-                <Form.Field key={choice}>
-                  <Radio
+            {useful.map((useful) =>
+                <Form.Field key={useful}>
+                  <Form.Radio
                       name="useful"
-                      label={choice}
-                      id={choice}
-                      value={choice}
-                      checked={values.useful === choice}
+                      label={useful}
+                      id={useful}
+                      value={useful}
+                      checked={values.useful === useful }
                       onChange={handleChange}
                       onBlur={handleBlur}
                   />
                 </Form.Field>
             )}
+            {errors.useful ?
+                <Message negative>{errors.useful}</Message> : ''
+            }
               <p>
                 <strong>[#2]</strong> Rate the quality of the modules?
               </p>
-              {quality.map((choice) =>
-                <Form.Field key={choice}>
-                  <Radio
+              {quality.map((quality) =>
+                <Form.Field key={quality}>
+                  <Form.Radio
                       name="quality"
-                      label={choice}
-                      id={choice}
-                      value={choice}
-                      checked={values.quality === choice}
+                      label={quality}
+                      id={quality}
+                      value={quality}
+                      checked={values.quality === quality}
                       onChange={handleChange}
                       onBlur={handleBlur}
                   />
                 </Form.Field>
             )}
+            {errors.quality ?
+                <Message negative>{errors.quality}</Message> : ''
+            }
               <p>
                 <strong>[#3]</strong> Please provide constructing comments to improve the content.
               </p>
@@ -116,6 +138,9 @@ if (completed) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.comments}
+                error={(errors.comments && touched.comments) ? {
+                  content: 'Please provide feedback'
+              } : null}
               />
               <Form.Button color="teal" type="submit" disabled={isSubmitting}>
                 Submit

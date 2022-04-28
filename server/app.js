@@ -1582,6 +1582,22 @@ app.post('/get/feedback', function (req, res) {
     })
 })
 
+
+app.post('/get/global_statistics', function (req, res) {
+    db.getGlobalStatistics().then(global => {
+        res.json({
+            globalQuestion: global.globalQuestion,
+            globalFeedback: global.globalFeedback,
+            globalSimFeedback: global.globalSimFeedback
+        })
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+    .catch((error => {
+        console.log("ERROR " + error)
+    }))
+})
+
 app.post('/get/userdata', function (req, res) {
     db.registerUser(req.body.email, req.body.userName).then(userID => {
         db.getUserData(userID).then(userData => {
@@ -1595,6 +1611,7 @@ app.post('/get/userdata', function (req, res) {
     }).catch((error => {
         console.log("ERROR " + error)
     }))
+
 })
 
 // Enable SSL server connection
