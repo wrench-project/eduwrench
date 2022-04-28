@@ -66,6 +66,8 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [1.3, 2.3],
                     type: "textbox",
+                    hint: "this is hint",
+                    giveup: true,
                     module: "A.1"
                 },
                 {
@@ -79,6 +81,8 @@ const TimeSharing = ({module, tab}) => {
                     ),
                     answer: [2.3, 4.9],
                     type: "textbox",
+                    hint: "this is hint",
+                    giveup: true,
                     module: "A.1"
                 }
             ]}

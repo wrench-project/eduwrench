@@ -63,10 +63,24 @@ if (completed) {
               setSubmitting(false)
             }, 400)
           }}
+          validate={values => {
+            const errors = {}
+            if (!values.useful) {
+                errors.useful = 'Required'
+            }
+            if (!values.quality) {
+                errors.quality = 'Required'
+            }
+            if (!values.comments) {
+              errors.comments = 'Required'
+          }
+            return errors
+        }}
         >
           {({
             values,
-            checked,
+            errors,
+            touched,
             handleChange,
             handleBlur,
             handleSubmit,
@@ -89,6 +103,9 @@ if (completed) {
                   />
                 </Form.Field>
             )}
+            {errors.useful ?
+                <Message negative>{errors.useful}</Message> : ''
+            }
               <p>
                 <strong>[#2]</strong> Rate the quality of the modules?
               </p>
@@ -105,6 +122,9 @@ if (completed) {
                   />
                 </Form.Field>
             )}
+            {errors.quality ?
+                <Message negative>{errors.quality}</Message> : ''
+            }
               <p>
                 <strong>[#3]</strong> Please provide constructing comments to improve the content.
               </p>
@@ -118,6 +138,9 @@ if (completed) {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.comments}
+                error={(errors.comments && touched.comments) ? {
+                  content: 'Please provide feedback'
+              } : null}
               />
               <Form.Button color="teal" type="submit" disabled={isSubmitting}>
                 Submit
