@@ -114,6 +114,17 @@ const ModulesList = () => {
         </Segment>
       </SegmentGroup>
 
+      <SegmentGroup className="modules">
+        <Segment><strong>C.2. Cloud Functions</strong></Segment>
+        <Segment>
+          <p className="module-desc">
+            <Button size="mini" color="yellow" floated="left"
+                    href="/pedagogic_modules/cloud_functions/">Launch</Button>
+            The goal of this module is to provide you with fundamental knowledge of and
+            hands-on experience with cloud functions.
+          </p>
+        </Segment>
+      </SegmentGroup>
       <h4 style={{ margin: 0 }}><br />D. Case Studies</h4>
 
       <SegmentGroup className="modules">
