@@ -18,7 +18,7 @@ import { Segment } from "semantic-ui-react"
  */
 const GlobalStatistics = ({ data }) => {
   let practiceQuesionMap = {
-    "Correct Answers": {
+    "Completed Questions": {
       practiceQuestion: ["completed"],
       count: 0,
     },
