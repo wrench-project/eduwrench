@@ -17,7 +17,7 @@ const TaskParallelism = ({module, tab}) => {
                 independently of each other. Multi-core processors have become ubiquitous. This is because starting in the early
                 2000’s it became increasingly difficult, and eventually impossible, to increase the clock rate of processors.
                 The reasons are well-documented power/heat issues (see the 2007 classic <a
-                href="http://www.gotw.ca/publications/concurrency-ddj.htm" target="_blank"> The Free Lunch Is Over </a>
+                href="http://www.gotw.ca/publications/concurrency-ddj.htm" target="_blank" rel="noreferrer"> The Free Lunch Is Over </a>
                 article). As a solution to this problem, microprocessor manufacturers started producing multi-core processors.
             </p>
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021. The WRENCH Team.
+ * Copyright (c) 2019-2022. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
       <h2>Basics</h2>
 
       <p>
-        The term <strong>cyberinfrastructure</strong> (CI) was introduced in the late 1990s, and became popular starting
+        The term <strong>cyberinfrastructure</strong> (CI) was introduced in the late 1990s and became popular starting
         around 2003. Although no strict definition is widely accepted, all commonly used definitions allude to systems
         comprising a computational <i>infrastructure</i> for enabling breakthrough scientific discoveries. In summary,
         a <i>cyberinfrastructure</i> can be composed of (but not limited to) the following elements:
@@ -55,13 +55,13 @@ const CIServiceFundamentals = ({ module, tab }) => {
         movements over the network, computation on bare-metal or virtualized compute nodes, and web sites that serve as
         portals for users to use all the above services. In this module, we explore different approaches and techniques
         commonly used for using these
-        services in a view to executing various application workloads. Note that we do not target any specific CI
+        services to execute various application workloads. Note that we do not target any specific CI
         service implementation, but instead we target the main concepts in different service categories.
       </p>
       <p>
         The figure below shows an example of a CI composed of four different services: a <i>website</i>, from where
         users interact with the system to upload/download data and launch compute tasks; a <i>Storage service</i>, where
-        data can stored and retrieve persistently; a <i>File Registry service</i>, which is a catalog that acts as a
+        data can be stored and retrieved persistently; a <i>File Registry service</i>, which is a catalog that acts as a
         bookkeeper for data location; and a <i>Compute service</i>, which can execute compute tasks on demand.
       </p>
 
@@ -72,14 +72,14 @@ const CIServiceFundamentals = ({ module, tab }) => {
       </div>
       <p>
         Although the figure above illustrates a simple CI deployment, this configuration represents a typical
-        infrastructure in which web portals (or science gateways) utilizes data storage services and file catalogs for
+        infrastructure in which web portals (or science gateways) utilize data storage services and file catalogs for
         data archival, and compute platforms (e.g., clouds or clusters) for performing computations (e.g., analysis of
         data or visualization). CI services are often connected to each other by a network topology with high-speed
         network links with small latencies, while connection to the users (client) are usually subjected to ISP
         (internet service provider) bandwidths and latencies (see the <a
-        href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a> for a discussion of
+          href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a> for a discussion of
         network latencies, bandwidths, and topologies; and see the <a href="/pedagogic_modules/client_server">Client-Server
-        module</a> to see the implications of low network bandwidth on the performance of a distributed computation).
+          module</a> to see the implications of low network bandwidth on the performance of a distributed computation).
       </p>
 
       <h2>CI Service Overhead</h2>
@@ -113,7 +113,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
 
       <p>
         The simulation app below simulates the execution of the client-server setup depicted in Figure 1 of the <a
-        href="/pedagogic_modules/client_server">Client-Server module</a>. But here each server is implemented as a CI
+          href="/pedagogic_modules/client_server">Client-Server module</a>. But here each server is implemented as a CI
         service that experience some <i>overhead</i> (a time in seconds) each time a task is started. This is the time
         needed to perform <i>startup</i> operations to configure the environment for executing the task (e.g., booting a
         VM instance). As a result, if it has high overhead, a server may not be as attractive as it may seem based on
@@ -122,10 +122,10 @@ const CIServiceFundamentals = ({ module, tab }) => {
       <p>
         Using the app, experiment with simulating the execution with each server (use the radio button to select which
         server to use), leaving all values to their default. You should notice a difference in execution time. In the
-        client Client-Server module, Server #2 is able to finish execution more quickly than Server #1, as the latter is
+        Client-Server module, Server #2 finishes the execution more quickly than Server #1, as the latter is
         connected to the client via a low-bandwidth link. Here, using the default overhead values of 1 sec and 5 sec for
         Server #1 and Server #2 respectively, we observe that Server #1 finishes execution a bit faster. For a task with
-        less computation to do, Server #1 would be even more preferable, while Server #2 would be the better choice
+        less computation to do, Server #1 would be even preferable, while Server #2 would be the better choice
         provided the task has enough computation to do.
       </p>
 
@@ -216,8 +216,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
       <p>
         <strong>[B.1.q1.1]</strong> Your company needs to execute a particular workload that is a
         "chain" of <TeX math="n" /> tasks that must be executed in sequence (this is also called a "linear workflow").
-        Each task consists of 10 Tflop of work,
-        and reads as input and writes as output a negligible about of data.
+        Each task consists of 10 Tflop of work         and reads as input and writes as output a negligible about of data.
         You consider two options:
       </p>
       <ul style={{ marginBottom: 0 }}>
@@ -242,7 +241,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
       </p>
       <p>
         Say now that <TeX math="n = 100" /> and that <TeX math="h = 10" />. How many tasks should we run locally?
-        (your answer must be an integer).
+        (Your answer must be an integer).
       </p>
 
       <p>
@@ -266,7 +265,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
         and then sends a request to the File Registry service to make it aware of the new file and its location.
       </p>
       <p>
-        Compute service #2 has higher overhead, but once a task starts on it it
+        Compute service #2 has higher overhead, but once a task starts on it
         runs twice as fast as on Computes service #1. The software system you use to
         execute your workload on the CI deployment performs static (i.e., ahead of
         time) load balancing by considering only the compute speeds of the compute services.

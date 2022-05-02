@@ -569,7 +569,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                 <sup>1</sup> In an attempt to suppress oppressive language, we have renamed the commonly
                 used <i>master-worker</i> term by <i>coordinator-worker</i> as suggested in <a
                 href="https://tools.ietf.org/id/draft-knodel-terminology-00.html#rfc.section.1.1"
-                target="_blank">this article</a>.
+                target="_blank" rel="noreferrer">this article</a>.
             </div>
 
         </>

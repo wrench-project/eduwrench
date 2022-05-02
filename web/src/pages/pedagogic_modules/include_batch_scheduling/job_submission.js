@@ -74,7 +74,7 @@ const JobSubmission = ({ module, tab }) => {
 
       <p>
         You can now navigate to this URL in a new browser window: <a href="http://localhost:8808"
-                                                                     target="_blank">http://localhost:8808</a>.
+                                                                     target="_blank" rel="noreferrer">http://localhost:8808</a>.
       </p>
 
       <p>

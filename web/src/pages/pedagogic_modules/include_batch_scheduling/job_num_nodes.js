@@ -57,7 +57,7 @@ const JobNumNodes = ({ module, tab }) => {
 
       <p>
         and, in a new browser window, navigate to: <a href="http://localhost:8808"
-                                                      target="_blank">http://localhost:8808</a>.
+                                                      target="_blank" rel="noreferrer">http://localhost:8808</a>.
       </p>
 
       <p>
