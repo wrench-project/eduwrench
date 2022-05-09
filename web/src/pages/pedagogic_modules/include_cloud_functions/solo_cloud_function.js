@@ -2,6 +2,7 @@ import React from "react"
 import {Divider, Header} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
+import Solo_Cloud_Function_Simulation from "./solo_cf_sim";
 
 const SoloCloudFunction = ({module, tab}) => {
     return (
@@ -12,40 +13,40 @@ const SoloCloudFunction = ({module, tab}) => {
             <p>
                 You are an employee at a data science company that is working on an on-demand facial recognition
                 service that will be used for real-time video analysis. This service will be used continuously
-                by various customers and must operate continuously.
+                by various customers and must operate 24/7.
             </p>
 
             <p>
                 The facial recognition service consists of a function that takes as input an image and returns
                 extracted features, which can then be searched in a database.  Rather than hosting this function
-                on bare-metal servers at your company, the goal is to deploy this system using “cloud functions”.
+                on bare-metal servers hosted in-house, the goal is to deploy this system using “cloud functions”.
             </p>
 
             <p>
-                Cloud functions are essentially as the name suggests. They are functions that you can run on the
-                cloud, and one term many people use to describe this is serverless. Cloud functions are typically
-                scalable and the code is typically run together with event-driven code in order to create the
-                code product that you need. Two popular examples of cloud function platforms are Google Cloud
-                and AWS Lambda.
+                Cloud functions are essentially as the name suggests: they are functions that you can invoke and
+                run on the cloud (one term many people use to describe this concept is “serverless computing”).
+                Cloud functions deployments can scale by provisioning more cloud resources (i.e., virtual
+                machine instances) for a particular function. Two popular examples of cloud function platforms
+                are Google Cloud and AWS Lambda.
             </p>
 
             <p>
-                In terms of cost, cloud functions are charged when running, meaning that cost only incurs when the
-                function is running, not when the function is idle. Typically, this means you pay a rate per time
-                unit for the amount of time that the function is running as opposed to paying for uptime.
+                In terms of cost, cloud functions are charged when running, meaning that cost only incurs when
+                the function is running, not when the function is idle. In other words, users pay per time unit
+                while the function is running as opposed to paying for uptime.
             </p>
 
             <p>
-                One feature that cloud functions have is a time-out mechanism. This is when all instances
-                provisioned for a cloud function have been taken up. If a job is to be run but there are no free
-                instances at the time, the cloud function will wait for the amount of time that the time-out
-                specifies. If an instance has still not been freed up for the job to run on, the job fails and
-                the function moves on. In the case of this module, we assume the time-out mechanism implements a
-                time-out of 10 seconds.
+                Cloud functions systems typically implement a time-out mechanism. That is, when all instances
+                provisioned for a cloud function are already working on function invocations,  if a new function
+                invocation is placed it waits. If an instance does not become available within a specific
+                time-out duration, then the function invocation fails. In this module, we assume the time-out
+                is 10 seconds.
             </p>
 
             <p>
-                We also assume that this function runs in 1 minute on a cloud function instance.
+                We assume that the facial recognition function that your company needs to deploy on the cloud
+                runs in 1 minute on a cloud function instance.
             </p>
 
             <p>
@@ -64,9 +65,7 @@ const SoloCloudFunction = ({module, tab}) => {
                 being 3 divisions: arrived, succeeded, and failed (arrived = succeeded + failed).
             </p>
 
-
-
-            {/*<SimulationActivity panelKey="local_computing" content={<Thrustd_Local_Simulation/>}/>*/}
+            <SimulationActivity panelKey="solo_cloud_function" content={<Solo_Cloud_Function_Simulation/>}/>
 
             <Divider/>
             <Header as="h3" block>
