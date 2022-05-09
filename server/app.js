@@ -1289,7 +1289,7 @@ app.post("/run/solo_cloud_function", function (req, res) {
         "timeout": 10.0
     }
     // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
-    let args_json = JSON.stringify(json_data);
+    // let args_json = JSON.stringify(json_data);
     // console.log(args_json);
     const fs = require('fs');
 

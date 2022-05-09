@@ -37,7 +37,7 @@ const Solo_Cloud_Function_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
-                                if (!validateFieldInRange("gcf-num-hosts-label", values.numInstances, 1, 100, "N = ", " Host(s)")) {
+                                if (!validateFieldInRange("gcf-num-instances-label", values.numInstances, 1, 100, "N = ", " Instance(s)")) {
                                     errors.numInstances = "ERROR"
                                 }
                                 if (!validateFieldInRange("gcf-num-fir-label", values.numFir, 2, 100, "Max # FIR / sec = ", "")) {
