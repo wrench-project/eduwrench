@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
   fclose(xml_file);
 
   // Reading and parsing the platform description file to instantiate a simulated platform
-  std::cerr << "Instantiating SimGrid platform..." << std::endl;
+  // std::cerr << "Instantiating SimGrid platform..." << std::endl;
   simulation.instantiatePlatform(platform_file);
 
   // Get a vector of all the hosts in the simulated platform
@@ -148,14 +148,14 @@ int main(int argc, char **argv) {
 //  }
 
   // Launch the simulation
-  std::cerr << "Launching the Simulation..." << std::endl;
+  // std::cerr << "Launching the Simulation..." << std::endl;
   try {
     simulation.launch();
   } catch (std::runtime_error &e) {
     std::cerr << "Exception: " << e.what() << std::endl;
     return 0;
   }
-  std::cerr << "Simulation done!" << std::endl;
+  // std::cerr << "Simulation done!" << std::endl;
 
   return 0;
 }
