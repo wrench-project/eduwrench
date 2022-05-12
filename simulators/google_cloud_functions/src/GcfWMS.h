@@ -53,6 +53,8 @@ private:
     double task_flops;
     int max_change;
     double timeout;
+    double record_period;
+    double record_time;
     std::set<std::shared_ptr<wrench::ComputeService>> idle;
     std::set<std::shared_ptr<wrench::ComputeService>> busy;
 };

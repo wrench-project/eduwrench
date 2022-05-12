@@ -1303,6 +1303,27 @@ app.post("/run/solo_cloud_function", function (req, res) {
 
     let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
 
+    let output_array = simulation_output.split("\n");
+
+    let arrived = output_array[0].split(":");
+    let success = output_array[2].split(":");
+    let fail = output_array[3].split(":");
+
+    let s_percent = Math.round(parseFloat(success[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+    let f_percent = Math.round(parseFloat(fail[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+
+    output_array[0] = "Total # FIR:" + arrived[1];
+    output_array[2] = "- Succeeded:" + success[1] + " (" + s_percent.toString() + "%)";
+    output_array[3] = "- Failed:" + fail[1] + " (" + f_percent.toString() + "%)";
+
+    let printed_sim_output = "";
+    for (let i = 0; i < output_array.length; i++) {
+        if (i != 1) {
+            printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+                + output_array[i] + "<br></span>";
+        }
+    }
+
     if (simulation_output !== null) {
         /**
          * Log the user running this simulation along with the
@@ -1317,8 +1338,9 @@ app.post("/run/solo_cloud_function", function (req, res) {
         });
 
         res.json({
-            "simulation_output": ansiUpSimulationOutput(simulation_output),
+            "simulation_output": printed_sim_output,
             "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+            "record_data": JSON.parse(fs.readFileSync("/tmp/record.json")),
         })
     }
 });

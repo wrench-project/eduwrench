@@ -10,6 +10,8 @@
 #include <iostream>
 #include <random>
 #include <deque>
+#include <fstream>
+#include <stdio.h>
 #include "GcfWMS.h"
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(GcfWMS, "Log category for Gcf WMS");
@@ -96,17 +98,44 @@ int GcfWMS::main() {
     num_requests_arrived = 0;
     succeeded = 0;
     failures = 0;
+    record_period = 60; // every 1 min
+    record_time = record_period;
+
+    remove("/tmp/record.json"); // remove file if existed before
+    std::string filename("/tmp/record.json");
+    std::ofstream file_out;
+    file_out.open(filename, std::ios_base::app);
+    file_out << "{" << endl;
+    double total_sim_time = 1.0 * .25 * 3600;
 
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
     busy = {};
 //    while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
-    while (wrench::Simulation::getCurrentSimulatedDate() < 1.0 * .25 * 3600) {
+    while (wrench::Simulation::getCurrentSimulatedDate() < total_sim_time) {
+
+        /*
+         * "time": {
+         *     "succeeded": x,
+         *     "failed": y
+         * },
+         */
+        if (wrench::Simulation::getCurrentSimulatedDate() >= record_time) {
+          file_out << "  \"" << wrench::Simulation::getCurrentSimulatedDate() << "\": {" << std::endl;
+          file_out << "    \"succeeded\": " << succeeded << "," << std::endl;
+          file_out << "    \"failed\": " << failures << std::endl;
+          if (wrench::Simulation::getCurrentSimulatedDate() + record_period > total_sim_time) {
+            file_out << "  }" << std::endl;
+          }
+          else {
+            file_out << "  }," << std::endl;
+          }
+          record_time += record_period;
+        }
 
         WRENCH_INFO("IN LOOP");
         // Insert into the queue
         double requests_arrival_time = wrench::Simulation::getCurrentSimulatedDate();
-        // add 10.0 to args file (timeout time)
         sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + timeout);
 
         // Compute the next sleep time
@@ -166,6 +195,9 @@ int GcfWMS::main() {
         }
 
     }
+
+    file_out << "}" << endl;
+    file_out.close();
 
     std::cerr << "Arrived: " << num_requests_arrived << std::endl;
     std::cerr << "Submitted: " << submitted << std::endl;

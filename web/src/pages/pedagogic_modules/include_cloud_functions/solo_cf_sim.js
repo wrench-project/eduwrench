@@ -68,10 +68,10 @@ const Solo_Cloud_Function_Simulation = () => {
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/solo_cloud_function", data).then(
                                         response => {
+                                            console.log(response.data)
                                             setSimulationResults(
                                                 <>
                                                     <SimulationOutput output={response.data.simulation_output} />
-                                                    <GanttChart data={response.data.task_data} />
                                                 </>
                                             )
                                             setSubmitting(false)
