@@ -4,7 +4,7 @@ import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
-import GanttChart from "../../../components/charts/gantt_chart"
+import StackedBarChart from "../../../components/charts/stacked_bar_chart"
 import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import {
     validateFieldInRange
@@ -68,10 +68,10 @@ const Solo_Cloud_Function_Simulation = () => {
                                     setSimulationResults(<></>)
                                     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/solo_cloud_function", data).then(
                                         response => {
-                                            console.log(response.data)
                                             setSimulationResults(
                                                 <>
                                                     <SimulationOutput output={response.data.simulation_output} />
+                                                    <StackedBarChart data={response.data.record_data} />
                                                 </>
                                             )
                                             setSubmitting(false)

@@ -121,7 +121,7 @@ int GcfWMS::main() {
          * },
          */
         if (wrench::Simulation::getCurrentSimulatedDate() >= record_time) {
-          file_out << "  \"" << wrench::Simulation::getCurrentSimulatedDate() << "\": {" << std::endl;
+          file_out << "  \"" << record_time << "\": {" << std::endl;
           file_out << "    \"succeeded\": " << succeeded << "," << std::endl;
           file_out << "    \"failed\": " << failures << std::endl;
           if (wrench::Simulation::getCurrentSimulatedDate() + record_period > total_sim_time) {
