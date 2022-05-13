@@ -26,12 +26,18 @@ const StackedBarChart = ({data}) => {
 
   const options = {
     scales: {
-      xAxes: [{
-        stacked: true
-      }],
-      yAxes: [{
-        stacked: true
-      }]
+      x: {
+        title: {
+          display: true,
+          text: 'Time (min)'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: '# FIR'
+        }
+      }
     }
   }
 
