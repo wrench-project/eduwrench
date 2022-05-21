@@ -1284,7 +1284,7 @@ app.post("/run/solo_cloud_function", function (req, res) {
         "num_instances": NUM_INSTANCES,
         "max_req": NUM_FIR,
         "min_req": 1,
-        "change_probability": 0.75,
+        "change_probability": 0.95,
         "max_change": 2,
         "timeout": 10.0
     }
@@ -1339,7 +1339,6 @@ app.post("/run/solo_cloud_function", function (req, res) {
 
         res.json({
             "simulation_output": printed_sim_output,
-            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
             "record_data": JSON.parse(fs.readFileSync("/tmp/record.json")),
         })
     }

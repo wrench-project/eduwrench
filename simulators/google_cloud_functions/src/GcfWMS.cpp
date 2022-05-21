@@ -94,19 +94,22 @@ int GcfWMS::main() {
     std::uniform_real_distribution<> dis(0.0, max_change);
 
     // initial sleep time and num free instances set in simulator
-    direction = 1;
+    direction = -1;
     num_requests_arrived = 0;
     succeeded = 0;
     failures = 0;
-    record_period = 60; // every 1 min
+    record_period = 600; // every 10 min
     record_time = record_period;
+    auto prev_record_time = 0;
+    auto prev_success_sum = 0;
+    auto prev_fail_sum = 0;
 
     remove("/tmp/record.json"); // remove file if existed before
     std::string filename("/tmp/record.json");
     std::ofstream file_out;
     file_out.open(filename, std::ios_base::app);
     file_out << "{" << endl;
-    double total_sim_time = 1.0 * .25 * 3600;
+    double total_sim_time = 50.0 * .25 * 3600;
 
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
@@ -121,9 +124,14 @@ int GcfWMS::main() {
          * },
          */
         if (wrench::Simulation::getCurrentSimulatedDate() >= record_time) {
-          file_out << "  \"" << record_time << "\": {" << std::endl;
-          file_out << "    \"succeeded\": " << succeeded << "," << std::endl;
-          file_out << "    \"failed\": " << failures << std::endl;
+          file_out << "  \"" << prev_record_time << "-" << record_time << "\": {" << std::endl;
+          file_out << "    \"succeeded\": " << succeeded - prev_success_sum << "," << std::endl;
+          file_out << "    \"failed\": " << failures - prev_fail_sum << std::endl;
+
+          prev_success_sum = succeeded;
+          prev_fail_sum = failures;
+          prev_record_time = record_time;
+
           if (wrench::Simulation::getCurrentSimulatedDate() + record_period > total_sim_time) {
             file_out << "  }" << std::endl;
           }
