@@ -1284,8 +1284,8 @@ app.post("/run/solo_cloud_function", function (req, res) {
         "num_instances": NUM_INSTANCES,
         "max_req": NUM_FIR,
         "min_req": 1,
-        "change_probability": 0.95,
-        "max_change": 2,
+        "change_probability": 0.75,
+        "max_change": (NUM_FIR - 1) / 2,
         "timeout": 10.0
     }
     // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
@@ -1305,20 +1305,20 @@ app.post("/run/solo_cloud_function", function (req, res) {
 
     let output_array = simulation_output.split("\n");
 
-    let arrived = output_array[0].split(":");
-    let success = output_array[2].split(":");
-    let fail = output_array[3].split(":");
+    let arrived = output_array[1].split(":");
+    let success = output_array[3].split(":");
+    let fail = output_array[4].split(":");
 
     let s_percent = Math.round(parseFloat(success[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
     let f_percent = Math.round(parseFloat(fail[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
 
-    output_array[0] = "Total # FIR:" + arrived[1];
-    output_array[2] = "- Succeeded:" + success[1] + " (" + s_percent.toString() + "%)";
-    output_array[3] = "- Failed:" + fail[1] + " (" + f_percent.toString() + "%)";
+    output_array[1] = "Total # FIR:" + arrived[1];
+    output_array[3] = "- Succeeded:" + success[1] + " (" + s_percent.toString() + "%)";
+    output_array[4] = "- Failed:" + fail[1] + " (" + f_percent.toString() + "%)";
 
     let printed_sim_output = "";
     for (let i = 0; i < output_array.length; i++) {
-        if (i != 1) {
+        if (i != 2) {
             printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
                 + output_array[i] + "<br></span>";
         }

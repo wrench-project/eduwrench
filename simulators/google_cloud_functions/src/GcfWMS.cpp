@@ -11,6 +11,7 @@
 #include <random>
 #include <deque>
 #include <fstream>
+#include <cmath>
 #include <stdio.h>
 #include "GcfWMS.h"
 
@@ -91,14 +92,14 @@ int GcfWMS::main() {
     // mention in narrative that every time you run, you will get different results due to random device seed
     std::random_device rd;  // Will be used to obtain a seed for the random number engine
     std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
-    std::uniform_real_distribution<> dis(0.0, max_change);
+    std::uniform_real_distribution<> dis(1.0, max_change);
 
     // initial sleep time and num free instances set in simulator
     direction = -1;
     num_requests_arrived = 0;
     succeeded = 0;
     failures = 0;
-    record_period = 600; // every 10 min
+    record_period = 300; // every 5 min
     record_time = record_period;
     auto prev_record_time = 0;
     auto prev_success_sum = 0;
@@ -109,7 +110,7 @@ int GcfWMS::main() {
     std::ofstream file_out;
     file_out.open(filename, std::ios_base::app);
     file_out << "{" << endl;
-    double total_sim_time = 50.0 * .25 * 3600;
+    double total_sim_time = 10.0 * .25 * 3600;
 
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
@@ -207,10 +208,15 @@ int GcfWMS::main() {
     file_out << "}" << endl;
     file_out.close();
 
+    auto totalCost = succeeded * (task_flops / 100) * 0.9520;
+    totalCost = std::ceil(totalCost * 100.0) / 100.0;
+    std::cerr << "Total Cost: $" << totalCost << std::endl;
+
     std::cerr << "Arrived: " << num_requests_arrived << std::endl;
     std::cerr << "Submitted: " << submitted << std::endl;
     std::cerr << "Succeeded: " << succeeded << std::endl;
     std::cerr << "Failures: " << failures << std::endl;
+
     this->job_manager.reset();
 
     return 0;

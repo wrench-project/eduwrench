@@ -74,27 +74,27 @@ const SoloCloudFunction = ({module, tab}) => {
 
             <p>
                 <strong>[C.2.q1.1]</strong> Assume your function is working in an environment in which peak hours
-                see a max X requests per second (i.e., max number of requests per second is set to X). How many
+                see a max 6 requests per second (i.e., max number of requests per second is set to 6). How many
                 instances do you need so that no request fails? Come up with an answer based on analysis
                 (e.g., math), and then test your theory by running the simulation and explain why you need that
                 many instances.
             </p>
 
             <p>
-                <strong>[C.2.q1.2]</strong> Using max X requests, what failure rate do you observe when reducing
+                <strong>[C.2.q1.2]</strong> Using max 6 requests, what failure rate do you observe when reducing
                 the number of instances by 10%, 25%, or by 50%? Is the increase in failure rate linear with the
                 decrease in number of instances?
             </p>
 
             <p>
                 <strong>[C.2.q1.3]</strong> Your business partner estimates that the popularity of the function
-                won’t be above Y max requests. How many instances would then be sufficient to achieve a failure
+                won’t be above 50 max requests. How many instances would then be sufficient to achieve a failure
                 rate below 1%?
             </p>
 
             <p>
-                <strong>[C.2.q1.4]</strong> Using max Y requests, the number of instances you picked in Question 3
-                leads to a cost of $XXX.  It turns out that your board of directors deems that a 10% failure rate
+                <strong>[C.2.q1.4]</strong> Using max 50 requests, the number of instances you picked in Question 3
+                leads to a cost of $1687.52.  It turns out that your board of directors deems that a 10% failure rate
                 of function invocations is still acceptable (that is, if 10% of invocations fail then customers
                 will still find the system useful).  What cost saving would occur when allowing for a 10% failure
                 rate?
