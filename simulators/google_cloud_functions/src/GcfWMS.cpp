@@ -23,10 +23,9 @@ void GcfWMS::setNumInstances(int num_instances) {
     this->num_free_instances = num_instances;
 }
 
-void GcfWMS::setSleepTime(double max_sleep_time, double min_sleep_time) {
-    this->max_sleep_time = max_sleep_time;
-    this->min_sleep_time = min_sleep_time;
-    this->sleep_time = (max_sleep_time - min_sleep_time) / 2;
+void GcfWMS::setReqArrivalRate(double min, double max) {
+    this->min_arrival_rate = min;
+    this->max_arrival_rate = max;
 }
 
 void GcfWMS::setChangeProb(double change_prob) {
@@ -95,11 +94,12 @@ int GcfWMS::main() {
     std::uniform_real_distribution<> dis(1.0, max_change);
 
     // initial sleep time and num free instances set in simulator
-    direction = -1;
+    double arrival_rate = min_arrival_rate;
+    direction = 1;
     num_requests_arrived = 0;
     succeeded = 0;
     failures = 0;
-    record_period = 300; // every 5 min
+    record_period = 10; // every 10 sec
     record_time = record_period;
     auto prev_record_time = 0;
     auto prev_success_sum = 0;
@@ -110,7 +110,7 @@ int GcfWMS::main() {
     std::ofstream file_out;
     file_out.open(filename, std::ios_base::app);
     file_out << "{" << endl;
-    double total_sim_time = 10.0 * .25 * 3600;
+    double total_sim_time = 1.0 * .25 * 3600;
 
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
@@ -148,19 +148,20 @@ int GcfWMS::main() {
         sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + timeout);
 
         // Compute the next sleep time
-        if (coinToss() == 0) {
-            sleep_time += direction * dis(gen);
-        }
-        if (direction == 1 && sleep_time >= max_sleep_time) {
-            sleep_time = max_sleep_time;
+         if (coinToss() == 0) {
+            arrival_rate += direction * dis(gen);
+            // arrival_rate += direction;
+         }
+        if (direction == 1 && arrival_rate >= max_arrival_rate) {
+            arrival_rate = max_arrival_rate;
             direction = -1;
-        } else if (direction == -1 && sleep_time <= min_sleep_time) {
-            sleep_time = min_sleep_time;
+        } else if (direction == -1 && arrival_rate <= min_arrival_rate) {
+            arrival_rate = min_arrival_rate;
             direction = 1;
         }
 
         // Compute the arrival date of the next request
-        double arrival_date_of_next_request = wrench::Simulation::getCurrentSimulatedDate() + sleep_time;
+        double arrival_date_of_next_request = wrench::Simulation::getCurrentSimulatedDate() + 1.0 / arrival_rate;
 
         WRENCH_INFO("ARRIVAL DATE OF NEXT REQUEST: %.2lf", arrival_date_of_next_request);
         // Until that request arrives, deal with job completions and perhaps serve more requests

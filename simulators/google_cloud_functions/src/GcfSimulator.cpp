@@ -121,7 +121,7 @@ int main(int argc, char **argv) {
                         nullptr, compute_services, {}, wms_host));
   // TO BE CHANGED BASED ON ARGS
   wms->setNumInstances(num_instances);
-  wms->setSleepTime(1.0 / min_req, 1.0 / max_req);
+  wms->setReqArrivalRate(min_req, max_req);
   wms->setChangeProb(change_probability);
   wms->setMaxChange(max_change);
   wms->addWorkflow(new wrench::Workflow());

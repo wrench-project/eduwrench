@@ -1285,7 +1285,7 @@ app.post("/run/solo_cloud_function", function (req, res) {
         "max_req": NUM_FIR,
         "min_req": 1,
         "change_probability": 0.75,
-        "max_change": (NUM_FIR - 1) / 2,
+        "max_change": 2,
         "timeout": 10.0
     }
     // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript

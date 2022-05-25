@@ -25,7 +25,7 @@ public:
               const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
               const std::string &hostname);
     void setNumInstances(int num_instances);
-    void setSleepTime(double max_sleep_time, double min_sleep_time);
+    void setReqArrivalRate(double min, double max);
     double getChangeProb();
     void setChangeProb(double change_prob);
     void setMaxChange(double max_change);
@@ -41,9 +41,8 @@ private:
         /** @brief The job manager */
     std::shared_ptr<wrench::JobManager> job_manager;
     int num_free_instances;
-    double sleep_time;
-    double max_sleep_time;
-    double min_sleep_time;
+    double max_arrival_rate;
+    double min_arrival_rate;
     int direction; // +1 or -1
     int num_requests_arrived;
     int submitted;
