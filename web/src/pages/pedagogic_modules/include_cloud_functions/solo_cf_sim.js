@@ -40,7 +40,7 @@ const Solo_Cloud_Function_Simulation = () => {
                                 if (!validateFieldInRange("gcf-num-instances-label", values.numInstances, 1, 100, "N = ", " Instance(s)")) {
                                     errors.numInstances = "ERROR"
                                 }
-                                if (!validateFieldInRange("gcf-num-fir-label", values.numFir, 2, 100, "Max # FIR / sec = ", "")) {
+                                if (!validateFieldInRange("gcf-num-fir-label", values.numFir, 2, 100, "Max # FIR / min = ", "")) {
                                     errors.numFir = "ERROR"
                                 }
                                 if (values.numInstances < 1 || values.numInstances > 100) {
@@ -112,7 +112,7 @@ const Solo_Cloud_Function_Simulation = () => {
                                         />
                                         <Form.Input fluid
                                                     name="numFir"
-                                                    label="Max # of Requests/sec"
+                                                    label="Max # of Requests/min"
                                                     placeholder="2"
                                                     type="number"
                                                     min={2}
@@ -121,7 +121,7 @@ const Solo_Cloud_Function_Simulation = () => {
                                                     onBlur={handleBlur}
                                                     value={values.numFir}
                                                     error={errors.numFir && touched.numFir ? {
-                                                        content: "Please provide the max # of requests/sec in the range of [2, 100].",
+                                                        content: "Please provide the max # of requests/min in the range of [2, 100].",
                                                         pointing: "above"
                                                     } : null}
                                         />

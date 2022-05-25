@@ -128,24 +128,6 @@ int main(int argc, char **argv) {
   wms->setTaskFlops(func_exec_time);
   wms->setTimeout(timeout);
 
-  // Instantiate a file registry service
-//  std::string file_registry_service_host = hostname_list[(hostname_list.size() > 2) ? 1 : 0];
-//  std::cerr << "Instantiating a FileRegistryService on " << file_registry_service_host << "..." << std::endl;
-//  auto file_registry_service =
-//          new wrench::FileRegistryService(file_registry_service_host);
-//  simulation.add(file_registry_service);
-
-  // It is necessary to store, or "stage", input files
-//  std::cerr << "Staging input files..." << std::endl;
-//  auto input_files = workflow->getInputFiles();
-//  try {
-//     for (auto const &f : input_files) {
-//         simulation.stageFile(f, storage_service);
-//     }
-//  } catch (std::runtime_error &e) {
-//    std::cerr << "Exception: " << e.what() << std::endl;
-//    return 0;
-//  }
 
   // Launch the simulation
   // std::cerr << "Launching the Simulation..." << std::endl;

@@ -29,7 +29,7 @@ const StackedBarChart = ({data}) => {
       x: {
         title: {
           display: true,
-          text: 'Time (sec)'
+          text: 'Hours'
         }
       },
       y: {
