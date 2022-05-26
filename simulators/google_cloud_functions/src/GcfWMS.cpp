@@ -99,6 +99,7 @@ int GcfWMS::main() {
     double half_period = 12 * HOUR;
     direction = 1;
     num_requests_arrived = 0;
+    submitted = 0;
     succeeded = 0;
     failures = 0;
     record_period = HOUR; // every fake hour

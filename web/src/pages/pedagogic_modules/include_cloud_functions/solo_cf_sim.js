@@ -37,13 +37,13 @@ const Solo_Cloud_Function_Simulation = () => {
 
                             validate={values => {
                                 const errors = {}
-                                if (!validateFieldInRange("gcf-num-instances-label", values.numInstances, 1, 100, "N = ", " Instance(s)")) {
+                                if (!validateFieldInRange("gcf-num-instances-label", values.numInstances, 1, 200, "N = ", " Instance(s)")) {
                                     errors.numInstances = "ERROR"
                                 }
                                 if (!validateFieldInRange("gcf-num-fir-label", values.numFir, 2, 100, "Max # FIR / min = ", "")) {
                                     errors.numFir = "ERROR"
                                 }
-                                if (values.numInstances < 1 || values.numInstances > 100) {
+                                if (values.numInstances < 1 || values.numInstances > 200) {
                                     errors.numInstances = "ERROR"
                                 }
                                 if (values.numFir < 2 || values.numFir > 100) {
@@ -101,12 +101,12 @@ const Solo_Cloud_Function_Simulation = () => {
                                                     placeholder="1"
                                                     type="number"
                                                     min={1}
-                                                    max={100}
+                                                    max={200}
                                                     onChange={handleChange}
                                                     onBlur={handleBlur}
                                                     value={values.numInstances}
                                                     error={errors.numInstances && touched.numInstances ? {
-                                                        content: "Please provide the number of instances in the range of [1, 100].",
+                                                        content: "Please provide the number of instances in the range of [1, 200].",
                                                         pointing: "above"
                                                     } : null}
                                         />
