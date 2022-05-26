@@ -5,6 +5,8 @@ import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import PracticeQuestions from "../../../components/practice_questions"
 import IOSimulation from "./io_simulation"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 import IOFigure1 from "../../../images/vector_graphs/single_core/IO_figure_1.svg"
 import IOFigure2 from "../../../images/vector_graphs/single_core/IO_figure_2.svg"
@@ -208,7 +210,7 @@ const IO = ({module, tab}) => {
 
             <PracticeQuestions questions={[
                 {
-                    key: "A.1.p4.1]",
+                    key: "A.1.p4.1",
                     question: "Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop, " +
                         "and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the simulation " +
                         "app above. What is the total execution time when I/O and computation can be overlapped? Show your work. " +
@@ -221,7 +223,13 @@ const IO = ({module, tab}) => {
                             The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
                             core utilization is <TeX math="250/253 = 98.8\%" />.
                         </>
-                    )
+                    ),
+                    answer: [2.3, 4.0],
+                    type: "textbox",
+                    choices: '',
+                    hint: "this is hint",
+                    giveup: true,
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.2",
@@ -240,7 +248,13 @@ const IO = ({module, tab}) => {
                             </ul>
                             Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
                         </>
-                    )
+                    ),
+                    answer: [1.2, 2.3],
+                    type: "textbox",
+                    choices: '',
+                    hint: "this is hint",
+                    giveup: true,
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.3",
@@ -290,7 +304,13 @@ const IO = ({module, tab}) => {
                                 The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [1.3, 2.0],
+                    type: "textbox",
+                    choices: '',
+                    hint: "this is hint",
+                    giveup: true,
+                    module: "A.1"
                 },
                 {
                     key: "A.1.p4.4",
@@ -318,7 +338,13 @@ const IO = ({module, tab}) => {
                                 increases, the CPU utilization tends to 100%.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    hint: "this is hint",
+                    giveup: true,
+                    module: "A.1"
                 }
             ]}
             />
@@ -386,6 +412,21 @@ const IO = ({module, tab}) => {
                 <strong>[Programming #2]</strong> Modify your program so that it determines which byte value is the most
                 frequent in the file. Is this modified program more or less I/O-intensive? By how much?
             </p>
+
+            <Divider />
+
+            <Header as="h3" block>
+                Feedback Questions
+            </Header>
+            
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                {
+                    key: "Feedback A.1.4",
+                    feedback: "feedback",
+                },
+                ]} />
+            } />
 
         </>
     )

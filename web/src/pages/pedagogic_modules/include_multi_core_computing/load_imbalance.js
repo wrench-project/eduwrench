@@ -107,7 +107,11 @@ const LoadImbalance = ({module, tab}) => {
                                 math="15 \times 2 = 30" />.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p2.2",
@@ -127,7 +131,11 @@ const LoadImbalance = ({module, tab}) => {
                                 simulation clearly shows a 3600-second execution time, i.e., 1 hour.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p2.3",
@@ -146,7 +154,11 @@ const LoadImbalance = ({module, tab}) => {
                                 This is seen easily in simulation by setting the task work to 100 Gflop.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p2.4",
@@ -169,7 +181,11 @@ const LoadImbalance = ({module, tab}) => {
                             <p>We conclude that we should go with the 5-core computer. Even though the 10-core computer completes the
                                 program faster, our concern here was parallel efficiency.</p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -232,7 +248,11 @@ const LoadImbalance = ({module, tab}) => {
                             that each sum up to 10. One of these parts must contain number 7. So we also put number 3 into that part
                             since then it exactly sums to 10. We are left with numbers 2, 4, and 5, which sum up to 11.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p2.6",
@@ -245,7 +265,11 @@ const LoadImbalance = ({module, tab}) => {
                             cores finish computing in 15s. On the third core we run the 12s task. If the 6th task takes 3s, then all 3
                             cores finish computing in 15s. So the answer is 3 seconds.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
