@@ -120,7 +120,11 @@ const DataParallelism = ({module, tab}) => {
                             The execution time on 6 cores is:
                             <TeX math="T(6) = \frac{100 \times 3^2 / 6}{100} + \frac{100}{100} =  2.50 \text{sec}" block />
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p5.2",
@@ -154,7 +158,11 @@ const DataParallelism = ({module, tab}) => {
                                 math="E_B = (10/2.125)/8 = 58.82\%" />. Our intuition is confirmed! Execution B has better efficiency!
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p5.3",
@@ -167,7 +175,11 @@ const DataParallelism = ({module, tab}) => {
                             When running on 4 cores, the program runs in 10 + 20/4 = 15 seconds. So the speedup is 30/15 = 2. So, the
                             parallel efficiency is 50%.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -276,7 +288,11 @@ const DataParallelism = ({module, tab}) => {
                                 Therefore, the sequential phase lasts for <TeX math="10 \times (1 - .53) = 4.7" /> minutes.
                             </p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p5.5",
@@ -294,7 +310,11 @@ const DataParallelism = ({module, tab}) => {
               = .65" block />
                             So only 65% of the 6-core execution is spent in the parallel phase.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p5.6",
@@ -307,7 +327,11 @@ const DataParallelism = ({module, tab}) => {
                             is really no need to remember the formula by heart. The bound is simply what speedup we would achieved
                             with an infinite number of cores, i.e., when the execution time of the parallel phase is zero.
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 
@@ -380,7 +404,11 @@ const DataParallelism = ({module, tab}) => {
               = \frac{10000}{500 + 2500}
               = 3.33" block />
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 },
                 {
                     key: "A.2.p5.8",
@@ -404,7 +432,11 @@ const DataParallelism = ({module, tab}) => {
                             <TeX math="\frac{10000}{10000 + X} \geq 0.9" block />
                             <p>which gives <TeX math="X \leq 1111.11" /> Gflop.</p>
                         </>
-                    )
+                    ),
+                    answer: [4.2, 10],
+                    type: "textbox",
+                    choices: '',
+                    module: "A.2"
                 }
             ]} />
 

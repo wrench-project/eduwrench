@@ -1,6 +1,8 @@
 import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 const Memory = ({module, tab}) => {
   return (
@@ -60,6 +62,21 @@ const Memory = ({module, tab}) => {
         navigate to content-heavy Web sites (e.g., news sites, social media sites). How much more memory does your
         browser use now?
       </p>
+
+      <Divider />
+
+      <Header as="h3" block>
+          Feedback Questions
+      </Header>
+      
+      <FeedbackActivity content={
+          <FeedbackQuestions feedbacks={[
+          {
+              key: "Feedback A.1.3",
+              feedback: "feedback",
+          },
+          ]} />
+      } />
     </>
   )
 }

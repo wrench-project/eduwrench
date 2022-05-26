@@ -1362,6 +1362,7 @@ app.post("/get/usage_statistics", function (req, res) {
     })).catch((error => {
         console.log("[ERROR]: " + error)
     }))
+    console.log(res.body);
 })
 
 /**
@@ -1425,7 +1426,6 @@ function logData(data) {
         let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
         db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
             return true
-
         })).catch((error => {
             console.log("[ERROR]: " + error)
             return false
@@ -1435,6 +1435,184 @@ function logData(data) {
         return false
     }))
 }
+
+/**
+ * Log the practice question parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
+function logQuestion(data) {
+    db.registerUser(data.email, data.user).then((userID) => {
+        let time = Math.round(new Date().getTime() / 1000)
+        if (data.button) {
+            db.setUpdateGiveUp(userID, data.question_key, time, data.button, data.answer).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else {
+            db.updatePracticeQuestion(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        }
+    }).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+}
+
+/* Post request to call function to update the practice question database */
+app.post('/update/question', function (req, res) {
+    console.log(req.body);
+    try {
+        logQuestion({
+            user: req.body.userName,
+            email: req.body.email,
+            question_key: req.body.question_key,
+            answer : req.body.answer,
+            correctAnswer: req.body.correctAnswer,
+            type: req.body.type,
+            button: req.body.button,
+            module: req.body.module
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+/* POST request to call function to respond with "completed" status */
+app.post('/get/question', function (req, res) {
+    console.log(req.body);
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getPracticeQuestion(userID, req.body.question_key).then(question => {
+            res.json({
+                previous_answer: question.previous_answer,
+                completed: question.completed,
+                giveup: question.giveup
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
+app.post('/insert/simfeedback', function (req, res) {
+    let time = Math.round(new Date().getTime() / 1000)
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.logSimulationFeedback(userID, time, req.body.simID, req.body.rating, req.body.feedback).then(simFeedbackID => {
+            return true
+        }).catch(error => {
+            console.log("[ERROR]: " + error)
+            return false
+        })
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
+    })
+})
+
+app.post('/get/simfeedback', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getSimulationFeedback(userID, req.body.simID).then(feedback => {
+            console.log(feedback)
+            res.json({
+                completed: feedback.completed
+            })
+        }).catch((error => {
+            console.log("[ERROR]" + error)
+            return false
+        }))
+    })
+})
+
+/**
+ * Log the feedback parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
+ function logFeedback(data) {
+    db.registerUser(data.email, data.user).then((userID) => {
+        let time = Math.round(new Date().getTime() / 1000)
+        db.updateFeedback(userID, data.feedback_key, time, data.useful, data.quality, data.comments, data.module).then ((feedbackId => {
+            return true
+        })).catch((error => {
+            console.log("[ERROR: " + error)
+            return false
+        }))
+    })
+}
+
+app.post('/update/feedback', function (req, res) {
+    console.log(req.body);
+    try {
+        logFeedback({
+            user: req.body.user_name,
+            email: req.body.email,
+            feedback_key: req.body.feedback_key,
+            useful : req.body.useful,
+            quality : req.body.quality,
+            comments : req.body.comments,
+            module : req.body.module
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+app.post('/get/feedback', function (req, res) {
+    console.log(req.body);
+    db.registerUser(req.body.email, req.body.user).then(userID => {
+        db.getFeedback(userID, req.body.feedback_key).then(feedback => {
+            res.json({
+                completed: feedback.completed,
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
+
+app.post('/get/global_statistics', function (req, res) {
+    db.getGlobalStatistics().then(global => {
+        res.json({
+            globalQuestion: global.globalQuestion,
+            globalFeedback: global.globalFeedback,
+            globalSimFeedback: global.globalSimFeedback
+        })
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+    .catch((error => {
+        console.log("ERROR " + error)
+    }))
+})
+
+app.post('/get/userdata', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getUserData(userID).then(userData => {
+            res.json({
+                questionData: userData.questionData,
+                feedbackData: userData.feedbackData
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+
+})
 
 // Enable SSL server connection
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {

@@ -4,6 +4,8 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 
 import MultiCoreCapstoneFigure from "../../../images/vector_graphs/multi_core/multicore_capstone.svg"
+import FeedbackQuestions from "../../../components/feedback_questions";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
 
 const MultiCoreCapstone = ({module, tab}) => {
     return (
@@ -82,7 +84,17 @@ const MultiCoreCapstone = ({module, tab}) => {
                 <strong>[A.2.q6.2]</strong> Which of the options above are worth it? Show your work for each option (e.g.,
                 mathematical expressions, narratives).
             </p>
-
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        key: "Feedback A.2",
+                        feedback: "feedback",
+                        useful: ['Very useful', 'Useful', 'Neutral', 'Useless'],
+                        quality: ['Very good', 'Good', 'Fair', 'Poor'],
+                        module: "A.2"
+                    },
+                ]} />
+            } />
         </>
     )
 }

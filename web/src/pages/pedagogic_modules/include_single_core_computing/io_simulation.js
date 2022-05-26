@@ -12,6 +12,8 @@ import {
   validateFieldInRange,
   validateFieldInMultipleRanges
 } from "../../../components/simulation/simulation_validation"
+import SimulationFeedback from "../../../components/simulation/simulaiton_feedback"
+
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
 
@@ -19,6 +21,7 @@ const IOSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -67,6 +70,8 @@ const IOSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
+                  console.log(runtimes)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -198,6 +203,7 @@ const IOSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'io_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

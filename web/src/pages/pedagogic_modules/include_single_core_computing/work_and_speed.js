@@ -3,6 +3,8 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions"
+import FeedbackQuestions from "../../../components/feedback_questions"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
 const WorkAndSpeed = ({module, tab}) => {
   return (
@@ -133,7 +135,12 @@ const WorkAndSpeed = ({module, tab}) => {
             "Tflop/sec. How long will the program run for in seconds?",
           content: (
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
-          )
+          ),
+            type: "textbox",
+            answer: [0, 5],
+            hint: "this is hint",
+            giveup: true,
+            module: "A.1"
         },
         {
           key: "A.1.p1.2",
@@ -141,7 +148,13 @@ const WorkAndSpeed = ({module, tab}) => {
             "program perform?",
           content: (
             <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
-          )
+          ),
+            type: "mutlichoice",
+            choices: ['test1', 'test2', 'test3', 'test4'],
+            answer: 'test2',
+            hint: "this is another hint",
+            giveup: true,
+            module: "A.1"
         }
       ]}
       />
@@ -189,6 +202,22 @@ const WorkAndSpeed = ({module, tab}) => {
         operations and use it to perform your own benchmarking of your machine. Implement this program in different
         languages and observe whether the Gflop/sec measurement varies across languages.
       </p>
+
+      <Divider />
+
+      <Header as="h3" block>
+        Feedback Questions
+      </Header>
+      
+      <FeedbackActivity content={
+        <FeedbackQuestions feedbacks={[
+          {
+            key: "Feedback A.1.1",
+            feedback: "feedback",
+            module: "A.1"
+          },
+        ]} />
+      } />
     </>
   )
 }

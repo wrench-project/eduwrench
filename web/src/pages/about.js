@@ -12,11 +12,13 @@ import axios from "axios"
 import Layout from "../components/layout"
 import PageHeader from "../components/page_header"
 import UsageStatistics from "../components/charts/usage_statistics"
+import GlobalStatistics from "../components/charts/global_statistics"
 import { Divider, Segment } from "semantic-ui-react"
 
 const About = () => {
 
   const [usageStatisticsResults, setUsageStatisticsResults] = useState(<></>)
+  const [globalStatisticsResults, setGlobalStatisticsResults] = useState(<></>)
 
   useEffect(() => {
     axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/usage_statistics").then(
@@ -31,6 +33,23 @@ const About = () => {
       error => {
         console.log(error)
         alert("Error executing simulation.")
+      }
+    )
+  }, []);
+
+  useEffect(() => {
+    axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/global_statistics").then(
+      response => {
+        console.log('================',response.data)
+        setGlobalStatisticsResults(
+          <>
+            <GlobalStatistics data={response.data} />
+          </>
+        )
+      },
+      error => {
+        console.log(error)
+        alert("Error global statistics.")
       }
     )
   }, [])
@@ -94,6 +113,10 @@ const About = () => {
         <h3>Usage Statistics</h3>
         {usageStatisticsResults}
       </Segment>
+      <Segment>
+         <h3>Global Statistics</h3>
+         {globalStatisticsResults}
+       </Segment>
 
       <br /><br />
 
