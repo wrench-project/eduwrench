@@ -1281,7 +1281,7 @@ app.post("/run/solo_cloud_function", function (req, res) {
 
     const json_data = {
         "func_exec_time": 10.0,
-        "num_instances": NUM_INSTANCES,
+        "num_instances": NUM_INSTANCES + 1,
         "max_req": NUM_FIR,
         "min_req": 1,
         "change_probability": 0.75,

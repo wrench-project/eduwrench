@@ -52,7 +52,7 @@ const SoloCloudFunction = ({module, tab}) => {
             <p>
                 The usage pattern of the facial recognition function, i.e., the number of function invocation
                 requests by customers per time unit, varies throughout time. Specifically, it oscillates between
-                some minimum number of requests per seconds (1 per minute, say in the middle of the night) and some
+                some minimum number of requests per minute (1 per minute, say in the middle of the night) and some
                 maximum  (say during peak hours). These oscillations have a random component, and therefore there
                 is a bit of jitter.
             </p>
@@ -74,14 +74,14 @@ const SoloCloudFunction = ({module, tab}) => {
 
             <p>
                 <strong>[C.2.q1.1]</strong> Assume your function is working in an environment in which peak hours
-                see a max 6 requests per second (i.e., max number of requests per second is set to 6). How many
+                see a max 9 requests per second (i.e., max number of requests per second is set to 9). How many
                 instances do you need so that no request fails? Come up with an answer based on analysis
                 (e.g., math), and then test your theory by running the simulation and explain why you need that
                 many instances.
             </p>
 
             <p>
-                <strong>[C.2.q1.2]</strong> Using max 6 requests, what failure rate do you observe when reducing
+                <strong>[C.2.q1.2]</strong> Using max 9 requests, what failure rate do you observe when reducing
                 the number of instances by 10%, 25%, or by 50%? Is the increase in failure rate linear with the
                 decrease in number of instances?
             </p>
