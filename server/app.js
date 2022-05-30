@@ -1488,7 +1488,6 @@ function logQuestion(data) {
 
 /* Post request to call function to update the practice question database */
 app.post('/update/question', function (req, res) {
-    console.log(req.body);
     try {
         logQuestion({
             user: req.body.userName,

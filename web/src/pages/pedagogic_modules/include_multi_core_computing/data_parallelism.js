@@ -4,7 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import DataParallelismSimulation from "./data_parallelism_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import ExampleDataParallelismDAG from "../../../images/vector_graphs/multi_core/multicore_example_data_parallelism_dag.svg"
 import ExampleDataParallelismExposedDAG from "../../../images/vector_graphs/multi_core/multicore_example_data_parallelism_exposed_dag.svg"

@@ -101,8 +101,9 @@ const Thrustd_Cloud_Simulation = () => {
                                             return
                                         }
                                         const userEmail = localStorage.getItem("currentUser")
+                                        const userName = localStorage.getItem("userName")
                                         const data = {
-                                            userName: userEmail.split("@")[0],
+                                            userName: userName,
                                             email: userEmail,
                                             // num_hosts: values.numHosts,
                                             num_hosts: 12,

@@ -4,7 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import CoordinatorWorkerBasicsSimulation from "./coordinator_worker_basics_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import CoordinatorWorkerNarrative
     from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_narrative.svg"

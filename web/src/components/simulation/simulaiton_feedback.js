@@ -7,6 +7,7 @@ import "./simulation_feedback.css"
 
 const SimulationFeedback = ({simulationID, trigger}) => {
     const userEmail = localStorage.getItem("currentUser")
+    const userName = localStorage.getItem("userName")
     const ratings = ['Perfect', 'Good', 'Poor', 'Bad']
     const [open, setOpen] = useState(false)
     const [complete, setComplete] = useState(false)
@@ -16,7 +17,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
     useEffect(() => {
         axios
             .post('http://localhost:3000/get/simfeedback', {
-                userName: userEmail.split("@")[0],
+                userName: userName,
                 email: userEmail,
                 simID: simulationID,
             })
@@ -45,7 +46,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                         onSubmit={(values, {setSubmitting}) => {
                             setTimeout(() => {
                                 const data = {
-                                    userName: userEmail.split("@")[0],
+                                    userName: userName,
                                     email: userEmail,
                                     rating: values.rating,
                                     feedback: values.feedback,

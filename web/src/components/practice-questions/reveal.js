@@ -3,7 +3,11 @@ import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
-const Reveal = ({question_key, hint, answer, module}) => {
+const PracticeQuestionReveal = ({question_key, question, hint, explanation, module}) => {
+    console.log("KEY = " + question_key)
+    console.log("HINT = " + hint)
+    console.log("EXPLANATION = " + explanation)
+    console.log("MODULE = " + module)
     const [state, setState] = useState('')
     // const [completed, setCompleted] = useState(false)
     // const [gaveUp, setGaveUp] = useState(false)
@@ -33,8 +37,9 @@ const Reveal = ({question_key, hint, answer, module}) => {
 
     const onHint = () => {
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         const question = {
-            userName: userEmail.split("@")[0],
+            userName: userName,
             email: userEmail,
             question_key: question_key,
             button: 'hint'
@@ -52,16 +57,15 @@ const Reveal = ({question_key, hint, answer, module}) => {
         setState('Revealed')
         // setRevealed(true)
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         const question = {
-            userName: userEmail.split("@")[0],
+            userName: userName,
             email: userEmail,
             question_key: question_key,
-            answer: '',
             button: 'reveal',
             type: 'reveal',
-            correctAnswer: answer,
-            module: module
         }
+        console.log(question)
         axios
             .post('http://localhost:3000/update/question', question)
             .then((response) => response)
@@ -73,22 +77,34 @@ const Reveal = ({question_key, hint, answer, module}) => {
     if (revealed) {
         return (
             <>
-                <Label color='' size='large'>Correct Answer:</Label> {answer}
+                <div>
+                <strong>[{question_key}]</strong> {question}
+                <br/><br/>
+                <Label color='grey' size='large'>Revealed Answer:</Label> {explanation}
+                    <br/>
+                    <br/>
+                </div>
+            </>
+        )
+    } else {
+        return (
+            <>
+                <div>
+                <strong>[{question_key}]</strong> {question}
+                    <br/><br/>
+                {<Button onClick={onReveal} color="teal" content="Reveal answer"/>}
+                {(hint) ? <Modal
+                    trigger={<Button onClick={onHint} content="Hint"/>}
+                    header='Hint'
+                    content={hint}
+                    actions={[{key: 'done', content: 'Done'}]}/> : ""}
+                    <br/>
+                    <br/>
+                </div>
             </>
         )
     }
-
-    return (
-        <>
-            {(answer) ? <Button onClick={onReveal} color="teal" content="Reveal answer" /> : ''}
-            {(hint) ? <Modal
-                trigger={<Button onClick={onHint} content="Hint" />}
-                header='Hint'
-                content={hint}
-                actions={[{ key: 'done', content: 'Done'}]} /> : ''}
-        </>
-    )
 }
 
 
-export default Reveal
+export default PracticeQuestionReveal

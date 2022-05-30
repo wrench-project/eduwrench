@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 import TaskDependencies3CoresSimulation from "./task_dependencies_3_cores_simulation"
 import TaskDependencies2CoresSimulation from "./task_dependencies_2_cores_simulation"
 

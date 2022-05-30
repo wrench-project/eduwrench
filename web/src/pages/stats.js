@@ -34,9 +34,10 @@ const Stats = () => {
 
     useEffect(() => {
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         axios
             .post('http://localhost:3000/get/userdata', {
-                userName: userEmail.split("@")[0],
+                userName: userName,
                 email: userEmail,
             })
             .then((response) => {

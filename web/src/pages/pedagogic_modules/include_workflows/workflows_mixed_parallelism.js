@@ -4,7 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import WorkflowsMixedParallelismSimulation from "./workflows_mixed_parallelism_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import WorkflowsMixedParallelismWorkflow
   from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism_workflow.svg"

@@ -2,7 +2,7 @@ import React from "react"
 import { Accordion, Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 const LatencyAndBandwidth = ({module, tab}) => {
     return (

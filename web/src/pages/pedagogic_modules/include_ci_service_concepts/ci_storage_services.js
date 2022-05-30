@@ -13,7 +13,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import CIStorageServicesSimulation from "./ci_storage_services_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import CISimpleStorage from "../../../images/vector_graphs/ci_service_concepts/simple_storage.svg"
 import CIStorageNetworkProximitySimulation from "./ci_storage_network_proximity_simulation"

@@ -4,7 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import ClientServerBasicsSimulation from "./client_server_basics_simulation"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import ClientServerImage from "../../../images/vector_graphs/client_server/client_server.svg"
 import ClientServerQuestion from "../../../images/vector_graphs/client_server/client_server_question.svg"

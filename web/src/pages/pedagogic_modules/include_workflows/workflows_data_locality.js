@@ -13,7 +13,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import WorkflowsDataLocalitySimulation from "./workflows_data_locality_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import WorkflowsDataLocalityPlatformZoom
   from "../../../images/vector_graphs/workflows/workflow_data_locality_platform_zoom.svg"

@@ -4,7 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import WorkflowsDistributedExecutionSimulation from "./workflows_distributed_execution_simulation"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 
 import DistributedPlatform from "../../../images/vector_graphs/workflows/workflow_distributed_platform.svg"
 import DistributedPlatformZoom from "../../../images/vector_graphs/workflows/workflow_distributed_platform_zoom.svg"

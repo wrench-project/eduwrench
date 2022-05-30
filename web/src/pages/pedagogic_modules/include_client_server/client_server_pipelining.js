@@ -3,7 +3,7 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import PracticeQuestions from "../../../components/practice_questions"
+import PracticeQuestions from "../../../components/practice_questions_header"
 import ClientServerPipeliningSimulation from "./client_server_pipelining_simulation"
 
 import PipeliningImage from "../../../images/vector_graphs/client_server/client_server_pipelining.svg"

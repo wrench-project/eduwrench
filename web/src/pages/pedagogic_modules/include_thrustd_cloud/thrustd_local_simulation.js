@@ -71,8 +71,9 @@ const Thrustd_Local_Simulation = () => {
                                         return
                                     }
                                     const userEmail = localStorage.getItem("currentUser")
+                                    const userName = localStorage.getItem("userName")
                                     const data = {
-                                        userName: userEmail.split("@")[0],
+                                        userName: userName,
                                         email: userEmail,
                                         num_hosts: values.numHosts,
                                         pstate: values.pstate

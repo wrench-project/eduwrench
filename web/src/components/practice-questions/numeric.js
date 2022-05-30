@@ -3,7 +3,7 @@ import { Formik } from "formik"
 import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import axios from "axios"
 
-const Numeric = ({question_key, answer, hint, giveup, module}) => {
+const Numeric = ({question_key, answer, hint, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
     const [gaveup, setGaveup] = useState(false)
@@ -33,8 +33,9 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
 
     const onHint = () => {
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         const question = {
-            userName: userEmail.split("@")[0],
+            userName: userName,
             email: userEmail,
             question_key: question_key,
             button: 'hint'
@@ -53,8 +54,9 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
         setGaveup(true);
         setPrevAnswer(`${answer[0]} - ${answer[1]}`)
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         const question = {
-            userName: userEmail.split("@")[0],
+            userName: userName,
             email: userEmail,
             question_key: question_key,
             button: 'giveup',
@@ -103,6 +105,7 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
                 validateOnChange={false}
                 onSubmit={(values, { setSubmitting }) =>{
                     const userEmail = localStorage.getItem("currentUser");
+                    const userName = localStorage.getItem("userName");
                     setTimeout(() => {
                         if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
                             setState("Correct")
@@ -111,7 +114,7 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
                             setState("Incorrect")
                         }
                         const question = {
-                            userName: userEmail.split("@")[0],
+                            userName: userName,
                             email: userEmail,
                             question_key: question_key,
                             answer: values.input,
@@ -161,7 +164,7 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
                 )}
             </Formik>
             {message}
-            {(giveup && !completed) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
+            {(!completed) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
             {(hint && !completed) ? <Modal
                 trigger={<Button onClick={onHint} content="Hint" />}
                 header='Hint'

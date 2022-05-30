@@ -3,7 +3,7 @@ import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
-const MultiChoice = ({question_key, choices, answer, hint, module}) => {
+const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_answer, explanation, hint, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
     let message
@@ -29,8 +29,9 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
 
     const onHint = () => {
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
         const question = {
-            userName: userEmail.split("@")[0],
+            userName: userName,
             email: userEmail,
             question_key: question_key,
             module: module,
@@ -44,9 +45,14 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
             })
     }
 
+    console.log("STATE = " + state)
+    console.log("CORRECT ANSWER = " + correct_answer)
+    console.log(correct_answer)
+    const correct_message = "You have given the correct answer: " + correct_answer
+    console.log("CORRECT MESSAGE = " + correct_message)
     switch (state) {
         case 'Correct':
-            message = <Message icon='check'color='green' content='Answer is correct!'/>
+            message = <Message icon='check' color='green' content={correct_message} />
             break
         case 'Incorrect':
             message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
@@ -59,14 +65,32 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
     if (completed) {
         return (
             <>
-                <Label color='green' size='large'>Detailed answer: {answer} </Label>}
+                <strong>[{question_key}]</strong> {question}<br/><br/>
+                <ul>
+                    {choices.map((choice) =>
+                            <li key={choice}> choice </li>
+                        // <Form.Field key={choice}>
+                        //     <Form.Radio
+                        //         name="selected"
+                        //         label={choice}
+                        //         id={choice}
+                        //         value={choice}
+                        //         checked={(completed) ? choice === correct_answer : values.selected === choice}
+                        //         onChange={}
+                        //         onBlur={}
+                        //     />
+                        // </Form.Field>
+                    )}
+                </ul>
                 {message}
+                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
             </>
         )
     }
 
     return (
         <>
+            <strong>[{question_key}]</strong> {question}<br/><br/>
             <Formik
                 key={question_key}
                 initialValues={{selected: ''}}
@@ -75,22 +99,24 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
                 onSubmit={(values, { setSubmitting }) =>{
                     setTimeout(() => {
                         const userEmail = localStorage.getItem("currentUser");
-                        if (values.selected === answer) {
+                        const userName = localStorage.getItem("userName");
+                        if (values.selected === correct_answer) {
                             setState("Correct")
                             setCompleted(true)
                         } else {
                             setState("Incorrect")
                         }
                         const question = {
-                            user: userEmail.split("@")[0],
+                            user: userName,
                             email: userEmail,
                             question_key: question_key,
                             answer: values.selected,
-                            correctAnswer: answer,
+                            correctAnswer: correct_answer,
                             type: 'multichoice',
                             button: 'submit',
                             module: module
                         }
+                        console.log(question)
                         axios
                             .post('http://localhost:3000/update/question', question)
                             .then((response) => response)
@@ -117,7 +143,7 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
                                     label={choice}
                                     id={choice}
                                     value={choice}
-                                    checked={(completed) ? choice === answer : values.selected === choice}
+                                    checked={(completed) ? choice === correct_answer : values.selected === choice}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                 />
@@ -149,4 +175,4 @@ const MultiChoice = ({question_key, choices, answer, hint, module}) => {
 }
 
 
-export default MultiChoice
+export default PracticeQuestionMultiChoice
