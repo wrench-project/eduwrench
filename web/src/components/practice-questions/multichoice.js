@@ -3,6 +3,7 @@ import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
+
 const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_answer, explanation, hint, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
@@ -45,11 +46,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
             })
     }
 
-    console.log("STATE = " + state)
-    console.log("CORRECT ANSWER = " + correct_answer)
-    console.log(correct_answer)
     const correct_message = "You have given the correct answer: " + correct_answer
-    console.log("CORRECT MESSAGE = " + correct_message)
     switch (state) {
         case 'Correct':
             message = <Message icon='check' color='green' content={correct_message} />
@@ -63,27 +60,19 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
     }
 
     if (completed) {
+        const correct_message = "You have given the correct answer: " + correct_answer
+        message = <Message icon='check' color='green' content={correct_message} />
         return (
             <>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 <ul>
                     {choices.map((choice) =>
-                            <li key={choice}> choice </li>
-                        // <Form.Field key={choice}>
-                        //     <Form.Radio
-                        //         name="selected"
-                        //         label={choice}
-                        //         id={choice}
-                        //         value={choice}
-                        //         checked={(completed) ? choice === correct_answer : values.selected === choice}
-                        //         onChange={}
-                        //         onBlur={}
-                        //     />
-                        // </Form.Field>
+                            <li key={choice}> {(completed) ? (choice === correct_answer) ? <strong>{choice}</strong> : choice : choice } </li>
                     )}
                 </ul>
                 {message}
                 <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <br/><br/>
             </>
         )
     }
@@ -164,12 +153,15 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                     </Form>
                 )}
             </Formik>
+            <div>
             {(hint) ? <Modal
                 trigger={<Button onClick={onHint} content="Hint" />}
                 header='Hint'
                 content={hint}
-                actions={[{ key: 'done', content: 'Done'}]} /> : ''}
+                actions={[{ key: 'done', content: 'Done'}]} />: ''}
             {message}
+            </div>
+            <br/>
         </>
     )
 }

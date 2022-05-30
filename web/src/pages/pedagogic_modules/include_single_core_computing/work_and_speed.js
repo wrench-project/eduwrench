@@ -4,6 +4,7 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestionReveal from "../../../components/practice-questions/reveal"
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice"
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric"
 import FeedbackQuestions from "../../../components/feedback_questions"
 import FeedbackActivity from "../../../components/feedback/feedback_activity"
 
@@ -133,22 +134,32 @@ const WorkAndSpeed = ({module, tab}) => {
                 Practice Questions
             </Header>
 
-             <PracticeQuestionReveal
-                 module={"A.1"}
-                 question_key={"A.1.p1.1"}
-                 question={"This is a reveal question"}
-                 hint={"this is a hint"}
-                 explanation={"This is an answer"} />
+             {/*<PracticeQuestionReveal*/}
+             {/*    module={"A.1"}*/}
+             {/*    question_key={"A.1.p1.1"}*/}
+             {/*    question={"This is a reveal question"}*/}
+             {/*    hint={"this is a hint"}*/}
+             {/*    explanation={"This is an answer"} />*/}
 
-            <PracticeQuestionMultiChoice
+            {/*<PracticeQuestionMultiChoice*/}
+            {/*    module={"A.1"}*/}
+            {/*    question_key={"A.1.p1.2"}*/}
+            {/*    question={"This is a multichoice question (test2 is the right answer)"}*/}
+            {/*    explanation={"Choice 2 is the best one because..."}*/}
+            {/*    hint={"This is a hint"}*/}
+            {/*    choices={["test1", "test2", "test3"]}*/}
+            {/*    correct_answer={"test2"}*/}
+            {/*/>*/}
+
+            <PracticeQuestionNumeric
                 module={"A.1"}
-                question_key={"A.1.p1.2"}
-                question={"This is a multichoice question (test2 is the right answer)"}
-                explanation={"Choice 2 is the best one because..."}
-                hint={"This is a hint"}
-                choices={["test1", "test2", "test3"]}
-                correct_answer={"test2"}
-                                         />
+                question_key={"A.1.p1.3"}
+                question={"This is a numeric question (answer should be between 1 and 2)"}
+                explanation={"The answer should be between 1 and 2"}
+                hint={"this is a hint"}
+                answer={[1,2]}
+            />
+
 
 
             <Divider />

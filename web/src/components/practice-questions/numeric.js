@@ -3,7 +3,7 @@ import { Formik } from "formik"
 import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import axios from "axios"
 
-const Numeric = ({question_key, answer, hint, module}) => {
+const PracticeQuestionNumeric = ({question_key, question, answer, explanation, hint, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
     const [gaveup, setGaveup] = useState(false)
@@ -72,32 +72,49 @@ const Numeric = ({question_key, answer, hint, module}) => {
 
     switch (state) {
         case 'Correct':
-            message = <Message icon='check'color='green' content='Answer is correct!'/>
+            message = <Message icon='check' color='green' content='Answer is correct!'/>
             break
         case 'Incorrect':
             message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
             break
         case 'GaveUp':
-            message = <Message icon='frown outline' color='yellow' content='You gave up... Try again later!' />
+            message = <Message icon='frown outline' color='yellow' content='You gave up on this question...' />
             break
         default:
             message = ''
             break
     }
-    if (completed) {
+
+    if (gaveup) {
+        const correct_message = "You have given up on this question"
+        message = <Message icon='frown outline' color='yellow' content={correct_message} />
         return (
             <>
-                Your Answer:
-                {(gaveup) ?
-                    <Label color='red' size='large'>{prevAnswer}</Label>
-                :   <Label color='green' size='large'>{prevAnswer}</Label>}
+                <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
+                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <br/><br/>
             </>
         )
     }
 
+    if (completed) {
+        const correct_message = "You have given a correct answer (" + prevAnswer + ")"
+        message = <Message icon='check' color='green' content={correct_message} />
+        return (
+            <>
+                <strong>[{question_key}]</strong> {question}<br/><br/>
+                {message}
+                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <br/><br/>
+            </>
+        )
+    }
+
+
     return (
         <>
+            <strong>[{question_key}]</strong> {question}<br/><br/>
             <Formik
                 key={question_key}
                 initialValues={{input: ''}}
@@ -170,9 +187,12 @@ const Numeric = ({question_key, answer, hint, module}) => {
                 header='Hint'
                 content={hint}
                 actions={[{ key: 'done', content: 'Done'}]} /> : ''}
+        <div>
+            <br/>
+        </div>
         </>
         )
 }
 
 
-export default Numeric
+export default PracticeQuestionNumeric
