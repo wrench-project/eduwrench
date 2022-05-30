@@ -41,45 +41,32 @@ const getUsageStatistics = () => db.transaction(async trx => {
 })
 
 /*  */
-const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswer, type, module) => db.transaction(async trx => {
+const updatePracticeQuestionSubmit = (userID, question_key, time, answer, correctAnswer, module) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key, user_id: userID})
         .first()
-    const correct = (type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
+    const correct = (question.type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
     let completed = (question) ? await trx("practice_questions")
-        .where({question_key:question_key})
-        .select('completed')
-        .first()
-        .then((completed) => completed.completed)
-    : false
-    if (!question) {
-        console.log('creating practice questions')
-        const questionID = await trx("practice_questions").insert({
-            user_id: userID,
-            question_key: question_key,
-            time: time,
-            completed: correct,
-            attempts: 1,
-            previous_answer: answer,
-            module: module
-        })
-        return questionID[0]
-    }
+            .where({question_key:question_key})
+            .select('completed')
+            .first()
+            .then((completed) => completed.completed)
+        : false
     if (!completed) {
-        console.log("updating practice quesitons")
         const attempts = await trx("practice_questions")
             .where({question_key: question_key, user_id: userID})
             .select('attempts')
             .first()
             .then((attempts) => attempts.attempts);
-        const question = await trx("practice_questions").where({question_key:question_key, user_id: userID}).update({
+        const question = await trx("practice_questions").where({question_key:question_key, user_id: userID}).update(
+            {
             user_id: userID,
             question_key: question_key,
             time: time,
             completed: correct,
             attempts:attempts + 1,
             previous_answer: answer
-            })
+        })
         return question
     } else {
         console.log("Answer is correct " + question_key + " is disabled now")
@@ -87,64 +74,121 @@ const updatePracticeQuestion = (userID, question_key, time, answer, correctAnswe
     }
 })
 
-const setUpdateGiveUp = (userID, question_key, time, button, answer) => db.transaction(async trx => {
+const updatePracticeQuestionGiveUp = (userID, question_key, time, module) => db.transaction(async trx => {
+    console.log("IN updatePracticeQuestionGiveUp");
+    // const question = await trx("practice_questions")
+    //     .where({question_key:question_key, user_id: userID})
+    //     .first()
+    // const questionInfo = {
+    //     // user_id: userID,
+    //     // question_key: question_key,
+    //     time: time,
+    //     completed: false,
+    //     giveup: true,
+    //     // previous_answer: '',
+    //     // module: module
+    // };
+
+    // console.log(questionInfo)
+    const question = await trx('practice_questions').where({question_key:question_key}).update(
+        {time: time, completed: false, giveup: true}
+    )
+    return question
+})
+
+const updatePracticeQuestionHint = (userID, question_key, time, module) => db.transaction(async trx => {
+    console.log("IN updatePracticeQuestionHint():");
+    // const question = await trx("practice_questions")
+    //     .where({question_key:question_key, user_id: userID})
+    //     .first()
+    // const questionInfo = {
+    //     user_id: userID,
+    //     question_key: question_key,
+    //     time: time,
+    //     completed: false,
+    //     hint: true,
+    //     previous_answer: '',
+    //     module: module
+    // };
+    // (button === 'hint') ? (questionInfo['hint'] = true)
+    //     : (questionInfo['giveup'] = true,
+    //         questionInfo["completed"] = true,
+    //         questionInfo["previous_answer"] = answer)
+    //     console.log(questionInfo)
+        const question = await trx('practice_questions').where({question_key:question_key}).update(
+            {hint: true})
+        return question
+})
+
+const updatePracticeQuestionReveal = (userID, question_key, time, module) => db.transaction(async trx => {
+    console.log("IN updatePracticeQuestionReveal():");
+    // const questionUpdate = {
+    // user_id: userID,
+    // question_key: question_key,
+    // time: time,
+    // module:
+    // completed: false,
+    // revealed: true,
+    // previous_answer: '',
+    // };
+    // console.log(questionInfo)
+    const question = await trx('practice_questions').where({question_key:question_key, user_id: userID}).
+    update({revealed: true})
+    return question
+})
+
+const loadPracticeQuestion = (userID, question_key, module, type) => db.transaction(async trx => {
     const question = await trx("practice_questions")
         .where({question_key:question_key, user_id: userID})
         .first()
-    const questionInfo = {
-        user_id: userID,
-        question_key: question_key,
-        time: time,
-        completed: false,
-        previous_answer: '',
-    };
-    (button === 'hint') ? (questionInfo['hint'] = true)
-        : (questionInfo['giveup'] = true,
-            questionInfo["completed"] = true,
-            questionInfo["previous_answer"] = answer)
-    if (!question) {
-        console.log('creating practice questions')
-        const questionID = await trx("practice_questions").insert(questionInfo)
-        return questionID[0]
+    if (question) {
+        // Retrieve question data
+        const questionData = await trx("practice_questions")
+            .where({question_key: question_key, user_id: userID})
+            .select('completed', 'previous_answer', 'giveup', 'revealed')
+            .first()
+        return questionData
     } else {
-        const question = await trx('practice_questions').where({question_key:question_key}).update(questionInfo)
-        return question
+        // Create blank question data since DB doesn't have the question
+        console.log("Creating a blank " + question_key + " question for user " + userID)
+        const blankQuestion = {
+            user_id: userID,
+            question_key: question_key,
+            module: module,
+            type: type,
+            time: 0,
+            completed: false,
+            revealed: false,
+            giveup: false,
+            previous_answer: '',
+        };
+        const questionData = await trx("practice_questions").insert(blankQuestion)
+        return questionData
     }
 })
 
-const getPracticeQuestion = (userID, question_key) => db.transaction(async trx => {
-    const question = await trx("practice_questions")
-        .where({question_key:question_key, user_id: userID})
-        .first()
-    const questionData = (question) ? await trx("practice_questions")
-            .where({question_key:question_key, user_id: userID})
-            .select('completed', 'previous_answer', 'giveup')
-            .first()
-        : false
-    return questionData
-})
-
 const logSimulationFeedback = (userID, time, simID, rating, feedback) => db.transaction(async trx => {
-        const simFeedbackID = await trx("simulation_feedback").insert({
-            user_id: userID,
-            sim_id: simID,
-            time: time,
-            rating: rating,
-            feedback: feedback,
-            completed: true
-        })
-        return simFeedbackID
+    const simFeedbackID = await trx("simulation_feedback").insert({
+        user_id: userID,
+        sim_id: simID,
+        time: time,
+        rating: rating,
+        feedback: feedback,
+        completed: true
+    })
+    return simFeedbackID
 })
 
 const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
+    console.log("in getSimulationFeedback")
     const feedback = await trx("simulation_feedback")
         .where({sim_id: simID, user_id: userID})
         .first()
     const feedbackData = (feedback) ? await trx("simulation_feedback")
-        .where({sim_id: simID, user_id: userID})
-        .select('completed')
-        .first()
-    : false
+            .where({sim_id: simID, user_id: userID})
+            .select('completed')
+            .first()
+        : false
     return feedbackData
 })
 
@@ -174,10 +218,10 @@ const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
         .where({user_id: userID, feedback_key:feedback_key})
         .first()
     const feedbackData = (feedback) ? await trx("feedbacks")
-        .where({user_id: userID, feedback_key:feedback_key})
-        .select('completed')
-        .first()
-    : false
+            .where({user_id: userID, feedback_key:feedback_key})
+            .select('completed')
+            .first()
+        : false
     return feedbackData
 })
 
@@ -214,9 +258,11 @@ module.exports = {
     registerUser,
     addSimulationRun,
     getUsageStatistics,
-    updatePracticeQuestion,
-    getPracticeQuestion,
-    setUpdateGiveUp,
+    loadPracticeQuestion,
+    updatePracticeQuestionSubmit,
+    updatePracticeQuestionGiveUp,
+    updatePracticeQuestionHint,
+    updatePracticeQuestionReveal,
     logSimulationFeedback,
     getSimulationFeedback,
     updateFeedback,

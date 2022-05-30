@@ -6,10 +6,12 @@ exports.up = function(knex) {
         tbl.text("question_key").notNullable()
         tbl.integer("time").notNullable()
         tbl.boolean("completed").notNullable()
+        tbl.text("type").notNullable()
         tbl.integer("attempts")
         tbl.text("previous_answer")
         tbl.boolean("hint")
         tbl.boolean("giveup")
+        tbl.boolean("revealed")
     })
 };
 

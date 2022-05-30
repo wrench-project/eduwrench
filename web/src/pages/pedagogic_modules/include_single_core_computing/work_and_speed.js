@@ -133,11 +133,10 @@ const WorkAndSpeed = ({module, tab}) => {
           key: "A.1.p1.1",
           question: "You have to run a program that performs 4000 Gflop, and your core computes at speed 30 " +
             "Tflop/sec. How long will the program run for in seconds?",
-          content: (
+          answer: (
             <TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />
           ),
-            type: "textbox",
-            answer: [0, 5],
+            type: "reveal",
             hint: "this is hint",
             giveup: true,
             module: "A.1"
@@ -146,12 +145,11 @@ const WorkAndSpeed = ({module, tab}) => {
           key: "A.1.p1.2",
           question: "A program just ran in 0.32 sec on a core with speed 2 Tflop/sec, how many Gflop does the " +
             "program perform?",
-          content: (
+          answer: (
             <TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />
           ),
-            type: "mutlichoice",
+            type: "multichoice",
             choices: ['test1', 'test2', 'test3', 'test4'],
-            answer: 'test2',
             hint: "this is another hint",
             giveup: true,
             module: "A.1"

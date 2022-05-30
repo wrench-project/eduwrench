@@ -12,11 +12,14 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
 
     useEffect(() => {
         const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName");
         axios
             .post('http://localhost:3000/get/question', {
-                userName: userEmail.split("@")[0],
+                userName: userName,
                 email: userEmail,
-                question_key: question_key
+                question_key: question_key,
+                type: "numeric",
+                module: module
             })
             .then((response) => {
                 setCompleted(response.data.completed)
@@ -114,6 +117,7 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
                             answer: values.input,
                             correctAnswer: answer,
                             type: 'numeric',
+                            button: "submit",
                             module: module
                         }
                         setPrevAnswer(values.input)
@@ -136,7 +140,7 @@ const Numeric = ({question_key, answer, hint, giveup, module}) => {
                 }) => (
                     <Form onSubmit={handleSubmit}>
                         <Form.Input fluid name="input"
-                                    label="Input"
+                                    label="Enter your answer"
                                     type="number"
                                     onChange={handleChange}
                                     onBlur={handleBlur}

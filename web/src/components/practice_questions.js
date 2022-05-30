@@ -2,6 +2,7 @@ import React from "react"
 import { Header, Segment } from "semantic-ui-react"
 import Numeric from "./practice-questions/numeric";
 import MultiChoice from "./practice-questions/multichoice"
+import Reveal from "./practice-questions/reveal"
 
 const PracticeQuestions = ({ header = null, questions }) => {
 
@@ -43,8 +44,11 @@ const PracticeQuestions = ({ header = null, questions }) => {
               <div>
                 <p key={key}>{title.content}</p>
                 {(type === "textbox") ? <Numeric question_key={key} answer={answer} giveup={giveup} hint={hint} module={module}/>
-                    : <MultiChoice question_key={key} choices={choices} answer={answer} giveup={giveup} hint={hint} module={module}/>}
+                    : (type === "multichoice") ? <MultiChoice question_key={key} choices={choices} answer={answer} giveup={giveup} hint={hint} module={module}/>
+                    : (type === "reveal") ? <Reveal question_key={key} answer={answer} hint={hint} module={module}/> :
+                ""}
               </div>
+              <br></br>
             </>
         ))}
       </div>

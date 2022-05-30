@@ -1214,7 +1214,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
 
     // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
     let args_json = JSON.stringify(json_data);
-    console.log(args_json);
+    // console.log(args_json);
     const fs = require('fs');
     fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
         if (err) console.log('error', err);
@@ -1422,7 +1422,7 @@ function ansiUpSimulationOutput(simulationOutput) {
  * @returns {boolean}
  */
 function logData(data) {
-    db.registerUser(data.email, data.user).then((userID => {
+    db.registerUser(data.email, data.user_name).then((userID => {
         let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
         db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
             return true
@@ -1443,22 +1443,42 @@ function logData(data) {
  * @returns {boolean}
  */
 function logQuestion(data) {
-    db.registerUser(data.email, data.user).then((userID) => {
+
+    db.registerUser(data.email, data.user_name).then((userID) => {
         let time = Math.round(new Date().getTime() / 1000)
-        if (data.button) {
-            db.setUpdateGiveUp(userID, data.question_key, time, data.button, data.answer).then ((questionId => {
+        if (!data.button) {
+            throw new Error("in logQuestion(), data.button is not provided")
+        }
+        if (data.button === "giveup") {
+            db.updatePracticeQuestionGiveUp(userID, data.question_key, time, data.button, data.answer).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "submit") {
+            db.updatePracticeQuestionSubmit(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "reveal") {
+            db.updatePracticeQuestionReveal(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "hint") {
+            db.updatePracticeQuestionHint(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
                 return true
             })).catch((error => {
                 console.log("[ERROR: " + error)
                 return false
             }))
         } else {
-            db.updatePracticeQuestion(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
-                return true
-            })).catch((error => {
-                console.log("[ERROR: " + error)
-                return false
-            }))
+            throw new Error("in logQuestion(), data.button is not known: " + data.button)
         }
     }).catch((error => {
         console.log("[ERROR: " + error)
@@ -1489,13 +1509,14 @@ app.post('/update/question', function (req, res) {
 
 /* POST request to call function to respond with "completed" status */
 app.post('/get/question', function (req, res) {
-    console.log(req.body);
     db.registerUser(req.body.email, req.body.userName).then(userID => {
-        db.getPracticeQuestion(userID, req.body.question_key).then(question => {
+        db.loadPracticeQuestion(userID, req.body.question_key, req.body.module, req.body.type).then(question => {
             res.json({
                 previous_answer: question.previous_answer,
                 completed: question.completed,
-                giveup: question.giveup
+                type: question.type,
+                giveup: question.giveup,
+                revealed: question.revealed
             })
         }).catch((error => {
             console.log("ERROR " + error)
@@ -1538,8 +1559,8 @@ app.post('/get/simfeedback', function (req, res) {
  * @param data
  * @returns {boolean}
  */
- function logFeedback(data) {
-    db.registerUser(data.email, data.user).then((userID) => {
+function logFeedback(data) {
+    db.registerUser(data.email, data.user_name).then((userID) => {
         let time = Math.round(new Date().getTime() / 1000)
         db.updateFeedback(userID, data.feedback_key, time, data.useful, data.quality, data.comments, data.module).then ((feedbackId => {
             return true
@@ -1551,7 +1572,6 @@ app.post('/get/simfeedback', function (req, res) {
 }
 
 app.post('/update/feedback', function (req, res) {
-    console.log(req.body);
     try {
         logFeedback({
             user: req.body.user_name,
@@ -1570,8 +1590,7 @@ app.post('/update/feedback', function (req, res) {
 })
 
 app.post('/get/feedback', function (req, res) {
-    console.log(req.body);
-    db.registerUser(req.body.email, req.body.user).then(userID => {
+    db.registerUser(req.body.email, req.body.user_name).then(userID => {
         db.getFeedback(userID, req.body.feedback_key).then(feedback => {
             res.json({
                 completed: feedback.completed,
@@ -1593,9 +1612,9 @@ app.post('/get/global_statistics', function (req, res) {
     }).catch((error => {
         console.log("ERROR " + error)
     }))
-    .catch((error => {
-        console.log("ERROR " + error)
-    }))
+        .catch((error => {
+            console.log("ERROR " + error)
+        }))
 })
 
 app.post('/get/userdata', function (req, res) {

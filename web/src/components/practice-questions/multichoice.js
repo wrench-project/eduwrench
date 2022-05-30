@@ -3,23 +3,24 @@ import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
-const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
+const MultiChoice = ({question_key, choices, answer, hint, module}) => {
     const [state, setState] = useState('')
     const [completed, setCompleted] = useState(false)
-    const [gaveUp, setGaveUp] = useState(false)
     let message
 
     useEffect(() => {
         const userEmail = localStorage.getItem("currentUser");
+        const userName = localStorage.getItem("userName");
         axios
             .post('http://localhost:3000/get/question', {
-                user: userEmail.split("@")[0],
+                userName: userName,
                 email: userEmail,
                 question_key:question_key,
+                type: "multichoice",
+                module: module
             })
             .then((response) => {
                 setCompleted(response.data.completed)
-                setGaveUp(response.data.giveup)
             })
             .catch(err => {
                 console.log(err);
@@ -32,26 +33,8 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
             userName: userEmail.split("@")[0],
             email: userEmail,
             question_key: question_key,
+            module: module,
             button: 'hint'
-        }
-        axios
-            .post('http://localhost:3000/update/question', question)
-            .then((response) => response)
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    const onGiveup = () => {
-        setGaveUp(true)
-        setState('GaveUp')
-        setCompleted(true)
-        const userEmail = localStorage.getItem("currentUser")
-        const question = {
-            userName: userEmail.split("@")[0],
-            email: userEmail,
-            question_key: question_key,
-            button: 'giveup'
         }
         axios
             .post('http://localhost:3000/update/question', question)
@@ -68,20 +51,15 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
         case 'Incorrect':
             message = <Message icon='x' color='red' content='Answer is incorrect... Try again!'/>
             break
-        case 'GaveUp':
-            message = <Message icon='frown outline' color='yellow' content='You gave up... Try again later!' />
-            break
         default:
             message = ''
             break
     }
+
     if (completed) {
         return (
             <>
-                Your Answer:
-                {(gaveUp) ?
-                    <Label color='red' size='large'>{answer}</Label>
-                    :   <Label color='green' size='large'>{answer}</Label>}
+                <Label color='green' size='large'>Detailed answer: {answer} </Label>}
                 {message}
             </>
         )
@@ -110,6 +88,7 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
                             answer: values.selected,
                             correctAnswer: answer,
                             type: 'multichoice',
+                            button: 'submit',
                             module: module
                         }
                         axios
@@ -159,13 +138,12 @@ const MultiChoice = ({question_key, choices, answer, hint, giveup, module}) => {
                     </Form>
                 )}
             </Formik>
-            {message}
-            {(giveup && !gaveUp) ? <Button onClick={onGiveup} color="red" content="Give Up" /> : ''}
             {(hint) ? <Modal
                 trigger={<Button onClick={onHint} content="Hint" />}
                 header='Hint'
                 content={hint}
                 actions={[{ key: 'done', content: 'Done'}]} /> : ''}
+            {message}
         </>
     )
 }
