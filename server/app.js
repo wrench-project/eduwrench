@@ -1541,7 +1541,6 @@ app.post('/insert/simfeedback', function (req, res) {
 app.post('/get/simfeedback', function (req, res) {
     db.registerUser(req.body.email, req.body.userName).then(userID => {
         db.getSimulationFeedback(userID, req.body.simID).then(feedback => {
-            console.log(feedback)
             res.json({
                 completed: feedback.completed
             })

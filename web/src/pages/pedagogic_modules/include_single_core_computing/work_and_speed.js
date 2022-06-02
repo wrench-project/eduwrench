@@ -134,13 +134,48 @@ const WorkAndSpeed = ({module, tab}) => {
                 Practice Questions
             </Header>
 
-            
-             {/*<PracticeQuestionReveal*/}
-             {/*    module={"A.1"}*/}
-             {/*    question_key={"A.1.p1.1"}*/}
-             {/*    question={"This is a reveal question"}*/}
-             {/*    hint={"this is a hint"}*/}
-             {/*    explanation={"This is an answer"} />*/}
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p1.1"}
+                question={
+                    <>
+                        You have to run a program that performs 4000 Gflop, and your core computes at speed 30
+                        Tflop/sec. How long will the program run for in seconds?
+                    </>
+                }
+                hint={
+                    <>
+                        It's just a matter of dividing the work by the compute speed, making sure units are in agreement
+                    </>}
+                answer={[0.13, 0.135]}
+                explanation={<TeX math="\frac{4\text{Tflop}}{30\text{Tflop/sec}} \simeq 0.13\text{sec}" block />}
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p1.2"}
+                question={
+                    <>
+                        A program just ran in 0.32 sec on a core with speed 2 Tflop/sec, how many Gflop does the
+                        program perform?
+                    </>
+                }
+                hint={
+                    <>
+                        It's just a matter of multiplying the compute speed by the time, using the right units
+                    </>
+                }
+                answer={[640, 640]}
+                explanation={<TeX math="2000\text{Gflop/sec} \times 0.32\text{sec} = 640\text{Gflop}" block />}
+            />
+
+
+            {/*<PracticeQuestionReveal*/}
+            {/*    module={"A.1"}*/}
+            {/*    question_key={"A.1.p1.1"}*/}
+            {/*    question={"This is a reveal question"}*/}
+            {/*    hint={"this is a hint"}*/}
+            {/*    explanation={"This is an answer"} />*/}
 
             {/*<PracticeQuestionMultiChoice*/}
             {/*    module={"A.1"}*/}

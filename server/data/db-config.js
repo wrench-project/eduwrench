@@ -45,7 +45,7 @@ const updatePracticeQuestionSubmit = (userID, question_key, time, answer, correc
     const question = await trx("practice_questions")
         .where({question_key:question_key, user_id: userID})
         .first()
-    const correct = (question.type === 'numeric') ? parseInt(answer) >= correctAnswer[0] && parseInt(answer) <= correctAnswer[1] : answer === correctAnswer
+    const correct = (question.type === 'numeric') ? parseFloat(answer) >= correctAnswer[0] && parseFloat(answer) <= correctAnswer[1] : answer === correctAnswer
     let completed = (question) ? await trx("practice_questions")
             .where({question_key:question_key})
             .select('completed')

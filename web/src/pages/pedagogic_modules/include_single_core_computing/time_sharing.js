@@ -5,6 +5,7 @@ import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions_header"
 import FeedbackQuestions from "../../../components/feedback_questions"
 import FeedbackActivity from "../../../components/feedback/feedback_activity"
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 
 const TimeSharing = ({module, tab}) => {
     return (
@@ -50,42 +51,53 @@ const TimeSharing = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.1.p2.1",
-                    question: "At time 0 on a core with speed 2 Tflop/sec you start two programs. Program A’s work is " +
-                        "200 Gflop, and program B’s work is 220 Gflop. At what times do the programs complete? Show your work.",
-                    content: (
-                        <>
-                            In a first phase, both programs proceed at speed 1 TFLop/sec. Program A completes first at time:
-                            <TeX math="T_{A} = \frac{0.2 \text{Tflop}}{1 \text{Tflop/sec}} = 0.2 \text{sec}" block />
-                            At that point, program <TeX math="B" /> still has 20 Gflop left to compute, but it now proceeds at speed
-                            2 Tflop/sec. Therefore, it completes at time:
-                            <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
-                        </>
-                    ),
-                    answer: [1.3, 2.3],
-                    type: "textbox",
-                    hint: "this is hint",
-                    giveup: true,
-                    module: "A.1"
-                },
-                {
-                    key: "A.1.p2.2",
-                    question: "Two programs, each with work 800 Tflop, were started at the same time on a core and " +
-                        "both completed simultaneously after one hour. What is the core's speed in Gflop/sec?",
-                    content: (
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p2.1"}
+                question={
+                    <>
+                        At time 0 on a core with speed 2 Tflop/sec you start two programs. Program A's work is
+                        200 Gflop, and program B’s work is 220 Gflop. At what times do the programs complete?
+                    </>
+                }
+                hint={
+                    <>
+                        Think of the execution proceeding in two distinct phases, and add up the execution time of each phase.
+                    </>
+                }
+                answer={[0.2,0.21]}
+                explanation={
+                    <>
+                        In a first phase, both programs proceed at speed 1 TFLop/sec. Program A completes first at time:
+                        <TeX math="T_{A} = \frac{0.2 \text{Tflop}}{1 \text{Tflop/sec}} = 0.2 \text{sec}" block />
+                        At that point, program <TeX math="B" /> still has 20 Gflop left to compute, but it now proceeds at speed
+                        2 Tflop/sec. Therefore, it completes at time:
+                        <TeX math="T_{B} = T_{A} + \frac{0.02 \text{Tflop}}{2 \text{Tflop/sec}} = 0.21 \text{sec}" block />
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p2.2"}
+                question={
+                    <>
+                        Two programs, each with work 800 Tflop, were started at the same time on a core and
+                        both completed simultaneously after one hour. What is the core's speed in Gflop/sec?
+                    </>
+                }
+                answer={[444,445]}
+                explanation={
+                    <>
                         <TeX
                             math="\text{speed} = 2 \times \frac{800000 \text{Gflop}}{ 3600 \text{sec}} \simeq 444.44 \text{Gflop/sec}"
                             block />
-                    ),
-                    answer: [2.3, 4.9],
-                    type: "textbox",
-                    hint: "this is hint",
-                    giveup: true,
-                    module: "A.1"
+                    </>
                 }
-            ]}
             />
 
             <Divider />
@@ -116,13 +128,13 @@ const TimeSharing = ({module, tab}) => {
             <Header as="h3" block>
                 Feedback Questions
             </Header>
-            
+
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[
-                {
-                    key: "Feedback A.1.2",
-                    feedback: "feedback",
-                },
+                    {
+                        key: "Feedback A.1.2",
+                        feedback: "feedback",
+                    },
                 ]} />
             } />
         </>

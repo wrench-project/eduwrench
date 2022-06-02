@@ -105,7 +105,8 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
             <>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <Label color='grey' size='large'>Answer explanation:</Label>
+                {explanation}
                 <br/><br/>
             </>
         )
@@ -124,7 +125,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
                     const userEmail = localStorage.getItem("currentUser");
                     const userName = localStorage.getItem("userName");
                     setTimeout(() => {
-                        if (parseInt(values.input) >= answer[0] && parseInt(values.input) <= answer[1]) {
+                        if (parseFloat(values.input) >= answer[0] && parseFloat(values.input) <= answer[1]) {
                             setState("Correct")
                             setCompleted(true)
                         } else {
