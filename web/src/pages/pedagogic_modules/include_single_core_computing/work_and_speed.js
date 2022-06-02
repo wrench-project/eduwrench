@@ -134,6 +134,7 @@ const WorkAndSpeed = ({module, tab}) => {
                 Practice Questions
             </Header>
 
+            
              {/*<PracticeQuestionReveal*/}
              {/*    module={"A.1"}*/}
              {/*    question_key={"A.1.p1.1"}*/}
@@ -151,14 +152,14 @@ const WorkAndSpeed = ({module, tab}) => {
             {/*    correct_answer={"test2"}*/}
             {/*/>*/}
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p1.3"}
-                question={"This is a numeric question (answer should be between 1 and 2)"}
-                explanation={"The answer should be between 1 and 2"}
-                hint={"this is a hint"}
-                answer={[1,2]}
-            />
+            {/*<PracticeQuestionNumeric*/}
+            {/*    module={"A.1"}*/}
+            {/*    question_key={"A.1.p1.3"}*/}
+            {/*    question={"This is a numeric question (answer should be between 1 and 2)"}*/}
+            {/*    explanation={"The answer should be between 1 and 2"}*/}
+            {/*    hint={"this is a hint"}*/}
+            {/*    answer={[1,2]}*/}
+            {/*/>*/}
 
 
 
