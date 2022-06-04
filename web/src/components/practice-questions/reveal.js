@@ -4,15 +4,8 @@ import {Formik} from 'formik'
 import axios from "axios"
 
 const PracticeQuestionReveal = ({question_key, question, hint, explanation, module}) => {
-    console.log("KEY = " + question_key)
-    console.log("HINT = " + hint)
-    console.log("EXPLANATION = " + explanation)
-    console.log("MODULE = " + module)
     const [state, setState] = useState('')
-    // const [completed, setCompleted] = useState(false)
-    // const [gaveUp, setGaveUp] = useState(false)
     const [revealed, setRevealed] = useState(false)
-    let message
 
     useEffect(() => {
         const userEmail = localStorage.getItem("currentUser");
