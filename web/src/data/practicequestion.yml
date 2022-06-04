@@ -10,6 +10,8 @@
         - "A.1.p4.2"
         - "A.1.p4.3"
         - "A.1.p4.4"
+        - "A.1.p4.5"
+        - "A.1.p4.6"
     - module: "A.2 Multi-core Computing"
       moduleNumber: "A.2"
       question:

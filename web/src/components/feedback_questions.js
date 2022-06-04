@@ -1,5 +1,6 @@
-import React from "react"
+import React, {useEffect} from "react"
 import Feedback from "./feedback/feedback"
+import axios from "axios";
 
 const FeedbackQuestions = ({ header = null, feedbacks }) => {
   let feedbackHeader = <></>
@@ -12,10 +13,7 @@ const FeedbackQuestions = ({ header = null, feedbacks }) => {
   /* Indexing to go through entries of feedback questions */
   for (const [index, value] of feedbacks.entries()) {
     panels.push({
-      key: value.key,
-      title: {
-        content: (<><strong>[{value.key}]</strong></>),
-      },
+      tabkey: value.tabkey,
       useful: value.useful,
       quality: value.quality,
       module: value.module
@@ -26,8 +24,8 @@ const FeedbackQuestions = ({ header = null, feedbacks }) => {
     <>
       {feedbackHeader}
       <div>
-        {panels.map(({ title, key, useful, quality, module }) => (
-          <><p key={key}>{title.content}</p><Feedback feedback_key={key} useful={useful} quality={quality} module={module}/></>
+        {panels.map(({ tabkey, useful, quality, module }) => (
+          <><Feedback tabkey={tabkey} useful={useful} quality={quality} module={module}/></>
         ))}
       </div>
     </>

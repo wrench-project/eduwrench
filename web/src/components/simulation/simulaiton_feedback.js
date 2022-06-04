@@ -66,9 +66,9 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                             if (!values.rating) {
                                 errors.rating = 'Required'
                             }
-                            if (!values.feedback) {
-                                errors.feedback = 'Required'
-                            }
+                            // if (!values.feedback) {
+                            //     errors.feedback = 'Required'
+                            // }
                             return errors
                         }}
                     >
@@ -99,7 +99,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                                 {errors.rating ?
                                     <Message negative>{errors.rating}</Message> : ''
                                 }
-                                <p className="feedback">Give us additional Feedback</p>
+                                <p className="feedback">Optionally provide us with additional feedback</p>
                                 <Form.TextArea
                                     placeholder='Enter text here...'
                                     name="feedback"

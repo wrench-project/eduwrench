@@ -2,7 +2,6 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
-import PracticeQuestions from "../../../components/practice_questions_header"
 
 const TaskParallelism = ({module, tab}) => {
     return (
@@ -138,47 +137,51 @@ const TaskParallelism = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p1.1",
-                    question: "Consider a parallel program that runs in 1 hour on a single core of a computer. The program’s " +
-                        "execution on 6 cores has 80% parallel efficiency. What is the program’s execution time when running on " +
-                        "6 cores? Show your work.",
-                    content: (
-                        <>
-                            Let <TeX math="S" /> be the speedup on 6 cores for this program. Since the efficiency is equal
-                            to <TeX math="S/6" />, we have <TeX math="S/6 = 0.8" />, which gives us <TeX math="S = 4.8" />.
-                            Therefore, the program runs in <TeX math="60/4.8 = 12.5" /> minutes.
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p1.2",
-                    question: (
-                        <>
-                            A parallel program has a speedup of 1.6 when running on 2 cores, and runs 10 minutes faster when running
-                            on 3 cores than when running on 2 cores. Give a formula for <TeX math="T(1)" /> (the execution time on one
-                            core in minutes) as a function of <TeX math="T(3)" /> (the execution time on 3 cores in minutes).
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <p>Because the speedup on 2 cores is 1.6, we have: <TeX math="T(2) = T(1) / 1.6" /></p>
-                            <p>And the 10-minute time reduction gives us: <TeX math="T(3) = T(2) -  10" /></p>
-                            <p>Therefore, <TeX math="T(3) = T(1) / 1.6 - 10" /></p>
-                            <p>which we can rewrite as: <TeX math="T(1) = 1.6 \times (T(3) + 10)" /></p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                }
-            ]} />
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            {/*<PracticeQuestions questions={[*/}
+            {/*    {*/}
+            {/*        key: "A.2.p1.1",*/}
+            {/*        question: "Consider a parallel program that runs in 1 hour on a single core of a computer. The program’s " +*/}
+            {/*            "execution on 6 cores has 80% parallel efficiency. What is the program’s execution time when running on " +*/}
+            {/*            "6 cores? Show your work.",*/}
+            {/*        content: (*/}
+            {/*            <>*/}
+            {/*                Let <TeX math="S" /> be the speedup on 6 cores for this program. Since the efficiency is equal*/}
+            {/*                to <TeX math="S/6" />, we have <TeX math="S/6 = 0.8" />, which gives us <TeX math="S = 4.8" />.*/}
+            {/*                Therefore, the program runs in <TeX math="60/4.8 = 12.5" /> minutes.*/}
+            {/*            </>*/}
+            {/*        ),*/}
+            {/*        answer: [4.2, 10],*/}
+            {/*        type: "textbox",*/}
+            {/*        choices: '',*/}
+            {/*        module: "A.2"*/}
+            {/*    },*/}
+            {/*    {*/}
+            {/*        key: "A.2.p1.2",*/}
+            {/*        question: (*/}
+            {/*            <>*/}
+            {/*                A parallel program has a speedup of 1.6 when running on 2 cores, and runs 10 minutes faster when running*/}
+            {/*                on 3 cores than when running on 2 cores. Give a formula for <TeX math="T(1)" /> (the execution time on one*/}
+            {/*                core in minutes) as a function of <TeX math="T(3)" /> (the execution time on 3 cores in minutes).*/}
+            {/*            </>*/}
+            {/*        ),*/}
+            {/*        content: (*/}
+            {/*            <>*/}
+            {/*                <p>Because the speedup on 2 cores is 1.6, we have: <TeX math="T(2) = T(1) / 1.6" /></p>*/}
+            {/*                <p>And the 10-minute time reduction gives us: <TeX math="T(3) = T(2) -  10" /></p>*/}
+            {/*                <p>Therefore, <TeX math="T(3) = T(1) / 1.6 - 10" /></p>*/}
+            {/*                <p>which we can rewrite as: <TeX math="T(1) = 1.6 \times (T(3) + 10)" /></p>*/}
+            {/*            </>*/}
+            {/*        ),*/}
+            {/*        answer: [4.2, 10],*/}
+            {/*        type: "textbox",*/}
+            {/*        choices: '',*/}
+            {/*        module: "A.2"*/}
+            {/*    }*/}
+            {/*]} />*/}
 
             <Divider />
 

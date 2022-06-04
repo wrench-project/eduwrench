@@ -75,21 +75,6 @@ const updatePracticeQuestionSubmit = (userID, question_key, time, answer, correc
 })
 
 const updatePracticeQuestionGiveUp = (userID, question_key, time, module) => db.transaction(async trx => {
-    console.log("IN updatePracticeQuestionGiveUp");
-    // const question = await trx("practice_questions")
-    //     .where({question_key:question_key, user_id: userID})
-    //     .first()
-    // const questionInfo = {
-    //     // user_id: userID,
-    //     // question_key: question_key,
-    //     time: time,
-    //     completed: false,
-    //     giveup: true,
-    //     // previous_answer: '',
-    //     // module: module
-    // };
-
-    // console.log(questionInfo)
     const question = await trx('practice_questions').where({question_key:question_key}).update(
         {time: time, completed: false, giveup: true}
     )
@@ -97,41 +82,12 @@ const updatePracticeQuestionGiveUp = (userID, question_key, time, module) => db.
 })
 
 const updatePracticeQuestionHint = (userID, question_key, time, module) => db.transaction(async trx => {
-    console.log("IN updatePracticeQuestionHint():");
-    // const question = await trx("practice_questions")
-    //     .where({question_key:question_key, user_id: userID})
-    //     .first()
-    // const questionInfo = {
-    //     user_id: userID,
-    //     question_key: question_key,
-    //     time: time,
-    //     completed: false,
-    //     hint: true,
-    //     previous_answer: '',
-    //     module: module
-    // };
-    // (button === 'hint') ? (questionInfo['hint'] = true)
-    //     : (questionInfo['giveup'] = true,
-    //         questionInfo["completed"] = true,
-    //         questionInfo["previous_answer"] = answer)
-    //     console.log(questionInfo)
         const question = await trx('practice_questions').where({question_key:question_key}).update(
             {hint: true})
         return question
 })
 
 const updatePracticeQuestionReveal = (userID, question_key, time, module) => db.transaction(async trx => {
-    console.log("IN updatePracticeQuestionReveal():");
-    // const questionUpdate = {
-    // user_id: userID,
-    // question_key: question_key,
-    // time: time,
-    // module:
-    // completed: false,
-    // revealed: true,
-    // previous_answer: '',
-    // };
-    // console.log(questionInfo)
     const question = await trx('practice_questions').where({question_key:question_key, user_id: userID}).
     update({revealed: true})
     return question
@@ -179,8 +135,16 @@ const logSimulationFeedback = (userID, time, simID, rating, feedback) => db.tran
     return simFeedbackID
 })
 
+const resetPracticeQuestions = (userID) => db.transaction(async trx => {
+    console.log("in resetPracticeQuestions")
+    const stuff = await trx("practice_questions")
+        .where({user_id: userID})
+        .delete()
+    return true
+})
+
+
 const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
-    console.log("in getSimulationFeedback")
     const feedback = await trx("simulation_feedback")
         .where({sim_id: simID, user_id: userID})
         .first()
@@ -192,37 +156,50 @@ const getSimulationFeedback = (userID, simID) => db.transaction(async trx => {
     return feedbackData
 })
 
-const updateFeedback = (userID, feedback_key, time, useful, quality, comments, module) => db.transaction(async trx => {
-    const feedback = await trx("feedbacks")
-        .where({feedback_key:feedback_key, user_id: userID})
-        .first()
+const updateFeedback = (userID, tabkey, time, useful, quality, comments) => db.transaction(async trx => {
+
     const feedbackInfo = {
-        user_id: userID,
-        feedback_key: feedback_key,
         time: time,
         completed: true,
         useful: useful,
         quality: quality,
         comments: comments,
-        module: module
     };
-    if (!feedback) {
-        console.log('creating feedbacks')
-        const feedbackID = await trx("feedbacks").insert(feedbackInfo)
-        return feedbackID[0]
-    }
+
+    // At this point, a blank feedback entry has already been created
+    const feedback = await trx("feedbacks")
+        .where({tabkey:tabkey, user_id: userID})
+        .update(
+            feedbackInfo
+        )
 })
 
-const getFeedback = (userID, feedback_key) => db.transaction(async trx => {
+const getFeedback = (userID, tabkey) => db.transaction(async trx => {
     const feedback = await trx("feedbacks")
-        .where({user_id: userID, feedback_key:feedback_key})
+        .where({user_id: userID, tabkey:tabkey})
         .first()
-    const feedbackData = (feedback) ? await trx("feedbacks")
-            .where({user_id: userID, feedback_key:feedback_key})
-            .select('completed')
-            .first()
-        : false
-    return feedbackData
+    if (!feedback) {
+        // Inserting a blank entry
+        const feedbackInfo = {
+            user_id: userID,
+            tabkey: tabkey,
+            time: 0,
+            completed: false,
+            useful: "",
+            quality: "",
+            comments: "",
+        };
+        await trx("feedbacks").insert(feedbackInfo)
+        return false
+    } else {
+        const feedbackData = await trx("feedbacks")
+                .where({user_id: userID, tabkey:tabkey})
+                .select('completed')
+                .first()
+        return feedbackData
+    }
+
+
 })
 
 const getGlobalStatistics = () => db.transaction(async trx => {
@@ -243,13 +220,18 @@ const getGlobalStatistics = () => db.transaction(async trx => {
 const getUserData = (userID) => db.transaction(async trx => {
     const questionData = await trx("practice_questions")
         .where({user_id: userID})
-        .select('question_key', 'time', 'completed', 'module')
+        .select('question_key', 'time', 'completed', 'giveup', 'revealed', 'module')
     const feedbackData = await trx("feedbacks")
         .where({user_id: userID})
-        .select('feedback_key', 'time', 'completed', 'module')
+        .select('tabkey', 'time', 'completed')
+    const simulationData = await trx("simulation_runs")
+        .where({user_id: userID})
+        .select('activity')
+
     const userData = {
         questionData: questionData,
-        feedbackData: feedbackData
+        feedbackData: feedbackData,
+        simulationData: simulationData
     }
     return userData
 })
@@ -263,6 +245,7 @@ module.exports = {
     updatePracticeQuestionGiveUp,
     updatePracticeQuestionHint,
     updatePracticeQuestionReveal,
+    resetPracticeQuestions,
     logSimulationFeedback,
     getSimulationFeedback,
     updateFeedback,

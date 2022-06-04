@@ -65,18 +65,19 @@ const Memory = ({module, tab}) => {
 
       <Divider />
 
-      <Header as="h3" block>
-          Feedback Questions
-      </Header>
-      
-      <FeedbackActivity content={
-          <FeedbackQuestions feedbacks={[
-          {
-              key: "Feedback A.1.3",
-              feedback: "feedback",
-          },
-          ]} />
-      } />
+        <Header as="h3" block>
+            You feedback is appreciated
+        </Header>
+
+
+        <FeedbackActivity content={
+            <FeedbackQuestions feedbacks={[
+                {
+                    tabkey: "memory",
+                    module: "A.1"
+                },
+            ]} />
+        } />
     </>
   )
 }

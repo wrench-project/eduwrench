@@ -2,7 +2,7 @@
 # Each SLO is identified by a unique key
 # Each Mapping is identified by a module key and a tab index
 
-### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later)
+### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later perhaps? or is it now a feature?)
 
 - TopSLOs:
     - description: "explain and apply the fundamental concepts of sequential, parallel, and

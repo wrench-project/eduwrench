@@ -126,14 +126,15 @@ const TimeSharing = ({module, tab}) => {
             <Divider />
 
             <Header as="h3" block>
-                Feedback Questions
+                You feedback is appreciated
             </Header>
+
 
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[
                     {
-                        key: "Feedback A.1.2",
-                        feedback: "feedback",
+                        tabkey: "time_sharing",
+                        module: "A.1"
                     },
                 ]} />
             } />

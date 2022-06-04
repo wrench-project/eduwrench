@@ -10,8 +10,10 @@
 import React, {useEffect, useState} from "react"
 import Layout from "../components/layout";
 import PageHeader from "../components/page_header";
-import { Segment, Header, Loader}  from "semantic-ui-react";
-import ModuleInfo from "../components/stats/module_info";
+import {Segment, Header, Loader, Button} from "semantic-ui-react";
+import PracticeQuestionInfo from "../components/stats/practice_question_info";
+import SimulationInfo from "../components/stats/simulation_info";
+import FeedbackInfo from "../components/stats/feedback_info";
 import axios from "axios";
 import {useStaticQuery, graphql} from "gatsby";
 
@@ -30,7 +32,19 @@ const Stats = () => {
     }
     `)
 
-    let practiceQuestions = data["practicequestionYaml"]["PracticeQuestions"]
+    let modulePracticeQuestions = data["practicequestionYaml"]["PracticeQuestions"]
+
+    const resetAllPracticeQuestions = ()  => {
+        const userEmail = localStorage.getItem("currentUser")
+        const userName = localStorage.getItem("userName")
+        axios
+            .post('http://localhost:3000/get/resetpracticequestions', {
+                userName: userName,
+                email: userEmail,
+            })
+            .then((response) => {
+            })
+    }
 
     useEffect(() => {
         const userEmail = localStorage.getItem("currentUser")
@@ -41,37 +55,43 @@ const Stats = () => {
                 email: userEmail,
             })
             .then((response) => {
+                console.log("USER DATA:")
+                console.log(response.data)
                 setUserData(response.data)
-                const feedbackData = response.data.feedbackData
+
                 const questionData = response.data.questionData
-                for (let i = 0; i < practiceQuestions.length; i++) {
-                    if (feedbackData[i] && feedbackData[i].module === practiceQuestions[i].moduleNumber) {
-                        practiceQuestions[i].feedback = feedbackData[i]
-                    } else {
-                        practiceQuestions[i].feedback = {
-                            completed: false
-                        }
-                    }
-                }
-                for (let i = 0; i < practiceQuestions.length; i++) {
-                    practiceQuestions[i].feedback = []
-                    for (const feedback of feedbackData) {
-                        if (feedback.module === practiceQuestions[i].moduleNumber) {
-                            practiceQuestions[i].feedback.push(feedback)
-                        }
-                    }
-                }
-                for (let i = 0; i < practiceQuestions.length; i++) {
-                    practiceQuestions[i].completedQuestions = []
+
+                // const feedbackData = response.data.feedbackData
+                // for (let i = 0; i < practiceQuestions.length; i++) {
+                //     if (feedbackData[i] && feedbackData[i].module === practiceQuestions[i].moduleNumber) {
+                //         practiceQuestions[i].feedback = feedbackData[i]
+                //     } else {
+                //         practiceQuestions[i].feedback = {
+                //             completed: false
+                //         }
+                //     }
+                // }
+
+                // for (let i = 0; i < practiceQuestions.length; i++) {
+                //     practiceQuestions[i].feedback = []
+                //     for (const feedback of feedbackData) {
+                //         if (feedback.module === practiceQuestions[i].moduleNumber) {
+                //             practiceQuestions[i].feedback.push(feedback)
+                //         }
+                //     }
+                // }
+
+                for (let i = 0; i < modulePracticeQuestions.length; i++) {
+                    modulePracticeQuestions[i].doneQuestions = []
                     for (const question of questionData) {
-                        if (question.module === practiceQuestions[i].moduleNumber && question.completed) {
-                            practiceQuestions[i].completedQuestions.push(question)
-                        } else if (!practiceQuestions[i].completedQuestions) {
-                            practiceQuestions[i].completedQuestions = []
+                        if (question.module === modulePracticeQuestions[i].moduleNumber) {
+                            if (question.completed || question.giveup || question.revealed) {
+                                modulePracticeQuestions[i].doneQuestions.push(question)
+                            }
                         }
                     }
                 }
-                console.log(practiceQuestions)
+
                 setLoading(false)
             })
     }, [])
@@ -81,21 +101,59 @@ const Stats = () => {
     }
 
     return (
-    <Layout>
-        <PageHeader title="Personal Statistics"/>
-        <Segment>
-            <Header as="h3" block>
-                <a id="modules">Modules</a>
-            </Header>
+        <Layout>
+            <PageHeader title="Personal Statistics about EduWRENCH Usage/Completion"/>
 
-        </Segment>
-        {practiceQuestions.map((module, index) => <ModuleInfo userData={userData} key={index} module={module} listIndex={index}/>)}
-        <Segment>
-            <Header as="h3" block>
-                <a id="simulations">Simulations</a>
-            </Header>
-        </Segment>
-    </Layout>
+            <Segment>
+                This page displays some information regarding your usage of the EduWRENCH pedagogic modules to date.
+            </Segment>
+
+            <Segment>
+                <Header as="h3" block>
+                    <a id="modules">Practice Questions</a>
+                </Header>
+            </Segment>
+
+            <p>
+                This section indicates your level of coverage of the practice questions for each module.
+            </p>
+
+            {modulePracticeQuestions.map((module, index) => <PracticeQuestionInfo userData={userData} key={index} module={module} listIndex={index}/>)}
+
+            <div>
+                <br/>
+                {<Button onClick={resetAllPracticeQuestions} color="red" size="small" content="Click to reset coverage to zero"/>}
+            </div>
+
+            <Segment>
+                <Header as="h3" block>
+                    <a id="simulations">Simulations</a>
+                </Header>
+            </Segment>
+            <p>
+                This section shows some data regarding your usage of the simulation-driven pedagogic activities.
+            </p>
+
+            <Segment>
+                <SimulationInfo simulationData={userData.simulationData}/>
+            </Segment>
+
+            <Segment>
+                <Header as="h3" block>
+                    <a id="feedback">Provided Feedback</a>
+                </Header>
+            </Segment>
+
+            <p>
+                This section shows the module tabs <strong>you have visited</strong> for which you have or have not provided feedback
+                (by answering a couple of questions at the bottom of the tab).<br/>
+
+                <Segment>
+                    <FeedbackInfo feedbackData={userData.feedbackData}/>
+                </Segment>
+            </p>
+            <br/>
+        </Layout>
     )
 }
 

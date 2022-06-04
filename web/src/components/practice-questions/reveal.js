@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label, Divider} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
@@ -77,10 +77,11 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
     if (revealed) {
         return (
             <>
+                <Divider/>
                 <div>
                 <strong>[{question_key}]</strong> {question}
                 <br/><br/>
-                <Label color='grey' size='large'>Revealed Answer:</Label> {explanation}
+                <Label color='grey' size='large'>Revealed Answer:</Label><br/> {explanation}
                     <br/>
                     <br/>
                 </div>
@@ -89,6 +90,7 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
     } else {
         return (
             <>
+                <Divider/>
                 <div>
                 <strong>[{question_key}]</strong> {question}
                     <br/><br/>

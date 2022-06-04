@@ -2,6 +2,8 @@ import React from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
+import FeedbackQuestions from "../../../components/feedback_questions";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
 
 const Capstone = ({module, tab}) => {
     return (
@@ -157,6 +159,18 @@ const Capstone = ({module, tab}) => {
                 implementation worthwhile? Show your reasoning.
             </p>
 
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "capstone",
+                        module: "A.1"
+                    },
+                ]} />
+            } />
         </>
     )
 }

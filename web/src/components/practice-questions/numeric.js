@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Formik } from "formik"
-import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label, Divider} from "semantic-ui-react"
 import axios from "axios"
 
 const PracticeQuestionNumeric = ({question_key, question, answer, explanation, hint, module}) => {
@@ -90,9 +90,10 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
         message = <Message icon='frown outline' color='yellow' content={correct_message} />
         return (
             <>
+                <Divider/>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <Label color='grey' size='large'>Answer explanation:</Label><br/>{explanation}
                 <br/><br/>
             </>
         )
@@ -103,6 +104,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
         message = <Message icon='check' color='green' content={correct_message} />
         return (
             <>
+                <Divider/>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
                 <Label color='grey' size='large'>Answer explanation:</Label>
@@ -115,6 +117,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
 
     return (
         <>
+            <Divider/>
             <strong>[{question_key}]</strong> {question}<br/><br/>
             <Formik
                 key={question_key}

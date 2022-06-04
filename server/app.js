@@ -482,7 +482,7 @@ app.post("/run/io_operations", function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'",
+        "--log='root.fmt:%e%m%n'",
     ];
 
     const SIMULATION_ARGS = [
@@ -1351,6 +1351,7 @@ app.post("/run/storage_network_proximity", function (req, res) {
     }
 })
 
+
 // get usage statistics
 app.post("/get/usage_statistics", function (req, res) {
 
@@ -1551,6 +1552,16 @@ app.post('/get/simfeedback', function (req, res) {
     })
 })
 
+app.post('/get/resetpracticequestions', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.resetPracticeQuestions(userID).then(status => {
+            return true
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
 /**
  * Log the feedback parameters to database.
  *
@@ -1560,7 +1571,7 @@ app.post('/get/simfeedback', function (req, res) {
 function logFeedback(data) {
     db.registerUser(data.email, data.user_name).then((userID) => {
         let time = Math.round(new Date().getTime() / 1000)
-        db.updateFeedback(userID, data.feedback_key, time, data.useful, data.quality, data.comments, data.module).then ((feedbackId => {
+        db.updateFeedback(userID, data.tabkey, time, data.useful, data.quality, data.comments).then ((feedbackId => {
             return true
         })).catch((error => {
             console.log("[ERROR: " + error)
@@ -1574,11 +1585,10 @@ app.post('/update/feedback', function (req, res) {
         logFeedback({
             user: req.body.user_name,
             email: req.body.email,
-            feedback_key: req.body.feedback_key,
+            tabkey: req.body.tabkey,
             useful : req.body.useful,
             quality : req.body.quality,
             comments : req.body.comments,
-            module : req.body.module
         })
         res.status(201).send();
     } catch(e) {
@@ -1589,7 +1599,7 @@ app.post('/update/feedback', function (req, res) {
 
 app.post('/get/feedback', function (req, res) {
     db.registerUser(req.body.email, req.body.user_name).then(userID => {
-        db.getFeedback(userID, req.body.feedback_key).then(feedback => {
+        db.getFeedback(userID, req.body.tabkey).then(feedback => {
             res.json({
                 completed: feedback.completed,
             })
@@ -1620,7 +1630,8 @@ app.post('/get/userdata', function (req, res) {
         db.getUserData(userID).then(userData => {
             res.json({
                 questionData: userData.questionData,
-                feedbackData: userData.feedbackData
+                feedbackData: userData.feedbackData,
+                simulationData: userData.simulationData
             })
         }).catch((error => {
             console.log("ERROR " + error)

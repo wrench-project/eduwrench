@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react"
-import {Form, Message, Button, Modal, Label} from "semantic-ui-react"
+import {Form, Message, Button, Modal, Label, Divider} from "semantic-ui-react"
 import {Formik} from 'formik'
 import axios from "axios"
 
@@ -64,6 +64,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
         message = <Message icon='check' color='green' content={correct_message} />
         return (
             <>
+                <Divider/>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 <ul>
                     {choices.map((choice) =>
@@ -71,7 +72,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                     )}
                 </ul>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label>{explanation}
+                <Label color='grey' size='large'>Answer explanation:</Label><br/>{explanation}
                 <br/><br/>
             </>
         )
@@ -79,6 +80,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
 
     return (
         <>
+            <Divider/>
             <strong>[{question_key}]</strong> {question}<br/><br/>
             <Formik
                 key={question_key}
@@ -89,6 +91,8 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                     setTimeout(() => {
                         const userEmail = localStorage.getItem("currentUser");
                         const userName = localStorage.getItem("userName");
+                        console.log("VALUES.SELECTED = " + values.selected)
+                        console.log("CORRECT ANSWER = " + correct_answer)
                         if (values.selected === correct_answer) {
                             setState("Correct")
                             setCompleted(true)

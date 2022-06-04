@@ -14,6 +14,7 @@ import IOFigure3 from "../../../images/vector_graphs/single_core/IO_figure_3.svg
 import IOFigure4 from "../../../images/vector_graphs/single_core/IO_figure_4.svg"
 import IOFigure5 from "../../../images/vector_graphs/single_core/IO_figure_5.svg"
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const IO = ({module, tab}) => {
     return (
@@ -220,165 +221,155 @@ const IO = ({module, tab}) => {
                     <>Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop,
                         and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the
                         simulation
-                        app above. What is the total execution time when I/O and computation can be overlapped? Show
-                        your work.
-                        Use the simulation app to check your answer. What is the core utilization percentage? Show your
-                        work.
+                        app above. What is the total execution time when I/O and computation can be overlapped?
+                    </>
+                }
+                hint={""}
+                answer={[253,253]}
+                explanation={
+                    <>
+                        Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing 100 MB takes 1 second.
+                        The compute time is much larger than the I/O time. So the total execution time will
+                        be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
+                    </>
+                }
+                />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p4.2"}
+                question={
+                    <>For the execution in the previous practice question, What is the core utilization percentage?
                     </>
                 }
                 hint={""}
                 answer={[98.8,98.9]}
                 explanation={
                     <>
-                        Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing 100 MB takes 1 second.
-                        The compute time is much larger than the I/O time. So the total execution time will
-                        be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
                         The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
                         core utilization is <TeX math="250/253 = 98.8\%" />.
                     </>
                 }
-                />
+            />
 
-            {/*<PracticeQuestions questions={[*/}
-            {/*    {*/}
-            {/*        key: "A.1.p4.1",*/}
-            {/*        question: "Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop, " +*/}
-            {/*            "and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the simulation " +*/}
-            {/*            "app above. What is the total execution time when I/O and computation can be overlapped? Show your work. " +*/}
-            {/*            "Use the simulation app to check your answer. What is the core utilization percentage? Show your work.",*/}
-            {/*        content: (*/}
-            {/*            <>*/}
-            {/*                Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing 100 MB takes 1 second.*/}
-            {/*                The compute time is much larger than the I/O time. So the total execution time will*/}
-            {/*                be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.*/}
-            {/*                The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the*/}
-            {/*                core utilization is <TeX math="250/253 = 98.8\%" />.*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        answer: [2.3, 4.0],*/}
-            {/*        type: "textbox",*/}
-            {/*        choices: '',*/}
-            {/*        hint: "this is hint",*/}
-            {/*        giveup: true,*/}
-            {/*        module: "A.1"*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*        key: "A.1.p4.2",*/}
-            {/*        question: "A program reads 2GB of input from disk, performs a 6 Tflop computation on this input, and then " +*/}
-            {/*            "writes 1GB of output to disk. It is executed on a computer that has a CPU that computes at speed " +*/}
-            {/*            "500 Gflop/sec and has a HDD with R/W bandwidth of 200 MB/sec. Is the program execution IO-intensive or " +*/}
-            {/*            "CPU-intensive? If you could upgrade either the CPU or the HDD, which upgrade would you choose? " +*/}
-            {/*            "Show your work and reasoning.",*/}
-            {/*        content: (*/}
-            {/*            <>*/}
-            {/*                The execution time breakdown is as follows:*/}
-            {/*                <ul>*/}
-            {/*                    <li>Read input: 2000 MB / 200 MB/sec = 10 sec</li>*/}
-            {/*                    <li>Compute: 6000 Gflop / 500 Gflop/sec = 12 sec</li>*/}
-            {/*                    <li>Write input: 1000 MB / 200 MB/sec = 5 sec</li>*/}
-            {/*                </ul>*/}
-            {/*                Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        answer: [1.2, 2.3],*/}
-            {/*        type: "textbox",*/}
-            {/*        choices: '',*/}
-            {/*        hint: "this is hint",*/}
-            {/*        giveup: true,*/}
-            {/*        module: "A.1"*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*        key: "A.1.p4.3",*/}
-            {/*        question: (*/}
-            {/*            <>*/}
-            {/*                You are working at a company that runs instances of the same task repeatedly. On the currently available*/}
-            {/*                hardware, the time to process a task instance is as follows:*/}
-            {/*                <ul>*/}
-            {/*                    <li>Read input: 2 sec</li>*/}
-            {/*                    <li>CPU computation: 3 sec</li>*/}
-            {/*                    <li>Write output: 2 sec</li>*/}
-            {/*                </ul>*/}
-            {/*                <p>*/}
-            {/*                    A program was designed to overlap IO and computation when executing multiple task instances in sequence.*/}
-            {/*                    As in Figure 3, the program first reads the input for the first 2 tasks, and then alternates between*/}
-            {/*                    writing the output for task <TeX math="i" /> and reading the input for task <TeX math="i + 2" />, until*/}
-            {/*                    at*/}
-            {/*                    the end it writes the output of the last two tasks one after the other. The computation on the CPU for a*/}
-            {/*                    task is started as soon as its input has been read from disk.*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    What is the total execution time when processing 4 consecutive task instances? Show your work, possibly*/}
-            {/*                    including a depiction of the execution as in Figure 3 above. You can use the simulation app above to*/}
-            {/*                    check your answer!*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    What is the core utilization? Show your work.*/}
-            {/*                </p>*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        content: (*/}
-            {/*            <>*/}
-            {/*                <p>*/}
-            {/*                    Here is a depiction of the execution:*/}
-            {/*                </p>*/}
-            {/*                <IOFigure4 />*/}
-            {/*                <p>*/}
-            {/*                    The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX*/}
-            {/*                    math="n" /> tasks by identifying the repeating pattern: <TeX*/}
-            {/*                    math="2 + 3 + (n-1) \times (3 + 1) + 1 = 4n + 2" />.)*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    We can double-check the result in simulation by setting the number of tasks to 4, the amount of input*/}
-            {/*                    data to 200 MB, the amount of output data to 200 MB, and the task work to 300 Gflop.*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.*/}
-            {/*                </p>*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        answer: [1.3, 2.0],*/}
-            {/*        type: "textbox",*/}
-            {/*        choices: '',*/}
-            {/*        hint: "this is hint",*/}
-            {/*        giveup: true,*/}
-            {/*        module: "A.1"*/}
-            {/*    },*/}
-            {/*    {*/}
-            {/*        key: "A.1.p4.4",*/}
-            {/*        question: (*/}
-            {/*            <>*/}
-            {/*                In the same setting as in the previous question, it is decided to purchase a SSD to replace the HDD*/}
-            {/*                currently being used. The SSD has <strong>twice the bandwidth</strong> of the HDD. What is now the CPU*/}
-            {/*                utilization when processing 4 consecutive task instances? Show your work, possibly including a depiction*/}
-            {/*                of the execution as in Figure 3 above.*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        content: (*/}
-            {/*            <>*/}
-            {/*                <p>Here is a depiction of the execution:</p>*/}
-            {/*                <IOFigure5 />*/}
-            {/*                <p>*/}
-            {/*                    The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX*/}
-            {/*                    math="n" /> tasks easily: <TeX math="3n + 2" />.)*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%.*/}
-            {/*                </p>*/}
-            {/*                <p>*/}
-            {/*                    By making the IO faster, input for tasks is always ready for the CPU to process. As the number of tasks*/}
-            {/*                    increases, the CPU utilization tends to 100%.*/}
-            {/*                </p>*/}
-            {/*            </>*/}
-            {/*        ),*/}
-            {/*        answer: [4.2, 10],*/}
-            {/*        type: "textbox",*/}
-            {/*        choices: '',*/}
-            {/*        hint: "this is hint",*/}
-            {/*        giveup: true,*/}
-            {/*        module: "A.1"*/}
-            {/*    }*/}
-            {/*]}*/}
-            {/*/>*/}
+            <PracticeQuestionMultiChoice
+                module={"A.1"}
+                question_key={"A.1.p4.3"}
+                question={
+                    <>
+                        A program reads 2GB of input from disk, performs a 6 Tflop computation on this input, and then
+                        writes 1GB of output to disk. It is executed on a computer that has a CPU that computes at speed
+                        500 Gflop/sec and has a HDD with R/W bandwidth of 200 MB/sec. If you could upgrade either the CPU or the HDD, which
+                        upgrade should you choose?
+                    </>
+                }
+                hint={"Determine whether the program's execution is CPU or I/O intensive"}
+                choices={["upgrade the CPU", "upgrade the HDD"]}
+                correct_answer={"upgrade the HDD"}
+                explanation={
+                    <>
+                        The execution time breakdown is as follows:
+                        <ul>
+                            <li>Read input: 2000 MB / 200 MB/sec = 10 sec</li>
+                            <li>Compute: 6000 Gflop / 500 Gflop/sec = 12 sec</li>
+                            <li>Write input: 1000 MB / 200 MB/sec = 5 sec</li>
+                        </ul>
+                        Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p4.4"}
+                question={
+                    <>
+                        You are working at a company that runs instances of the same task repeatedly. On the currently available
+                        hardware, the time to process a task instance is as follows:
+                        <ul>
+                            <li>Read input: 2 sec</li>
+                            <li>CPU computation: 3 sec</li>
+                            <li>Write output: 2 sec</li>
+                        </ul>
+                        <p>
+                            A program was designed to overlap IO and computation when executing multiple task instances in sequence.
+                            As in Figure 3, the program first reads the input for the first 2 tasks, and then alternates between
+                            writing the output for task <TeX math="i" /> and reading the input for task <TeX math="i + 2" />, until
+                            at
+                            the end it writes the output of the last two tasks one after the other. The computation on the CPU for a
+                            task is started as soon as its input has been read from disk.
+                        </p>
+                        <p>
+                            What is the total execution time when processing 4 consecutive task instances?
+                        </p>
+                    </>
+                }
+                hint={"It may be a good idea to draw the execution as in Figure 3 above"}
+                answer={[18, 18]}
+                explanation={
+                    <>
+                    Here is a depiction of the execution:
+                        <IOFigure4 />
+                        <p>
+                        The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX
+                        math="n" /> tasks by identifying the repeating pattern: <TeX
+                        math="2 + 3 + (n-1) \times (3 + 1) + 1 = 4n + 2" />.)
+                        </p>
+                        <p>
+                        We can double-check the result in simulation by setting the number of tasks to 4, the amount of input
+                        data to 200 MB, the amount of output data to 200 MB, and the task work to 300 Gflop.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p4.5"}
+                question={
+                    <>
+                        For the execution in the previous question, what is the core utilization in percentage?
+                    </>
+                }
+                answer={[66.6, 66.7]}
+                explanation={
+                    <>
+                        The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.1"}
+                question_key={"A.1.p4.6"}
+                question={
+                    <>
+                        In the context of the two previous questions, it is decided to purchase a SSD to replace the HDD
+                        currently being used. The SSD has <strong>twice the bandwidth</strong> of the HDD. What is now the CPU
+                        utilization when processing 4 consecutive task instances?
+                    </>
+                }
+                hint={"It may be a good idea to draw the execution as in Figure 3 above"}
+                answer={[85,86]}
+                explanation={
+                    <>
+                        <p>Here is a depiction of the execution:</p>
+                        <IOFigure5 />
+                        <p>
+                            The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX
+                            math="n" /> tasks easily: <TeX math="3n + 2" />.)
+                        </p>
+                        <p>
+                            The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%.
+                        </p>
+                        <p>
+                            By making the IO faster, input for tasks is always ready for the CPU to process. As the number of tasks
+                            increases, the CPU utilization tends to 100%.
+                        </p>
+                    </>
+                }
+
+            />
 
             <Divider />
 
@@ -447,15 +438,16 @@ const IO = ({module, tab}) => {
             <Divider />
 
             <Header as="h3" block>
-                Feedback Questions
+                You feedback is appreciated
             </Header>
-            
+
+
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[
-                {
-                    key: "Feedback A.1.4",
-                    feedback: "feedback",
-                },
+                    {
+                        tabkey: "io",
+                        module: "A.1"
+                    },
                 ]} />
             } />
 
