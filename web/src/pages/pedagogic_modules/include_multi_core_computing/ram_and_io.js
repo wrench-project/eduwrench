@@ -11,6 +11,10 @@ import ExampleIODAG from "../../../images/vector_graphs/multi_core/multicore_exa
 import ExampleIODAG1Core from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_1_core.svg"
 import ExampleIODAG4Cores1 from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_4_cores_1.svg"
 import ExampleIODAG4Cores2 from "../../../images/vector_graphs/multi_core/multicore_example_io_dag_4_cores_2.svg"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const RamAndIO = ({module, tab}) => {
     return (
@@ -56,64 +60,71 @@ const RamAndIO = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p3.1",
-                    question: "You need to execute 5 tasks that each run in 1 second on one core. Your current single-core " +
-                        "processor thus can run these tasks in 5 seconds. The processor is then upgraded to have 5 cores, " +
-                        "each identical in processing power to the original single core. If the machine has 32 GB of RAM and " +
-                        "each task requires 8 GB of RAM to execute, what is the execution time on the new 5-core processor? " +
-                        "Show your work. (You can double-check your answer in simulation.) What is the parallel efficiency? " +
-                        "Show your work.",
-                    content: (
-                        <>
-                            <p>
-                                On the single-core machine the RAM constraint was not a problem as tasks were executed sequentially
-                                (there was never a need for more than 8 GB of RAM). With 5 cores, running all tasks concurrently would
-                                require 5x8 = 40 GB of RAM, but only 32 GB is available. Therefore, we can only run 4 tasks at the same
-                                time. So the last task runs by itself, with 4 cores being idle. The overall execution time is 2 seconds.
-                                This is seen easily in simulation.
-                            </p>
-                            <p>Therefore:</p>
-                            <TeX math="\text{Speedup}(5) = \frac{5}{2} = 2.5" block />
-                            <p>and</p>
-                            <TeX math="\text{Efficiency}(5) = \frac{2.5}{5} = 50\%" block />
-                            <p>We would have been better off with a 4-core computer (since, likely, it would cost less).</p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p3.2",
-                    question: "Assume you have a 2-core machine on which you need to run 6 tasks (in any order). Each task " +
-                        "runs in 1 second on a core. However, the tasks have the following RAM requirements in GB: 6, 2, 4, 3, " +
-                        "1, 7. If your machine has a total of 8 GB of RAM, can you achieve 100% parallel efficiency? Show your " +
-                        "work and reasoning.",
-                    content: (
-                        <>
-                            <p>
-                                The question really is: Can you always run two tasks at the same time so that the sum of their RAM
-                                requirements never exceeds 8 GB? The answer is "yes":
-                            </p>
-                            <ul>
-                                <li>Run the 7 GB and the 1 GB task together</li>
-                                <li>Run the 6 GB and the 2 GB task together</li>
-                                <li>Run the 4 GB and the 3 GB task together</li>
-                            </ul>
-                            <p>
-                                (the order of the three steps above does not matter).
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p3.1"}
+                question={
+                    <>
+                        You need to execute 5 tasks that each run in 1 second on one core. Your current single-core
+                        processor thus can run these tasks in 5 seconds. The processor is then upgraded to have 5 cores,
+                        each identical in processing power to the original single core. If the machine has 32 GB of RAM and
+                        each task requires 8 GB of RAM to execute, what is the parallel efficiency?
+                    </>
                 }
-            ]} />
+                hint={"First compute the execution time, then the parallel speedup, and then the parallel efficiency"}
+                answer={[50,50]}
+                explanation={
+                    <>
+                        <p>
+                            On the single-core machine the RAM constraint was not a problem as tasks were executed sequentially
+                            (there was never a need for more than 8 GB of RAM). With 5 cores, running all tasks concurrently would
+                            require 5x8 = 40 GB of RAM, but only 32 GB is available. Therefore, we can only run 4 tasks at the same
+                            time. So the last task runs by itself, with 4 cores being idle. The overall execution time is 2 seconds.
+                            This is seen easily in simulation.
+                        </p>
+                        <p>Therefore:</p>
+                        <TeX math="\text{Speedup}(5) = \frac{5}{2} = 2.5" block />
+                        <p>and</p>
+                        <TeX math="\text{Efficiency}(5) = \frac{2.5}{5} = 50\%" block />
+                        <p>We would have been better off with a 4-core computer (since, likely, it would cost less).</p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p3.2"}
+                question={
+                    <>
+                        Assume you have a 2-core machine on which you need to run 6 tasks (in any order). Each task
+                        runs in 1 second on a core. However, the tasks have the following RAM requirements in GB: 6, 2, 4, 3,
+                        1, 7. If your machine has a total of 8 GB of RAM, can you achieve 100% parallel efficiency?
+                    </>
+                }
+                choices={["Yes", "No"]}
+                correct_answer={"Yes"}
+                explanation={
+                    <>
+                        <p>
+                            The question really is: Can you always run two tasks at the same time so that the sum of their RAM
+                            requirements never exceeds 8 GB? The answer is "yes":
+                        </p>
+                        <ul>
+                            <li>Run the 7 GB and the 1 GB task together</li>
+                            <li>Run the 6 GB and the 2 GB task together</li>
+                            <li>Run the 4 GB and the 3 GB task together</li>
+                        </ul>
+                        <p>
+                            (the order of the three steps above does not matter).
+                        </p>
+                    </>
+                }
+            />
+
 
             <Divider />
 
@@ -201,187 +212,205 @@ const RamAndIO = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p3.3",
-                    question: (
-                        <>
-                            A parallel program consists of 2 tasks:
-                            <ul>
-                                <li>Task #1 reads 20 MB of input, computes 500 Gflop, writes back 100 MB of output</li>
-                                <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
-                            </ul>
-                            <p>
-                                We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
-                                100 MB/sec read and write bandwidth.
-                            </p>
-                            <p>
-                                Is it better to run Task #1 or Task #2 first? Try to come up with an answer via reasoning rather than by
-                                estimating the execution time of both options and comparing. Show your work. You can double-check your
-                                result in simulation.
-                            </p>
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <p>
-                                It is better to run Task #1 first. This is because it has a small input size, so it can start executing
-                                early, and while it computes the input file for Task #2 can be read. This reasoning holds because both
-                                tasks compute for the same time and write the same amount of output. The simulation confirms that
-                                running Task #1 first is 0.8 seconds faster than running Task #2 first.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p3.4",
-                    question: (
-                        <>
-                            A parallel program consists of 2 tasks:
-                            <ul>
-                                <li>Task #1 reads 120 MB of input, computes 800 Gflop, writes back 20 MB of output</li>
-                                <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
-                            </ul>
-                            <p>
-                                We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
-                                100 MB/sec read and write bandwidth.
-                            </p>
-                            <p>
-                                Estimate the execution time of the "Task #1 first" option. For what fraction of this execution are both
-                                cores utilized. Show your work, possibly including a depiction of the execution as in the figures
-                                earlier in this page. Double-check your result in simulation.
-                            </p>
-                        </>
-                    ),
-                    content: (
-                        <>
-                            Here is the time-line of events:
-                            <ul>
-                                <li>Time 0.0: Task #1 starts reading input</li>
-                                <li>Time 1.2: Task #1 starts computing on core 1</li>
-                                <li>Time 1.2: Task #2 starts reading input</li>
-                                <li>Time 2.2: Task #2 starts computing on core 2</li>
-                                <li>Time 7.2: Task #2 start writing output</li>
-                                <li>Time 8.2: Task #2 finishes writing output</li>
-                                <li>Time 9.2: Task #1 starts writing output</li>
-                                <li>Time 9.4: Task #1 finishes writing output</li>
-                            </ul>
-                            <p>
-                                Execution time: 9.4 seconds. Both cores are utilized from time 2.2 until time 7.2, that is for 5
-                                seconds, which is <TeX math="5 / 9.4 = 53.2\%" /> of the execution time.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p3.5",
-                    question: (
-                        <>
-                            A parallel program consists of 2 tasks:
-                            <ul>
-                                <li>Task #1 reads 80 MB of input, computes 200 Gflop, writes back 100 MB of output</li>
-                                <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
-                            </ul>
-                            <p>
-                                We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
-                                100 MB/sec read and write bandwidth.
-                            </p>
-                            <p>
-                                We consider the "Task #2 first" execution, which leads to some overall execution time. Say we now
-                                increase the work of Task #1. What is the smallest increase that will cause the overall execution time
-                                to also increase? Show your work and reasoning, possibly including a depiction of the execution as in
-                                the figures earlier in this page. You can check your answer in simulation.
-                            </p>
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <p>
-                                In this execution, Task #2 finishes its computation at time 6, while Task #1 finishes writing its output
-                                at time 100/100 + 80/100 + 200/100 + 100/100 = 4.8. Consequently, Task #1 could compute for 6 - 4.8 =
-                                1.2 seconds longer without impacting the execution of Task #2. This means that the overall execution
-                                time would increase when Task #1’s work becomes strictly superior to 200 + 120 = 320 Gflop.
-                            </p>
-                            <p>
-                                One can double-check this in simulation, which gives the following execution times for different values
-                                of Task #1’s work:
-                            </p>
-                            <ul>
-                                <li>Task #1 work at 200 Gflop: 7.00 seconds (original)</li>
-                                <li>Task #1 work at 320 Gflop: 7.00 seconds (no increase)</li>
-                                <li>Task #1 work at 321 Gflop: 7.01 seconds (increase)</li>
-                            </ul>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p3.6",
-                    question: (
-                        <>
-                            A parallel program consists of 2 tasks:
-                            <ul>
-                                <li>Task #1 reads 200 MB of input, computes 300 Gflop, writes back 10 MB of output</li>
-                                <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
-                            </ul>
-                            <p>
-                                We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
-                                100 MB/sec read and write bandwidth.
-                            </p>
-                            <p>
-                                Which of the two execution options ("Task #1 first" or "Task #2 first") leads to the highest parallel
-                                efficiency? What is that efficiency? Show your work. Feel free to use the simulation to determine the
-                                execution times for each option as a first step.
-                            </p>
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <p>
-                                The simulation gives the following execution times on 2 cores for each option:
-                            </p>
-                            <ul>
-                                <li>Task #1 first: 9.00 seconds</li>
-                                <li>Task #2 first: 7.10 seconds</li>
-                            </ul>
-                            <p>
-                                We now need to determine the sequential execution time for each option. This is similar to what we did
-                                in the <a href="/pedagogic_modules/single_core_computing/">I/O tab of the Single Core Computing
-                                module</a> when considering overlap of I/O and computation:
-                            </p>
-                            <ul>
-                                <li>Task #1 first: 200/100 + 300/100 + 500/100 + 100/100 = 11.00 seconds</li>
-                                <li>Task #2 first: 100/100 + 500/100 + 300/100 + 10/100 = 9.0 seconds</li>
-                            </ul>
-                            <p>
-                                Hence the parallel efficiencies:
-                            </p>
-                            <ul>
-                                <li>Task #1 first: (11.00 / 9.00) / 2 = 61.1%</li>
-                                <li>Task #2 first: (9.00 / 7.10) / 2 = 63.3%</li>
-                            </ul>
-                            <p>
-                                The "Task #2 first" option has the highest parallel efficiency, at 63.3%.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p3.3"}
+                question={
+                    <>
+                        A parallel program consists of 2 tasks:
+                        <ul>
+                            <li>Task #1 reads 20 MB of input, computes 500 Gflop, writes back 100 MB of output</li>
+                            <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
+                        </ul>
+                        <p>
+                            We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
+                            100 MB/sec read and write bandwidth.
+                        </p>
+                        <p>
+                            Is it better to run Task #1 or Task #2 first? Try to come up with an answer via reasoning rather than by
+                            estimating the execution time of both options and comparing.
+                        </p>
+                    </>
                 }
-            ]} />
+                hint={"You can double-check your results in simulation."}
+                choices={["It's better to run Task#1 first", "It's better to run Task#2 first"]}
+                correct_answer={"It's better to run Task#1 first"}
+                explanation={
+                    <>
+                        <p>
+                            It is better to run Task #1 first. This is because it has a small input size, so it can start executing
+                            early, and while it computes the input file for Task #2 can be read. This reasoning holds because both
+                            tasks compute for the same time and write the same amount of output. The simulation confirms that
+                            running Task #1 first is 0.8 seconds faster than running Task #2 first.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p3.4"}
+                question={
+                    <>
+                        A parallel program consists of 2 tasks:
+                        <ul>
+                            <li>Task #1 reads 120 MB of input, computes 800 Gflop, writes back 20 MB of output</li>
+                            <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
+                        </ul>
+                        <p>
+                            We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
+                            100 MB/sec read and write bandwidth.
+                        </p>
+                        <p>
+                            Estimate the execution time of the "Task #1 first" option.
+                        </p>
+                    </>
+                }
+                hint={
+                    "It could be useful to draw the execution as in the figures earlier in this page. You can double-check your result in simulation."
+                }
+                answer={[9.39,9.41]}
+                explanation={
+                    <>
+                        Here is the time-line of events:
+                        <ul>
+                            <li>Time 0.0: Task #1 starts reading input</li>
+                            <li>Time 1.2: Task #1 starts computing on core 1</li>
+                            <li>Time 1.2: Task #2 starts reading input</li>
+                            <li>Time 2.2: Task #2 starts computing on core 2</li>
+                            <li>Time 7.2: Task #2 start writing output</li>
+                            <li>Time 8.2: Task #2 finishes writing output</li>
+                            <li>Time 9.2: Task #1 starts writing output</li>
+                            <li>Time 9.4: Task #1 finishes writing output</li>
+                        </ul>
+                        <p>
+                            Execution time: 9.4 seconds.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p3.5"}
+                question={
+                    <>
+                        In the previous question, what is the percentage of the execution time for which both cores are utilized?
+                    </>
+                }
+                answer={[53.1,53.3]}
+                explanation={
+                    <>
+                        Both cores are utilized from time 2.2 until time 7.2, that is for 5
+                        seconds, which is <TeX math="5 / 9.4 = 53.2\%" /> of the execution time.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p3.6"}
+                question={
+                    <>
+                        A parallel program consists of 2 tasks:
+                        <ul>
+                            <li>Task #1 reads 80 MB of input, computes 200 Gflop, writes back 100 MB of output</li>
+                            <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
+                        </ul>
+                        <p>
+                            We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
+                            100 MB/sec read and write bandwidth.
+                        </p>
+                        <p>
+                            We consider the "Task #2 first" execution, which leads to some overall execution time. Say we now
+                            increase the work of Task #1. What is the smallest increase that will cause the overall execution time
+                            to also increase?
+                        </p>
+                    </>
+                }
+                hint={
+                    "It could be useful to draw the execution as in the figures earlier in this page. You can double-check your result in simulation."
+                }
+                answer={[320,320]}
+                explanation={
+                    <>
+                        <p>
+                            In this execution, Task #2 finishes its computation at time 6, while Task #1 finishes writing its output
+                            at time 100/100 + 80/100 + 200/100 + 100/100 = 4.8. Consequently, Task #1 could compute for 6 - 4.8 =
+                            1.2 seconds longer without impacting the execution of Task #2. This means that the overall execution
+                            time would increase when Task #1’s work becomes strictly superior to 200 + 120 = 320 Gflop.
+                        </p>
+                        <p>
+                            One can double-check this in simulation, which gives the following execution times for different values
+                            of Task #1’s work:
+                        </p>
+                        <ul>
+                            <li>Task #1 work at 200 Gflop: 7.00 seconds (original)</li>
+                            <li>Task #1 work at 320 Gflop: 7.00 seconds (no increase)</li>
+                            <li>Task #1 work at 321 Gflop: 7.01 seconds (increase)</li>
+                        </ul>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p3.7"}
+                question={
+                    <>
+                        A parallel program consists of 2 tasks:
+                        <ul>
+                            <li>Task #1 reads 200 MB of input, computes 300 Gflop, writes back 10 MB of output</li>
+                            <li>Task #2 reads 100 MB of input, computes for 500 Gflop, writes back 100 MB of output</li>
+                        </ul>
+                        <p>
+                            We execute this program on a computer with two cores that compute at 100 Gflop/sec and with a disk with
+                            100 MB/sec read and write bandwidth.
+                        </p>
+                        <p>
+                            Which of the two execution options ("Task #1 first" or "Task #2 first") leads to the highest parallel
+                            efficiency?
+                        </p>
+                    </>
+                }
+                hint={"Use the simulation to determine the execution times for each option as a first step."}
+                choices={["Task #1 first", "Task #2 first"]}
+                correct_answer={"Task #2 first"}
+                explanation={
+                    <>
+                        <p>
+                            The simulation gives the following execution times on 2 cores for each option:
+                        </p>
+                        <ul>
+                            <li>Task #1 first: 9.00 seconds</li>
+                            <li>Task #2 first: 7.10 seconds</li>
+                        </ul>
+                        <p>
+                            We now need to determine the sequential execution time for each option. This is similar to what we did
+                            in the <a href="/pedagogic_modules/single_core_computing/">I/O tab of the Single Core Computing
+                            module</a> when considering overlap of I/O and computation:
+                        </p>
+                        <ul>
+                            <li>Task #1 first: 200/100 + 300/100 + 500/100 + 100/100 = 11.00 seconds</li>
+                            <li>Task #2 first: 100/100 + 500/100 + 300/100 + 10/100 = 9.0 seconds</li>
+                        </ul>
+                        <p>
+                            Hence the parallel efficiencies:
+                        </p>
+                        <ul>
+                            <li>Task #1 first: (11.00 / 9.00) / 2 = 61.1%</li>
+                            <li>Task #2 first: (9.00 / 7.10) / 2 = 63.3%</li>
+                        </ul>
+                        <p>
+                            The "Task #2 first" option has the highest parallel efficiency, at 63.3%.
+                        </p>
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -414,8 +443,21 @@ const RamAndIO = ({module, tab}) => {
                 your work and reasoning.
             </p>
 
-        </>
-    )
-}
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "ram_and_io",
+                        module: "A.2"
+                    },
+                ]} />
+            } />
+
+            </>
+            )
+            }
 
 export default RamAndIO
