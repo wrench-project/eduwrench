@@ -61,25 +61,6 @@ const Stats = () => {
 
                 const questionData = response.data.questionData
 
-                // const feedbackData = response.data.feedbackData
-                // for (let i = 0; i < practiceQuestions.length; i++) {
-                //     if (feedbackData[i] && feedbackData[i].module === practiceQuestions[i].moduleNumber) {
-                //         practiceQuestions[i].feedback = feedbackData[i]
-                //     } else {
-                //         practiceQuestions[i].feedback = {
-                //             completed: false
-                //         }
-                //     }
-                // }
-
-                // for (let i = 0; i < practiceQuestions.length; i++) {
-                //     practiceQuestions[i].feedback = []
-                //     for (const feedback of feedbackData) {
-                //         if (feedback.module === practiceQuestions[i].moduleNumber) {
-                //             practiceQuestions[i].feedback.push(feedback)
-                //         }
-                //     }
-                // }
 
                 for (let i = 0; i < modulePracticeQuestions.length; i++) {
                     modulePracticeQuestions[i].doneQuestions = []
@@ -145,7 +126,7 @@ const Stats = () => {
             </Segment>
 
             <p>
-                This section shows the module tabs <strong>you have visited</strong> for which you have or have not provided feedback
+                This section shows the <strong>module tabsyou have visited</strong> for which you have or have not provided feedback
                 (by answering a couple of questions at the bottom of the tab).<br/>
 
                 <Segment>

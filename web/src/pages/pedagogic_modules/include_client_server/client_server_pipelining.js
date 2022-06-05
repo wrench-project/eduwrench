@@ -7,6 +7,11 @@ import PracticeQuestions from "../../../components/practice_questions_header"
 import ClientServerPipeliningSimulation from "./client_server_pipelining_simulation"
 
 import PipeliningImage from "../../../images/vector_graphs/client_server/client_server_pipelining.svg"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionReveal from "../../../components/practice-questions/reveal";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const ClientServerPipelining = ({module, tab}) => {
     return (
@@ -196,180 +201,217 @@ const ClientServerPipelining = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.3.2.p2.1",
-                    question: "When using a 1 GB buffer size (i.e., no pipelining), what would you  expect the execution time " +
-                        "to be when running on Server #2? Show your work. Check your answer with the simulation.",
-                    content: (
-                        <>
-                            <p>One would expect the execution time to be:</p>
-                            <TeX
-                                math="T = \frac{1 \text{GB}}{400 \text{MB/sec}} + 10 \text{us} + \frac{1 \text{GB}}{600 \text{MB/sec}} + \frac{1000 \text{Gflop}}{60 \text{Gflop/sec}}"
-                                block />
-                            <p>which gives <TeX math="T = 20.83 \text{sec}" />.</p>
-                            <p>The simulation gives us 20.92 sec. As usual, our back-of-the-envelope estimate is a bit optimistic
-                                (because it does not capture some network behaviors), but it is close.</p>
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
 
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p2.2",
-                    question: "Still on Server #2, what do you think the execution time would be when setting the buffer size " +
-                        "to 500 MB? Show your work and reasoning. Check your answer in simulation.",
-                    content: (
-                        <>
-                            <p>
-                                With a 500 MB buffer, sending the file over to the server consists of three steps. In the first step,
-                                500 GB of data is read from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same
-                                time, this data is sent to the server and another 500 MB is read from the disk. Because the network for
-                                Server #2 has higher bandwidth than the disk, the disk is the bottleneck, and so this step also takes
-                                1.25 seconds. Finally, in the third step, 500 MB of data is sent over the network, which takes time
-                                500/600 = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 + .83 = 3.33 seconds. The
-                                server then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. Note
-                                that we neglected network latencies since we incur only three of them.
-                            </p>
-
-                            <p>The simulation gives us 20.04 seconds, which again is very close.</p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p2.3",
-                    question: (
-                        <>
-                            Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it
-                            takes for the server to <i>receive the data</i>. Discuss/explain what you observe. What would be an ideal
-                            transfer time assuming no latencies whatsoever and maximum pipelining? Can we pick a good buffer size that
-                            gets close? Is it easy to pick a good buffer size, or is it like finding a needle in a haystack? For all
-                            these questions, show your work and reasoning.
-                        </>
-                    ),
-                    content: (
-                        <>
-                            The simulation gives these results:
-                            <Table collapsing compact>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell>buffer size</Table.HeaderCell>
-                                        <Table.HeaderCell>transfer time</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>100 KB</Table.Cell>
-                                        <Table.Cell>3.05</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>500 KB</Table.Cell>
-                                        <Table.Cell>2.50</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>1 MB</Table.Cell>
-                                        <Table.Cell>2.50</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>5 MB</Table.Cell>
-                                        <Table.Cell>2.51</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>10 MB</Table.Cell>
-                                        <Table.Cell>2.52</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>100 MB</Table.Cell>
-                                        <Table.Cell>2.68</Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
-                            </Table>
-
-                            <p>
-                                With a small buffer size, we do not do great, because of latencies. With a large buffer size, we do not
-                                do great because of poor pipelining.
-                            </p>
-
-                            <p>
-                                If we had no latencies, we could achieve almost perfect pipelining (buffer size of 1 byte). The transfer
-                                would thus proceed at the bottleneck bandwidth, i.e., that of the disk, and we would get a transfer time
-                                of 1000/400 = 2.5 seconds. So yes, we can achieve this with 1 MB buffer size!
-                            </p>
-
-                            <p>
-                                It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best
-                                possible execution time.
-                            </p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p2.4",
-                    question: "Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the " +
-                        "simulation, determine the data transfer time with the original 10 us latency. Say now that the latency " +
-                        "is instead 20 us. What is the increase in data transfer time? For this new latency, can we lower the " +
-                        "data transfer time by using a different buffer size? Show your work and reasoning.",
-                    content: (
-                        <>
-                            <p>
-                                With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55
-                                seconds. If we make the latency 20 us, this jumps up to 7.85 sec. This is almost a 20% increase.
-                            </p>
-
-                            <p>
-                                It would make sense that using a larger buffer size would be better, so as to save on latencies. For
-                                instance, if we try a 200 KB buffer size, the data transfer time goes from 7.85 to 6.55, back to what it
-                                was with the lower latency!
-                            </p>
-
-                            <p>
-                                So if a client program is told the latency of the network to the server, it could likely make a good
-                                decision for the buffer size.
-                            </p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p2.5",
-                    question: "Going more extreme, say now that the latency to Server #1 is 1 millisecond, but that the client " +
-                        "program has  not been updated and still uses a 100KB buffer. Can  you come up with a rough estimate of " +
-                        "how long the data transfer will take? Show your work. Check your answer in simulation. Do the two " +
-                        "numbers agree?",
-                    content: (
-                        <>
-                            <p>
-                                We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency,
-                                which adds up to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55
-                                seconds.
-                            </p>
-
-                            <p>The simulation gives us: 135.40 seconds!!!!</p>
-
-                            <p>
-                                No, the two numbers do not match and <strong>our estimate is way optimistic</strong>. Once again, this
-                                is because our estimate fails to capture complex network behaviors. In this case, when latencies get
-                                really high, the network protocol that we simulate (TCP) leads to a severe performance collapse. This is
-                                something you can find out more about in Networking <a href="/textbooks">textbooks</a>, but for now,
-                                let's just remember that <i>latency is bad</i> :)
-                            </p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p2.6",
-                    question: "With the 1 millisecond latency to Server #1, is pipelining still useful? Answer this question " +
-                        "purely experimentally (since from the previous question we see that our estimates are not useful for " +
-                        "such  high latencies). Show your work and reasoning.",
-                    content: (
-                        <>
-                            <p>If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80
-                                seconds.</p>
-                            <p>If we try a big buffer size of 100 MB, we get a data transfer time of 5.67 seconds! with 80 MB we get
-                                5.66 seconds. This is about the best we can do.</p>
-                            <p>So yes, pipelining is still useful!</p>
-                        </>
-                    )
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.1"}
+                question={
+                    <>
+                        When using a 1 GB buffer size (i.e., no pipelining), what would you  expect the execution time
+                        to be when running on Server #2?
+                    </>
                 }
-            ]} />
+                answer={[20,21]}
+                explanation={
+                    <>
+                        <p>One would expect the execution time to be:</p>
+                        <TeX
+                            math="T = \frac{1 \text{GB}}{400 \text{MB/sec}} + 10 \text{us} + \frac{1 \text{GB}}{600 \text{MB/sec}} + \frac{1000 \text{Gflop}}{60 \text{Gflop/sec}}"
+                            block />
+                        <p>which gives <TeX math="T = 20.83 \text{sec}" />.</p>
+                        <p>The simulation gives us 20.92 sec. As usual, our back-of-the-envelope estimate is a bit optimistic
+                            (because it does not capture some network behaviors), but it is close.</p>
+
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.2"}
+                question={
+                    <>
+                        Still on Server #2, what do you think the execution time would be when setting the buffer size
+                        to 500 MB?
+                    </>
+                }
+                answer={[19.5,20.5]}
+                explanation={
+                    <>
+                        <p>
+                            With a 500 MB buffer, sending the file over to the server consists of three steps. In the first step,
+                            500 GB of data is read from the disk into a buffer. This take 500/400 = 1.25 seconds. Then, at the same
+                            time, this data is sent to the server and another 500 MB is read from the disk. Because the network for
+                            Server #2 has higher bandwidth than the disk, the disk is the bottleneck, and so this step also takes
+                            1.25 seconds. Finally, in the third step, 500 MB of data is sent over the network, which takes time
+                            500/600 = .83 seconds. So overall, the file transfer takes time 1.25 + 1.25 + .83 = 3.33 seconds. The
+                            server then computes for 1000/60 = 16.66 seconds. So in total, the execution time is 19.99 seconds. Note
+                            that we neglected network latencies since we incur only three of them.
+                        </p>
+
+                        <p>The simulation gives us 20.04 seconds, which again is very close.</p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionReveal
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.3"}
+                question={
+                    <>
+                        Still on Server #2, run with buffer sizes of 100 KB, 500KB, 1MB, 10MB, and 100MB. Report on the time it
+                        takes for the server to <i>receive the data</i>. Discuss/explain what you observe. What would be an ideal
+                        transfer time assuming no latencies whatsoever and maximum pipelining? Can we pick a good buffer size that
+                        gets close? Is it easy to pick a good buffer size, or is it like finding a needle in a haystack?
+                    </>
+                }
+                explanation={
+                    <>
+                        The simulation gives these results:
+                        <Table collapsing compact>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>buffer size</Table.HeaderCell>
+                                    <Table.HeaderCell>transfer time</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>100 KB</Table.Cell>
+                                    <Table.Cell>3.05</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>500 KB</Table.Cell>
+                                    <Table.Cell>2.50</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>1 MB</Table.Cell>
+                                    <Table.Cell>2.50</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>5 MB</Table.Cell>
+                                    <Table.Cell>2.51</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>10 MB</Table.Cell>
+                                    <Table.Cell>2.52</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>100 MB</Table.Cell>
+                                    <Table.Cell>2.68</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+
+                        <p>
+                            With a small buffer size, we do not do great, because of latencies. With a large buffer size, we do not
+                            do great because of poor pipelining.
+                        </p>
+
+                        <p>
+                            If we had no latencies, we could achieve almost perfect pipelining (buffer size of 1 byte). The transfer
+                            would thus proceed at the bottleneck bandwidth, i.e., that of the disk, and we would get a transfer time
+                            of 1000/400 = 2.5 seconds. So yes, we can achieve this with 1 MB buffer size!
+                        </p>
+
+                        <p>
+                            It is not difficult to pick a good buffer size as between 500KB and 10MB we get really close to the best
+                            possible execution time.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionReveal
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.4"}
+                question={
+                    <>
+                        Switching now to Server #1, say the client is configured to use a 100 KB buffer. Using the
+                        simulation, determine the data transfer time with the original 10 us latency. Say now that the latency
+                        is instead 20 us. What is the increase in data transfer time? For this new latency, can we lower the
+                        data transfer time by using a different buffer size? Show your work and reasoning.
+                    </>
+                }
+                explanation={
+                    <>
+                        <p>
+                            With a 100 KB buffer and a 10 us latency, the simulation tells us that the data transfer time is 6.55
+                            seconds. If we make the latency 20 us, this jumps up to 7.85 sec. This is almost a 20% increase.
+                        </p>
+
+                        <p>
+                            It would make sense that using a larger buffer size would be better, so as to save on latencies. For
+                            instance, if we try a 200 KB buffer size, the data transfer time goes from 7.85 to 6.55, back to what it
+                            was with the lower latency!
+                        </p>
+
+                        <p>
+                            So if a client program is told the latency of the network to the server, it could likely make a good
+                            decision for the buffer size.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.5"}
+                question={
+                    <>
+                        Going more extreme, say now that the latency to Server #1 is 1 millisecond, but that the client
+                        program has  not been updated and still uses a 100KB buffer. Can  you come up with a rough analytical estimate of
+                        how long the data transfer will take?
+                    </>
+                }
+                hint={"Your estimate is likely way off when compared to the simulation"}
+                answer={[15, 20]}
+                explanation={
+                    <>
+                        <p>
+                            We have 1 GB / 100 KB = 10,000 different network transfers. Each one incurs a 1 millisecond latency,
+                            which adds up to 10 seconds. So we should go roughly 10 seconds slower, for a total time around 16.55
+                            seconds.
+                        </p>
+
+                        <p>The simulation gives us: 135.40 seconds!!!!</p>
+
+                        <p>
+                            No, the two numbers do not match and <strong>our estimate is way optimistic</strong>. Once again, this
+                            is because our estimate fails to capture complex network behaviors. In this case, when latencies get
+                            really high, the network protocol that we simulate (TCP) leads to a severe performance collapse. This is
+                            something you can find out more about in Networking <a href="/textbooks">textbooks</a>, but for now,
+                            let's just remember that <i>latency is bad</i> :)
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.3.2"}
+                question_key={"A.3.2.p2.6"}
+                question={
+                    <>
+                        With the 1 millisecond latency to Server #1, is pipelining still useful? Answer this question
+                        purely experimentally (since from the previous question we see that our estimates are not useful for
+                        such high latencies).
+                    </>
+                }
+                choices={["Yes", "No"]}
+                correct_answer={"Yes"}
+                explanation={
+                    <>
+                        <p>If we set the buffer size to 1 GB (i.e., no pipelining), the data transfer time in simulation is: 7.80
+                            seconds.</p>
+                        <p>If we try a big buffer size of 100 MB, we get a data transfer time of 5.67 seconds! with 80 MB we get
+                            5.66 seconds. This is about the best we can do.</p>
+                        <p>So yes, pipelining is still useful!</p>
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -445,6 +487,19 @@ const ClientServerPipelining = ({module, tab}) => {
                 the lowest execution cost? Show your work, in which you estimate the
                 execution time on both servers.
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "client_server_pipelining",
+                        module: "A.3.2"
+                    },
+                ]} />
+            } />
 
         </>
     )

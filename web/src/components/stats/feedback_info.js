@@ -38,6 +38,12 @@ const FeedbackInfo = ({feedbackData}) => {
 
     console.log("DATA")
     const data = GetCurriculumMapDatabase()
+    const module_titles = data["allCurriculummapYaml"]["nodes"][1]["ModuleTitles"]
+    const modulenamedict = {}
+    for (const module_title of module_titles) {
+        modulenamedict[module_title["number"]] = module_title["title"]
+    }
+
     const mappings = data["allCurriculummapYaml"]["nodes"][3]["Mappings"]
     const tabnamedict = {}
     for (const mapping of mappings) {
@@ -45,7 +51,7 @@ const FeedbackInfo = ({feedbackData}) => {
         const tabkey = mapping["tab"]
         const tabname = mapping["tabname"]
         console.log("* " + module + " " + tabkey + " " + tabname)
-        tabnamedict[tabkey] = {"module": module, "tabname": tabname}
+        tabnamedict[tabkey] = {"module": module + " " + modulenamedict[module], "tabname": tabname}
     }
     console.log("FEEDBACK DATA")
     console.log(feedbackData)

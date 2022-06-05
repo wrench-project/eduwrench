@@ -8,6 +8,10 @@ import PracticeQuestions from "../../../components/practice_questions_header"
 
 import ClientServerImage from "../../../images/vector_graphs/client_server/client_server.svg"
 import ClientServerQuestion from "../../../images/vector_graphs/client_server/client_server_question.svg"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const ClientServerBasics = ({module, tab}) => {
     return (
@@ -94,124 +98,153 @@ const ClientServerBasics = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.3.2.p1.1",
-                    question: "The client's link to Server #2 is faster than that to Server #1. Is there a bandwidth for " +
-                        "Server #1 that would make it equivalent to Server #2 from the client's perspective? Show your work " +
-                        "and reasoning. You should write (and solve) and equation where the bandwidth to Server #1 is the " +
-                        "unknown. You can check your answer using the simulation app.",
-                    content: (
-                        <>
-                            The task execution time on Server #2 is:
-                            <TeX
-                                math="T_{\text{server 2}} = \frac{100 \text{MB}}{100 \text{MB/sec}} + \frac{1000 \text{Gflop}}{60 \text{Gflop/sec}} = 17.66 \text{sec}"
-                                block />
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
 
-                            <p>
-                                We can double-check this result in simulation, which gives us an execution time of
-                                17.72 seconds. The discrepancy is because the
-                                simulation simulates details that our estimate above does not capture.
-                                (See the <a href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a>).
-                            </p>
-
-                            <p>
-                                Let <TeX math="B" /> be the unknown bandwidth to Server #1, in MB/sec. The task execution time on Server
-                                #1 would then be:
-                            </p>
-                            <TeX math="T_{\text{server 1}} = \frac{100 \text{MB}}{B} + \frac{1000 \text{Gflop}}{100 \text{Gflop/sec}}"
-                                 block />
-
-                            <p>To determine <TeX math="B" /> we just need to solve:</p>
-                            <TeX math="T_{\text{server 1}} = T_{\text{server 2}}" block />
-
-                            <p>which gives us: <TeX math="B = 13.05 \text{MB / sec}" />.</p>
-
-                            <p>
-                                We can double-check this result in simulation by setting the bandwidth to Server #1 to 13 MB/sec (close
-                                enough). The simulation shows execution times of 18.08 secs for Server #1, which is very close
-                                to that for Server #2.
-                            </p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p1.2",
-                    question: "It is possible to set a bandwidth to Server #1 so that the task execution time with that server " +
-                        "is one third of the execution time with the original 10 MB/sec bandwidth? Show your work and reasoning.",
-                    content: (
-                        <>
-                            The original execution time on Server #1, according to the simulation, is 20.50 seconds. So our target is
-                            20.50/3 = 6.83 seconds. Since the compute time is 10 seconds, the answer is no, it is not possible to have
-                            a task execution time that low.
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.2.p1.3",
-                    question: (
-                        <>
-                            Say you now have <strong>two images</strong> to process, each of them 100 MB and requiring 1000 Gflop of
-                            work. Bandwidth to Server #1 is set to the original 10 MB/sec.
-
-                            <p>Assuming your client program can do two network transfers at the same time, what would be the total
-                                execution time (using both servers)?</p>
-
-                            <p>What if your client program can only do one network transfer at a time? Show your work and reasoning.
-                                It may be a good idea to depict executions timelines.
-                            </p>
-                        </>
-                    ),
-                    content: (
-                        <>
-                            If our client program can do simultaneous network transfers, since the client is connected to the servers
-                            via two different network links, then the execution time would be:
-                            <TeX math="\max(20.50, 17.72) = 20.50 \text{seconds}." block />
-
-                            <p>If our client cannot do simultaneous network transfers, we have two options: either
-                                we first send an image to Server #1 and then send the other image to Server #2, or the other
-                                way around. Let's examine both options, giving the timeline of events for each based on
-                                back-of-the-envelope calculations:</p>
-
-                            <ul>
-                                <li><strong>Server #1 first:</strong></li>
-                                <ul>
-                                    <li>time 0: start sending an image to Server #1</li>
-                                    <li>time 10: image received by Server #1, which starts computing; and start sending image to Server
-                                        #2
-                                    </li>
-                                    <li>time 11: image received by Server #2, which starts computing</li>
-                                    <li>time 10 + 1000/100 = 20: Server #1 finishes computing</li>
-                                    <li>time 11 + 1000/60 = 27.66: Server #2 finishes computing</li>
-                                </ul>
-                            </ul>
-
-                            <ul>
-                                <li><strong>Server #2 first:</strong></li>
-                                <ul>
-                                    <li>time 0: start sending an image to Server #2</li>
-                                    <li>time 1: image received by Server #2, which starts computing; and start sending image to Server
-                                        #1
-                                    </li>
-                                    <li>time 11: image received by Server #1, which starts computing</li>
-                                    <li>time 1 + 1000/60 = 17.66: Server #2 finishes computing</li>
-                                    <li>time 11 + 1000/100 = 21: Server #1 finished computing</li>
-                                </ul>
-                            </ul>
-
-                            <p>The second option is 6.66 seconds faster than the first option. As we have already seen, simulation
-                                results would be a bit different, but not to the extent that the first option would be faster!</p>
-
-                            <p>This example highlights a pretty well-known rule of thumb: trying to get computers to compute as early
-                                as possible is a good idea. In our case, this works out great because Server #2 can get the image really
-                                quickly, and is slower than Server #1 for computing. So we achieve much better overlap of communication
-                                and computation with the second option than with the first option. This is exactly the same idea as
-                                overlapping I/O and computation as see in the <a href="/pedagogic_modules/single_core_computing">I/O tab
-                                    of the Single Core Computing module</a>.</p>
-                        </>
-                    )
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p1.1"}
+                question={
+                    <>
+                        The client's link to Server #2 is faster than that to Server #1. What should the bandwidth to
+                        Server #1 be, in MB/sec, so that Server #1 would be equivalent to Server #2 from the client's perspective?
+                    </>
                 }
-            ]} />
+                hint={"You should write (and solve) and equation where the bandwidth to Server #1 is the unknown. You can check your answer using the simulation app."}
+                answer={[13.04, 13.06]}
+                explanation={
+                    <>
+                        The task execution time on Server #2 is:
+                        <TeX
+                            math="T_{\text{server 2}} = \frac{100 \text{MB}}{100 \text{MB/sec}} + \frac{1000 \text{Gflop}}{60 \text{Gflop/sec}} = 17.66 \text{sec}"
+                            block />
+
+                        <p>
+                            We can double-check this result in simulation, which gives us an execution time of
+                            17.72 seconds. The discrepancy is because the
+                            simulation simulates details that our estimate above does not capture.
+                            (See the <a href="/pedagogic_modules/networking_fundamentals/">Networking Fundamentals module</a>).
+                        </p>
+
+                        <p>
+                            Let <TeX math="B" /> be the unknown bandwidth to Server #1, in MB/sec. The task execution time on Server
+                            #1 would then be:
+                        </p>
+                        <TeX math="T_{\text{server 1}} = \frac{100 \text{MB}}{B} + \frac{1000 \text{Gflop}}{100 \text{Gflop/sec}}"
+                             block />
+
+                        <p>To determine <TeX math="B" /> we just need to solve:</p>
+                        <TeX math="T_{\text{server 1}} = T_{\text{server 2}}" block />
+
+                        <p>which gives us: <TeX math="B = 13.05 \text{MB / sec}" />.</p>
+
+                        <p>
+                            We can double-check this result in simulation by setting the bandwidth to Server #1 to 13 MB/sec (close
+                            enough). The simulation shows execution times of 18.08 secs for Server #1, which is very close
+                            to that for Server #2.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.3.2"}
+                question_key={"A.3.2.p1.2"}
+                question={
+                    <>
+                        It is possible to set a bandwidth to Server #1 so that the task execution time with that server
+                        is one third of the execution time with the original 10 MB/sec bandwidth? Show your work and reasoning.
+                    </>
+                }
+                choices={["Yes","No"]}
+                correct_answer={"No"}
+                explanation={
+                    <>
+                        The original execution time on Server #1, according to the simulation, is 20.50 seconds. So our target is
+                        20.50/3 = 6.83 seconds. Since the compute time is 10 seconds, the answer is no, it is not possible to have
+                        a task execution time that low.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p1.3"}
+                question={
+                    <>
+                        Say you now have <strong>two images</strong> to process, each of them 100 MB and requiring 1000 Gflop of
+                        work. Bandwidth to Server #1 is set to the original 10 MB/sec.
+
+                        <p>Assuming your client program can do two network transfers at the same time, what would be the total
+                            execution time in seconds (using both servers)?</p>
+                    </>
+                }
+                answer={[20.5,20.5]}
+                explanation={
+                    <>
+                        If our client program can do simultaneous network transfers, since the client is connected to the servers
+                        via two different network links, then the execution time would be:
+                        <TeX math="\max(20.50, 17.72) = 20.50 \text{seconds}." block />
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.2"}
+                question_key={"A.3.2.p1.4"}
+                question={
+                    <>
+                        In the context of the previous question, what would be the best possible execution time, in seconds, if
+                        your client program can only do one network transfer at a time?
+                    </>
+                }
+                answer={[21, 21]}
+                explanation={
+                    <>
+                        <p>If our client cannot do simultaneous network transfers, we have two options: either
+                            we first send an image to Server #1 and then send the other image to Server #2, or the other
+                            way around. Let's examine both options, giving the timeline of events for each based on
+                            back-of-the-envelope calculations:</p>
+
+                        <ul>
+                            <li><strong>Server #1 first:</strong></li>
+                            <ul>
+                                <li>time 0: start sending an image to Server #1</li>
+                                <li>time 10: image received by Server #1, which starts computing; and start sending image to Server
+                                    #2
+                                </li>
+                                <li>time 11: image received by Server #2, which starts computing</li>
+                                <li>time 10 + 1000/100 = 20: Server #1 finishes computing</li>
+                                <li>time 11 + 1000/60 = 27.66: Server #2 finishes computing</li>
+                            </ul>
+                        </ul>
+
+                        <ul>
+                            <li><strong>Server #2 first:</strong></li>
+                            <ul>
+                                <li>time 0: start sending an image to Server #2</li>
+                                <li>time 1: image received by Server #2, which starts computing; and start sending image to Server
+                                    #1
+                                </li>
+                                <li>time 11: image received by Server #1, which starts computing</li>
+                                <li>time 1 + 1000/60 = 17.66: Server #2 finishes computing</li>
+                                <li>time 11 + 1000/100 = 21: Server #1 finished computing</li>
+                            </ul>
+                        </ul>
+
+                        <p>The second option is 6.66 seconds faster than the first option. As we have already seen, simulation
+                            results would be a bit different, but not to the extent that the first option would be faster!</p>
+
+                        <p>This example highlights a pretty well-known rule of thumb: trying to get computers to compute as early
+                            as possible is a good idea. In our case, this works out great because Server #2 can get the image really
+                            quickly, and is slower than Server #1 for computing. So we achieve much better overlap of communication
+                            and computation with the second option than with the first option. This is exactly the same idea as
+                            overlapping I/O and computation as see in the <a href="/pedagogic_modules/single_core_computing">I/O tab
+                                of the Single Core Computing module</a>.</p>
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -255,6 +288,19 @@ const ClientServerBasics = ({module, tab}) => {
                 time (including the time to get the task's input data)? Show your work.
                 Write an equation where the bandwidth is the unknown and solve it.
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "client_server_basics",
+                        module: "A.3.2"
+                    },
+                ]} />
+            } />
 
         </>
     )

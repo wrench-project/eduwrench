@@ -18,7 +18,7 @@ const FeedbackInfoRow = ({ module, tab, completed }) => {
 
     return (
         <Table.Row>
-            <Table.Cell textAlign='left'><strong>{module}. {tab}</strong></Table.Cell>
+            <Table.Cell textAlign='left'><strong>{module} / {tab}</strong></Table.Cell>
             <Table.Cell textAlign='left'>
                 <Icon color={color} name={check}/> {text}
             </Table.Cell>
