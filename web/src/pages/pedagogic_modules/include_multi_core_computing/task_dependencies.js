@@ -3,9 +3,13 @@ import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
-import PracticeQuestions from "../../../components/practice_questions_header"
 import TaskDependencies3CoresSimulation from "./task_dependencies_3_cores_simulation"
 import TaskDependencies2CoresSimulation from "./task_dependencies_2_cores_simulation"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionReveal from "../../../components/practice-questions/reveal";
+
 
 import ExampleChainDAG from "../../../images/vector_graphs/multi_core/multicore_example_chain_dag.svg"
 import ExampleCarDAG from "../../../images/vector_graphs/multi_core/multicore_example_car_dag.svg"
@@ -14,6 +18,7 @@ import PracticeQuestionDAG1 from "../../../images/vector_graphs/multi_core/multi
 import PracticeQuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_practice_dag_2.svg"
 import QuestionDAG1 from "../../../images/vector_graphs/multi_core/multicore_question_dag_1.svg"
 import QuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_question_dag_2.svg"
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const TaskDependencies = ({module, tab}) => {
     return (
@@ -110,111 +115,128 @@ const TaskDependencies = ({module, tab}) => {
             <SimulationActivity panelKey="multicore-task-dependencies-3-cores"
                                 content={<TaskDependencies3CoresSimulation />} />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p4.1",
-                    question: "Say we run the program with an \"analyze\" task that has 100 Gflop work. What is the parallel " +
-                        "efficiency when running the program on the 3-core computer and when using a single analysis task? Show " +
-                        "your work, and feel free to use the simulation app to help you.",
-                    content: (
-                        <>
-                            The sequential program's execution on 1 core, T(1), is simply the sum of individual task execution times,
-                            <TeX math="T(1) = 5 + 20 + 10 + 10 + 10 + 40 + 1 = 96\text{sec}" block />
-                            The simulated execution time on our 3-core computer is:
-                            <TeX math="T(3) = 46\text{sec}" block />
-                            <p>
-                                So the parallel efficiency is <TeX math="E(3) = (96 / 46) / 3 =" /> <strong>69.56%</strong>.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p4.2",
-                    question: "What is the number of idle core seconds when running the program when the \"analyze\" task has " +
-                        "300 Gflop work on our 3-core computer? Show your work. You can double-check your answer in simulation.",
-                    content: (
-                        <>
-                            <p>
-                                This is a very similar question as the previous one. The sequential execution time is 126 seconds, and
-                                the execution time on 3 cores is still 46 seconds. Therefore, the number of core idle seconds
-                                is <TeX math="46 \times 3 - 126 = 12" /> seconds.
-                            </p>
-                            <p>
-                                We can double check this answer by counting the number of idle seconds as shown in the Host Utilization
-                                graph of the simulation app.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p4.3",
-                    question: "For what amount of work of the \"analyze\" task is the parallel efficiency maximized? Show your " +
-                        "work. You could use the simulation app to \"search\" for the right answer, but that would be really " +
-                        "tedious. Try using analysis and/or intuition first. This is not an easy question, as it requires " +
-                        "careful reasoning. Hint: consider two cases depending on whether the critical path is the analysis " +
-                        "path or the statistics path.",
-                    content: (
-                        <>
-                            <p>
-                                Let's first do a purely analytical solution. Let <TeX math="x" /> be the work of the "analyze" task in
-                                Gflop. The sequential execution time is <TeX math="x / 10 + 86" /> seconds.
-                            </p>
 
-                            <p>
-                                The parallel execution time is a bit trickier.
-                            </p>
-                            <p>
-                                The visualization path takes time <TeX math="5 + 20 + 10 + 1 = 36" /> seconds, which is shorter than the
-                                statistics path, which takes 46 seconds. The analysis path takes time <TeX
-                                math="5 + x / 10 + 10 + 1 = 16 + x / 10" /> seconds.
-                            </p>
+            <Divider/>
 
-                            <p>
-                                So, we have two cases: If <TeX math="16 + x / 10 \leq 46" />, that is, if <TeX math="x \leq 300" />, the
-                                critical path is the analysis path, otherwise the critical path is the statistics path. So let’s examine
-                                both cases:
-                            </p>
-                            <ul>
-                                <li>
-                                    <TeX math="x \leq 300" />: the parallel execution time is 46 seconds, and so the parallel efficiency
-                                    is equal to <TeX math="(( x / 10 + 86 ) / 46 ) / 3" />. This is maximized for <TeX math="x = 300" />,
-                                    and is then equal to 84.05%.
-                                </li>
-                                <li>
-                                    <TeX math="x \geq 300" />: the parallel execution time is <TeX math="16 + x/10" />, and so the
-                                    parallel efficiency is equal to <TeX math="(( x / 10 + 86 ) / ( 16 + x / 10 )) / 3" />. This is a
-                                    decreasing function on the [300, infinity] domain, and so on that domain it is maximized for <TeX
-                                    math="x = 300" />.
-                                </li>
-                            </ul>
-                            <p>The final answer is thus 300 Gflop.</p>
-                            <p>
-                                The above is quite formal, but we could have given a purely common-sense answer. The parallel efficiency
-                                is maximized when all three paths take time as close as possible as the longest such path, so as have
-                                cores working as much as possible. This is the same load balancing idea that we have seen in the
-                                <a href="/pedagogic_modules/multi_core_computing/">Parallelism tab</a> for independent tasks! This is
-                                achieved when the analysis path and the statistics path are equal (nothing can be done about the
-                                visualization path), that is, when <TeX math="x = 300" />.
-                            </p>
-                            <p>
-                                For <TeX math="x = 300" /> the efficiency is 84.05%, which is the best this program can ever achieve.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p4.1"}
+                question={
+                    <>
+                        Say we run the program with an "analyze" task that has 100 Gflop work. What is the parallel
+                        efficiency when running the program on the 3-core computer and when using a single analysis task?
+                    </>
                 }
-            ]} />
+                hint={"You can use the simulation to help you"}
+                answer={[69,70]}
+                explanation={
+                    <>
+                        The sequential program's execution on 1 core, T(1), is simply the sum of individual task execution times,
+                        <TeX math="T(1) = 5 + 20 + 10 + 10 + 10 + 40 + 1 = 96\text{sec}" block />
+                        The simulated execution time on our 3-core computer is:
+                        <TeX math="T(3) = 46\text{sec}" block />
+                        <p>
+                            So the parallel efficiency is <TeX math="E(3) = (96 / 46) / 3 =" /> <strong>69.56%</strong>.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p4.2"}
+                question={
+                    <>
+                        What is the number of idle core seconds when running the program when the "analyze" task has
+                        300 Gflop work on our 3-core computer?
+                    </>
+                }
+                hint={"You can use the simulation to double-check your results"}
+                answer={[12,12]}
+                explanation={
+                    <>
+                        <p>
+                            This is a very similar question as the previous one. The sequential execution time is 126 seconds, and
+                            the execution time on 3 cores is still 46 seconds. Therefore, the number of core idle seconds
+                            is <TeX math="46 \times 3 - 126 = 12" /> seconds.
+                        </p>
+                        <p>
+                            We can double check this answer by counting the number of idle seconds as shown in the Host Utilization
+                            graph of the simulation app.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p4.3"}
+                question={
+                    <>
+                        For what amount of work of the "analyze" task is the parallel efficiency maximized? Show your
+                        work. You could use the simulation app to "search" for the right answer, but that would be really
+                        tedious. Try using analysis and/or intuition first. This is not an easy question, as it requires
+                        careful reasoning.
+                    </>
+                }
+                hint={"Consider two cases depending on whether the critical path is the analysis path or the statistics path."
+                }
+                answer={[300,300]}
+                explanation={
+                    <>
+                        <p>
+                            Let's first do a purely analytical solution. Let <TeX math="x" /> be the work of the "analyze" task in
+                            Gflop. The sequential execution time is <TeX math="x / 10 + 86" /> seconds.
+                        </p>
+
+                        <p>
+                            The parallel execution time is a bit trickier.
+                        </p>
+                        <p>
+                            The visualization path takes time <TeX math="5 + 20 + 10 + 1 = 36" /> seconds, which is shorter than the
+                            statistics path, which takes 46 seconds. The analysis path takes time <TeX
+                            math="5 + x / 10 + 10 + 1 = 16 + x / 10" /> seconds.
+                        </p>
+
+                        <p>
+                            So, we have two cases: If <TeX math="16 + x / 10 \leq 46" />, that is, if <TeX math="x \leq 300" />, the
+                            critical path is the analysis path, otherwise the critical path is the statistics path. So let’s examine
+                            both cases:
+                        </p>
+                        <ul>
+                            <li>
+                                <TeX math="x \leq 300" />: the parallel execution time is 46 seconds, and so the parallel efficiency
+                                is equal to <TeX math="(( x / 10 + 86 ) / 46 ) / 3" />. This is maximized for <TeX math="x = 300" />,
+                                and is then equal to 84.05%.
+                            </li>
+                            <li>
+                                <TeX math="x \geq 300" />: the parallel execution time is <TeX math="16 + x/10" />, and so the
+                                parallel efficiency is equal to <TeX math="(( x / 10 + 86 ) / ( 16 + x / 10 )) / 3" />. This is a
+                                decreasing function on the [300, infinity] domain, and so on that domain it is maximized for <TeX
+                                math="x = 300" />.
+                            </li>
+                        </ul>
+                        <p>The final answer is thus 300 Gflop.</p>
+                        <p>
+                            The above is quite formal, but we could have given a purely common-sense answer. The parallel efficiency
+                            is maximized when all three paths take time as close as possible as the longest such path, so as have
+                            cores working as much as possible. This is the same load balancing idea that we have seen in the
+                            <a href="/pedagogic_modules/multi_core_computing/">Parallelism tab</a> for independent tasks! This is
+                            achieved when the analysis path and the statistics path are equal (nothing can be done about the
+                            visualization path), that is, when <TeX math="x = 300" />.
+                        </p>
+                        <p>
+                            For <TeX math="x = 300" /> the efficiency is 84.05%, which is the best this program can ever achieve.
+                        </p>
+                    </>
+                }
+            />
+
+
 
             <Divider />
 
@@ -303,91 +325,176 @@ const TaskDependencies = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p4.4",
-                    question: (
-                        <>
-                            For the DAG below, give the number of levels, the maximum level width, and the length of the critical path
-                            in seconds (name and execution time are shown for each task).<br />
-                            <PracticeQuestionDAG1 />
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <ul>
-                                <li>Number of levels: 4</li>
-                                <li>Maximum level width: 3 (level 3 has 3 tasks: G, E, and F)</li>
-                                <li>Length of the critical path: 30s (A 1s, D 20s, F 7s, and H 2s)</li>
-                            </ul>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p4.5",
-                    question: (
-                        <>
-                            For the DAG below, would it be useful to use more than 3 cores? Can the execution time be ever shorter
-                            than 29 seconds? Could you modify one edge's end point to increase the DAG's maximum level width? Show
-                            your work and reasoning.<br />
-                            <PracticeQuestionDAG2 />
-                        </>
-                    ),
-                    content: (
-                        <>
-                            Here is the set of DAG levels:
-                            <Table collapsing size="small" compact>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell>level</Table.HeaderCell>
-                                        <Table.HeaderCell>tasks</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
 
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>0</Table.Cell>
-                                        <Table.Cell>A</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>1</Table.Cell>
-                                        <Table.Cell>B, C</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>2</Table.Cell>
-                                        <Table.Cell>D, E, F</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>3</Table.Cell>
-                                        <Table.Cell>G</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>4</Table.Cell>
-                                        <Table.Cell>H</Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
-                            </Table>
-                            <p>
-                                It would never be useful to use more than 3 cores because the width of the DAG is 3 (level 2). The DAG's
-                                critical path is {"{"}A->B->D->G->H{"}"}, which has length 28s. So yes, the execution (on 3 cores) could
-                                be lower than 29s.
-                            </p>
-                            <p>
-                                Replacing the D->G edge by a D->H edge would make the DAG’s maximum level width 4 (i.e., level 2 would
-                                have 4 tasks in it).
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.4"}
+                question={
+                    <>
+                        For the DAG below (name and execution time are shown for each task) what is the the number of levels?<br/>
+                        <br/>
+                        <PracticeQuestionDAG1 />
+                    </>
                 }
-            ]} />
+                choices={[
+                    "2 levels",
+                    "3 levels",
+                    "4 levels",
+                    "5 levels"
+                ]}
+                correct_answer={"4 levels"}
+                explanation={
+                    <>
+                        A top to bottom traversal easily gives the number of levels.
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.5"}
+                question={
+                    <>
+                        For the DAG in question A.2.p4.4 what is the  maximum level width<br/>
+                    </>
+                }
+                choices={[
+                    "maximum level width is 2",
+                    "maximum level width is 3",
+                    "maximum level width is 4",
+                ]}
+                correct_answer={"maximum level width is 3"}
+                explanation={
+                    <>
+                        Level 3 is the largest level with 3 tasks: G, E, and F.
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.6"}
+                question={
+                    <>
+                        For the DAG in question A.2.p4.4 what is the length of the critical path<br/>
+                    </>
+                }
+                choices={[
+                    "20s",
+                    "30s",
+                    "40s",
+                ]}
+                correct_answer={"30s"}
+                explanation={
+                    <>
+                        The critical path consists of tasks A (1s), D (20s), F (7s) and H (2s).
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.7"}
+                question={
+                    <>
+                        For the DAG below, would it be useful to use more than 3 cores?<br/>
+                        <br/>
+                        <PracticeQuestionDAG2 />
+                    </>
+                }
+                choices={[
+                    "Yes",
+                    "No",
+                ]}
+                correct_answer={"No"}
+                explanation={
+                    <>
+                        Here is the set of DAG levels:
+                        <Table collapsing size="small" compact>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>level</Table.HeaderCell>
+                                    <Table.HeaderCell>tasks</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>0</Table.Cell>
+                                    <Table.Cell>A</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>B, C</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>2</Table.Cell>
+                                    <Table.Cell>D, E, F</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>3</Table.Cell>
+                                    <Table.Cell>G</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>4</Table.Cell>
+                                    <Table.Cell>H</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                        <p>
+                            It would never be useful to use more than 3 cores because the width of the DAG is 3 (level 2)
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.8"}
+                question={
+                    <>
+                        For the DAG in question A.2.p4.7, can the execution time be ever shorter
+                        than 29 seconds?<br/>
+                    </>
+                }
+                choices={[
+                    "Yes",
+                    "No",
+                ]}
+                correct_answer={"Yes"}
+                explanation={
+                    <>
+                        The DAG's
+                        critical path is {"{"}A->B->D->G->H{"}"}, which has length 28s. So yes, the execution (on 3 cores) could
+                        be lower than 29s.
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.9"}
+                question={
+                    <>
+                        For the DAG in question A.2.p4.7, could you modify one edge's end point to increase the DAG's maximum level width?
+                    </>
+                }
+                choices={[
+                    "Yes",
+                    "No",
+                ]}
+                correct_answer={"Yes"}
+                explanation={
+                    <>
+                        Replacing the D->G edge by a D->H edge would make the DAG’s maximum level width 4 (i.e., level 2 would
+                        have 4 tasks in it).
+                    </>
+                }
+            />
+
 
             <Divider />
 
@@ -441,129 +548,142 @@ const TaskDependencies = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p4.6",
-                    question: "Setting the \"analyze\" task's work to 10 Gflop, does it matter which paths are prioritized " +
-                        "when executing the program on 2 cores? If so, which ones should be prioritized? Can you venture an " +
-                        "explanation? Show your work and reasoning.",
-                    content: (
-                        <>
-                            <p>
-                                Yes, it does matter! Not prioritizing the statistics path is a mistake. This is because the statistics
-                                path is the critical path. Not counting the "start" and "display" tasks, the visualization path runs in
-                                30s, the analysis path in 11s, and the stats path in 40s. This is <strong>exactly</strong> the problem
-                                we looked at in the <a href="/pedagogic_modules/multi_core_computing">first tab</a>: partition a set of
-                                numbers into two groups so that their sums are as close to each other as possible! The best choice for
-                                this grouping here is clearly {"{"}30, 11{"}"} and {"{"}40{"}"}. In other words, on one core we should
-                                run the visualization and the analysis path, and on the other we should run the statistics path.
-                            </p>
-                            <p>
-                                So, if we prioritize both the visualization and analysis paths after task "start" completes, they will
-                                run on different cores, which is a bad choice (as the groupings will be {"{"}30{"}"} and {"{"}11,
-                                40{"}"}). Conclusion: the "stats" path should be part of the two prioritized paths.
-                            </p>
-                            <p>All this can be seen easily in the simulation app.</p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p4.7",
-                    question: "Say now we set the work of the \"analyze\" task to be 300 Gflop. What are the execution times " +
-                        "with each of the three path prioritization options? Show your work and explain why the results are " +
-                        "as they are.",
-                    content: (
-                        <>
-                            <p>
-                                All three prioritization schemes give a 76 second execution time. In other words, path prioritization
-                                does not matter. With a 300 Gflop work for the "analyze" task, the visualization path takes 30 seconds,
-                                and both the analysis and the statistics paths take 40 seconds. (Without counting the "start" and the
-                                "display" tasks). No matter what we do, running on two cores three tasks that take 30s, 40s, and 40s
-                                will take 70s.
-                            </p>
-                            <p>
-                                If you really want to spell it out, we can just look at all possibilities. If both 40s paths start
-                                first, each on a core, then the 30s path starts after that, for 70s of execution. If the 30s path starts
-                                with a 40s path, each on a core, then the 2nd 40s path will start on the core that ran the 30s path,
-                                since it becomes idle first. This, again, is a 70s execution. So overall, the execution will always be 5
-                                + 70 + 1 = 76s.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p4.8",
-                    question: "Is it possible that, for some amount of work of the \"analyze\" task, all three different " +
-                        "prioritizing options lead to three different execution times (when executing the program on 2 cores)? " +
-                        "Show your work and reasoning. Although you may have a rapid intuition of whether the answer is yes " +
-                        "or no, deriving a convincing argument is not that easy...",
-                    content: (
-                        <>
-                            <p>
-                                This is perhaps not an easy question, as it requires to think about this abstractly (so as to avoid
-                                examining all possibilities). The answer is "no". Let’s see why.
-                            </p>
-                            <p>
-                                We can look at this question at a very abstract level: we have three "things" to run, let’s call
-                                them <TeX math="A" />, <TeX math="B" />, and <TeX math="C" />. (Each of them is one of our three paths,
-                                excluding the "start" and "display" tasks). Let <TeX math="a" />, <TeX math="b" />, and <TeX
-                                math="c" /> be their execution times. Say, without loss of generality, that <TeX
-                                math="a \leq b \leq c" />. Then, we can see what runs on each core for each option that prioritizes two
-                                of them:
-                            </p>
-                            <Table collapsing size="small" compact>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell>prioritizing</Table.HeaderCell>
-                                        <Table.HeaderCell>core #1</Table.HeaderCell>
-                                        <Table.HeaderCell>core #2</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
 
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell><TeX math="A" /> and <TeX math="B" /></Table.Cell>
-                                        <Table.Cell><TeX math="A" /> then <TeX math="C" /></Table.Cell>
-                                        <Table.Cell><TeX math="B" /></Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell><TeX math="A" /> and <TeX math="C" /></Table.Cell>
-                                        <Table.Cell><TeX math="A" /> then <TeX math="B" /></Table.Cell>
-                                        <Table.Cell><TeX math="C" /></Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell><TeX math="B" /> and <TeX math="C" /></Table.Cell>
-                                        <Table.Cell><TeX math="B" /> then <TeX math="A" /></Table.Cell>
-                                        <Table.Cell><TeX math="C" /></Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
-                            </Table>
-                            <p>
-                                The two prioritized things start first. Then the third thing runs on the core that becomes idle first
-                                (i.e., the core that was running the shortest thing).
-                            </p>
-                            <p>
-                                We note that in the table above, the 2nd and 3rd rows are identical. That is, the cores finish computing
-                                at the same time. The only thing that changes is the order in which things run on core #1 ("<TeX
-                                math="A" /> then <TeX math="B" />" or "<TeX math="B" /> then <TeX math="A" />"). Therefore, two of the
-                                prioritization options always produce the same outcome in terms of overall program execution time!
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.10"}
+                question={
+                    <>
+                        Setting the "analyze" task's work to 10 Gflop, which path in the DAG should definitely be prioritized?
+                    </>
                 }
-            ]} />
+                choices={[
+                    "The visualize (yellow) path",
+                    "The analyze (red) path",
+                    "The statistics (blue) path"
+                ]}
+                correct_answer={"The statistics (blue) path"}
+                explanation={
+                    <>
+                        <p>
+                            Not prioritizing the statistics path is a mistake. This is because the statistics
+                            path is the critical path. Not counting the "start" and "display" tasks, the visualization path runs in
+                            30s, the analysis path in 11s, and the stats path in 40s. This is <strong>exactly</strong> the problem
+                            we looked at in the <a href="/pedagogic_modules/multi_core_computing">first tab</a>: partition a set of
+                            numbers into two groups so that their sums are as close to each other as possible! The best choice for
+                            this grouping here is clearly {"{"}30, 11{"}"} and {"{"}40{"}"}. In other words, on one core we should
+                            run the visualization and the analysis path, and on the other we should run the statistics path.
+                        </p>
+                        <p>
+                            So, if we prioritize both the visualization and analysis paths after task "start" completes, they will
+                            run on different cores, which is a bad choice (as the groupings will be {"{"}30{"}"} and {"{"}11,
+                            40{"}"}). Conclusion: the "stats" path should be part of the two prioritized paths.
+                        </p>
+                        <p>All this can be seen easily in the simulation app.</p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionReveal
+                module={"A.2"}
+                question_key={"A.2.p4.11"}
+                question={
+                    <>
+                        Say now we set the work of the "analyze" task to be 300 Gflop. What are the execution times
+                        with each of the three path prioritization options?
+                    </>
+                }
+                explanation={
+                    <>
+                        <p>
+                            All three prioritization schemes give a 76 second execution time. In other words, path prioritization
+                            does not matter. With a 300 Gflop work for the "analyze" task, the visualization path takes 30 seconds,
+                            and both the analysis and the statistics paths take 40 seconds. (Without counting the "start" and the
+                            "display" tasks). No matter what we do, running on two cores three tasks that take 30s, 40s, and 40s
+                            will take 70s.
+                        </p>
+                        <p>
+                            If you really want to spell it out, we can just look at all possibilities. If both 40s paths start
+                            first, each on a core, then the 30s path starts after that, for 70s of execution. If the 30s path starts
+                            with a 40s path, each on a core, then the 2nd 40s path will start on the core that ran the 30s path,
+                            since it becomes idle first. This, again, is a 70s execution. So overall, the execution will always be 5
+                            + 70 + 1 = 76s.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p4.12"}
+                question={
+                    <>
+                        Is it possible that, for some amount of work of the "analyze" task, all three different
+                        prioritizing options lead to three different execution times (when executing the program on 2 cores)?
+                    </>
+                }
+                choices={["Yes", "No"]}
+                correct_answer={"No"}
+                hint={"Although you may have a rapid intuition of whether the answer is yes or no, deriving a convincing argument is not that easy..."}
+                explanation={
+                    <>
+                        <p>
+                            This is perhaps not an easy question, as it requires to think about this abstractly (so as to avoid
+                            examining all possibilities). The answer is "no". Let’s see why.
+                        </p>
+                        <p>
+                            We can look at this question at a very abstract level: we have three "things" to run, let’s call
+                            them <TeX math="A" />, <TeX math="B" />, and <TeX math="C" />. (Each of them is one of our three paths,
+                            excluding the "start" and "display" tasks). Let <TeX math="a" />, <TeX math="b" />, and <TeX
+                            math="c" /> be their execution times. Say, without loss of generality, that <TeX
+                            math="a \leq b \leq c" />. Then, we can see what runs on each core for each option that prioritizes two
+                            of them:
+                        </p>
+                        <Table collapsing size="small" compact>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>prioritizing</Table.HeaderCell>
+                                    <Table.HeaderCell>core #1</Table.HeaderCell>
+                                    <Table.HeaderCell>core #2</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell><TeX math="A" /> and <TeX math="B" /></Table.Cell>
+                                    <Table.Cell><TeX math="A" /> then <TeX math="C" /></Table.Cell>
+                                    <Table.Cell><TeX math="B" /></Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell><TeX math="A" /> and <TeX math="C" /></Table.Cell>
+                                    <Table.Cell><TeX math="A" /> then <TeX math="B" /></Table.Cell>
+                                    <Table.Cell><TeX math="C" /></Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell><TeX math="B" /> and <TeX math="C" /></Table.Cell>
+                                    <Table.Cell><TeX math="B" /> then <TeX math="A" /></Table.Cell>
+                                    <Table.Cell><TeX math="C" /></Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                        <p>
+                            The two prioritized things start first. Then the third thing runs on the core that becomes idle first
+                            (i.e., the core that was running the shortest thing).
+                        </p>
+                        <p>
+                            We note that in the table above, the 2nd and 3rd rows are identical. That is, the cores finish computing
+                            at the same time. The only thing that changes is the order in which things run on core #1 ("<TeX
+                            math="A" /> then <TeX math="B" />" or "<TeX math="B" /> then <TeX math="A" />"). Therefore, two of the
+                            prioritization options always produce the same outcome in terms of overall program execution time!
+                        </p>
+                    </>
+                }
+            />
+
+
 
             <Divider />
 
@@ -603,6 +723,19 @@ const TaskDependencies = ({module, tab}) => {
                 application execution for determining the execution time.
             </p>
             <QuestionDAG2 />
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "task_dependencies",
+                        module: "A.2"
+                    },
+                ]} />
+            } />
 
         </>
     )
