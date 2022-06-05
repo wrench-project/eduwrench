@@ -84,13 +84,15 @@ const MultiCoreCapstone = ({module, tab}) => {
                 <strong>[A.2.q6.2]</strong> Which of the options above are worth it? Show your work for each option (e.g.,
                 mathematical expressions, narratives).
             </p>
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[
                     {
-                        key: "Feedback A.2",
-                        feedback: "feedback",
-                        useful: ['Very useful', 'Useful', 'Neutral', 'Useless'],
-                        quality: ['Very good', 'Good', 'Fair', 'Poor'],
+                        tabkey: "multicore_capstone",
                         module: "A.2"
                     },
                 ]} />
