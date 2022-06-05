@@ -4,9 +4,12 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import SimulationActivity from "../../../components/simulation/simulation_activity"
 import LoadImbalanceSimulation from "./load_imbalance_simulation"
-import PracticeQuestions from "../../../components/practice_questions_header"
+import FeedbackActivity from "../../../components/feedback/feedback_activity"
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 
 import Utilization from "../../../images/vector_graphs/multi_core/multicore_utilization.svg"
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const LoadImbalance = ({module, tab}) => {
     return (
@@ -81,113 +84,131 @@ const LoadImbalance = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p2.1",
-                    question: "You have a 4-core computer where each core computes at speed 1000 Gflop/sec. You are told that " +
-                        "a 10-task parallel program has 30 idle core seconds in total when executed on that computer. All tasks " +
-                        "have the same work. What is the task work in Gflop? Show your work and reasoning, and in particular " +
-                        "write and solve a simple equation where the task work is the unknown. You can double-check your answer " +
-                        "with the simulation app above.",
-                    content: (
-                        <>
-                            <p>
-                                Since we have 10 tasks and 4 cores, in the last phase of execution 2 cores are idle while 2 cores
-                                compute. Let <TeX math="w" /> be the work of a task. The duration of this last phase is <TeX
-                                math="w/1000" /> seconds, i.e., work divided by compute speed. So the total idle core seconds
-                                is <TeX math="2 \times w / 1000" />, since 2 cores are idle in the last phase. We know this number to be
-                                30 seconds, therefore we simply need to solve:
-                            </p>
-                            <TeX math="\frac{2 \times w}{1000} = 30" block />
-                            <p>which gives us <TeX math="w = 15000" /> Gflop/sec.</p>
-                            <p>
-                                We can use the simulation app to double-check our result. We just need to enter 1500, instead of 15000,
-                                as the task work amount in Gflop since in the simulation the core computes 10 times slower than in this
-                                question. The simulation clearly shows that the number of idle seconds is <TeX
-                                math="15 \times 2 = 30" />.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p2.2",
-                    question: "You are told that a 10-task program runs in 1 hour on a 3-core machine. All tasks execute in " +
-                        "the same amount of time on one core. What is the execution time of one task? Show your work and " +
-                        "reasoning. You can double-check your answer with the simulation app above.",
-                    content: (
-                        <>
-                            <p>
-                                The execution proceeds in 4 phases. If each of the first three phases 3 tasks are executed in parallel.
-                                In the last phase a single task executes. Therefore, each phase takes 60/4 = 15 minutes, which is the
-                                execution time of a task.
-                            </p>
-                            <p>
-                                You can double-check this in simulation by setting the task work to <TeX
-                                math="15 \times 60 \times 100 = 90000" /> , so that each task runs in 15 minutes on a core. The
-                                simulation clearly shows a 3600-second execution time, i.e., 1 hour.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p2.3",
-                    question: "Assume you have 20 tasks to execute on a multi-core computer, where each task runs in 1 second " +
-                        "on a core. By what factor is the overall execution time reduced when going from 4 to 8 cores? Show your " +
-                        "work and reasoning. You can double-check your answer in simulation.",
-                    content: (
-                        <>
-                            <p>
-                                The total execution time when using 4 cores will be 5 seconds, as each core executes 5 tasks. When
-                                increasing from 4 cores to 8 cores, now the total execution time is 3 seconds. This is because the best
-                                we can do is have 4 of the cores run 2 tasks and the other 4 run 3 tasks. The overall execution time is
-                                reduced by a factor 5/3 = 1.66.
-                            </p>
-                            <p>
-                                This is seen easily in simulation by setting the task work to 100 Gflop.
-                            </p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p2.4",
-                    question: (
-                        <>
-                            You are upgrading your (pre-historic?) single-core computer and you have two new multi-core computers to
-                            choose from, one with 5 cores and one with 10 cores. <i>Your only concern is to maximize parallel
-                            efficiency.</i> All of the cores are identical. You have 15 tasks to run, each taking 1 second to complete
-                            on a core. Which multi-core computer will provide the highest parallel efficiency? Show your work and
-                            reasoning.
-                        </>
-                    ),
-                    content: (
-                        <>
-                            <p>When using only a single core, the 15 tasks will take 15 seconds to complete.</p>
-                            <p>When increasing the number of cores to 5, the program runs in 3 seconds, and there is no idle time
-                                because 5 divides 15 perfectly. Therefore, parallel efficiency is 100%.</p>
-                            <p>When increasing the number of cores to 10, the program runs in 2 seconds. In this scenario, for the
-                                last second, 5 out of the 10 cores are idle. Therefore, efficiency is 75%, which is less than 100%.</p>
-                            <p>We conclude that we should go with the 5-core computer. Even though the 10-core computer completes the
-                                program faster, our concern here was parallel efficiency.</p>
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p2.1"}
+                question={
+                    <>
+                        You have a 4-core computer where each core computes at speed 1000 Gflop/sec. You are told that
+                        a 10-task parallel program has 30 idle core seconds in total when executed on that computer. All tasks
+                        have the same work. What is the task work in Gflop?
+                    </>
                 }
-            ]} />
+                hint={
+                    <>
+                        Write and solve a simple equation where the task work is the unknown. You can double-check your answer
+                        with the simulation app above.
+                    </>
+                }
+                answer={[15000,15000]}
+                explanation={
+                    <>
+                        <p>
+                            Since we have 10 tasks and 4 cores, in the last phase of execution 2 cores are idle while 2 cores
+                            compute. Let <TeX math="w" /> be the work of a task. The duration of this last phase is <TeX
+                            math="w/1000" /> seconds, i.e., work divided by compute speed. So the total idle core seconds
+                            is <TeX math="2 \times w / 1000" />, since 2 cores are idle in the last phase. We know this number to be
+                            30 seconds, therefore we simply need to solve:
+                        </p>
+                        <TeX math="\frac{2 \times w}{1000} = 30" block />
+                        <p>which gives us <TeX math="w = 15000" /> Gflop.</p>
+                        <p>
+                            We can use the simulation app to double-check our result. We just need to enter 1500, instead of 15000,
+                            as the task work amount in Gflop since in the simulation the core computes 10 times slower than in this
+                            question. The simulation clearly shows that the number of idle seconds is <TeX
+                            math="15 \times 2 = 30" />.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p2.2"}
+                question={
+                    <>
+                        You are told that a 10-task program runs in 1 hour on a 3-core machine. All tasks execute in
+                        the same amount of time on one core. What is the execution time of one task?
+                    </>
+                }
+                hint={
+                    <>
+                        Figure out how many phases of execution there are, where all phases take the same amount of time.
+                        You can double-check your answer with the simulation app above.",
+                    </>
+                }
+                answer={[15,15]}
+                explanation={
+                    <>
+                        <p>
+                            The execution proceeds in 4 phases. If each of the first three phases 3 tasks are executed in parallel.
+                            In the last phase a single task executes. Therefore, each phase takes 60/4 = 15 minutes, which is the
+                            execution time of a task.
+                        </p>
+                        <p>
+                            You can double-check this in simulation by setting the task work to <TeX
+                            math="15 \times 60 \times 100 = 90000" /> , so that each task runs in 15 minutes on a core. The
+                            simulation clearly shows a 3600-second execution time, i.e., 1 hour.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p2.3"}
+                question={
+                    <>
+                        Assume you have 20 tasks to execute on a multi-core computer, where each task runs in 1 second
+                        on a core. By what factor is the overall execution time reduced when going from 4 to 8 cores? Show your
+                        work and reasoning. You can double-check your answer in simulation.
+                    </>
+                }
+                answer={[1.6,1.7]}
+                explanation={
+                    <>
+                        <p>
+                            The total execution time when using 4 cores will be 5 seconds, as each core executes 5 tasks. When
+                            increasing from 4 cores to 8 cores, now the total execution time is 3 seconds. This is because the best
+                            we can do is have 4 of the cores run 2 tasks and the other 4 run 3 tasks. The overall execution time is
+                            reduced by a factor 5/3 = 1.66.
+                        </p>
+                        <p>
+                            This is seen easily in simulation by setting the task work to 100 Gflop.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p2.4"}
+                question={
+                    <>
+                        You are upgrading your (pre-historic?) single-core computer and you have two new multi-core computers to
+                        choose from, one with 5 cores and one with 10 cores. <i>Your only concern is to maximize parallel
+                        efficiency.</i> All of the cores are identical. You have 15 tasks to run, each taking 1 second to complete
+                        on a core. Which multi-core computer will provide the highest parallel efficiency?
+                    </>
+                }
+                choices={["The 5-core computer", "The 10-core computer"]}
+                correct_answer={"The 5-core computer"}
+                explanation={
+                    <>
+                    <p>When using only a single core, the 15 tasks will take 15 seconds to complete.</p>
+                    <p>When increasing the number of cores to 5, the program runs in 3 seconds, and there is no idle time
+                    because 5 divides 15 perfectly. Therefore, parallel efficiency is 100%.</p>
+                    <p>When increasing the number of cores to 10, the program runs in 2 seconds. In this scenario, for the
+                    last second, 5 out of the 10 cores are idle. Therefore, efficiency is 75%, which is less than 100%.</p>
+                    <p>We conclude that we should go with the 5-core computer. Even though the 10-core computer completes the
+                    program faster, our concern here was parallel efficiency.</p>
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -236,42 +257,50 @@ const LoadImbalance = ({module, tab}) => {
 
             <Divider />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.2.p2.5",
-                    question: "A 5-task program runs optimally (i.e., it’s the best it can possibly do) in 10 seconds on a " +
-                        "2-core computer. Tasks 1 to 4 run in 2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5 " +
-                        "runs in 7s? Show your work and reasoning.",
-                    content: (
-                        <>
-                            Nope. If Task 5 runs in 7 seconds, then we’d have to split the set {"{"}2, 3, 4, 5, 7{"}"} into two parts
-                            that each sum up to 10. One of these parts must contain number 7. So we also put number 3 into that part
-                            since then it exactly sums to 10. We are left with numbers 2, 4, and 5, which sum up to 11.
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
-                },
-                {
-                    key: "A.2.p2.6",
-                    question: "Consider a 6-task program. The execution times of 5 of the tasks are: 6, 8, 7, 12, 9. What " +
-                        "should the 6th task’s execution time so that this program can run with 100% parallel efficiency on " +
-                        "3 cores? Show your work and reasoning.",
-                    content: (
-                        <>
-                            If we run the 6s and the 9s tasks on one core, and the 8s and the 7s tasks on another core, both these
-                            cores finish computing in 15s. On the third core we run the 12s task. If the 6th task takes 3s, then all 3
-                            cores finish computing in 15s. So the answer is 3 seconds.
-                        </>
-                    ),
-                    answer: [4.2, 10],
-                    type: "textbox",
-                    choices: '',
-                    module: "A.2"
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionMultiChoice
+                module={"A.2"}
+                question_key={"A.2.p2.5"}
+                question={
+                    <>
+                        A 5-task program runs optimally (i.e., it’s the best it can possibly do) in 10 seconds on a
+                        2-core computer. Tasks 1 to 4 run in 2s, 4s, 3s, and 5s, respectively. Is it possible that Task 5
+                        runs in 7s?
+                    </>
                 }
-            ]} />
+                choices={["Yes", "No"]}
+                correct_answer={"No"}
+                explanation={
+                    <>
+                        Nope. If Task 5 runs in 7 seconds, then we’d have to split the set {"{"}2, 3, 4, 5, 7{"}"} into two parts
+                        that each sum up to 10. One of these parts must contain number 7. So we also put number 3 into that part
+                        since then it exactly sums to 10. We are left with numbers 2, 4, and 5, which sum up to 11.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.2"}
+                question_key={"A.2.p2.6"}
+                question={
+                    <>
+                        Consider a 6-task program. The execution times of 5 of the tasks are: 6, 8, 7, 12, 9. What
+                        should the 6th task’s execution time (in seconds) so that this program can run with 100% parallel efficiency on
+                        3 cores?
+                    </>
+                }
+                answer={[3,3]}
+                explanation={
+                    <>
+                        If we run the 6s and the 9s tasks on one core, and the 8s and the 7s tasks on another core, both these
+                        cores finish computing in 15s. On the third core we run the 12s task. If the 6th task takes 3s, then all 3
+                        cores finish computing in 15s. So the answer is 3 seconds.
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -304,6 +333,19 @@ const LoadImbalance = ({module, tab}) => {
                 times on one core are: 2s, 4s, 8s, 3s, 9s, and 3s. What is the best possible program execution time on these 3
                 cores? Could we do better with 4 cores? Show your work by giving the execution time for both options.
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "load_imbalance",
+                        module: "A.2"
+                    },
+                ]} />
+            } />
 
         </>
     )
