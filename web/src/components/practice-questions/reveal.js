@@ -74,7 +74,7 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
                 <div>
                 <strong>[{question_key}]</strong> {question}
                 <br/><br/>
-                <Label color='grey' size='large'>Revealed Answer:</Label><br/> {explanation}
+                <Label color='grey' size='large'>Revealed Answer:</Label><br/><br/> {explanation}
                     <br/>
                     <br/>
                 </div>

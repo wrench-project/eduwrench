@@ -72,7 +72,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                     )}
                 </ul>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label><br/>{explanation}
+                <Label color='grey' size='large'>Answer explanation:</Label><br/><br/>{explanation}
                 <br/><br/>
             </>
         )

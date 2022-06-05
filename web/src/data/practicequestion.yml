@@ -60,6 +60,9 @@
         - "A.3.1.p2.2"
         - "A.3.1.p2.3"
         - "A.3.1.p2.4"
+        - "A.3.1.p3.1"
+        - "A.3.1.p3.2"
+        - "A.3.1.p3.3"
     - module: "A.3.2 Distributed Computing: Network Fundamentals"
       moduleNumber: "A.3.2"
       question:

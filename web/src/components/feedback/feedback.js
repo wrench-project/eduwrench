@@ -28,7 +28,7 @@ const Feedback = ({tabkey}) => {
 
     if (completed) {
         return (
-            <Message size='big' color='brown' content='Feedback Completed!'/>
+            <Message size='big' color='brown' content='Feedback already provided!'/>
         )
     }
     return (

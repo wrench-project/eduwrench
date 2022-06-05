@@ -93,7 +93,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
                 <Divider/>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label><br/>{explanation}
+                <Label color='grey' size='large'>Answer explanation:</Label><br/><br/>{explanation}
                 <br/><br/>
             </>
         )
@@ -107,7 +107,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
                 <Divider/>
                 <strong>[{question_key}]</strong> {question}<br/><br/>
                 {message}
-                <Label color='grey' size='large'>Answer explanation:</Label>
+                <Label color='grey' size='large'>Answer explanation:</Label><br/><br/>
                 {explanation}
                 <br/><br/>
             </>

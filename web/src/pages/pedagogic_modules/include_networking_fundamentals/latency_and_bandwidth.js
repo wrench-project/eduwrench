@@ -3,6 +3,9 @@ import { Accordion, Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import PracticeQuestions from "../../../components/practice_questions_header"
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const LatencyAndBandwidth = ({module, tab}) => {
     return (
@@ -74,40 +77,67 @@ const LatencyAndBandwidth = ({module, tab}) => {
                 network link, we will always mean its <i>effective bandwidth</i>.
             </p>
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.3.1.p1.1",
-                    question: "How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500 " +
-                        "microseconds and 20 GB/sec bandwidth? Show your work as a mathematical expression.",
-                    content: (
-                        <TeX math="T = 500 / 1000 + 1000 × ( 250 \times 10^6 ) / ( 20 \times 10^9 ) = 13 \text{ms}." />
-                    )
-                },
-                {
-                    key: "A.3.1.p1.2",
-                    question: "How long, in minutes, does it take to transfer 1 GB on a network link with latency 100 " +
-                        "microseconds and 520 MB/sec bandwidth? Show your work as a mathematical expression.",
-                    content: (
-                        <TeX
-                            math="T = 100 / (60 \times 10^6) + (1 / 60) \times (1 \times 10^9) / (520 \times 10^6) ≃ 0.032 \text{min} ." />
-                    )
-                },
-                {
-                    key: "A.3.1.p1.3",
-                    question: "You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth, " +
-                        "in GB/sec, should the link have so that the data transfer takes 2.5 sec? Show your work by writing " +
-                        "(and solving) a simple equation.",
-                    content: (
-                        <>
-                            Let <TeX math="B" /> be the needed bandwidth. We simply need to solve the equation below for <TeX
-                            math="B" />:
-                            <TeX math="1 / 1000 + ( 148 / 10^3 ) / B = 2.5," block />
-                            which gives:
-                            <TeX math="B = (148 / 10^3) / (2.5 - 1 / 1000) \simeq .059 \text{GB/sec}." block />
-                        </>
-                    )
+            <Divider />
+
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.3.1"}
+                question_key={"A.3.1.p1.1"}
+                question={
+                    <>
+                        How long, in milliseconds, does it take to transfer 250 MB on a network link with latency 500
+                        microseconds and 20 GB/sec bandwidth? Show your work as a mathematical expression.
+                    </>
                 }
-            ]} />
+                answer={[13,13]}
+                explanation={
+                    <>
+                        <TeX math="T = 500 / 1000 + 1000 × ( 250 \times 10^6 ) / ( 20 \times 10^9 ) = 13 \text{ms}." />
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.1"}
+                question_key={"A.3.1.p1.2"}
+                question={
+                    <>
+                        How long, in minutes, does it take to transfer 1 GB on a network link with latency 100
+                        microseconds and 520 MB/sec bandwidth? Show your work as a mathematical expression.
+                    </>
+                }
+                answer={[0.031,0.33]}
+                explanation={
+                    <>
+                        <TeX math="T = 100 / (60 \times 10^6) + (1 / 60) \times (1 \times 10^9) / (520 \times 10^6) ≃ 0.032 \text{min} ." />
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.1"}
+                question_key={"A.3.1.p1.3"}
+                question={
+                    <>
+                        You need to transfer 148 MB of data through a network link with latency 1 ms. What bandwidth,
+                        in GB/sec, should the link have so that the data transfer takes 2.5 sec? Show your work by writing
+                        (and solving) a simple equation.
+                    </>
+                }
+                answer={[0.058,0.060]}
+                explanation={
+                    <>
+                        Let <TeX math="B" /> be the needed bandwidth. We simply need to solve the equation below for <TeX
+                        math="B" />:
+                        <TeX math="1 / 1000 + ( 148 / 10^3 ) / B = 2.5," block />
+                        which gives:
+                        <TeX math="B = (148 / 10^3) / (2.5 - 1 / 1000) \simeq .059 \text{GB/sec}." block />
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -165,6 +195,19 @@ const LatencyAndBandwidth = ({module, tab}) => {
                 browsers) are available to download files from URLs that print out download times and/or data transfer rates
                 (e.g., <code>wget</code> on Linux).
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "latency_and_bandwidth",
+                        module: "A.3.1"
+                    },
+                ]} />
+            } />
 
         </>
     )
