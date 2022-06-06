@@ -316,7 +316,7 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                     </>
                 }
             />
-            
+
 
             <Divider />
 
@@ -347,6 +347,10 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                 previous question? Show your work, again, estimating the execution time on
                 each platform.
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
 
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[

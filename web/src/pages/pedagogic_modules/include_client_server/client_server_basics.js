@@ -289,9 +289,7 @@ const ClientServerBasics = ({module, tab}) => {
                 Write an equation where the bandwidth is the unknown and solve it.
             </p>
 
-            <Header as="h3" block>
-                You feedback is appreciated
-            </Header>
+
 
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[
