@@ -9,7 +9,7 @@ const SimulationInfo = ({simulationData}) => {
 
     return (
         <>
-            To data have you have executed <strong>{numSimulations} {wordSimulation}</strong>
+            To date have you have executed <strong>{numSimulations} {wordSimulation}</strong>
         </>
     )
 }
