@@ -2,6 +2,8 @@ import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const JobCancellation = ({ module, tab }) => {
   return (
@@ -105,6 +107,18 @@ const JobCancellation = ({ module, tab }) => {
         should be resubmitted with different parameters (requested numbers of node, requested duration).
       </strong></p>
 
+        <Header as="h3" block>
+            You feedback is appreciated
+        </Header>
+
+        <FeedbackActivity content={
+            <FeedbackQuestions feedbacks={[
+                {
+                    tabkey: "job_cancellation",
+                    module: "C.1"
+                },
+            ]} />
+        } />
 
     </>
 

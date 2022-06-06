@@ -2,6 +2,8 @@ import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const JobSubmission = ({ module, tab }) => {
   return (
@@ -133,6 +135,20 @@ const JobSubmission = ({ module, tab }) => {
         When submitting a job one must pick a number of nodes and a duration. It is crucial to pick
         a duration that allows the program to run to completion.
       </strong></p>
+
+
+        <Header as="h3" block>
+            You feedback is appreciated
+        </Header>
+
+        <FeedbackActivity content={
+            <FeedbackQuestions feedbacks={[
+                {
+                    tabkey: "job_submission",
+                    module: "C.1"
+                },
+            ]} />
+        } />
 
     </>
   )
