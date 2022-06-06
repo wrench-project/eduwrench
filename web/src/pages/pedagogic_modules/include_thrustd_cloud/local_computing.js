@@ -4,6 +4,8 @@ import LearningObjectives from "../../../components/learning_objectives";
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg";
 import Thrustd_Local_Simulation from "./thrustd_local_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const LocalComputing = ({module, tab}) => {
     return (
@@ -220,6 +222,21 @@ const LocalComputing = ({module, tab}) => {
                     (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we
                 used the simulator - from a script - to perform a systematic search. The optimal configuration uses 29 nodes at p-state 5.)
             </p>
+
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "local_computing",
+                        module: "D.1"
+                    },
+                ]} />
+            } />
+
         </>
     )
 }

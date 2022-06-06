@@ -4,6 +4,8 @@ import LearningObjectives from "../../../components/learning_objectives"
 import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 import TeX from "@matejmazur/react-katex"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const CloudComputing = ({module, tab}) => {
     return (
@@ -131,6 +133,18 @@ const CloudComputing = ({module, tab}) => {
                 <li>What is the corresponding increase in CO2, if any?</li>
             </ol>
 
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "cloud_computing",
+                        module: "D.1"
+                    },
+                ]} />
+            } />
         </>
     )
 }
