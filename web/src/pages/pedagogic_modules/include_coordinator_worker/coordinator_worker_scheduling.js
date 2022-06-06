@@ -229,7 +229,7 @@ const CoordinatorWorkerScheduling = ({module, tab}) => {
                     </>
                 }
             />
-            
+
             <Divider />
 
             <Header as="h3" block>

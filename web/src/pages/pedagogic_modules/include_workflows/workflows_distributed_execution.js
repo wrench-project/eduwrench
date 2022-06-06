@@ -10,6 +10,11 @@ import DistributedPlatform from "../../../images/vector_graphs/workflows/workflo
 import DistributedPlatformZoom from "../../../images/vector_graphs/workflows/workflow_distributed_platform_zoom.svg"
 import DistributedWorkflow from "../../../images/vector_graphs/workflows/workflow_distributed_workflow.svg"
 import DistributedQuestion from "../../../images/vector_graphs/workflows/workflow_distributed_question.svg"
+import FeedbackQuestions from "../../../components/feedback_questions";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import PracticeQuestionReveal from "../../../components/practice-questions/reveal";
 
 const WorkflowsDistributedExecution = ({module, tab}) => {
     return (
@@ -152,127 +157,166 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
             <SimulationActivity panelKey="workflow-distributed-execution-simulation"
                                 content={<WorkflowsDistributedExecutionSimulation />} />
 
-            <PracticeQuestions questions={[
-                {
-                    key: "A.3.4.p2.1",
-                    question: "When executing the workflow with a single 1-core compute host, what fraction of the time " +
-                        "is spent doing actual computation?  Use the simulation to answer this question, and show your work. ",
-                    content: (
-                        <>
-                            Running the simulation gives us a total execution time of 299.69 seconds.
-                            In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
-                            core. So that is 210 seconds of computation. Therefore, the execution
-                            spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
-                            of the execution is disk and network I/O.
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.4.p2.2",
-                    question: "Based on the answer to the previous question, how long would you expect the execution time " +
-                        "to be if the (single) compute host had 2 cores? Show your work, and then double-check your answer " +
-                        "in simulation.",
-                    content: (
-                        <>
-                            <p>
-                                In the previous question, we found out that the computation in total takes
-                                210 seconds. On 2 cores, this should be 110 seconds (since the
-                                final task runs by itself). Therefore we would expect the
-                                execution time to be 100 second shorter than in the previous question,
-                                that is, 199.69 seconds.
-                            </p>
-                            <p>
-                                The simulation gives 189.77 seconds. This is faster than expected, which
-                                can be due to several reasons. When running tasks in parallel,
-                                there can be beneficial effects in terms of network bandwidth. In this
-                                case, this is happening on the wide-area link due to its high latency.
-                                This is now a recurring theme in these pedagogic modules: the network
-                                is complicated and its performance difficult to estimate precisely.
-                            </p>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.4.p2.3",
-                    question: "For running our workflow, is it better to have 5 4-core compute hosts or 4 5-core hosts? " +
-                        "Show your work. Check your answer in simulation.",
-                    content: (
-                        <>
-                            <p>
-                                It is better to use 5 4-core hosts because the RAM at each host if 32 GB. Therefore, no matter how many
-                                cores a host has it cannot run more than 4 of our <code>pre_*</code> tasks in parallel.
-                            </p>
-                            <p>This is seen in simulation:</p>
-                            <ul>
-                                <li>With 4 5-core hosts: 102.67 seconds</li>
-                                <li>With 5 4-core hosts: 91.76 seconds</li>
-                            </ul>
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.4.p2.4",
-                    question: "What is the parallel efficiency (in terms of cores) of the execution when using 5 4-core " +
-                        "compute hosts? Show your work.",
-                    content: (
-                        <>
-                            The speedup is 299.69 / 91.76 = 3.26. Since we used 20 cores, our parallel
-                            efficiency is 3.26/20 = 16.33%. This is pretty low, but expected since
-                            we have so much I/O and a level of the workflow has no parallelism
-                            whatsoever.
-                        </>
-                    )
-                },
-                {
-                    key: "A.3.4.p2.5",
-                    question: "What overall I/O bandwidth is achieved by the workflow execution when using a single core? " +
-                        "What about when using 5 4-core hosts?  Show your work.",
-                    content: (
-                        <>
-                            <p>
-                                In total, the execution reads and writes <TeX math="20*(50 + 100 + 100) + 1 = 5001 \text{MB}" /> of
-                                data. Using the same reasoning as in question A.3.4.p2.1 above, we can compute the I/O time for each
-                                execution, and deduce the bandwidth. This is summarized in the table
-                                below:
-                            </p>
-                            <Table striped collapsing compact>
-                                <Table.Header>
-                                    <Table.Row>
-                                        <Table.HeaderCell>execution</Table.HeaderCell>
-                                        <Table.HeaderCell>total time</Table.HeaderCell>
-                                        <Table.HeaderCell>compute time</Table.HeaderCell>
-                                        <Table.HeaderCell collapsing>I/O time</Table.HeaderCell>
-                                        <Table.HeaderCell collapsing>I/O bandwidth</Table.HeaderCell>
-                                    </Table.Row>
-                                </Table.Header>
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>1x1 core</Table.Cell>
-                                        <Table.Cell>299.69 s</Table.Cell>
-                                        <Table.Cell>210 s</Table.Cell>
-                                        <Table.Cell>89.69 s</Table.Cell>
-                                        <Table.Cell>55.75 MB/s</Table.Cell>
-                                    </Table.Row>
-                                    <Table.Row>
-                                        <Table.Cell>5x4 core</Table.Cell>
-                                        <Table.Cell>91.76 s</Table.Cell>
-                                        <Table.Cell>20 s</Table.Cell>
-                                        <Table.Cell>71.76 s</Table.Cell>
-                                        <Table.Cell>69.69 MB/s</Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
-                            </Table>
-                            <p>
-                                As earlier, we find that doing parallel I/O (over the network) brings
-                                some benefit. However, due to latency effects, we are pretty
-                                far from achieving the peak 100 MB/s bandwidth. It would be
-                                pretty difficult to estimate the I/O time of this workflow
-                                execution without the simulation.
-                            </p>
-                        </>
-                    )
+            <Divider/>
+
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p2.1"}
+                question={
+                    <>
+                        When executing the workflow with a single 1-core compute host, what fraction (in percentage) of the time
+                        is spent doing actual computation?  Use the simulation to answer this question, and show your work.
+                    </>
                 }
-            ]} />
+                answer={[69,71]}
+                explanation={
+                    <>
+                        Running the simulation gives us a total execution time of 299.69 seconds.
+                        In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
+                        core. So that is 210 seconds of computation. Therefore, the execution
+                        spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
+                        of the execution is disk and network I/O.
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p2.2"}
+                question={
+                    <>
+                        Based on the answer to the previous question, how long would you expect, based on a simple
+                        analytical computation, the execution time
+                        to be if the (single) compute host had 2 cores? You should note that the simulation gives a faster time
+                        than your expectation.
+                    </>
+                }
+                answer={[195,205]}
+                explanation={
+                    <>
+                        <p>
+                            In the previous question, we found out that the computation in total takes
+                            210 seconds. On 2 cores, this should be 110 seconds (since the
+                            final task runs by itself). Therefore we would expect the
+                            execution time to be 100 second shorter than in the previous question,
+                            that is, 199.69 seconds.
+                        </p>
+                        <p>
+                            The simulation gives 189.77 seconds. This is faster than expected, which
+                            can be due to several reasons. When running tasks in parallel,
+                            there can be beneficial effects in terms of network bandwidth. In this
+                            case, this is happening on the wide-area link due to its high latency.
+                            This is now a recurring theme in these pedagogic modules: the network
+                            is complicated and its performance difficult to estimate precisely.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.3.4"}
+                question_key={"A.3.4.p2.3"}
+                question={
+                    <>
+                        For running our workflow, is it better to have 5 4-core compute hosts or 4 5-core hosts?
+                    </>
+                }
+                choices={["It's better to use 5 4-core hosts", "It's better to use 4 5-core hosts"]}
+                correct_answer={"It's better to use 5 4-core hosts"}
+                explanation={
+                    <>
+                        <p>
+                            It is better to use 5 4-core hosts because the RAM at each host if 32 GB. Therefore, no matter how many
+                            cores a host has it cannot run more than 4 of our <code>pre_*</code> tasks in parallel.
+                        </p>
+                        <p>This is seen in simulation:</p>
+                        <ul>
+                            <li>With 4 5-core hosts: 102.67 seconds</li>
+                            <li>With 5 4-core hosts: 91.76 seconds</li>
+                        </ul>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p2.4"}
+                question={
+                    <>
+                        What is the parallel efficiency (in percentage and in terms of cores) of the execution when using 5 4-core
+                        compute hosts?
+                    </>
+                }
+                answer={[16,17]}
+                explanation={
+                    <>
+                        The speedup is 299.69 / 91.76 = 3.26. Since we used 20 cores, our parallel
+                        efficiency is 3.26/20 = 16.33%. This is pretty low, but expected since
+                        we have so much I/O and a level of the workflow has no parallelism
+                        whatsoever.
+                    </>
+                }
+            />
+
+            <PracticeQuestionReveal
+                module={"A.3.4"}
+                question_key={"A.3.4.p2.5"}
+                question={
+                    <>
+                        What overall I/O bandwidth is achieved by the workflow execution when using a single core?
+                        What about when using 5 4-core hosts?
+                    </>
+                }
+                explanation={
+                    <>
+                        <p>
+                            In total, the execution reads and writes <TeX math="20*(50 + 100 + 100) + 1 = 5001 \text{MB}" /> of
+                            data. Using the same reasoning as in question A.3.4.p2.1 above, we can compute the I/O time for each
+                            execution, and deduce the bandwidth. This is summarized in the table
+                            below:
+                        </p>
+                        <Table striped collapsing compact>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>execution</Table.HeaderCell>
+                                    <Table.HeaderCell>total time</Table.HeaderCell>
+                                    <Table.HeaderCell>compute time</Table.HeaderCell>
+                                    <Table.HeaderCell collapsing>I/O time</Table.HeaderCell>
+                                    <Table.HeaderCell collapsing>I/O bandwidth</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>1x1 core</Table.Cell>
+                                    <Table.Cell>299.69 s</Table.Cell>
+                                    <Table.Cell>210 s</Table.Cell>
+                                    <Table.Cell>89.69 s</Table.Cell>
+                                    <Table.Cell>55.75 MB/s</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>5x4 core</Table.Cell>
+                                    <Table.Cell>91.76 s</Table.Cell>
+                                    <Table.Cell>20 s</Table.Cell>
+                                    <Table.Cell>71.76 s</Table.Cell>
+                                    <Table.Cell>69.69 MB/s</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                        <p>
+                            As earlier, we find that doing parallel I/O (over the network) brings
+                            some benefit. However, due to latency effects, we are pretty
+                            far from achieving the peak 100 MB/s bandwidth. It would be
+                            pretty difficult to estimate the I/O time of this workflow
+                            execution without the simulation.
+                        </p>
+                    </>
+                }
+            />
+            
 
             <Divider />
 
@@ -303,6 +347,15 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                 previous question? Show your work, again, estimating the execution time on
                 each platform.
             </p>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "workflows_distributed_execution",
+                        module: "A.3.4"
+                    },
+                ]} />
+            } />
 
         </>
     )

@@ -8,6 +8,11 @@ import PracticeQuestions from "../../../components/practice_questions_header"
 
 import ExampleWorkflow from "../../../images/vector_graphs/workflows/example_workflow_1.svg"
 import WorkflowsFundamentalsQuestion from "../../../images/vector_graphs/workflows/workflow_fundamental_question.svg"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
+import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import PracticeQuestionReveal from "../../../components/practice-questions/reveal";
+import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const WorkflowsFundamentals = ({module, tab}) => {
     return (
@@ -100,228 +105,276 @@ const WorkflowsFundamentals = ({module, tab}) => {
 
             <SimulationActivity panelKey="workflows-fundamentals-simulation" content={<WorkflowsFundamentalsSimulation />} />
 
-            <PracticeQuestions
-                header={
+            <Divider />
+
+            <Header as="h3" block>
+                Practice Questions
+            </Header>
+
+            <p>
+                Answer these practice questions, using the simulation app and/or using analysis (and then using the app for
+                double-checking your results)
+            </p>
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.1"}
+                question={
                     <>
-                        Answer these practice questions, using the simulation app and/or using analysis (and then using the app for
-                        double-checking your results):
+                        How many MB of data are read and written by the workflow when executed on this computer?
                     </>
                 }
-                questions={[
-                    {
-                        key: "A.3.4.p1.1",
-                        question: "How many MB of data are read and written by the workflow when executed on this computer? " +
-                            "Show your work.",
-                        content: (
-                            <>
-                                <p>
-                                    This can easily be done analytically. The table below shows for each file the
-                                    total amount of read/write it causes in MB:
-                                </p>
+                answer={[3700,3700]}
+                explanation={
+                    <>
+                        <p>
+                            This can easily be done analytically. The table below shows for each file the
+                            total amount of read/write it causes in MB:
+                        </p>
 
-                                <Table striped collapsing compact>
-                                    <Table.Header>
-                                        <Table.Row>
-                                            <Table.HeaderCell>file</Table.HeaderCell>
-                                            <Table.HeaderCell>size in MB</Table.HeaderCell>
-                                            <Table.HeaderCell>times read</Table.HeaderCell>
-                                            <Table.HeaderCell>times written</Table.HeaderCell>
-                                            <Table.HeaderCell>total MB read/written</Table.HeaderCell>
-                                        </Table.Row>
-                                    </Table.Header>
-                                    <Table.Body>
-                                        <Table.Row>
-                                            <Table.Cell>data</Table.Cell>
-                                            <Table.Cell>500</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>0</Table.Cell>
-                                            <Table.Cell>500</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>filtered</Table.Cell>
-                                            <Table.Cell>400</Table.Cell>
-                                            <Table.Cell>3</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>1600</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>finalA</Table.Cell>
-                                            <Table.Cell>200</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>400</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>finalB</Table.Cell>
-                                            <Table.Cell>200</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>400</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>finalC</Table.Cell>
-                                            <Table.Cell>200</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>400</Table.Cell>
-                                        </Table.Row>
-                                        <Table.Row>
-                                            <Table.Cell>aggBC</Table.Cell>
-                                            <Table.Cell>200</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>1</Table.Cell>
-                                            <Table.Cell>400</Table.Cell>
-                                        </Table.Row>
-                                    </Table.Body>
-                                </Table>
-                                <p>So the total amount of data read/written is <TeX math="500 + 1600 + 4 \times 400 = 3700" /> MB.</p>
-                                <p>
-                                    We can verify this in simulation. Running the app with 1 core and with disk bandwidth set to 100, the
-                                    total execution time is 231 seconds. The time to perform the computation is the sum of the task
-                                    execution times: <TeX math="10 + 20 + 100 + 20 + 40 + 4 = 194" /> seconds.
-                                </p>
-                                <p>
-                                    So the time to perform the I/O is <TeX math="231 - 194 = 37" /> seconds. Since the disk bandwidth is
-                                    100 MB/sec, this means the total data size is: 3700 MB!
-                                </p>
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.3.4.p1.2",
-                        question: "What is the parallel efficiency when executing the workflow on 3 cores and when the disk " +
-                            "bandwidth is 150 MB/sec? Show your work.",
-                        content: (
-                            <>
-                                The simulation shows that the 1-core execution takes time 218.67 seconds,
-                                while the 3-core execution takes time 197.33 seconds. So the speedup
-                                on 3 cores is 218.67 / 197.33 = 1.108. Meaning that the parallel efficiency
-                                is 1.108/3 = 36.9%. This is pretty low.
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.3.4.p1.3",
-                        question: "Explain why there is never any improvement when going from a 2-core execution to a  3-core " +
-                            "execution for this workflow?  Show your work.",
-                        content: (
-                            <>
-                                <p>
-                                    The lack of improvement is easy to see in the simulation. In fact, executions look
-                                    identical with 2 and 3 cores.
-                                </p>
-                                <p>
-                                    The width of the DAG is 3, so in principle using 3 cores could be useful.
-                                    The only level of the DAG with 3 tasks is the "blue" level. Unfortunately,
-                                    the 3 tasks in that level cannot run concurrently due to RAM constraints.
-                                    At most 2 of them can run concurrently (task3 and task4) since together
-                                    they use less than 16 GB of RAM.
-                                </p>
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.2.3.p1.4",
-                        question: "Consider the execution of this workflow on 2 cores with disk bandwidth set to 50 MB/sec. " +
-                            "Is the disk ever used concurrently by tasks? How can you tell based on the simulation output? " +
-                            "Show your work.",
-                        content: (
-                            <>
-                                <p>
-                                    Tasks task3 and task4 use the disk concurrently. This is easily seen in the
-                                    "Workflow Task Data" section of the simulation output. For instance, task3 spends 16
-                                    seconds reading its input file. Given that this file is 400 MB, this means that
-                                    task3 experiences a read bandwidth of 400/16 = 25 MB/sec. This is half of
-                                    the disk bandwidth, meaning that the disk is used concurrently by another task (task4),
-                                    which also gets half of the disk bandwidth.
-                                </p>
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.2.3.p1.5",
-                        question: "Considering a 1-core execution of the workflow, for which disk bandwidth would the execution " +
-                            "be perfectly balanced between computation time and I/O time? Show your work.",
-                        content: (
-                            <>
-                                <p>
-                                    Let <TeX math="B" /> be the unknown bandwidth. The compute time is, as we saw in question A.2.3.p1.1
-                                    above, 194 seconds. The I/O time, again based on what we saw in that previous question, is <TeX
-                                    math="3700 / B" /> seconds. So we simply need to solve:
-                                </p>
-                                <TeX math="3700 / B = 194" block />
-                                <p>
-                                    which gives <TeX math="B" /> = 19.07 MB/sec. We can verify this in simulation by setting
-                                    <TeX math="B" /> to 19. The simulation shows a total execution time of 388.7 seconds,
-                                    which is almost exactly twice 194.
-                                </p>
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.2.3.p1.6",
-                        question: "Considering computation and I/O, what is the length of the workflow's critical path (in " +
-                            "seconds) if the disk bandwidth is 100 MB/sec? show your work.",
-                        content: (
-                            <>
-                                <p>
-                                    In the <a href="/pedagogic_modules/multi_core_computing">Task Dependencies tab of the Multi Core
-                                    Computing module</a> we defined the critical path without any I/O. Extending this notion to I/O is
-                                    straightforward (one can simply consider file reads and writes as extra tasks to perform).
-                                </p>
-                                <p>
-                                    We have 3 possible paths in the workflow, and for each one we can compute
-                                    its length (i.e., duration in seconds), as follows (note that all intermediate files
-                                    are both written and read, and hence are counted "twice"):
-                                </p>
-                                <ul>
-                                    <li>task1->task2->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 4 = 51 seconds</li>
-                                    <li>task1->task3->task5->task6: 5 + 10 + 4 + 4 + 100 + 2 + 2 + 40 + 2 + 2 + 4 = 175 seconds</li>
-                                    <li>task1->task4->task5->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 40 + 2 + 2 + 4 = 95 seconds</li>
-                                </ul>
-                                <p>
-                                    The critical path (the middle path) has length 175 seconds. No execution can proceed faster
-                                    than 175 seconds no matter how many cores are used.
-                                </p>
-                            </>
-                        )
-                    },
-                    {
-                        key: "A.2.3.p1.7",
-                        question: "Explain why this workflow is poorly suited for parallel execution in general and on our " +
-                            "3-core computer in particular. Hint: There are several reasons why.",
-                        content: (
-                            <>
-                                <p>There are three clear problems here:</p>
-                                <ul>
-                                    <li><i>Problem #1:</i> Only 1 level of the workflow has 3 tasks, and all other levels have
-                                        1 task. So this workflow is mostly sequential, and <strong>Amdahl's law</strong> tells us this is
-                                        bad news.
-                                    </li>
+                        <Table striped collapsing compact>
+                            <Table.Header>
+                                <Table.Row>
+                                    <Table.HeaderCell>file</Table.HeaderCell>
+                                    <Table.HeaderCell>size in MB</Table.HeaderCell>
+                                    <Table.HeaderCell>times read</Table.HeaderCell>
+                                    <Table.HeaderCell>times written</Table.HeaderCell>
+                                    <Table.HeaderCell>total MB read/written</Table.HeaderCell>
+                                </Table.Row>
+                            </Table.Header>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>data</Table.Cell>
+                                    <Table.Cell>500</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>0</Table.Cell>
+                                    <Table.Cell>500</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>filtered</Table.Cell>
+                                    <Table.Cell>400</Table.Cell>
+                                    <Table.Cell>3</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>1600</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>finalA</Table.Cell>
+                                    <Table.Cell>200</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>400</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>finalB</Table.Cell>
+                                    <Table.Cell>200</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>400</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>finalC</Table.Cell>
+                                    <Table.Cell>200</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>400</Table.Cell>
+                                </Table.Row>
+                                <Table.Row>
+                                    <Table.Cell>aggBC</Table.Cell>
+                                    <Table.Cell>200</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>1</Table.Cell>
+                                    <Table.Cell>400</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Table>
+                        <p>So the total amount of data read/written is <TeX math="500 + 1600 + 4 \times 400 = 3700" /> MB.</p>
+                        <p>
+                            We can verify this in simulation. Running the app with 1 core and with disk bandwidth set to 100, the
+                            total execution time is 231 seconds. The time to perform the computation is the sum of the task
+                            execution times: <TeX math="10 + 20 + 100 + 20 + 40 + 4 = 194" /> seconds.
+                        </p>
+                        <p>
+                            So the time to perform the I/O is <TeX math="231 - 194 = 37" /> seconds. Since the disk bandwidth is
+                            100 MB/sec, this means the total data size is: 3700 MB!
+                        </p>
+                    </>
+                }
+            />
 
-                                    <li><i>Problem #2:</i> The only parallel level (the "blue" level) suffers from high
-                                        <strong>load imbalance</strong>. One task runs in 100 seconds, while the other two
-                                        run in 20 seconds. So, when running on 3 cores, assuming no I/O, the parallel efficiency is
-                                        at most (140/100)/3 = 46.6%.
-                                    </li>
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.2"}
+                question={
+                    <>
+                        What is the parallel efficiency, in percentage, when executing the workflow on 3 cores and when the disk
+                        bandwidth is 150 MB/sec?
+                    </>
+                }
+                answer={[36.5,37.5]}
+                explanation={
+                    <>
+                        The simulation shows that the 1-core execution takes time 218.67 seconds,
+                        while the 3-core execution takes time 197.33 seconds. So the speedup
+                        on 3 cores is 218.67 / 197.33 = 1.108. Meaning that the parallel efficiency
+                        is 1.108/3 = 36.9%. This is pretty low.
+                    </>
+                }
+            />
 
-                                    <li><i>Problem #3:</i> On our particular computer, the <strong>RAM constraints</strong> make things
-                                        even worse as the workflow's width becomes essentially 2 instead of 3. We can never run the
-                                        3 blue tasks in parallel.
-                                    </li>
-                                </ul>
-                                <p>
-                                    To get a sense of how "bad" this workflow is, let's assume infinite
-                                    disk bandwidth and infinite RAM capacity (which removes Problem #3 above). In this case, on 3 cores,
-                                    the workflow would run in time: 10 + 100 + 40 + 4 = 154 seconds. The
-                                    sequential execution time would be 194 seconds. So the speedup would only
-                                    be 1.26, for a parallel efficiency of only 42%. <i>Amdahl's law is never
-                                    good news.</i>
-                                </p>
-                            </>
-                        )
-                    }
-                ]} />
+            <PracticeQuestionReveal
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.3"}
+                question={
+                    <>
+                        Explain why there is never any improvement when going from a 2-core execution to a  3-core
+                        execution for this workflow?
+                    </>
+                }
+                explanation={
+                    <>
+                        <p>
+                            The lack of improvement is easy to see in the simulation. In fact, executions look
+                            identical with 2 and 3 cores.
+                        </p>
+                        <p>
+                            The width of the DAG is 3, so in principle using 3 cores could be useful.
+                            The only level of the DAG with 3 tasks is the "blue" level. Unfortunately,
+                            the 3 tasks in that level cannot run concurrently due to RAM constraints.
+                            At most 2 of them can run concurrently (task3 and task4) since together
+                            they use less than 16 GB of RAM.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionMultiChoice
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.4"}
+                question={
+                    <>
+                        Consider the execution of this workflow on 2 cores with disk bandwidth set to 50 MB/sec.
+                        Is the disk ever used concurrently by tasks?
+                    </>
+                }
+                hint={"It should be possible to determine this based on the simulation output"}
+                choices={["Yes","No"]}
+                correct_answer={"Yes"}
+                explanation={
+                    <>
+                        <p>
+                            Tasks task3 and task4 use the disk concurrently. This is easily seen in the
+                            "Workflow Task Data" section of the simulation output. For instance, task3 spends 16
+                            seconds reading its input file. Given that this file is 400 MB, this means that
+                            task3 experiences a read bandwidth of 400/16 = 25 MB/sec. This is half of
+                            the disk bandwidth, meaning that the disk is used concurrently by another task (task4),
+                            which also gets half of the disk bandwidth.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.5"}
+                question={
+                    <>
+                        Considering a 1-core execution of the workflow, for which disk bandwidth, in MB/sec, would the execution
+                        be perfectly balanced between computation time and I/O time?
+                    </>
+                }
+                answer={[19,19.1]}
+                explanation={
+                    <>
+                        <p>
+                            Let <TeX math="B" /> be the unknown bandwidth. The compute time is, as we saw in question A.2.3.p1.1
+                            above, 194 seconds. The I/O time, again based on what we saw in that previous question, is <TeX
+                            math="3700 / B" /> seconds. So we simply need to solve:
+                        </p>
+                        <TeX math="3700 / B = 194" block />
+                        <p>
+                            which gives <TeX math="B" /> = 19.07 MB/sec. We can verify this in simulation by setting
+                            <TeX math="B" /> to 19. The simulation shows a total execution time of 388.7 seconds,
+                            which is almost exactly twice 194.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionNumeric
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.6"}
+                question={
+                    <>
+                        Considering computation and I/O, what is the length of the workflow's critical path (in
+                        seconds) if the disk bandwidth is 100 MB/sec?
+                    </>
+                }
+                answer={[175.175]}
+                explanation={
+                    <>
+                        <p>
+                            In the <a href="/pedagogic_modules/multi_core_computing">Task Dependencies tab of the Multi Core
+                            Computing module</a> we defined the critical path without any I/O. Extending this notion to I/O is
+                            straightforward (one can simply consider file reads and writes as extra tasks to perform).
+                        </p>
+                        <p>
+                            We have 3 possible paths in the workflow, and for each one we can compute
+                            its length (i.e., duration in seconds), as follows (note that all intermediate files
+                            are both written and read, and hence are counted "twice"):
+                        </p>
+                        <ul>
+                            <li>task1->task2->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 4 = 51 seconds</li>
+                            <li>task1->task3->task5->task6: 5 + 10 + 4 + 4 + 100 + 2 + 2 + 40 + 2 + 2 + 4 = 175 seconds</li>
+                            <li>task1->task4->task5->task6: 5 + 10 + 4 + 4 + 20 + 2 + 2 + 40 + 2 + 2 + 4 = 95 seconds</li>
+                        </ul>
+                        <p>
+                            The critical path (the middle path) has length 175 seconds. No execution can proceed faster
+                            than 175 seconds no matter how many cores are used.
+                        </p>
+                    </>
+                }
+            />
+
+            <PracticeQuestionReveal
+                module={"A.3.4"}
+                question_key={"A.3.4.p1.7"}
+                question={
+                    <>
+                        Explain why this workflow is poorly suited for parallel execution in general and on our
+                        3-core computer in particular. Hint: There are several reasons why.
+                    </>
+                }
+                explanation={
+                    <>
+                        <p>There are three clear problems here:</p>
+                        <ul>
+                            <li><i>Problem #1:</i> Only 1 level of the workflow has 3 tasks, and all other levels have
+                                1 task. So this workflow is mostly sequential, and <strong>Amdahl's law</strong> tells us this is
+                                bad news.
+                            </li>
+
+                            <li><i>Problem #2:</i> The only parallel level (the "blue" level) suffers from high
+                                <strong>load imbalance</strong>. One task runs in 100 seconds, while the other two
+                                run in 20 seconds. So, when running on 3 cores, assuming no I/O, the parallel efficiency is
+                                at most (140/100)/3 = 46.6%.
+                            </li>
+
+                            <li><i>Problem #3:</i> On our particular computer, the <strong>RAM constraints</strong> make things
+                                even worse as the workflow's width becomes essentially 2 instead of 3. We can never run the
+                                3 blue tasks in parallel.
+                            </li>
+                        </ul>
+                        <p>
+                            To get a sense of how "bad" this workflow is, let's assume infinite
+                            disk bandwidth and infinite RAM capacity (which removes Problem #3 above). In this case, on 3 cores,
+                            the workflow would run in time: 10 + 100 + 40 + 4 = 154 seconds. The
+                            sequential execution time would be 194 seconds. So the speedup would only
+                            be 1.26, for a parallel efficiency of only 42%. <i>Amdahl's law is never
+                            good news.</i>
+                        </p>
+                    </>
+                }
+            />
 
             <Divider />
 
@@ -359,6 +412,20 @@ const WorkflowsFundamentals = ({module, tab}) => {
                 <strong>[A.2.3.q1.5]</strong> Say we now have 4 cores. Explain why there is no way to get the parallel
                 efficiency above 60% even if the disk can be upgraded at will.
             </p>
+
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "workflows_fundamentals",
+                        module: "A.3.4"
+                    },
+                ]} />
+            } />
 
         </>
     )
