@@ -1255,6 +1255,95 @@ app.post("/run/thrustd_cloud", function (req, res) {
     }
 });
 
+// execute cloud functions simulator (one function)
+app.post("/run/solo_cloud_function", function (req, res) {
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/google_cloud_functions/"
+    );
+
+    const SIMULATOR = "cloud_functions";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_INSTANCES = req.body.numInstances;
+    const NUM_FIR = req.body.numFir;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
+
+    const json_data = {
+        "func_exec_time": 95.0,
+        "num_instances": NUM_INSTANCES,
+        "max_req": NUM_FIR,
+        "min_req": 1,
+        "change_probability": 0.75,
+        "max_change": 2,
+        "timeout": 10.0
+    }
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    // let args_json = JSON.stringify(json_data);
+    // console.log(args_json);
+    const fs = require('fs');
+
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if (err) console.log('error', err);
+    });
+
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+
+    let output_array = simulation_output.split("\n");
+
+    let arrived = output_array[1].split(":");
+    let success = output_array[3].split(":");
+    let fail = output_array[4].split(":");
+
+    let s_percent = Math.round(parseFloat(success[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+    let f_percent = Math.round(parseFloat(fail[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+
+    output_array[1] = "Total # FIR:" + arrived[1];
+    output_array[3] = "- Succeeded:" + success[1] + " (" + s_percent.toString() + "%)";
+    output_array[4] = "- Failed:" + fail[1] + " (" + f_percent.toString() + "%)";
+
+    let printed_sim_output = "";
+    for (let i = 0; i < output_array.length; i++) {
+        if (i != 2) {
+            printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+                + output_array[i] + "<br></span>";
+        }
+    }
+
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            params: json_data,
+            activity: "cloud_functions"
+        });
+
+        res.json({
+            "simulation_output": printed_sim_output,
+            "record_data": JSON.parse(fs.readFileSync("/tmp/record.json")),
+        })
+    }
+});
+
 // execute activity storage service simulation route
 app.post("/run/storage_service", function (req, res) {
     const PATH_PREFIX = getPathPrefix("storage_interaction_data_movement")

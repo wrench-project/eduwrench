@@ -34,6 +34,8 @@
       title: "Cyberinfrastructure Concepts"
     - number: "C.1"
       title: "Batch Scheduling"
+    - number: "C.2"
+      title: "Cloud Functions"
     - number: "D.1"
       title: "Case Study: Energy-Aware Workflow Execution"
 
@@ -331,6 +333,16 @@
       key: "slo_optimizing_performance_and_energy"
       topSLOs:
         - "top_slo_3"
+    - description: "explain the concept of a cloud function"
+      key: "slo_cloud_function_basics"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "reason about application workloads and resource provisions in the context of cloud functions"
+      key: "slo_cloud_function_performance"
+      topSLOs:
+        - "top_slo2"
+        - "top_slo3"
 
 - Mappings:
     - module: "A.1"
@@ -525,6 +537,12 @@
       SLOs:
         - "slo_batch_num_nodes_impact"
         - "slo_batch_optimization"
+    - module: "C.2"
+      tab: "solo_cloud_function"
+      tabname: "A single cloud function"
+      SLOs:
+        - "slo_cloud_function_basics"
+        - "slo_cloud_function_performance"
     - module: "D.1"
       tab: "local_computing"
       tabname: "Local cluster"
