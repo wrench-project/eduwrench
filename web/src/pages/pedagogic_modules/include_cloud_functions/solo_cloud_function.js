@@ -3,6 +3,8 @@ import {Divider, Header} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 import Solo_Cloud_Function_Simulation from "./solo_cf_sim";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const SoloCloudFunction = ({module, tab}) => {
     return (
@@ -102,6 +104,20 @@ const SoloCloudFunction = ({module, tab}) => {
                 that the cost paid to the cloud function provider is too high, and want to reduce it by $50. What failure rate
                 would you then achieve? 
             </p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "solo_cloud_function",
+                        module: "C.2"
+                    },
+                ]} />
+            } />
+
 
         </>
     )

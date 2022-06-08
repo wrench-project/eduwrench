@@ -126,7 +126,7 @@ const Stats = () => {
             </Segment>
 
             <p>
-                This section shows the <strong>module tabsyou have visited</strong> for which you have or have not provided feedback
+                This section shows the <strong>module tabs you have visited</strong> for which you have or have not provided feedback
                 (by answering a couple of questions at the bottom of the tab).<br/>
 
                 <Segment>
