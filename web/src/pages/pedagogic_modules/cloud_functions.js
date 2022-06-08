@@ -21,10 +21,8 @@ const CloudFunctions = () => {
             }}><br />C.2. Cloud Functions</h2>
 
             <Segment style={{ marginBottom: "2em" }}>
-                The goal of this module is to have you go through a case-study for a real-world workflow application that must be executed
-                while paying attention both to  performance and carbon footprint.  You first execute the app on a local cluster that you
-                can configure in various ways to trade-off performance for electrical power efficiency. You then execute it by using the local cluster
-                in a low-power configuration as well as a remote cloud whose power source is green(er).
+                The goal of this module is to provide you with a very gentle introduction to the concept
+                of Cloud Functions (aka Serverless Computing).
                 <br /><br />
                 Go through the two tabs below in sequence…
             </Segment>
@@ -33,7 +31,7 @@ const CloudFunctions = () => {
                 {
                     menuItem: {
                         key: "solo_cloud_function",
-                        content: "Solo Cloud Function"
+                        content: "A single Cloud Function"
                     },
                     render: () => <Tab.Pane><SoloCloudFunction module={module} tab={"solo_cloud_function"}/></Tab.Pane>
                 },

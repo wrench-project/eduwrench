@@ -91,8 +91,11 @@ int GcfWMS::main() {
 
     // Referenced from https://en.cppreference.com/w/cpp/numeric/random/uniform_real_distribution
     // mention in narrative that every time you run, you will get different results due to random device seed
-    std::random_device rd;  // Will be used to obtain a seed for the random number engine
-    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+//    std::random_device rd;  // Will be used to obtain a seed for the random number engine
+//    std::mt19937 gen(rd()); // Standard mersenne_twister_engine seeded with rd()
+    // Deterministic simulation
+    std::mt19937 gen(min_arrival_rate + max_arrival_rate + num_free_instances);
+
 
     // initial sleep time and num free instances set in simulator
     double arrival_rate = min_arrival_rate;
@@ -109,10 +112,16 @@ int GcfWMS::main() {
     auto prev_fail_sum = 0;
 
     // Convert min and max request arrival rates to the fake HOUR, in request / sec
+//    std::cerr << "MIN ARRIVAL RATE = " << min_arrival_rate << "\n";
+//    std::cerr << "MAX ARRIVAL RATE = " << max_arrival_rate << "\n";
     min_arrival_rate *= (3600 / HOUR) / 60;
     max_arrival_rate *= (3600 / HOUR) / 60;
 //    std::cerr << "MIN ARRIVAL RATE = " << min_arrival_rate << "\n";
 //    std::cerr << "MAX ARRIVAL RATE = " << max_arrival_rate << "\n";
+
+    // Convert function time to fake hours
+    task_flops /= (3600 / HOUR);
+
     double noise_magnitude = 0.4;
     std::uniform_real_distribution<> dis(-max_arrival_rate * noise_magnitude, max_arrival_rate * noise_magnitude);
 
@@ -122,7 +131,7 @@ int GcfWMS::main() {
     file_out.open(filename, std::ios_base::app);
     file_out << "{" << endl;
 //    double total_sim_time = 1.0 * .25 * HOUR;
-    double total_sim_time = 7 * half_period;
+    double total_sim_time = 4 * half_period;
 
     int n = 0;
     idle = this->getAvailableComputeServices<wrench::ComputeService>();
@@ -166,6 +175,9 @@ int GcfWMS::main() {
 
         // Insert into the queue
         double requests_arrival_time = wrench::Simulation::getCurrentSimulatedDate();
+
+//        std::cerr << requests_arrival_time << "\n";
+
         sorted_queue_of_request_arrival_times.push_back(requests_arrival_time + timeout);
 
         // Update the arrival rate based on a linear model
@@ -249,7 +261,7 @@ int GcfWMS::main() {
     std::cerr << "Succeeded: " << succeeded << std::endl;
     std::cerr << "Failures: " << failures << std::endl;
 
-    this->job_manager.reset();
+//    this->job_manager.reset();
 
     return 0;
 }

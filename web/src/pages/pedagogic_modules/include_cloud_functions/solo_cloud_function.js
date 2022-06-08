@@ -25,15 +25,16 @@ const SoloCloudFunction = ({module, tab}) => {
             <p>
                 Cloud functions are essentially as the name suggests: they are functions that you can invoke and
                 run on the cloud (one term many people use to describe this concept is “serverless computing”).
-                Cloud functions deployments can scale by provisioning more cloud resources (i.e., virtual
+                Cloud function deployments can scale by provisioning more cloud resources (i.e., virtual
                 machine instances) for a particular function. Two popular examples of cloud function platforms
                 are Google Cloud and AWS Lambda.
             </p>
 
             <p>
-                In terms of cost, cloud functions are charged when running, meaning that cost only incurs when
-                the function is running, not when the function is idle. In other words, users pay per time unit
-                while the function is running as opposed to paying for uptime.
+                Cloud functions are charged when running, meaning that the customer only incurs cost when
+                the function is running. In other words, users pay per time unit
+                while the function is running as opposed to paying for uptime. This is in sharp contrast with
+                the cost model for virtual machine instances.
             </p>
 
             <p>
@@ -46,13 +47,13 @@ const SoloCloudFunction = ({module, tab}) => {
 
             <p>
                 We assume that the facial recognition function that your company needs to deploy on the cloud
-                runs in 1 minute on a cloud function instance.
+                runs in <strong>95 seconds</strong> on a cloud function instance.
             </p>
 
             <p>
                 The usage pattern of the facial recognition function, i.e., the number of function invocation
-                requests by customers per time unit, varies throughout time. Specifically, it oscillates between
-                some minimum number of requests per minute (1 per minute, say in the middle of the night) and some
+                requests per time unit, varies throughout time. Specifically, it oscillates between
+                a minimum number of requests per seconds (1 per second, say in the middle of the night) and some
                 maximum  (say during peak hours). These oscillations have a random component, and therefore there
                 is a bit of jitter.
             </p>
@@ -60,9 +61,10 @@ const SoloCloudFunction = ({module, tab}) => {
             <h3>Simulation</h3>
 
             <p>
-                The simulation application below simulates the system for 1 week. The input takes the number of
-                instances and the maximum request rate. The output is the number of total requests, with there
-                being 3 divisions: arrived, succeeded, and failed (arrived = succeeded + failed).
+                The simulation application below simulates the system for a couple of days. It takes as input the number of
+                provisioned instances and the maximum request rate. The output is the number of total requests, the
+                number of requests that have succeeded, and the number of requests that have failed due to a
+                time-out (total = succeeded + failed).
             </p>
 
             <SimulationActivity panelKey="solo_cloud_function" content={<Solo_Cloud_Function_Simulation/>}/>
@@ -73,38 +75,34 @@ const SoloCloudFunction = ({module, tab}) => {
             </Header>
 
             <p>
-              <strong>The simulation implements a randomness factor as mentioned above in the narrative, so in order to
-              collect more accurate results, run 5-10 trials for each question to find the average for your
-              solutions.</strong>
+              <strong>The simulation is deterministic, that is, it always produces the same output for the same input.
+                  The results do show jitter, the jitter is samples from a seeded random number generator
+                  and thus, deterministic. In a real-world setting, unlike with this simulation,
+                  multiple experiments should be executed to compute statistics.
+              </strong>
             </p>
 
             <p>
                 <strong>[C.2.q1.1]</strong> Assume your function is working in an environment in which peak hours
-                see a max 9 requests per second (i.e., max number of requests per second is set to 9). How many
-                instances do you need so that no request fails? Come up with an answer based on analysis
-                (e.g., math), and then test your theory by running the simulation and explain why you need that
-                many instances.
+                see at most 20 requests per minute (i.e., max number of requests per minute is set to 20). How many
+                instances do you need so that no request fails? Come up with an answer based on reasoning, explaining
+                why you need this many instances. Then test your result by running the simulations.
             </p>
 
             <p>
-                <strong>[C.2.q1.2]</strong> Using max 9 requests, what failure rate do you observe when reducing
-                the number of instances by 10%, 25%, or by 50%? Is the increase in failure rate linear with the
-                decrease in number of instances?
+                <strong>[C.2.q1.2]</strong> Using max 20 requests, what failure rate do you observe when reducing
+                the number of instances you estimated in the previous question by 12.5%, 25%, 50%, or by 75%?
+                Is the success rate linear in the number of instances?
             </p>
 
             <p>
                 <strong>[C.2.q1.3]</strong> Your business partner estimates that the popularity of the function
-                won’t be above 15 max requests. How many instances would then be sufficient to achieve a failure
-                rate between 1% and 3%?
+                won’t be above 20 max requests. And in the first question above, you came up with a
+                number of instances needed to achieve a 0% failure rate.  Your board of directors has decided
+                that the cost paid to the cloud function provider is too high, and want to reduce it by $50. What failure rate
+                would you then achieve? 
             </p>
 
-            <p>
-                <strong>[C.2.q1.4]</strong> Using max 15 requests, the number of instances you picked in Question 3
-                leads to a cost of around $2100 - $2200.  It turns out that your board of directors deems that a 10% failure rate
-                of function invocations is still acceptable (that is, if 10% of invocations fail then customers
-                will still find the system useful).  What cost saving would occur when allowing for a 10% failure
-                rate?
-            </p>
         </>
     )
 }
