@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import axios from "axios"
 import { GoogleLogin, GoogleLogout } from "react-google-login"
 import { Dropdown, Menu } from "semantic-ui-react"
 import "./auth.css"
@@ -19,7 +20,25 @@ class Auth extends Component {
     this.handleLoginFailure = this.handleLoginFailure.bind(this)
     this.logout = this.logout.bind(this)
     this.handleLogoutFailure = this.handleLogoutFailure.bind(this)
-  }
+
+    axios.get(window.location.protocol + "//" + window.location.hostname + ":3000/server_time").then(
+        response => {
+          let serverTime = new Date(response.data.time)
+          let loginTime = new Date(localStorage.getItem("loginTime"))
+          if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
+            this.setState(state => ({
+              logged: false,
+              accessToken: "",
+              user: {}
+            }))
+          }
+        },
+        error => {
+          console.log(error)
+          alert("Error obtaining server time.")
+        }
+      )
+    }
 
   login(response) {
     if (response.accessToken) {
@@ -33,10 +52,11 @@ class Auth extends Component {
           picture: response.profileObj.imageUrl
         }
       }))
+      localStorage.setItem("loginTime", new Date())
       localStorage.setItem("login", "true")
       localStorage.setItem("currentUser", response.profileObj.email)
       localStorage.setItem("userName", response.profileObj.name)
-      localStorage.setItem("userPicture", response.profileObj.imageUrl)
+      localStorage.setItem("userPicture", response.profileObj.imageUrl)      
     }
   }
 
