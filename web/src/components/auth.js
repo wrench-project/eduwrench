@@ -21,23 +21,26 @@ class Auth extends Component {
     this.logout = this.logout.bind(this)
     this.handleLogoutFailure = this.handleLogoutFailure.bind(this)
 
-    axios.get(window.location.protocol + "//" + window.location.hostname + ":3000/server_time").then(
-        response => {
-          let serverTime = new Date(response.data.time)
-          let loginTime = new Date(localStorage.getItem("loginTime"))
-          if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
-            this.setState(state => ({
-              logged: false,
-              accessToken: "",
-              user: {}
-            }))
+    const isBrowser = () => typeof window !== "undefined"
+    if (isBrowser()) {
+      axios.get(window.location.protocol + "//" + window.location.hostname + ":3000/server_time").then(
+          response => {
+            let serverTime = new Date(response.data.time)
+            let loginTime = new Date(localStorage.getItem("loginTime"))
+            if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
+              this.setState(state => ({
+                logged: false,
+                accessToken: "",
+                user: {}
+              }))
+            }
+          },
+          error => {
+            console.log(error)
+            alert("Error obtaining server time.")
           }
-        },
-        error => {
-          console.log(error)
-          alert("Error obtaining server time.")
-        }
-      )
+        )
+      }
     }
 
   login(response) {
