@@ -11,47 +11,47 @@ const SoloCloudFunction = ({module, tab}) => {
             />
 
             <p>
-                You are an employee at a data science company that is working on an on-demand facial recognition
-                service that will be used for real-time video analysis. This service will be used continuously
+                You are an employee at a data science company that is working on an on-demand license plate recognition
+                service that will be used for real-time video analysis of parking lots. This service will be used continuously
                 by various customers and must operate 24/7.
             </p>
 
             <p>
-                The facial recognition service consists of a function that takes as input an image and returns
-                extracted features, which can then be searched in a database.  Rather than hosting this function
+                The license plate recognition service consists of a function that takes as input an image and returns
+                license plate numbers, which can then be searched in a database.  Rather than hosting this function
                 on bare-metal servers hosted in-house, the goal is to deploy this system using “cloud functions”.
             </p>
 
             <p>
                 Cloud functions are essentially as the name suggests: they are functions that you can invoke and
                 run on the cloud (one term many people use to describe this concept is “serverless computing”).
-                Cloud function deployments can scale by provisioning more cloud resources (i.e., virtual
-                machine instances) for a particular function. Two popular examples of cloud function platforms
+                Cloud function deployments can scale by provisioning more function instances, that is, increasing
+                the number of function executions that can execute concurrently. Two popular examples of cloud function platforms
                 are Google Cloud and AWS Lambda.
             </p>
 
             <p>
                 Cloud functions are charged when running, meaning that the customer only incurs cost when
-                the function is running. In other words, users pay per time unit
-                while the function is running as opposed to paying for uptime. This is in sharp contrast with
-                the cost model for virtual machine instances.
+                the function is being executed. (This is in sharp contrast with
+                the cost model for virtual machine instances.)
             </p>
 
             <p>
                 Cloud functions systems typically implement a time-out mechanism. That is, when all instances
-                provisioned for a cloud function are already working on function invocations,  if a new function
+                provisioned for a cloud function are already running,  if a new function
                 invocation is placed it waits. If an instance does not become available within a specific
-                time-out duration, then the function invocation fails. In this module, we assume the time-out
-                is 10 seconds.
+                time-out duration, then the function invocation fails. (The simulation below assumes the time-out
+                is 10 seconds, but this value is not necessary to understand simulation results and/or to answer
+                questions hereafter).
             </p>
 
             <p>
-                We assume that the facial recognition function that your company needs to deploy on the cloud
+                We assume that the license plate recognition function that your company needs to deploy on the cloud
                 runs in <strong>95 seconds</strong> on a cloud function instance.
             </p>
 
             <p>
-                The usage pattern of the facial recognition function, i.e., the number of function invocation
+                The usage pattern of the license plate recognition function, i.e., the number of function invocation
                 requests per time unit, varies throughout time. Specifically, it oscillates between
                 a minimum number of requests per seconds (1 per second, say in the middle of the night) and some
                 maximum  (say during peak hours). These oscillations have a random component, and therefore there
@@ -100,7 +100,8 @@ const SoloCloudFunction = ({module, tab}) => {
                 won’t be above 20 max requests. And in the first question above, you came up with a
                 number of instances needed to achieve a 0% failure rate.  Your board of directors has decided
                 that the cost paid to the cloud function provider is too high, and want to reduce it by $50. What failure rate
-                would you then achieve? 
+                would you then achieve?  Note that you do not know the charging rate, but only can observe the overall cost
+                from the simulation. So you should answer this question empirically using the simulation.
             </p>
 
         </>
