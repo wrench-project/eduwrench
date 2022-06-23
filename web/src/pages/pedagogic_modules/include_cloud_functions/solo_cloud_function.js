@@ -76,7 +76,7 @@ const SoloCloudFunction = ({module, tab}) => {
 
             <p>
               <strong>The simulation is deterministic, that is, it always produces the same output for the same input.
-                  The results do show jitter, the jitter is samples from a seeded random number generator
+                  The results do show jitter, the jitter is sampled from a seeded random number generator
                   and thus, deterministic. In a real-world setting, unlike with this simulation,
                   multiple experiments should be executed to compute statistics.
               </strong>
