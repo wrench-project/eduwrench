@@ -9,6 +9,10 @@ RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs
 RUN npm install -g gatsby-cli --unsafe-perm
 
+# Make wrench user sudoer
+RUN adduser wrench sudo
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
 USER wrench
 WORKDIR /home/wrench/
 
