@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021. The WRENCH Team.
+ * Copyright (c) 2019-2022. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     au = require("ansi_up"),
-    {spawnSync} = require("child_process"),
+    { spawnSync } = require("child_process"),
     fs = require("fs")
 
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
@@ -20,10 +20,11 @@ const cors = require("cors")
 const db = require("./data/db-config")
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 const ansiUp = new au.default();
+const serverTime = new Date();
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 
@@ -52,6 +53,12 @@ app.use(cors(corsOptions))
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
     res.send("eduWRENCH Pedagogic Modules")
+})
+
+app.get("/server_time", function (req, res) {
+    res.json({
+        "time": serverTime
+    })
 })
 
 // execute networking fundamentals simulation route
@@ -1732,6 +1739,7 @@ app.post('/get/userdata', function (req, res) {
 })
 
 // Enable SSL server connection
+let st = serverTime.toISOString().replace(/T/, ' ').replace(/\..+/, '')
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")
     const fs = require("fs")
@@ -1741,11 +1749,11 @@ if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     }
     https.createServer(options, app).listen(PORT, function () {
         console.log(
-            "eduWRENCH backend server is running on port " + PORT + " with SSL-enabled mode"
+            "[" + st + "] eduWRENCH backend server is running on port " + PORT + " with SSL-enabled mode"
         )
     })
 } else {
     app.listen(PORT, function () {
-        console.log("eduWRENCH backend server is running on port " + PORT)
+        console.log("[" + st + "] eduWRENCH backend server is running on port " + PORT)
     })
 }

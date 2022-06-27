@@ -222,7 +222,6 @@ int GcfWMS::main() {
                 auto it_value = *it;
                 double deque_val = sorted_queue_of_request_arrival_times[0];
                 sorted_queue_of_request_arrival_times.pop_front();
-                num_requests_arrived++;
                 if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
                     wrench::WorkflowTask * task =
                             this->getWorkflow()->addTask("task_" + std::to_string(n),
@@ -252,6 +251,7 @@ int GcfWMS::main() {
     file_out << "}" << endl;
     file_out.close();
 
+    num_requests_arrived = succeeded + failures;
     auto totalCost = succeeded * (task_flops / 100) * (3600 / HOUR) * 0.009520;
     totalCost = std::ceil(totalCost * 100.0) / 100.0;
     std::cerr << "Total Cost: $" << totalCost << std::endl;
