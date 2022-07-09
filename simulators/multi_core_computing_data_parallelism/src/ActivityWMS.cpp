@@ -13,17 +13,15 @@ namespace wrench {
      * @param storage_services
      * @param hostname
      */
-    ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::shared_ptr<ComputeService> &compute_services,
-                             const std::string &hostname) : WMS (
-                                     std::move(standard_job_scheduler),
-                                     nullptr,
-                                     {compute_services},
-                                     {},
-                                     {}, nullptr,
+    ActivityWMS::ActivityWMS(const std::shared_ptr<ComputeService> &compute_service,
+                             const std::shared_ptr<Workflow> &workflow,
+                             const std::string &hostname) : ExecutionController(
                                      hostname,
                                      "multicore"
-                                     ) {}
+                                     ) {
+        this->compute_service = compute_service;
+        this->workflow = workflow;
+    }
 
     /**
      * @brief WMS main method
@@ -40,33 +38,30 @@ namespace wrench {
 
         while (true) {
             // Get the ready tasks
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            // Get the available compute services, in this case only one
-            const auto compute_services = this->getAvailableComputeServices<ComputeService>();
+            auto ready_tasks = this->workflow->getReadyTasks();
 
             // Run ready tasks with defined scheduler implementation
-            this->getStandardJobScheduler()->scheduleTasks(
-                    compute_services,
+            this->scheduleTasks(
+                    compute_service,
                     ready_tasks);
 
             // Wait for a workflow execution event, and process it
             try {
                 this->waitForAndProcessNextEvent();
-            } catch (WorkflowExecutionException &e) {
+            } catch (ExecutionException &e) {
                 WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                             (e.getCause()->toString().c_str()));
                 continue;
             }
-            if (this->abort || this->getWorkflow()->isDone()) {
+            if (this->abort || this->workflow->isDone()) {
                 break;
             }
         }
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
         WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
+        if (this->workflow->isDone()) {
+            WRENCH_INFO("Execution completed in %.2f seconds!", this->workflow->getCompletionDate());
         } else {
             WRENCH_INFO("Execution is incomplete!");
         }
@@ -84,5 +79,27 @@ namespace wrench {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         WRENCH_INFO("Task %s has completed", standard_job->getTasks().at(0)->getID().c_str());
+    }
+
+    /**
+     * @brief Method to scheduling ready tasks
+     * @param compute_services
+     * @param ready_tasks
+     */
+    void ActivityWMS::scheduleTasks(std::shared_ptr<ComputeService> &compute_service,
+                                    const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks) {
+
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+
+        auto idle_core_count = compute_service->getPerHostNumIdleCores()["the_host"];
+
+        //  Schedule all  ready tasks (this is  always possible)
+        for (auto const &t : ready_tasks) {
+            WRENCH_INFO("Starting task %s on a core!", t->getID().c_str());
+            auto job = this->job_manager->createStandardJob(t);
+            this->job_manager->submitJob(job, compute_service, {});
+            idle_core_count--;
+        }
+
     }
 }
