@@ -12,7 +12,7 @@ import {
   validateFieldInRange,
   validateFieldInMultipleRanges
 } from "../../../components/simulation/simulation_validation"
-import SimulationFeedback from "../../../components/simulation/simulaiton_feedback"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback"
 
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
@@ -203,7 +203,7 @@ const IOSimulation = () => {
                 </Form>
               )}
             </Formik>
-            <SimulationFeedback simulationID={'io_simulation'} trigger={runtimes === 3}/>
+            <SimulationFeedback simulationID={'YYY'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

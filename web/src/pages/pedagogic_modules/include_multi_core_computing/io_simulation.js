@@ -10,11 +10,13 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import IOSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_io_simulation.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const IOSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -56,6 +58,7 @@ const IOSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -166,6 +169,7 @@ const IOSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'multi_core_computing/io_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

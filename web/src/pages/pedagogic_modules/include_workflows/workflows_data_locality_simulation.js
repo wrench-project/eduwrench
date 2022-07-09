@@ -12,11 +12,14 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDataLocalityScenario from "../../../images/vector_graphs/workflows/workflow_data_locality.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const WorkflowsDataLocalitySimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -61,6 +64,7 @@ const WorkflowsDataLocalitySimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -159,6 +163,7 @@ const WorkflowsDataLocalitySimulation = () => {
                 </Form>
               )}
             </Formik>
+              <SimulationFeedback simulationID={'workflows/workflows_data_locality_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

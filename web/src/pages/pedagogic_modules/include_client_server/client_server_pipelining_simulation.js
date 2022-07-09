@@ -13,11 +13,14 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import ClientServerDiskScenario from "../../../images/vector_graphs/client_server/client_server_disk.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const ClientServerPipeliningSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -58,6 +61,7 @@ const ClientServerPipeliningSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -157,6 +161,7 @@ const ClientServerPipeliningSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'client_server/client_server_pipelining_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

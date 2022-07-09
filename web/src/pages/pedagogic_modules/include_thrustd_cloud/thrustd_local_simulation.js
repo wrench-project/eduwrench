@@ -14,11 +14,13 @@ import {
 
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg"
 import LocalComputingScenario from "../../../images/vector_graphs/thrustd/thrustd_local.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const Thrustd_Local_Simulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
+    const [runtimes, setRunTimes] = useState(0)
 
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
@@ -70,6 +72,7 @@ const Thrustd_Local_Simulation = () => {
                                         setSimulationResults(<></>)
                                         return
                                     }
+                                    setRunTimes(runtimes + 1)
                                     const userEmail = localStorage.getItem("currentUser")
                                     const userName = localStorage.getItem("userName")
                                     const data = {
@@ -145,6 +148,7 @@ const Thrustd_Local_Simulation = () => {
                                 </Form>
                             )}
                         </Formik>
+                        <SimulationFeedback simulationID={'thrustd_cloud/thrustd_local_simulation'} trigger={runtimes === 3}/>
                     </Segment>
                 </Segment.Group>
 

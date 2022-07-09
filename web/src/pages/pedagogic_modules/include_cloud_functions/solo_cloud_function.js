@@ -2,7 +2,7 @@ import React from "react"
 import {Divider, Header} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
-import Solo_Cloud_Function_Simulation from "./solo_cf_sim";
+import Solo_Cloud_Function_Simulation from "./solo_cloud_function_simulation";
 import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 

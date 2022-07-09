@@ -11,11 +11,13 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import SoloCloudFunctionScenario from "../../../images/vector_graphs/gcf/gcf.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const Solo_Cloud_Function_Simulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
+    const [runtimes, setRunTimes] = useState(0)
 
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
@@ -58,6 +60,7 @@ const Solo_Cloud_Function_Simulation = () => {
                                         setSimulationResults(<></>)
                                         return
                                     }
+                                    setRunTimes(runtimes + 1)
                                     const userEmail = localStorage.getItem("currentUser")
                                     const data = {
                                         userName: userEmail.split("@")[0],
@@ -130,6 +133,7 @@ const Solo_Cloud_Function_Simulation = () => {
                                 </Form>
                             )}
                         </Formik>
+                        <SimulationFeedback simulationID={'cloud_functions/solo_cloud_function_simulation'} trigger={runtimes === 3}/>
                     </Segment>
                 </Segment.Group>
 

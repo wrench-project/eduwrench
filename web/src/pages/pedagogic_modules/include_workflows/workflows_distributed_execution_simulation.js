@@ -11,11 +11,14 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDistributedExecutionScenario from "../../../images/vector_graphs/workflows/workflow_distributed.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const WorkflowsDistributedExecutionSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -56,6 +59,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -129,6 +133,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'workflows/workflows_distributed_execution_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

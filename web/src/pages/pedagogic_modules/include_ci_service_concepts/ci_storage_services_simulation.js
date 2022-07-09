@@ -17,11 +17,14 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import CIStorageServicesScenario from "../../../images/vector_graphs/ci_service_concepts/cic_storage_service.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const CIStorageServicesSimulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
+    const [runtimes, setRunTimes] = useState(0)
+
 
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
@@ -62,6 +65,7 @@ const CIStorageServicesSimulation = () => {
                                             setSimulationResults(<></>)
                                             return
                                         }
+                                        setRunTimes(runtimes + 1)
                                         const data = {
                                             user_name: localStorage.getItem("userName"),
                                             email: localStorage.getItem("currentUser"),
@@ -163,6 +167,7 @@ const CIStorageServicesSimulation = () => {
                                     )
                                 }
                             </Formik>
+                            <SimulationFeedback simulationID={'ci_service_concepts/ci_stirage_services_simulation'} trigger={runtimes === 3}/>
                         </Segment>
                     </Segment.Group>
 

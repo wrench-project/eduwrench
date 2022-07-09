@@ -41,12 +41,14 @@ import MViewerInput from "../../../images/vector_graphs/thrustd/split_montage/mV
 import MViewerLevel from "../../../images/vector_graphs/thrustd/split_montage/mViewer/level_7.svg"
 import MViewerTasks from "../../../images/vector_graphs/thrustd/split_montage/mViewer/tasks_7.svg"
 import MOutput from "../../../images/vector_graphs/thrustd/split_montage/files_8.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const Thrustd_Cloud_Simulation = () => {
 
     const [simulationResults, setSimulationResults] = useState(<></>)
     const [auth, setAuth] = useState("false")
     const [numVmsError, setNumVmsError] = useState("false")
+    const [runtimes, setRunTimes] = useState(0)
 
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
@@ -100,6 +102,7 @@ const Thrustd_Cloud_Simulation = () => {
                                             setSimulationResults(<></>)
                                             return
                                         }
+                                        setRunTimes(runtimes + 1)
                                         const userEmail = localStorage.getItem("currentUser")
                                         const userName = localStorage.getItem("userName")
                                         const data = {
@@ -384,6 +387,7 @@ const Thrustd_Cloud_Simulation = () => {
                                 </Form>
                             )}
                         </Formik>
+                        <SimulationFeedback simulationID={'thrustd_cloud/thrustd_cloud_simulation'} trigger={runtimes === 3}/>
                     </Segment>
                 </Segment.Group>
                 {simulationResults}
