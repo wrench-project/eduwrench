@@ -23,8 +23,6 @@ set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /opt/simgrid/lib)
 set(SOURCE_FILES
         include/ActivityWMS.h
         src/ActivityWMS.cpp
-        include/ActivityScheduler.h
-        src/ActivityScheduler.cpp
         src/Simulator.cpp
         )
 
