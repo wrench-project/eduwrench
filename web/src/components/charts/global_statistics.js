@@ -17,12 +17,12 @@ import { Segment } from "semantic-ui-react"
  * @constructor
  */
 const GlobalStatistics = ({ data }) => {
-  let practiceQuesionMap = {
+  let practiceQuestionMap = {
     "Completed Questions": {
       practiceQuestion: ["completed"],
       count: 0,
     },
-    "Attemps": {
+    "Attempts": {
       practiceQuestion: [],
       count: 0,
     },
@@ -95,12 +95,17 @@ const GlobalStatistics = ({ data }) => {
   const globalQuestion = data.globalQuestion
   for (let idx in globalQuestion) {
     let global = globalQuestion[idx]
-    let time = new Date(global["time"] * 1000)
+    let time
+    if (global["time"] === 0) {
+      time = new Date()
+    } else {
+      time = new Date(global["time"] * 1000)
+    }
     minMonth = Math.min(minMonth, time.getMonth())
     minYear = Math.min(minYear, time.getFullYear())
 
-    for (let p in practiceQuesionMap) {
-      let module = practiceQuesionMap[p]
+    for (let p in practiceQuestionMap) {
+      let module = practiceQuestionMap[p]
       if (module["practiceQuestion"].includes(global["completed"] === 1 ? "completed" : 0)) {
         module["count"]++
       }
@@ -108,7 +113,7 @@ const GlobalStatistics = ({ data }) => {
         module["count"]++
       }
     }
-    practiceQuesionMap.Attemps.count += global["attempts"]
+    practiceQuestionMap.Attempts.count += global["attempts"]
   }
 
   let questionChartData = {
@@ -116,9 +121,9 @@ const GlobalStatistics = ({ data }) => {
     datasets: [],
   }
   let questionValues = []
-  for (let p in practiceQuesionMap) {
+  for (let p in practiceQuestionMap) {
     questionChartData.labels.push(p)
-    questionValues.push(practiceQuesionMap[p]["count"])
+    questionValues.push(practiceQuestionMap[p]["count"])
   }
 
   questionChartData.datasets.push({
@@ -139,7 +144,12 @@ const GlobalStatistics = ({ data }) => {
   const globalFeedback = data.globalFeedback
   for (let idx in globalFeedback) {
     let global = globalFeedback[idx]
-    let time = new Date(global["time"] * 1000)
+    let time
+    if (global["time"] === 0) {
+      time = new Date()
+    } else {
+      time = new Date(global["time"] * 1000)
+    }
     minMonth = Math.min(minMonth, time.getMonth())
     minYear = Math.min(minYear, time.getFullYear())
 
@@ -214,8 +224,12 @@ const GlobalStatistics = ({ data }) => {
   const globalSimFeedback = data.globalSimFeedback
   for (let idx in globalSimFeedback) {
     let global = globalSimFeedback[idx]
-    let time = new Date(global["time"] * 1000)
-    minMonth = Math.min(minMonth, time.getMonth())
+    let time
+    if (global["time"] === 0) {
+      time = new Date()
+    } else {
+      time = new Date(global["time"] * 1000)
+    }    minMonth = Math.min(minMonth, time.getMonth())
     minYear = Math.min(minYear, time.getFullYear())
 
     for (let s in simFeedbackMap) {
@@ -277,7 +291,7 @@ const GlobalStatistics = ({ data }) => {
       x: {
         title: {
           display: true,
-          text: "Number of People",
+          text: "Number of Votes",
         },
       },
     },
@@ -299,26 +313,26 @@ const GlobalStatistics = ({ data }) => {
           <Bar type="bar" width={100} height={200} data={questionChartData} options={option} />
         </Segment>
         <Segment color="green">
-          <strong>Feedbacks</strong> (since {minMonth}/{minYear})
+          <strong>Feedback provided by EduWRENCH users</strong> (since {minMonth}/{minYear})
         </Segment>
-        <div class="ui segments">
-          <div class="ui segment">
+        <div className="ui segments">
+          <div className="ui segment">
             <strong>Usefulness Rating of Modules</strong>
           </div>
           <Segment>
             <Bar type="bar" width={100} height={250} data={usefulChartData} options={options} />
           </Segment>
         </div>
-        <div class="ui segments">
-          <div class="ui segment">
+        <div className="ui segments">
+          <div className="ui segment">
             <strong>Quality Rating of Modules</strong>
           </div>
           <Segment>
             <Bar type="bar" width={100} height={250} data={qualityChartData} options={options} />
           </Segment>
         </div>
-        <div class="ui segments">
-          <div class="ui segment">
+        <div className="ui segments">
+          <div className="ui segment">
             <strong>Experience Rating of Simulations</strong>
           </div>
           <Segment>
