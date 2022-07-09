@@ -1459,7 +1459,6 @@ app.post("/get/usage_statistics", function (req, res) {
     })).catch((error => {
         console.log("[ERROR]: " + error)
     }))
-    console.log(res.body);
 })
 
 /**

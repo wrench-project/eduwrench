@@ -136,7 +136,6 @@ const logSimulationFeedback = (userID, time, simID, rating, feedback) => db.tran
 })
 
 const resetPracticeQuestions = (userID) => db.transaction(async trx => {
-    console.log("in resetPracticeQuestions")
     const stuff = await trx("practice_questions")
         .where({user_id: userID})
         .delete()
