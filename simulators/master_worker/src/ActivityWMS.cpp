@@ -1,5 +1,6 @@
 
 #include "ActivityWMS.h"
+#include "ActivityScheduler.h"
 #include <algorithm>
 
 XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms, "Log category for Simple WMS");
@@ -13,19 +14,19 @@ namespace wrench {
      * @param storage_services
      * @param hostname
      */
-    ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::set<std::shared_ptr<ComputeService>> compute_services,
+    ActivityWMS::ActivityWMS(ActivityScheduler *job_scheduler,
+                             const std::set<std::shared_ptr<ComputeService>> &compute_services,
                              const std::set<std::shared_ptr<StorageService>> &storage_services,
-                             const std::string &hostname) : WMS (
-                                     std::move(standard_job_scheduler),
-                                     nullptr,
-                                     compute_services,
-                                     storage_services,
-                                     {},
-                                     nullptr,
+                             const std::shared_ptr<Workflow> &workflow,
+                             const std::string &hostname) : ExecutionController(
                                      hostname,
                                      "coordinator_worker"
-                                     ) {}
+                                     ) {
+        this->job_scheduler = job_scheduler;
+        this->compute_services = compute_services;
+        this->storage_services = storage_services;
+        this->workflow = workflow;
+    }
 
     /**
      * @brief WMS main method
@@ -43,33 +44,31 @@ namespace wrench {
         this->job_manager = this->createJobManager();
 
         while (true) {
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            // Get the available compute services
-            const auto compute_services = this->getAvailableComputeServices<ComputeService>();
+            auto ready_tasks = this->workflow->getReadyTasks();
 
             // Run ready tasks with defined scheduler implementation
-            this->getStandardJobScheduler()->scheduleTasks(
+            this->job_scheduler->scheduleTasks(
                     compute_services,
-                    ready_tasks);
+                    ready_tasks,
+                    this->job_manager);
 
             // Wait for a workflow execution event, and process it
             try {
                 this->waitForAndProcessNextEvent();
-            } catch (WorkflowExecutionException &e) {
+            } catch (ExecutionException &e) {
                 WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                             (e.getCause()->toString().c_str()));
                 continue;
             }
-            if (this->abort || this->getWorkflow()->isDone()) {
+            if (this->abort || this->workflow->isDone()) {
                 break;
             }
         }
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
         WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
+        if (this->workflow->isDone()) {
+            WRENCH_INFO("Execution completed in %.2f seconds!", this->workflow->getCompletionDate());
         } else {
             WRENCH_INFO("Execution is incomplete!");
         }

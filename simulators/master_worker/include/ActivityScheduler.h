@@ -6,11 +6,12 @@
 namespace wrench {
     class Simulation;
 
-    class ActivityScheduler : public StandardJobScheduler {
+    class ActivityScheduler {
 
     public:
         void scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                           const std::vector<WorkflowTask *> &ready_tasks) override;
+                           const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks,
+                           std::shared_ptr<JobManager> job_manager);
 
         ActivityScheduler(std::shared_ptr<StorageService> storage_service,
                           std::map<std::string, double> link_speed,
@@ -21,7 +22,9 @@ namespace wrench {
 
     private:
         std::shared_ptr<StorageService> storage_service;
+        std::shared_ptr<JobManager> job_manager;
         std::map<std::string, double> link_speed;
+
         int task_selection;
         int compute_selection;
         std::mt19937 &rng;
