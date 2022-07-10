@@ -122,6 +122,15 @@ int ThrustDWMS::main() {
         // Get the ready tasks
         auto ready_tasks = this->workflow->getReadyTasks();
 
+        // Sort them by ID
+        std::sort(
+                ready_tasks.begin(),
+                ready_tasks.end(),
+                [] (const std::shared_ptr<wrench::WorkflowTask> &t1, const std::shared_ptr<wrench::WorkflowTask> &t2) {
+                    return (t1->getID() < t2->getID());
+                }
+            );
+
         this->ss_job_scheduler->scheduleTasks(compute_service, vm_css, ready_tasks);
 
         // Wait for a workflow execution event, and process it
