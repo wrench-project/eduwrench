@@ -181,6 +181,8 @@ namespace wrench {
         std::vector<ComputeServiceMetadata> compute_service_information;
         for (const auto &compute : compute_services) {
 
+
+
             auto flop_map = compute->getCoreFlopRate();
             double flops_tally = 0;
             auto it = flop_map.begin();
@@ -233,6 +235,11 @@ namespace wrench {
             // Got through each worker, and if it's not busy, submit the task to it
             bool scheduled = false;
             for (auto const &cs : compute_service_information) {
+
+                if (this->cs_busy[cs.compute_service] == true) {
+                    continue;
+                }
+
 //                std::cerr << "    CONSIDERING " << cs.compute_service->getHostname() << "\n";
                 // If it's busy, nevermind
                 if (cs.compute_service->getTotalNumIdleCores() < 1) {
@@ -255,11 +262,21 @@ namespace wrench {
 //                std::cerr << "SUBMITTING " << task_to_run.task->getID() << " to " << cs.compute_service->getHostname() << "\n";
                 auto job = job_manager->createStandardJob(task_to_run.task, file_locations);
                 job_manager->submitJob(job, cs.compute_service, service_specific_args);
+                this->setComputeServiceToBusy(cs.compute_service);
                 scheduled = true;
                 break;
             }
             if (not scheduled) break;
         }
     }
+
+    void ActivityScheduler::setComputeServiceToIdle(std::shared_ptr<ComputeService> cs) {
+        this->cs_busy[cs] = false;
+    }
+
+    void ActivityScheduler::setComputeServiceToBusy(std::shared_ptr<ComputeService> cs) {
+        this->cs_busy[cs] = true;
+    }
+
 
 }

@@ -86,5 +86,6 @@ namespace wrench {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         WRENCH_INFO("Notified that %s has completed", standard_job->getTasks().at(0)->getID().c_str());
+        this->job_scheduler->setComputeServiceToIdle(standard_job->getParentComputeService());
     }
 }

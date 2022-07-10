@@ -612,7 +612,6 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                             {{std::get<0>(worker), std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                             "",
                             {
-                                    {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                             },
                             {}
                     )
@@ -627,7 +626,6 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                         {{WORKER_ZERO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
@@ -638,7 +636,6 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                         {{WORKER_ONE, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
@@ -649,7 +646,6 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                         {{WORKER_TWO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )

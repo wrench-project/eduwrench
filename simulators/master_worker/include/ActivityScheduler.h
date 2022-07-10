@@ -20,6 +20,9 @@ namespace wrench {
                           int compute_selection = 0);
 
 
+        void setComputeServiceToIdle(std::shared_ptr<ComputeService> cs);
+        void setComputeServiceToBusy(std::shared_ptr<ComputeService> cs);
+
     private:
         std::shared_ptr<StorageService> storage_service;
         std::shared_ptr<JobManager> job_manager;
@@ -28,6 +31,8 @@ namespace wrench {
         int task_selection;
         int compute_selection;
         std::mt19937 &rng;
+
+        std::unordered_map<std::shared_ptr<ComputeService>, bool> cs_busy;
 
     };
 }

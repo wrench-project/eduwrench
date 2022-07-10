@@ -28,6 +28,7 @@ namespace wrench {
         std::shared_ptr<JobManager> job_manager;
         bool abort = false;
 
+
     };
 };
 
