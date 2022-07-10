@@ -26,7 +26,7 @@ static bool ends_with(const std::string& str, const std::string& suffix) {
 int main(int argc, char **argv) {
 
     // Declaration of the top-level WRENCH simulation object
-    wrench::Simulation simulation;
+    auto simulation = wrench::Simulation::createSimulation();
 
     // Add the --wrench-energy-simulation flag in case user forgot (duplicates don't matter)
     char **new_argv = (char **)calloc(argc+1, sizeof(char*));
@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     argc++;
 
     // Initialization of the simulation
-    simulation.init(&argc, argv);
+    simulation->init(&argc, argv);
 
     // Parsing of the command-line arguments for this WRENCH simulation
     if (argc != 2) {
@@ -214,7 +214,7 @@ int main(int argc, char **argv) {
 
     // Reading and parsing the workflow description file to create a wrench::Workflow object
     WRENCH_INFO("Loading workflow...");
-    wrench::Workflow *workflow;
+    auto workflow = wrench::Workflow::createWorkflow();
 
     // min number of cores per task
     int min_cores = j.at("min_cores_per_task").get<int>();
@@ -223,37 +223,29 @@ int main(int argc, char **argv) {
     int max_cores = j.at("max_cores_per_task").get<int>();
 
     std::string reference_speed = "43Gf";
-    if (ends_with(workflow_file, "dax")) {
-        workflow = wrench::PegasusWorkflowParser::createWorkflowFromDAX(workflow_file, reference_speed, false,
-                                                                        min_cores, max_cores, true);
-    } else if (ends_with(workflow_file, "json")) {
-        workflow = wrench::PegasusWorkflowParser::createWorkflowFromJSON(workflow_file, reference_speed, false,
-                                                                         min_cores, max_cores, true);
-    } else {
-        std::cerr << "Workflow file name must end with '.dax' or '.json'" << std::endl;
-        exit(1);
-    }
+    workflow = wrench::WfCommonsWorkflowParser::createWorkflowFromJSON(workflow_file, reference_speed, false,
+                                                                     min_cores, max_cores, true);
 
     WRENCH_INFO("The workflow has %ld tasks", workflow->getNumberOfTasks());
 
     // Reading and parsing the platform description file to instantiate a simulated platform
     WRENCH_INFO("Instantiating SimGrid platform...");
-    simulation.instantiatePlatform(platform_file);
+    simulation->instantiatePlatform(platform_file);
     WRENCH_INFO("SimGrid platform instantiated");
 
     // Get a vector of all the hosts in the simulated platform
-    std::vector<std::string> hostname_list = simulation.getHostnameList();
+    std::vector<std::string> hostname_list = simulation->getHostnameList();
 
     // Instantiate a storage service on the local
     std::string storage_host = "storage_host";
     // in xml file, need storage_host w/ disk
     WRENCH_INFO("Instantiating a SimpleStorageService on %s", storage_host.c_str());
 
-    auto storage_service = simulation.add(new wrench::SimpleStorageService(storage_host, {"/"}, {},
-                                                                           {
-                                                                                   {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
-                                                                                   {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
-                                                                           }));
+    auto storage_service = simulation->add(new wrench::SimpleStorageService(storage_host, {"/"}, {},
+                                                                            {
+                                                                                    {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
+                                                                                    {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
+                                                                            }));
 
 
 
@@ -267,11 +259,11 @@ int main(int argc, char **argv) {
         std::string cloud_provider_host = "cloud_provider_host";
         // in xml file, need storage_host w/ disk
         WRENCH_INFO("Instantiating a SimpleStorageService on %s", cloud_provider_host.c_str());
-        cloud_storage_service = simulation.add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
-                                                                                {
-                                                                                        {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD,  0.0},
-                                                                                        {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
-                                                                                }));
+        cloud_storage_service = simulation->add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
+                                                                                 {
+                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD,  0.0},
+                                                                                         {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
+                                                                                 }));
         storage_services.insert(cloud_storage_service);
     }
 
@@ -287,7 +279,7 @@ int main(int argc, char **argv) {
         }
         auto baremetal_service = new wrench::BareMetalComputeService(
                 wms_host, execution_hosts, "", {}, {});
-        compute_services.insert(simulation.add(baremetal_service));
+        compute_services.insert(simulation->add(baremetal_service));
     } catch (std::invalid_argument &e) {
         std::cerr << "Error: " << e.what() << std::endl;
         std::exit(1);
@@ -302,7 +294,7 @@ int main(int argc, char **argv) {
             }
             auto cloud_service = new wrench::CloudComputeService(
                     "cloud_provider_host", cloud_hosts, "", {}, {});
-            compute_services.insert(simulation.add(cloud_service));
+            compute_services.insert(simulation->add(cloud_service));
         } catch (std::invalid_argument &e) {
             std::cerr << "Error: " << e.what() << std::endl;
             std::exit(1);
@@ -312,11 +304,10 @@ int main(int argc, char **argv) {
 
 
     // Instantiate a WMS
-    auto wms = simulation.add(
+    auto wms = simulation->add(
             new ThrustDWMS(std::unique_ptr<ThrustDJobScheduler>(
                     new ThrustDJobScheduler(storage_service, cloud_storage_service)),
-                           compute_services, storage_services, wms_host));
-    wms->addWorkflow(workflow);
+                           compute_services, storage_services, workflow, wms_host));
 
 
     if (use_cloud) {
@@ -336,14 +327,14 @@ int main(int argc, char **argv) {
     WRENCH_INFO("Instantiating a FileRegistryService on %s", file_registry_service_host.c_str());
     auto file_registry_service =
             new wrench::FileRegistryService(file_registry_service_host);
-    simulation.add(file_registry_service);
+    simulation->add(file_registry_service);
 
     // It is necessary to store, or "stage", input files
     WRENCH_INFO("Staging input files...");
     auto input_files = workflow->getInputFiles();
     try {
         for (auto const &f : input_files) {
-            simulation.stageFile(f, storage_service);
+            simulation->stageFile(f, storage_service);
         }
     } catch (std::runtime_error &e) {
         std::cerr << "Exception: " << e.what() << std::endl;
@@ -354,7 +345,7 @@ int main(int argc, char **argv) {
     WRENCH_INFO("Launching the Simulation...");
     auto start = std::chrono::high_resolution_clock::now();
     try {
-        simulation.launch();
+        simulation->launch();
     } catch (std::runtime_error &e) {
         std::cerr << "Exception: " << e.what() << std::endl;
         return 0;
@@ -391,16 +382,16 @@ int main(int argc, char **argv) {
     }
 
     auto total_energy_cluster = 0;
-    total_energy_cluster += simulation.getEnergyConsumed("WMSHost");
-    total_energy_cluster += simulation.getEnergyConsumed("storage_host");
+    total_energy_cluster += simulation->getEnergyConsumed("WMSHost");
+    total_energy_cluster += simulation->getEnergyConsumed("storage_host");
     for (int i = 1; i < num_hosts + 1; i++) {
-        total_energy_cluster += simulation.getEnergyConsumed("compute_host_" + std::to_string(i));
+        total_energy_cluster += simulation->getEnergyConsumed("compute_host_" + std::to_string(i));
     }
     auto total_energy_cloud = 0;
     if (use_cloud) {
-        total_energy_cloud += simulation.getEnergyConsumed("cloud_provider_host");
+        total_energy_cloud += simulation->getEnergyConsumed("cloud_provider_host");
         for (int i = 1; i < num_cloud_hosts + 1; i++) {
-            total_energy_cloud += simulation.getEnergyConsumed("cloud_host_" + std::to_string(i));
+            total_energy_cloud += simulation->getEnergyConsumed("cloud_host_" + std::to_string(i));
         }
     }
     auto total_energy = total_energy_cluster + total_energy_cloud;
@@ -432,15 +423,15 @@ int main(int argc, char **argv) {
 
     std::cout << output_json.dump() << std::endl;
 
-    // simulation.getOutput().enableDiskTimestamps(true);
-    simulation.getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json",
-                                           false,
-                                           true,
-                                           false,
-                                           false,
-                                           false,
-                                           false,
-                                           true);
+    // simulation->getOutput().enableDiskTimestamps(true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json",
+                                            false,
+                                            true,
+                                            false,
+                                            false,
+                                            false,
+                                            false,
+                                            true);
 
     return 0;
 }

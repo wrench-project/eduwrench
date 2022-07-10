@@ -102,7 +102,7 @@ void ThrustDJobScheduler::createCoresTracker(std::set<std::shared_ptr<wrench::Co
  */
 void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeService> &local_cs,
                                         const std::set<std::shared_ptr<wrench::ComputeService>> &vm_created_cs,
-                                        const std::vector<wrench::WorkflowTask *> &tasks) {
+                                        const std::vector<std::shared_ptr<wrench::WorkflowTask>> &tasks) {
 
     // Check that the at least one compute_services is passed
     if (local_cs == nullptr) {
@@ -198,7 +198,7 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
 
         /* First, we need to create a map of file locations, stating for each file
          * where is should be read/written */
-        std::map<wrench::WorkflowFile *, std::shared_ptr<wrench::FileLocation>> file_locations;
+        std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
         for (auto const &f : task->getInputFiles()) {
             if (isCloudTask(task->getID())) {
                 if (this->cloud_storage_service->lookupFile(f, wrench::FileLocation::LOCATION(this->cloud_storage_service))) {
