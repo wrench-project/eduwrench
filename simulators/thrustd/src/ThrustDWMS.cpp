@@ -71,14 +71,11 @@ int ThrustDWMS::main() {
         throw std::runtime_error("WMS needs exactly  one BareMetal compute service to run!");
     }
 
-    // Get the bare-metal compute service
-    WRENCH_INFO("NAME OF LOCAL COMPUTE_SERVICE: %s", compute_service->getName().c_str());
 
     // Get the cloud compute service
     std::shared_ptr<wrench::CloudComputeService> cloud_service;
     if (this->getNumVmInstances() > 0) {
         int num_cloud_cs = 0;
-        std::shared_ptr<wrench::CloudComputeService> cloud_service;
         for (auto const &cs : this->compute_services) {
             if (std::dynamic_pointer_cast<wrench::CloudComputeService>(cs)) {
                 num_cloud_cs++;
@@ -88,7 +85,6 @@ int ThrustDWMS::main() {
         if (num_cloud_cs != 1) {
             throw std::runtime_error("WMS needs exactly one cloud service to run!");
         }
-        WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
     }
 
     // Get the available storage services
