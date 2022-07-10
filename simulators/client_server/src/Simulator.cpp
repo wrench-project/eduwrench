@@ -273,7 +273,6 @@ int main(int argc, char** argv) {
                         {{SERVER1, std::make_tuple(wrench::ComputeService::ALL_CORES, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
@@ -288,7 +287,6 @@ int main(int argc, char** argv) {
                         {{SERVER2, std::make_tuple(wrench::ComputeService::ALL_CORES, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )

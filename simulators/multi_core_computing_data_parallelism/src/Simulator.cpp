@@ -139,7 +139,6 @@ int main(int argc, char** argv) {
                     {{THE_HOST, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
-                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                     },
                     {}
             )

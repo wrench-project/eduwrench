@@ -20,8 +20,6 @@ include_directories(src/ include/  /usr/local/include /usr/local/include/wrench 
 set(SOURCE_FILES
         include/ActivityWMS.h
         src/ActivityWMS.cpp
-        include/ActivityScheduler.h
-        src/ActivityScheduler.cpp
         src/Simulator.cpp
         )
 
