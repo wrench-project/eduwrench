@@ -315,12 +315,12 @@ int main(int argc, char **argv) {
                         {}
                 )
         );
+        compute_overhead = atof(COMPUTE_2_OVERHEAD.c_str());
         auto server_storage_service = simulation->add(
                 new wrench::SimpleStorageService(
                         SERVER2, {"/"},
                         {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
-        compute_overhead = atof(COMPUTE_2_OVERHEAD.c_str());
 
     }
 

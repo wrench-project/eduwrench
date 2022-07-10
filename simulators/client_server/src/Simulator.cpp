@@ -19,7 +19,7 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int file_size_in_mb) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -32,8 +32,7 @@ void generateWorkflow(wrench::Workflow *workflow, int file_size_in_mb) {
     const double                  MB = 1000.0 * 1000.0;
     const double                  GB = 1000.0 * 1000.0 * 1000.0;
 
-    wrench::WorkflowTask *single_task;
-    single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, 8 * GB);
+    auto single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, 8 * GB);
     single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb*MB));
 
 }
@@ -147,8 +146,8 @@ void generatePlatform(std::string platform_file_path, int link_1_latency, int li
  */
 int main(int argc, char** argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     const int MAX_CORES         = 1000;
     int HOST_SELECT;
@@ -244,13 +243,13 @@ int main(int argc, char** argv) {
     }
 
     // create workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow, FILE_SIZE);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow, FILE_SIZE);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, SERVER_1_LINK_LATENCY, SERVER_1_LINK_BANDWIDTH, SERVER_2_LINK_BANDWIDTH, DISK_TOGGLE, DISK_SPEED);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
 
     const std::string CLIENT("client");
@@ -261,14 +260,14 @@ int main(int argc, char** argv) {
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     std::shared_ptr<wrench::StorageService> client_storage_service;
 
-    client_storage_service = simulation.add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+    client_storage_service = simulation->add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
 
 
     storage_services.insert(client_storage_service);
 
     std::shared_ptr<wrench::ComputeService> compute_service;
     if (HOST_SELECT == 1){
-        compute_service = simulation.add(
+        compute_service = simulation->add(
                 new wrench::BareMetalComputeService(
                         CLIENT,
                         {{SERVER1, std::make_tuple(wrench::ComputeService::ALL_CORES, wrench::ComputeService::ALL_RAM)}},
@@ -280,10 +279,10 @@ int main(int argc, char** argv) {
                 )
         );
 
-        auto server_storage_service = simulation.add(new wrench::SimpleStorageService(SERVER1, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+        auto server_storage_service = simulation->add(new wrench::SimpleStorageService(SERVER1, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
     } else {
-        compute_service = simulation.add(
+        compute_service = simulation->add(
                 new wrench::BareMetalComputeService(
                         CLIENT,
                         {{SERVER2, std::make_tuple(wrench::ComputeService::ALL_CORES, wrench::ComputeService::ALL_RAM)}},
@@ -294,33 +293,31 @@ int main(int argc, char** argv) {
                         {}
                 )
         );
-        auto server_storage_service = simulation.add(new wrench::SimpleStorageService(SERVER2, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+        auto server_storage_service = simulation->add(new wrench::SimpleStorageService(SERVER2, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
     }
 
 
     // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(
+    auto wms = simulation->add(new wrench::ActivityWMS(
             {compute_service},
             storage_services,
+            workflow,
             CLIENT
     ));
 
 
+    simulation->add(new wrench::FileRegistryService(CLIENT));
 
-    wms->addWorkflow(&workflow);
-
-    simulation.add(new wrench::FileRegistryService(CLIENT));
-
-    for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file, client_storage_service);
+    for (auto const &file : workflow->getInputFiles()) {
+        simulation->stageFile(file, client_storage_service);
     }
 
-    simulation.getOutput().enableDiskTimestamps(true);
+    simulation->getOutput().enableDiskTimestamps(true);
 
-    simulation.launch();
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
 
     return 0;
 }
