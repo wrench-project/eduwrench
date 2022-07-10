@@ -25,15 +25,15 @@ namespace wrench {
     ActivityWMS::ActivityWMS(
             const std::set<std::shared_ptr<StorageService>> &storage_services,
             const std::string &hostname,
-            const std::shared_ptr<FileRegistryService> &file_registry_service) : WMS(
-            nullptr,
-            nullptr,
-            {},
-            storage_services,
-            {}, file_registry_service,
+            const std::shared_ptr<FileRegistryService> &file_registry_service,
+            const std::shared_ptr<Workflow> &workflow) : ExecutionController(
             hostname,
             "client_server"
-    ) {}
+    ) {
+        this->storage_services = storage_services;
+        this->file_registry_service = file_registry_service;
+        this->workflow = workflow;
+    }
 
     /**
      * @brief WMS main method
@@ -45,7 +45,6 @@ namespace wrench {
         // Create a job manager
         auto data_manager = this->createDataMovementManager();
         auto job_manager = this->createJobManager();
-        auto file_registry = this->getAvailableFileRegistryService();
 
         // Start bandwidth meters
         const double BANDWIDTH_METER_PERIOD = 0.01;
@@ -54,7 +53,7 @@ namespace wrench {
         auto em = this->createBandwidthMeter(linknames, BANDWIDTH_METER_PERIOD);
 
         std::shared_ptr<StorageService> client_storage_service, server_storage_service;
-        for (const auto &storage_service : this->getAvailableStorageServices()) {
+        for (const auto &storage_service : this->storage_services) {
             if (storage_service->getHostname() == "Client") {
                 client_storage_service = storage_service;
             } else {
@@ -62,7 +61,7 @@ namespace wrench {
             }
         }
 
-        auto input_file = this->getWorkflow()->getFileByID("data_file");
+        auto input_file = this->workflow->getFileByID("data_file");
 
         WRENCH_INFO("Sending the file over to the server running on host %s",
                     server_storage_service->getHostname().c_str());
@@ -71,7 +70,7 @@ namespace wrench {
         data_manager->doSynchronousFileCopy(input_file,
                                             FileLocation::LOCATION(client_storage_service),
                                             FileLocation::LOCATION(server_storage_service),
-                                            file_registry);
+                                            this->file_registry_service);
 
         WRENCH_INFO("File sent and registered in the file registry!");
 
