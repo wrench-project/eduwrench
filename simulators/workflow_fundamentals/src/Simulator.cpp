@@ -19,7 +19,7 @@
  * @brief Generate the workflow for activity 1
  * @description Fork-Join
  */
-void generateWorkflow(wrench::Workflow *workflow) {
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
 
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
     const double MB = 1000.0 * 1000.0;
@@ -113,8 +113,8 @@ void generatePlatform(std::string platform_file_path, int num_cores, int disk_bw
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     int NUM_CORES;
     int DISK_BW;
@@ -144,23 +144,23 @@ int main(int argc, char **argv) {
     }
 
     // generate workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow);
 
     // generate platform
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, NUM_CORES, DISK_BW);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     // storage service
-    auto storage_service = simulation.add(new wrench::SimpleStorageService("the_host", {"/"},
+    auto storage_service = simulation->add(new wrench::SimpleStorageService("the_host", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"},
         }, {}));
 
     storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
 
-    auto compute_service = simulation.add(new wrench::BareMetalComputeService(
+    auto compute_service = simulation->add(new wrench::BareMetalComputeService(
             "the_host",
             {"the_host"},
             {},
@@ -168,25 +168,24 @@ int main(int argc, char **argv) {
     ));
 
     // WMS on my_lab_computer_edu
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(storage_service)),
+    auto wms = simulation->add(new wrench::ActivityWMS(
+            new wrench::ActivityScheduler(storage_service),
                                                       {compute_service},
                                                       {storage_service},
+                                                      workflow,
                                                       "the_host"
     ));
 
-    wms->addWorkflow(&workflow);
-
     // file registry service on storage_db_edu
-    simulation.add(new wrench::FileRegistryService("the_host"));
+    simulation->add(new wrench::FileRegistryService("the_host"));
 
     // stage the input files
-    for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file, storage_service);
+    for (auto file : workflow->getInputFiles()) {
+        simulation->stageFile(file, storage_service);
     }
 
     // launch the simulation
-    simulation.launch();
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json");
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json");
 }

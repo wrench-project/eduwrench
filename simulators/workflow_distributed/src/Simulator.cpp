@@ -21,7 +21,7 @@
  * @brief Generate the workflow
  * @description Fork-Join
  */
-void generateWorkflow(wrench::Workflow *workflow) {
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
 
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
     const double MB = 1000.0 * 1000.0;
@@ -165,8 +165,8 @@ void generatePlatform(std::string platform_file_path, int num_hosts, int num_cor
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     int NUM_HOSTS;
     int NUM_CORES_PER_HOST;
@@ -211,16 +211,16 @@ int main(int argc, char **argv) {
     }
 
     // generate workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow);
 
     // generate platform
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, NUM_HOSTS, NUM_CORES_PER_HOST, WIDE_AREA_BW);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     // Remote storage service
-    auto storage_service = simulation.add(new wrench::SimpleStorageService(
+    auto storage_service = simulation->add(new wrench::SimpleStorageService(
             "storage.edu", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
@@ -232,7 +232,7 @@ int main(int argc, char **argv) {
     storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
 
     // Local storage service
-    auto local_storage_service = simulation.add(new wrench::SimpleStorageService(
+    auto local_storage_service = simulation->add(new wrench::SimpleStorageService(
             "hpc_0.edu", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
@@ -246,7 +246,7 @@ int main(int argc, char **argv) {
     for (int i=1; i < NUM_HOSTS + 1; i++) {
         compute_hosts.push_back("hpc_" + std::to_string(i)+".edu");
     }
-    auto compute_service = simulation.add(new wrench::BareMetalComputeService(
+    auto compute_service = simulation->add(new wrench::BareMetalComputeService(
             "hpc_0.edu",
             compute_hosts,
             {},
@@ -254,25 +254,24 @@ int main(int argc, char **argv) {
     ));
 
     // WMS on user.edu
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(storage_service, local_storage_service, (USE_LOCAL_STORAGE == 1))),
+    auto wms = simulation->add(new wrench::ActivityWMS(
+            new wrench::ActivityScheduler(storage_service, local_storage_service, (USE_LOCAL_STORAGE == 1)),
                                                       {compute_service},
                                                       {storage_service, local_storage_service},
+                                                      workflow,
                                                       "user.edu"
     ));
 
-    wms->addWorkflow(&workflow);
-
     // file registry service on storage_db_edu
-    simulation.add(new wrench::FileRegistryService("user.edu"));
+    simulation->add(new wrench::FileRegistryService("user.edu"));
 
     // stage the input files
-    for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file, storage_service);
+    for (auto file : workflow->getInputFiles()) {
+        simulation->stageFile(file, storage_service);
     }
 
     // launch the simulation
-    simulation.launch();
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", false, true, true, false, true, true, true);
 }
