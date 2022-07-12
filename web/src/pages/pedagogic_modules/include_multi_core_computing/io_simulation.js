@@ -40,10 +40,10 @@ const IOSimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("mcit-io-task1-input-size-label", values.taskInput, 100, 1000, null, "MB")) {
+                if (!validateFieldInRange("mcit-io-task1-input-size-label", values.taskInput, 1, 1000, null, "MB")) {
                   errors.taskInput = "ERROR"
                 }
-                if (!validateFieldInRange("mcit-io-task1-output-size-label", values.taskOutput, 100, 1000, null, "MB")) {
+                if (!validateFieldInRange("mcit-io-task1-output-size-label", values.taskOutput, 1, 1000, null, "MB")) {
                   errors.taskOutput = "ERROR"
                 }
                 if (!validateFieldInRange("mcit-io-task1-work-label", values.taskGflop, 100, 1000, null, "Gflop")) {
@@ -105,13 +105,13 @@ const IOSimulation = () => {
                                 label="Task #1 input size (MB)"
                                 placeholder="100"
                                 type="number"
-                                min={100}
+                                min={1}
                                 max={1000}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.taskInput}
                                 error={errors.taskInput && touched.taskInput ? {
-                                  content: "Please provide the number of MBs in the range of [100, 1000].",
+                                  content: "Please provide the number of MBs in the range of [1, 1000].",
                                   pointing: "above"
                                 } : null}
                     />
@@ -133,13 +133,13 @@ const IOSimulation = () => {
                                 label="Task #1 output size (MB)"
                                 placeholder="100"
                                 type="number"
-                                min={100}
+                                min={1}
                                 max={1000}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.taskOutput}
                                 error={errors.taskOutput && touched.taskOutput ? {
-                                  content: "Please provide a number of MBs in the range of [100, 1000].",
+                                  content: "Please provide a number of MBs in the range of [1, 1000].",
                                   pointing: "above"
                                 } : null}
                     />

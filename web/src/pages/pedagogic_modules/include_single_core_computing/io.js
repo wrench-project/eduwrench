@@ -246,7 +246,7 @@ const IO = ({module, tab}) => {
                 answer={[98.8,98.9]}
                 explanation={
                     <>
-                        The core is idle for only 3 seconds (at the very beginning and the very of of the execution), and so the
+                        The core is idle for only 3 seconds (2 seconds at the very beginning and 1 second at the very end of the execution), and so the
                         core utilization is <TeX math="250/253 = 98.8\%" />.
                     </>
                 }

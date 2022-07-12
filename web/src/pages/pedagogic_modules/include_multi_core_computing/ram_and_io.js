@@ -288,7 +288,7 @@ const RamAndIO = ({module, tab}) => {
                             <li>Time 9.4: Task #1 finishes writing output</li>
                         </ul>
                         <p>
-                            Execution time: 9.4 seconds.
+                            Execution time: 9.4 seconds (which is confirmed in simulation).
                         </p>
                     </>
                 }

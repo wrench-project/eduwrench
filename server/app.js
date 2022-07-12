@@ -339,7 +339,7 @@ app.post("/run/multi_core_independent_tasks_io", function (req, res) {
     const TASK2_INPUT_SIZE = req.body.task2_input_size
     const TASK2_OUTPUT_SIZE = req.body.task2_output_size
     const TASK2_WORK = req.body.task2_work
-    const TASK1_BEFORE_TASK2 = req.body.first_task === 1
+    const TASK1_BEFORE_TASK2 = (req.body.first_task === "1")
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
