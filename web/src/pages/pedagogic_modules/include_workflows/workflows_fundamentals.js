@@ -353,8 +353,7 @@ const WorkflowsFundamentals = ({module, tab}) => {
                                 bad news.
                             </li>
 
-                            <li><i>Problem #2:</i> The only parallel level (the "blue" level) suffers from high
-                                <strong>load imbalance</strong>. One task runs in 100 seconds, while the other two
+                            <li><i>Problem #2:</i> The only parallel level (the "blue" level) suffers from high <strong>load imbalance</strong>. One task runs in 100 seconds, while the other two
                                 run in 20 seconds. So, when running on 3 cores, assuming no I/O, the parallel efficiency is
                                 at most (140/100)/3 = 46.6%.
                             </li>
