@@ -107,29 +107,29 @@ const WorkflowsDataLocality = ({ module, tab }) => {
                     <>
                         <p>This can be answered by just running the simulation:</p>
                         <ul>
-                            <li>With only remote storage: 299.69 seconds</li>
+                            <li>With only remote storage: 292.28 seconds</li>
                             <li>With local storage: 239.91 seconds</li>
                         </ul>
-                        <p>Thus, the saving is 59.78 seconds.</p>
+                        <p>Thus, the saving is 52.37 seconds.</p>
                         <p>
                             The only difference in the two executions is the I/O times for the intermediate files. In both
                             cases, <TeX math="2 \times 20 \times 100 = 4000 \text{MB}" /> of data are being read/written from/to
                             storage. To the remote storage, this should take time 4000/100 = 40 seconds. To the local storage, this
                             should take time 4000/500 = 8 seconds. So we would expect a saving of <TeX
-                            math="40 - 8 = 32" /> seconds. In fact, the saving is twice as much.
+                            math="40 - 8 = 32" /> seconds. In fact, the saving is quite a bit bigger.
                         </p>
                         <p> This is because the wide-area data transfer rate is not 100 MB/sec, due to the high network
                             latency.</p>
                         <p>
                             We saw this in the previous tab but can re-iterate. The application, when not using any local storage,
                             reads/write a total of <TeX math="20 \times 50 + 2 \times 20 \times 100 + 1 = 5001 \text{MB}" /> of
-                            data. Since the application computes for 210 seconds, this means that it spends 299.69 - 210 = 89.69
-                            seconds transferring the data. Thus, the actual data transfer rate is 5001/89.69 = 55.75 MB/sec, a far
+                            data. Since the application computes for 210 seconds, this means that it spends 292.28 - 210 = 82.28
+                            seconds transferring the data. Thus, the actual data transfer rate is 5001/82.28 = 60.78 MB/sec, a far
                             cry from the peak 100 MB/sec!
                         </p>
                         <p>
                             So if we re-compute our saving estimate above using this effective data transfer
-                            rate we obtain: 4000/55.75 - 4000/500 = 63.64 seconds. This is much closer to what
+                            rate we obtain: 4000/60.78 - 4000/500 = 57.81 seconds. This is much closer to what
                             the simulation gives us. The remaining discrepancy is due to other effects/overheads
                             captured by the simulation (which we will mention in upcoming modules).
                         </p>
@@ -150,9 +150,9 @@ const WorkflowsDataLocality = ({ module, tab }) => {
                 explanation={
                     <>
                         <p> As we saw in the previous question, the sequential (1-core) execution time is 239.91 seconds when
-                            using local storage. Using the simulation to determine the parallel execution time we get: 41.86
+                            using local storage. Using the simulation to determine the parallel execution time we get: 41.85
                             seconds.</p>
-                        <p> So the parallel efficiency is (239.91 / 41.86) / 20 = 28.6%. This is better than without using local
+                        <p> So the parallel efficiency is (239.91 / 41.85) / 20 = 28.6%. This is better than without using local
                             storage, but still not great.</p>
                     </>
                 }
@@ -169,7 +169,7 @@ const WorkflowsDataLocality = ({ module, tab }) => {
                 answer={[32,33]}
                 explanation={
                     <>
-                        Using the simulation again, we get: (239.91 / 36.61) / 20 = 32.7%.
+                        Using the simulation again, we get: (239.91 / 36.59) / 20 = 32.78%.
                     </>
                 }
             />
@@ -185,7 +185,7 @@ const WorkflowsDataLocality = ({ module, tab }) => {
                 }
                 explanation={
                     <>
-                        <p>Using the simulation again, we get: (239.91 / 33.45) / 20 = 35.8%. This is <i>not</i> a big jump at
+                        <p>Using the simulation again, we get: (239.91 / 33.44) / 20 = 35.8%. This is <i>not</i> a big jump at
                             all.</p>
                         <p>
                             From the simulation output, we see that it takes 4.49 seconds for all tasks to read their

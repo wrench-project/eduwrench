@@ -175,10 +175,10 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                 answer={[69,71]}
                 explanation={
                     <>
-                        Running the simulation gives us a total execution time of 299.69 seconds.
+                        Running the simulation gives us a total execution time of 292.28 seconds.
                         In total, the computation consists of 21,000 Gflop to be performed on a 100 Gflop/sec
                         core. So that is 210 seconds of computation. Therefore, the execution
-                        spends (299.69 - 210)/299.69 = 70% of its time doing computation. The rest
+                        spends 210/292.28 = 71.8% of its time doing computation. The rest
                         of the execution is disk and network I/O.
                     </>
                 }
@@ -203,10 +203,10 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                             210 seconds. On 2 cores, this should be 110 seconds (since the
                             final task runs by itself). Therefore we would expect the
                             execution time to be 100 second shorter than in the previous question,
-                            that is, 199.69 seconds.
+                            that is, 192.28 seconds.
                         </p>
                         <p>
-                            The simulation gives 189.77 seconds. This is faster than expected, which
+                            The simulation gives 182.55 seconds. This is faster than expected, which
                             can be due to several reasons. When running tasks in parallel,
                             there can be beneficial effects in terms of network bandwidth. In this
                             case, this is happening on the wide-area link due to its high latency.
@@ -235,8 +235,8 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                         </p>
                         <p>This is seen in simulation:</p>
                         <ul>
-                            <li>With 4 5-core hosts: 102.67 seconds</li>
-                            <li>With 5 4-core hosts: 91.76 seconds</li>
+                            <li>With 4 5-core hosts: 95.25 seconds</li>
+                            <li>With 5 4-core hosts: 84.34 seconds</li>
                         </ul>
                     </>
                 }
@@ -254,8 +254,8 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                 answer={[16,17]}
                 explanation={
                     <>
-                        The speedup is 299.69 / 91.76 = 3.26. Since we used 20 cores, our parallel
-                        efficiency is 3.26/20 = 16.33%. This is pretty low, but expected since
+                        The speedup is 292.28 / 84.34 = 3.46. Since we used 20 cores, our parallel
+                        efficiency is 3.46/20 = 17.3%. This is pretty low, but expected since
                         we have so much I/O and a level of the workflow has no parallelism
                         whatsoever.
                     </>
@@ -292,17 +292,17 @@ const WorkflowsDistributedExecution = ({module, tab}) => {
                             <Table.Body>
                                 <Table.Row>
                                     <Table.Cell>1x1 core</Table.Cell>
-                                    <Table.Cell>299.69 s</Table.Cell>
+                                    <Table.Cell>292.28 s</Table.Cell>
                                     <Table.Cell>210 s</Table.Cell>
-                                    <Table.Cell>89.69 s</Table.Cell>
-                                    <Table.Cell>55.75 MB/s</Table.Cell>
+                                    <Table.Cell>82.28 s</Table.Cell>
+                                    <Table.Cell>60.78 MB/s</Table.Cell>
                                 </Table.Row>
                                 <Table.Row>
                                     <Table.Cell>5x4 core</Table.Cell>
-                                    <Table.Cell>91.76 s</Table.Cell>
+                                    <Table.Cell>84.34 s</Table.Cell>
                                     <Table.Cell>20 s</Table.Cell>
-                                    <Table.Cell>71.76 s</Table.Cell>
-                                    <Table.Cell>69.69 MB/s</Table.Cell>
+                                    <Table.Cell>64.34 s</Table.Cell>
+                                    <Table.Cell>77.72 MB/s</Table.Cell>
                                 </Table.Row>
                             </Table.Body>
                         </Table>
