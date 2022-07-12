@@ -673,6 +673,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                                                       MASTER
     ));
 
+    simulation->getOutput().enableWorkflowTaskTimestamps(true);
     simulation->launch();
     if (single) {
         simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", false, true, false, false, false);

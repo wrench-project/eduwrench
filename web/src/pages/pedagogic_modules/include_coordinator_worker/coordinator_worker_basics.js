@@ -273,7 +273,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                 explanation={
                     <>
                         <p>
-                            The execution completes in <strong>61.51 seconds</strong>. Inspecting the task execution timeline
+                            The execution completes in <strong>61.50 seconds</strong>. Inspecting the task execution timeline
                             we find that the coordinator makes the first three scheduling decisions as follows:
                         </p>
                         <ul>
@@ -283,7 +283,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                         </ul>
                         <p>These decisions correspond to the "highest work first / highest speed first" strategy.</p>
                         <p>
-                            When going from "highest work first" to "lowest work first", the execution time becomes <strong>82.01
+                            When going from "highest work first" to "lowest work first", the execution time becomes <strong>82.00
                             seconds</strong>, that is 20.50 seconds slower! One intuition for this is that if we run first the
                             "quick" tasks, then at the end of the execution one can be left waiting for a long task to finish. This
                             is exactly what is happening here as seen in the task execution timeline. We see that Task #5 starts
@@ -314,9 +314,9 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                     <>
                         <p>Here are the execution time, including those in the previous question:</p>
                         <ul>
-                            <li>highest work / fastest: 61.51 seconds</li>
-                            <li>lowest work / fastest: 82.01 seconds</li>
-                            <li>highest data / best-connected: 51.01 seconds</li>
+                            <li>highest work / fastest: 61.50 seconds</li>
+                            <li>lowest work / fastest: 82.00 seconds</li>
+                            <li>highest data / best-connected: 51.00 seconds</li>
                             <li>lowest data / best-connected: 70.25 seconds</li>
                         </ul>
                         <p>
@@ -348,13 +348,13 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                 explanation={
                     <>
                         <p>
-                            Here are times obtained with 10 experiments: 56.50, 82.01, 47.67, 50.76, 61.26, 56.01, 64.00, 61.51,
-                            56.51, 54.26. Of course you may
+                            Here are times obtained with 10 experiments: 56.50, 82.00, 47.67, 50.75, 61.25, 56.00, 64.00, 61.50,
+                            56.50, 54.25. Of course you may
                             have obtained different results, but if you ran more than 10 experiments you probably saw all the above
                             numbers at least once, and others.
                         </p>
                         <p>
-                            The worst time above is 82.01 seconds, which is equivalent to the "lowest work / fastest" strategy. But
+                            The worst time above is 82.00 seconds, which is equivalent to the "lowest work / fastest" strategy. But
                             we see a very low 47.67 seconds result! This is
                             much better than anything we saw above. Here is the set of decisions:
                         </p>
@@ -430,7 +430,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                         </p>
                         <p>Let's verify this in simulation with the following simulator input:</p>
                         <pre>
-              Workers: 2000 500, 20 1000{"\n"}
+                            Workers: 2000 500, 20 1000{"\n"}
                             Tasks: 1000 310, 300 300, 10 10, 10 10
               </pre>
                         <br />
@@ -573,7 +573,7 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
             <p>The coordinator software implements the "highest data / best-connected" scheduling strategy.</p>
             <p>So the simulator input would be:</p>
             <pre>
-      Workers: 100 100, 100 100, 100 100{"\n"}
+                Workers: 100 100, 100 100, 100 100{"\n"}
                 Tasks: 2000 500, 2000 500, 2000 500, 1600 1000{"\n"}
                 Task Scheduling: Highest data{"\n"}
                 Worker Scheduling: Best-connected worker

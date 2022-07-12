@@ -114,13 +114,14 @@ const CoordinatorWorkerScheduling = ({module, tab}) => {
                         </p>
                         <p>The results are as follows ([min : mean : max]):</p>
                         <ul>
-                            <li>random / fastest: [9.70 sec : 14.13 sec : 17.37 sec]</li>
-                            <li>highest work / fastest: [8.03 sec : 11.92 : 16.18 sec]</li>
-                            <li>lowest work / fastest: [9.88 sec : 14.31 sec : 17.94 sec]</li>
+                            <li>random / fastest: [8.21 sec : 14.62 sec : 19.83 sec]</li>
+                            <li>highest work / fastest: [8.22 sec : 12.11 : 17.04 sec]</li>
+                            <li>lowest work / fastest: [9.08 sec : 14.16 sec : 17.89 sec]</li>
                         </ul>
                         <p>
-                            The expectations are confirmed: highest work is best; random is a bit
-                            better than lowest work!
+                            The expectations are confirmed: highest work is best on average; random is a bit
+                            worse than lowest work on average, but can be better in terms of the min
+                            but also quite a bit worse in terms of the max.
                         </p>
                     </>
                 }
@@ -140,14 +141,14 @@ const CoordinatorWorkerScheduling = ({module, tab}) => {
                     <>
                         <p>Setting worker speeds in the range [100, 1000], we obtain:</p>
                         <ul>
-                            <li>random / fastest: [1.33 sec : 4.00 sec : 7.97 sec]</li>
-                            <li>highest work / fastest: [1.26 sec : 3.20 sec : 7.12 sec]</li>
-                            <li>lowest work / fastest: [1.54 sec : 3.44 sec : 7.03 sec]</li>
+                            <li>random / fastest: [1.73 sec : 3.43 sec : 5.68 sec]</li>
+                            <li>highest work / fastest: [1.61 sec : 3.27 sec : 5.96 sec]</li>
+                            <li>lowest work / fastest: [2.01 sec : 3.43 sec : 5.89 sec]</li>
                         </ul>
                         <p>
-                            Results are very similar, with the different that random is worse than "lower work". It seems that the
+                            Results are pretty similar. It seems that the
                             "highest work" idea
-                            is a good one even when workers are heterogeneous, provided we pick the
+                            is a good one (at least on average) even when workers are heterogeneous, provided we pick the
                             fastest workers.
                         </p>
                     </>
@@ -216,10 +217,10 @@ const CoordinatorWorkerScheduling = ({module, tab}) => {
                             simulation using 80 tasks and 20 workers (30 samples):
                         </p>
                         <ul>
-                            <li>highest work / random: [9.56 sec : 12.98 sec : 18.22 sec]</li>
-                            <li>highest work / fastest: [9.32 sec : 12.87 sec : 17.95 sec]</li>
-                            <li>highest work / best-connected: [9.91 sec : 12.80 sec : 18.81 sec]</li>
-                            <li>highest work / earliest completion: [9.51 sec : 12.96 sec : 18.03 sec]</li>
+                            <li>highest work / random: [9.56 sec : 13.00 sec : 18.21 sec]</li>
+                            <li>highest work / fastest: [9.32 sec : 12.85 sec : 17.95 sec]</li>
+                            <li>highest work / best-connected: [9.42 sec : 12.77 sec : 18.81 sec]</li>
+                            <li>highest work / earliest completion: [9.51 sec : 13.09 sec : 18.02 sec]</li>
                         </ul>
                         <p>
                             The main observation is that random really looks as good as anything
