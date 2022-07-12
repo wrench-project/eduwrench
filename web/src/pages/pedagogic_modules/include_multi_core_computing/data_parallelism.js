@@ -164,7 +164,7 @@ const DataParallelism = ({module, tab}) => {
                         </p>
                         <TeX math="T_B(8) = \frac{100 \times 3^2 / 8}{100} + \frac{100}{100} = 2.125 \text{sec}" block />
                         <p>
-                            You can confirm the above numbers with the simulation. The parallel efficiency is <TeX
+                            You can confirm the above numbers with the simulation (up to round-off errors). The parallel efficiency is <TeX
                             math="E_B = (10/2.125)/8 = 58.82\%" />. Our intuition is confirmed! Execution B has better efficiency!
                         </p>
                     </>
