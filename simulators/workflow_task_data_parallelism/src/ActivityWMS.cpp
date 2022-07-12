@@ -15,23 +15,23 @@ namespace wrench {
      */
     ActivityWMS::ActivityWMS(const std::set<std::shared_ptr<ComputeService>> &compute_services,
                              const std::set<std::shared_ptr<StorageService>> &storage_services,
-                             const std::string &hostname) : WMS (
-            nullptr,
-            nullptr,
-            compute_services,
-            storage_services,
-            {}, nullptr,
+                             const std::shared_ptr<Workflow> &workflow,
+                             const std::string &hostname) : ExecutionController (
             hostname,
             ""
-    ) {}
+    ) {
+        this->compute_services = compute_services;
+        this->storage_services = storage_services;
+        this->workflow = workflow;
+    }
 
     void ActivityWMS::submitTask(std::string task_name, std::string host_name) {
-        auto cs = *((this->getAvailableComputeServices<ComputeService>()).begin());
-        auto job = this->job_manager->createStandardJob(this->getWorkflow()->getTaskByID(task_name));
+        auto cs = *((this->compute_services).begin());
+        auto job = this->job_manager->createStandardJob(this->workflow->getTaskByID(task_name));
         this->job_manager->submitJob(job, cs, {{task_name, host_name}});
         WRENCH_INFO("%s task starting on %lu cores on %s",
                     task_name.c_str(),
-                    this->getWorkflow()->getTaskByID(task_name)->getMinNumCores(),
+                    this->workflow->getTaskByID(task_name)->getMinNumCores(),
                     host_name.c_str()
         );
     }
@@ -43,7 +43,7 @@ namespace wrench {
     int ActivityWMS::main() {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
-        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
+        WRENCH_INFO("About to execute a workflow with %lu tasks", this->workflow->getNumberOfTasks());
 
         // Create the job manager
         this->job_manager = this->createJobManager();
@@ -51,7 +51,7 @@ namespace wrench {
         int num_pending_tasks = 0;
 
         // Get the compute service
-        auto cs = *((this->getAvailableComputeServices<ComputeService>()).begin());
+        auto cs = *((this->compute_services).begin());
 
         std::map<std::string, unsigned long> idle_cores = {{"host1", 3}, {"host2", 3}};
 
@@ -63,14 +63,14 @@ namespace wrench {
         }
         // Submit blue task on host1
         {
-            auto blue_task = this->getWorkflow()->getTaskByID("blue");
+            auto blue_task = this->workflow->getTaskByID("blue");
             submitTask("blue", "host1");
             num_pending_tasks++;
             idle_cores["host1"] -= blue_task->getMinNumCores();
         }
         // Submit yellow task on host1 or host2
         {
-            auto yellow_task = this->getWorkflow()->getTaskByID("yellow");
+            auto yellow_task = this->workflow->getTaskByID("yellow");
             if (idle_cores["host1"] >= yellow_task->getMinNumCores()) {
                 submitTask("yellow", "host1");
                 idle_cores["host1"] -= yellow_task->getMinNumCores();
@@ -83,7 +83,7 @@ namespace wrench {
 
         bool purple_task_submitted = false;
         while (not purple_task_submitted) {
-            auto purple_task = this->getWorkflow()->getTaskByID("purple");
+            auto purple_task = this->workflow->getTaskByID("purple");
             if (idle_cores["host1"] >= purple_task->getMinNumCores()) {
                 submitTask("purple", "host1");
                 num_pending_tasks++;
@@ -118,8 +118,8 @@ namespace wrench {
         }
 
         WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
+        if (this->workflow->isDone()) {
+            WRENCH_INFO("Workflow execution completed in %.2f seconds!", this->workflow->getCompletionDate());
         } else {
             WRENCH_INFO("Workflow execution is incomplete!");
         }

@@ -17,12 +17,9 @@ class Simulation;
 /**
  *  @brief A simple WMS implementation
  */
-class GcfWMS : public wrench::WMS {
+class GcfWMS : public wrench::ExecutionController {
 public:
-    GcfWMS(std::unique_ptr<wrench::StandardJobScheduler> standard_job_scheduler,
-              std::unique_ptr<wrench::PilotJobScheduler> pilot_job_scheduler,
-              const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
-              const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
+    GcfWMS(   const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
               const std::string &hostname);
     void setNumInstances(int num_instances);
     void setReqArrivalRate(double min, double max);
@@ -36,6 +33,12 @@ public:
 private:
     int main() override;
     void processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) override;
+    void scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
+                               const std::vector<std::shared_ptr<wrench::WorkflowTask>> &tasks);
+
+    std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
+    std::vector<std::shared_ptr<wrench::BareMetalComputeService>> compute_services_running_on_vms;
+    std::shared_ptr<wrench::Workflow> workflow;
 
 
         /** @brief The job manager */

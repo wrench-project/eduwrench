@@ -10,7 +10,7 @@ namespace wrench {
     * @brief Constructor
     * @param storage_services: a map of hostname key to StorageService pointer
     */
-    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service) : StandardJobScheduler(), storage_service(storage_service) {
+    ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service) : storage_service(storage_service) {
 
     }
 
@@ -25,13 +25,13 @@ namespace wrench {
      * @param ready_tasks
      */
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                                          const std::vector<WorkflowTask *> &ready_tasks) {
+                                          const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks) {
 
 
         auto compute_service = *compute_services.begin();
         auto compute_host = compute_service->getHostname();
 
-        std::vector<WorkflowTask *> tasks_to_submit;
+        std::vector<std::shared_ptr<WorkflowTask>> tasks_to_submit;
         std::map<std::string, std::string> service_specific_args;
         //add all tasks possible to be submitted.
         for (const auto &task : ready_tasks) {
@@ -39,7 +39,7 @@ namespace wrench {
             tasks_to_submit.push_back(task);
         }
 
-        std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
+        std::map<std::shared_ptr<DataFile>, std::shared_ptr<FileLocation>> file_locations;
         for (const auto &task : tasks_to_submit) {
 
             for (const auto &file : task->getInputFiles()) {
@@ -49,8 +49,8 @@ namespace wrench {
             for (const auto &file : task->getOutputFiles()) {
                 file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
             }
-            auto job = this->getJobManager()->createStandardJob(task, file_locations);
-            this->getJobManager()->submitJob(job, compute_service, service_specific_args);
+            auto job = this->job_manager->createStandardJob(task, file_locations);
+            this->job_manager->submitJob(job, compute_service, service_specific_args);
             if (task->getID() == "io read task #1") {
                 TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
                 WRENCH_INFO("Starting reading input file for task #1");

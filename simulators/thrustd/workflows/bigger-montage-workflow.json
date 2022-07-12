@@ -15,7 +15,7 @@
     "workflow": {
         "executedAt": "20210417T175605-1000",
         "makespan": null,
-        "jobs": [
+        "tasks": [
             {
                 "name": "mProject_00000001",
                 "type": "compute",

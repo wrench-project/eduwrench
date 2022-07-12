@@ -11,19 +11,19 @@
 #define MY_GCFSCHEDULER_H
 
 #include <wrench-dev.h>
-
-class GcfJobScheduler : public wrench::StandardJobScheduler {
-public:
-  GcfJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service) :
-          default_storage_service(default_storage_service) {}
-
-  void scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
-                     const std::vector<wrench::WorkflowTask *> &tasks);
-
-private:
-  std::shared_ptr<wrench::StorageService> default_storage_service;
-  std::vector<std::shared_ptr<wrench::BareMetalComputeService>> compute_services_running_on_vms;
-};
+//
+//class GcfJobScheduler : public wrench::StandardJobScheduler {
+//public:
+//  GcfJobScheduler(std::shared_ptr<wrench::StorageService> default_storage_service) :
+//          default_storage_service(default_storage_service) {}
+//
+//  void scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
+//                     const std::vector<wrench::WorkflowTask *> &tasks);
+//
+//private:
+//  std::shared_ptr<wrench::StorageService> default_storage_service;
+//  std::vector<std::shared_ptr<wrench::BareMetalComputeService>> compute_services_running_on_vms;
+//};
 
 #endif //MY_GCFSCHEDULER_H
 

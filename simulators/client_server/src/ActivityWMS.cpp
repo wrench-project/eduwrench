@@ -17,15 +17,15 @@ namespace wrench {
     ActivityWMS::ActivityWMS(
             const std::set<std::shared_ptr<ComputeService>> &compute_services,
             const std::set<std::shared_ptr<StorageService>> &storage_services,
-            const std::string &hostname) : WMS (
-            nullptr,
-            nullptr,
-            compute_services,
-            storage_services,
-            {}, nullptr,
+            const std::shared_ptr<Workflow> &workflow,
+            const std::string &hostname) : ExecutionController (
             hostname,
             "client_server"
-    ) {}
+    ) {
+        this->compute_services = compute_services;
+        this->storage_services = storage_services;
+        this->workflow = workflow;
+    }
 
 
 
@@ -42,7 +42,7 @@ namespace wrench {
 
 
         // Get the compute service
-        const auto compute_service = *(this->getAvailableComputeServices<ComputeService>().begin());
+        const auto compute_service = *(this->compute_services.begin());
 
         // Start bandwidth meters
         const double BANDWIDTH_METER_PERIOD = 0.01;
@@ -52,7 +52,7 @@ namespace wrench {
         auto em = this->createBandwidthMeter(linknames, BANDWIDTH_METER_PERIOD);
 
         std::shared_ptr<StorageService> client_storage_service, server_storage_service;
-        for (const auto &ss : this->getAvailableStorageServices()) {
+        for (const auto &ss : this->storage_services) {
             if (ss->getHostname() == "client") {
                 client_storage_service = ss;
             } else {
@@ -60,8 +60,8 @@ namespace wrench {
             }
         }
 
-        auto task = *(this->getWorkflow()->getTasks().begin());
-        auto file = *(this->getWorkflow()->getFiles().begin());
+        auto task = *(this->workflow->getTasks().begin());
+        auto file = (*(this->workflow->getFileMap().begin())).second;
 
         //  Copy the file over to the server
         WRENCH_INFO("Sending the image file over to the server running on host %s", server_storage_service->getHostname().c_str());
@@ -71,7 +71,7 @@ namespace wrench {
         WRENCH_INFO("File sent, server can start computing");
 
         // Run the task
-        std::map<WorkflowFile *, std::shared_ptr<FileLocation>> file_locations;
+        std::map<std::shared_ptr<DataFile>, std::shared_ptr<FileLocation>> file_locations;
         file_locations[file] = FileLocation::LOCATION(server_storage_service);
         auto job = job_manager->createStandardJob(task, file_locations);
         job_manager->submitJob(job, compute_service, {});
@@ -79,7 +79,7 @@ namespace wrench {
         // Wait for a workflow execution event, and process it
         try {
             this->waitForAndProcessNextEvent();
-        } catch (WorkflowExecutionException &e) {
+        } catch (ExecutionException &e) {
             WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                         (e.getCause()->toString().c_str()));
         }

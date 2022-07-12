@@ -214,9 +214,6 @@ const LocalComputing = ({module, tab}) => {
                 <li>How does it compare to that obtained with the best option in question [D.1.q1.2]?</li>
                 <li>Do you conclude that it is useful or not useful to use both power-management
                     techniques (powering hosts off and lowering the p-state) in combination?</li>
-                <li>It turns out that the optimal cluster configuration in terms of number of nodes
-                    powered on and p-state leads to a carbon emission of 61.72 gCO2e and an execution
-                    time of 179.75 seconds. How far is your answer from the optimal in terms of CO2?</li>
             </ol>
             <p>
                     (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we

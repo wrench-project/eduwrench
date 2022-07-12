@@ -16,9 +16,9 @@ int main(int argc, char **argv) {
 
     std::string reference_speed = "43Gf";
 
-    wrench::Workflow *workflow;
-    workflow = wrench::PegasusWorkflowParser::createWorkflowFromJSON(workflow_file, reference_speed, false,
+    auto workflow = wrench::WfCommonsWorkflowParser::createWorkflowFromJSON(workflow_file, reference_speed, false,
                                                                      4, 4, true);
+
 
 //    std::vector<wrench::WorkflowFile*> files[8];
 //    int numFiles[8] = {0, 0, 0, 0, 0, 0, 0, 0};

@@ -14,7 +14,6 @@
 #include <wrench.h>
 
 #include "ActivityWMS.h"
-#include "ActivityScheduler.h"
 
 /**
  * @brief Generates an independent-task Workflow
@@ -28,7 +27,7 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int task_read, int task_write, int task_num, int task_gflop,
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int task_read, int task_write, int task_num, int task_gflop,
                       bool io_overlap) {
 
     if (workflow == nullptr) {
@@ -138,9 +137,9 @@ void generatePlatform(std::string platform_file_path) {
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
+    auto simulation = wrench::Simulation::createSimulation();
 
-    simulation.init(&argc, argv);
+    simulation->init(&argc, argv);
 
     const int NUM_CORES = 1;
     int TASK_READ;
@@ -207,60 +206,52 @@ int main(int argc, char **argv) {
     }
 
     // create workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow, TASK_READ, TASK_WRITE, TASK_NUM, TASK_GFLOP, IO_OVERLAP);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow, TASK_READ, TASK_WRITE, TASK_NUM, TASK_GFLOP, IO_OVERLAP);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path);
 
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     const std::string WMS_HOST("thehost");
     const std::string COMPUTE_HOST("thehost");
     const std::string STORAGE_HOST("thehost");
 
-    std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto io_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));
-    storage_services.insert(io_storage_service);
+    auto storage_service = simulation->add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));
 
-    std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
-    auto compute_service = simulation.add(
+    auto compute_service = simulation->add(
             new wrench::BareMetalComputeService(
                     COMPUTE_HOST,
                     {{COMPUTE_HOST, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
-                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                     },
                     {}
             )
     );
-    compute_services.insert(compute_service);
 
     // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(io_storage_service)),
-                                                      compute_services,
-                                                      storage_services,
-                                                      WMS_HOST
+    auto wms = simulation->add(new wrench::ActivityWMS(compute_service,
+                                                      storage_service,
+                                                      WMS_HOST,
+                                                      workflow
     ));
-
-    wms->addWorkflow(&workflow);
 
     auto *file_registry_service =
             new wrench::FileRegistryService(WMS_HOST);
-    simulation.add(file_registry_service);
+    simulation->add(file_registry_service);
 
     // stage the input files
-    for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file, io_storage_service);
+    for (auto const &file : workflow->getInputFiles()) {
+        simulation->stageFile(file, storage_service);
     }
 
-    simulation.getOutput().enableDiskTimestamps(true);
-    simulation.launch();
+    simulation->getOutput().enableDiskTimestamps(true);
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", true, true, true, false, false, true);
     //simulation.getOutput().dumpWorkflowExecutionJSON(&workflow, "workflow_data.json", true);
     return 0;
 }

@@ -10,7 +10,6 @@
 #include <pugixml.hpp>
 
 #include "ActivityWMS.h"
-#include "ActivityScheduler.h"
 
 /**
  * @brief Generates an independent-task Workflow
@@ -21,7 +20,7 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow, int num_tasks, int task_gflop, int task_ram) {
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int num_tasks, int task_gflop, int task_ram) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -94,8 +93,8 @@ void generatePlatform(std::string platform_file_path, int num_cores) {
  */
 int main(int argc, char** argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     const int MAX_CORES         = 1000;
     int NUM_CORES;
@@ -150,39 +149,34 @@ int main(int argc, char** argv) {
     }
 
     // create workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow, NUM_TASKS, TASK_GFLOP, TASK_MEMORY);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow, NUM_TASKS, TASK_GFLOP, TASK_MEMORY);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, NUM_CORES);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
 
     const std::string THE_HOST("thehost");
 
-    auto compute_service = simulation.add(
+    auto compute_service = simulation->add(
             new wrench::BareMetalComputeService(
                     THE_HOST,
                     {{THE_HOST, std::make_tuple(NUM_CORES, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
-                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                     },
                     {}
             )
     );
 
     // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler()), compute_service, THE_HOST
-    ));
+    auto wms = simulation->add(new wrench::ActivityWMS({compute_service}, workflow, THE_HOST));
 
-    wms->addWorkflow(&workflow);
+    simulation->launch();
 
-    simulation.launch();
-
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, false);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", true, true, true, false, false, false);
 
     return 0;
 }

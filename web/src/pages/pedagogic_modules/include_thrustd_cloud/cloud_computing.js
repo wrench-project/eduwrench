@@ -110,7 +110,7 @@ const CloudComputing = ({module, tab}) => {
 
             <p>
                 <strong>[D.1.q2.3]</strong> So now you're on a mission to determine whether using the local cluster at all is a good idea. After all,
-                its cores are slower that that of the cloud VMs, and the local cluster has only <TeX math="12\times 8=96"/> cores
+                its cores are slower than that of the cloud VMs, and the local cluster has only <TeX math="12\times 8=96"/> cores
                 while the cloud VMs have a total of <TeX math="16\times 16 = 256"/> cores.  Let's use the "run all on the cloud" option as a starting point and
                 think of having some portion of those tasks in <strong>one level</strong> running on the local cluster. Say we consider doing this
                 for either Level 1 or Level 2. For which of these two levels do you think this would pay off the most and why?

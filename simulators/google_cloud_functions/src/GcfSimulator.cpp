@@ -16,10 +16,10 @@
 int main(int argc, char **argv) {
 
   // Declaration of the top-level WRENCH simulation object
-  wrench::Simulation simulation;
+  auto simulation = wrench::Simulation::createSimulation();
 
   // Initialization of the simulation
-  simulation.init(&argc, argv);
+  simulation->init(&argc, argv);
 
   // Parsing of the command-line arguments for this WRENCH simulation
   if (argc != 2) {
@@ -92,10 +92,10 @@ int main(int argc, char **argv) {
 
   // Reading and parsing the platform description file to instantiate a simulated platform
   // std::cerr << "Instantiating SimGrid platform..." << std::endl;
-  simulation.instantiatePlatform(platform_file);
+  simulation->instantiatePlatform(platform_file);
 
   // Get a vector of all the hosts in the simulated platform
-  // std::vector<std::string> hostname_list = simulation.getHostnameList();
+  // std::vector<std::string> hostname_list = simulation->getHostnameList();
 
   std::string wms_host = "WMSHost";
   // Create a list of compute services that will be used by the WMS
@@ -107,7 +107,7 @@ int main(int argc, char **argv) {
       instances.push_back("instance_" + std::to_string(i));
       auto baremetal_service = new wrench::BareMetalComputeService(
           wms_host, instances, "", {}, {});
-      compute_services.insert(simulation.add(baremetal_service));
+      compute_services.insert(simulation->add(baremetal_service));
     } catch (std::invalid_argument &e) {
       std::cerr << "Error: " << e.what() << std::endl;
       std::exit(1);
@@ -115,16 +115,13 @@ int main(int argc, char **argv) {
   }
 
   // Instantiate a WMS
-  auto wms = simulation.add(
-          new GcfWMS(std::unique_ptr<GcfJobScheduler>(
-                  new GcfJobScheduler({})),
-                        nullptr, compute_services, {}, wms_host));
+  auto wms = simulation->add(
+          new GcfWMS(compute_services, wms_host));
   // TO BE CHANGED BASED ON ARGS
   wms->setNumInstances(num_instances);
   wms->setReqArrivalRate(min_req, max_req);
   wms->setChangeProb(change_probability);
   wms->setMaxChange(max_change);
-  wms->addWorkflow(new wrench::Workflow());
   wms->setTaskFlops(func_exec_time);
   wms->setTimeout(timeout);
 
@@ -132,7 +129,7 @@ int main(int argc, char **argv) {
   // Launch the simulation
   // std::cerr << "Launching the Simulation..." << std::endl;
   try {
-    simulation.launch();
+    simulation->launch();
   } catch (std::runtime_error &e) {
     std::cerr << "Exception: " << e.what() << std::endl;
     return 0;

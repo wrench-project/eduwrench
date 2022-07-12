@@ -48,7 +48,7 @@ double generate_random_double_in_range(std::mt19937 &rng, double min,  double ma
     }
 }
 
-void generateWorkflow(wrench::Workflow *workflow, std::vector<std::tuple<double,double,double>> task_list) {
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, std::vector<std::tuple<double,double,double>> task_list) {
 
     if (workflow == nullptr) {
         throw std::invalid_argument("generateWorkflow(): invalid workflow");
@@ -344,7 +344,7 @@ retVals parse_arguments_for_individual_run(int argc, char** argv, std::mt19937 &
                   << std::endl;
         std::cerr << "    flags: " << std::endl;
         std::cerr
-                << "          '--worker' used to specify a worker to be added to simulation. Accompanied by three arguments, [<flag> <id> <link bandwidth> <flops>] "
+                << "          '--worker' used to specify a worker to be added to simulation-> Accompanied by three arguments, [<flag> <id> <link bandwidth> <flops>] "
                 << std::endl;
         std::cerr << "          '--ts' used to specify task scheduling behavior. [<flag> <selection>]" << std::endl;
         std::cerr << "               0: Random" << std::endl;
@@ -534,7 +534,7 @@ retVals parse_argument_for_generated_run(int argc, char** argv, std::mt19937 &rn
         std::cerr << "          '--seed' used to specify seed for random generation and scheduling [<flag> <seed>]"
                   << std::endl;
         std::cerr
-                << "          '--inv' used to indicate the number of invocations of the simulation. [<flag> <int>]"
+                << "          '--inv' used to indicate the number of invocations of the simulation-> [<flag> <int>]"
                 << std::endl;
     }
 
@@ -577,18 +577,18 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
                            char** argv,
                            bool single = false) {
     wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::Color::COLOR_BLUE);
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow, tasks);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow, tasks);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform_";
     platform_file_path.append(std::to_string(getpid()));
     platform_file_path.append(".xml");
     generatePlatform(platform_file_path, workers);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     const std::string MASTER("coordinator");
     const std::string WORKER_ZERO("worker_zero");
@@ -596,7 +596,9 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
     const std::string WORKER_TWO("worker_two");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto master_storage_service = simulation.add(new wrench::SimpleStorageService(MASTER, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE,  "infinity"}}, {}));
+    auto master_storage_service = simulation->add(
+            new wrench::SimpleStorageService(MASTER, {"/"},
+                                             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE,  "infinity"}}, {}));
     storage_services.insert(master_storage_service);
 
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
@@ -604,13 +606,12 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
 
     if(!workers.empty()) {
         for (const auto &worker : workers) {
-            auto new_compute_service = simulation.add(
+            auto new_compute_service = simulation->add(
                     new wrench::BareMetalComputeService(
                             std::get<0>(worker),
                             {{std::get<0>(worker), std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                             "",
                             {
-                                    {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                             },
                             {}
                     )
@@ -619,35 +620,32 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
             link_speed[std::get<0>(worker)] = std::get<1>(worker);
         }
     } else {
-        auto compute_service_zero = simulation.add(
+        auto compute_service_zero = simulation->add(
                 new wrench::BareMetalComputeService(
                         WORKER_ZERO,
                         {{WORKER_ZERO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
         );
-        auto compute_service_one = simulation.add(
+        auto compute_service_one = simulation->add(
                 new wrench::BareMetalComputeService(
                         WORKER_ONE,
                         {{WORKER_ONE, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
         );
-        auto compute_service_two = simulation.add(
+        auto compute_service_two = simulation->add(
                 new wrench::BareMetalComputeService(
                         WORKER_TWO,
                         {{WORKER_TWO, std::make_tuple(1, wrench::ComputeService::ALL_RAM)}},
                         "",
                         {
-                                {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                         },
                         {}
                 )
@@ -660,27 +658,27 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
 
 
     // file registry service on storage_db_edu
-    simulation.add(new wrench::FileRegistryService(MASTER));
+    simulation->add(new wrench::FileRegistryService(MASTER));
 
     // stage the input files
-    for (auto file : workflow.getInputFiles()) {
-        simulation.stageFile(file, master_storage_service);
+    for (auto file : workflow->getInputFiles()) {
+        simulation->stageFile(file, master_storage_service);
     }
 
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(master_storage_service, link_speed, rng, task_scheduling_selection, compute_scheduling_selection)),
+    auto wms = simulation->add(new wrench::ActivityWMS(
+            new wrench::ActivityScheduler(master_storage_service, link_speed, rng, task_scheduling_selection, compute_scheduling_selection),
                                                       compute_services,
                                                       storage_services,
+                                                      workflow,
                                                       MASTER
     ));
 
-    wms->addWorkflow(&workflow);
-    simulation.launch();
+    simulation->launch();
     if (single) {
-        simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
+        simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", false, true, false, false, false);
     }
 
-    auto task_termination_timestamps = simulation.getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
+    auto task_termination_timestamps = simulation->getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
     if(!task_termination_timestamps.empty()) {
         auto last_task = task_termination_timestamps.back()->getContent()->getDate();
         return std::to_string(last_task);
@@ -796,7 +794,7 @@ int main(int argc, char** argv) {
                 exit(1);
             } else if (pid[i] == 0) {
                 close(pipes[i][0]);
-                auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
+                auto wms = simulation->add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
                         new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed+i)),
                                                                   compute_services,
                                                                   storage_services,
@@ -804,8 +802,8 @@ int main(int argc, char** argv) {
                 ));
 
                 wms->addWorkflow(&workflow);
-                simulation.launch();
-                auto task_termination_timestamps = simulation.getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
+                simulation->launch();
+                auto task_termination_timestamps = simulation->getOutput().getTrace<wrench::SimulationTimestampTaskCompletion>();
                 if(!task_termination_timestamps.empty()) {
                     auto last_task = task_termination_timestamps.back()->getContent()->getDate();
                     auto last_task_string = std::to_string(last_task).c_str();
@@ -841,7 +839,7 @@ int main(int argc, char** argv) {
                   << " seconds\n";
         std::cout << "----------------------------------------" << std::endl;
     } else {
-        auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
+        auto wms = simulation->add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
                 new wrench::ActivityScheduler(master_storage_service, link_speed, task_scheduling_selection, compute_scheduling_selection, seed)),
                                                           compute_services,
                                                           storage_services,
@@ -849,8 +847,8 @@ int main(int argc, char** argv) {
         ));
 
         wms->addWorkflow(&workflow);
-        simulation.launch();
-        simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
+        simulation->launch();
+        simulation->getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, true, false, false, false);
     }
 
     return 0;

@@ -20,15 +20,14 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(simple_wms, "Log category for Simple WMS");
 ThrustDWMS::ThrustDWMS(std::unique_ptr<ThrustDJobScheduler> ss_job_scheduler,
                        const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
                        const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
-                       const std::string &hostname) : wrench::WMS(
-        nullptr,
-        nullptr,
-        compute_services,
-        storage_services,
-        {}, nullptr,
+                       const std::shared_ptr<wrench::Workflow> &workflow,
+                       const std::string &hostname) : wrench::ExecutionController(
         hostname,
         "simple") {
     this->ss_job_scheduler = std::move(ss_job_scheduler);
+    this->compute_services = compute_services;
+    this->storage_services = storage_services;
+    this->workflow = workflow;
 }
 
 /**
@@ -43,10 +42,7 @@ int ThrustDWMS::main() {
       this->createBandwidthMeter({"WIDE_AREA_LINK"}, 10.0);
     }
 
-    // Check whether the WMS has a deferred start time
-    checkDeferredStart();
-
-    WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
+    WRENCH_INFO("About to execute a workflow with %lu tasks", this->workflow->getNumberOfTasks());
 
     // Create a job manager
     this->job_manager = this->createJobManager();
@@ -58,32 +54,41 @@ int ThrustDWMS::main() {
     std::shared_ptr<wrench::DataMovementManager> data_movement_manager = this->createDataMovementManager();
 
     // Check that we have at least one compute service
-    if (this->getAvailableComputeServices<wrench::ComputeService>().size() < 1) {
+    if (this->compute_services.size() < 1) {
         throw std::runtime_error("WMS needs at least one compute service to run!");
     }
 
     // Check that we have exactly  one BM compute service
-    if (this->getAvailableComputeServices<wrench::BareMetalComputeService>().size() != 1) {
+    int num_bm_cs = 0;
+    std::shared_ptr<wrench::BareMetalComputeService> compute_service;
+    for (auto const &cs : this->compute_services) {
+        if (std::dynamic_pointer_cast<wrench::BareMetalComputeService>(cs)) {
+            num_bm_cs++;
+            compute_service = std::dynamic_pointer_cast<wrench::BareMetalComputeService>(cs);
+        }
+    }
+    if (num_bm_cs != 1) {
         throw std::runtime_error("WMS needs exactly  one BareMetal compute service to run!");
     }
 
-    // Get the bare-metal compute service
-    auto compute_service = *(this->getAvailableComputeServices<wrench::BareMetalComputeService>().begin());
-    WRENCH_INFO("NAME OF LOCAL COMPUTE_SERVICE: %s", compute_service->getName().c_str());
 
     // Get the cloud compute service
     std::shared_ptr<wrench::CloudComputeService> cloud_service;
     if (this->getNumVmInstances() > 0) {
-        if (this->getAvailableComputeServices<wrench::CloudComputeService>().size() != 1) {
+        int num_cloud_cs = 0;
+        for (auto const &cs : this->compute_services) {
+            if (std::dynamic_pointer_cast<wrench::CloudComputeService>(cs)) {
+                num_cloud_cs++;
+                cloud_service = std::dynamic_pointer_cast<wrench::CloudComputeService>(cs);
+            }
+        }
+        if (num_cloud_cs != 1) {
             throw std::runtime_error("WMS needs exactly one cloud service to run!");
         }
-        cloud_service = *(this->getAvailableComputeServices<wrench::CloudComputeService>().begin());
-        WRENCH_INFO("NAME OF CLOUD COMPUTE_SERVICE: %s", cloud_service->getName().c_str());
     }
 
     // Get the available storage services
-    auto storage_services = this->getAvailableStorageServices();
-    if (storage_services.empty()) {
+    if (this->storage_services.empty()) {
         throw std::runtime_error("WMS needs at least one storage service to run!");
     }
 
@@ -111,7 +116,16 @@ int ThrustDWMS::main() {
 
     while (true) {
         // Get the ready tasks
-        std::vector<wrench::WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
+        auto ready_tasks = this->workflow->getReadyTasks();
+
+        // Sort them by ID
+        std::sort(
+                ready_tasks.begin(),
+                ready_tasks.end(),
+                [] (const std::shared_ptr<wrench::WorkflowTask> &t1, const std::shared_ptr<wrench::WorkflowTask> &t2) {
+                    return (t1->getID() < t2->getID());
+                }
+            );
 
         this->ss_job_scheduler->scheduleTasks(compute_service, vm_css, ready_tasks);
 
@@ -120,13 +134,13 @@ int ThrustDWMS::main() {
             WRENCH_INFO("Waiting for some execution event (job completion or failure)");
             this->waitForAndProcessNextEvent();
 //            WRENCH_INFO("Got the execution event");
-        } catch (wrench::WorkflowExecutionException &e) {
+        } catch (wrench::ExecutionException &e) {
             WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                         (e.getCause()->toString().c_str()));
             continue;
         }
 
-        if (this->getWorkflow()->isDone()) {
+        if (this->workflow->isDone()) {
             break;
         }
     }

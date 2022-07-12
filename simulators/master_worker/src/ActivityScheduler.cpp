@@ -31,7 +31,7 @@ namespace wrench {
      * @brief A struct to hold metrics for each ready task.
      */
     typedef struct TaskInformation {
-        WorkflowTask *task;
+        std::shared_ptr<WorkflowTask> task;
         double flop;
         double bytes;
         double ratio;
@@ -112,7 +112,6 @@ namespace wrench {
                                          std::mt19937 &rng,
                                          int task_selection,
                                          int compute_selection) :
-            StandardJobScheduler(),
             storage_service(storage_service),
             link_speed(link_speed),
             task_selection(task_selection),
@@ -126,7 +125,8 @@ namespace wrench {
      * @param ready_tasks - vector of tasks ready to be run
      */
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                                          const std::vector<WorkflowTask *> &ready_tasks) {
+                                          const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks,
+                                          std::shared_ptr<JobManager> job_manager) {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
         auto compute_service = *compute_services.begin();
@@ -181,6 +181,8 @@ namespace wrench {
         std::vector<ComputeServiceMetadata> compute_service_information;
         for (const auto &compute : compute_services) {
 
+
+
             auto flop_map = compute->getCoreFlopRate();
             double flops_tally = 0;
             auto it = flop_map.begin();
@@ -205,8 +207,6 @@ namespace wrench {
 
         // Now go through the tasks in sequence and submit them to workers
         for (auto const &task_to_run : task_information) {
-
-//            std::cerr << "SCHEDULING TASK " + task_to_run.task->getID() << "\n";
 
 //            std::cerr << "SCHEDULING TASK " << task_to_run.task->getID() << "\n";
             // Sort the workers
@@ -235,6 +235,11 @@ namespace wrench {
             // Got through each worker, and if it's not busy, submit the task to it
             bool scheduled = false;
             for (auto const &cs : compute_service_information) {
+
+                if (this->cs_busy[cs.compute_service] == true) {
+                    continue;
+                }
+
 //                std::cerr << "    CONSIDERING " << cs.compute_service->getHostname() << "\n";
                 // If it's busy, nevermind
                 if (cs.compute_service->getTotalNumIdleCores() < 1) {
@@ -246,7 +251,7 @@ namespace wrench {
                         cs.compute_service->getHostname() + ":" + std::to_string(task_to_run.task->getMaxNumCores());
 
                 // specify file locations for tasks that will be submitted
-                std::map<WorkflowFile *, std::shared_ptr<FileLocation >> file_locations;
+                std::map<std::shared_ptr<DataFile>, std::shared_ptr<FileLocation >> file_locations;
                 for (const auto &file : task_to_run.task->getInputFiles()) {
                     file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
                 }
@@ -255,13 +260,23 @@ namespace wrench {
                     file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
                 }
 //                std::cerr << "SUBMITTING " << task_to_run.task->getID() << " to " << cs.compute_service->getHostname() << "\n";
-                auto job = this->getJobManager()->createStandardJob(task_to_run.task, file_locations);
-                this->getJobManager()->submitJob(job, cs.compute_service, service_specific_args);
+                auto job = job_manager->createStandardJob(task_to_run.task, file_locations);
+                job_manager->submitJob(job, cs.compute_service, service_specific_args);
+                this->setComputeServiceToBusy(cs.compute_service);
                 scheduled = true;
                 break;
             }
             if (not scheduled) break;
         }
     }
+
+    void ActivityScheduler::setComputeServiceToIdle(std::shared_ptr<ComputeService> cs) {
+        this->cs_busy[cs] = false;
+    }
+
+    void ActivityScheduler::setComputeServiceToBusy(std::shared_ptr<ComputeService> cs) {
+        this->cs_busy[cs] = true;
+    }
+
 
 }

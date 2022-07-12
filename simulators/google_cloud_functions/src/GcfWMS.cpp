@@ -58,18 +58,12 @@ int GcfWMS::coinToss() {
 /**
  * @brief Create a Gcf WMS with a workflow instance, a scheduler implementation, and a list of compute services
  */
-GcfWMS::GcfWMS(std::unique_ptr<wrench::StandardJobScheduler> standard_job_scheduler,
-               std::unique_ptr<wrench::PilotJobScheduler> pilot_job_scheduler,
-               const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
-               const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
-               const std::string &hostname) : wrench::WMS(
-        std::move(standard_job_scheduler),
-        std::move(pilot_job_scheduler),
-        compute_services,
-        storage_services,
-        {}, nullptr,
+GcfWMS::GcfWMS(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
+               const std::string &hostname) : wrench::ExecutionController(
         hostname,
-        "gcf") {}
+        "gcf") {
+        this->compute_services = compute_services;
+}
 
 
 
@@ -79,12 +73,9 @@ GcfWMS::GcfWMS(std::unique_ptr<wrench::StandardJobScheduler> standard_job_schedu
  */
 int GcfWMS::main() {
 
+    this->workflow = wrench::Workflow::createWorkflow();
+
     wrench::TerminalOutput::setThisProcessLoggingColor(wrench::TerminalOutput::COLOR_GREEN);
-
-    // Check whether the WMS has a deferred start time
-    checkDeferredStart();
-
-    // WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
 
     // Create a job manager
     this->job_manager = this->createJobManager();
@@ -134,7 +125,7 @@ int GcfWMS::main() {
     double total_sim_time = 4 * half_period;
 
     int n = 0;
-    idle = this->getAvailableComputeServices<wrench::ComputeService>();
+    idle = this->compute_services;
     busy = {};
 //    while (wrench::Simulation::getCurrentSimulatedDate() < 7.0 * 24 * 3600) {
 
@@ -223,8 +214,8 @@ int GcfWMS::main() {
                 double deque_val = sorted_queue_of_request_arrival_times[0];
                 sorted_queue_of_request_arrival_times.pop_front();
                 if (wrench::Simulation::getCurrentSimulatedDate() < deque_val) {
-                    wrench::WorkflowTask * task =
-                            this->getWorkflow()->addTask("task_" + std::to_string(n),
+                    auto task =
+                            this->workflow->addTask("task_" + std::to_string(n),
                                                          task_flops,
                                                          1, 1, 1000);
                     n++;
@@ -273,4 +264,85 @@ void GcfWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJ
     busy.erase(it);
     succeeded++;
     num_free_instances++;
+}
+
+
+void GcfWMS::scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
+                           const std::vector<std::shared_ptr<wrench::WorkflowTask>> &tasks) {
+
+    // Check that the right compute_services is passed
+    if (compute_services.size() != 1) {
+        throw std::runtime_error("This Gcf Scheduler requires a single compute service");
+    }
+
+    auto compute_service = *compute_services.begin();
+    std::shared_ptr<wrench::CloudComputeService> cloud_service;
+    if (not(cloud_service = std::dynamic_pointer_cast<wrench::CloudComputeService>(compute_service))) {
+        throw std::runtime_error("This example Cloud Scheduler can only handle a cloud service");
+    }
+    for (auto task : tasks) {
+
+        WRENCH_INFO("Trying to schedule ready task %s on a currently running VM", task->getID().c_str());
+
+        // Try to run the task on one of compute services running on previously created VMs
+        std::shared_ptr<wrench::BareMetalComputeService> picked_vm_cs = nullptr;
+        for (auto const &vm_cs : this->compute_services_running_on_vms) {
+            unsigned long num_idle_cores;
+            try {
+                num_idle_cores = vm_cs->getTotalNumIdleCores();
+            } catch (wrench::ExecutionException &e) {
+                // The service has some problem
+                throw std::runtime_error("Unable to get the number of idle cores: " + e.getCause()->toString());
+            }
+            if (task->getMinNumCores() <= num_idle_cores) {
+                picked_vm_cs = vm_cs;
+                break;
+            }
+        }
+
+        // If no current running compute service on a VM can accommodate the task, try
+        // to create a new one
+        if (picked_vm_cs == nullptr) {
+            WRENCH_INFO("No currently VM can support task %s, trying to create one...", task->getID().c_str());
+            unsigned long num_idle_cores;       try {
+                num_idle_cores = cloud_service->getTotalNumIdleCores();
+            } catch (wrench::ExecutionException &e) {
+                // The service has some problem
+                throw std::runtime_error("Unable to get the number of idle cores: " + e.getCause()->toString());       }
+            if (num_idle_cores >= task->getMinNumCores()) {
+                // Create and start the best VM possible for this task
+                try {
+                    WRENCH_INFO("Creating a VM with %ld cores", std::min(task->getMinNumCores(), num_idle_cores));
+                    auto vm = cloud_service->createVM(std::min(task->getMinNumCores(), num_idle_cores),
+                                                      task->getMemoryRequirement());
+                    picked_vm_cs = cloud_service->startVM(vm);
+                    this->compute_services_running_on_vms.push_back(picked_vm_cs);
+                } catch (wrench::ExecutionException &e) {
+                    throw std::runtime_error("Unable to create/start a VM: " + e.getCause()->toString());
+                }
+            } else {
+                WRENCH_INFO("Not enough idle cores on the CloudComputeService to create a big enough VM for task %s", task->getID().c_str());
+            }
+        }
+
+        // If no VM is available to run the task, then nevermind
+        if (picked_vm_cs == nullptr) {
+            continue;
+        }
+
+        WRENCH_INFO("Submitting task %s for execution on a VM", task->getID().c_str());
+
+        // Submitting the task
+        std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
+//        for (auto f : task->getInputFiles()) {
+//            file_locations.insert(std::make_pair(f, wrench::FileLocation::LOCATION(default_storage_service)));
+//        }
+//        for (auto f : task->getOutputFiles()) {
+//            file_locations.insert(std::make_pair(f, wrench::FileLocation::LOCATION(default_storage_service)));
+//        }
+        auto job = this->job_manager->createStandardJob(task, file_locations);
+        this->job_manager->submitJob(job, picked_vm_cs);
+
+    }
+    WRENCH_INFO("Done with scheduling tasks as standard jobs");
 }
