@@ -130,11 +130,11 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                 }) => (
                     <Form onSubmit={handleSubmit}>
                         {choices.map((choice) =>
-                            <Form.Field key={choice}>
+                            <Form.Field key={question_key + "_" + choice}>
                                 <Form.Radio
                                     name="selected"
                                     label={choice}
-                                    id={choice}
+                                    id={question_key + "_" + choice}
                                     value={choice}
                                     checked={(completed) ? choice === correct_answer : values.selected === choice}
                                     onChange={handleChange}

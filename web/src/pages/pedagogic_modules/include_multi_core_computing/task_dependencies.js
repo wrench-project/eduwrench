@@ -224,10 +224,13 @@ const TaskDependencies = ({module, tab}) => {
                         <p>
                             The above is quite formal, but we could have given a purely common-sense answer. The parallel efficiency
                             is maximized when all three paths take time as close as possible as the longest such path, so as have
-                            cores working as much as possible. This is the same load balancing idea that we have seen in the
-                            <a href="/pedagogic_modules/multi_core_computing/">Parallelism tab</a> for independent tasks! This is
-                            achieved when the analysis path and the statistics path are equal (nothing can be done about the
-                            visualization path), that is, when <TeX math="x = 300" />.
+			    cores working as much as possible. This is the same load balancing idea that we have seen in the <a href="/pedagogic_modules/multi_core_computing/">Parallelism
+			    tab</a> for independent tasks! This is achieved
+			    when the analysis path and the statistics path
+			    are equal (nothing can be done about the
+			    visualization path), that is, when <TeX math="x
+			    = 300" />.
+
                         </p>
                         <p>
                             For <TeX math="x = 300" /> the efficiency is 84.05%, which is the best this program can ever achieve.
