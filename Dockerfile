@@ -21,7 +21,7 @@ RUN apt-get -y install g++ gcc
 ENV CXX="g++-9" CC="gcc-9"
 WORKDIR /tmp
 
-# install SimGrid 3.31
+# install SimGrid 3.31 
 RUN wget https://framagit.org/simgrid/simgrid/-/archive/v3.31/simgrid-v3.31.tar.gz && tar -xf simgrid-v3.31.tar.gz && cd simgrid-v3.31 && cmake . && make -j4 && sudo make install && cd .. && rm -rf simgrid-v3.31*
 
 # install json for modern c++

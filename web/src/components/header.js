@@ -67,10 +67,6 @@ const Header = props => {
             About
           </Menu.Item>
 
-          <Menu.Item href="/stats" className="menu-item">
-            My Stats
-          </Menu.Item>
-
           <Auth />
 
         </Menu>

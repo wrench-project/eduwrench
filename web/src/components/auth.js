@@ -99,6 +99,9 @@ class Auth extends Component {
                   <strong>{this.state.user.name}</strong><br />
                   <small>{this.state.user.email}</small>
                 </Dropdown.Item>
+                <Dropdown.Item enabled>
+                  <a href="/stats" className="grey-link">My EduWRENCH usage</a>
+                </Dropdown.Item>
                 <Dropdown.Divider />
                 <GoogleLogout
                   clientId={CLIENT_ID}
