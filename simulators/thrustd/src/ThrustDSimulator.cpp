@@ -395,19 +395,23 @@ int main(int argc, char **argv) {
         }
     }
     auto total_energy = total_energy_cluster + total_energy_cloud;
+    auto total_energy_in_wh = (total_energy / (3.6 * 1000.0));
 
     // 1 MWh = 3,600 MJ = 3,600,000,000 J
     auto total_cost = (cost / 3600000000) * total_energy_cluster;
     auto total_co2 = (co2 / 3600000000) * total_energy_cluster;
 
+    char energy_buf[25];
     char cost_buf[25];
     char co2_buf[25];
     char exec_time_buf[25];
+    sprintf(energy_buf, "%.2f", total_energy_in_wh);
     sprintf(cost_buf, "%.2f", total_cost);
     sprintf(co2_buf, "%.2f", total_co2);
     sprintf(exec_time_buf, "%.2f", workflow_finish_time);
 
-    std::cerr << "Energy Consumption: " << total_energy << " Joules" << std::endl;
+
+    std::cerr << "Energy Consumption: " << energy_buf << " Wh" << std::endl;
 //    std::cerr << "Total Energy Monetary Cost: $" << cost_buf << std::endl;
     std::cerr << "Energy CO2 Cost:    " << co2_buf << " gCO2e" << std::endl;
     std::cerr << "Execution time:     " << exec_time_buf << " sec" << std::endl;
@@ -415,7 +419,7 @@ int main(int argc, char **argv) {
 
     nlohmann::json output_json =
             {
-                    {"energy_consumption", total_energy},
+                    {"energy_consumption", total_energy_in_wh},
                     {"energy_cost", total_cost},
                     {"energy_co2", total_co2},
                     {"exec_time", exec_time_buf}
