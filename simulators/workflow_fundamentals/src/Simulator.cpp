@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include <wrench.h>
-#include <pugixml.hpp>
 
 #include "ActivityWMS.h"
 #include "ActivityScheduler.h"

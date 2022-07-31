@@ -7,7 +7,6 @@
 #include <simgrid/s4u.hpp>
 #include <wrench.h>
 #include <nlohmann/json.hpp>
-#include <pugixml.hpp>
 
 #include "ActivityWMS.h"
 

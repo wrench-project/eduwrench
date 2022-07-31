@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <string>
 #include <wrench.h>
-#include <pugixml.hpp>
 #include <sstream>
 
 #include "ActivityWMS.h"
