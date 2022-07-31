@@ -34,6 +34,9 @@ RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git c
 # EDUWRENCH and its dependencies
 #################################################
 
+# install PUGIXML
+RUN wget http://github.com/zeux/pugixml/releases/download/v1.11/pugixml-1.11.tar.gz && tar -xf pugixml-1.11.tar.gz && cd pugixml-1.11 && cmake . && make -j12 && sudo make install && cd .. && rm -rf pugixml-1.11*
+
 # install Node and Gatsby client
 RUN apt-get upgrade ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
