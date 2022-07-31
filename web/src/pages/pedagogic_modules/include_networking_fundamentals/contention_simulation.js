@@ -8,11 +8,14 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import ContentScenario
   from "../../../images/vector_graphs/networking_fundamentals/networking_fundamentals_cyber_infrastructure.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const ContentionSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -45,6 +48,7 @@ const ContentionSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -95,6 +99,7 @@ const ContentionSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'networking_fundamentals/contention_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

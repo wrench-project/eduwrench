@@ -11,7 +11,8 @@ exports.up = function (knex) {
     return knex.schema.createTable("users", tbl => {
         tbl.increments("id")
         tbl.text("email").unique().notNullable()
-        tbl.text("name").notNullable()
+        tbl.text("name")
+        // tbl.text("name").notNullable()
     })
 }
 

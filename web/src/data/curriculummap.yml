@@ -2,7 +2,7 @@
 # Each SLO is identified by a unique key
 # Each Mapping is identified by a module key and a tab index
 
-### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later)
+### WARNING: THE ORDER OF THE TopSLOs and of the Mappings matters (to fix later perhaps? or is it now a feature?)
 
 - TopSLOs:
     - description: "explain and apply the fundamental concepts of sequential, parallel, and
@@ -34,6 +34,10 @@
       title: "Cyberinfrastructure Concepts"
     - number: "C.1"
       title: "Batch Scheduling"
+    - number: "C.2"
+      title: "Cloud Functions"
+    - number: "D.1"
+      title: "Case Study: Energy-Aware Workflow Execution"
 
 - SLOs:
     - description: "define the concepts of 'work' and of 'compute speed'"
@@ -316,6 +320,29 @@
       topSLOs:
         - "top_slo_1"
         - "top_slo_2"
+    - description: "define the concept of processor power states"
+      key: "slo_processor_power_state"
+      topSLOs:
+        - "top_slo_1"
+    - description: "explain the concept of cluster power management and how it can be done by powering hosts on and off and/or changing power states"
+      key: "slo_cluster_power_management"
+      topSLOs:
+        - "top_slo_1"
+        - "top_slo_2"
+    - description: "reason about and optimize a PDC application's execution in terms of performance, energy consumption, and carbon footprint"
+      key: "slo_optimizing_performance_and_energy"
+      topSLOs:
+        - "top_slo_3"
+    - description: "explain the concept of a cloud function"
+      key: "slo_cloud_function_basics"
+      topSLOs:
+        - "top_slo_3"
+        - "top_slo_4"
+    - description: "reason about application workloads and resource provisions in the context of cloud functions"
+      key: "slo_cloud_function_performance"
+      topSLOs:
+        - "top_slo2"
+        - "top_slo3"
 
 - Mappings:
     - module: "A.1"
@@ -392,18 +419,18 @@
         - "slo_latency_bandwidth"
         - "slo_data_transfer_time"
     - module: "A.3.1"
-      tab: "contention"
-      tabname: "Contention"
-      SLOs:
-        - "slo_contention"
-        - "slo_contention_transfer_time"
-    - module: "A.3.1"
       tab: "topologies"
       tabname: "Topology"
       SLOs:
         - "slo_topology"
         - "slo_end_to_end"
         - "slo_end_to_end_transfer_time"
+    - module: "A.3.1"
+      tab: "contention"
+      tabname: "Contention"
+      SLOs:
+        - "slo_contention"
+        - "slo_contention_transfer_time"
     - module: "A.3.2"
       tab: "client_server_basics"
       tabname: "Basics"
@@ -510,3 +537,24 @@
       SLOs:
         - "slo_batch_num_nodes_impact"
         - "slo_batch_optimization"
+    - module: "C.2"
+      tab: "solo_cloud_function"
+      tabname: "A single cloud function"
+      SLOs:
+        - "slo_cloud_function_basics"
+        - "slo_cloud_function_performance"
+    - module: "D.1"
+      tab: "local_computing"
+      tabname: "Local cluster"
+      SLOs:
+        - "slo_workflow_distributed_performance"
+        - "slo_processor_power_state"
+        - "slo_cluster_power_management"
+        - "slo_optimizing_performance_and_energy"
+    - module: "D.1"
+      tab: "cloud_computing"
+      tabname: "Local cluster and remote cloud"
+      SLOs:
+        - "slo_workflow_distributed_performance"
+        - "slo_workflow_distributed_data_locality"
+        - "slo_optimizing_performance_and_energy"

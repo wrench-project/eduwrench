@@ -13,17 +13,17 @@ namespace wrench {
      * @param storage_services
      * @param hostname
      */
-    ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                             const std::shared_ptr<ComputeService> &compute_services,
-                             const std::string &hostname) : WMS (
-                                     std::move(standard_job_scheduler),
-                                     nullptr,
-                                     {compute_services},
-                                     {},
-                                     {}, nullptr,
+    ActivityWMS::ActivityWMS(const std::shared_ptr<ComputeService> &compute_service,
+                             const std::shared_ptr<Workflow> &workflow,
+                             const std::string &scheduling_scheme,
+                             const std::string &hostname) : ExecutionController (
                                      hostname,
                                      "multicore"
-                                     ) {}
+                                     ) {
+        this->workflow = workflow;
+        this->compute_service = compute_service;
+        this->scheduling_scheme = scheduling_scheme;
+    }
 
     /**
      * @brief WMS main method
@@ -40,33 +40,28 @@ namespace wrench {
 
         while (true) {
             // Get the ready tasks
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
-
-            // Get the available compute services, in this case only one
-            const auto compute_services = this->getAvailableComputeServices<ComputeService>();
+            auto ready_tasks = this->workflow->getReadyTasks();
 
             // Run ready tasks with defined scheduler implementation
-            this->getStandardJobScheduler()->scheduleTasks(
-                    compute_services,
-                    ready_tasks);
+            this->scheduleTasks(ready_tasks);
 
             // Wait for a workflow execution event, and process it
             try {
                 this->waitForAndProcessNextEvent();
-            } catch (WorkflowExecutionException &e) {
+            } catch (ExecutionException &e) {
                 WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                             (e.getCause()->toString().c_str()));
                 continue;
             }
-            if (this->abort || this->getWorkflow()->isDone()) {
+            if (this->abort || this->workflow->isDone()) {
                 break;
             }
         }
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
         WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
+        if (this->workflow->isDone()) {
+            WRENCH_INFO("Execution completed in %.2f seconds!", this->workflow->getCompletionDate());
         } else {
             WRENCH_INFO("Execution is incomplete!");
         }
@@ -84,5 +79,57 @@ namespace wrench {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         WRENCH_INFO("Task %s has completed", standard_job->getTasks().at(0)->getID().c_str());
+    }
+
+
+    void ActivityWMS::scheduleTasks(const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks) {
+
+        TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
+
+        auto idle_core_count = compute_service->getPerHostNumIdleCores()["the_host"];
+
+        std::set<std::shared_ptr<WorkflowTask>> ready_task_set;
+        for (auto const &t : ready_tasks) {
+            ready_task_set.insert(t);
+        }
+
+        // Map of which tasks shouldn't be picked first based on the scheduling scheme
+        std::map<std::string, std::vector<std::string>> losers;
+        losers["viz"] = {"viz", "plot"};
+        losers["analyze"] = {"analyze", "summarize"};
+        losers["stats"] = {"stats"};
+        int num_scheduled =  0;
+
+        //  Schedule tasks
+        while ((!ready_task_set.empty()) and (idle_core_count > 0)) {
+
+            std::shared_ptr<WorkflowTask> lucky_winner;
+            if (ready_task_set.size() == 1)  {
+                lucky_winner = *(ready_task_set.begin());
+            } else {
+                //  This is pretty lame, but it's just a one-shot simulator :)
+                for (auto const &t  : ready_task_set)  {
+                    bool is_a_loser = false;
+                    for (auto const &l : losers[this->scheduling_scheme]) {
+                        if (t->getID() == l) {
+                            is_a_loser = true;
+                            break;
+                        }
+                    }
+                    if (!is_a_loser) {
+                        lucky_winner = t;
+                        break;
+                    }
+                }
+            }
+            ready_task_set.erase(lucky_winner);
+
+            WRENCH_INFO("Starting task %s on a core!", lucky_winner->getID().c_str());
+            auto job = this->job_manager->createStandardJob(lucky_winner);
+            this->job_manager->submitJob(job, compute_service, {});
+            idle_core_count--;
+            num_scheduled++;
+        }
+
     }
 }

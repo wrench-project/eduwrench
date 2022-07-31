@@ -4,6 +4,8 @@ import { Divider, Header } from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 
 import WorkflowsCapstoneScenario from "../../../images/vector_graphs/workflows/workflow_capstone.svg"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const WorkflowsCapstone = ({module, tab}) => {
     return (
@@ -58,6 +60,20 @@ const WorkflowsCapstone = ({module, tab}) => {
 
             <p><strong>[A.3.4.q5.1]</strong> Which upgrade should you pick? Show your work, by deriving the completion time of
                 the last task from a Gantt chart of the workflow execution for each option above.</p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "workflows_capstone",
+                        module: "A.3.4"
+                    },
+                ]} />
+            } />
+
 
         </>
     )

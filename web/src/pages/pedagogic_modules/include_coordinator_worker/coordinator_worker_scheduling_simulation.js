@@ -9,11 +9,14 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import CoordinatorWorkerSchedulingScenario
   from "../../../images/vector_graphs/coordinator_worker/coordinator_worker.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const CoordinatorWorkerSchedulingSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -81,6 +84,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   let fixed_task_specs = ""
                   let tokens = "100 10 100, 100 1000 100, 1000 1000 1000, 1000 1000 1000".split(",")
                   for (let i = 0; i < tokens.length; i++) {
@@ -451,6 +455,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'coordinator_worker/coordinator_worker_scheduling_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

@@ -30,7 +30,7 @@
  *
  * @throws std::invalid_argument
  */
-void generateWorkflow(wrench::Workflow *workflow,
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow,
                       std::vector<std::tuple<int,int,int>> task_specs,
                       bool task1_before_task2)  {
 
@@ -49,7 +49,7 @@ void generateWorkflow(wrench::Workflow *workflow,
     const double MB = 1000.0 * 1000.0;
 
     // Create tasks
-    std::vector<std::tuple<wrench::WorkflowTask*, wrench::WorkflowTask*, wrench::WorkflowTask*>> tasks;
+    std::vector<std::tuple<std::shared_ptr<wrench::WorkflowTask>, std::shared_ptr<wrench::WorkflowTask>, std::shared_ptr<wrench::WorkflowTask>>> tasks;
     int count = 0;
     for (auto const &task_spec : task_specs) {
         count++;
@@ -139,9 +139,9 @@ void generatePlatform(std::string platform_file_path) {
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
+    auto simulation = wrench::Simulation::createSimulation();
 
-    simulation.init(&argc, argv);
+    simulation->init(&argc, argv);
 
     int TASK1_READ;
     int TASK1_WRITE;
@@ -194,35 +194,34 @@ int main(int argc, char **argv) {
     }
 
     // create workflow
-    wrench::Workflow workflow;
+    auto workflow = wrench::Workflow::createWorkflow();
     std::vector<std::tuple<int,int,int>> task_specs;
     task_specs.push_back(std::make_tuple(TASK1_READ, TASK1_WRITE, TASK1_GFLOP));
     task_specs.push_back(std::make_tuple(TASK2_READ, TASK2_WRITE, TASK2_GFLOP));
 
-    generateWorkflow(&workflow, task_specs, TASK1_BEFORE_TASK2);
+    generateWorkflow(workflow, task_specs, TASK1_BEFORE_TASK2);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path);
 
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     const std::string WMS_HOST("twocorehost");
     const std::string COMPUTE_HOST("twocorehost");
     const std::string STORAGE_HOST("twocorehost");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto io_storage_service = simulation.add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}, {}));
+    auto io_storage_service = simulation->add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}, {}));
     storage_services.insert(io_storage_service);
 
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
-    auto compute_service = simulation.add(
+    auto compute_service = simulation->add(
             new wrench::BareMetalComputeService(
                     COMPUTE_HOST,
                     {{COMPUTE_HOST, std::make_tuple(2, wrench::ComputeService::ALL_RAM)}},
                     "",
                     {
-                            {wrench::BareMetalComputeServiceProperty::TASK_STARTUP_OVERHEAD, "0"},
                     },
                     {}
             )
@@ -230,27 +229,26 @@ int main(int argc, char **argv) {
     compute_services.insert(compute_service);
 
     // wms
-    auto wms = simulation.add(new wrench::ActivityWMS(std::unique_ptr<wrench::ActivityScheduler>(
-            new wrench::ActivityScheduler(io_storage_service)),
+    auto wms = simulation->add(new wrench::ActivityWMS(
+            new wrench::ActivityScheduler(io_storage_service),
                                                       compute_services,
                                                       storage_services,
+                                                      workflow,
                                                       WMS_HOST
     ));
 
-    wms->addWorkflow(&workflow);
-
     auto *file_registry_service =
             new wrench::FileRegistryService(WMS_HOST);
-    simulation.add(file_registry_service);
+    simulation->add(file_registry_service);
 
     // stage the input files
-    for (auto const &file : workflow.getInputFiles()) {
-        simulation.stageFile(file, io_storage_service);
+    for (auto const &file : workflow->getInputFiles()) {
+        simulation->stageFile(file, io_storage_service);
     }
 
-    simulation.getOutput().enableDiskTimestamps(true);
-    simulation.launch();
+    simulation->getOutput().enableDiskTimestamps(true);
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", true, true, true, false, false, true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", true, true, true, false, false, true);
     return 0;
 }

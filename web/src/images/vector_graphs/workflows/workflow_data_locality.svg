@@ -411,7 +411,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b><span class="wf-locality-num-cores-label">Cores: 1</span></b>
+                                    <b><span class="wf-locality-num-cores-label-1">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>
@@ -760,7 +760,7 @@
                                     <span style="font-size: 14px">Core speed: 100 GFlop/sec</span>
                                 </div>
                                 <div style="font-size: 14px">
-                                    <b><span class="wf-locality-num-cores-label">Cores: 1</span></b>
+                                    <b><span class="wf-locality-num-cores-label-2">Cores: 1</span></b>
                                     <span style="font-size: 14px">
                                         <br style="font-size: 14px"/>
                                     </span>

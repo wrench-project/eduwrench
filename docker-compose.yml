@@ -3,7 +3,7 @@ services:
   eduwrench:
     image: wrenchproject/eduwrench:latest
     ports:
-      - "${EDUWRENCH_JEKYLL_PORT}:4000"
+      - "${EDUWRENCH_GATSBY_PORT}:4000"
       - "${EDUWRENCH_NODE_PORT}:3000"
     volumes:
       - ${EDUWRENCH_DB_DIR}:/home/wrench/eduwrench/db

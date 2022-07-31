@@ -17,7 +17,7 @@
  * @brief Generate the workflow
  * @description Fork-Join
  */
-void generateWorkflow(wrench::Workflow *workflow,
+void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow,
                       int task_blue_num_cores,
                       int task_yellow_num_cores,
                       int task_purple_num_cores
@@ -122,8 +122,8 @@ void generatePlatform(std::string platform_file_path) {
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     int BLUE_NUM_CORES;
     int YELLOW_NUM_CORES;
@@ -159,16 +159,16 @@ int main(int argc, char **argv) {
     }
 
     // generate workflow
-    wrench::Workflow workflow;
-    generateWorkflow(&workflow, BLUE_NUM_CORES, YELLOW_NUM_CORES, PURPLE_NUM_CORES);
+    auto workflow = wrench::Workflow::createWorkflow();
+    generateWorkflow(workflow, BLUE_NUM_CORES, YELLOW_NUM_CORES, PURPLE_NUM_CORES);
 
     // generate platform
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     std::vector<std::string> compute_hosts = {"host1", "host2"};
-    auto compute_service = simulation.add(new wrench::BareMetalComputeService(
+    auto compute_service = simulation->add(new wrench::BareMetalComputeService(
             "host1",
             compute_hosts,
             {},
@@ -176,14 +176,12 @@ int main(int argc, char **argv) {
     ));
 
     // WMS on user.edu
-    auto wms = simulation.add(new wrench::ActivityWMS({compute_service},
-                                                      {},"host1"
+    auto wms = simulation->add(new wrench::ActivityWMS({compute_service},
+                                                      {}, workflow, "host1"
     ));
 
-    wms->addWorkflow(&workflow);
-
     // launch the simulation
-    simulation.launch();
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json");
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json");
 }

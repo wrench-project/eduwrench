@@ -4,6 +4,8 @@ import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
 import GanttChart from "../../../images/vector_graphs/batch_scheduling/gantt_chart.svg"
 import Basics from "../../../images/vector_graphs/batch_scheduling/basics.svg";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const BatchQueue = ({ module, tab }) => {
     return (
@@ -119,6 +121,19 @@ const BatchQueue = ({ module, tab }) => {
                 Inspecting the state of the batch queue is easy and can help you understand what is going on on the cluster.
                 We'll see in the next tab that it can even help you reduce job turnaround time.
             </strong></p>
+
+            <Header as="h3" block>
+                You feedback is appreciated
+            </Header>
+
+            <FeedbackActivity content={
+                <FeedbackQuestions feedbacks={[
+                    {
+                        tabkey: "batch_queue",
+                        module: "C.1"
+                    },
+                ]} />
+            } />
 
         </>
     )

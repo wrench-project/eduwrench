@@ -13,11 +13,14 @@ import {
 } from "../../../components/simulation/simulation_validation"
 
 import ClientServerDiskScenario from "../../../images/vector_graphs/client_server/client_server_disk.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const ClientServerPipeliningSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -44,7 +47,8 @@ const ClientServerPipeliningSimulation = () => {
                   errors.server1Latency = "ERROR"
                 }
                 if (!validateFieldInMultipleRanges("csd-buffer-size-label", values.bufferSize, [
-                  { min: 50000, max: 999999, postfix: "MB", valueLambdaFunction: (v) => v / 1000 },
+                  { min: 100, max:  999, postfix: "KB", valueLambdaFunction: (v) => v },
+                  { min: 1000, max: 999999, postfix: "MB", valueLambdaFunction: (v) => v / 1000 },
                   { min: 1000000, max: 1000000, postfix: "GB", valueLambdaFunction: (v) => v / 1000000 }
                 ])) {
                   errors.bufferSize = "ERROR"
@@ -58,6 +62,7 @@ const ClientServerPipeliningSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -77,8 +82,8 @@ const ClientServerPipeliningSimulation = () => {
                       setSimulationResults(
                         <>
                           <SimulationOutput output={response.data.simulation_output} />
-                          <HostUtilizationChart data={response.data.task_data} diskHostsList={diskHostsList} />
-                          <NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />
+                          {/*<HostUtilizationChart data={response.data.task_data} diskHostsList={diskHostsList} />*/}
+                          {/*<NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />*/}
                         </>
                       )
                     },
@@ -142,13 +147,13 @@ const ClientServerPipeliningSimulation = () => {
                                 label="Buffer Size (KB)"
                                 placeholder="100000"
                                 type="number"
-                                min={50000}
+                                min={100}
                                 max={1000000}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.bufferSize}
                                 error={errors.bufferSize && touched.bufferSize ? {
-                                  content: "Please provide a buffer size in KB between 50,000 and 1,000,000.",
+                                  content: "Please provide a buffer size in KB between 100 and 1,000,000.",
                                   pointing: "above"
                                 } : null}
                     />
@@ -157,6 +162,7 @@ const ClientServerPipeliningSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'client_server/client_server_pipelining_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

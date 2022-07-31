@@ -12,11 +12,14 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDataLocalityScenario from "../../../images/vector_graphs/workflows/workflow_data_locality.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const WorkflowsDataLocalitySimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -40,7 +43,10 @@ const WorkflowsDataLocalitySimulation = () => {
 
               validate={values => {
                 const errors = {}
-                if (!validateFieldInRange("wf-locality-num-cores-label", values.numCores, 1, 32, "Cores:")) {
+                if (!validateFieldInRange("wf-locality-num-cores-label-1", values.numCores, 1, 32, "Cores:")) {
+                  errors.numCores = "ERROR"
+                }
+                if (!validateFieldInRange("wf-locality-num-cores-label-2", values.numCores, 1, 32, "Cores:")) {
                   errors.numCores = "ERROR"
                 }
                 if (!validateFieldInRange("wf-locality-num-hosts-label", values.numHosts, 1, 20, "N =", "Host(s)")) {
@@ -58,6 +64,7 @@ const WorkflowsDataLocalitySimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -128,7 +135,7 @@ const WorkflowsDataLocalitySimulation = () => {
                                 } : null}
                     />
                     <Form.Input fluid name="linkBandwidth"
-                                label="Number of cores per compute host"
+                                label="Wide-area link bandwidth"
                                 placeholder="1"
                                 type="number"
                                 min={1}
@@ -156,6 +163,7 @@ const WorkflowsDataLocalitySimulation = () => {
                 </Form>
               )}
             </Formik>
+              <SimulationFeedback simulationID={'workflows/workflows_data_locality_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

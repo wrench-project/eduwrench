@@ -15,16 +15,17 @@ XBT_LOG_NEW_DEFAULT_CATEGORY(FileCopyWMS, "Log category for FileCopyWMS");
 
 namespace wrench {
     ActivityWMS::ActivityWMS(const std::set<std::shared_ptr<StorageService>> &storage_services,
+                             const std::shared_ptr<Workflow> workflow,
                              const std::string &hostname)
-            : WMS(nullptr, nullptr, {}, storage_services, {}, nullptr, hostname, "activity0") {
+            : ExecutionController(hostname, "activity_wms") {
+        this->workflow = workflow;
+        this->storage_services = storage_services;
 
     }
 
     int ActivityWMS::main() {
 
         this->data_movement_manager = this->createDataMovementManager();
-
-        auto storage_services = this->getAvailableStorageServices();
 
         auto storage_service_1 = std::find_if(
                 storage_services.begin(),
@@ -42,14 +43,14 @@ namespace wrench {
                            "host2";
                 });
 
-        for (auto const &file : this->getWorkflow()->getFiles()) {
-            this->data_movement_manager->initiateAsynchronousFileCopy(file,
+        for (auto const &file : this->workflow->getFileMap()) {
+            this->data_movement_manager->initiateAsynchronousFileCopy(file.second,
                                                                       FileLocation::LOCATION(*storage_service_1, "/"),
                                                                       FileLocation::LOCATION(*storage_service_2, "/"),
                                                                       nullptr);
         }
 
-        for (auto const &file: this->getWorkflow()->getFiles()) {
+        for (auto const &file: this->workflow->getFileMap()) {
             this->waitForAndProcessNextEvent();
         }
 

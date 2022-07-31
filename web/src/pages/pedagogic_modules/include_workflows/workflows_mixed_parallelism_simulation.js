@@ -11,11 +11,14 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import WorkflowsMixedParallelismScenario
   from "../../../images/vector_graphs/workflows/workflow_task_data_parallelism.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const WorkflowsMixedParallelismSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -56,6 +59,7 @@ const WorkflowsMixedParallelismSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -147,6 +151,7 @@ const WorkflowsMixedParallelismSimulation = () => {
                 </Form>
               )}
             </Formik>
+              <SimulationFeedback simulationID={'workflows/workflows_mixed_parallelism_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

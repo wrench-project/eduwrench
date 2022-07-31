@@ -10,11 +10,13 @@ import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import CoordinatorWorkerBasicsScenario
   from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_no_output.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const CoordinatorWorkerBasicsSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -52,6 +54,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   let fixed_task_specs = ""
                   let tokens = values.tasks.split(",")
                   for (let i = 0; i < tokens.length; i++) {
@@ -250,6 +253,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'coordinator_worker/coordinator_worker_basics_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

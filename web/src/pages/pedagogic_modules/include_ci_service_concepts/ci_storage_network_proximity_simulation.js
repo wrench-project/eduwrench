@@ -18,11 +18,13 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import CIStorageNetworkProximityScenario
   from "../../../images/vector_graphs/ci_service_concepts/ci_network_proximity.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const CIStorageNetworkProximitySimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -79,6 +81,7 @@ const CIStorageNetworkProximitySimulation = () => {
                       setSimulationResults(<></>)
                       return
                     }
+                    setRunTimes(runtimes + 1)
                     const data = {
                       user_name: localStorage.getItem("userName"),
                       email: localStorage.getItem("currentUser"),
@@ -237,6 +240,7 @@ const CIStorageNetworkProximitySimulation = () => {
                   )
                 }
               </Formik>
+              <SimulationFeedback simulationID={'ci_service_concepts/ci_storage_network_proximity_simulation'} trigger={runtimes === 3}/>
             </Segment>
           </Segment.Group>
 

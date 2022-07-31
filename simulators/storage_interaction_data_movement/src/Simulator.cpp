@@ -80,8 +80,8 @@ void generatePlatform(std::string &platform_file_path, int link_bandwidth) {
  */
 int main(int argc, char **argv) {
 
-    wrench::Simulation simulation;
-    simulation.init(&argc, argv);
+    auto simulation = wrench::Simulation::createSimulation();
+    simulation->init(&argc, argv);
 
     int SERVER_LINK_BANDWIDTH;
     int FILE_SIZE;
@@ -114,31 +114,32 @@ int main(int argc, char **argv) {
 
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
-        std::cerr << "Usage: " << argv[0] << " <server_link_bandwidth> <file_size>" << std::endl;
+        std::cerr << "Usage: " << argv[0] << " <server_link_bandwidth> <file_size> <file registry overhead>" << std::endl;
         std::cerr << "   server_link_bandwidth: Bandwidth must be in range [1,1000000] MBps" << std::endl;
         std::cerr << "   file size: File size must be in range [1,100000] MBps" << std::endl;
+        std::cerr << "   file registry overhead: in range [1, 10] sec" << std::endl;
         std::cerr << "" << std::endl;
         return 1;
     }
 
     // create workflow
-    wrench::Workflow workflow;
-    workflow.addFile("data_file", FILE_SIZE * MB);
+    auto workflow = wrench::Workflow::createWorkflow();
+    workflow->addFile("data_file", FILE_SIZE * MB);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
     generatePlatform(platform_file_path, SERVER_LINK_BANDWIDTH);
-    simulation.instantiatePlatform(platform_file_path);
+    simulation->instantiatePlatform(platform_file_path);
 
     const std::string CLIENT("Client");
     const std::string FILEREGISTRY("FileRegistryService");
     const std::string SERVER("StorageService");
 
     //adding and instantiating storage services and file registry
-    auto client_storage_service = simulation.add(new wrench::SimpleStorageService(
+    auto client_storage_service = simulation->add(new wrench::SimpleStorageService(
             CLIENT, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
-    auto server_storage_service = simulation.add(new wrench::SimpleStorageService(
+    auto server_storage_service = simulation->add(new wrench::SimpleStorageService(
             SERVER, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
 
@@ -146,24 +147,22 @@ int main(int argc, char **argv) {
     storage_services.insert(client_storage_service);
     storage_services.insert(server_storage_service);
 
-    auto file_registry = simulation.add(new wrench::FileRegistryService(FILEREGISTRY, {
+    auto file_registry = simulation->add(new wrench::FileRegistryService(FILEREGISTRY, {
             {wrench::FileRegistryServiceProperty::ADD_ENTRY_COMPUTE_COST, std::to_string(FILE_REGISTRY_OVERHEAD)}
     }, {}));
 
     //adding WMS and workflow to simulation
-    auto wms = simulation.add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry));
-
-    wms->addWorkflow(&workflow);
+    auto wms = simulation->add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry, workflow));
 
     //staging file to be copied on client storage service
-    auto file = workflow.getFileByID("data_file");
-    simulation.stageFile(file, client_storage_service);
+    auto file = workflow->getFileByID("data_file");
+    simulation->stageFile(file, client_storage_service);
 
-    simulation.getOutput().enableDiskTimestamps(true);
+    simulation->getOutput().enableDiskTimestamps(true);
 
-    simulation.launch();
+    simulation->launch();
 
-    simulation.getOutput().dumpUnifiedJSON(&workflow, "/tmp/workflow_data.json", false, false, false, false, false, true, true);
+    simulation->getOutput().dumpUnifiedJSON(workflow, "/tmp/workflow_data.json", false, false, false, false, false, true, true);
 
     return 0;
 }

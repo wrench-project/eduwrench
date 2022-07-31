@@ -12,11 +12,13 @@ import {
 
 import LoadImbalanceSimulationScenario
   from "../../../images/vector_graphs/multi_core/multicore_load_imbalance_simulation.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const LoadImbalanceSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -60,6 +62,7 @@ const LoadImbalanceSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -150,6 +153,7 @@ const LoadImbalanceSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'multi_core_computing/load_imbalance_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

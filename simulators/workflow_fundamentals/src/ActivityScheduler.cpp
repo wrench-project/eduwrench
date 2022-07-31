@@ -19,7 +19,7 @@ namespace wrench {
      * @param storage_services: storage service
      */
     ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service)
-            : StandardJobScheduler(), storage_service(storage_service) {}
+            : storage_service(storage_service) {}
 
     /**
      * @brief Schedules a single ready task at a time on the compute service.
@@ -32,7 +32,7 @@ namespace wrench {
      * @param ready_tasks
      */
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                                          const std::vector<WorkflowTask *> &ready_tasks) {
+                                          const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks) {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
 
@@ -47,15 +47,15 @@ namespace wrench {
         for (const auto &t : ready_tasks) {
             if ((idle_core_count > 0) and (free_ram >= t->getMemoryRequirement())) {
                 WRENCH_INFO("Starting task %s on a core", t->getID().c_str());
-                std::map<wrench::WorkflowFile *, std::shared_ptr<wrench::FileLocation>> file_locations;
+                std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
                 for (auto const &f : t->getInputFiles()) {
                     file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
                 }
                 for (auto const &f : t->getOutputFiles()) {
                     file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);;
                 }
-                auto job = this->getJobManager()->createStandardJob(t, file_locations);
-                this->getJobManager()->submitJob(job, compute_service, {});
+                auto job = this->job_manager->createStandardJob(t, file_locations);
+                this->job_manager->submitJob(job, compute_service, {});
 
                 idle_core_count--;
                 free_ram -= t->getMemoryRequirement();

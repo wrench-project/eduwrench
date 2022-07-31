@@ -7,19 +7,25 @@ namespace wrench {
 
     class Simulation;
 
-    class ActivityWMS : public WMS {
+    class ActivityWMS : public ExecutionController {
     public:
-        ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
-                    const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                    const std::set<std::shared_ptr<StorageService>> &storage_services,
-                    const std::string &hostname);
+        ActivityWMS(const std::shared_ptr<ComputeService> &compute_service,
+                    const std::shared_ptr<StorageService> &storage_service,
+                    const std::string &hostname,
+                    const std::shared_ptr<Workflow>& workflow);
 
         void processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent>) override;
 
     private:
         int main() override;
 
+        void scheduleTasks(const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks);
+
+        std::shared_ptr<wrench::ComputeService> compute_service;
+        std::shared_ptr<wrench::StorageService> storage_service;
+
         std::shared_ptr<JobManager> job_manager;
+        std::shared_ptr<Workflow> workflow;
         bool abort = false;
 
     };

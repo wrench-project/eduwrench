@@ -53,7 +53,7 @@ const Footer = () => (
             >
               <StaticImage
                 src="../images/logo-nsf.png"
-                height={40}
+                height={35}
                 alt="NSF logo"
                 backgroundColor="#fff"
               />
@@ -63,26 +63,12 @@ const Footer = () => (
               target="_blank"
               rel="noreferrer"
               className="link m-lg-2"
-              style={{marginLeft: "1em", verticalAlign: "top"}}
+              style={{marginLeft: "1em", verticalAlign: "bottom"}}
             >
               <StaticImage
                 src="../images/logo-uhm.png"
-                height={40}
-                alt="UHM logo"
-                backgroundColor="#fff"
-              />
-            </a>
-            <a
-              href="https://www.isi.edu/"
-              target="_blank"
-              rel="noreferrer"
-              className="link m-lg-2"
-              style={{marginLeft: "0.5em", verticalAlign: "bottom"}}
-            >
-              <StaticImage
-                src="../images/logo-usc.png"
                 height={35}
-                alt="USC logo"
+                alt="UHM logo"
                 backgroundColor="#fff"
               />
             </a>
@@ -91,12 +77,26 @@ const Footer = () => (
               target="_blank"
               rel="noreferrer"
               className="link m-lg-2"
-              style={{marginLeft: "0.5em", verticalAlign: "bottom"}}
+              style={{marginLeft: "1em", verticalAlign: "bottom"}}
             >
               <StaticImage
                 src="../images/logo-ornl.png"
                 height={30}
                 alt="ORNL logo"
+                backgroundColor="#fff"
+              />
+            </a>
+            <a
+              href="https://www.isi.edu/"
+              target="_blank"
+              rel="noreferrer"
+              className="link m-lg-2"
+              style={{marginLeft: "1em", verticalAlign: "bottom"}}
+            >
+              <StaticImage
+                src="../images/logo-usc.png"
+                height={30}
+                alt="USC logo"
                 backgroundColor="#fff"
               />
             </a>

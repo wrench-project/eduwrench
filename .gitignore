@@ -8,6 +8,7 @@ _site/
 *.bak
 web/.bundle/
 web/vendor/
+Testing
 
 
 # Simulators

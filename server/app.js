@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2019-2021. The WRENCH Team.
+ * Copyright (c) 2019-2022. The WRENCH Team.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     au = require("ansi_up"),
-    {spawnSync} = require("child_process"),
+    { spawnSync } = require("child_process"),
     fs = require("fs")
 
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
@@ -20,10 +20,11 @@ const cors = require("cors")
 const db = require("./data/db-config")
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 const ansiUp = new au.default();
+const serverTime = new Date();
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 
@@ -37,7 +38,8 @@ app.use(function (req, res, next) {
 });
 
 /* CORS */
-let whitelist = ["https://eduwrench.ics.hawaii.edu", "http://localhost:8000"]
+let whitelist = ["https://eduwrench.ics.hawaii.edu",
+                "http://localhost:8000"]
 let corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -52,6 +54,12 @@ app.use(cors(corsOptions))
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
     res.send("eduWRENCH Pedagogic Modules")
+})
+
+app.get("/server_time", function (req, res) {
+    res.json({
+        "time": serverTime
+    })
 })
 
 // execute networking fundamentals simulation route
@@ -332,7 +340,7 @@ app.post("/run/multi_core_independent_tasks_io", function (req, res) {
     const TASK2_INPUT_SIZE = req.body.task2_input_size
     const TASK2_OUTPUT_SIZE = req.body.task2_output_size
     const TASK2_WORK = req.body.task2_work
-    const TASK1_BEFORE_TASK2 = req.body.first_task === 1
+    const TASK1_BEFORE_TASK2 = (req.body.first_task === "1")
 
     // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
     const LOGGING = [
@@ -482,7 +490,7 @@ app.post("/run/io_operations", function (req, res) {
         "--log=wms.thresh:debug",
         "--log=simple_wms.thresh:debug",
         "--log=simple_wms_scheduler.thresh:debug",
-        "--log='root.fmt:[%d][%h:%t]%e%m%n'",
+        "--log='root.fmt:%e%m%n'",
     ];
 
     const SIMULATION_ARGS = [
@@ -997,6 +1005,353 @@ app.post("/run/ci_overhead", function (req, res) {
     }
 });
 
+// execute thrust d simulator
+app.post("/run/thrustd", function (req, res) {
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/thrustd/"
+    );
+
+    const SIMULATOR = "thrustd";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_HOSTS = req.body.num_hosts;
+    const PSTATE = req.body.pstate;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
+
+    const json_data = {
+        "workflow_file": PATH_PREFIX + "workflows/bigger-montage-workflow.json",
+        "num_hosts": parseInt(NUM_HOSTS),
+        "cores": 8,
+        "min_cores_per_task": 4,
+        "max_cores_per_task": 4,
+        "pstate": parseInt(PSTATE),
+        "speed": "22.43Gf, 26.17Gf, 29.91Gf, 33.65Gf, 37.39Gf, 41.13Gf, 43Gf",
+        "value": "98:98:120, 98:98:130, 98:98:140, 98:98:150, 98:98:160, 98:98:170, 98:98:190",
+        "energy_cost_per_mwh": 1000,
+        "energy_co2_per_mwh": 291000,
+        "use_cloud": false,
+        "num_cloud_hosts": 0,
+        "cloud_cores": 0,
+        "cloud_bandwidth": "15MBps",
+        "cloud_pstate": 0,
+        "cloud_speed": "",
+        "cloud_value": "",
+        "cloud_cost_per_mwh": 0,
+        "num_vm_instances": 0,
+        "vm_usage_duration": 0,
+        "cloud_tasks": ""
+    }
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    let args_json = JSON.stringify(json_data);
+    console.log(args_json);
+    const fs = require('fs');
+
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if (err) console.log('error', err);
+    });
+
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+
+    let sim_output_start = simulation_output.indexOf("Total");
+    let trimmed_sim_output = simulation_output.substring(sim_output_start);
+    let output_array = trimmed_sim_output.split("\n");
+    let printed_sim_output = "";
+    for (let i = 0; i < output_array.length; i++) {
+        if (!output_array[i].startsWith('Num')) {
+            printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+                + output_array[i] + "<br></span>";
+        }
+    }
+
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            params: json_data,
+            activity: "thrustd"
+        });
+
+        res.json({
+            "simulation_output": printed_sim_output,
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        })
+    }
+});
+
+// execute thrust d cloud simulator
+app.post("/run/thrustd_cloud", function (req, res) {
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/thrustd/"
+    );
+
+    const SIMULATOR = "thrustd";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_HOSTS = req.body.num_hosts;
+    const PSTATE = req.body.pstate;
+    const NUM_CLOUD_HOSTS = 4;
+    const NUM_VM_INSTANCES = req.body.numVmInstances;
+    let MPROJECT_CLOUD = Math.round(((parseInt(req.body.mProjectCloud) * 1.0) / 100) * 117);
+    let MDIFFFIT_CLOUD = Math.round(((parseInt(req.body.mDiffFitCloud) * 1.0) / 100) * 499);
+    let MCONCATFIT_CLOUD = req.body.mConcatFitCloud;
+    let MBGMODEL_CLOUD = req.body.mBgModelCloud;
+    let MBACKGROUND_CLOUD = Math.round(((parseInt(req.body.mBackgroundCloud) * 1.0) / 100) * 117);
+    let MIMGTBL_CLOUD = req.body.mImgtblCloud;
+    let MADD_CLOUD = req.body.mAddCloud;
+    let MVIEWER_CLOUD = req.body.mViewerCloud;
+
+    let USE_CLOUD = true;
+
+    if (NUM_VM_INSTANCES == 0) {
+        USE_CLOUD = false;
+        MPROJECT_CLOUD = 0;
+        MDIFFFIT_CLOUD = 0;
+        MCONCATFIT_CLOUD = false;
+        MBGMODEL_CLOUD = false;
+        MBACKGROUND_CLOUD = 0;
+        MIMGTBL_CLOUD = false;
+        MADD_CLOUD = false;
+        MVIEWER_CLOUD = false;
+    }
+
+    // mProject = 1 - 117
+    // mDiffFit = 118 - 616
+    // mConcatFit = 617
+    // mBgModel = 618
+    // mBackground = 619 - 735
+    // mImgBtl = 736
+    // mAdd = 737
+    // mViewer = 738
+
+    let CLOUD_TASKS = "";
+
+    for (let i = 1; i < MPROJECT_CLOUD + 1; i++) {
+        let task = "";
+        if (i / 100 >= 1) {
+            task = "mProject_00000" + i.toString() + ",";
+        } else if (i / 10 >= 1) {
+            task = "mProject_000000" + i.toString() + ",";
+        } else {
+            task = "mProject_0000000" + i.toString() + ",";
+        }
+        CLOUD_TASKS += task;
+    }
+    for (let i = 118; i < MDIFFFIT_CLOUD + 118; i++) {
+        const task = "mDiffFit_00000" + i.toString() + ",";
+        CLOUD_TASKS += task;
+    }
+    if (MCONCATFIT_CLOUD === true) {
+        CLOUD_TASKS += "mConcatFit_00000617,";
+    }
+    if (MBGMODEL_CLOUD === true) {
+        CLOUD_TASKS += "mBgModel_00000618,";
+    }
+    for (let i = 619; i < MBACKGROUND_CLOUD + 619; i++) {
+        const task = "mBackground_00000" + i.toString() + ",";
+        CLOUD_TASKS += task;
+    }
+    if (MIMGTBL_CLOUD === true) {
+        CLOUD_TASKS += "mImgtbl_00000736,";
+    }
+    if (MADD_CLOUD === true) {
+        CLOUD_TASKS += "mAdd_00000737,";
+    }
+    if (MVIEWER_CLOUD === true) {
+        CLOUD_TASKS += "mViewer_00000738,";
+    }
+
+    if (CLOUD_TASKS != "") {
+        CLOUD_TASKS = CLOUD_TASKS.substring(0, CLOUD_TASKS.length - 1);
+    }
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
+
+    const json_data = {
+        "workflow_file": PATH_PREFIX + "workflows/bigger-montage-workflow.json",
+        "num_hosts": parseInt(NUM_HOSTS),
+        "cores": 8,
+        "min_cores_per_task": 4,
+        "max_cores_per_task": 4,
+        "pstate": parseInt(PSTATE),
+        "speed": "22.43Gf, 26.17Gf, 29.91Gf, 33.65Gf, 37.39Gf, 41.13Gf, 43Gf",
+        "value": "98:98:120, 98:98:130, 98:98:140, 98:98:150, 98:98:160, 98:98:170, 98:98:190",
+        "energy_cost_per_mwh": 1000,
+        "energy_co2_per_mwh": 291000,
+        "use_cloud": USE_CLOUD,
+        "num_cloud_hosts": parseInt(NUM_CLOUD_HOSTS),
+        "cloud_cores": 16,
+        "cloud_bandwidth": "15MBps",
+        "cloud_pstate": 0,
+        "cloud_speed": "34.4Gf",
+        "cloud_value": "10.00:10.00:80.00",
+        "cloud_cost_per_mwh": 1000,
+        "num_vm_instances": parseInt(NUM_VM_INSTANCES),
+        "vm_usage_duration": 10,
+        "cloud_tasks": CLOUD_TASKS
+    }
+
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    let args_json = JSON.stringify(json_data);
+    // console.log(args_json);
+    const fs = require('fs');
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if (err) console.log('error', err);
+    });
+
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    var simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+
+    let sim_output_start = simulation_output.indexOf("Total");
+    let trimmed_sim_output = simulation_output.substring(sim_output_start);
+    let output_array = trimmed_sim_output.split("\n");
+    let printed_sim_output = "";
+    for (let i = 0; i < output_array.length; i++) {
+        printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+            + output_array[i] + "<br></span>";
+    }
+
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            activity: "thrustd",
+            params: json_data
+        });
+
+        res.json({
+            "simulation_output": printed_sim_output,
+            "task_data": JSON.parse(fs.readFileSync("/tmp/workflow_data.json")),
+        })
+    }
+});
+
+// execute cloud functions simulator (one function)
+app.post("/run/solo_cloud_function", function (req, res) {
+    const PATH_PREFIX = __dirname.replace(
+        "server",
+        "simulators/google_cloud_functions/"
+    );
+
+    const SIMULATOR = "cloud_functions";
+    const EXECUTABLE = PATH_PREFIX + SIMULATOR;
+
+    const USERNAME = req.body.userName;
+    const EMAIL = req.body.email;
+    const NUM_INSTANCES = req.body.numInstances;
+    const NUM_FIR = req.body.numFir;
+
+    // additional WRENCH arguments that filter simulation output (We only want simulation output from the WMS in this activity)
+    const LOGGING = [
+        "--log=root.thresh:critical",
+        "--log=wms.thresh:critical",
+        "--log=simple_wms.thresh:critical",
+        "--log=simple_wms_scheduler.thresh:critical",
+        "--log='root.fmt:[%.2d]%e%m%n'",
+    ];
+
+    const json_data = {
+        "func_exec_time": 95.0,
+        "num_instances": NUM_INSTANCES,
+        "max_req": NUM_FIR,
+        "min_req": 1,
+        "change_probability": 0.75,
+        "max_change": 2,
+        "timeout": 10.0
+    }
+    // https://stackoverflow.com/questions/25590486/creating-json-file-and-storing-data-in-it-with-javascript
+    // let args_json = JSON.stringify(json_data);
+    // console.log(args_json);
+    const fs = require('fs');
+
+    fs.writeFileSync("/tmp/args.json", JSON.stringify(json_data, null, 2).concat("\n"), (err) => {
+        if (err) console.log('error', err);
+    });
+
+    const SIMULATION_ARGS = [
+        "/tmp/args.json"
+    ].concat(LOGGING);
+
+    let simulation_output = launchSimulation(EXECUTABLE, SIMULATION_ARGS);
+
+    let output_array = simulation_output.split("\n");
+
+    let arrived = output_array[1].split(":");
+    let success = output_array[3].split(":");
+    let fail = output_array[4].split(":");
+
+    let s_percent = Math.round(parseFloat(success[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+    let f_percent = Math.round(parseFloat(fail[1]) / parseFloat(arrived[1]) * 100 * 10) / 10;
+
+    output_array[1] = "Total # FIR:" + arrived[1];
+    output_array[3] = "- Succeeded:" + success[1] + " (" + s_percent.toString() + "%)";
+    output_array[4] = "- Failed:" + fail[1] + " (" + f_percent.toString() + "%)";
+
+    let printed_sim_output = "";
+    for (let i = 0; i < output_array.length; i++) {
+        if (i != 2) {
+            printed_sim_output += "<span style=\"font-weight:bold;color:rgb(0,0,0)\">"
+                + output_array[i] + "<br></span>";
+        }
+    }
+
+    if (simulation_output !== null) {
+        /**
+         * Log the user running this simulation along with the
+         * simulation parameters to the data server.
+         */
+        logData({
+            user: USERNAME,
+            email: EMAIL,
+            time: Math.round(new Date().getTime() / 1000), // unix timestamp
+            params: json_data,
+            activity: "cloud_functions"
+        });
+
+        res.json({
+            "simulation_output": printed_sim_output,
+            "record_data": JSON.parse(fs.readFileSync("/tmp/record.json")),
+        })
+    }
+});
+
 // execute activity storage service simulation route
 app.post("/run/storage_service", function (req, res) {
     const PATH_PREFIX = getPathPrefix("storage_interaction_data_movement")
@@ -1093,6 +1448,20 @@ app.post("/run/storage_network_proximity", function (req, res) {
     }
 })
 
+
+// get usage statistics
+app.post("/get/usage_statistics", function (req, res) {
+
+    db.getUsageStatistics().then((usage => {
+        res.json({
+            usage_data: usage
+        })
+
+    })).catch((error => {
+        console.log("[ERROR]: " + error)
+    }))
+})
+
 /**
  *
  * @param simulatorFolder
@@ -1138,6 +1507,7 @@ function launchSimulation(executable, args, stdout = false) {
 function ansiUpSimulationOutput(simulationOutput) {
     let find = "</span>"
     let re = new RegExp(find, "g")
+    console.log(ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find))
     return ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find)
 }
 
@@ -1149,11 +1519,10 @@ function ansiUpSimulationOutput(simulationOutput) {
  * @returns {boolean}
  */
 function logData(data) {
-    db.registerUser(data.email, data.user).then((userID => {
+    db.registerUser(data.email, data.user_name).then((userID => {
         let time = Math.round(new Date().getTime() / 1000)  // unix timestamp
         db.addSimulationRun(userID, time, data.activity, data.params).then((simID => {
             return true
-
         })).catch((error => {
             console.log("[ERROR]: " + error)
             return false
@@ -1164,7 +1533,213 @@ function logData(data) {
     }))
 }
 
+/**
+ * Log the practice question parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
+function logQuestion(data) {
+
+    db.registerUser(data.email, data.user_name).then((userID) => {
+        let time = Math.round(new Date().getTime() / 1000)
+        if (!data.button) {
+            throw new Error("in logQuestion(), data.button is not provided")
+        }
+        if (data.button === "giveup") {
+            db.updatePracticeQuestionGiveUp(userID, data.question_key, time, data.button, data.answer).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "submit") {
+            db.updatePracticeQuestionSubmit(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "reveal") {
+            db.updatePracticeQuestionReveal(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else if (data.button === "hint") {
+            db.updatePracticeQuestionHint(userID, data.question_key, time, data.answer, data.correctAnswer, data.type, data.module).then ((questionId => {
+                return true
+            })).catch((error => {
+                console.log("[ERROR: " + error)
+                return false
+            }))
+        } else {
+            throw new Error("in logQuestion(), data.button is not known: " + data.button)
+        }
+    }).catch((error => {
+        console.log("[ERROR: " + error)
+        return false
+    }))
+}
+
+/* Post request to call function to update the practice question database */
+app.post('/update/question', function (req, res) {
+    try {
+        logQuestion({
+            user: req.body.userName,
+            email: req.body.email,
+            question_key: req.body.question_key,
+            answer : req.body.answer,
+            correctAnswer: req.body.correctAnswer,
+            type: req.body.type,
+            button: req.body.button,
+            module: req.body.module
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+/* POST request to call function to respond with "completed" status */
+app.post('/get/question', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.loadPracticeQuestion(userID, req.body.question_key, req.body.module, req.body.type).then(question => {
+            res.json({
+                previous_answer: question.previous_answer,
+                completed: question.completed,
+                type: question.type,
+                giveup: question.giveup,
+                revealed: question.revealed
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
+app.post('/insert/simfeedback', function (req, res) {
+    let time = Math.round(new Date().getTime() / 1000)
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.logSimulationFeedback(userID, time, req.body.simID, req.body.rating, req.body.feedback).then(simFeedbackID => {
+            return true
+        }).catch(error => {
+            console.log("[ERROR]: " + error)
+            return false
+        })
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
+    })
+})
+
+app.post('/get/simfeedback', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getSimulationFeedback(userID, req.body.simID).then(feedback => {
+            res.json({
+                completed: feedback.completed
+            })
+        }).catch((error => {
+            console.log("[ERROR]" + error)
+            return false
+        }))
+    })
+})
+
+app.post('/get/resetpracticequestions', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.resetPracticeQuestions(userID).then(status => {
+            return true
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
+/**
+ * Log the feedback parameters to database.
+ *
+ * @param data
+ * @returns {boolean}
+ */
+function logFeedback(data) {
+    db.registerUser(data.email, data.user_name).then((userID) => {
+        let time = Math.round(new Date().getTime() / 1000)
+        db.updateFeedback(userID, data.tabkey, time, data.useful, data.quality, data.comments).then ((feedbackId => {
+            return true
+        })).catch((error => {
+            console.log("[ERROR: " + error)
+            return false
+        }))
+    })
+}
+
+app.post('/update/feedback', function (req, res) {
+    try {
+        logFeedback({
+            user: req.body.user_name,
+            email: req.body.email,
+            tabkey: req.body.tabkey,
+            useful : req.body.useful,
+            quality : req.body.quality,
+            comments : req.body.comments,
+        })
+        res.status(201).send();
+    } catch(e) {
+        console.log(e);
+        res.status(400).send(e);
+    }
+})
+
+app.post('/get/feedback', function (req, res) {
+    db.registerUser(req.body.email, req.body.user_name).then(userID => {
+        db.getFeedback(userID, req.body.tabkey).then(feedback => {
+            res.json({
+                completed: feedback.completed,
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    })
+})
+
+
+app.post('/get/global_statistics', function (req, res) {
+    db.getGlobalStatistics().then(global => {
+        res.json({
+            globalQuestion: global.globalQuestion,
+            globalFeedback: global.globalFeedback,
+            globalSimFeedback: global.globalSimFeedback
+        })
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+        .catch((error => {
+            console.log("ERROR " + error)
+        }))
+})
+
+app.post('/get/userdata', function (req, res) {
+    db.registerUser(req.body.email, req.body.userName).then(userID => {
+        db.getUserData(userID).then(userData => {
+            res.json({
+                questionData: userData.questionData,
+                feedbackData: userData.feedbackData,
+                simulationData: userData.simulationData
+            })
+        }).catch((error => {
+            console.log("ERROR " + error)
+        }))
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
+
+})
+
 // Enable SSL server connection
+let st = serverTime.toISOString().replace(/T/, ' ').replace(/\..+/, '')
 if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     const https = require("https")
     const fs = require("fs")
@@ -1174,11 +1749,11 @@ if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
     }
     https.createServer(options, app).listen(PORT, function () {
         console.log(
-            "eduWRENCH backend server is running on port " + PORT + " with SSL-enabled mode"
+            "[" + st + "] eduWRENCH backend server is running on port " + PORT + " with SSL-enabled mode"
         )
     })
 } else {
     app.listen(PORT, function () {
-        console.log("eduWRENCH backend server is running on port " + PORT)
+        console.log("[" + st + "] eduWRENCH backend server is running on port " + PORT)
     })
 }

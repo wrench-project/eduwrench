@@ -10,11 +10,14 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import TaskDependencies3CoresSimulationScenario
   from "../../../images/vector_graphs/multi_core/multicore_dependencies_3_cores.svg"
+import SimulationFeedback from "../../../components/simulation/simulation_feedback";
 
 const TaskDependencies3CoresSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
   const [auth, setAuth] = useState("false")
+  const [runtimes, setRunTimes] = useState(0)
+
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
@@ -47,6 +50,7 @@ const TaskDependencies3CoresSimulation = () => {
                     setSimulationResults(<></>)
                     return
                   }
+                  setRunTimes(runtimes + 1)
                   const data = {
                     user_name: localStorage.getItem("userName"),
                     email: localStorage.getItem("currentUser"),
@@ -104,6 +108,7 @@ const TaskDependencies3CoresSimulation = () => {
                 </Form>
               )}
             </Formik>
+            <SimulationFeedback simulationID={'multi_core_computing/task_depencies_3_cores_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 

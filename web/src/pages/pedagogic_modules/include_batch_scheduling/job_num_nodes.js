@@ -2,6 +2,8 @@ import React from "react"
 import { Divider, Header, Segment } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const JobNumNodes = ({ module, tab }) => {
   return (
@@ -57,7 +59,7 @@ const JobNumNodes = ({ module, tab }) => {
 
       <p>
         and, in a new browser window, navigate to: <a href="http://localhost:8808"
-                                                      target="_blank">http://localhost:8808</a>.
+                                                      target="_blank" rel="noreferrer">http://localhost:8808</a>.
       </p>
 
       <p>
@@ -101,6 +103,20 @@ const JobNumNodes = ({ module, tab }) => {
         of long execution time. But asking for too many may hurt turnaround
         time because of long wait time.
       </strong></p>
+
+        <Header as="h3" block>
+            You feedback is appreciated
+        </Header>
+
+        <FeedbackActivity content={
+            <FeedbackQuestions feedbacks={[
+                {
+                    tabkey: "job_num_nodes",
+                    module: "C.1"
+                },
+            ]} />
+        } />
+
 
     </>
   )

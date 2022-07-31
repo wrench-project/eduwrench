@@ -8,14 +8,17 @@ namespace wrench {
 
     class Simulation;
 
-    class ActivityWMS : public WMS {
+    class ActivityWMS : public ExecutionController {
     public:
         ActivityWMS(const std::set<std::shared_ptr<wrench::StorageService>> &storage_services,
+                    const std::shared_ptr<Workflow> workflow,
                     const std::string &hostname);
 
     private:
         int main() override;
 
+        std::shared_ptr<wrench::Workflow> workflow;
+        std::set<std::shared_ptr<StorageService>> storage_services;
         std::shared_ptr<wrench::DataMovementManager> data_movement_manager;
     };
 };

@@ -6,14 +6,15 @@
 namespace wrench {
     class Simulation;
 
-    class ActivityScheduler : public StandardJobScheduler {
+    class ActivityScheduler {
 
     public:
         void scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                           const std::vector<WorkflowTask *> &tasks);
+                           const std::vector<std::shared_ptr<WorkflowTask>> &tasks);
 
 
         ActivityScheduler(std::shared_ptr<StorageService> storage_service);
+       std::shared_ptr<JobManager> job_manager;
 
     private:
        std::shared_ptr<StorageService> storage_service;

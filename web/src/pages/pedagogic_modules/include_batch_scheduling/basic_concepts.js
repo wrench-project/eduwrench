@@ -2,6 +2,9 @@ import React from "react"
 import LearningObjectives from "../../../components/learning_objectives"
 
 import Basics from "../../../images/vector_graphs/batch_scheduling/basics.svg"
+import {Header} from "semantic-ui-react";
+import FeedbackActivity from "../../../components/feedback/feedback_activity";
+import FeedbackQuestions from "../../../components/feedback_questions";
 
 const BasicConcepts = ({ module, tab }) => {
   return (
@@ -74,6 +77,19 @@ const BasicConcepts = ({ module, tab }) => {
         the Slurm functionality. This module is thus a first step towards
         becoming an expert Slurm user.
       </p>
+
+        <Header as="h3" block>
+            You feedback is appreciated
+        </Header>
+
+        <FeedbackActivity content={
+            <FeedbackQuestions feedbacks={[
+                {
+                    tabkey: "basic_concepts",
+                    module: "C.1"
+                },
+            ]} />
+        } />
 
     </>
   )

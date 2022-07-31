@@ -23,7 +23,7 @@ namespace wrench {
     ActivityScheduler::ActivityScheduler(std::shared_ptr<StorageService> storage_service,
                                          std::shared_ptr<StorageService> local_storage_service,
                                          bool use_local_storage_service)
-            : StandardJobScheduler(), storage_service(storage_service),
+            : storage_service(storage_service),
               local_storage_service(local_storage_service),
               use_local_storage_service(use_local_storage_service) {
     }
@@ -39,7 +39,7 @@ namespace wrench {
      * @param ready_tasks
      */
     void ActivityScheduler::scheduleTasks(const std::set<std::shared_ptr<ComputeService>> &compute_services,
-                                          const std::vector<WorkflowTask *> &ready_tasks) {
+                                          const std::vector<std::shared_ptr<WorkflowTask>> &ready_tasks) {
 
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_BLUE);
 
@@ -58,7 +58,7 @@ namespace wrench {
                 if ((this->idle_core_counts[h.first] > 0) && (this->available_rams[h.first] >= t->getMemoryRequirement())) {
 
                     WRENCH_INFO("Starting task %s on a core of host %s", t->getID().c_str(), h.first.c_str());
-                    std::map<wrench::WorkflowFile *, std::shared_ptr<wrench::FileLocation>> file_locations;
+                    std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
                     for (auto const &f : t->getInputFiles()) {
                         if ((t->getTopLevel() != 0) and (this->use_local_storage_service)) {
                             file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service);
@@ -78,10 +78,10 @@ namespace wrench {
 //                        std::cerr << "  - " << f.first->getID() << " at " << f.second->getStorageService()->getHostname() << "\n";
 //                    }
 
-                    auto job = this->getJobManager()->createStandardJob(t, file_locations);
+                    auto job = this->job_manager->createStandardJob(t, file_locations);
                     std::map<std::string, std::string> service_specific_arguments;
                     service_specific_arguments[t->getID()] = h.first+":1";
-                    this->getJobManager()->submitJob(job, compute_service, service_specific_arguments);
+                    this->job_manager->submitJob(job, compute_service, service_specific_arguments);
 
                     this->idle_core_counts[h.first]--;
                     this->available_rams[h.first] -= t->getMemoryRequirement();
@@ -91,7 +91,7 @@ namespace wrench {
         }
     }
 
-    void ActivityScheduler::taskCompletedOnHost(std::string hostname, WorkflowTask *task) {
+    void ActivityScheduler::taskCompletedOnHost(std::string hostname, std::shared_ptr<WorkflowTask> task) {
         this->idle_core_counts[hostname]++;
         this->available_rams[hostname] += task->getMemoryRequirement();
     }

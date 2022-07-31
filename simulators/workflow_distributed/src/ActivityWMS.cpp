@@ -14,18 +14,19 @@ namespace wrench {
      * @param storage_services
      * @param hostname
      */
-    ActivityWMS::ActivityWMS(std::unique_ptr <StandardJobScheduler> standard_job_scheduler,
+    ActivityWMS::ActivityWMS(ActivityScheduler *standard_job_scheduler,
                              const std::set<std::shared_ptr<ComputeService>> &compute_services,
                              const std::set<std::shared_ptr<StorageService>> &storage_services,
-                             const std::string &hostname) : WMS (
-                                     std::move(standard_job_scheduler),
-                                     nullptr,
-                                     compute_services,
-                                     storage_services,
-                                     {}, nullptr,
+                             const std::shared_ptr<Workflow> &workflow,
+                             const std::string &hostname) : ExecutionController (
                                      hostname,
                                      ""
-                                     ) {}
+                                     ) {
+        this->standard_job_scheduler = standard_job_scheduler;
+        this->compute_services = compute_services;
+        this->storage_services = storage_services;
+        this->workflow = workflow;
+    }
 
     /**
      * @brief WMS main method
@@ -35,10 +36,11 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
 
-        WRENCH_INFO("About to execute a workflow with %lu tasks", this->getWorkflow()->getNumberOfTasks());
+        WRENCH_INFO("About to execute a workflow with %lu tasks", this->workflow->getNumberOfTasks());
 
         // Create a job manager
         this->job_manager = this->createJobManager();
+        this->standard_job_scheduler->job_manager = this->job_manager;
 
 
         // Start bandwidth meters
@@ -49,39 +51,35 @@ namespace wrench {
         while (true) {
 
             // Get the ready tasks and SORT them by taskID
-            std::vector<WorkflowTask *> ready_tasks = this->getWorkflow()->getReadyTasks();
+            auto ready_tasks = this->workflow->getReadyTasks();
 
-            std::sort(ready_tasks.begin(), ready_tasks.end(), [ ] (WorkflowTask *lhs, WorkflowTask *rhs) {
+            std::sort(ready_tasks.begin(), ready_tasks.end(), [ ] (std::shared_ptr<WorkflowTask>lhs, std::shared_ptr<WorkflowTask> rhs) {
                 return lhs->getID() < rhs->getID();
             });
 
-            // Get the available compute services, in this case only one 
-            const std::set<std::shared_ptr<ComputeService>> compute_services =
-                    this->getAvailableComputeServices<ComputeService>();
-
 
             // Run ready tasks with defined scheduler implementation
-            this->getStandardJobScheduler()->scheduleTasks(
-                    compute_services,
+            this->standard_job_scheduler->scheduleTasks(
+                    this->compute_services,
                     ready_tasks);
 
             // Wait for a workflow execution event, and process it
             try {
                 this->waitForAndProcessNextEvent();
-            } catch (WorkflowExecutionException &e) {
+            } catch (ExecutionException &e) {
                 WRENCH_INFO("Error while getting next execution event (%s)... ignoring and trying again",
                             (e.getCause()->toString().c_str()));
                 continue;
             }
-            if (this->abort || this->getWorkflow()->isDone()) {
+            if (this->abort || this->workflow->isDone()) {
                 break;
             }
         }
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_MAGENTA);
 
         WRENCH_INFO("--------------------------------------------------------");
-        if (this->getWorkflow()->isDone()) {
-            WRENCH_INFO("Workflow execution completed in %.2f seconds!", this->getWorkflow()->getCompletionDate());
+        if (this->workflow->isDone()) {
+            WRENCH_INFO("Workflow execution completed in %.2f seconds!", this->workflow->getCompletionDate());
         } else {
             WRENCH_INFO("Workflow execution is incomplete!");
         }
@@ -100,7 +98,7 @@ namespace wrench {
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         for (const auto &t : standard_job->getTasks()) {
             WRENCH_INFO("Notified that %s has completed", t->getID().c_str());
-            auto scheduler = this->getStandardJobScheduler();
+            auto scheduler = this->standard_job_scheduler;
             auto real_scheduler = (ActivityScheduler *)(scheduler);
             real_scheduler->taskCompletedOnHost(t->getExecutionHost(), t);
         }
