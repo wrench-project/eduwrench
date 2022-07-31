@@ -37,8 +37,6 @@ RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git c
 # install PUGIXML
 RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz && tar -xf pugixml-1.12.1.tar.gz && cd pugixml-1.12 && cmake . && make -j12 && sudo make install && cd .. && rm -rf pugixml-1.12*
 
-RUN echo ls /usr/local/lib/
-
 # install Node and Gatsby client
 RUN apt-get upgrade ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
@@ -62,16 +60,16 @@ RUN cd eduwrench && git checkout
 RUN mkdir /home/wrench/eduwrench/data_server
 VOLUME /home/wrench/eduwrench/data_server
 
-# run build script
-WORKDIR /home/wrench/eduwrench
-RUN mkdir db
-RUN bash build.sh -j2
-
-# run applications
-WORKDIR /home/wrench/eduwrench
-USER root
-COPY ./docker.sh .
-RUN chown wrench:users docker.sh
-
-USER wrench
-CMD ./docker.sh
+## run build script
+#WORKDIR /home/wrench/eduwrench
+#RUN mkdir db
+#RUN bash build.sh -j2
+#
+## run applications
+#WORKDIR /home/wrench/eduwrench
+#USER root
+#COPY ./docker.sh .
+#RUN chown wrench:users docker.sh
+#
+#USER wrench
+#CMD ./docker.sh

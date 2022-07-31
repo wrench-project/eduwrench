@@ -30,8 +30,7 @@ set(TEST_FILES
 
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY NAMES wrenchpegasusworkflowparser)
-find_library(GTEST_LIBRARY NAMES gtest)
+find_library(WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY NAMES wrenchwfcommonsworkflowparser)
 
 # generating the executable
 add_executable(cloud_functions ${SOURCE_FILES})
@@ -39,13 +38,13 @@ add_executable(cloud_functions ${SOURCE_FILES})
 if (ENABLE_BATSCHED)
 target_link_libraries(cloud_functions
                        ${WRENCH_LIBRARY}
-                       ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
+                       ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
                       -lzmq )
 else()
 target_link_libraries(cloud_functions
                        ${WRENCH_LIBRARY}
-                       ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
+                       ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
                       )
 endif()
@@ -57,6 +56,3 @@ add_executable(unit_tests EXCLUDE_FROM_ALL
                    ${SOURCE_FILES}
                    ${TEST_FILES}
                )
-target_link_libraries(unit_tests
-                       ${GTEST_LIBRARY} wrench -lpthread -lm
-                      )
