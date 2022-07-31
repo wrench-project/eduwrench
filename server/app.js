@@ -38,7 +38,9 @@ app.use(function (req, res, next) {
 });
 
 /* CORS */
-let whitelist = ["https://eduwrench.ics.hawaii.edu", "http://localhost:8000"]
+let whitelist = ["https://eduwrench.ics.hawaii.edu",
+                "http://localhost:3000/update/feedback",
+                "http://localhost:8000"]
 let corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
