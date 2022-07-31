@@ -26,9 +26,12 @@ set(SOURCE_FILES
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES libwrench.a wrench)
 find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
+find_library(PUGIXML_LIBRARY NAMES pugixml)
+
 
 add_executable(ci_overhead_simulator ${SOURCE_FILES})
 target_link_libraries(ci_overhead_simulator
         ${WRENCH_LIBRARY}
+        ${PUGIXML_LIBRARY}
         ${SimGrid_LIBRARY}
         )
