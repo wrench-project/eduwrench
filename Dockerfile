@@ -60,16 +60,16 @@ RUN cd eduwrench && git checkout
 RUN mkdir /home/wrench/eduwrench/data_server
 VOLUME /home/wrench/eduwrench/data_server
 
-## run build script
-#WORKDIR /home/wrench/eduwrench
-#RUN mkdir db
-#RUN bash build.sh -j2
-#
-## run applications
-#WORKDIR /home/wrench/eduwrench
-#USER root
-#COPY ./docker.sh .
-#RUN chown wrench:users docker.sh
-#
-#USER wrench
-#CMD ./docker.sh
+# run build script
+WORKDIR /home/wrench/eduwrench
+RUN mkdir db
+RUN bash build.sh -j2
+
+# run applications
+WORKDIR /home/wrench/eduwrench
+USER root
+COPY ./docker.sh .
+RUN chown wrench:users docker.sh
+
+USER wrench
+CMD ./docker.sh
