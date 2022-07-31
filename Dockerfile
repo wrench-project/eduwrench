@@ -41,6 +41,7 @@ RUN apt install -y nodejs
 RUN npm install -g gatsby-cli --unsafe-perm
 
 # Make wrench user sudoer
+RUN useradd -ms /bin/bash wrench
 RUN adduser wrench sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
