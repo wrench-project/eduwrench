@@ -13,7 +13,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
         const userEmail = localStorage.getItem("currentUser");
         const userName = localStorage.getItem("userName");
         axios
-            .post('http://localhost:3000/get/question', {
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/question", {
                 userName: userName,
                 email: userEmail,
                 question_key:question_key,
@@ -39,7 +39,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
             button: 'hint'
         }
         axios
-            .post('http://localhost:3000/update/question', question)
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/update/question", question)
             .then((response) => response)
             .catch(err => {
                 console.log(err);
@@ -111,7 +111,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                         }
                         console.log(question)
                         axios
-                            .post('http://localhost:3000/update/question', question)
+                            .post(window.location.protocol + "//" + window.location.hostname + ":3000/update/question", question)
                             .then((response) => response)
                             .catch(err => {
                                 console.error(err);

@@ -16,7 +16,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
     }, [trigger])
     useEffect(() => {
         axios
-            .post('http://localhost:3000/get/simfeedback', {
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/simfeedback", {
                 userName: userName,
                 email: userEmail,
                 simID: simulationID,
@@ -52,7 +52,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                                     feedback: values.feedback,
                                     simID: simulationID
                                 }
-                                axios.post('http://localhost:3000/insert/simfeedback', data)
+                                axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/insert/simfeedback", data)
                                     .then((response) => response)
                                     .catch((error) => {
                                             console.log(error)
