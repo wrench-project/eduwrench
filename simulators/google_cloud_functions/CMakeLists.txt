@@ -31,7 +31,6 @@ set(TEST_FILES
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY NAMES wrenchpegasusworkflowparser)
-find_library(PUGIXML_LIBRARY NAMES pugixml)
 find_library(GTEST_LIBRARY NAMES gtest)
 
 # generating the executable
@@ -42,14 +41,12 @@ target_link_libraries(cloud_functions
                        ${WRENCH_LIBRARY}
                        ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
-                       ${PUGIXML_LIBRARY}
                       -lzmq )
 else()
 target_link_libraries(cloud_functions
                        ${WRENCH_LIBRARY}
                        ${WRENCH_PEGASUS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
-                       ${PUGIXML_LIBRARY}
                       )
 endif()
 

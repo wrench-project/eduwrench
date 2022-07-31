@@ -26,11 +26,9 @@ set(SOURCE_FILES
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
-find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(networking_fundamentals_simulator ${SOURCE_FILES})
 target_link_libraries(networking_fundamentals_simulator
         ${WRENCH_LIBRARY}
         ${SimGrid_LIBRARY}
-        ${PUGIXML_LIBRARY}
         )

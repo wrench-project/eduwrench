@@ -28,11 +28,9 @@ set(SOURCE_FILES
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
-find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 add_executable(workflow_distributed_simulator ${SOURCE_FILES})
 target_link_libraries(workflow_distributed_simulator
         ${WRENCH_LIBRARY}
         ${SimGrid_LIBRARY}
-        ${PUGIXML_LIBRARY}
         )

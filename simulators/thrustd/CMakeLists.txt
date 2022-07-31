@@ -39,7 +39,6 @@ set(TEST_FILES
 # wrench library and dependencies
 find_library(WRENCH_LIBRARY NAMES wrench)
 find_library(WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY NAMES wrenchwfcommonsworkflowparser)
-find_library(PUGIXML_LIBRARY NAMES pugixml)
 find_library(GTEST_LIBRARY NAMES gtest)
 
 # generating the executable
@@ -53,26 +52,22 @@ target_link_libraries(thrustd
                        ${WRENCH_LIBRARY}
                        ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
-                       ${PUGIXML_LIBRARY}
                       -lzmq )
 target_link_libraries(fbl
                         ${WRENCH_LIBRARY}
                         ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                         ${SimGrid_LIBRARY}
-                        ${PUGIXML_LIBRARY}
                         -lzmq )
 else()
 target_link_libraries(thrustd
                        ${WRENCH_LIBRARY}
                        ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
-                       ${PUGIXML_LIBRARY}
                       )
 target_link_libraries(fbl
                         ${WRENCH_LIBRARY}
                         ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                         ${SimGrid_LIBRARY}
-                        ${PUGIXML_LIBRARY}
                         )
 endif()
 
