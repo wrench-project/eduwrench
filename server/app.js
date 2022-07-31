@@ -39,7 +39,6 @@ app.use(function (req, res, next) {
 
 /* CORS */
 let whitelist = ["https://eduwrench.ics.hawaii.edu",
-                "http://localhost:3000",
                 "http://localhost:8000"]
 let corsOptions = {
     origin: function (origin, callback) {

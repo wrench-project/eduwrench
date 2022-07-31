@@ -11,7 +11,7 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
         const userEmail = localStorage.getItem("currentUser");
         const userName = localStorage.getItem("userName");
         axios
-            .post('http://localhost:3000/get/question', {
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/question", {
                 userName: userName,
                 email: userEmail,
                 question_key:question_key,
@@ -38,7 +38,7 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
             button: 'hint'
         }
         axios
-            .post('http://localhost:3000/update/question', question)
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/update/question", question)
             .then((response) => response)
             .catch(err => {
                 console.log(err);
@@ -60,7 +60,7 @@ const PracticeQuestionReveal = ({question_key, question, hint, explanation, modu
         }
         console.log(question)
         axios
-            .post('http://localhost:3000/update/question', question)
+            .post(window.location.protocol + "//" + window.location.hostname + ":3000/update/question", question)
             .then((response) => response)
             .catch(err => {
                 console.log(err);
