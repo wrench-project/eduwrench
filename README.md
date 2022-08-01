@@ -11,7 +11,10 @@
 ### Local installation
 
 Dependencies:
-- [WRENCH 1.10](https://github.com/wrench-project/wrench)
+- [SimGrid 3.31](https://simgrid.org/)
+- [JSON for Modern C++ 3.9.0 or higher](https://github.com/nlohmann/json)
+- [WRENCH 2.0](https://github.com/wrench-project/wrench)
+- [PugiXML 1.12](https://pugixml.org/)
 - [Node.js](https://nodejs.org/en/)
 
 
@@ -44,8 +47,8 @@ Dependencies:
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
 ```bash
-$ docker pull wrenchproject/wrench:1.10
-$ mkdir data_server
+$ docker pull wrenchproject/eduwrench:latest
+$ cd eduwrench
 $ docker-compose build --no-cache
 $ docker-compose up -d
 ```
