@@ -6,6 +6,9 @@
 - term: "bandwidth"
   description: Peak achievable data transfer rate across a network link/path, measured in bytes per second
 
+- term: "binary search"
+  description: A classical algorithm to find items in sorted arrays in logarithmic complexity. 
+
 - term: "cluster"
   description: A set of possibly many computers (or compute nodes) interconnected via a high-speed network used as a high-capacity compute platform
 
