@@ -37,54 +37,54 @@ const GlobalStatistics = ({ data }) => {
       feedback: ["Very Useful"],
       count: 0,
     },
-    "Kinda Useful": {
+    "Useful": {
       feedback: ["Useful"],
       count: 0,
     },
-    "Sorta Useful": {
-      feedback: ["Neutral"],
+    "Of Little Use": {
+      feedback: ["Of Little Use"],
       count: 0,
     },
-    "Useless": {
-      feedback: ["Useless"],
+    "Not Useful at all": {
+      feedback: ["Not Useful at all"],
       count: 0,
     },
   }
 
   let qualityMap = {
     "Excellent Quality": {
-      feedback: ["Excellent Quality"],
+      feedback: ["Excellent"],
       count: 0,
     },
     "Good Quality": {
-      feedback: ["Good Quality"],
+      feedback: ["Good"],
       count: 0,
     },
     "Fair Quality": {
-      feedback: ["Fair Quality"],
+      feedback: ["Fair"],
       count: 0,
     },
     "Poor Quality": {
-      feedback: ["Poor Quality"],
+      feedback: ["Poor"],
       count: 0,
     },
   }
 
   let simFeedbackMap = {
-    "Perfect Experience": {
-      feedback: ["Perfect"],
+    "Excellent Experience": {
+      feedback: ["Excellent"],
       count: 0,
     },
     "Good Experience": {
       feedback: ["Good"],
       count: 0,
     },
-    "Poor Experience": {
-      feedback: ["Poor"],
+    "Fair Experience": {
+      feedback: ["Fair"],
       count: 0,
     },
-    "Bad Experience": {
-      feedback: ["Bad"],
+    "Poor Experience": {
+      feedback: ["Poor"],
       count: 0,
     },
   }
