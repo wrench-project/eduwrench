@@ -8,7 +8,7 @@ import "./simulation_feedback.css"
 const SimulationFeedback = ({simulationID, trigger}) => {
     const userEmail = localStorage.getItem("currentUser")
     const userName = localStorage.getItem("userName")
-    const ratings = ['Perfect', 'Good', 'Poor', 'Bad']
+    const ratings = ['Excellent', 'Good', 'Fair', 'Poor']
     const [open, setOpen] = useState(false)
     const [complete, setComplete] = useState(false)
     useEffect(() => {
@@ -99,7 +99,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                                 {errors.rating ?
                                     <Message negative>{errors.rating}</Message> : ''
                                 }
-                                <p className="feedback">Optionally provide us with additional feedback</p>
+                                <p className="feedback">Additional constructive feedback:</p>
                                 <Form.TextArea
                                     placeholder='Enter text here...'
                                     name="feedback"
