@@ -126,7 +126,7 @@ const Feedback = ({tabkey}) => {
                                 <Message negative>{errors.quality}</Message> : ''
                             }
                             <p>
-                                <strong>[#3]</strong> Optionally provide constructing comments.
+                                <strong>[#3]</strong> Optionally provide constructive comments.
                             </p>
                             <Form.TextArea
                                 fluid

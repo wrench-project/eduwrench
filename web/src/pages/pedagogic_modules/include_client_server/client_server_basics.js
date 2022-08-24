@@ -14,6 +14,8 @@ import PracticeQuestionNumeric from "../../../components/practice-questions/nume
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 
 const ClientServerBasics = ({module, tab}) => {
+
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -34,6 +36,7 @@ const ClientServerBasics = ({module, tab}) => {
                 information from the end user and forward their request to a server for
                 actual processing.
             </p>
+
 
             <p>
                 The performance of a client-server setup thus depends on the network on
