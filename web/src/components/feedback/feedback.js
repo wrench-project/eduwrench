@@ -7,7 +7,7 @@ import FeedbackSignIn from "./feedback_signin"
 const Feedback = ({tabkey}) => {
     const [auth, setAuth] = useState("false")
     const [completed, setCompleted] = useState(false)
-    const useful = ['Very Useful', 'Useful', 'Neutral', 'Useless']
+    const useful = ['Very Useful', 'Useful', 'Of Little Use', 'Not Useful']
     const quality = ['Excellent Quality', 'Good Quality', 'Fair Quality', 'Poor Quality']
 
     useEffect(() => {
