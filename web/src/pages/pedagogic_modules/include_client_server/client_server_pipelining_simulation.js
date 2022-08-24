@@ -86,13 +86,14 @@ const ClientServerPipeliningSimulation = () => {
                           {/*<NetworkBandwidthUsageChart data={response.data.task_data} linkNames={linkNames} />*/}
                         </>
                       )
+                      setSubmitting(false)
                     },
                     error => {
                       console.log(error)
                       alert("Error executing simulation.")
+                      setSubmitting(false)
                     }
                   )
-                  setSubmitting(false)
                 }, 400)
               }}
             >

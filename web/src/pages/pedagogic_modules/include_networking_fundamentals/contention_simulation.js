@@ -62,13 +62,14 @@ const ContentionSimulation = () => {
                           <SimulationOutput output={response.data.simulation_output} />
                         </>
                       )
+                      setSubmitting(false)
                     },
                     error => {
                       console.log(error)
                       alert("Error executing simulation.")
+                      setSubmitting(false)
                     }
                   )
-                  setSubmitting(false)
                 }, 400)
               }}
             >

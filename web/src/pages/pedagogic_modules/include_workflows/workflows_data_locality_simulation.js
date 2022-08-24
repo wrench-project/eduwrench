@@ -85,13 +85,14 @@ const WorkflowsDataLocalitySimulation = () => {
                           <TasksData data={response.data.task_data} />
                         </>
                       )
+                      setSubmitting(false)
                     },
                     error => {
                       console.log(error)
                       alert("Error executing simulation.")
+                      setSubmitting(false)
                     }
                   )
-                  setSubmitting(false)
                 }, 400)
               }}
             >

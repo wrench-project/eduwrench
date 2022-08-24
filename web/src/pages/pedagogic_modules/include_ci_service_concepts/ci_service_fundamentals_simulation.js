@@ -94,13 +94,14 @@ const CIServiceFundamentalsSimulation = () => {
                             }} />
                           </>
                         )
+                        setSubmitting(false)
                       },
                       error => {
                         console.log(error)
                         alert("Error executing simulation.")
+                        setSubmitting(false)
                       }
                     )
-                    setSubmitting(false)
                   }, 400)
                 }}
               >
