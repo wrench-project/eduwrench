@@ -83,11 +83,11 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                             <Form onSubmit={handleSubmit}>
                                 <p className="feedback">How was your experience with this simulation?</p>
                                 {ratings.map((rating) =>
-                                    <Form.Field key={rating}>
+                                    <Form.Field key={"sim_" + rating}>
                                         <Form.Radio
                                             name="rating"
                                             label={rating}
-                                            id={rating}
+                                            id={"sim_" + rating}
                                             value={rating}
                                             checked={values.rating === rating}
                                             onChange={handleChange}
