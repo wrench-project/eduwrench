@@ -40,7 +40,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                 <Modal.Content>
                     <Formik
                         initialValues={{
-                            rating: '',
+                            rating: 'Excellent',
                             feedback: ''
                         }}
                         onSubmit={(values, {setSubmitting}) => {
@@ -96,6 +96,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                                         />
                                     </Form.Field>
                                 )}
+
                                 {errors.rating ?
                                     <Message negative>{errors.rating}</Message> : ''
                                 }
