@@ -4,7 +4,6 @@ import { Formik } from "formik"
 import axios from "axios"
 import "./simulation_feedback.css"
 
-
 const SimulationFeedback = ({simulationID, trigger}) => {
     const userEmail = localStorage.getItem("currentUser")
     const userName = localStorage.getItem("userName")
