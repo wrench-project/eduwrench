@@ -116,6 +116,7 @@ const GlobalStatistics = ({ data }) => {
     practiceQuestionMap.Attempts.count += global["attempts"]
   }
 
+
   let questionChartData = {
     labels: [],
     datasets: [],
@@ -166,6 +167,8 @@ const GlobalStatistics = ({ data }) => {
       }
     }
   }
+
+  minMonth = (["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])[minMonth]
 
   let usefulChartData = {
     labels: [],
@@ -240,6 +243,8 @@ const GlobalStatistics = ({ data }) => {
     }
   }
 
+  minMonth = (["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])[minMonth]
+
   let simFeedbackChartData = {
     labels: [],
     datasets: [],
@@ -307,13 +312,13 @@ const GlobalStatistics = ({ data }) => {
     <>
       <Segment.Group>
         <Segment color="purple">
-          <strong>Practice Questions</strong> (since {minMonth}/{minYear})
+          <strong>Practice Questions</strong> (since {minMonth} {minYear})
         </Segment>
         <Segment>
           <Bar type="bar" width={100} height={200} data={questionChartData} options={option} />
         </Segment>
         <Segment color="green">
-          <strong>Feedback provided by EduWRENCH users</strong> (since {minMonth}/{minYear})
+          <strong>Feedback provided by EduWRENCH users</strong> (since {minMonth} {minYear})
         </Segment>
         <div className="ui segments">
           <div className="ui segment">
