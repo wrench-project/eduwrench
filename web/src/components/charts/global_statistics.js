@@ -116,7 +116,6 @@ const GlobalStatistics = ({ data }) => {
     practiceQuestionMap.Attempts.count += global["attempts"]
   }
 
-
   let questionChartData = {
     labels: [],
     datasets: [],
@@ -167,8 +166,6 @@ const GlobalStatistics = ({ data }) => {
       }
     }
   }
-
-  minMonth = (["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])[minMonth]
 
   let usefulChartData = {
     labels: [],
