@@ -110,11 +110,11 @@ const About = () => {
       </Segment>
 
       <Segment>
-        <h3>Usage Statistics</h3>
+        <h3>Simulation Usage Statistics</h3>
         {usageStatisticsResults}
       </Segment>
       <Segment>
-         <h3>Global Statistics</h3>
+         <h3>Practice Questions and Feedback Statistics</h3>
          {globalStatisticsResults}
        </Segment>
 

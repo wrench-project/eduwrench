@@ -21,6 +21,15 @@ class Auth extends Component {
     this.logout = this.logout.bind(this)
     this.handleLogoutFailure = this.handleLogoutFailure.bind(this)
 
+    if (!document.cookie) {
+      localStorage.setItem("login", "false")
+      this.setState(state => ({
+        logged: false,
+        accessToken: "",
+        user: {}
+      }))
+    }
+
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
       axios.get(window.location.protocol + "//" + window.location.hostname + ":3000/server_time").then(
@@ -55,8 +64,10 @@ class Auth extends Component {
           picture: response.profileObj.imageUrl
         }
       }))
+      document.cookie = "eduwrench=eduWRENCH"
       localStorage.setItem("loginTime", new Date())
       localStorage.setItem("login", "true")
+      localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
       localStorage.setItem("currentUser", response.profileObj.email)
       localStorage.setItem("userName", response.profileObj.name)
       localStorage.setItem("userPicture", response.profileObj.imageUrl)      

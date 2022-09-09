@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import CoordinatorWorkerBasicsScenario
   from "../../../images/vector_graphs/coordinator_worker/coordinator_worker_no_output.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const CoordinatorWorkerBasicsSimulation = () => {
 
@@ -20,12 +20,12 @@ const CoordinatorWorkerBasicsSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<CoordinatorWorkerBasicsScenario />} />
+        <SimulationScenario scenario={<CoordinatorWorkerBasicsScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -90,18 +90,19 @@ const CoordinatorWorkerBasicsSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
-                          <GanttChart data={response.data.task_data} />
-                          <HostUtilizationChart data={response.data.task_data} />
+                          <SimulationOutput output={response.data.simulation_output}/>
+                          <GanttChart data={response.data.task_data}/>
+                          <HostUtilizationChart data={response.data.task_data}/>
                         </>
                       )
+                      setSubmitting(false)
                     },
                     error => {
                       console.log(error)
                       alert("Error executing simulation.")
+                      setSubmitting(false)
                     }
                   )
-                  setSubmitting(false)
                 }, 400)
               }}
             >
@@ -260,9 +261,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

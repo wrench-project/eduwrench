@@ -1,9 +1,9 @@
 import React from "react"
 import { StaticImage } from "gatsby-plugin-image"
 
-const SimulationSignIn = () => {
+const ContentSignIn = ({content}) => {
   return (
-    <>
+    <div style={{ backgroundColor: "#f7f7f7" }}>
       <StaticImage
         src="../../images/wrench_logo.png"
         width={40}
@@ -12,11 +12,11 @@ const SimulationSignIn = () => {
         backgroundColor="#f7f7f7"
         style={{ marginRight: "1em", float: "left" }}
       />
-      <strong style={{ backgroundColor: "#f7f7f7" }}>eduWRENCH Pedagogic Module Simulator</strong>
+      <strong>eduWRENCH Pedagogic Modules</strong>
       <br />
-      Sign in on the top of the page to access the simulator.
-    </>
+      Sign in on the top of the page to access the {content}.
+    </div>
   )
 }
 
-export default SimulationSignIn
+export default ContentSignIn

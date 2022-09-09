@@ -7,11 +7,11 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDistributedExecutionScenario from "../../../images/vector_graphs/workflows/workflow_distributed.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const WorkflowsDistributedExecutionSimulation = () => {
 
@@ -22,10 +22,10 @@ const WorkflowsDistributedExecutionSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<WorkflowsDistributedExecutionScenario />} />
 
@@ -79,13 +79,14 @@ const WorkflowsDistributedExecutionSimulation = () => {
                           <TasksData data={response.data.task_data} />
                         </>
                       )
+                      setSubmitting(false)
                     },
                     error => {
                       console.log(error)
                       alert("Error executing simulation.")
+                      setSubmitting(false)
                     }
                   )
-                  setSubmitting(false)
                 }, 400)
               }}
             >
@@ -140,9 +141,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

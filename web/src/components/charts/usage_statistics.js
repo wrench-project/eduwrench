@@ -43,6 +43,10 @@ const UsageStatistics = ({ data }) => {
       "simulation": ["workflow_distributed", "workflow_fundamentals", "workflow_task_data_parallelism"],
       "count": 0
     },
+    "C.2 Cloud Functions": {
+      "simulation": ["cloud_functions"],
+      "count": 0
+    },
     "D.1 Case Study: Energy-Aware Workflow Execution": {
       "simulation": ["thrustd_cloud", "thrustd"],
       "count": 0
@@ -56,6 +60,7 @@ const UsageStatistics = ({ data }) => {
     let usage = data[idx]
     let time = new Date(usage["time"] * 1000)
     minMonth = Math.min(minMonth, time.getMonth())
+    console.log("MINMONTH = " + minMonth)
     minYear = Math.min(minYear, time.getFullYear())
 
     for (let m in simulationModulesMap) {
@@ -66,6 +71,7 @@ const UsageStatistics = ({ data }) => {
       }
     }
   }
+  minMonth = (["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"])[minMonth]
 
   let chartData = {
     labels: [],
@@ -119,7 +125,7 @@ const UsageStatistics = ({ data }) => {
   return (
     <>
       <Segment.Group>
-        <Segment color="yellow"><strong>Total Number of Simulation Runs</strong> (since {minMonth}/{minYear})</Segment>
+        <Segment color="yellow"><strong>Total Number of Simulation Runs</strong> (since {minMonth} {minYear})</Segment>
         <Segment>
           <Bar type="bar" data={chartData} options={options} />
         </Segment>
