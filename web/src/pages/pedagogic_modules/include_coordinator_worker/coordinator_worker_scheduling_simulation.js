@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Header, Label, Segment } from "semantic-ui-react"
+import { Form, Header, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
-import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import CoordinatorWorkerSchedulingScenario
   from "../../../images/vector_graphs/coordinator_worker/coordinator_worker.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const CoordinatorWorkerSchedulingSimulation = () => {
 
@@ -20,12 +19,12 @@ const CoordinatorWorkerSchedulingSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<CoordinatorWorkerSchedulingScenario />} />
+        <SimulationScenario scenario={<CoordinatorWorkerSchedulingScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -120,7 +119,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
+                          <SimulationOutput output={response.data.simulation_output}/>
                         </>
                       )
                       setSubmitting(false)
@@ -463,9 +462,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

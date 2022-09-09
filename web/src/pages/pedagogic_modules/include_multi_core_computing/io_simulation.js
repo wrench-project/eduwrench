@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import IOSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_io_simulation.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const IOSimulation = () => {
 
@@ -20,10 +20,10 @@ const IOSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<IOSimulationScenario />} />
 
@@ -177,9 +177,7 @@ const IOSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import TaskDependencies2CoresSimulationScenario
   from "../../../images/vector_graphs/multi_core/multicore_dependencies_2_cores.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const TaskDependencies2CoresSimulation = () => {
 
@@ -21,12 +21,12 @@ const TaskDependencies2CoresSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<TaskDependencies2CoresSimulationScenario />} />
+        <SimulationScenario scenario={<TaskDependencies2CoresSimulationScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -64,8 +64,8 @@ const TaskDependencies2CoresSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
-                          <HostUtilizationChart data={response.data.task_data} />
+                          <SimulationOutput output={response.data.simulation_output}/>
+                          <HostUtilizationChart data={response.data.task_data}/>
                         </>
                       )
                       setSubmitting(false)
@@ -147,9 +147,7 @@ const TaskDependencies2CoresSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

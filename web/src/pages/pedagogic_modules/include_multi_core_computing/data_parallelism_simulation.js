@@ -5,11 +5,11 @@ import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import DataParallelismSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_data_parallelism.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const DataParallelismSimulation = () => {
 
@@ -20,12 +20,12 @@ const DataParallelismSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<DataParallelismSimulationScenario />} />
+        <SimulationScenario scenario={<DataParallelismSimulationScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -68,8 +68,8 @@ const DataParallelismSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
-                          <HostUtilizationChart data={response.data.task_data} />
+                          <SimulationOutput output={response.data.simulation_output}/>
+                          <HostUtilizationChart data={response.data.task_data}/>
                         </>
                       )
                       setSubmitting(false)
@@ -136,9 +136,7 @@ const DataParallelismSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

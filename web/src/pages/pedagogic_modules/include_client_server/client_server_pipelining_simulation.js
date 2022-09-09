@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import {
   validateFieldInRange,
   validateFieldInMultipleRanges
@@ -14,6 +11,7 @@ import {
 
 import ClientServerDiskScenario from "../../../images/vector_graphs/client_server/client_server_disk.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const ClientServerPipeliningSimulation = () => {
 
@@ -24,10 +22,10 @@ const ClientServerPipeliningSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<ClientServerDiskScenario />} />
 
@@ -170,9 +168,7 @@ const ClientServerPipeliningSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

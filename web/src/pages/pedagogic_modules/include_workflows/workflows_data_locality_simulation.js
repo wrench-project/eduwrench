@@ -8,11 +8,11 @@ import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import NetworkBandwidthUsageChart from "../../../components/charts/network_bandwidth_usage"
 import TasksData from "../../../components/simulation/tasks_data"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsDataLocalityScenario from "../../../images/vector_graphs/workflows/workflow_data_locality.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const WorkflowsDataLocalitySimulation = () => {
 
@@ -20,13 +20,12 @@ const WorkflowsDataLocalitySimulation = () => {
   const [auth, setAuth] = useState("false")
   const [runtimes, setRunTimes] = useState(0)
 
-
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<WorkflowsDataLocalityScenario />} />
 
@@ -164,16 +163,14 @@ const WorkflowsDataLocalitySimulation = () => {
                 </Form>
               )}
             </Formik>
-              <SimulationFeedback simulationID={'workflows/workflows_data_locality_simulation'} trigger={runtimes === 3}/>
+            <SimulationFeedback simulationID={'workflows/workflows_data_locality_simulation'} trigger={runtimes === 3}/>
           </Segment>
         </Segment.Group>
 
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

@@ -7,13 +7,12 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import {
   validateFieldInRange,
   validateFieldInMultipleRanges
 } from "../../../components/simulation/simulation_validation"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback"
-
+import SigninCheck from '../../../components/signin_check';
 
 import IOTask from "../../../images/vector_graphs/single_core/io_task.svg"
 
@@ -25,10 +24,10 @@ const IOSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<IOTask />} />
 
@@ -210,9 +209,7 @@ const IOSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

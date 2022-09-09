@@ -4,7 +4,6 @@ import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import {
   validateFieldInRange,
   validateFieldInMultipleRanges
@@ -13,6 +12,7 @@ import {
 import LoadImbalanceSimulationScenario
   from "../../../images/vector_graphs/multi_core/multicore_load_imbalance_simulation.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const LoadImbalanceSimulation = () => {
 
@@ -22,10 +22,10 @@ const LoadImbalanceSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<LoadImbalanceSimulationScenario />} />
 
@@ -161,9 +161,7 @@ const LoadImbalanceSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

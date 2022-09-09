@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationOutput from "../../../components/simulation/simulation_output"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 
 import ContentScenario
   from "../../../images/vector_graphs/networking_fundamentals/networking_fundamentals_cyber_infrastructure.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const ContentionSimulation = () => {
 
@@ -19,12 +19,12 @@ const ContentionSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<ContentScenario />} />
+        <SimulationScenario scenario={<ContentScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -59,7 +59,7 @@ const ContentionSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
+                          <SimulationOutput output={response.data.simulation_output}/>
                         </>
                       )
                       setSubmitting(false)
@@ -107,9 +107,7 @@ const ContentionSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

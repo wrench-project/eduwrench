@@ -7,11 +7,11 @@ import SimulationScenario from "../../../components/simulation/simulation_scenar
 import GanttChart from "../../../components/charts/gantt_chart"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
 import TasksData from "../../../components/simulation/tasks_data"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInRange } from "../../../components/simulation/simulation_validation"
 
 import WorkflowsFundamentalsScenario from "../../../images/vector_graphs/workflows/workflow_fundamentals.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const WorkflowsFundamentalsSimulation = () => {
 
@@ -21,10 +21,10 @@ const WorkflowsFundamentalsSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<WorkflowsFundamentalsScenario />} />
 
@@ -135,9 +135,7 @@ const WorkflowsFundamentalsSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

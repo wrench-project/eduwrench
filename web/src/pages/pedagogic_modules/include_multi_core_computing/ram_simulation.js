@@ -4,7 +4,6 @@ import { Form, Label, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import HostUtilizationChart from "../../../components/charts/host_utilization_chart"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import {
   validateFieldInMultipleRanges,
   validateFieldInRange
@@ -12,6 +11,7 @@ import {
 
 import RAMSimulationScenario from "../../../images/vector_graphs/multi_core/multicore_ram_simulation.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const RAMSimulation = () => {
 
@@ -22,10 +22,10 @@ const RAMSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<RAMSimulationScenario />} />
 
@@ -181,9 +181,7 @@ const RAMSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

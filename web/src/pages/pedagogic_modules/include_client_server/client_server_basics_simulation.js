@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react"
 import axios from "axios"
-import { Form, Label, Segment } from "semantic-ui-react"
+import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
 import SimulationScenario from "../../../components/simulation/simulation_scenario"
 import SimulationOutput from "../../../components/simulation/simulation_output"
-import SimulationSignIn from "../../../components/simulation/simulation_signin"
 import { validateFieldInMultipleRanges } from "../../../components/simulation/simulation_validation"
 
 import ClientServerBasicsScenario from "../../../images/vector_graphs/client_server/client_server_basics.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
+import SigninCheck from '../../../components/signin_check';
 
 const ClientServerBasicsSimulation = () => {
 
@@ -19,12 +19,12 @@ const ClientServerBasicsSimulation = () => {
 
   useEffect(() => {
     setAuth(localStorage.getItem("login"))
-  })
+  }, [])
 
   return (
-    auth === "true" ? (
+    <SigninCheck data={[
       <>
-        <SimulationScenario scenario={<ClientServerBasicsScenario />} />
+        <SimulationScenario scenario={<ClientServerBasicsScenario/>}/>
 
         <Segment.Group>
           <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
@@ -67,7 +67,7 @@ const ClientServerBasicsSimulation = () => {
                     response => {
                       setSimulationResults(
                         <>
-                          <SimulationOutput output={response.data.simulation_output} />
+                          <SimulationOutput output={response.data.simulation_output}/>
                         </>
                       )
                       setSubmitting(false)
@@ -140,9 +140,7 @@ const ClientServerBasicsSimulation = () => {
         {simulationResults}
 
       </>
-    ) : (
-      <SimulationSignIn />
-    )
+    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 
