@@ -13,6 +13,7 @@
     "chart.js": "^3.7.1",
     "formik": "^2.2.9",
     "gatsby": "4.12.1",
+    "gatsby-cli": "^4.23.0",
     "gatsby-plugin-image": "^2.12.1",
     "gatsby-plugin-manifest": "^4.12.1",
     "gatsby-plugin-nodejs": "^0.7.0",
