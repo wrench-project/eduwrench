@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import { Divider, Header} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives"
 import Thrustd_Cloud_Simulation from "./thrustd_cloud_simulation";
@@ -11,6 +11,9 @@ import SigninCheck from "../../../components/signin_check";
 const CloudComputing = ({module, tab}) => {
 
     const [auth, setAuth] = useState("false")
+    useEffect(() => {
+        setAuth(localStorage.getItem("login"))
+    })
 
     return (
         <>

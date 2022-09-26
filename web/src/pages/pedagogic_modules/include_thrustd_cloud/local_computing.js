@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
 import {Divider, Header, Table} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg";
@@ -11,6 +11,9 @@ import SigninCheck from "../../../components/signin_check";
 const LocalComputing = ({module, tab}) => {
 
     const [auth, setAuth] = useState("false")
+    useEffect(() => {
+        setAuth(localStorage.getItem("login"))
+    })
 
     return (
         <>
