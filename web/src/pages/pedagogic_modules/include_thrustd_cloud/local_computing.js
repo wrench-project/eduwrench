@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import {Divider, Header, Table} from "semantic-ui-react"
 import LearningObjectives from "../../../components/learning_objectives";
 import MontageWorkflow from "../../../images/vector_graphs/thrustd/montage_workflow.svg";
@@ -6,8 +6,12 @@ import Thrustd_Local_Simulation from "./thrustd_local_simulation";
 import SimulationActivity from "../../../components/simulation/simulation_activity";
 import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
+import SigninCheck from "../../../components/signin_check";
 
 const LocalComputing = ({module, tab}) => {
+
+    const [auth, setAuth] = useState("false")
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -36,7 +40,7 @@ const LocalComputing = ({module, tab}) => {
                 in a level perform the same kind of computation on different data. The task
                 dependency structure is relatively straightforward, with each task at a level depending on some (or all) of
                 the tasks in the previous level.  For each level, the figure above indicates the number of tasks and the total work (in GFlop) of these tasks. The number of input/output
-                files and their total size in MB are indicated in between each workflow level.  
+                files and their total size in MB are indicated in between each workflow level.
             </p>
 
             <h3>Your local cluster</h3>
@@ -48,7 +52,7 @@ const LocalComputing = ({module, tab}) => {
             </p>
 
             <p>
-            The cluster has a storage system with read/write bandwidth of 100 MBps. The storage system holds all workflow data, that is,
+                The cluster has a storage system with read/write bandwidth of 100 MBps. The storage system holds all workflow data, that is,
                 all input files and all files generated.
             </p>
 
@@ -136,11 +140,11 @@ const LocalComputing = ({module, tab}) => {
 
             <p>
                 You can pick the p-state value of the nodes at will. <b>We will assume that all nodes are always set
-                to the same pstate.</b> 
+                to the same pstate.</b>
             </p>
 
             <p>
-                Furthermore, you can decide to <b>power off some of the nodes</b>. This is because <b>an idling 
+                Furthermore, you can decide to <b>power off some of the nodes</b>. This is because <b>an idling
                 node still consumes a significant amount of power</b>. Specifically, the cluster nodes consume 98 Watts when idling. It thus may
                 be preferable to power some of them off, since your Montage workflow may not be able to use all 64
                 compute nodes anyway (e.g., due to limited parallelism).
@@ -163,63 +167,69 @@ const LocalComputing = ({module, tab}) => {
                 Questions
             </Header>
 
-            <p>
-                <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
-                Using the simulation, answer the following questions:
-            </p>
-            <ol type="a">
-                <li>
-                    What is the <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>?
-                </li>
-                <li>What is the <a href="/pedagogic_modules/multi_core_computing">parallel efficiency?</a></li>
-                <li>What is the total CO2 emission?</li>
-            </ol>
+            <SigninCheck data={[
+                <>
+
+                    <p>
+                        <strong>[D.1.q1.1]</strong> Say the cluster is configured for maximum performance: all 64 hosts are powered on and all are at p-state 6.
+                        Using the simulation, answer the following questions:
+                    </p>
+                    <ol type="a">
+                        <li>
+                            What is the <a href="/pedagogic_modules/multi_core_computing">parallel speedup</a>?
+                        </li>
+                        <li>What is the <a href="/pedagogic_modules/multi_core_computing">parallel efficiency?</a></li>
+                        <li>What is the total CO2 emission?</li>
+                    </ol>
 
 
-            <p>
-                <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
-                as possible is overkill. Instead, it is only necessary that the workflow run in under 3 minutes
-                (e.g., running in 2 minutes brings no extra benefits when compared to running in 3 minutes). The only goal
-                is now to configure the cluster so as to have the lowest CO2 emission provided the workflow executes in 
-                less than 3 minutes.  You have two cluster configuration options to choose from:
-                <br/>
-            </p>
-            <ul>
-                <li>Option 1: Turn off some of the nodes and have all powered on nodes operate in the highest p-state. Using a binary search,
-                    find the smallest number of nodes that satisfies the 3-minute time limit.
-                </li>
-                <li>Option 2: Power on all 64 nodes but downclock them to a lower p-state. Using a binary search, find the
-                    smallest p-state that satisfies the 3-minute time limit.
-                </li>
-            </ul>
-            <ol type="a">
-                <li>
-                    For both these options give the CO2 emission.
-                </li>
-                <li>What should you tell your boss regarding which of the two options is best?</li>
-                <li>Give a reason why the less desirable option among the two has a higher CO2 footprint than the better option.</li>
-            </ol>
+                    <p>
+                        <strong>[D.1.q1.2]</strong> It turns out that, according to your boss, running the workflow as fast
+                        as possible is overkill. Instead, it is only necessary that the workflow run in under 3 minutes
+                        (e.g., running in 2 minutes brings no extra benefits when compared to running in 3 minutes). The only goal
+                        is now to configure the cluster so as to have the lowest CO2 emission provided the workflow executes in
+                        less than 3 minutes.  You have two cluster configuration options to choose from:
+                        <br/>
+                    </p>
+                    <ul>
+                        <li>Option 1: Turn off some of the nodes and have all powered on nodes operate in the highest p-state. Using a binary search,
+                            find the smallest number of nodes that satisfies the 3-minute time limit.
+                        </li>
+                        <li>Option 2: Power on all 64 nodes but downclock them to a lower p-state. Using a binary search, find the
+                            smallest p-state that satisfies the 3-minute time limit.
+                        </li>
+                    </ul>
+                    <ol type="a">
+                        <li>
+                            For both these options give the CO2 emission.
+                        </li>
+                        <li>What should you tell your boss regarding which of the two options is best?</li>
+                        <li>Give a reason why the less desirable option among the two has a higher CO2 footprint than the better option.</li>
+                    </ol>
 
-            <p>
-                <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 65% is just
-                unacceptable, because they remember from a college course that low parallel efficiency means that
-                compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
-                nodes configured at the maximum p-state, that leads to a parallel efficiency of at least 65%. Then, using
-                that number of nodes, you're supposed to find to which p-state you can downclock to so that you can save energy,
-                while still remaining under the 3-minute time limit.
-            </p>
-            <ol type="a">
-                <li>
-                    Report on the number of nodes and p-state that you end up using and the CO2 cost.
-                </li>
-                <li>How does it compare to that obtained with the best option in question [D.1.q1.2]?</li>
-                <li>Do you conclude that it is useful or not useful to use both power-management
-                    techniques (powering hosts off and lowering the p-state) in combination?</li>
-            </ol>
-            <p>
-                    (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we
-                used the simulator - from a script - to perform a systematic search. The optimal configuration uses 29 nodes at p-state 5.)
-            </p>
+                    <p>
+                        <strong>[D.1.q1.3]</strong> Your boss says that running at parallel efficiency below 65% is just
+                        unacceptable, because they remember from a college course that low parallel efficiency means that
+                        compute resources are wasted. So they propose the following heuristic. They ask you to first find the maximum number of nodes, with all
+                        nodes configured at the maximum p-state, that leads to a parallel efficiency of at least 65%. Then, using
+                        that number of nodes, you're supposed to find to which p-state you can downclock to so that you can save energy,
+                        while still remaining under the 3-minute time limit.
+                    </p>
+                    <ol type="a">
+                        <li>
+                            Report on the number of nodes and p-state that you end up using and the CO2 cost.
+                        </li>
+                        <li>How does it compare to that obtained with the best option in question [D.1.q1.2]?</li>
+                        <li>Do you conclude that it is useful or not useful to use both power-management
+                            techniques (powering hosts off and lowering the p-state) in combination?</li>
+                    </ol>
+                    <p>
+                        (In case you're wondering how we came up with the optimal, we didn't solve this problem analytically. Instead, we
+                        used the simulator - from a script - to perform a systematic search. The optimal configuration uses 29 nodes at p-state 5.)
+                    </p>
+
+                </>
+            ]} auth={auth} content="questions"></SigninCheck>
 
 
             <Header as="h3" block>

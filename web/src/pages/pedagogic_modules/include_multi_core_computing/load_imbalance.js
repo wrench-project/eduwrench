@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -10,8 +10,11 @@ import PracticeQuestionNumeric from "../../../components/practice-questions/nume
 import Utilization from "../../../images/vector_graphs/multi_core/multicore_utilization.svg"
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 import FeedbackQuestions from "../../../components/feedback_questions";
+import SigninCheck from "../../../components/signin_check";
 
 const LoadImbalance = ({module, tab}) => {
+    const [auth, setAuth] = useState("false")
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -87,6 +90,7 @@ const LoadImbalance = ({module, tab}) => {
             <Header as="h3" block>
                 Practice Questions
             </Header>
+
 
             <PracticeQuestionNumeric
                 module={"A.2"}
@@ -214,6 +218,9 @@ const LoadImbalance = ({module, tab}) => {
 
             <h2>More Load Imbalance with Non-Identical Tasks</h2>
 
+            <SigninCheck data={[
+                <>
+
             <p>
                 In all the above, we've only considered "identical" tasks: all tasks run in the same amount of time. Therefore,
                 the main question was how the number of cores divides the number of tasks. If it divides it perfectly then we
@@ -333,6 +340,8 @@ const LoadImbalance = ({module, tab}) => {
                 times on one core are: 2s, 4s, 8s, 3s, 9s, and 3s. What is the best possible program execution time on these 3
                 cores? Could we do better with 4 cores? Show your work by giving the execution time for both options.
             </p>
+                </>
+            ]} auth={auth} content="this content"></SigninCheck>
 
             <Header as="h3" block>
                 You feedback is appreciated

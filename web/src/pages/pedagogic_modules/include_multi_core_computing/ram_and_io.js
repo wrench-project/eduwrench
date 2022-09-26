@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -15,8 +15,12 @@ import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import SigninCheck from "../../../components/signin_check";
 
 const RamAndIO = ({module, tab}) => {
+
+    const [auth, setAuth] = useState("false")
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -129,6 +133,9 @@ const RamAndIO = ({module, tab}) => {
             <Divider />
 
             <h2>I/O and Parallelism</h2>
+
+            <SigninCheck data={[
+                <>
 
             <p>
                 Another common cause of idle time is I/O. While a task running on a core performs I/O, the core is (mostly)
@@ -442,6 +449,10 @@ const RamAndIO = ({module, tab}) => {
                 <strong>[A.2.q3.4]</strong> Same question as above but now the program always overlaps I/O and computation. Show
                 your work and reasoning.
             </p>
+
+
+                </>
+            ]} auth={auth} content="this content"></SigninCheck>
 
             <Header as="h3" block>
                 You feedback is appreciated

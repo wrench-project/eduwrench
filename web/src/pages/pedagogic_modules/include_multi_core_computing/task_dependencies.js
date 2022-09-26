@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useState} from "react"
 import { Divider, Header, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -19,8 +19,12 @@ import PracticeQuestionDAG2 from "../../../images/vector_graphs/multi_core/multi
 import QuestionDAG1 from "../../../images/vector_graphs/multi_core/multicore_question_dag_1.svg"
 import QuestionDAG2 from "../../../images/vector_graphs/multi_core/multicore_question_dag_2.svg"
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import SigninCheck from "../../../components/signin_check";
 
 const TaskDependencies = ({module, tab}) => {
+
+    const [auth, setAuth] = useState("false")
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -244,6 +248,9 @@ const TaskDependencies = ({module, tab}) => {
             <Divider />
 
             <h2>Levels, Width, Critical Path</h2>
+
+            <SigninCheck data={[
+                <>
 
             <p>
                 In the previous section, and the practice questions, we touched upon some fundamental concepts without naming
@@ -726,6 +733,9 @@ const TaskDependencies = ({module, tab}) => {
                 application execution for determining the execution time.
             </p>
             <QuestionDAG2 />
+
+                </>
+            ]} auth={auth} content="this content"></SigninCheck>
 
             <Header as="h3" block>
                 You feedback is appreciated
