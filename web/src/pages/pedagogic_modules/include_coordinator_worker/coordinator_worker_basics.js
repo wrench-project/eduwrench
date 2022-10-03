@@ -621,23 +621,24 @@ const CoordinatorWorkerBasics = ({module, tab}) => {
                         target="_blank" rel="noreferrer">this article</a>.
                     </div>
 
+                    <Divider />
+
+                    <Header as="h3" block>
+                        Your feedback is appreciated
+                    </Header>
+
+                    <FeedbackActivity content={
+                        <FeedbackQuestions feedbacks={[
+                            {
+                                tabkey: "coordinator_worker_basics",
+                                module: "A.3.3"
+                            },
+                        ]} />
+                    } />
+
                 </>
             ]} auth={auth} content="this content"></SigninCheck>
 
-            <Divider />
-
-            <Header as="h3" block>
-                You feedback is appreciated
-            </Header>
-
-            <FeedbackActivity content={
-                <FeedbackQuestions feedbacks={[
-                    {
-                        tabkey: "coordinator_worker_basics",
-                        module: "A.3.3"
-                    },
-                ]} />
-            } />
 
         </>
     )

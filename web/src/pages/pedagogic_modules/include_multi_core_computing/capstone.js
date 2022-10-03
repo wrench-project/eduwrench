@@ -85,7 +85,7 @@ const MultiCoreCapstone = ({module, tab}) => {
                 mathematical expressions, narratives).
             </p>
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
 

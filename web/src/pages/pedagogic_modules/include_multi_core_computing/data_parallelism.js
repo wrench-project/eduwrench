@@ -514,7 +514,7 @@ const DataParallelism = ({module, tab}) => {
             ]} auth={auth} content="this content"></SigninCheck>
 
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
             <FeedbackActivity content={

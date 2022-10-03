@@ -257,21 +257,25 @@ const Topologies = ({module, tab}) => {
                         reasoning.
                     </p>
 
+                    <Divider/>
+
+                    <Header as="h3" block>
+                        Your feedback is appreciated
+                    </Header>
+
+                    <FeedbackActivity content={
+                        <FeedbackQuestions feedbacks={[
+                            {
+                                tabkey: "topologies",
+                                module: "A.3.1"
+                            },
+                        ]} />
+                    } />
+
                 </>
+
             ]} auth={auth} content="this content"></SigninCheck>
 
-            <Header as="h3" block>
-                You feedback is appreciated
-            </Header>
-
-            <FeedbackActivity content={
-                <FeedbackQuestions feedbacks={[
-                    {
-                        tabkey: "topologies",
-                        module: "A.3.1"
-                    },
-                ]} />
-            } />
 
         </>
     )
