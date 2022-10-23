@@ -13,6 +13,7 @@ import { Menu } from "semantic-ui-react"
 import { StaticImage } from "gatsby-plugin-image"
 import Auth from "./auth"
 import "./header.css"
+import AuthCI from "./authCI"
 
 const Header = props => {
   return (
@@ -68,6 +69,7 @@ const Header = props => {
           </Menu.Item>
 
           <Auth />
+          <AuthCI/>
 
         </Menu>
       </div>
