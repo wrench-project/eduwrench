@@ -68,8 +68,11 @@ const Header = props => {
             About
           </Menu.Item>
 
-          <Auth />
-          <AuthCI/>
+          <Menu.Menu position="right">
+            <Auth />
+            <AuthCI/>
+          </Menu.Menu>
+
 
         </Menu>
       </div>

@@ -20,8 +20,6 @@ class AuthCI extends Component {
       accessToken: ""
     }
 
-
-
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
     this.cilogon_link = "https://cilogon.org/authorize" + "?" +
@@ -62,17 +60,19 @@ class AuthCI extends Component {
     }
   }
 
-  login(response) {
+  login() {
     const width = 600;
     const height = 700;
     const top = window.outerHeight / 2 + window.screenY - height / 2;
     const left = window.outerWidth / 2 + window.screenX - width / 2;
 
-    const child = window.open(this.cilogon_link, 'cilogon', `width=${width},height=${height},top=${top},left=${left}`);
+    const child = window.open(this.cilogon_link, '_blank', `width=${width},height=${height},top=${top},left=${left}`);
 
     window.addEventListener("message", (event) => {
       if (event.origin !== "https://eduwrench.org" && event.origin !== "http://localhost:8000") {
-        console.log(`unknown origin ${event.origin}`);
+        // console.log(`unknown origin ${event.origin}`);
+        child.close();
+        setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
         return;
       }
       // console.log(event.data);
@@ -81,7 +81,9 @@ class AuthCI extends Component {
       let searchParams = searchStr.split("&");
       if (searchParams.length !== 2) {
         // did not get code and state back -> invalid
-        alert("Invalid Sign In. Please try again.");
+        console.log("invalid sign in");
+        child.close();
+        setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
         return;
       }
 
@@ -90,23 +92,28 @@ class AuthCI extends Component {
 
       if (searchParams[0].indexOf('code=') < 0) {
         // first param is not code -> invalid
-        alert("Invalid Sign In Code. Please try again. 2");
+        console.log("invalid sign in code");
+        child.close();
+        setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
         return;
       }
 
       if (searchParams[1].indexOf('state=') < 0) {
         // second param is not state -> invalid
-        alert("Invalid Sign In State. Please try again. 3");
+        console.log("invalid sign in state");
+        child.close();
+        setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
         return;
       }
 
       let code = searchParams[0].substring(6);
       let state = searchParams[1].substring(6);
 
-      // console.log(code);
       if (state !== randomState) {
         // state values mismatch -> invalid
-        alert("Mismatched state values. Please try signing in again.");
+        console.log("Mismatched state values");
+        child.close();
+        setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
         return;
       }
 
@@ -119,12 +126,9 @@ class AuthCI extends Component {
       // console.log(data.code);
       axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/oauth_token", data).then(
         response => {
-          // console.log(response.data);
-          // console.log(response.data.access_token);
 
           if (response.data.access_token) {
             this.setState(state => ({
-              logged: true,
               accessToken: response.data.access_token,
             }))
             const getUserInfo = {
@@ -134,111 +138,90 @@ class AuthCI extends Component {
           }
         },
         error => {
-          console.log(error)
-          alert("Error logging in.")
+          console.log(error);
+          child.close();
+          setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
+          return;
         }
       )
         // use accesstoken to get user info
         .then(
           response => {
             console.log(response.data);
-            // console.log(response.data.access_token);
 
+            this.setState(state => ({
+              logged: true,
+              user: {
+                given: response.data.given_name,
+                name: response.data.given_name + response.data.family_name,
+                email: response.data.email,
+                // picture: response.profileObj.imageUrl
+              }
+            }))
+            document.cookie = "eduwrench=eduWRENCH"
+            localStorage.setItem("loginTime", new Date())
+            localStorage.setItem("login", "true")
+            localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
+            localStorage.setItem("currentUser", response.data.email)
+            localStorage.setItem("userName", response.data.given_name + response.data.family_name)
+            // localStorage.setItem("userPicture", response.profileObj.imageUrl)
           },
           error => {
-            console.log(error)
-            alert("Error logging in.")
+            console.log(error);
+            child.close();
+            setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
+            return;
           }
         )
 
-      // console.log(accessToken);
-      //
-      // if (accessToken !== "") {
-      //   const getUserInfo = {
-      //     accessToken: accessToken,
-      //   }
-      //
-      //   axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/cilogon_userinfo", getUserInfo).then(
-      //     response => {
-      //       console.log(response.data)
-      //     },
-      //     error => {
-      //       console.log(error)
-      //       alert("Error getting CILogon User Info.")
-      //     }
-      //   )
-      // }
+    }, { once: true });
 
-    }, false);
-
-  }
-
-  login1(response) {
-
-    // if (response.accessToken) {
-    //   this.setState(state => ({
-    //     logged: true,
-    //     accessToken: response.accessToken,
-    //     user: {
-    //       given: response.profileObj.givenName,
-    //       name: response.profileObj.name,
-    //       email: response.profileObj.email,
-    //       picture: response.profileObj.imageUrl
-    //     }
-    //   }))
-    //   document.cookie = "eduwrench=eduWRENCH"
-    //   localStorage.setItem("loginTime", new Date())
-    //   localStorage.setItem("login", "true")
-    //   localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
-    //   localStorage.setItem("currentUser", response.profileObj.email)
-    //   localStorage.setItem("userName", response.profileObj.name)
-    //   localStorage.setItem("userPicture", response.profileObj.imageUrl)
-    // } else {
-    //   alert("Failed to log in")
-    // }
   }
 
   logout() {
-    this.setState(state => ({
-      logged: false,
-      accessToken: "",
-      user: {}
-    }))
-    localStorage.setItem("login", "false")
-    localStorage.setItem("currentUser", "")
-    localStorage.setItem("userName", "")
-    localStorage.setItem("userPicture", "")
+    try {
+      this.setState(state => ({
+        logged: false,
+        accessToken: "",
+        user: {}
+      }))
+      localStorage.setItem("login", "false")
+      localStorage.setItem("currentUser", "")
+      localStorage.setItem("userName", "")
+      // localStorage.setItem("userPicture", "")
+    } catch (e) {
+      console.log(e.message);
+      alert("Failed to log out");
+    }
   }
 
   render() {
     return (
       <>
-        <Menu.Menu position="right">
-          {this.state.logged ? (
-            <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
-              <img className="thumbnail-image"
-                   src={this.state.user.picture}
-                   alt="user pic"
-              />
-            }>
-              <Dropdown.Menu>
-                <Dropdown.Item disabled>
-                  <strong>{this.state.user.name}</strong><br/>
-                  <small>{this.state.user.email}</small>
-                </Dropdown.Item>
-                <Dropdown.Item enabled>
-                  <a href="/stats" className="grey-link">My EduWRENCH usage</a>
-                </Dropdown.Item>
-                <Dropdown.Divider/>
-                <Button onClick={this.logout}></Button>
-              </Dropdown.Menu>
-            </Dropdown>
-          ) : (
-            <Menu.Item style={{ backgroundColor: "#fff" }} className="sign-in">
-              <Button color='red' onClick={this.login}>Login</Button>
-            </Menu.Item>
-          )}
-        </Menu.Menu>
+        {this.state.logged ? (
+          <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
+            <img className="thumbnail-image"
+                 src={this.state.user.picture}
+                 alt="user pic"
+            />
+          }>
+            <Dropdown.Menu>
+              <Dropdown.Item disabled>
+                <strong>{this.state.user.name}</strong><br/>
+                <small>{this.state.user.email}</small>
+              </Dropdown.Item>
+              <Dropdown.Item enabled>
+                <a href="/stats" className="grey-link">My EduWRENCH usage</a>
+              </Dropdown.Item>
+              <Dropdown.Divider/>
+              <Button className="cilogon sign-out" onClick={this.logout}>Sign Out</Button>
+            </Dropdown.Menu>
+          </Dropdown>
+        ) : (
+          <Menu.Item style={{ backgroundColor: "#fff" }} className="sign-in">
+            <Button className="cilogon sign-out" onClick={this.login}>Sign In</Button>
+          </Menu.Item>
+        )}
       </>
     )
   }

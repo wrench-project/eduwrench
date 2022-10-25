@@ -97,7 +97,6 @@ class Auth extends Component {
   render() {
     return (
       <>
-        <Menu.Menu position="right">
           {this.state.logged ? (
             <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
                 <img className="thumbnail-image"
@@ -139,7 +138,6 @@ class Auth extends Component {
               />
             </Menu.Item>
           )}
-        </Menu.Menu>
       </>
     )
   }

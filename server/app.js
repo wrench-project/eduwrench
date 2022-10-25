@@ -1779,7 +1779,7 @@ app.post('/get/cilogon_userinfo', function (req, res) {
   const https = require("https");
 
   const accessToken = req.body.accessToken;
-  console.log(accessToken);
+  // console.log(accessToken);
 
   const options = {
     hostname: 'cilogon.org',

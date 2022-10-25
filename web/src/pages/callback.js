@@ -6,6 +6,7 @@ import { Button } from "semantic-ui-react"
 
 function exchangeCode(search) {
   window.opener.postMessage(search, window.opener.location.href);
+  window.close();
 }
 
 const CallbackPage = () => (
@@ -13,7 +14,7 @@ const CallbackPage = () => (
     <Seo title="CILogon Callback Page" />
     <h1>CILogon to eduWRENCH</h1>
     <p>Allow eduWRENCH to access your CILogon account and information?</p>
-    <Button onClick={exchangeCode(window.location.search)}>Yes</Button>
+    <Button onClick={() => exchangeCode(window.location.search)}>Yes</Button>
     <Button>No</Button>
   </Layout>
 )
