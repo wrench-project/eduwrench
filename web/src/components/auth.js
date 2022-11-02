@@ -70,7 +70,8 @@ class Auth extends Component {
       localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
       localStorage.setItem("currentUser", response.profileObj.email)
       localStorage.setItem("userName", response.profileObj.name)
-      localStorage.setItem("userPicture", response.profileObj.imageUrl)      
+      localStorage.setItem("userPicture", response.profileObj.imageUrl)
+      this.props.signedIn()
     }
   }
 
@@ -84,6 +85,7 @@ class Auth extends Component {
     localStorage.setItem("currentUser", "")
     localStorage.setItem("userName", "")
     localStorage.setItem("userPicture", "")
+    this.props.signedIn()
   }
 
   handleLoginFailure(response) {

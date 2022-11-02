@@ -6,8 +6,8 @@ import { nanoid } from "nanoid";
 
 const CLIENT_ID =
   "cilogon:/client_id/b5deb22f68b35d12084368473a0881a"
-const CLIENT_SECRET = "DOOJf_Ubo7_1Z-lKYy5wkPPL5Qr9Uu6nbLVbHWaDYkz75yQIYFvt3Psdv5YW8gcweQlYlhDrU_IRyyTV1jA6yA"
-const redirect_uri = "http://localhost:8000/callback"
+const redirect_uri = "http://localhost:8000/callback" // TODO: change to use window.location...
+// TODO: add dropdown and combine auth + authCI into one file
 // generate random state value
 const randomState = nanoid(20);
 
@@ -16,7 +16,7 @@ class AuthCI extends Component {
     super(props)
 
     this.state = {
-      logged: false,
+      loggedCI: false,
       accessToken: ""
     }
 
@@ -30,9 +30,9 @@ class AuthCI extends Component {
       "scope=openid email profile org.cilogon.userinfo";
 
     if (!document.cookie) {
-      localStorage.setItem("login", "false")
+      localStorage.setItem("loginCI", "false")
       this.setState(state => ({
-        logged: false,
+        loggedCI: false,
         accessToken: "",
         user: {}
       }))
@@ -43,12 +43,26 @@ class AuthCI extends Component {
       axios.get(window.location.protocol + "//" + window.location.hostname + ":3000/server_time").then(
         response => {
           let serverTime = new Date(response.data.time)
-          let loginTime = new Date(localStorage.getItem("loginTime"))
+          let loginTime = new Date(localStorage.getItem("loginTimeCI"))
+          console.log(serverTime + "-" + loginTime);
           if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
+            console.log('weird message');
             this.setState(state => ({
-              logged: false,
+              loggedCI: false,
               accessToken: "",
               user: {}
+            }))
+          }
+          else if (localStorage.getItem("loginCI") === "true") {
+            this.setState(state => ({
+              loggedCI: true,
+              accessToken: this.state.accessToken,
+              user: {
+                given: localStorage.getItem("givenName"),
+                name: localStorage.getItem("userName"),
+                email: localStorage.getItem("currentUser"),
+              // picture: response.profileObj.imageUrl
+              }
             }))
           }
         },
@@ -147,24 +161,27 @@ class AuthCI extends Component {
         // use accesstoken to get user info
         .then(
           response => {
-            console.log(response.data);
+            // console.log(response.data);
 
             this.setState(state => ({
-              logged: true,
+              loggedCI: true,
               user: {
                 given: response.data.given_name,
-                name: response.data.given_name + response.data.family_name,
+                name: response.data.given_name + " " + response.data.family_name,
                 email: response.data.email,
                 // picture: response.profileObj.imageUrl
               }
             }))
             document.cookie = "eduwrench=eduWRENCH"
-            localStorage.setItem("loginTime", new Date())
-            localStorage.setItem("login", "true")
+            localStorage.setItem("loginTimeCI", new Date())
+            localStorage.setItem("loginCI", "true")
+            // TODO: add loginType
             localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
             localStorage.setItem("currentUser", response.data.email)
-            localStorage.setItem("userName", response.data.given_name + response.data.family_name)
+            localStorage.setItem("givenName", response.data.given_name)
+            localStorage.setItem("userName", response.data.given_name + " " +  response.data.family_name)
             // localStorage.setItem("userPicture", response.profileObj.imageUrl)
+            this.props.signedIn()
           },
           error => {
             console.log(error);
@@ -181,14 +198,16 @@ class AuthCI extends Component {
   logout() {
     try {
       this.setState(state => ({
-        logged: false,
+        loggedCI: false,
         accessToken: "",
         user: {}
       }))
-      localStorage.setItem("login", "false")
+      localStorage.setItem("loginCI", "false")
       localStorage.setItem("currentUser", "")
+      localStorage.setItem("givenName", "")
       localStorage.setItem("userName", "")
       // localStorage.setItem("userPicture", "")
+      this.props.signedIn()
     } catch (e) {
       console.log(e.message);
       alert("Failed to log out");
@@ -196,9 +215,12 @@ class AuthCI extends Component {
   }
 
   render() {
+    // console.log(this.state.loggedCI);
+    // TODO: add cilogon logo
+    console.log("state: " + this.state.loggedCI);
     return (
       <>
-        {this.state.logged ? (
+        {this.state.loggedCI ? (
           <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
             <img className="thumbnail-image"
                  src={this.state.user.picture}
