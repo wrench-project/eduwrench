@@ -27,7 +27,6 @@ const CallbackPage = () => (
       }}
       alt="CILogon to eduWRENCH"
     />
-    {/*<img src="web/src/images/cilogon_to_eduwrench.png" alt="CILogon to eduWRENCH"/>*/}
     <p className="cilogon_question">Allow eduWRENCH to access your CILogon account and information?</p>
     <div className="button-group">
       <Button className="cilogon_confirm" size="huge" color="blue" onClick={() => exchangeCode(window.location.search)}>Yes</Button>

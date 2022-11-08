@@ -19,36 +19,27 @@ class SignIn extends Component {
     this.signedIn = this.signedIn.bind(this)
 
     this.state = {
-      googleLogin: "false",
-      cilogon: "false"
+      login: "",
     }
 
   }
 
   signedIn() {
-    console.log(this.state.googleLogin);
-    console.log(this.state.cilogon);
 
     this.setState({
-      googleLogin: localStorage.getItem("login"),
-      cilogon: localStorage.getItem("loginCI")
+      login: localStorage.getItem("loginType"),
     })
 
-    // googleLogin = localStorage.getItem("login");
-    // cilogon = localStorage.getItem("loginCI");
-
-    console.log(this.state.googleLogin);
-    console.log(this.state.cilogon);
   }
 
   render() {
     return (
       <>
-        {(this.state.googleLogin === "true") ? (
+        {(this.state.login === "Google") ? (
           <Auth signedIn={this.signedIn}/>
 
         ) : (
-          (this.state.cilogon === "true") ? (
+          (this.state.login === "CILogon") ? (
             <AuthCI signedIn={this.signedIn}/>
           ) : (
             <>
