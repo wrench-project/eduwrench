@@ -50,7 +50,6 @@ class AuthCI extends Component {
           let loginTime = new Date(localStorage.getItem("loginTime"))
           console.log(serverTime + "-" + loginTime);
           if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
-            console.log('weird message');
             this.setState(state => ({
               logged: false,
               loginType: "",
