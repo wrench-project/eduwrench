@@ -348,18 +348,19 @@ class SignIn extends Component {
               </Dropdown.Item>
               <Dropdown.Divider/>
               <Dropdown.Item style={{ backgroundColor: "#fff" }} className="sign-in">
-                <Button className="cilogon sign-out" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0000008A", textAlign: "center" }} onClick={this.cilogin}>
+                <Button className="cilogon sign-out" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0000008A", textAlign: "center", paddingLeft: "10px" }} onClick={this.cilogin}>
                   <StaticImage
                     src="../images/cilogon.png"
                     style={{
                       width: 20,
                       height: 20,
-                      marginRight: "10px",
-                      padding: "10px",
+                      // marginRight: "10px",
+                      // padding: "10px 10px 10px 10px",
                     }}
                     alt="CILogon"
                   />
-                  Sign In
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  Sign In&nbsp;&nbsp;&nbsp;
                 </Button>
               </Dropdown.Item>
             </Dropdown.Menu>

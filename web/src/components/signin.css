@@ -48,3 +48,8 @@
 .grey-link {
   color: #9b9b9b;
 }
+
+.ui.item.dropdown:hover {
+  background-color: #fff !important;
+  color: #fff !important;
+}
