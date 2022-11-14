@@ -332,7 +332,7 @@ class SignIn extends Component {
 
         ) : (
 
-          <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} text="Sign In">
+          <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0, fontSize: '16px', fontFamily: "Roboto, sans-serif", fontWeight: 500 }} text="Sign In">
             <Dropdown.Menu>
               <Dropdown.Item style={{ backgroundColor: "#fff" }} className="sign-in">
                 <GoogleLogin
@@ -347,7 +347,7 @@ class SignIn extends Component {
                 />
               </Dropdown.Item>
               <Dropdown.Divider/>
-              <Dropdown.Item style={{ backgroundColor: "#fff" }} className="sign-in">
+              <Dropdown.Item fluid style={{ backgroundColor: "#fff" }} className="sign-in">
                 <Button className="cilogon sign-out" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0000008A", textAlign: "center", paddingLeft: "10px" }} onClick={this.cilogin}>
                   <StaticImage
                     src="../images/cilogon.png"
