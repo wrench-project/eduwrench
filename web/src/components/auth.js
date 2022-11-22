@@ -13,6 +13,7 @@ class Auth extends Component {
 
     this.state = {
       logged: false,
+      loginType: "",
       accessToken: ""
     }
 
@@ -25,6 +26,7 @@ class Auth extends Component {
       localStorage.setItem("login", "false")
       this.setState(state => ({
         logged: false,
+        loginType: "",
         accessToken: "",
         user: {}
       }))
@@ -39,6 +41,7 @@ class Auth extends Component {
             if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
               this.setState(state => ({
                 logged: false,
+                loginType: "",
                 accessToken: "",
                 user: {}
               }))
@@ -56,6 +59,7 @@ class Auth extends Component {
     if (response.accessToken) {
       this.setState(state => ({
         logged: true,
+        loginType: "Google",
         accessToken: response.accessToken,
         user: {
           given: response.profileObj.givenName,
@@ -67,23 +71,28 @@ class Auth extends Component {
       document.cookie = "eduwrench=eduWRENCH"
       localStorage.setItem("loginTime", new Date())
       localStorage.setItem("login", "true")
+      localStorage.setItem("loginType", "Google")
       localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
       localStorage.setItem("currentUser", response.profileObj.email)
       localStorage.setItem("userName", response.profileObj.name)
-      localStorage.setItem("userPicture", response.profileObj.imageUrl)      
+      localStorage.setItem("userPicture", response.profileObj.imageUrl)
+      this.props.signedIn()
     }
   }
 
   logout(response) {
     this.setState(state => ({
       logged: false,
+      loginType: "",
       accessToken: "",
       user: {}
     }))
     localStorage.setItem("login", "false")
+    localStorage.setItem("loginType", "")
     localStorage.setItem("currentUser", "")
     localStorage.setItem("userName", "")
     localStorage.setItem("userPicture", "")
+    this.props.signedIn()
   }
 
   handleLoginFailure(response) {
@@ -97,8 +106,7 @@ class Auth extends Component {
   render() {
     return (
       <>
-        <Menu.Menu position="right">
-          {this.state.logged ? (
+          {(this.state.logged && this.state.loginType === "Google") ? (
             <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
                 <img className="thumbnail-image"
                      src={this.state.user.picture}
@@ -139,7 +147,6 @@ class Auth extends Component {
               />
             </Menu.Item>
           )}
-        </Menu.Menu>
       </>
     )
   }

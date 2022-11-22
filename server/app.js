@@ -18,6 +18,7 @@ const express = require("express"),
 const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
 const cors = require("cors")
 const db = require("./data/db-config")
+
 // WRENCH produces output to the terminal using ansi colors, ansi_up will apply those colors to <span> html elements
 const ansiUp = new au.default();
 const serverTime = new Date();
@@ -1737,6 +1738,74 @@ app.post('/get/userdata', function (req, res) {
     }))
 
 })
+
+app.post('/get/oauth_token', function (req, res) {
+  const https = require("https");
+
+  const code = req.body.code;
+  const client_id = req.body.client_id;
+  const redirect_uri = req.body.redirect_uri;
+  // console.log(req.body['code']);
+  const CLIENT_SECRET = "DOOJf_Ubo7_1Z-lKYy5wkPPL5Qr9Uu6nbLVbHWaDYkz75yQIYFvt3Psdv5YW8gcweQlYlhDrU_IRyyTV1jA6yA";
+
+  const options = {
+    hostname: 'cilogon.org',
+    port: 443,
+    path: `/oauth2/token?code=${code}&grant_type=authorization_code&redirect_uri=${redirect_uri}&client_id=${client_id}&client_secret=${CLIENT_SECRET}`,
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+  };
+
+  const request = https.request(options, (response) => {
+    console.log('statusCode:', response.statusCode);
+    console.log('headers:', response.headers);
+
+    response.on('data', (d) => {
+      res.send(d);
+    });
+  });
+
+  request.on('error', (e) => {
+    console.error(e);
+  });
+  request.end();
+
+});
+
+app.post('/get/cilogon_userinfo', function (req, res) {
+  const https = require("https");
+
+  const accessToken = req.body.accessToken;
+  // console.log(accessToken);
+
+  const options = {
+    hostname: 'cilogon.org',
+    port: 443,
+    path: `/oauth2/userinfo`,
+    method: 'GET',
+    headers: {
+      'Authorization': 'Bearer ' + accessToken,
+    },
+  };
+
+  const request = https.request(options, (response) => {
+    console.log('statusCode:', response.statusCode);
+    console.log('headers:', response.headers);
+
+    response.on('data', (d) => {
+      res.send(d);
+    });
+  });
+
+  request.on('error', (e) => {
+    console.error(e);
+  });
+  request.end();
+
+});
 
 // Enable SSL server connection
 let st = serverTime.toISOString().replace(/T/, ' ').replace(/\..+/, '')

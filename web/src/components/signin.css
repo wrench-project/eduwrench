@@ -1,0 +1,54 @@
+.google * {
+  background-color: white !important;
+}
+
+.cilogon * {
+  background-color: white !important;
+}
+
+.thumbnail-image {
+  border-radius: 50%;
+  max-width: 4em !important;
+  max-height: 4em !important;
+  margin-left: 1em !important;
+  padding: 0 !important;
+  background-color: #fff;
+}
+
+.ui.item.dropdown {
+  background-color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+.ui.item.dropdown:hover, .sign-out:after {
+  background-color: #fff !important;
+}
+
+.ui.item.dropdown .icon {
+  display: none;
+}
+
+.auth-dropdown .dropdown-toggle::after {
+  display: none !important;
+}
+
+.sign-out {
+  border: 0 !important;
+  background-color: #fff !important;
+  box-shadow: none !important;
+  margin: 0;
+  padding: 0;
+}
+
+.sign-in {
+  padding: 0 1em !important;
+}
+
+.grey-link {
+  color: #9b9b9b;
+}
+
+.item.sign-in:hover {
+  background-color: white !important;
+}

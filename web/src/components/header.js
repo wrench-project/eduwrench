@@ -11,7 +11,7 @@ import React from "react"
 import PropTypes from "prop-types"
 import { Menu } from "semantic-ui-react"
 import { StaticImage } from "gatsby-plugin-image"
-import Auth from "./auth"
+import SignIn from "./signin"
 import "./header.css"
 
 const Header = props => {
@@ -67,7 +67,10 @@ const Header = props => {
             About
           </Menu.Item>
 
-          <Auth />
+          <Menu.Menu position="right">
+            <SignIn/>
+          </Menu.Menu>
+
 
         </Menu>
       </div>
