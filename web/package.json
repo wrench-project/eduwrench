@@ -33,6 +33,7 @@
     "react-katex": "^2.0.2",
     "react-mathjax": "^1.0.1",
     "react-mathjax2": "^0.0.2",
+    "react-new-window": "^0.2.2",
     "react-router-dom": "^6.3.0",
     "react-script-tag": "^1.1.2",
     "react-semantic-ui-range": "^0.7.1",

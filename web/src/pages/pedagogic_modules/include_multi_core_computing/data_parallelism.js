@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -13,8 +13,16 @@ import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import SimNewWindow from "../../../components/simNewWindow";
 
 const DataParallelism = ({module, tab}) => {
+    const [newSimWindow, setNewSimWindow] = useState([]);
+
+    function openNewWindow() {
+      setNewSimWindow([]);
+      setNewSimWindow([...newSimWindow, "data-parallelism"]);
+    }
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -108,6 +116,10 @@ const DataParallelism = ({module, tab}) => {
 
             <SimulationActivity panelKey="data-parallelism" content={<DataParallelismSimulation />} />
 
+            <Divider />
+
+            <button onClick={openNewWindow}>Pop Up Simulation</button>
+            {newSimWindow.map((item, i) => ( <SimNewWindow><DataParallelismSimulation/></SimNewWindow> ))}
             <Divider />
 
             <Header as="h3" block>
