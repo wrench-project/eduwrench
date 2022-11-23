@@ -19,7 +19,15 @@ const GOOGLE_CLIENT_ID =
   "1043042177326-hr8cj7m89j8s8i4bopgm9pkkllr4dedf.apps.googleusercontent.com"
 const CILOGON_CLIENT_ID =
   "cilogon:/client_id/b5deb22f68b35d12084368473a0881a"
-const redirect_uri = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/callback"
+
+let redirect_uri = ""
+if (window.location.port === "") {
+  redirect_uri = window.location.protocol + "//" + window.location.hostname + "/callback"
+}
+else {
+  redirect_uri = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/callback"
+}
+
 // generate random state value
 const randomState = nanoid(20);
 
