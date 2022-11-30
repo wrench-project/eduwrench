@@ -167,7 +167,13 @@ class SignIn extends Component {
         return; // do not listen to message if not sent from child
       }
 
-      if (event.origin !== window.location.protocol + "//" + window.location.hostname + ":" + window.location.port) {
+      let origin_url = ""
+      if (window.location.port === "") {
+        origin_url = window.location.protocol + "//" + window.location.hostname
+      } else {
+        origin_url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
+      }
+      if (event.origin !== origin_url) {
         // console.log(`unknown origin ${event.origin}`);
         child.close();
         setTimeout(() => alert("Failed to Sign In. Please try again."), 0);
