@@ -1,13 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-// function copyStyles(src, dest) {
-//   Array.from(src.styleSheets).forEach(styleSheet => {
-//     dest.head.appendChild(styleSheet.ownerNode.cloneNode(true))
-//   })
-//   Array.from(src.fonts).forEach(font => dest.fonts.add(font))
-// }
-
 function copyStyles(src, dest) {
   Array.from(src.styleSheets).forEach((styleSheet) => {
     const styleElement = styleSheet.ownerNode.cloneNode(true);
@@ -24,7 +17,11 @@ class SimNewWindow extends React.PureComponent {
   }
 
   componentDidMount() {
-    let win = window.open('', '', 'width=1000,height=1000');
+    const width = 1100;
+    const height = 600;
+    const top = window.outerHeight / 2 + window.screenY - height / 2;
+    const left = window.outerWidth / 2 + window.screenX - width / 2;
+    let win = window.open('', '', `width=${width},height=${height},top=${top},left=${left}`);
     copyStyles(window.document, win.document);
     win.document.title = 'Portal Simulator Window';
     let el = document.createElement('div');

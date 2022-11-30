@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, {useEffect, useState} from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -13,15 +13,22 @@ import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import SigninCheck from "../../../components/signin_check";
 import SimNewWindow from "../../../components/simNewWindow";
 
-const DataParallelism = ({module, tab}) => {
-    const [newSimWindow, setNewSimWindow] = useState([]);
 
-    function openNewWindow() {
-      setNewSimWindow([]);
-      setNewSimWindow([...newSimWindow, "data-parallelism"]);
-    }
+const DataParallelism = ({module, tab}) => {
+    // const [newSimWindow, setNewSimWindow] = useState([]);
+    //
+    // function openNewWindow() {
+    //   setNewSimWindow([]);
+    //   setNewSimWindow([...newSimWindow, "data-parallelism"]);
+    // }
+
+    const [auth, setAuth] = useState("false")
+    useEffect(() => {
+      setAuth(localStorage.getItem("login"))
+    })
 
     return (
         <>
@@ -118,9 +125,8 @@ const DataParallelism = ({module, tab}) => {
 
             <Divider />
 
-            <button onClick={openNewWindow}>Pop Up Simulation</button>
-            {newSimWindow.map((item, i) => ( <SimNewWindow><DataParallelismSimulation/></SimNewWindow> ))}
-            <Divider />
+            {/*<button onClick={openNewWindow}>Pop Up Simulation</button>*/}
+            {/*{newSimWindow.map((item, i) => ( <SimNewWindow><DataParallelismSimulation/></SimNewWindow> ))}*/}
 
             <Header as="h3" block>
                 Practice Questions
@@ -207,7 +213,10 @@ const DataParallelism = ({module, tab}) => {
 
             <h2>Amdahl's Law</h2>
 
-            <p>
+            <SigninCheck data={[
+                <>
+
+                <p>
                 The simulation and practice questions above highlight a simple phenomenon known as <strong>Amdahl's law</strong>.
                 This law says that the overall parallel speedup that a program that has a sequential and a parallel part is
                 limited by the amount of time spent in the sequential part. This is very intuitive, since in the extreme a
@@ -513,8 +522,11 @@ const DataParallelism = ({module, tab}) => {
                 your work and reasoning. For each option determine the execution time, and compare.
             </p>
 
+                </>
+            ]} auth={auth} content="this content"></SigninCheck>
+
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
             <FeedbackActivity content={
@@ -531,46 +543,3 @@ const DataParallelism = ({module, tab}) => {
 }
 
 export default DataParallelism
-
-const text1 = `
-
-
-
-        ---
-
-        #### Questions
-
-        Answer the following questions:
-
-        <strong>[A.2.q5.1]</strong> If the sequential execution of a program spends 30% of its
-        time in a phase that could be parallelized perfectly, what would be the
-        parallel efficiency of an execution of this program on  6 cores  (assuming
-        that phase has been parallelized)? Show your work and reasoning.
-
-        <strong>[A.2.q5.2]</strong> A program consists of a sequential phase and a perfectly
-        parallelizable phase. The program runs on 1 core in 20 minutes and on 3
-        cores in 10 minutes.  How long does the sequential phase run for? Show your
-        work and reasoning.
-
-        <strong>[A.2.q5.3]</strong> If a parallel program achieves parallel efficiency of 99%
-        when running on 64 cores, what fraction of its sequential execution time
-        was non-parallelizable? Show your work and reasoning. Write and solve an equation where
-        the fraction is the unknown.
-
-        <strong>[A.2.q5.4]</strong> Consider a program that consists of a single task  with
-        work  10,000 Gflop.  Developer <TeX math="A"/> proposes to replace this task with 5
-        tasks each with work  2,000 Gflop.  Developer  <TeX math="B"/> proposes to replace this
-        task with  4 tasks  each  with  work 3,000 Gflop, followed by a sequential
-        task with work  500  Gflop. Which developer's idea  should you use when
-        running this program on a 4-core machine? Show your work and reasoning. For each option
-        show the execution time as a function of the core speed, and compare.
-
-        <strong>[A.2.q5.5]</strong> A program currently consists of two tasks, <TeX math="A"/>  and <TeX math="B"/>,
-        that are independent (i.e., they  can be performed in parallel).  Task <TeX math="A"/>
-        has work 1000 Gflop, while task <TeX math="B"/> has work 2000 Gflop.  You  can either
-        replace task <TeX math="A"/> with two independent tasks each with work 600 Gflop, or
-        replace task <TeX math="B"/> with  two independent tasks each with  work 1900 Gflop.
-        If running on a 3-core computer,  which replacement would be best in  terms
-        of program execution  time? Sow your work and reasoning. For each option determine the
-        execution time, and compare.
-        `
