@@ -14,16 +14,9 @@ import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
 import SigninCheck from "../../../components/signin_check";
-import SimNewWindow from "../../../components/simNewWindow";
 
 
 const DataParallelism = ({module, tab}) => {
-    // const [newSimWindow, setNewSimWindow] = useState([]);
-    //
-    // function openNewWindow() {
-    //   setNewSimWindow([]);
-    //   setNewSimWindow([...newSimWindow, "data-parallelism"]);
-    // }
 
     const [auth, setAuth] = useState("false")
     useEffect(() => {
@@ -124,9 +117,6 @@ const DataParallelism = ({module, tab}) => {
             <SimulationActivity panelKey="data-parallelism" content={<DataParallelismSimulation />} />
 
             <Divider />
-
-            {/*<button onClick={openNewWindow}>Pop Up Simulation</button>*/}
-            {/*{newSimWindow.map((item, i) => ( <SimNewWindow><DataParallelismSimulation/></SimNewWindow> ))}*/}
 
             <Header as="h3" block>
                 Practice Questions
