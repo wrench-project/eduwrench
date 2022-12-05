@@ -7,7 +7,7 @@ function copyStyles(src, dest) {
     styleElement.href = styleSheet.href;
     dest.head.appendChild(styleElement);
   });
-  Array.from(src.fonts).forEach((font) => dest.fonts.add(font));
+  // Array.from(src.fonts).forEach((font) => dest.fonts.add(font));
 }
 
 class SimNewWindow extends React.PureComponent {
@@ -29,9 +29,9 @@ class SimNewWindow extends React.PureComponent {
     this.setState({ win, el });
   }
 
-  componentWillUnmount() {
-    this.state.win.close();
-  }
+  // componentWillUnmount() {
+  //   this.state.win.close();
+  // }
 
   render() {
     const { el } = this.state;
