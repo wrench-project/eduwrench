@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 import SimNewWindow from '../simNewWindow';
+import SigninCheck from '../../components/signin_check';
 
 const SimulationActivity = ({ panelKey, content }) => {
 
@@ -12,14 +13,6 @@ const SimulationActivity = ({ panelKey, content }) => {
     // console.log(newSimWindowPopup);
   }
 
-  // const [newSimWindowExpand, setNewSimWindowExpand] = useState([]);
-  //
-  // function openNewWindowExpand() {
-  //   setNewSimWindowExpand([]);
-  //   setNewSimWindowExpand([...newSimWindowExpand, panelKey]);
-  //   // console.log(newSimWindowExpand);
-  // }
-
   const [activeIndex, setActiveIndex] = useState(-1);
 
   function handleClick(e, titleProps) {
@@ -29,7 +22,14 @@ const SimulationActivity = ({ panelKey, content }) => {
     setActiveIndex(newIndex)
   }
 
+  const [auth, setAuth] = useState("false")
+
+  useEffect(() => {
+    setAuth(localStorage.getItem("login"))
+  }, [])
+
   return (
+    <SigninCheck data={[
     <>
       <div style={{ width: "175px" }}>
       <Accordion styled className="simulation" defaultActiveIndex={-1} panels={[{
@@ -66,6 +66,8 @@ const SimulationActivity = ({ panelKey, content }) => {
       </Accordion>
 
     </>
+    ]} auth={auth} content="simulator">
+    </SigninCheck>
 
   )
 }

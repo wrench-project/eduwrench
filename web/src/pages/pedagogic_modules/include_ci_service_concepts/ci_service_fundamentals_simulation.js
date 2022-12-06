@@ -7,7 +7,7 @@
  * (at your option) any later version.
  */
 
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
@@ -18,21 +18,13 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import CIServiceFundamentalsScenario from "../../../images/vector_graphs/ci_service_concepts/ci_overhead.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
-import SigninCheck from '../../../components/signin_check';
 
 const CIServiceFundamentalsSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
-  const [auth, setAuth] = useState("false")
   const [runtimes, setRunTimes] = useState(0)
 
-
-  useEffect(() => {
-    setAuth(localStorage.getItem("login"))
-  }, [])
-
   return (
-    <SigninCheck data={[
       <>
         <SimulationScenario scenario={<CIServiceFundamentalsScenario/>}/>
 
@@ -196,7 +188,6 @@ const CIServiceFundamentalsSimulation = () => {
         }
 
       </>
-    ]} auth={auth} content="simulator"></SigninCheck>
   )
 }
 

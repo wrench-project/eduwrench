@@ -9,7 +9,7 @@ const SimulationScenario = ({ scenario }) => {
         <Segment color="orange">
           <Label attached="top right" href="https://wrench-project.org" target="_blank" style={{ color: "#C48550" }}>
             <StaticImage
-              src="../../images/wrench_logo.png"
+              src='../../images/wrench_logo.png'
               width={15}
               height={15}
               alt="WRENCH logo"

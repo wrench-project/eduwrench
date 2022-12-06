@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import axios from "axios"
 import { Form, Segment } from "semantic-ui-react"
 import { Formik } from "formik"
@@ -11,137 +11,128 @@ import { validateFieldInRange } from "../../../components/simulation/simulation_
 
 import WorkflowsDistributedExecutionScenario from "../../../images/vector_graphs/workflows/workflow_distributed.svg"
 import SimulationFeedback from "../../../components/simulation/simulation_feedback";
-import SigninCheck from '../../../components/signin_check';
 
 const WorkflowsDistributedExecutionSimulation = () => {
 
   const [simulationResults, setSimulationResults] = useState(<></>)
-  const [auth, setAuth] = useState("false")
   const [runtimes, setRunTimes] = useState(0)
 
-
-  useEffect(() => {
-    setAuth(localStorage.getItem("login"))
-  }, [])
-
   return (
-    <SigninCheck data={[
-      <>
-        <SimulationScenario scenario={<WorkflowsDistributedExecutionScenario />} />
+    <>
+      <SimulationScenario scenario={<WorkflowsDistributedExecutionScenario/>}/>
 
-        <Segment.Group>
-          <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
-          <Segment>
-            <Formik
-              initialValues={{
-                numCores: 1,
-                numHosts: 1
-              }}
+      <Segment.Group>
+        <Segment color="teal"><strong>Simulation Parameters</strong></Segment>
+        <Segment>
+          <Formik
+            initialValues={{
+              numCores: 1,
+              numHosts: 1
+            }}
 
-              validate={values => {
-                const errors = {}
-                if (!validateFieldInRange("wf-dist-num-cores-label-1", values.numCores, 1, 32, "Cores: ", "")) {
-                  errors.numCores = "ERROR"
-                }
-                if (!validateFieldInRange("wf-dist-num-cores-label-2", values.numCores, 1, 32, "Cores: ", "")) {
-                  errors.numCores = "ERROR"
-                }
-                if (!validateFieldInRange("wf-dist-num-hosts-label", values.numHosts, 1, 20, "N= ", "Hosts")) {
-                  errors.numHosts = "ERROR"
-                }
+            validate={values => {
+              const errors = {}
+              if (!validateFieldInRange("wf-dist-num-cores-label-1", values.numCores, 1, 32, "Cores: ", "")) {
+                errors.numCores = "ERROR"
+              }
+              if (!validateFieldInRange("wf-dist-num-cores-label-2", values.numCores, 1, 32, "Cores: ", "")) {
+                errors.numCores = "ERROR"
+              }
+              if (!validateFieldInRange("wf-dist-num-hosts-label", values.numHosts, 1, 20, "N= ", "Hosts")) {
+                errors.numHosts = "ERROR"
+              }
 
-                return errors
-              }}
+              return errors
+            }}
 
-              onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                  if (localStorage.getItem("login") !== "true") {
-                    setSimulationResults(<></>)
-                    return
-                  }
-                  setRunTimes(runtimes + 1)
-                  const data = {
-                    user_name: localStorage.getItem("userName"),
-                    email: localStorage.getItem("currentUser"),
-                    num_hosts: values.numHosts,
-                    num_cores: values.numCores,
-                    link_bandwidth: "100",
-                    use_local_storage: "0"
-                  }
+            onSubmit={(values, { setSubmitting }) => {
+              setTimeout(() => {
+                if (localStorage.getItem("login") !== "true") {
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
-                    response => {
-                      setSimulationResults(
-                        <>
-                          <SimulationOutput output={response.data.simulation_output} />
-                          <GanttChart data={response.data.task_data} />
-                          <HostUtilizationChart data={response.data.task_data} />
-                          <TasksData data={response.data.task_data} />
-                        </>
-                      )
-                      setSubmitting(false)
-                    },
-                    error => {
-                      console.log(error)
-                      alert("Error executing simulation.")
-                      setSubmitting(false)
-                    }
-                  )
-                }, 400)
-              }}
-            >
-              {({
-                  values,
-                  errors,
-                  touched,
-                  handleChange,
-                  handleBlur,
-                  handleSubmit,
-                  isSubmitting
-                }) => (
-                <Form onSubmit={handleSubmit}>
-                  <Form.Group widths="equal">
-                    <Form.Input fluid name="numHosts"
-                                label="Number of compute hosts"
-                                placeholder="1"
-                                type="number"
-                                min={1}
-                                max={20}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.numHosts}
-                                error={errors.numHosts && touched.numHosts ? {
-                                  content: "Provide a number in the range of [1, 20].",
-                                  pointing: "above"
-                                } : null}
-                    />
-                    <Form.Input fluid name="numCores"
-                                label="Number of cores per compute host"
-                                placeholder="1"
-                                type="number"
-                                min={1}
-                                max={32}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                value={values.numCores}
-                                error={errors.numCores && touched.numCores ? {
-                                  content: "Provide a number in the range of [1, 32].",
-                                  pointing: "above"
-                                } : null}
-                    />
-                  </Form.Group>
-                  <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
-                </Form>
-              )}
-            </Formik>
-            <SimulationFeedback simulationID={'workflows/workflows_distributed_execution_simulation'} trigger={runtimes === 3}/>
-          </Segment>
-        </Segment.Group>
+                  return
+                }
+                setRunTimes(runtimes + 1)
+                const data = {
+                  user_name: localStorage.getItem("userName"),
+                  email: localStorage.getItem("currentUser"),
+                  num_hosts: values.numHosts,
+                  num_cores: values.numCores,
+                  link_bandwidth: "100",
+                  use_local_storage: "0"
+                }
+                setSimulationResults(<></>)
+                axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/workflow_distributed", data).then(
+                  response => {
+                    setSimulationResults(
+                      <>
+                        <SimulationOutput output={response.data.simulation_output}/>
+                        <GanttChart data={response.data.task_data}/>
+                        <HostUtilizationChart data={response.data.task_data}/>
+                        <TasksData data={response.data.task_data}/>
+                      </>
+                    )
+                    setSubmitting(false)
+                  },
+                  error => {
+                    console.log(error)
+                    alert("Error executing simulation.")
+                    setSubmitting(false)
+                  }
+                )
+              }, 400)
+            }}
+          >
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                isSubmitting
+              }) => (
+              <Form onSubmit={handleSubmit}>
+                <Form.Group widths="equal">
+                  <Form.Input fluid name="numHosts"
+                              label="Number of compute hosts"
+                              placeholder="1"
+                              type="number"
+                              min={1}
+                              max={20}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.numHosts}
+                              error={errors.numHosts && touched.numHosts ? {
+                                content: "Provide a number in the range of [1, 20].",
+                                pointing: "above"
+                              } : null}
+                  />
+                  <Form.Input fluid name="numCores"
+                              label="Number of cores per compute host"
+                              placeholder="1"
+                              type="number"
+                              min={1}
+                              max={32}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              value={values.numCores}
+                              error={errors.numCores && touched.numCores ? {
+                                content: "Provide a number in the range of [1, 32].",
+                                pointing: "above"
+                              } : null}
+                  />
+                </Form.Group>
+                <Form.Button color="teal" type="submit" disabled={isSubmitting}>Run Simulation</Form.Button>
+              </Form>
+            )}
+          </Formik>
+          <SimulationFeedback simulationID={'workflows/workflows_distributed_execution_simulation'} trigger={runtimes === 3}/>
+        </Segment>
+      </Segment.Group>
 
-        {simulationResults}
+      {simulationResults}
 
-      </>
-    ]} auth={auth} content="simulator"></SigninCheck>
+    </>
   )
 }
 
