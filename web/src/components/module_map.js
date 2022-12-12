@@ -314,6 +314,7 @@ const ModuleMap = () => {
             'line-color': '#00D380',
             'target-arrow-color': '#00D380',
             'target-arrow-shape': 'triangle',
+            'arrow-scale': 1.5
           }
         },
       ]}

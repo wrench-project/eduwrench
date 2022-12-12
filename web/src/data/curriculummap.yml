@@ -26,12 +26,12 @@
     - number: "A.3.1"
       title: "Distributed Computing: Networking Fundamentals"
       description: "The goal of this module is to provide you with knowledge of networking, as it relates to the performance of distributed computing applications."
-      href: "/pedagogic_modules/multi_core_computing/"
+      href: "/pedagogic_modules/networking_fundamentals/"
       position: [100, 200]
     - number: "A.2"
       title: "Multi-core Computing"
       description: "The goal of this module is to introduce you to multi-core computing (i.e., running a program on multiple cores within the same computer)."
-      href: "/pedagogic_modules/networking_fundamentals/"
+      href: "/pedagogic_modules/multi_core_computing/"
       position: [1000, 200]
     - number: "A.3.2"
       title: "Distributed Computing: Client-Server"
@@ -51,12 +51,12 @@
     - number: "C.1"
       title: "Batch Schedulincg"
       description: "The goal of this module is to provide you with fundamental knowledge of and hands-on experience with the use of a batch scheduler."
-      href: "/pedagogic_modules/ci_service_concepts/"
+      href: "/pedagogic_modules/batch_scheduling/"
       position: [1000, 500]
     - number: "B.1"
       title: "Cyberinfrastructure Concepts"
       description: "The goal of this module is to provide you with basic knowledge about cyberinfrastructure (CI) services."
-      href: "/pedagogic_modules/batch_scheduling/"
+      href: "/pedagogic_modules/ci_service_concepts/"
       position: [100, 800]
     - number: "C.2"
       title: "Cloud Functions"
