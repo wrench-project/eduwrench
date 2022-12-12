@@ -1,0 +1,24 @@
+.popper-div {
+  position: relative;
+  background-color: #FCECA5;
+  color: #CF5C00;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 1.4;
+  outline: 0;
+  padding: 5px 9px;
+  width: 600px;
+  height: auto;
+  opacity: .8;
+}
+
+.popper-div-json {
+  background-color: #FAEBD7;
+  color: #818181;
+  border-radius: 4px;
+  line-height: 1.4;
+  outline: 0;
+  padding: 5px 9px;
+  font-size: 12px;
+  line-height: 1.4;
+}

@@ -16,7 +16,11 @@ const GetCurriculumMapDatabase = () => {
             ModuleTitles {
                 number
                 title
+                description
+                href
+                position
             }
+           
             SLOs {
                 description
                 key
@@ -28,6 +32,10 @@ const GetCurriculumMapDatabase = () => {
                 tabname
                 SLOs
           }
+            ModuleEdges {
+                source
+                target
+            }
         }
       }
     }
@@ -65,16 +73,51 @@ export const ListSLOs = (module, tab) => {
   return SLODescriptions
 }
 
+// Function to retrieve the list of ModuleTitles
+export const ModuleCytoscapeGraph = () => {
+  const data = GetCurriculumMapDatabase()
+
+  const ModuleTitles = data["allCurriculummapYaml"]["nodes"][1]["ModuleTitles"]
+  const ModuleEdges = data["allCurriculummapYaml"]["nodes"][4]["ModuleEdges"]
+  const temp1 = ModuleTitles.map((module) => {
+    return {
+      data: {
+        id: module.number,
+        label: `${module.number} \n\n ${module.title}`,
+        href: module.href,
+        description: module.description,
+      },
+      position: {
+        x: module.position[0],
+        y: module.position[1]
+      }
+    }
+  })
+
+  const temp2 = ModuleEdges.map((edges) => {
+    return {
+      data: {
+        source: edges.source,
+        target: edges.target
+      }
+    }
+  })
+  const elements = {
+    nodes: temp1,
+    edges: temp2
+  }
+  return elements
+}
+
 export const HighLevelCurriculumMap = () => {
 
   const data = GetCurriculumMapDatabase()
-
   // Get the SLOs and Mappings
   const TopSLOs = data["allCurriculummapYaml"]["nodes"][0]["TopSLOs"]
   const ModuleTitles = data["allCurriculummapYaml"]["nodes"][1]["ModuleTitles"]
   const SLOs = data["allCurriculummapYaml"]["nodes"][2]["SLOs"]
   const Mappings = data["allCurriculummapYaml"]["nodes"][3]["Mappings"]
-
+  console.log(ModuleTitles)
   // Compute the dict of all modules: module_dict[module] = [[tab, bool, bool, bool, bool], [tab, bool, bool, bool], ...]
   let module_dict = {}
 
