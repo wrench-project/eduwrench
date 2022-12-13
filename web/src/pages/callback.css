@@ -1,0 +1,13 @@
+.cilogon_header, .cilogon_question {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.cilogon_question {
+  font-size: 16pt;
+}
+
+.button-group {
+  text-align: center;
+}

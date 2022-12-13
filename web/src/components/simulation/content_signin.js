@@ -14,7 +14,7 @@ const ContentSignIn = ({content}) => {
       />
       <strong>eduWRENCH Pedagogic Modules</strong>
       <br />
-      Sign in on the top of the page to access the {content}.
+      Sign in on the top of the page to access {content}.
     </div>
   )
 }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -20,8 +20,14 @@ import PracticeQuestionMultiChoice from "../../../components/practice-questions/
 import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
+import SigninCheck from "../../../components/signin_check";
 
 const Contention = ({ module, tab }) => {
+    const [auth, setAuth] = useState("false")
+    useEffect(() => {
+        setAuth(localStorage.getItem("login"))
+    })
+
     return (
         <>
             <LearningObjectives module={module} tab={tab} />
@@ -190,126 +196,137 @@ const Contention = ({ module, tab }) => {
                 Practice Questions
             </Header>
 
-            <p>All practice questions hereafter pertain to this topology:</p>
-            <TopologyContentionPractice />
-            <div className="caption"><strong>Figure 5:</strong> Topology for practice questions.</div>
+            <SigninCheck data={[
+                <>
 
-            <PracticeQuestionMultiChoice
-                module={"A.3.1"}
-                question_key={"A.3.1.p3.1"}
-                question={
-                    <>
-                        A 100 MB transfer from host A to host C, and a 100 MB transfer from host B to host C start
-                        at the same time. Do they finish at the same time? Explain your reasoning.
-                    </>
-                }
-                choices={["Yes","No"]}
-                correct_answer={"Yes"}
-                explanation={
-                    <>
-                        Yes! Both transfers are bottlenecked on the link into host C, sharing its
-                        bandwidth, so that both transfers proceed at bandwidth 20 MB/sec.
-                    </>
-                }
-            />
+                    <p>All practice questions hereafter pertain to this topology:</p>
+                    <TopologyContentionPractice />
+                    <div className="caption"><strong>Figure 5:</strong> Topology for practice questions.</div>
 
-            <PracticeQuestionNumeric
-                module={"A.3.1"}
-                question_key={"A.3.1.p3.2"}
-                question={
-                    <>
-                        A 100 MB transfer from host D to host B, and a 100 MB transfer from host A to host C start
-                        at time 0. One of these transfers completes later than the other. At what
-                        time (in seconds) does it complete?
-                    </>
-                }
-                answer={[3.3, 3.4]}
-                explanation={
-                    <>
-                        <p>
-                            The transfer from D to B proceeds at 30 MB/sec as it is bottlenecked
-                            on the link into host B. The transfer from A to C proceeds at 40 MB/sec
-                            as it is bottlenecked on the link into host C. These two transfers share
-                            one network link, but that network link has bandwidth 100 MB/sec, and so
-                            there is no contention on that link. Consequently, the transfer times
-                            are as follows:
-                        </p>
-                        <TeX
-                            math="T_{D \rightarrow B} = 200 \text{us} + \frac{100 \text{MB}}{30 \text{MB/sec}} = 3.3335 \text{sec}"
-                            block />
-                        <TeX
-                            math="T_{A \rightarrow C} = 200 \text{us} + \frac{100 \text{MB}}{40 \text{MB/sec}} = 2.5002 \text{sec}"
-                            block />
-                        <p>
-                            Note that the latency term (the first term) above is negligible when compared to the bandwidth term
-                            (the second term).
-                        </p>
-                    </>
-                }
-            />
+                    <PracticeQuestionMultiChoice
+                        module={"A.3.1"}
+                        question_key={"A.3.1.p3.1"}
+                        question={
+                            <>
+                                A 100 MB transfer from host A to host C, and a 100 MB transfer from host B to host C start
+                                at the same time. Do they finish at the same time? Explain your reasoning.
+                            </>
+                        }
+                        choices={["Yes","No"]}
+                        correct_answer={"Yes"}
+                        explanation={
+                            <>
+                                Yes! Both transfers are bottlenecked on the link into host C, sharing its
+                                bandwidth, so that both transfers proceed at bandwidth 20 MB/sec.
+                            </>
+                        }
+                    />
 
-            <PracticeQuestionNumeric
-                module={"A.3.1"}
-                question_key={"A.3.1.p3.3"}
-                question={
-                    <>
-                        A 100 MB transfer from host B to host C and a 60 MB transfer from host A to host C start
-                        at time 0. One of these transfers completes later than the other. At what
-                        time (in seconds) does it complete?
-                    </>
-                }
-                answer={[4.3,4.4]}
-                explanation={
-                    <>
-                        <p>
-                            Both transfers are bottlenecked on the link into host C, sharing its
-                            bandwidth so that both transfers proceed at 20 MB/sec. When the 60 MB
-                            transfer completes, then the 100 MB transfer still has 40 MB to transfer and
-                            proceeds at 30 MB/sec (as it is now bottlenecked on the link from host B). Therefore:
-                        </p>
-                        <TeX
-                            math="T_{A \rightarrow C} = 200 \text{us} + \frac{60 \text{MB}}{20 \text{MB/sec}} = 3.0002 \text{sec}"
-                            block />
-                        <TeX
-                            math="T_{B \rightarrow C} = 200 \text{us} + \frac{60 \text{MB}}{20 \text{MB/sec}} + \frac{40 \text{MB}}{30 \text{MB/sec}} = 4.3335 \text{sec}"
-                            block />
-                        <p>
-                            Note that the latency term (the first term) above is negligible when compared to the bandwidth term
-                            (the second term).
-                        </p>
-                    </>
-                }
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.3.1"}
+                        question_key={"A.3.1.p3.2"}
+                        question={
+                            <>
+                                A 100 MB transfer from host D to host B, and a 100 MB transfer from host A to host C start
+                                at time 0. One of these transfers completes later than the other. At what
+                                time (in seconds) does it complete?
+                            </>
+                        }
+                        answer={[3.3, 3.4]}
+                        explanation={
+                            <>
+                                <p>
+                                    The transfer from D to B proceeds at 30 MB/sec as it is bottlenecked
+                                    on the link into host B. The transfer from A to C proceeds at 40 MB/sec
+                                    as it is bottlenecked on the link into host C. These two transfers share
+                                    one network link, but that network link has bandwidth 100 MB/sec, and so
+                                    there is no contention on that link. Consequently, the transfer times
+                                    are as follows:
+                                </p>
+                                <TeX
+                                    math="T_{D \rightarrow B} = 200 \text{us} + \frac{100 \text{MB}}{30 \text{MB/sec}} = 3.3335 \text{sec}"
+                                    block />
+                                <TeX
+                                    math="T_{A \rightarrow C} = 200 \text{us} + \frac{100 \text{MB}}{40 \text{MB/sec}} = 2.5002 \text{sec}"
+                                    block />
+                                <p>
+                                    Note that the latency term (the first term) above is negligible when compared to the bandwidth term
+                                    (the second term).
+                                </p>
+                            </>
+                        }
+                    />
 
+                    <PracticeQuestionNumeric
+                        module={"A.3.1"}
+                        question_key={"A.3.1.p3.3"}
+                        question={
+                            <>
+                                A 100 MB transfer from host B to host C and a 60 MB transfer from host A to host C start
+                                at time 0. One of these transfers completes later than the other. At what
+                                time (in seconds) does it complete?
+                            </>
+                        }
+                        answer={[4.3,4.4]}
+                        explanation={
+                            <>
+                                <p>
+                                    Both transfers are bottlenecked on the link into host C, sharing its
+                                    bandwidth so that both transfers proceed at 20 MB/sec. When the 60 MB
+                                    transfer completes, then the 100 MB transfer still has 40 MB to transfer and
+                                    proceeds at 30 MB/sec (as it is now bottlenecked on the link from host B). Therefore:
+                                </p>
+                                <TeX
+                                    math="T_{A \rightarrow C} = 200 \text{us} + \frac{60 \text{MB}}{20 \text{MB/sec}} = 3.0002 \text{sec}"
+                                    block />
+                                <TeX
+                                    math="T_{B \rightarrow C} = 200 \text{us} + \frac{60 \text{MB}}{20 \text{MB/sec}} + \frac{40 \text{MB}}{30 \text{MB/sec}} = 4.3335 \text{sec}"
+                                    block />
+                                <p>
+                                    Note that the latency term (the first term) above is negligible when compared to the bandwidth term
+                                    (the second term).
+                                </p>
+                            </>
+                        }
+                    />
 
-            <Divider />
+                </>
+            ]} auth={auth} content="practice questions"></SigninCheck>
 
             <Header as="h3" block>
                 Questions
             </Header>
 
-            <p>Answer the following questions, which pertain to this topology:</p>
+            <SigninCheck data={[
+                <>
 
-            <TopologyContentionQuestions />
-            <div className="caption"><strong>Figure 6:</strong> Topology for questions (lat = "latency"; bw = "bandwidth").
-            </div>
+                    <p>Answer the following questions, which pertain to this topology:</p>
 
-            <p>
-                <strong>[A.3.1.q3.1]</strong> At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB
-                transfer starts from host A to host D. Do they finish at the same time? Show your work. You don't need to
-                compute full transfer times but can instead use simple reasoning about bottleneck bandwidths.
-            </p>
+                    <TopologyContentionQuestions />
+                    <div className="caption"><strong>Figure 6:</strong> Topology for questions (lat = "latency"; bw = "bandwidth").
+                    </div>
 
-            <p>
-                <strong>[A.3.1.q3.2]</strong> At time 0, a 100 MB transfer starts from host B to host C,
-                and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
-                Show your work. Hint: Consider the first phase in which both transfers are ongoing, and the second
-                phase in which only one transfer is ongoing.
-            </p>
+                    <p>
+                        <strong>[A.3.1.q3.1]</strong> At time 0, a 10 MB transfer starts from host B to host C, and another 10 MB
+                        transfer starts from host A to host D. Do they finish at the same time? Show your work. You don't need to
+                        compute full transfer times but can instead use simple reasoning about bottleneck bandwidths.
+                    </p>
 
-            <Header as="h3" block>
-                You feedback is appreciated
-            </Header>
+                    <p>
+                        <strong>[A.3.1.q3.2]</strong> At time 0, a 100 MB transfer starts from host B to host C,
+                        and a 200 MB transfer starts from host A to host D. At what time do these transfers finish?
+                        Show your work. Hint: Consider the first phase in which both transfers are ongoing, and the second
+                        phase in which only one transfer is ongoing.
+                    </p>
+
+                    <Header as="h3" block>
+                        Your feedback is appreciated
+                    </Header>
+
+                </>
+            ]} auth={auth} content="questions"></SigninCheck>
+
+            <Divider/>
 
             <FeedbackActivity content={
                 <FeedbackQuestions feedbacks={[

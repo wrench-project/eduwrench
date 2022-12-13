@@ -21,7 +21,7 @@ const NetworkingFundamental = () => {
         <br /><br />
         The goal is <strong style={{ backgroundColor: "#fff" }}>not</strong> to teach you details of network
         technologies and protocols, which are fascinating topics you can learn about in Networking <a
-        href="/textbooks"> textbooks < /a>.
+        href="/textbooks"> textbooks </a>.
         <br /><br />
         Go through the tabs below in sequence…
       </Segment>

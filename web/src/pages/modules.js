@@ -10,15 +10,17 @@
 import React from "react"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
-import ModulesList from "../components/modules_list"
+import ModuleMap from "../components/module_map"
 
 const Modules = () => (
-  <Layout>
-    <Seo title="Modules" />
-    <p>&nbsp;</p>
-    <ModulesList />
-    <br/><br/>
-  </Layout>
+  <div style={{ overflowX: "scroll" }}>
+    <Layout>
+      <Seo title="Modules"/>
+      <p>&nbsp;</p>
+      <ModuleMap/>
+      <br/><br/>
+    </Layout>
+  </div>
 )
 
 export default Modules

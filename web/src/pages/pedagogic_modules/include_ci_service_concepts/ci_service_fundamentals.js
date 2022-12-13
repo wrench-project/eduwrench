@@ -320,7 +320,7 @@ const CIServiceFundamentals = ({ module, tab }) => {
             {/*- IDEA: Curl REST API request overhead.*/}
 
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
             <FeedbackActivity content={

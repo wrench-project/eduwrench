@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { Divider, Header } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -6,8 +6,15 @@ import FeedbackActivity from "../../../components/feedback/feedback_activity";
 import FeedbackQuestions from "../../../components/feedback_questions";
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionReveal from "../../../components/practice-questions/reveal";
+import SigninCheck from "../../../components/signin_check";
 
 const TaskParallelism = ({module, tab}) => {
+
+    const [auth, setAuth] = useState("false")
+    useEffect(() => {
+        setAuth(localStorage.getItem("login"))
+    })
+
     return (
         <>
             <LearningObjectives module={module} tab={tab}
@@ -145,46 +152,53 @@ const TaskParallelism = ({module, tab}) => {
                 Practice Questions
             </Header>
 
-            <PracticeQuestionNumeric
-                module={"A.2"}
-                question_key={"A.2.p1.1"}
-                question={
-                    <>
-                        Consider a parallel program that runs in 1 hour on a single core of a computer. The program's
-                        execution on 6 cores has 80% parallel efficiency. What is the program’s execution time in minutes when running on
-                        6 cores?
-                    </>
-                }
-                answer={[12.5,12.5]}
-                explanation={
-                    <>
-                        Let <TeX math="S" /> be the speedup on 6 cores for this program. Since the efficiency is equal
-                        to <TeX math="S/6" />, we have <TeX math="S/6 = 0.8" />, which gives us <TeX math="S = 4.8" />.
-                        Therefore, the program runs in <TeX math="60/4.8 = 12.5" /> minutes.
-                    </>
-                }
-                hint={"First compute the parallel speedup, and form it infer the execution time"}
-                />
+            <SigninCheck data={[
+                <>
 
-            <PracticeQuestionReveal
-                module={"A.2"}
-                question_key={"A.2.p1.2"}
-                question={
-                    <>
-                        A parallel program has a speedup of 1.6 when running on 2 cores, and runs 10 minutes faster when running
-                        on 3 cores than when running on 2 cores. Give a formula for <TeX math="T(1)" /> (the execution time on one
-                        core in minutes) as a function of <TeX math="T(3)" /> (the execution time on 3 cores in minutes).
-                    </>
-                }
-                explanation={
-                    <>
-                        <p>Because the speedup on 2 cores is 1.6, we have: <TeX math="T(2) = T(1) / 1.6" /></p>
-                        <p>And the 10-minute time reduction gives us: <TeX math="T(3) = T(2) -  10" /></p>
-                        <p>Therefore, <TeX math="T(3) = T(1) / 1.6 - 10" /></p>
-                        <p>which we can rewrite as: <TeX math="T(1) = 1.6 \times (T(3) + 10)" /></p>
-                    </>
-                }
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.2"}
+                        question_key={"A.2.p1.1"}
+                        question={
+                            <>
+                                Consider a parallel program that runs in 1 hour on a single core of a computer. The program's
+                                execution on 6 cores has 80% parallel efficiency. What is the program’s execution time in minutes when running on
+                                6 cores?
+                            </>
+                        }
+                        answer={[12.5,12.5]}
+                        explanation={
+                            <>
+                                Let <TeX math="S" /> be the speedup on 6 cores for this program. Since the efficiency is equal
+                                to <TeX math="S/6" />, we have <TeX math="S/6 = 0.8" />, which gives us <TeX math="S = 4.8" />.
+                                Therefore, the program runs in <TeX math="60/4.8 = 12.5" /> minutes.
+                            </>
+                        }
+                        hint={"First compute the parallel speedup, and form it infer the execution time"}
+                    />
+
+                    <PracticeQuestionReveal
+                        module={"A.2"}
+                        question_key={"A.2.p1.2"}
+                        question={
+                            <>
+                                A parallel program has a speedup of 1.6 when running on 2 cores, and runs 10 minutes faster when running
+                                on 3 cores than when running on 2 cores. Give a formula for <TeX math="T(1)" /> (the execution time on one
+                                core in minutes) as a function of <TeX math="T(3)" /> (the execution time on 3 cores in minutes).
+                            </>
+                        }
+                        explanation={
+                            <>
+                                <p>Because the speedup on 2 cores is 1.6, we have: <TeX math="T(2) = T(1) / 1.6" /></p>
+                                <p>And the 10-minute time reduction gives us: <TeX math="T(3) = T(2) -  10" /></p>
+                                <p>Therefore, <TeX math="T(3) = T(1) / 1.6 - 10" /></p>
+                                <p>which we can rewrite as: <TeX math="T(1) = 1.6 \times (T(3) + 10)" /></p>
+                            </>
+                        }
+                    />
+
+                </>
+            ]} auth={auth} content="practice questions"></SigninCheck>
+
 
             <Divider />
 
@@ -192,20 +206,26 @@ const TaskParallelism = ({module, tab}) => {
                 Questions
             </Header>
 
-            <p>
-                <strong>[A.2.q1.1]</strong> You are told that a parallel program runs in 1 hour on a 3-core machine, and that
-                the parallel efficiency is 90%. How long, in minutes, would the program take if executed using a single core?
-                Show your work.
-            </p>
+            <SigninCheck data={[
+                <>
 
-            <p>
-                <strong>[A.2.q1.2]</strong> You are told that a parallel program runs in 10 hours when using the 4 cores of some
-                computer with parallel efficiency 80%. Using 8 cores, the program runs in 6 hours. What is the parallel
-                efficiency of this 8-core execution? Show your work and reasoning.
-            </p>
+                    <p>
+                        <strong>[A.2.q1.1]</strong> You are told that a parallel program runs in 1 hour on a 3-core machine, and that
+                        the parallel efficiency is 90%. How long, in minutes, would the program take if executed using a single core?
+                        Show your work.
+                    </p>
+
+                    <p>
+                        <strong>[A.2.q1.2]</strong> You are told that a parallel program runs in 10 hours when using the 4 cores of some
+                        computer with parallel efficiency 80%. Using 8 cores, the program runs in 6 hours. What is the parallel
+                        efficiency of this 8-core execution? Show your work and reasoning.
+                    </p>
+
+                </>
+            ]} auth={auth} content="questions"></SigninCheck>
 
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
             <FeedbackActivity content={

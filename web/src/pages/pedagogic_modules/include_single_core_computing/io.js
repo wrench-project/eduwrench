@@ -1,4 +1,4 @@
-import React from "react"
+import React, {useEffect, useState} from "react"
 import { Divider, Header, Icon, Table } from "semantic-ui-react"
 import TeX from "@matejmazur/react-katex"
 import LearningObjectives from "../../../components/learning_objectives"
@@ -15,8 +15,15 @@ import IOFigure4 from "../../../images/vector_graphs/single_core/IO_figure_4.svg
 import IOFigure5 from "../../../images/vector_graphs/single_core/IO_figure_5.svg"
 import PracticeQuestionNumeric from "../../../components/practice-questions/numeric";
 import PracticeQuestionMultiChoice from "../../../components/practice-questions/multichoice";
+import SigninCheck from "../../../components/signin_check";
 
 const IO = ({module, tab}) => {
+
+    const [auth, setAuth] = useState("false")
+    useEffect(() => {
+        setAuth(localStorage.getItem("login"))
+    })
+
     return (
         <>
 
@@ -214,162 +221,167 @@ const IO = ({module, tab}) => {
                 Practice Questions
             </Header>
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p4.1"}
-                question={
-                    <>Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop,
-                        and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the
-                        simulation
-                        app above. What is the total execution time when I/O and computation can be overlapped?
-                    </>
-                }
-                hint={""}
-                answer={[253,253]}
-                explanation={
-                    <>
-                        Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing 100 MB takes 1 second.
-                        The compute time is much larger than the I/O time. So the total execution time will
-                        be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
-                    </>
-                }
-                />
+            <SigninCheck data={[
+                <>
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p4.2"}
-                question={
-                    <>For the execution in the previous practice question, What is the core utilization percentage?
-                    </>
-                }
-                hint={""}
-                answer={[98.8,98.9]}
-                explanation={
-                    <>
-                        The core is idle for only 3 seconds (2 seconds at the very beginning and 1 second at the very end of the execution), and so the
-                        core utilization is <TeX math="250/253 = 98.8\%" />.
-                    </>
-                }
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.1"}
+                        question_key={"A.1.p4.1"}
+                        question={
+                            <>Say you have 10 tasks to execute, where each task reads in 200 MB of input, computes 2500 Gflop,
+                                and writes out 100MB of output. These 10 tasks are to be executed on the platform shown in the
+                                simulation
+                                app above. What is the total execution time when I/O and computation can be overlapped?
+                            </>
+                        }
+                        hint={""}
+                        answer={[253,253]}
+                        explanation={
+                            <>
+                                Reading 200 MB takes 2 seconds, computing 2500 Gflop takes 25 seconds, and writing 100 MB takes 1 second.
+                                The compute time is much larger than the I/O time. So the total execution time will
+                                be <TeX math=" 2 + 10\times 25 + 1 = 253" /> seconds, which is confirmed by the simulation.
+                            </>
+                        }
+                    />
 
-            <PracticeQuestionMultiChoice
-                module={"A.1"}
-                question_key={"A.1.p4.3"}
-                question={
-                    <>
-                        A program reads 2GB of input from disk, performs a 6 Tflop computation on this input, and then
-                        writes 1GB of output to disk. It is executed on a computer that has a CPU that computes at speed
-                        500 Gflop/sec and has a HDD with R/W bandwidth of 200 MB/sec. If you could upgrade either the CPU or the HDD, which
-                        upgrade should you choose?
-                    </>
-                }
-                hint={"Determine whether the program's execution is CPU or I/O intensive"}
-                choices={["upgrade the CPU", "upgrade the HDD"]}
-                correct_answer={"upgrade the HDD"}
-                explanation={
-                    <>
-                        The execution time breakdown is as follows:
-                        <ul>
-                            <li>Read input: 2000 MB / 200 MB/sec = 10 sec</li>
-                            <li>Compute: 6000 Gflop / 500 Gflop/sec = 12 sec</li>
-                            <li>Write input: 1000 MB / 200 MB/sec = 5 sec</li>
-                        </ul>
-                        Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
-                    </>
-                }
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.1"}
+                        question_key={"A.1.p4.2"}
+                        question={
+                            <>For the execution in the previous practice question, What is the core utilization percentage?
+                            </>
+                        }
+                        hint={""}
+                        answer={[98.8,98.9]}
+                        explanation={
+                            <>
+                                The core is idle for only 3 seconds (2 seconds at the very beginning and 1 second at the very end of the execution), and so the
+                                core utilization is <TeX math="250/253 = 98.8\%" />.
+                            </>
+                        }
+                    />
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p4.4"}
-                question={
-                    <>
-                        You are working at a company that runs instances of the same task repeatedly. On the currently available
-                        hardware, the time to process a task instance is as follows:
-                        <ul>
-                            <li>Read input: 2 sec</li>
-                            <li>CPU computation: 3 sec</li>
-                            <li>Write output: 2 sec</li>
-                        </ul>
-                        <p>
-                            A program was designed to overlap IO and computation when executing multiple task instances in sequence.
-                            As in Figure 3, the program first reads the input for the first 2 tasks, and then alternates between
-                            writing the output for task <TeX math="i" /> and reading the input for task <TeX math="i + 2" />, until
-                            at
-                            the end it writes the output of the last two tasks one after the other. The computation on the CPU for a
-                            task is started as soon as its input has been read from disk.
-                        </p>
-                        <p>
-                            What is the total execution time when processing 4 consecutive task instances?
-                        </p>
-                    </>
-                }
-                hint={"It may be a good idea to draw the execution as in Figure 3 above"}
-                answer={[18, 18]}
-                explanation={
-                    <>
-                    Here is a depiction of the execution:
-                        <IOFigure4 />
-                        <p>
-                        The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX
-                        math="n" /> tasks by identifying the repeating pattern: <TeX
-                        math="2 + 3 + (n-1) \times (3 + 1) + 1 = 4n + 2" />.)
-                        </p>
-                        <p>
-                        We can double-check the result in simulation by setting the number of tasks to 4, the amount of input
-                        data to 200 MB, the amount of output data to 200 MB, and the task work to 300 Gflop.
-                        </p>
-                    </>
-                }
-            />
+                    <PracticeQuestionMultiChoice
+                        module={"A.1"}
+                        question_key={"A.1.p4.3"}
+                        question={
+                            <>
+                                A program reads 2GB of input from disk, performs a 6 Tflop computation on this input, and then
+                                writes 1GB of output to disk. It is executed on a computer that has a CPU that computes at speed
+                                500 Gflop/sec and has a HDD with R/W bandwidth of 200 MB/sec. If you could upgrade either the CPU or the HDD, which
+                                upgrade should you choose?
+                            </>
+                        }
+                        hint={"Determine whether the program's execution is CPU or I/O intensive"}
+                        choices={["upgrade the CPU", "upgrade the HDD"]}
+                        correct_answer={"upgrade the HDD"}
+                        explanation={
+                            <>
+                                The execution time breakdown is as follows:
+                                <ul>
+                                    <li>Read input: 2000 MB / 200 MB/sec = 10 sec</li>
+                                    <li>Compute: 6000 Gflop / 500 Gflop/sec = 12 sec</li>
+                                    <li>Write input: 1000 MB / 200 MB/sec = 5 sec</li>
+                                </ul>
+                                Therefore the program's execution is IO-intensive. Therefore one should upgrade the HDD.
+                            </>
+                        }
+                    />
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p4.5"}
-                question={
-                    <>
-                        For the execution in the previous question, what is the core utilization in percentage?
-                    </>
-                }
-                answer={[66.6, 66.7]}
-                explanation={
-                    <>
-                        The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.
-                    </>
-                }
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.1"}
+                        question_key={"A.1.p4.4"}
+                        question={
+                            <>
+                                You are working at a company that runs instances of the same task repeatedly. On the currently available
+                                hardware, the time to process a task instance is as follows:
+                                <ul>
+                                    <li>Read input: 2 sec</li>
+                                    <li>CPU computation: 3 sec</li>
+                                    <li>Write output: 2 sec</li>
+                                </ul>
+                                <p>
+                                    A program was designed to overlap IO and computation when executing multiple task instances in sequence.
+                                    As in Figure 3, the program first reads the input for the first 2 tasks, and then alternates between
+                                    writing the output for task <TeX math="i" /> and reading the input for task <TeX math="i + 2" />, until
+                                    at
+                                    the end it writes the output of the last two tasks one after the other. The computation on the CPU for a
+                                    task is started as soon as its input has been read from disk.
+                                </p>
+                                <p>
+                                    What is the total execution time when processing 4 consecutive task instances?
+                                </p>
+                            </>
+                        }
+                        hint={"It may be a good idea to draw the execution as in Figure 3 above"}
+                        answer={[18, 18]}
+                        explanation={
+                            <>
+                                Here is a depiction of the execution:
+                                <IOFigure4 />
+                                <p>
+                                    The execution time is <strong>18 seconds</strong>. (This result can be generalized for <TeX
+                                    math="n" /> tasks by identifying the repeating pattern: <TeX
+                                    math="2 + 3 + (n-1) \times (3 + 1) + 1 = 4n + 2" />.)
+                                </p>
+                                <p>
+                                    We can double-check the result in simulation by setting the number of tasks to 4, the amount of input
+                                    data to 200 MB, the amount of output data to 200 MB, and the task work to 300 Gflop.
+                                </p>
+                            </>
+                        }
+                    />
 
-            <PracticeQuestionNumeric
-                module={"A.1"}
-                question_key={"A.1.p4.6"}
-                question={
-                    <>
-                        In the context of the two previous questions, it is decided to purchase a SSD to replace the HDD
-                        currently being used. The SSD has <strong>twice the bandwidth</strong> of the HDD. What is now the CPU
-                        utilization when processing 4 consecutive task instances?
-                    </>
-                }
-                hint={"It may be a good idea to draw the execution as in Figure 3 above"}
-                answer={[85,86]}
-                explanation={
-                    <>
-                        <p>Here is a depiction of the execution:</p>
-                        <IOFigure5 />
-                        <p>
-                            The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX
-                            math="n" /> tasks easily: <TeX math="3n + 2" />.)
-                        </p>
-                        <p>
-                            The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%.
-                        </p>
-                        <p>
-                            By making the IO faster, input for tasks is always ready for the CPU to process. As the number of tasks
-                            increases, the CPU utilization tends to 100%.
-                        </p>
-                    </>
-                }
+                    <PracticeQuestionNumeric
+                        module={"A.1"}
+                        question_key={"A.1.p4.5"}
+                        question={
+                            <>
+                                For the execution in the previous question, what is the core utilization in percentage?
+                            </>
+                        }
+                        answer={[66.6, 66.7]}
+                        explanation={
+                            <>
+                                The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/18 = 66.6%.
+                            </>
+                        }
+                    />
 
-            />
+                    <PracticeQuestionNumeric
+                        module={"A.1"}
+                        question_key={"A.1.p4.6"}
+                        question={
+                            <>
+                                In the context of the two previous questions, it is decided to purchase a SSD to replace the HDD
+                                currently being used. The SSD has <strong>twice the bandwidth</strong> of the HDD. What is now the CPU
+                                utilization when processing 4 consecutive task instances?
+                            </>
+                        }
+                        hint={"It may be a good idea to draw the execution as in Figure 3 above"}
+                        answer={[85,86]}
+                        explanation={
+                            <>
+                                <p>Here is a depiction of the execution:</p>
+                                <IOFigure5 />
+                                <p>
+                                    The execution time is <strong>14 seconds</strong>. (This result can be generalized for <TeX
+                                    math="n" /> tasks easily: <TeX math="3n + 2" />.)
+                                </p>
+                                <p>
+                                    The CPU is utilized for 12 seconds. Therefore the CPU utilization is 12/14 = 85.7%.
+                                </p>
+                                <p>
+                                    By making the IO faster, input for tasks is always ready for the CPU to process. As the number of tasks
+                                    increases, the CPU utilization tends to 100%.
+                                </p>
+                            </>
+                        }
+
+                    />
+                </>
+            ]} auth={auth} content="practice questions"></SigninCheck>
 
             <Divider />
 
@@ -377,44 +389,49 @@ const IO = ({module, tab}) => {
                 Questions
             </Header>
 
-            <p>
-                <strong>[A.1.q4.1]</strong> Consider a series of 10 identical tasks. With the hardware we have available, each
-                task requires 1 second to read data from disk, 2 seconds for computation, and 0.5 seconds to write the output
-                back
-                to the disk.
-            </p>
-            <ul>
-                <li>What is the lowest possible execution time if we are not able to perform IO during computation? Show your
-                    work.
-                </li>
-                <li>What is the lowest possible execution time when overlap of computation and IO is possible? Show your work.
-                </li>
-            </ul>
-            <p>
-                Show your work, depicting executions as in the figures earlier in this page and compute the execution times
-                accordingly.
-            </p>
+            <SigninCheck data={[
+                <>
+                    <p>
+                        <strong>[A.1.q4.1]</strong> Consider a series of 10 identical tasks. With the hardware we have available, each
+                        task requires 1 second to read data from disk, 2 seconds for computation, and 0.5 seconds to write the output
+                        back
+                        to the disk.
+                    </p>
+                    <ul>
+                        <li>What is the lowest possible execution time if we are not able to perform IO during computation? Show your
+                            work.
+                        </li>
+                        <li>What is the lowest possible execution time when overlap of computation and IO is possible? Show your work.
+                        </li>
+                    </ul>
+                    <p>
+                        Show your work, depicting executions as in the figures earlier in this page and compute the execution times
+                        accordingly.
+                    </p>
 
-            <p>
-                <strong>[A.1.q4.2]</strong> A task requires 50 MB of input data to be loaded from disk before computation and
-                writes 50 MB of data to disk once computation has been completed. The computation performs 500 Gflop. Instances
-                of
-                this task are executed continuously in sequence throughout the day, in a way that overlaps IO and computation.
-                The
-                computer on which this is done has a disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
-                Tflop/sec. We wish to increase the number of task instances we can execute per day. Should we upgrade the
-                processor? Or should we upgrade the disk? Show your work by computing execution times for both options, possibly
-                depicting executions as in the figures earlier in this page.
-            </p>
+                    <p>
+                        <strong>[A.1.q4.2]</strong> A task requires 50 MB of input data to be loaded from disk before computation and
+                        writes 50 MB of data to disk once computation has been completed. The computation performs 500 Gflop. Instances
+                        of
+                        this task are executed continuously in sequence throughout the day, in a way that overlaps IO and computation.
+                        The
+                        computer on which this is done has a disk with R/W bandwidth 200 MB/sec and a CPU with compute speed 1.5
+                        Tflop/sec. We wish to increase the number of task instances we can execute per day. Should we upgrade the
+                        processor? Or should we upgrade the disk? Show your work by computing execution times for both options, possibly
+                        depicting executions as in the figures earlier in this page.
+                    </p>
 
-            <p>
-                <strong>[A.1.q4.3]</strong> A task requires 100 MB of input data to be loaded from disk, performs 1 Tflop of
-                computation, and writes some output back to disk. A batch of fifty instances of this task is to be run on a
-                computer with a processor capable of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. IO and
-                computation are overlapped. How large can the task output be so that the CPU is still 100% utilized? (ignoring
-                the initial input read and final output write, during which the CPU is necessarily idle). Show your work by
-                writing (and solving) a simple inequation.
-            </p>
+                    <p>
+                        <strong>[A.1.q4.3]</strong> A task requires 100 MB of input data to be loaded from disk, performs 1 Tflop of
+                        computation, and writes some output back to disk. A batch of fifty instances of this task is to be run on a
+                        computer with a processor capable of 250 Gflop/sec and a disk with R/W bandwidths of 100 MB/sec. IO and
+                        computation are overlapped. How large can the task output be so that the CPU is still 100% utilized? (ignoring
+                        the initial input read and final output write, during which the CPU is necessarily idle). Show your work by
+                        writing (and solving) a simple inequation.
+                    </p>
+
+                </>
+            ]} auth={auth} content="open-ended questions"></SigninCheck>
 
             <Divider />
 
@@ -435,10 +452,12 @@ const IO = ({module, tab}) => {
                 frequent in the file. Is this modified program more or less I/O-intensive? By how much?
             </p>
 
+
+
             <Divider />
 
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
 

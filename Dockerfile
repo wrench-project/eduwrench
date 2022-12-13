@@ -41,7 +41,7 @@ RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.
 RUN apt-get upgrade ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs
-RUN npm install -g gatsby-cli --unsafe-perm
+RUN npm install -g gatsby-cli@4.23.0 --unsafe-perm
 
 # Make wrench user sudoer
 RUN useradd -ms /bin/bash wrench

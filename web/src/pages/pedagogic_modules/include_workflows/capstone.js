@@ -62,7 +62,7 @@ const WorkflowsCapstone = ({module, tab}) => {
                 the last task from a Gantt chart of the workflow execution for each option above.</p>
 
             <Header as="h3" block>
-                You feedback is appreciated
+                Your feedback is appreciated
             </Header>
 
             <FeedbackActivity content={
