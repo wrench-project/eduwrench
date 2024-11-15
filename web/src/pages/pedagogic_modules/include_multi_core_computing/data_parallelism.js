@@ -508,7 +508,7 @@ const DataParallelism = ({module, tab}) => {
                 that are independent (i.e., they can be performed in parallel). Task <TeX math="A" /> has work 1000 Gflop, while
                 task <TeX math="B" /> has work 2000 Gflop. You can either replace task <TeX math="A" /> with two independent
                 tasks each with work 600 Gflop, or replace task <TeX math="B" /> with two independent tasks each with work 1900
-                Gflop. If running on a 3-core computer, which replacement would be best in terms of program execution time? Sow
+                Gflop. If running on a 3-core computer, which replacement would be best in terms of program execution time? Show
                 your work and reasoning. For each option determine the execution time, and compare.
             </p>
 
