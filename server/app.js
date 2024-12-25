@@ -43,15 +43,14 @@ let whitelist = ["https://eduwrench.ics.hawaii.edu",
                 "http://localhost:8000"]
 let corsOptions = {
     origin: function (origin, callback) {
-        callback(null,true)
-        //if (whitelist.indexOf(origin) !== -1) {
-        //    callback(null, true)
-        //} else {
-        //    callback(new Error("Not allowed by CORS: " + origin))
-        //}
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS: " + origin))
+        }
     }
 }
-app.use(cors(corsOptions))
+//app.use(cors(corsOptions))
 
 // main route that will show login/logout and available activities
 app.get("/", function (req, res) {
