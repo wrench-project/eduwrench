@@ -54,7 +54,7 @@ WORKDIR /home/wrench/
 
 # download eduWRENCH repository
 RUN git clone https://github.com/wrench-project/eduwrench.git
-RUN cd eduwrench && git checkout
+RUN cd eduwrench && git checkout debug
 
 # set volume for data server
 RUN mkdir /home/wrench/eduwrench/data_server
