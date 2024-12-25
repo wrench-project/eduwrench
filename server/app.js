@@ -44,11 +44,11 @@ let whitelist = ["https://eduwrench.ics.hawaii.edu",
 let corsOptions = {
     origin: function (origin, callback) {
         callback(null,true)
-        if (whitelist.indexOf(origin) !== -1) {
-            callback(null, true)
-        } else {
-            callback(new Error("Not allowed by CORS: " + origin))
-        }
+        //if (whitelist.indexOf(origin) !== -1) {
+        //    callback(null, true)
+        //} else {
+        //    callback(new Error("Not allowed by CORS: " + origin))
+        //}
     }
 }
 app.use(cors(corsOptions))
