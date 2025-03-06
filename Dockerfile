@@ -22,13 +22,13 @@ ENV CXX="g++-9" CC="gcc-9"
 WORKDIR /tmp
 
 # install SimGrid 3.31 
-RUN wget https://framagit.org/simgrid/simgrid/-/archive/v3.31/simgrid-v3.31.tar.gz && tar -xf simgrid-v3.31.tar.gz && cd simgrid-v3.31 && cmake . && make -j4 && sudo make install && cd .. && rm -rf simgrid-v3.31*
+#RUN wget https://framagit.org/simgrid/simgrid/-/archive/v3.31/simgrid-v3.31.tar.gz && tar -xf simgrid-v3.31.tar.gz && cd simgrid-v3.31 && cmake . && make -j4 && sudo make install && cd .. && rm -rf simgrid-v3.31*
 
 # install json for modern c++
-RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.10.4.tar.gz && tar -xf v3.10.4.tar.gz && cd json-3.10.4 && cmake . && make -j4 && sudo make install && cd .. && rm -rf v3.10.4* json-3.10.4
+#RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.10.4.tar.gz && tar -xf v3.10.4.tar.gz && cd json-3.10.4 && cmake . && make -j4 && sudo make install && cd .. && rm -rf v3.10.4* json-3.10.4
 
 # install WRENCH master:27083ee99f5961ec4bd6889fab3f01f53f447fa7
-RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git checkout 27083ee99f5961ec4bd6889fab3f01f53f447fa7 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd .. && cd .. && rm -rf wrench/ 
+#RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git checkout 27083ee99f5961ec4bd6889fab3f01f53f447fa7 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd .. && cd .. && rm -rf wrench/ 
 
 #################################################
 # EDUWRENCH and its dependencies
@@ -48,28 +48,30 @@ RUN useradd -ms /bin/bash wrench
 RUN adduser wrench sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
-USER wrench
-WORKDIR /home/wrench/
+#USER wrench
+#WORKDIR /home/wrench/
 
 
 # download eduWRENCH repository
-RUN git clone https://github.com/wrench-project/eduwrench.git
-RUN cd eduwrench && git checkout
+#RUN git clone https://github.com/wrench-project/eduwrench.git
+#RUN cd eduwrench
+COPY . .
 
 # set volume for data server
-RUN mkdir /home/wrench/eduwrench/data_server
-VOLUME /home/wrench/eduwrench/data_server
+#RUN mkdir /home/wrench/eduwrench/data_server
+#VOLUME /home/wrench/eduwrench/data_server
 
 # run build script
-WORKDIR /home/wrench/eduwrench
-RUN mkdir db
-RUN bash build.sh -j2
+#WORKDIR /home/wrench/eduwrench
+#RUN mkdir db
+#RUN bash build.sh -j2
 
 # run applications
-WORKDIR /home/wrench/eduwrench
-USER root
-COPY ./docker.sh .
-RUN chown wrench:users docker.sh
+#WORKDIR /home/wrench/eduwrench
+#USER root
+#COPY ./docker.sh .
+#RUN chown wrench:users docker.sh
 
-USER wrench
-CMD ./docker.sh
+#USER wrench
+#CMD ./docker.sh
+CMD sleep 1000000

@@ -1,16 +1,61 @@
-version: '3'
+
 services:
-  eduwrench:
-    image: wrenchproject/eduwrench:latest
-    ports:
-      - "${EDUWRENCH_GATSBY_PORT}:4000"
-      - "${EDUWRENCH_NODE_PORT}:3000"
-    volumes:
-      - ${EDUWRENCH_DB_DIR}:/home/wrench/eduwrench/db
-      - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/web/ssl
-      - ${EDUWRENCH_SSL_CERTS_DIR}:/home/wrench/eduwrench/server/ssl
+#  nginx:
+#    container_name: wfinstances-browser-nginx
+#    depends_on:
+#      - ui
+#    build:
+#      context: ./nginx
+#      args:
+#        PORT: ${NGINX_PORT}
+#        SERVER_NAME: ${NGINX_SERVER_HOSTNAME}
+#    secrets:
+#      - nginx_certificate
+#      - nginx_private_key
+#    ports:
+#      - ${NGINX_PORT}:${NGINX_PORT}
+#    networks:
+#      - nginx-network
+
+  frontend:
+    container_name: eduwrench-frontend
+    build: ./web
+    depends_on:
+      - backend
     environment:
-      - EDUWRENCH_NODE_PORT=${EDUWRENCH_NODE_PORT}
-      - EDUWRENCH_ENABLE_SSL=${EDUWRENCH_ENABLE_SSL}
-      - EDUWRENCH_SSL_CERTIFICATE=${EDUWRENCH_SSL_CERTIFICATE}
-      - EDUWRENCH_SSL_PRIVATE_KEY=${EDUWRENCH_SSL_PRIVATE_KEY}
+      - PORT=8080
+      - API_BASE_URL=http://api:8081
+    ports:
+      - 127.0.0.1:8080:8080
+    networks:
+      - nginx-network
+
+  backend:
+    container_name: eduwrench-backend
+#    depends_on:
+    build:
+      context: ./server
+#      args:
+    environment:
+      - NGINX_SERVER_HOSTNAME=${NGINX_SERVER_HOSTNAME}
+    volumes:
+       - ~/eduwrench_data:/eduwrench_data/
+    ports:
+      - 127.0.0.1:8081:8081
+    networks:
+      - nginx-network
+
+secrets:
+  nginx_certificate:
+    file: ${NGINX_SSL_CERTIFICATE_PATH:-/dev/null}
+  nginx_private_key:
+    file: ${NGINX_SSL_PRIVATE_KEY_PATH:-/dev/null}
+
+volumes:
+  db:
+
+networks:
+  nginx-network:
+    name: nginx-network
+    driver: bridge
+

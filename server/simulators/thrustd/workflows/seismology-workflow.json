@@ -1,0 +1,378 @@
+{
+    "name": "Seismology-synthetic-trace",
+    "description": "Trace generated with WorkflowHub - https://workflowhub.org",
+    "createdAt": "2021-02-23T07:08:43.027915",
+    "schemaVersion": "1.0",
+    "author": {
+        "name": "dluyen",
+        "email": "support@workflowhub.org"
+    },
+    "wms": {
+        "name": "WorkflowHub",
+        "version": "0.4",
+        "url": "https://workflowhub.readthedocs.io/en/v0.4/"
+    },
+    "workflow": {
+        "executedAt": "20210222T210843-1000",
+        "makespan": null,
+        "jobs": [
+            {
+                "name": "sG1IterDecon_00000001",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "184cc982-7ba4-486a-bccf-0e6be79d959b.lht",
+                        "size": 7169
+                    },
+                    {
+                        "link": "input",
+                        "name": "053c0175-078a-444c-9c55-789321d91b18.lht",
+                        "size": 14132
+                    },
+                    {
+                        "link": "output",
+                        "name": "61d7f17c-6875-4c73-b92e-a96af79b1f88.stf",
+                        "size": 11850
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000002",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "4c392cb4-381a-46d8-964f-1d4e17f2405e.lht",
+                        "size": 8596
+                    },
+                    {
+                        "link": "input",
+                        "name": "bfadf7aa-9e18-4f00-955d-906dfd740d68.lht",
+                        "size": 12209
+                    },
+                    {
+                        "link": "output",
+                        "name": "38357cec-adef-4f52-a01b-30280ff74131.stf",
+                        "size": 15205
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000003",
+                "type": "compute",
+                "runtime": 2.807,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "e6aafc11-715e-467f-8ef4-d1377c3888bd.lht",
+                        "size": 3889
+                    },
+                    {
+                        "link": "input",
+                        "name": "c5f26844-47ca-4274-9bac-397dbbcdb300.lht",
+                        "size": 10682
+                    },
+                    {
+                        "link": "output",
+                        "name": "9cf15084-2a29-445c-a3ee-cc4d0a9dd3d4.stf",
+                        "size": 11937
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000004",
+                "type": "compute",
+                "runtime": 4.167,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "7f5bb031-930b-4e65-b184-7990b5cf5e73.lht",
+                        "size": 12087
+                    },
+                    {
+                        "link": "input",
+                        "name": "6c087fa3-dcfa-4feb-84c7-76eaf812e5b3.lht",
+                        "size": 16030
+                    },
+                    {
+                        "link": "output",
+                        "name": "117b52e7-8524-4d3e-b85d-5ce0fccf9fb2.stf",
+                        "size": 13236
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000005",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "4e18f4ad-ab3a-40d7-92b4-4bf58d7e1405.lht",
+                        "size": 12668
+                    },
+                    {
+                        "link": "input",
+                        "name": "abc1af5e-89d2-4fa2-a2c2-e91d871dd45f.lht",
+                        "size": 8948
+                    },
+                    {
+                        "link": "output",
+                        "name": "e0334e84-24da-4fcd-8351-8015081d33ac.stf",
+                        "size": 11757
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000006",
+                "type": "compute",
+                "runtime": 4.832,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "d9ce0214-0ccb-441c-a34d-3ed1b896853a.lht",
+                        "size": 12263
+                    },
+                    {
+                        "link": "input",
+                        "name": "bd16ad1a-9211-4e21-b388-d62a7fc20b17.lht",
+                        "size": 5271
+                    },
+                    {
+                        "link": "output",
+                        "name": "b70eda85-289f-4d6d-9f64-5282057279cc.stf",
+                        "size": 17617
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000007",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "9d3f75b4-e66f-4d70-9c2b-10a78a7fcb08.lht",
+                        "size": 16050
+                    },
+                    {
+                        "link": "input",
+                        "name": "8ef2f8b1-dc7e-4bde-8a28-c7f57e615924.lht",
+                        "size": 8115
+                    },
+                    {
+                        "link": "output",
+                        "name": "cf45c99c-8061-423d-807a-529b4e5229a2.stf",
+                        "size": 17490
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000008",
+                "type": "compute",
+                "runtime": 3.489,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "ede44332-5e37-4364-ae79-2a41319735b1.lht",
+                        "size": 8135
+                    },
+                    {
+                        "link": "input",
+                        "name": "5db6f4b3-49c2-4f5a-aa01-9919c06f28db.lht",
+                        "size": 16328
+                    },
+                    {
+                        "link": "output",
+                        "name": "df4640a8-d8d6-4e5e-a4ab-44a07ba10102.stf",
+                        "size": 10799
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000009",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "ea1d0078-8462-4132-a9eb-a3f1688282f7.lht",
+                        "size": 7419
+                    },
+                    {
+                        "link": "input",
+                        "name": "a80c77a0-d7d4-494b-9178-b38bd9d1729e.lht",
+                        "size": 9351
+                    },
+                    {
+                        "link": "output",
+                        "name": "f989e570-21b2-41d1-a41f-7b48c6e55d88.stf",
+                        "size": 4992
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "sG1IterDecon_00000010",
+                "type": "compute",
+                "runtime": 0.561,
+                "parents": [],
+                "children": [
+                    "wrapper_siftSTFByMisfit_00000011"
+                ],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "50f50082-94a7-4b89-b4aa-19de721a03ed.lht",
+                        "size": 6320
+                    },
+                    {
+                        "link": "input",
+                        "name": "a15dc1ac-f432-401e-9cc0-d5dc54160b2a.lht",
+                        "size": 14123
+                    },
+                    {
+                        "link": "output",
+                        "name": "28b4d9a7-7fe6-4318-8614-ba47407c984f.stf",
+                        "size": 14630
+                    }
+                ],
+                "cores": 1
+            },
+            {
+                "name": "wrapper_siftSTFByMisfit_00000011",
+                "type": "compute",
+                "runtime": 0.496,
+                "parents": [
+                    "sG1IterDecon_00000001",
+                    "sG1IterDecon_00000002",
+                    "sG1IterDecon_00000003",
+                    "sG1IterDecon_00000004",
+                    "sG1IterDecon_00000005",
+                    "sG1IterDecon_00000006",
+                    "sG1IterDecon_00000007",
+                    "sG1IterDecon_00000008",
+                    "sG1IterDecon_00000009",
+                    "sG1IterDecon_00000010"
+                ],
+                "children": [],
+                "files": [
+                    {
+                        "link": "input",
+                        "name": "61d7f17c-6875-4c73-b92e-a96af79b1f88.stf",
+                        "size": 11850
+                    },
+                    {
+                        "link": "input",
+                        "name": "38357cec-adef-4f52-a01b-30280ff74131.stf",
+                        "size": 15205
+                    },
+                    {
+                        "link": "input",
+                        "name": "9cf15084-2a29-445c-a3ee-cc4d0a9dd3d4.stf",
+                        "size": 11937
+                    },
+                    {
+                        "link": "input",
+                        "name": "117b52e7-8524-4d3e-b85d-5ce0fccf9fb2.stf",
+                        "size": 13236
+                    },
+                    {
+                        "link": "input",
+                        "name": "e0334e84-24da-4fcd-8351-8015081d33ac.stf",
+                        "size": 11757
+                    },
+                    {
+                        "link": "input",
+                        "name": "b70eda85-289f-4d6d-9f64-5282057279cc.stf",
+                        "size": 17617
+                    },
+                    {
+                        "link": "input",
+                        "name": "cf45c99c-8061-423d-807a-529b4e5229a2.stf",
+                        "size": 17490
+                    },
+                    {
+                        "link": "input",
+                        "name": "df4640a8-d8d6-4e5e-a4ab-44a07ba10102.stf",
+                        "size": 10799
+                    },
+                    {
+                        "link": "input",
+                        "name": "f989e570-21b2-41d1-a41f-7b48c6e55d88.stf",
+                        "size": 4992
+                    },
+                    {
+                        "link": "input",
+                        "name": "28b4d9a7-7fe6-4318-8614-ba47407c984f.stf",
+                        "size": 14630
+                    },
+                    {
+                        "link": "input",
+                        "name": "34f96d4a-ec86-49ed-8047-eeab7405fa34.py",
+                        "size": 0
+                    },
+                    {
+                        "link": "input",
+                        "name": "232b1f95-b8b8-4798-b2fe-f6bd6b7da00bsiftSTFByMisfit",
+                        "size": 1386
+                    },
+                    {
+                        "link": "output",
+                        "name": "536d53ea-921e-4979-9a04-e43ca4321ef7.gz",
+                        "size": 612828
+                    }
+                ],
+                "cores": 1
+            }
+        ],
+        "machines": []
+    }
+}
