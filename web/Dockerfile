@@ -24,13 +24,11 @@ RUN useradd -ms /bin/bash wrench
 RUN adduser wrench sudo
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
+WORKDIR /home/wrench
+
 # Copy files over
-WORKDIR /home/wrench/
 COPY . .
+RUN /bin/rm -rf .cache ./src/public
 
-RUN npm install
-RUN npm audit fix
-
-#RUN gatsby build
 #CMD gatsby develop -H 0.0.0.0 -p 4000
-CMD sleep 100000
+CMD ["sh", "-c", "npm install && npm audit fix && gatsby develop"]

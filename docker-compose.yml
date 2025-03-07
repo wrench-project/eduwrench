@@ -1,21 +1,21 @@
 
 services:
-#  nginx:
-#    container_name: wfinstances-browser-nginx
-#    depends_on:
-#      - ui
-#    build:
-#      context: ./nginx
-#      args:
-#        PORT: ${NGINX_PORT}
-#        SERVER_NAME: ${NGINX_SERVER_HOSTNAME}
-#    secrets:
-#      - nginx_certificate
-#      - nginx_private_key
-#    ports:
-#      - ${NGINX_PORT}:${NGINX_PORT}
-#    networks:
-#      - nginx-network
+  nginx:
+    container_name: wfinstances-browser-nginx
+    depends_on:
+      - frontend
+    build:
+      context: ./nginx
+      args:
+        PORT: ${NGINX_PORT}
+        SERVER_NAME: ${NGINX_SERVER_HOSTNAME}
+    secrets:
+      - nginx_certificate
+      - nginx_private_key
+    ports:
+      - ${NGINX_PORT}:${NGINX_PORT}
+    networks:
+      - nginx-network
 
   frontend:
     container_name: eduwrench-frontend
