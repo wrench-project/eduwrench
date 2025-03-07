@@ -31,4 +31,4 @@ COPY . .
 RUN /bin/rm -rf .cache ./src/public
 
 #CMD gatsby develop -H 0.0.0.0 -p 4000
-CMD ["sh", "-c", "npm install && npm audit fix && gatsby develop"]
+CMD ["sh", "-c", "npm install && gatsby develop -p 4000 -H 0.0.0.0"]

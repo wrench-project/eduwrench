@@ -23,10 +23,10 @@ services:
     depends_on:
       - backend
     environment:
-      - PORT=8080
-      - API_BASE_URL=http://api:8081
+      - PORT=4000
+      - API_BASE_URL=http://eduwrench-backend:3000
     ports:
-      - 127.0.0.1:8080:8080
+      - 127.0.0.1:4000:4000
     networks:
       - nginx-network
 
@@ -41,7 +41,7 @@ services:
     volumes:
        - ~/eduwrench_data:/eduwrench_data/
     ports:
-      - 127.0.0.1:8081:8081
+      - 127.0.0.1:3000:3000
     networks:
       - nginx-network
 
