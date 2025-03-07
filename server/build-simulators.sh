@@ -8,7 +8,7 @@
 # example: 4
 if [ -z $1 ]
 then
-    makedashjarg="-j2"
+    makedashjarg="-j4"
 else
     makedashjarg=$1
 fi

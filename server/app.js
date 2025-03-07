@@ -35,12 +35,15 @@ app.use(function (req, res, next) {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     );
+    //console.log("Request Origin:", req.headers.origin);
     next();
 });
 
 /* CORS */
 let whitelist = ["https://eduwrench.ics.hawaii.edu",
-                "http://localhost:8000"]
+		"http://localhost/",
+	        "http://localhost", // This one is crucial
+                "http://eduwrench-frontend"]
 let corsOptions = {
     origin: function (origin, callback) {
         if (whitelist.indexOf(origin) !== -1) {
@@ -1469,7 +1472,7 @@ app.post("/get/usage_statistics", function (req, res) {
  * @returns {string}
  */
 function getPathPrefix(simulatorFolder) {
-    return __dirname.replace("server", "simulators/" + simulatorFolder + "/");
+    return __dirname + "/simulators/" + simulatorFolder + "/build/"
 }
 
 /**
