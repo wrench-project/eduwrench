@@ -19,7 +19,8 @@ if (!process.env.EDUWRENCH_BACKEND_PORT) {
   throw new Error("Environment variable EDUWRENCH_BACKEND_PORT is required but not set.");
 }
 
-const PORT = process.env.EDUWRENCH_NODE_PORT || 3000
+const PORT = process.env.EDUWRENCH_BACKEND_PORT
+
 const cors = require("cors")
 const db = require("./data/db-config")
 
