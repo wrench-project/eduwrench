@@ -19,7 +19,10 @@ services:
 
   frontend:
     container_name: eduwrench-frontend
-    build: ./web
+    build: 
+      context: ./web
+      args:
+        EDUWRENCH_FRONTEND_PORT: ${EDUWRENCH_FRONTEND_PORT}
     depends_on:
       - backend
     environment:
