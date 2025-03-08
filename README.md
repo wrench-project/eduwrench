@@ -8,74 +8,18 @@
 
 ## Running the Application
 
-### Local installation
-
-Dependencies:
-- [SimGrid 3.31](https://simgrid.org/)
-- [JSON for Modern C++ 3.9.0 or higher](https://github.com/nlohmann/json)
-- [WRENCH 2.0](https://github.com/wrench-project/wrench)
-- [PugiXML 1.12](https://pugixml.org/)
-- [Node.js](https://nodejs.org/en/)
-
-
-Run the build script (compiles all simulators, and configures web application):
-
-```bash
-$ ./build.sh
-```
-
-Start the backend server:
-
-```bash
-$ cd server
-$ node app.js
-```
-
-Start the frontend application:
-
-```bash
-$ cd web
-$ gatsby develop
-```
-
-Open a Web browser and navigate to http://localhost:8000
-
 ### Running with Docker
 
 Dependencies:
 - [Docker](https://docs.docker.com/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
+Edit file `.env` to configure the deployment, and then:
+
 ```bash
-$ docker pull wrenchproject/eduwrench:latest
-$ cd eduwrench
 $ docker-compose build --no-cache
 $ docker-compose up -d
 ```
-
-### Enabling SSL deployment
-
-By default, eduWRENCH is configured to run in _SSL disabled_ mode. SSL
-support can be enabled by editing the `.env` file. The following variables
-need to be defined to enable SSL support:
-
-```bash
-# Port number for Gatsby application (frontend)
-EDUWRENCH_GATSBY_PORT=443
-# Enable SSL connection (true|false)
-EDUWRENCH_ENABLE_SSL=true
-# Folder where certificates are stored in the local system
-EDUWRENCH_SSL_CERTS_DIR=./ssl
-# Name of the certificate file
-EDUWRENCH_SSL_CERTIFICATE=cert.pem
-# Name of the private key file
-EDUWRENCH_SSL_PRIVATE_KEY=key.pem
-```
-
-If running the **Local installation**, the environment should be set by
-running the following command: `$ source .env`. If running with **Docker**
-no additional steps are required, since the `.env` file is automatically
-read by the `docker-compose` command.
 
 ## Get in Touch
 
