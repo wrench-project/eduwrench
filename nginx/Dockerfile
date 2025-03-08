@@ -17,16 +17,19 @@ RUN apt -y install wget
 RUN apt -y install inetutils-ping
 RUN apt -y install curl
 
-# Copy nginx custom config file
-ARG PORT
-ARG SERVER_NAME
+# Get arguments
+ARG NGINX_SERVER_HOSTNAME
+ARG NGINX_PORT
+ARG EDUWRENCH_FRONTEND_PORT
 
+# Create nginx config files
 COPY custom-nginx-locations-common.conf /etc/nginx/custom-nginx-locations-common.conf
-COPY custom-nginx-port-${PORT}.conf /etc/nginx/custom-nginx.conf
-RUN sed -i "s/SERVER_NAME/${SERVER_NAME}/g" /etc/nginx/custom-nginx.conf
+COPY custom-nginx-port-${NGINX_PORT}.conf /etc/nginx/custom-nginx.conf
+RUN sed -i "s/SERVER_NAME/${NGINX_SERVER_HOSTNAME}/g" /etc/nginx/custom-nginx.conf
+RUN sed -i "s/EDUWRENCH_FRONTEND_PORT/${EDUWRENCH_FRONTEND_PORT}/g" /etc/nginx/custom-nginx-locations-common.conf
 
 # Start nginx 
-EXPOSE $PORT
+EXPOSE $NGINX_PORT
 STOPSIGNAL SIGQUIT
 #CMD ["sleep", "10000"]
 CMD ["nginx", "-c", "/etc/nginx/custom-nginx.conf", "-g", "daemon off;"]

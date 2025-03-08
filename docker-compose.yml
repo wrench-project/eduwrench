@@ -6,8 +6,9 @@ services:
     build:
       context: ./nginx
       args:
-        PORT: ${NGINX_PORT}
-        SERVER_NAME: ${NGINX_SERVER_HOSTNAME}
+        NGINX_SERVER_HOSTNAME: ${NGINX_SERVER_HOSTNAME}
+        NGINX_PORT: ${NGINX_PORT}
+        EDUWRENCH_FRONTEND_PORT: ${EDUWRENCH_FRONTEND_PORT}
     secrets:
       - nginx_certificate
       - nginx_private_key
@@ -22,25 +23,23 @@ services:
     depends_on:
       - backend
     environment:
-      - GATSBY_BACKEND_PORT=3000
-      - PORT=4000
+      - GATSBY_BACKEND_PORT=${EDUWRENCH_BACKEND_PORT}
+      - PORT=${EDUWRENCH_FRONTEND_PORT}
     ports:
-      - 127.0.0.1:4000:4000
+      - 127.0.0.1:${EDUWRENCH_FRONTEND_PORT}:${EDUWRENCH_FRONTEND_PORT}
     networks:
       - nginx-network
 
   backend:
     container_name: eduwrench-backend
-#    depends_on:
     build:
       context: ./server
-#      args:
     environment:
       - NGINX_SERVER_HOSTNAME=${NGINX_SERVER_HOSTNAME}
     volumes:
        - ~/eduwrench_data:/eduwrench_data/
     ports:
-      - 127.0.0.1:3000:3000
+      - 127.0.0.1:${EDUWRENCH_BACKEND_PORT}:${EDUWRENCH_BACKEND_PORT}
     networks:
       - nginx-network
 
