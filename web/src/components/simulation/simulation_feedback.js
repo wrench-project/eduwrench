@@ -51,7 +51,7 @@ const SimulationFeedback = ({simulationID, trigger}) => {
                                     feedback: values.feedback,
                                     simID: simulationID
                                 }
-                                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/insert/simfeedback", data)
+                                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/insert/simfeedback", data)
                                     .then((response) => response)
                                     .catch((error) => {
                                             console.log(error)

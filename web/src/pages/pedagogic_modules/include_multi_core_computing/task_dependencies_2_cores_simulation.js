@@ -52,7 +52,7 @@ const TaskDependencies2CoresSimulation = () => {
                   scheduling_scheme: values.schedulingScheme
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/multi_core_dependent_tasks", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/multi_core_dependent_tasks", data).then(
                   response => {
                     setSimulationResults(
                       <>

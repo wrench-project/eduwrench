@@ -87,7 +87,7 @@ const CIStorageNetworkProximitySimulation = () => {
                   server3Latency: values.server3Latency
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/storage_network_proximity", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/storage_network_proximity", data).then(
                   response => {
                     const diskHostsList = ["Client"]
                     const linkNames = ["network_link"]

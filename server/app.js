@@ -16,7 +16,7 @@ const express = require("express"),
     fs = require("fs")
 
 if (!process.env.EDUWRENCH_BACKEND_PORT) {
-  throw new Error("Environment variable EDUWRENCH_BACKEND_PORT is required but not set.");
+    throw new Error("Environment variable EDUWRENCH_BACKEND_PORT is required but not set.");
 }
 
 const PORT = process.env.EDUWRENCH_BACKEND_PORT
@@ -40,18 +40,18 @@ app.use(function (req, res, next) {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     );
-    //console.log("Request Origin:", req.headers.origin);
+    console.log("Request Origin:", req.headers.origin);
     next();
 });
 
 /* CORS */
 let whitelist = ["https://eduwrench.ics.hawaii.edu",
-		"http://localhost/",
-	        "http://localhost", // This one is crucial
-                "http://eduwrench-frontend"]
+    "http://localhost/",
+    "http://localhost", // This one is crucial
+    "http://eduwrench-frontend"]
 let corsOptions = {
     origin: function (origin, callback) {
-        if (whitelist.indexOf(origin) !== -1) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
             callback(null, true)
         } else {
             callback(new Error("Not allowed by CORS"))
@@ -1748,70 +1748,70 @@ app.post('/get/userdata', function (req, res) {
 })
 
 app.post('/get/oauth_token', function (req, res) {
-  const https = require("https");
+    const https = require("https");
 
-  const code = req.body.code;
-  const client_id = req.body.client_id;
-  const redirect_uri = req.body.redirect_uri;
-  // console.log(req.body['code']);
-  const CLIENT_SECRET = "DOOJf_Ubo7_1Z-lKYy5wkPPL5Qr9Uu6nbLVbHWaDYkz75yQIYFvt3Psdv5YW8gcweQlYlhDrU_IRyyTV1jA6yA";
+    const code = req.body.code;
+    const client_id = req.body.client_id;
+    const redirect_uri = req.body.redirect_uri;
+    // console.log(req.body['code']);
+    const CLIENT_SECRET = "DOOJf_Ubo7_1Z-lKYy5wkPPL5Qr9Uu6nbLVbHWaDYkz75yQIYFvt3Psdv5YW8gcweQlYlhDrU_IRyyTV1jA6yA";
 
-  const options = {
-    hostname: 'cilogon.org',
-    port: 443,
-    path: `/oauth2/token?code=${code}&grant_type=authorization_code&redirect_uri=${redirect_uri}&client_id=${client_id}&client_secret=${CLIENT_SECRET}`,
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  };
+    const options = {
+        hostname: 'cilogon.org',
+        port: 443,
+        path: `/oauth2/token?code=${code}&grant_type=authorization_code&redirect_uri=${redirect_uri}&client_id=${client_id}&client_secret=${CLIENT_SECRET}`,
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+    };
 
-  const request = https.request(options, (response) => {
-    console.log('statusCode:', response.statusCode);
-    console.log('headers:', response.headers);
+    const request = https.request(options, (response) => {
+        console.log('statusCode:', response.statusCode);
+        console.log('headers:', response.headers);
 
-    response.on('data', (d) => {
-      res.send(d);
+        response.on('data', (d) => {
+            res.send(d);
+        });
     });
-  });
 
-  request.on('error', (e) => {
-    console.error(e);
-  });
-  request.end();
+    request.on('error', (e) => {
+        console.error(e);
+    });
+    request.end();
 
 });
 
 app.post('/get/cilogon_userinfo', function (req, res) {
-  const https = require("https");
+    const https = require("https");
 
-  const accessToken = req.body.accessToken;
-  // console.log(accessToken);
+    const accessToken = req.body.accessToken;
+    // console.log(accessToken);
 
-  const options = {
-    hostname: 'cilogon.org',
-    port: 443,
-    path: `/oauth2/userinfo`,
-    method: 'GET',
-    headers: {
-      'Authorization': 'Bearer ' + accessToken,
-    },
-  };
+    const options = {
+        hostname: 'cilogon.org',
+        port: 443,
+        path: `/oauth2/userinfo`,
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + accessToken,
+        },
+    };
 
-  const request = https.request(options, (response) => {
-    console.log('statusCode:', response.statusCode);
-    console.log('headers:', response.headers);
+    const request = https.request(options, (response) => {
+        console.log('statusCode:', response.statusCode);
+        console.log('headers:', response.headers);
 
-    response.on('data', (d) => {
-      res.send(d);
+        response.on('data', (d) => {
+            res.send(d);
+        });
     });
-  });
 
-  request.on('error', (e) => {
-    console.error(e);
-  });
-  request.end();
+    request.on('error', (e) => {
+        console.error(e);
+    });
+    request.end();
 
 });
 

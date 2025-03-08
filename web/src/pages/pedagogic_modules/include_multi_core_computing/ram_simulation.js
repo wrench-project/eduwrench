@@ -68,7 +68,7 @@ const RAMSimulation = () => {
                   task_ram: values.taskRam
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/multi_core_independent_tasks_ram", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/multi_core_independent_tasks_ram", data).then(
                   response => {
                     setSimulationResults(
                       <>

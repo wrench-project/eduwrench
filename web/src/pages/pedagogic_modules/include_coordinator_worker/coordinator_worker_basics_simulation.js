@@ -79,7 +79,7 @@ const CoordinatorWorkerBasicsSimulation = () => {
                   seed: Math.floor(1000 * Math.random())
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/coordinator_worker", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/coordinator_worker", data).then(
                   response => {
                     setSimulationResults(
                       <>

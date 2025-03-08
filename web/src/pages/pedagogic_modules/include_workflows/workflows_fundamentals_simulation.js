@@ -55,7 +55,7 @@ const WorkflowsFundamentalsSimulation = () => {
                   disk_bandwidth: values.diskBandwidth
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/workflow_fundamentals", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/workflow_fundamentals", data).then(
                   response => {
                     setSimulationResults(
                       <>

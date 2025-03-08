@@ -55,7 +55,7 @@ const ClientServerBasicsSimulation = () => {
                   host_select: values.hostSelect
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/client_server", data).then(
+                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/client_server", data).then(
                   response => {
                     setSimulationResults(
                       <>
