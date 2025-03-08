@@ -13,7 +13,7 @@ const Feedback = ({tabkey}) => {
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/feedback", {
+            .post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/feedback", {
                 user_name: localStorage.getItem("userName"),
                 email: localStorage.getItem("currentUser"),
                 tabkey: tabkey,
@@ -55,7 +55,7 @@ const Feedback = ({tabkey}) => {
                                 module: module
                             }
                             axios
-                                .post(window.location.protocol + "//" + window.location.hostname + ":3000/update/feedback", feedback)
+                                .post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/update/feedback", feedback)
                                 .then(response => response)
                                 .catch(err => {
                                     console.error(err)

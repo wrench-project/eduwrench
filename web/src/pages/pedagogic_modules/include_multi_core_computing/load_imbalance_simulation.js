@@ -65,7 +65,7 @@ const LoadImbalanceSimulation = () => {
                   task_ram: 0
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/multi_core_independent_tasks", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/multi_core_independent_tasks", data).then(
                   response => {
                     setSimulationResults(
                       <>

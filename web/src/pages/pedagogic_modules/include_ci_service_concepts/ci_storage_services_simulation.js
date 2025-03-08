@@ -66,7 +66,7 @@ const CIStorageServicesSimulation = () => {
                   registrationOverhead: values.registrationOverhead
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/storage_service", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/storage_service", data).then(
                   response => {
                     const diskHostsList = ["StorageHost"]
                     const linkNames = ["network_link"]

@@ -38,7 +38,7 @@ const Stats = () => {
         const userEmail = localStorage.getItem("currentUser")
         const userName = localStorage.getItem("userName")
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/resetpracticequestions", {
+            .post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/resetpracticequestions", {
                 userName: userName,
                 email: userEmail,
             })
@@ -50,7 +50,7 @@ const Stats = () => {
         const userEmail = localStorage.getItem("currentUser")
         const userName = localStorage.getItem("userName")
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + ":3000/get/userdata", {
+            .post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/userdata", {
                 userName: userName,
                 email: userEmail,
             })

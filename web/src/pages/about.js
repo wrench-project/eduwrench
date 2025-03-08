@@ -21,7 +21,7 @@ const About = () => {
   const [globalStatisticsResults, setGlobalStatisticsResults] = useState(<></>)
 
   useEffect(() => {
-    axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/usage_statistics").then(
+    axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/usage_statistics").then(
       response => {
         console.log(response.data)
         setUsageStatisticsResults(
@@ -38,7 +38,7 @@ const About = () => {
   }, []);
 
   useEffect(() => {
-    axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/get/global_statistics").then(
+    axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/global_statistics").then(
       response => {
         console.log('================',response.data)
         setGlobalStatisticsResults(

@@ -74,7 +74,7 @@ const CIServiceFundamentalsSimulation = () => {
                     host_select: values.hostSelect
                   }
                   setSimulationResults(<></>)
-                  axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/ci_overhead", data).then(
+                  axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/ci_overhead", data).then(
                     response => {
                       setSimulationResults(
                         <>

@@ -73,7 +73,7 @@ const Thrustd_Local_Simulation = () => {
                   pstate: values.pstate
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + ":3000/run/thrustd", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/thrustd", data).then(
                   response => {
                     setSimulationResults(
                       <>
