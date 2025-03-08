@@ -11,7 +11,7 @@ module.exports = {
     development: {
         client: "sqlite3",
         connection: {
-            filename: "/eduwrench_data/eduwrench-server.db"
+            filename: "/data/eduwrench/eduwrench-server.db"
         },
         useNullAsDefault: true,
         migrations: {

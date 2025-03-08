@@ -41,7 +41,7 @@ services:
       - NGINX_SERVER_HOSTNAME=${NGINX_SERVER_HOSTNAME}
       - EDUWRENCH_BACKEND_PORT=${EDUWRENCH_BACKEND_PORT}
     volumes:
-       - ~/eduwrench_data:/eduwrench_data/
+       - ${EDUWRENCH_DATABASE_DIRECTORY}:/data/eduwrench/
     ports:
       - 127.0.0.1:${EDUWRENCH_BACKEND_PORT}:${EDUWRENCH_BACKEND_PORT}
     networks:

@@ -49,6 +49,7 @@ let whitelist = ["https://eduwrench.ics.hawaii.edu",
     "http://localhost/",
     "http://localhost", // This one is crucial
     "http://eduwrench-frontend"]
+
 let corsOptions = {
     origin: function (origin, callback) {
         if (!origin || whitelist.indexOf(origin) !== -1) {
