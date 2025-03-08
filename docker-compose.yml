@@ -39,6 +39,7 @@ services:
       context: ./server
     environment:
       - NGINX_SERVER_HOSTNAME=${NGINX_SERVER_HOSTNAME}
+      - EDUWRENCH_BACKEND_PORT=${EDUWRENCH_BACKEND_PORT}
     volumes:
        - ~/eduwrench_data:/eduwrench_data/
     ports:
