@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: wfinstances-browser-nginx
+    container_name: eduwrench-nginx
     depends_on:
       - frontend
     build:
