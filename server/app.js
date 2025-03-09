@@ -45,10 +45,11 @@ app.use(function (req, res, next) {
 });
 
 /* CORS */
-let whitelist = ["https://eduwrench.ics.hawaii.edu",
-    "http://localhost/",
-    "http://localhost", // This one is crucial
-    "http://eduwrench-frontend"]
+let whitelist = [
+    "http://" + process.env.NGINX_SERVER_HOSTNAME,
+    "http://" + process.env.NGINX_SERVER_HOSTNAME + "/",
+    "https://" + process.env.NGINX_SERVER_HOSTNAME,
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + "/"]
 
 let corsOptions = {
     origin: function (origin, callback) {
@@ -1818,7 +1819,8 @@ app.post('/get/cilogon_userinfo', function (req, res) {
 
 // Enable SSL server connection
 let st = serverTime.toISOString().replace(/T/, ' ').replace(/\..+/, '')
-if (process.env.EDUWRENCH_ENABLE_SSL === "true") {
+// if (process.env.EDUWRENCH_ENABLE_SSL === "true") { // Back when we ran it using ssl
+if (false) {
     const https = require("https")
     const fs = require("fs")
     const options = {
