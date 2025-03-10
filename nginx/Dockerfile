@@ -21,12 +21,14 @@ RUN apt -y install curl
 ARG NGINX_SERVER_HOSTNAME
 ARG NGINX_PORT
 ARG EDUWRENCH_FRONTEND_PORT
+ARG EDUWRENCH_BACKEND_PORT
 
 # Create nginx config files
 COPY custom-nginx-locations-common.conf /etc/nginx/custom-nginx-locations-common.conf
 COPY custom-nginx-port-${NGINX_PORT}.conf /etc/nginx/custom-nginx.conf
 RUN sed -i "s/SERVER_NAME/${NGINX_SERVER_HOSTNAME}/g" /etc/nginx/custom-nginx.conf
 RUN sed -i "s/EDUWRENCH_FRONTEND_PORT/${EDUWRENCH_FRONTEND_PORT}/g" /etc/nginx/custom-nginx-locations-common.conf
+RUN sed -i "s/EDUWRENCH_BACKEND_PORT/${EDUWRENCH_BACKEND_PORT}/g" /etc/nginx/custom-nginx-locations-common.conf
 
 # Start nginx 
 EXPOSE $NGINX_PORT

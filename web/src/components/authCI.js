@@ -44,7 +44,7 @@ class AuthCI extends Component {
 
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
-      axios.get("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/server_time").then(
+      axios.get(window.location.protocol + "//" + window.location.hostname + "/backend" + "/server_time").then(
         response => {
           let serverTime = new Date(response.data.time)
           let loginTime = new Date(localStorage.getItem("loginTime"))
@@ -143,7 +143,7 @@ class AuthCI extends Component {
       }
 
       // console.log(data.code);
-      axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/oauth_token", data).then(
+      axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/oauth_token", data).then(
         response => {
 
           if (response.data.access_token) {
@@ -153,7 +153,7 @@ class AuthCI extends Component {
             const getUserInfo = {
               accessToken: response.data.access_token,
             }
-            return axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/get/cilogon_userinfo", getUserInfo);
+            return axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/cilogon_userinfo", getUserInfo);
           }
         },
         error => {

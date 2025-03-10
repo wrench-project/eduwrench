@@ -61,7 +61,7 @@ const WorkflowsDistributedExecutionSimulation = () => {
                   use_local_storage: "0"
                 }
                 setSimulationResults(<></>)
-                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/workflow_distributed", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/workflow_distributed", data).then(
                   response => {
                     setSimulationResults(
                       <>

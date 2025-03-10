@@ -62,7 +62,7 @@ const Solo_Cloud_Function_Simulation = () => {
                   numFir: values.numFir
                 }
                 setSimulationResults(<></>)
-                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/solo_cloud_function", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/solo_cloud_function", data).then(
                   response => {
                     setSimulationResults(
                       <>

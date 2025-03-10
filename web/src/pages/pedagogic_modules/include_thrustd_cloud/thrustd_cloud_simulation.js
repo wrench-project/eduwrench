@@ -111,7 +111,7 @@ const Thrustd_Cloud_Simulation = () => {
                         mViewerCloud: values.mViewerCloud
                       }
                       setSimulationResults(<></>)
-                      axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/thrustd_cloud", data).then(
+                      axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/thrustd_cloud", data).then(
                         response => {
                           setSimulationResults(
                             <>

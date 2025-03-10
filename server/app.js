@@ -21,6 +21,7 @@ if (!process.env.EDUWRENCH_BACKEND_PORT) {
 
 const PORT = process.env.EDUWRENCH_BACKEND_PORT
 
+
 const cors = require("cors")
 const db = require("./data/db-config")
 
@@ -47,9 +48,18 @@ app.use(function (req, res, next) {
 /* CORS */
 let whitelist = [
     "http://" + process.env.NGINX_SERVER_HOSTNAME,
+    "http://" + process.env.NGINX_SERVER_HOSTNAME + ":" + PORT,
     "http://" + process.env.NGINX_SERVER_HOSTNAME + "/",
+    "http://" + process.env.NGINX_SERVER_HOSTNAME + ":" + PORT + "/",
+    "http://" + process.env.NGINX_SERVER_HOSTNAME + "/backend",
+    "http://" + process.env.NGINX_SERVER_HOSTNAME + "/backend/",
     "https://" + process.env.NGINX_SERVER_HOSTNAME,
-    "https://" + process.env.NGINX_SERVER_HOSTNAME + "/"]
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + ":" + PORT,
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + "/",
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + ":" + PORT + "/",
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + "/backend",
+    "https://" + process.env.NGINX_SERVER_HOSTNAME + "/backend/",
+	]
 
 let corsOptions = {
     origin: function (origin, callback) {

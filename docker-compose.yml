@@ -9,6 +9,7 @@ services:
         NGINX_SERVER_HOSTNAME: ${NGINX_SERVER_HOSTNAME}
         NGINX_PORT: ${NGINX_PORT}
         EDUWRENCH_FRONTEND_PORT: ${EDUWRENCH_FRONTEND_PORT}
+        EDUWRENCH_BACKEND_PORT: ${EDUWRENCH_BACKEND_PORT}
     secrets:
       - nginx_certificate
       - nginx_private_key

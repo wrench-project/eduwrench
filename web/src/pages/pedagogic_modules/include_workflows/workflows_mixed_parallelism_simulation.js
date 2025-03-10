@@ -60,7 +60,7 @@ const WorkflowsMixedParallelismSimulation = () => {
                   num_cores_purple: values.numCoresPurple
                 }
                 setSimulationResults(<></>)
-                axios.post("http://" + window.location.hostname + ":" + process.env.GATSBY_BACKEND_PORT + "/run/workflow_task_data_parallelism", data).then(
+                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/workflow_task_data_parallelism", data).then(
                   response => {
                     setSimulationResults(
                       <>
