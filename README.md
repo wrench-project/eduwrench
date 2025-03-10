@@ -17,8 +17,8 @@ Dependencies:
 Edit file `.env` to configure the deployment, and then:
 
 ```bash
-$ docker-compose build --no-cache
-$ docker-compose up -d
+$ docker-compose build --env-file <.env file>  --no-cache
+$ docker-compose up [-d]
 ```
 
 ## Get in Touch
