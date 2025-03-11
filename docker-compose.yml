@@ -1,5 +1,6 @@
 services:
   nginx:
+    profiles: ["with-my-own-nginx"]
     container_name: eduwrench-nginx
     depends_on:
       - frontend
