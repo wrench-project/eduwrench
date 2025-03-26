@@ -21,6 +21,8 @@ $ docker-compose build --env-file <.env file>  --no-cache
 $ docker-compose up [-d]
 ```
 
+The above will not run any Nginx front-end. If you want to do so, you must add the `--profile "with-my-own-nginx` argument to the `docker-compose up` command. 
+
 ## Get in Touch
 
 The main channel to reach the eduWRENCH team is via the support email:
