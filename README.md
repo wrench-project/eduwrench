@@ -14,14 +14,14 @@ Dependencies:
 - [Docker](https://docs.docker.com/install/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-Edit file `.env` to configure the deployment, and then:
+Edit/use one of the `.env-*` files to configure the deployment, and then:
 
 ```bash
 $ docker-compose --env-file <.env file> build  --no-cache
 $ docker-compose up [-d]
 ```
 
-The above will not run any Nginx front-end. If you want to do so, you must add the `--profile "with-my-own-nginx` argument to the `docker-compose up` command. 
+The above will not run any Nginx front-end. If you want to do so, you must add the `--profile "with-my-own-nginx` argument to the `docker-compose` commands above. 
 
 ## Get in Touch
 
