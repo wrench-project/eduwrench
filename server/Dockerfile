@@ -1,4 +1,5 @@
-FROM ubuntu:focal
+#FROM ubuntu:focal
+FROM node:14
 
 USER root
 
@@ -18,7 +19,7 @@ RUN apt-get -y install g++ gcc
 #################################################
 
 # set root's environment variable
-ENV CXX="g++-9" CC="gcc-9"
+ENV CXX="g++-8" CC="gcc-8"
 WORKDIR /tmp
 
 # install SimGrid 3.31 
@@ -37,10 +38,12 @@ RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git c
 # install PUGIXML
 RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz && tar -xf pugixml-1.12.1.tar.gz && cd pugixml-1.12 && cmake . && make -j12 && sudo make install && cd .. && rm -rf pugixml-1.12*
 
-# install Node and Gatsby client
+# install Node 
 RUN apt-get upgrade ca-certificates -y
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt install -y nodejs
+
+# install Gatsby client
 #RUN npm install -g gatsby-cli@4.23.0 --unsafe-perm
 
 # Make wrench user sudoer
