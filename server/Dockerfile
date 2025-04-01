@@ -1,5 +1,5 @@
 #FROM ubuntu:focal
-FROM node:14
+FROM node:16
 
 USER root
 
@@ -38,10 +38,6 @@ RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git c
 # install PUGIXML
 RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz && tar -xf pugixml-1.12.1.tar.gz && cd pugixml-1.12 && cmake . && make -j12 && sudo make install && cd .. && rm -rf pugixml-1.12*
 
-# install Node 
-RUN apt-get upgrade ca-certificates -y
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt install -y nodejs
 
 # install Gatsby client
 #RUN npm install -g gatsby-cli@4.23.0 --unsafe-perm
@@ -64,7 +60,7 @@ RUN sudo bash build-simulators.sh -j4
 
 RUN npm install sqlite3 --save
 RUN npm install
-RUN npm audit fix
+#RUN npm audit fix
 
 #RUN npx knex migrate:latest
  
