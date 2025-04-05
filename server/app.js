@@ -1658,6 +1658,9 @@ app.post('/get/simfeedback', function (req, res) {
             console.log("[ERROR]" + error)
             return false
         }))
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
     })
 })
 
@@ -1668,6 +1671,9 @@ app.post('/get/resetpracticequestions', function (req, res) {
         }).catch((error => {
             console.log("ERROR " + error)
         }))
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
     })
 })
 
@@ -1686,6 +1692,9 @@ function logFeedback(data) {
             console.log("[ERROR: " + error)
             return false
         }))
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
     })
 }
 
@@ -1715,6 +1724,9 @@ app.post('/get/feedback', function (req, res) {
         }).catch((error => {
             console.log("ERROR " + error)
         }))
+    }).catch(error => {
+        console.log("[ERROR]: " + error)
+        return false
     })
 })
 

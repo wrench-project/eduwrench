@@ -12,6 +12,14 @@ const config = require("../knexfile")
 const db = knex(config.development)
 
 const registerUser = (email, name) => db.transaction(async trx => {
+
+    if (!email) {
+        throw new Error("User Email is required to register user");
+    }
+    if (!name) {
+        throw new Error("User Name is required to register user");
+    }
+
     const user = await trx("users")
         .where({email: email})
         .first()
