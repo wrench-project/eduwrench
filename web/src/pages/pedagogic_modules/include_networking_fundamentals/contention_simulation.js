@@ -47,7 +47,7 @@ const ContentionSimulation = () => {
                   file_sizes: values.fileSizes
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/networking_fundamentals", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/networking_fundamentals`, data).then(
                   response => {
                     setSimulationResults(
                       <>

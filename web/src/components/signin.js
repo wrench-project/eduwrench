@@ -22,10 +22,10 @@ const CILOGON_CLIENT_ID =
 
 let redirect_uri = ""
 if (window.location.port === "") {
-  redirect_uri = window.location.protocol + "//" + window.location.hostname + "/callback"
+  redirect_uri = `${window.location.protocol}//${window.location.hostname}/callback`
 }
 else {
-  redirect_uri = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/callback"
+  redirect_uri = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/callback`
 }
 
 // generate random state value
@@ -69,7 +69,7 @@ class SignIn extends Component {
 
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
-      axios.get(window.location.protocol + "//" + window.location.hostname + "/backend" + "/server_time").then(
+      axios.get(`${window.location.protocol}//${window.location.hostname}/backend/server_time`).then(
         response => {
           let serverTime = new Date(response.data.time)
           let loginTime = new Date(localStorage.getItem("loginTime"))
@@ -169,9 +169,9 @@ class SignIn extends Component {
 
       let origin_url = ""
       if (window.location.port === "") {
-        origin_url = window.location.protocol + "//" + window.location.hostname
+        origin_url = `${window.location.protocol}//${window.location.hostname}`
       } else {
-        origin_url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port
+        origin_url = `${window.location.protocol}//${window.location.hostname}:${window.location.port}`
       }
       if (event.origin !== origin_url) {
         // console.log(`unknown origin ${event.origin}`);
@@ -228,7 +228,7 @@ class SignIn extends Component {
       }
 
       // console.log(data.code);
-      axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/oauth_token", data).then(
+      axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/oauth_token`, data).then(
         response => {
 
           if (response.data.access_token) {
@@ -238,7 +238,7 @@ class SignIn extends Component {
             const getUserInfo = {
               accessToken: response.data.access_token,
             }
-            return axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/cilogon_userinfo", getUserInfo);
+            return axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/cilogon_userinfo`, getUserInfo);
           }
         },
         error => {

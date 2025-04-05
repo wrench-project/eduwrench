@@ -65,7 +65,7 @@ const ClientServerPipeliningSimulation = () => {
                   disk_speed: 400
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/client_server_disk", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/client_server_disk`, data).then(
                   response => {
                     const diskHostsList = ["client"]
                     const linkNames = [values.hostSelect === "1" ? "link1" : "link2"]

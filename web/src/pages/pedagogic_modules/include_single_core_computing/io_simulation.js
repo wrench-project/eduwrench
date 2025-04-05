@@ -74,7 +74,7 @@ const IOSimulation = () => {
                   io_overlap: values.overlapAllowed
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/io_operations", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/io_operations`, data).then(
                   response => {
                     setSimulationResults(
                       <>

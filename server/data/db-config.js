@@ -106,7 +106,7 @@ const loadPracticeQuestion = (userID, question_key, module, type) => db.transact
         return questionData
     } else {
         // Create blank question data since DB doesn't have the question
-        console.log("Creating a blank " + question_key + " question for user " + userID)
+        // console.log("Creating a blank " + question_key + " question for user " + userID)
         const blankQuestion = {
             user_id: userID,
             question_key: question_key,

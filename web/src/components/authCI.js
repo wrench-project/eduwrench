@@ -8,7 +8,7 @@ import { StaticImage } from 'gatsby-plugin-image';
 const CLIENT_ID =
   "cilogon:/client_id/b5deb22f68b35d12084368473a0881a"
 // const redirect_uri = "http://localhost:8000/callback"
-const redirect_uri = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port + "/callback"
+const redirect_uri = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/callback`
 // TODO: add dropdown and combine auth + authCI into one file
 // generate random state value
 const randomState = nanoid(20);
@@ -44,7 +44,7 @@ class AuthCI extends Component {
 
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
-      axios.get(window.location.protocol + "//" + window.location.hostname + "/backend" + "/server_time").then(
+      axios.get(`${window.location.protocol}//${window.location.hostname}/backend/server_time`).then(
         response => {
           let serverTime = new Date(response.data.time)
           let loginTime = new Date(localStorage.getItem("loginTime"))
@@ -143,7 +143,7 @@ class AuthCI extends Component {
       }
 
       // console.log(data.code);
-      axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/oauth_token", data).then(
+      axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/oauth_token`, data).then(
         response => {
 
           if (response.data.access_token) {
@@ -153,7 +153,7 @@ class AuthCI extends Component {
             const getUserInfo = {
               accessToken: response.data.access_token,
             }
-            return axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/cilogon_userinfo", getUserInfo);
+            return axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/cilogon_userinfo`, getUserInfo);
           }
         },
         error => {

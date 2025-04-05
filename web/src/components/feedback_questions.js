@@ -1,6 +1,7 @@
-import React, {useEffect} from "react"
+import React from "react"
+//import {useEffect} from "react"
 import Feedback from "./feedback/feedback"
-import axios from "axios";
+//import axios from "axios";
 
 const FeedbackQuestions = ({ header = null, feedbacks }) => {
   let feedbackHeader = <></>

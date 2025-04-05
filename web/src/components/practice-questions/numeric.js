@@ -14,7 +14,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
         const userEmail = localStorage.getItem("currentUser")
         const userName = localStorage.getItem("userName");
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/question", {
+            .post(`${window.location.protocol}//${window.location.hostname}/backend/get/question`, {
                 userName: userName,
                 email: userEmail,
                 question_key: question_key,
@@ -41,7 +41,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
             button: 'hint'
         }
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/update/question", question)
+            .post(`${window.location.protocol}//${window.location.hostname}/backend/update/question`, question)
             .then((response) => response)
             .catch(err => {
                 console.log(err);
@@ -63,7 +63,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
             answer: `${answer[0]} - ${answer[1]}`
         }
         axios
-            .post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/update/question", question)
+            .post(`${window.location.protocol}//${window.location.hostname}/backend/update/question`, question)
             .then((response) => response)
             .catch(err => {
                 console.log(err);
@@ -146,7 +146,7 @@ const PracticeQuestionNumeric = ({question_key, question, answer, explanation, h
                         }
                         setPrevAnswer(values.input)
                         axios
-                            .post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/update/question", question)
+                            .post(`${window.location.protocol}//${window.location.hostname}/backend/update/question`, question)
                             .then((response) => response)
                             .catch(err => {
                                 console.error(err);

@@ -41,7 +41,7 @@ app.use(function (req, res, next) {
         "Access-Control-Allow-Headers",
         "Origin, X-Requested-With, Content-Type, Accept"
     );
-    console.log("Request Origin:", req.headers.origin);
+    // console.log("Request Origin:", req.headers.origin);
     next();
 });
 
@@ -1493,8 +1493,7 @@ function getPathPrefix(simulatorFolder) {
 function launchSimulation(executable, args, stdout = false) {
     const simulationCommand = [executable].concat(args).join(" ")
     console.log("\nRunning Simulation")
-    console.log("===================")
-    console.log("Executing command: " + simulationCommand)
+    // console.log("Executing command: " + simulationCommand)
     let simulation_process = spawnSync(executable, args)
 
     if (simulation_process.status !== 0) {
@@ -1504,7 +1503,8 @@ function launchSimulation(executable, args, stdout = false) {
     }
 
     let simulation_output = stdout ? simulation_process.stdout.toString() : simulation_process.stderr.toString()
-    console.log(simulation_output)
+    console.log("Simulation output retrieved")
+    // console.log(simulation_output)
     return simulation_output
 }
 
@@ -1520,7 +1520,7 @@ function launchSimulation(executable, args, stdout = false) {
 function ansiUpSimulationOutput(simulationOutput) {
     let find = "</span>"
     let re = new RegExp(find, "g")
-    console.log(ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find))
+    // console.log(ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find))
     return ansiUp.ansi_to_html(simulationOutput).replace(re, "<br>" + find)
 }
 

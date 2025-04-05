@@ -64,7 +64,7 @@ const IOSimulation = () => {
                   task2_work: 500
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/multi_core_independent_tasks_io", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/multi_core_independent_tasks_io`, data).then(
                   response => {
                     setSimulationResults(
                       <>

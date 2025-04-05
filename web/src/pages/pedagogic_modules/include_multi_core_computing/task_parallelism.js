@@ -13,7 +13,7 @@ const TaskParallelism = ({module, tab}) => {
     const [auth, setAuth] = useState("false")
     useEffect(() => {
         setAuth(localStorage.getItem("login"))
-    })
+    }, [])
 
     return (
         <>

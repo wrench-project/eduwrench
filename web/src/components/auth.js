@@ -34,7 +34,7 @@ class Auth extends Component {
 
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
-      axios.get(window.location.protocol + "//" + window.location.hostname + "/backend" + "/server_time").then(
+      axios.get(`${window.location.protocol}//${window.location.hostname}/backend/server_time`).then(
           response => {
             let serverTime = new Date(response.data.time)
             let loginTime = new Date(localStorage.getItem("loginTime"))

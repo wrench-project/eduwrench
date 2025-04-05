@@ -66,7 +66,7 @@ const WorkflowsDataLocalitySimulation = () => {
                   use_local_storage: values.useLocalStorage ? "1" : "0"
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/workflow_distributed", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/workflow_distributed`, data).then(
                   response => {
                     setSimulationResults(
                       <>

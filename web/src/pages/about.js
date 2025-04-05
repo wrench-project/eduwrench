@@ -21,7 +21,7 @@ const About = () => {
   const [globalStatisticsResults, setGlobalStatisticsResults] = useState(<></>)
 
   useEffect(() => {
-    axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/usage_statistics").then(
+    axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/usage_statistics`).then(
       response => {
         console.log(response.data)
         setUsageStatisticsResults(
@@ -38,7 +38,7 @@ const About = () => {
   }, []);
 
   useEffect(() => {
-    axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/get/global_statistics").then(
+    axios.post(`${window.location.protocol}//${window.location.hostname}/backend/get/global_statistics`).then(
       response => {
         console.log('================',response.data)
         setGlobalStatisticsResults(
@@ -61,10 +61,10 @@ const About = () => {
       <Segment>
         <p>
           eduWRENCH is developed by a collaborative team from
-          the <a href="https://www.ics.hawaii.edu/" target="_blank">University of Hawai'i at Mãnoa</a> (UHM),
-          the <a href="https://www.ornl.gov/group/dlsw" target="_blank">Oak Ridge National Laboratory</a> (ORNL),
-          the <a href="https://isi.edu/" target="_blank">University of Southern California</a> (USC),
-          and the <a href="https://cnrs.fr/" target="_blank">National Center for Scientific Research</a> (CNRS).
+          the <a href="https://www.ics.hawaii.edu/" target="_blank" rel="noreferrer noopener">University of Hawai'i at Mãnoa</a> (UHM),
+          the <a href="https://www.ornl.gov/group/dlsw" target="_blank" rel="noreferrer noopener">Oak Ridge National Laboratory</a> (ORNL),
+          the <a href="https://isi.edu/" target="_blank" rel="noreferrer noopener">University of Southern California</a> (USC),
+          and the <a href="https://cnrs.fr/" target="_blank" rel="noreferrer noopener">National Center for Scientific Research</a> (CNRS).
         </p>
 
         <Divider />

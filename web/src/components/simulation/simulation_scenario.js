@@ -7,7 +7,7 @@ const SimulationScenario = ({ scenario }) => {
     <>
       <Segment.Group>
         <Segment color="orange">
-          <Label attached="top right" href="https://wrench-project.org" target="_blank" style={{ color: "#C48550" }}>
+          <Label attached="top right" href="https://wrench-project.org" target="_blank" rel="noopener noreferrer" style={{ color: "#C48550" }}>
             <StaticImage
               src='../../images/wrench_logo.png'
               width={15}

@@ -56,7 +56,7 @@ const DataParallelismSimulation = () => {
                   scheduling_scheme: values.schedulingScheme
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/multi_core_data_parallelism", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/multi_core_data_parallelism`, data).then(
                   response => {
                     setSimulationResults(
                       <>

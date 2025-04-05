@@ -107,7 +107,7 @@ const CoordinatorWorkerSchedulingSimulation = () => {
                   seed: values.seed
                 }
                 setSimulationResults(<></>)
-                axios.post(window.location.protocol + "//" + window.location.hostname + "/backend" + "/run/coordinator_worker", data).then(
+                axios.post(`${window.location.protocol}//${window.location.hostname}/backend/run/coordinator_worker`, data).then(
                   response => {
                     setSimulationResults(
                       <>

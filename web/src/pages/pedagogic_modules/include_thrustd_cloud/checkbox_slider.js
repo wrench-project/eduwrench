@@ -12,7 +12,7 @@ const CheckboxSlider = ({color, name, set, value}) => {
                 <Grid.Column width={4}>
                     <Checkbox slider name={name}
                               onChange={() => {state.checked = !value; set(name, state.checked);
-                              (state.checked == true ? setLabel("Cloud") : setLabel("Local"))
+                              (state.checked === true ? setLabel("Cloud") : setLabel("Local"))
                               }}/>
                 </Grid.Column>
                 <Grid.Column width={16}>

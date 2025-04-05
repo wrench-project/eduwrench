@@ -13,7 +13,7 @@ const Footer = () => (
           Released under{" "}
           <a
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="link"
             href="https://github.com/wrench-project/eduwrench/blob/master/LICENSE"
             style={{ fontWeight: "bold" }}
@@ -34,7 +34,7 @@ const Footer = () => (
           <a
             href="https://wrench-project.org/"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="slink"
             style={{ color: "#d98636 !important", fontWeight: "bold" }}
           >
@@ -47,7 +47,7 @@ const Footer = () => (
             <a
               href="https://nsf.gov/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="link m-lg-2"
               style={{ marginLeft: "1em !important" }}
             >
@@ -61,7 +61,7 @@ const Footer = () => (
             <a
               href="https://www.ics.hawaii.edu/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="link m-lg-2"
               style={{marginLeft: "1em", verticalAlign: "bottom"}}
             >
@@ -75,7 +75,7 @@ const Footer = () => (
             <a
               href="https://www.ornl.gov/group/dlsw"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="link m-lg-2"
               style={{marginLeft: "1em", verticalAlign: "bottom"}}
             >
@@ -89,7 +89,7 @@ const Footer = () => (
             <a
               href="https://www.isi.edu/"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="link m-lg-2"
               style={{marginLeft: "1em", verticalAlign: "bottom"}}
             >
@@ -110,7 +110,7 @@ const Footer = () => (
           grants number{" "}
           <a
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="link"
             href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923539"
           >
@@ -119,7 +119,7 @@ const Footer = () => (
           , and{" "}
           <a
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="link"
             href="https://nsf.gov/awardsearch/showAward?AWD_ID=1923621"
           >
