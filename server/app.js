@@ -1278,10 +1278,11 @@ app.post("/run/thrustd_cloud", function (req, res) {
 
 // execute cloud functions simulator (one function)
 app.post("/run/solo_cloud_function", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/google_cloud_functions/"
-    );
+    const PATH_PREFIX = getPathPrefix("google_cloud_functions")
+    // const PATH_PREFIX = __dirname.replace(
+    //     "server",
+    //     "simulators/google_cloud_functions/"
+    // );
 
     const SIMULATOR = "cloud_functions";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -1493,7 +1494,7 @@ function getPathPrefix(simulatorFolder) {
 function launchSimulation(executable, args, stdout = false) {
     const simulationCommand = [executable].concat(args).join(" ")
     console.log("\nRunning Simulation")
-    // console.log("Executing command: " + simulationCommand)
+    //console.log("Executing command: " + simulationCommand)
     let simulation_process = spawnSync(executable, args)
 
     if (simulation_process.status !== 0) {
