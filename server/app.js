@@ -1631,7 +1631,9 @@ app.post('/get/question', function (req, res) {
         }).catch((error => {
             console.log("ERROR " + error)
         }))
-    })
+    }).catch((error => {
+        console.log("ERROR " + error)
+    }))
 })
 
 app.post('/insert/simfeedback', function (req, res) {
