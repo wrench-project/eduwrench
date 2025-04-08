@@ -101,7 +101,7 @@ app.post("/run/networking_fundamentals", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "networking_fundamentals",
             params: {
@@ -140,7 +140,7 @@ app.post("/run/workflow_execution_fundamentals", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_execution_fundamentals",
             params: {
@@ -181,7 +181,7 @@ app.post("/run/workflow_execution_data_locality", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_execution_data_locality",
             params: {
@@ -231,7 +231,7 @@ app.post("/run/workflow_execution_parallelism", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_execution_parallelism",
             params: {
@@ -276,7 +276,7 @@ app.post("/run/multi_core_dependent_tasks", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "multi_core_dependent_tasks",
             params: {
@@ -322,7 +322,7 @@ app.post("/run/multi_core_independent_tasks", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "multi_core_independent_tasks",
             params: {
@@ -378,7 +378,7 @@ app.post("/run/multi_core_independent_tasks_io", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+        user_name: USERNAME,
             email: EMAIL,
             activity: "multi_core_computing_two_tasks_with_io",
             params: {
@@ -421,7 +421,7 @@ app.post("/run/multi_core_data_parallelism", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "multi_core_computing_data_parallelism",
             params: {
@@ -466,7 +466,7 @@ app.post("/run/multi_core_independent_tasks_ram", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "multi_core_independent_tasks_ram",
             params: {
@@ -518,7 +518,7 @@ app.post("/run/io_operations", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "io_operations",
             params: {
@@ -580,7 +580,7 @@ app.post("/run/client_server", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "client_server",
             params: {
@@ -646,7 +646,7 @@ app.post("/run/client_server_disk", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "client_server_disk",
             params: {
@@ -766,7 +766,7 @@ app.post("/run/coordinator_worker", function (req, res) {
 
         if (NUM_INVOCATION === 1) {
             logData({
-                user: USERNAME,
+                user_name: USERNAME,
                 email: EMAIL,
                 activity: "coordinator_worker",
                 params: {
@@ -785,7 +785,7 @@ app.post("/run/coordinator_worker", function (req, res) {
 
         } else {
             logData({
-                user: USERNAME,
+                user_name: USERNAME,
                 email: EMAIL,
                 activity: "coordinator_worker_many_test_cases",
                 params: {
@@ -841,7 +841,7 @@ app.post("/run/workflow_fundamentals", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_fundamentals",
             params: {
@@ -890,7 +890,7 @@ app.post("/run/workflow_distributed", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_distributed",
             params: {
@@ -939,7 +939,7 @@ app.post("/run/workflow_task_data_parallelism", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "workflow_task_data_parallelism",
             params: {
@@ -993,9 +993,9 @@ app.post("/run/ci_overhead", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            "user": USERNAME,
-            "email": EMAIL,
-            "activity": "ci_overhead",
+            user_name: USERNAME,
+            email: EMAIL,
+            activity: "ci_overhead",
             params: {
                 "server_1_link_latency": SERVER_1_LINK_LATENCY,
                 "server_1_link_bandwidth": SERVER_1_LINK_BANDWIDTH,
@@ -1020,10 +1020,7 @@ app.post("/run/ci_overhead", function (req, res) {
 
 // execute thrust d simulator
 app.post("/run/thrustd", function (req, res) {
-    const PATH_PREFIX = __dirname.replace(
-        "server",
-        "simulators/thrustd/"
-    );
+    const PATH_PREFIX = getPathPrefix("thrustd")
 
     const SIMULATOR = "thrustd";
     const EXECUTABLE = PATH_PREFIX + SIMULATOR;
@@ -1043,7 +1040,7 @@ app.post("/run/thrustd", function (req, res) {
     ];
 
     const json_data = {
-        "workflow_file": PATH_PREFIX + "workflows/bigger-montage-workflow.json",
+        "workflow_file": PATH_PREFIX + "../workflows/bigger-montage-workflow.json",
         "num_hosts": parseInt(NUM_HOSTS),
         "cores": 8,
         "min_cores_per_task": 4,
@@ -1097,7 +1094,7 @@ app.post("/run/thrustd", function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             time: Math.round(new Date().getTime() / 1000), // unix timestamp
             params: json_data,
@@ -1262,7 +1259,7 @@ app.post("/run/thrustd_cloud", function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             time: Math.round(new Date().getTime() / 1000), // unix timestamp
             activity: "thrustd",
@@ -1352,7 +1349,7 @@ app.post("/run/solo_cloud_function", function (req, res) {
          * simulation parameters to the data server.
          */
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             time: Math.round(new Date().getTime() / 1000), // unix timestamp
             params: json_data,
@@ -1394,7 +1391,7 @@ app.post("/run/storage_service", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "ci_storage_service",
             params: {
@@ -1441,7 +1438,7 @@ app.post("/run/storage_network_proximity", function (req, res) {
 
     if (simulation_output !== null) {
         logData({
-            user: USERNAME,
+            user_name: USERNAME,
             email: EMAIL,
             activity: "ci_storage_network_proximity",
             params: {
@@ -1494,7 +1491,7 @@ function getPathPrefix(simulatorFolder) {
 function launchSimulation(executable, args, stdout = false) {
     const simulationCommand = [executable].concat(args).join(" ")
     console.log("\nRunning Simulation")
-    //console.log("Executing command: " + simulationCommand)
+    console.log("Executing command: " + simulationCommand)
     let simulation_process = spawnSync(executable, args)
 
     if (simulation_process.status !== 0) {
@@ -1601,7 +1598,7 @@ function logQuestion(data) {
 app.post('/update/question', function (req, res) {
     try {
         logQuestion({
-            user: req.body.userName,
+            user_name: req.body.userName,
             email: req.body.email,
             question_key: req.body.question_key,
             answer : req.body.answer,
@@ -1704,7 +1701,7 @@ function logFeedback(data) {
 app.post('/update/feedback', function (req, res) {
     try {
         logFeedback({
-            user: req.body.user_name,
+            user_name: req.body.user_name,
             email: req.body.email,
             tabkey: req.body.tabkey,
             useful : req.body.useful,

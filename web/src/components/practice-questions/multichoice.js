@@ -100,7 +100,7 @@ const PracticeQuestionMultiChoice = ({question_key, question, choices, correct_a
                             setState("Incorrect")
                         }
                         const question = {
-                            user: userName,
+                            userName: userName,
                             email: userEmail,
                             question_key: question_key,
                             answer: values.selected,
