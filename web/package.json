@@ -27,7 +27,7 @@
     "gatsby-transformer-remark": "^5.12.1",
     "gatsby-transformer-sharp": "^4.12.1",
     "gatsby-transformer-yaml": "^4.12.1",
-    "katex": "^0.15.3",
+    "katex": "^0.16.22",
     "prop-types": "^15.8.1",
     "react": "^17.0.0",
     "react-cytoscapejs": "^2.0.0",
@@ -43,7 +43,7 @@
     "react-semantic-ui-range": "^0.7.1",
     "react-sidebar": "^3.0.2",
     "reactstrap": "^9.0.2",
-    "rehype-katex": "^6.0.2",
+    "rehype-katex": "^6.0.3",
     "remark-math": "^5.1.1",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^2.1.2"
