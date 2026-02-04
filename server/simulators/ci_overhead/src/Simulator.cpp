@@ -12,9 +12,10 @@
 #include <string>
 #include <algorithm>
 
+#include <pugixml.hpp>
+
 #include <simgrid/s4u.hpp>
 #include <wrench.h>
-#include <pugixml.hpp>
 
 #include "ActivityWMS.h"
 
@@ -41,7 +42,8 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow,
     const double GB = 1000.0 * 1000.0 * 1000.0;
 
     auto single_task = workflow->addTask("slow_server_task", task_work_in_gf * GFLOP, MIN_CORES, MAX_CORES, 8 * GB);
-    single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb * MB));
+    auto input_file = wrench::Simulation::addFile("file_copy", file_size_in_mb * MB);
+    single_task->addInputFile(input_file);
 }
 
 /**
@@ -68,7 +70,7 @@ void generatePlatform(const std::string &platform_file_path,
         throw std::invalid_argument("generatePlatform() disk_speed must be greater than 0");
     }
 
-    // Create a the platform file
+    // Create the platform file
     std::string xml_string = "<?xml version='1.0'?>\n"
                              "<!DOCTYPE platform SYSTEM \"http://simgrid.gforge.inria.fr/simgrid/simgrid.dtd\">\n"
                              "<platform version=\"4.1\">\n"
@@ -113,6 +115,7 @@ void generatePlatform(const std::string &platform_file_path,
                              "   </zone>\n"
                              "</platform>\n";
 
+    // Update it
     pugi::xml_document xml_doc;
 
     if (xml_doc.load_string(xml_string.c_str(), pugi::parse_doctype)) {
@@ -277,7 +280,7 @@ int main(int argc, char **argv) {
     std::shared_ptr<wrench::StorageService> client_storage_service;
 
     client_storage_service = simulation->add(
-            new wrench::SimpleStorageService(CLIENT, {"/"},
+            wrench::SimpleStorageService::createSimpleStorageService(CLIENT, {"/"},
                                              {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
 
     storage_services.insert(client_storage_service);
@@ -299,7 +302,7 @@ int main(int argc, char **argv) {
         compute_overhead = atof(COMPUTE_1_OVERHEAD.c_str());
 
         auto server_storage_service = simulation->add(
-                new wrench::SimpleStorageService(
+                wrench::SimpleStorageService::createSimpleStorageService(
                         SERVER1, {"/"},
                         {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
@@ -317,7 +320,7 @@ int main(int argc, char **argv) {
         );
         compute_overhead = atof(COMPUTE_2_OVERHEAD.c_str());
         auto server_storage_service = simulation->add(
-                new wrench::SimpleStorageService(
+                wrench::SimpleStorageService::createSimpleStorageService(
                         SERVER2, {"/"},
                         {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
@@ -336,7 +339,7 @@ int main(int argc, char **argv) {
     simulation->add(new wrench::FileRegistryService(CLIENT));
 
     for (auto const &file : workflow->getInputFiles()) {
-        simulation->stageFile(file, client_storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(client_storage_service, file));
     }
 
     simulation->getOutput().enableDiskTimestamps(true);

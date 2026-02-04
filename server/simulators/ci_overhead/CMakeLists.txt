@@ -69,6 +69,7 @@ if (DEFINED WRENCH_PATH)
 endif()
 find_package(WRENCH REQUIRED)
 
+find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 # include directories for dependencies and WRENCH libraries
 include_directories(src/ include/ /usr/local/include /usr/local/include/wrench /opt/local/include /opt/simgrid/include ${Boost_INCLUDE_DIR} ${SimGrid_INCLUDE_DIR})
@@ -90,4 +91,5 @@ target_link_libraries(ci_overhead_simulator
         ${SimGrid_LIBRARY}
         ${FSMOD_LIBRARY}
         ${Boost_LIBRARIES}
+	${PUGIXML_LIBRARY}
 )
