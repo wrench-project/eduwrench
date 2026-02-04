@@ -253,11 +253,11 @@ namespace wrench {
                 // specify file locations for tasks that will be submitted
                 std::map<std::shared_ptr<DataFile>, std::shared_ptr<FileLocation >> file_locations;
                 for (const auto &file : task_to_run.task->getInputFiles()) {
-                    file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                    file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service, file)));
                 }
 
                 for (const auto &file: task_to_run.task->getOutputFiles()) {
-                    file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service)));
+                    file_locations.insert(std::make_pair(file, FileLocation::LOCATION(storage_service, file)));
                 }
 //                std::cerr << "SUBMITTING " << task_to_run.task->getID() << " to " << cs.compute_service->getHostname() << "\n";
                 auto job = job_manager->createStandardJob(task_to_run.task, file_locations);

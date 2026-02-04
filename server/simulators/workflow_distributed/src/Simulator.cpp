@@ -23,8 +23,8 @@
 void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
 
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
-    const double MB = 1000.0 * 1000.0;
-    const double GB = MB * 1000.0;
+    const size_t MB = 1000 * 1000;
+    const size_t GB = MB * 1000;
 
     const int num_pre_tasks = 20;
 
@@ -33,8 +33,8 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
         ostringstream os;
         os<<setfill('0')<<setw(2)<<i;
         auto  number =  os.str();
-        auto ifile = workflow->addFile("in_" + number, 50 * MB);
-        auto ofile = workflow->addFile("out_" + number, 100 * MB);
+        auto ifile = wrench::Simulation::addFile("in_" + number, 50 * MB);
+        auto ofile = wrench::Simulation::addFile("out_" + number, 100 * MB);
         auto task = workflow->addTask("pre_" + number, 1000 *  GFLOP, 1, 1, 8 *GB);
         task->setColor("#D4E8D4");
         task->addInputFile(ifile);
@@ -42,7 +42,7 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
         final_task->addInputFile(ofile);
     }
 
-    auto output_file = workflow->addFile("output", 1 * MB);
+    auto output_file = wrench::Simulation::addFile("output", 1 * MB);
     final_task->addOutputFile(output_file);
     final_task->setColor("#FFFCCC");
 }
@@ -219,7 +219,7 @@ int main(int argc, char **argv) {
     simulation->instantiatePlatform(platform_file_path);
 
     // Remote storage service
-    auto storage_service = simulation->add(new wrench::SimpleStorageService(
+    auto storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(
             "storage.edu", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
@@ -231,7 +231,7 @@ int main(int argc, char **argv) {
     storage_service->setNetworkTimeoutValue(100000.00); // Large file, small bandwidth
 
     // Local storage service
-    auto local_storage_service = simulation->add(new wrench::SimpleStorageService(
+    auto local_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(
             "hpc_0.edu", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "25000000000"}, // no buffering
@@ -266,7 +266,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto file : workflow->getInputFiles()) {
-        simulation->stageFile(file, storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(storage_service, file));
     }
 
     // launch the simulation

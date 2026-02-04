@@ -155,7 +155,7 @@ int ThrustDWMS::main() {
  *
  * @param event: the event
  */
-void ThrustDWMS::processEventStandardJobFailure(std::shared_ptr<wrench::StandardJobFailedEvent> event) {
+void ThrustDWMS::processEventStandardJobFailure(const std::shared_ptr<wrench::StandardJobFailedEvent> &event) {
     /* Retrieve the job that this event is for */
     auto job = event->standard_job;
     WRENCH_INFO("Notified that a standard job has failed (failure cause: %s)",
@@ -175,7 +175,7 @@ void ThrustDWMS::processEventStandardJobFailure(std::shared_ptr<wrench::Standard
  *
  * @param event: the event
  */
-void ThrustDWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> event) {
+void ThrustDWMS::processEventStandardJobCompletion(const std::shared_ptr<wrench::StandardJobCompletedEvent> &event) {
     /* Retrieve the job that this event is for */
     auto job = event->standard_job;
     WRENCH_INFO("Notified that a standard job has successfully completed");

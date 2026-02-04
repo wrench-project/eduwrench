@@ -12,7 +12,7 @@ if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS json program_options REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
@@ -82,12 +82,10 @@ set(SOURCE_FILES
         src/Simulator.cpp
         )
 
-# wrench library and dependencies
-find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
 
 add_executable(workflow_fundamentals_simulator ${SOURCE_FILES})
 target_link_libraries(workflow_fundamentals_simulator
         ${WRENCH_LIBRARY}
         ${SimGrid_LIBRARY}
+        ${FSMOD_LIBRARY}
         )

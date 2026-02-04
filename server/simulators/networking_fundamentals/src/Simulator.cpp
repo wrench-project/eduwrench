@@ -18,13 +18,12 @@
 
 /**
  * @brief Generate a workflow containing only files
- * @param workflow: pointer to the workflow
   @param file_sizes: the list of file sizes, in MB
  */
-void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, std::vector<double> &file_sizes) {
+void generateWorkflow(std::vector<size_t> &file_sizes) {
     int id = 0;
     for (auto const &size : file_sizes) {
-        workflow->addFile(("file_" + std::to_string(id++)), size * 1000.0 * 1000.0);
+        wrench::Simulation::addFile(("file_" + std::to_string(id++)), size * 1000 * 1000);
     }
 }
 
@@ -99,7 +98,7 @@ int main(int argc, char **argv) {
     const int MAX_NUM_FILES = 100;
     const int MAX_FILE_SIZE = 1000;
 
-    std::vector<double> file_sizes;
+    std::vector<size_t> file_sizes;
 
     try {
         if (argc < 2) {
@@ -112,7 +111,7 @@ int main(int argc, char **argv) {
         }
 
         for (int i = 1; i < argc; i++) {
-            double size = std::stof(std::string(argv[i]));
+            size_t size = std::stol(std::string(argv[i]));
             if ((size < 1) || (size > MAX_FILE_SIZE)) {
                 std::cerr << "Invalid file size. Enter a file size in the range [1, " + std::to_string(MAX_FILE_SIZE) +
                              "] MB" << std::endl;
@@ -135,11 +134,11 @@ int main(int argc, char **argv) {
     simulation->instantiatePlatform(platform_file_path);
 
     // two storage services, one on each host
-    auto storage_service_1 = simulation->add(new wrench::SimpleStorageService("host1", {"/"}));
-    auto storage_service_2 = simulation->add(new wrench::SimpleStorageService("host2", {"/"}));
+    auto storage_service_1 = simulation->add(wrench::SimpleStorageService::createSimpleStorageService("host1", {"/"}));
+    auto storage_service_2 = simulation->add(wrench::SimpleStorageService::createSimpleStorageService("host2", {"/"}));
 
     auto workflow = wrench::Workflow::createWorkflow();
-    generateWorkflow(workflow, file_sizes);
+    generateWorkflow(file_sizes);
 
     // wms
     auto wms = simulation->add(new wrench::ActivityWMS({storage_service_1, storage_service_2}, workflow, "host1"));
@@ -150,7 +149,7 @@ int main(int argc, char **argv) {
 
     // stage all the files in the workflow at ss on host1
     for (const auto &file : workflow->getFileMap()) {
-        simulation->stageFile(file.second, storage_service_1);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(storage_service_1, file.second));
     }
 
     simulation->getOutput().enableFileReadWriteCopyTimestamps(true);

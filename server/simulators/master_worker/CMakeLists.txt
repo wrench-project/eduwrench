@@ -12,7 +12,7 @@ if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS json program_options REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
@@ -83,8 +83,6 @@ set(SOURCE_FILES
         )
 
 # wrench library and dependencies
-find_library(WRENCH_LIBRARY NAMES libwrench.a wrench)
-find_library(SimGrid_LIBRARY NAMES simgrid HINTS "/opt/simgrid/lib")
 find_library(PUGIXML_LIBRARY NAMES pugixml)
 
 
@@ -94,4 +92,5 @@ target_link_libraries(master_worker_simulator
         ${WRENCH_LIBRARY}
         ${PUGIXML_LIBRARY}
         ${SimGrid_LIBRARY}
+	${FSMOD_LIBRARY}
         )

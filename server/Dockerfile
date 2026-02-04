@@ -68,7 +68,7 @@ COPY . .
 
 
 # Build the simulators
-RUN sudo bash build-simulators.sh -j4
+#TMP REMOVE RUN sudo bash build-simulators.sh -j4
 
 # set volume for data server
 #RUN mkdir /home/wrench/data_server

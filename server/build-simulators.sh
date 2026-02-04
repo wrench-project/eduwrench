@@ -27,6 +27,7 @@ echo "COMPILING SIMULATORS"
 printf "${NC}\n"
 
 for  dir in `ls simulators/`; do
+    
     echo "Building in simulator/$dir ..."
     cd simulators/$dir
     rm -rf ./build CMakeCache.txt 

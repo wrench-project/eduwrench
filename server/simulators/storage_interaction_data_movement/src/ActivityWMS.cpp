@@ -61,15 +61,15 @@ namespace wrench {
             }
         }
 
-        auto input_file = this->workflow->getFileByID("data_file");
+        auto input_file = wrench::Simulation::getFileByID("data_file");
 
         WRENCH_INFO("Sending the file over to the server running on host %s",
                     server_storage_service->getHostname().c_str());
 
         //  Copy the file over to the server
-        data_manager->doSynchronousFileCopy(input_file,
-                                            FileLocation::LOCATION(client_storage_service),
-                                            FileLocation::LOCATION(server_storage_service),
+        data_manager->doSynchronousFileCopy(
+                                            FileLocation::LOCATION(client_storage_service, input_file),
+                                            FileLocation::LOCATION(server_storage_service, input_file),
                                             this->file_registry_service);
 
         WRENCH_INFO("File sent and registered in the file registry!");

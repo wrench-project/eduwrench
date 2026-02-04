@@ -27,7 +27,7 @@ namespace wrench {
        bool use_local_storage_service;
 
        std::map<std::string, unsigned long> idle_core_counts;
-       std::map<std::string, double> available_rams;
+       std::map<std::string, sg_size_t> available_rams;
     };
 }
 

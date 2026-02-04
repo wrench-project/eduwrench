@@ -46,7 +46,6 @@ namespace wrench {
         // only a single compute service in this activity
         auto compute_service = *compute_services.begin();
 
-
         if (this->idle_core_counts.empty()) {
             this->idle_core_counts = compute_service->getPerHostNumCores();
             this->available_rams = compute_service->getPerHostAvailableMemoryCapacity();
@@ -61,16 +60,16 @@ namespace wrench {
                     std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
                     for (auto const &f : t->getInputFiles()) {
                         if ((t->getTopLevel() != 0) and (this->use_local_storage_service)) {
-                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service);
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service, f);
                         } else {
-                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service, f);
                         }
                     }
                     for (auto const &f : t->getOutputFiles()) {
                         if ((t->getTopLevel() != t->getWorkflow()->getNumLevels()-1) and (this->use_local_storage_service)) {
-                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service);
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->local_storage_service, f);
                         } else {
-                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                            file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service, f);
                         }
                     }
 //                    std::cerr << "Task" << t->getID() << "\n";

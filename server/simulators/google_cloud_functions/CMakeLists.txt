@@ -12,7 +12,7 @@ if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS json program_options REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")

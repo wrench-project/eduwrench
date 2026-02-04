@@ -6,13 +6,15 @@ project("thrustd")
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
 set(CMAKE_CXX_STANDARD 17)
+#set_property(TARGET thrustd PROPERTY CXX_STANDARD 17)
+
 
 # Find Boost
 if(POLICY CMP0167)
     cmake_policy(SET CMP0167 NEW)
 endif()
 find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS json program_options REQUIRED)
+find_package(Boost COMPONENTS program_options REQUIRED)
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
@@ -96,39 +98,23 @@ set(SCRIPT_FILES
 set(TEST_FILES
        )
 
-# wrench library and dependencies
-find_library(WRENCH_LIBRARY NAMES wrench)
-find_library(WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY NAMES wrenchwfcommonsworkflowparser)
-
 # generating the executable
 add_executable(thrustd ${SOURCE_FILES})
 add_executable(fbl ${SCRIPT_FILES})
-set_property(TARGET thrustd PROPERTY CXX_STANDARD 14)
 
 
-if (ENABLE_BATSCHED)
 target_link_libraries(thrustd
                        ${WRENCH_LIBRARY}
                        ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                        ${SimGrid_LIBRARY}
-                      -lzmq )
-target_link_libraries(fbl
-                        ${WRENCH_LIBRARY}
-                        ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
-                        ${SimGrid_LIBRARY}
-                        -lzmq )
-else()
-target_link_libraries(thrustd
-                       ${WRENCH_LIBRARY}
-                       ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
-                       ${SimGrid_LIBRARY}
+                       ${FSMOD_LIBRARY}
                       )
 target_link_libraries(fbl
                         ${WRENCH_LIBRARY}
                         ${WRENCH_WFCOMMONS_WORKFLOW_PARSER_LIBRARY}
                         ${SimGrid_LIBRARY}
+                        ${FSMOD_LIBRARY}
                         )
-endif()
 
 install(TARGETS thrustd DESTINATION bin)
 install(TARGETS fbl DESTINATION bin)
