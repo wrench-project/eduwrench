@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:latest
 
 USER root
 
@@ -15,7 +15,7 @@ RUN apt-get -y install g++ gcc
 
 # install Node and Gatsby client
 RUN apt-get upgrade ca-certificates -y
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt install -y nodejs
 RUN npm install -g gatsby-cli@4.23.0 --unsafe-perm
 

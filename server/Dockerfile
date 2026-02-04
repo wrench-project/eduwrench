@@ -1,5 +1,5 @@
 #FROM ubuntu:focal
-FROM node:16
+FROM node:20
 
 USER root
 
@@ -19,17 +19,32 @@ RUN apt-get -y install g++ gcc
 #################################################
 
 # set root's environment variable
-ENV CXX="g++-8" CC="gcc-8"
+ENV CXX="g++" CC="gcc"
 WORKDIR /tmp
 
-# install SimGrid 3.31 
-RUN wget https://framagit.org/simgrid/simgrid/-/archive/v3.31/simgrid-v3.31.tar.gz && tar -xf simgrid-v3.31.tar.gz && cd simgrid-v3.31 && cmake . && make -j4 && sudo make install && cd .. && rm -rf simgrid-v3.31*
+# install SimGrid
+RUN wget --no-check-certificate https://github.com/simgrid/simgrid/releases/download/v4.1/simgrid-4.1.tar.gz && tar -xf simgrid-4.1.tar.gz && cd simgrid-4.1 && cmake . && make  && sudo make install && cd .. && rm -rf simgrid-4.1*
+#RUN git clone https://framagit.org/simgrid/simgrid.git && cd simgrid && git checkout 1f1b85861ea71dd27d362b70f268b580c1f8c7c4 && mkdir build && cd build && cmake .. && make && sudo make install
+
+# install SimGrid's FSMod
+RUN wget https://github.com/simgrid/file-system-module/archive/refs/tags/v0.4.tar.gz && tar -xf v0.4.tar.gz && cd file-system-module-0.4 && mkdir build && cd build && cmake .. && make  && sudo make install && cd ../.. && rm -rf v0.4.tar.gz file-system-module-v*
 
 # install json for modern c++
-RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.10.4.tar.gz && tar -xf v3.10.4.tar.gz && cd json-3.10.4 && cmake . && make -j4 && sudo make install && cd .. && rm -rf v3.10.4* json-3.10.4
+RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.tar.gz && tar -xf v3.11.3.tar.gz && cd json-3.11.3 && cmake . && make && $SUDO make install && cd .. && rm -rf v3.11.3* json-3.11.3
 
-# install WRENCH master:27083ee99f5961ec4bd6889fab3f01f53f447fa7
-RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git checkout 27083ee99f5961ec4bd6889fab3f01f53f447fa7 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd .. && cd .. && rm -rf wrench/ 
+# install swagger-codegen stuff
+RUN apt-get install -y python3
+RUN apt-get install -y python3-pip
+RUN pip3 install  --upgrade pip --break-system-packages
+RUN pip3 install jsonref --break-system-packages
+RUN apt-get install -y libasio-dev
+
+# install WRENCH
+ENV WRENCH_VERSION="2.8"
+RUN wget https://github.com/wrench-project/wrench/archive/v${WRENCH_VERSION}.tar.gz && tar -zxf v${WRENCH_VERSION}.tar.gz && cd wrench-${WRENCH_VERSION} && mkdir build && cd build && cmake .. && make -j12 wrench-daemon examples && sudo make install && cd ../.. && /bin/rm -rf wrench-${WRENCH_VERSION}
+
+
+
 
 #################################################
 # EDUWRENCH and its dependencies
@@ -50,6 +65,7 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # Copy files over
 WORKDIR /home/wrench/
 COPY . .
+
 
 # Build the simulators
 RUN sudo bash build-simulators.sh -j4

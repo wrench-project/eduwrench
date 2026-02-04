@@ -3,6 +3,7 @@
 #  Usage  ./build.sh [-jX]
 #  Example: ./build.sh -j10 (make will run with 10 threads)
 #
+set -e
 
 # Get a numthreads argument (for parallel compilation)
 # example: 4
