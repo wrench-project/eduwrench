@@ -14,7 +14,7 @@ namespace wrench {
                     const std::string &hostname,
                     const std::shared_ptr<Workflow>& workflow);
 
-        void processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent>) override;
+        void processEventStandardJobCompletion(const std::shared_ptr<StandardJobCompletedEvent> &event) override;
 
     private:
         int main() override;

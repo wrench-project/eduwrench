@@ -257,7 +257,7 @@ int GcfWMS::main() {
     return 0;
 }
 
-void GcfWMS::processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) {
+void GcfWMS::processEventStandardJobCompletion(const std::shared_ptr<wrench::StandardJobCompletedEvent> &e) {
     auto cs = e->compute_service;
     idle.insert(cs);
     auto it = busy.find(cs);
