@@ -1,13 +1,19 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.12)
 message(STATUS "Cmake version ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}.${CMAKE_PATCH_VERSION}")
 
 project(ACTIVITY_NETWORKING_FUNDAMENTALS)
 
 add_definitions("-Wall -Wno-unused-variable -Wno-unused-private-field")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 
+# Find Boost
+if(POLICY CMP0167)
+    cmake_policy(SET CMP0167 NEW)
+endif()
 find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS json program_options REQUIRED)
+
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/CMakeModules/")
 
