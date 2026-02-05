@@ -11,6 +11,9 @@ RUN echo "America/Los_Angeles" > /etc/timezone && export DEBIAN_FRONTEND=noninte
 # build environment
 RUN apt-get -y install pkg-config git cmake cmake-data graphviz libboost-all-dev wget sudo curl lcov default-jre flex bison doxygen
 
+# update npm
+RUN npm install -g npm@11.9.0
+
 # install compiler
 RUN apt-get -y install g++ gcc
 
