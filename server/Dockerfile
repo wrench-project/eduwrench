@@ -3,6 +3,11 @@ FROM node:16
 
 USER root
 
+# Point to Debian archive for EOL Buster
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i '/stretch-updates/d' /etc/apt/sources.list
+
 RUN apt-get update
 
 # set timezone
@@ -29,7 +34,10 @@ RUN wget https://framagit.org/simgrid/simgrid/-/archive/v3.31/simgrid-v3.31.tar.
 RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.10.4.tar.gz && tar -xf v3.10.4.tar.gz && cd json-3.10.4 && cmake . && make -j4 && sudo make install && cd .. && rm -rf v3.10.4* json-3.10.4
 
 # install WRENCH master:27083ee99f5961ec4bd6889fab3f01f53f447fa7
-RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git checkout 27083ee99f5961ec4bd6889fab3f01f53f447fa7 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd .. && cd .. && rm -rf wrench/ 
+ENV WRENCH_VERSION="2.0"
+RUN wget https://github.com/wrench-project/wrench/archive/v${WRENCH_VERSION}.tar.gz && tar -zxf v${WRENCH_VERSION}.tar.gz && cd wrench-${WRENCH_VERSION} && mkdir build && cd build && cmake .. && make -j6 && sudo make install  && cd ../.. && /bin/rm -rf wrench-${WRENCH_VERSION}
+#RUN git clone https://github.com/wrench-project/wrench.git && cd wrench && git checkout 5729f4a50ea21465e8f49dca860c75ac8db45b54 && mkdir build && cd build && cmake .. && make -j4 && sudo make install && cd .. && cd .. && rm -rf wrench/ 
+
 
 #################################################
 # EDUWRENCH and its dependencies

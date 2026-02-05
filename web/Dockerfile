@@ -1,6 +1,13 @@
-FROM ubuntu:focal
+#FROM ubuntu:focal
+FROM node:14
 
 USER root
+
+# Point to Debian archive for EOL Focal
+RUN sed -i 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i 's/security.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+    sed -i '/stretch-updates/d' /etc/apt/sources.list
+
 
 RUN apt-get update
 
@@ -14,9 +21,17 @@ RUN apt-get -y install pkg-config git cmake cmake-data graphviz libboost-all-dev
 RUN apt-get -y install g++ gcc
 
 # install Node and Gatsby client
-RUN apt-get upgrade ca-certificates -y
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
-RUN apt install -y nodejs
+#RUN apt-get upgrade ca-certificates -y
+#RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+#RUN apt install -y nodejs
+#RUN apt-get update && apt-get install -y ca-certificates curl gnupg && \
+#    mkdir -p /etc/apt/keyrings && \
+#    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
+#    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_14.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list && \
+#    apt-get update && \
+#    apt-get install -y nodejs
+
+
 RUN npm install -g gatsby-cli@4.23.0 --unsafe-perm
 
 # Make wrench user sudoer
