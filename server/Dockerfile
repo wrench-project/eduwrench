@@ -1,5 +1,4 @@
-#FROM ubuntu:focal
-FROM node:20
+FROM ubuntu:latest
 
 USER root
 
@@ -11,8 +10,10 @@ RUN echo "America/Los_Angeles" > /etc/timezone && export DEBIAN_FRONTEND=noninte
 # build environment
 RUN apt-get -y install pkg-config git cmake cmake-data graphviz libboost-all-dev wget sudo curl lcov default-jre flex bison doxygen
 
-# update npm
-RUN npm install -g npm@11.9.0
+# install Node and Gatsby client
+RUN apt-get upgrade ca-certificates -y
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt install -y nodejs
 
 # install compiler
 RUN apt-get -y install g++ gcc
@@ -38,7 +39,6 @@ RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.tar.gz && ta
 # install swagger-codegen stuff
 RUN apt-get install -y python3
 RUN apt-get install -y python3-pip
-RUN pip3 install  --upgrade pip --break-system-packages
 RUN pip3 install jsonref --break-system-packages
 RUN apt-get install -y libasio-dev
 
