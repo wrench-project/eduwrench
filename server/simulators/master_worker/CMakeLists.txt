@@ -92,5 +92,5 @@ target_link_libraries(master_worker_simulator
         ${WRENCH_LIBRARY}
         ${PUGIXML_LIBRARY}
         ${SimGrid_LIBRARY}
-	${FSMOD_LIBRARY}
+	    ${FSMOD_LIBRARY}
         )
