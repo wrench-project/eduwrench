@@ -1,6 +1,8 @@
 import React, { Component } from "react"
 import axios from "axios"
-import { GoogleLogin, GoogleLogout } from "react-google-login"
+// import { GoogleLogin, GoogleLogout } from "react-google-login"
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import { Dropdown, Menu } from "semantic-ui-react"
 import "./auth.css"
 
