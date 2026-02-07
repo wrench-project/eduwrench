@@ -32,6 +32,10 @@ USER wrench
 COPY --chown=wrench:wrench . .
 RUN /bin/rm -rf .cache ./src/public
 
+# Create the .cache directory (???)
+RUN mkdir -p /home/wrench/.cache && \
+    chown -R wrench:wrench /home/wrench/.cache
+
 #CMD gatsby develop -H 0.0.0.0 -p ${EDUWRENCH_FRONTEND_PORT}
 CMD ["sh", "-c", "npm install --legacy-peer-deps --unsafe-perm && gatsby develop -p ${EDUWRENCH_FRONTEND_PORT} -H 0.0.0.0"]
 #CMD sleep 1000000

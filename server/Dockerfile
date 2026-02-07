@@ -27,14 +27,14 @@ ENV CXX="g++" CC="gcc"
 WORKDIR /tmp
 
 # install SimGrid
-RUN wget --no-check-certificate https://github.com/simgrid/simgrid/releases/download/v4.1/simgrid-4.1.tar.gz && tar -xf simgrid-4.1.tar.gz && cd simgrid-4.1 && cmake . && make  && sudo make install && cd .. && rm -rf simgrid-4.1*
+RUN wget --no-check-certificate https://github.com/simgrid/simgrid/releases/download/v4.1/simgrid-4.1.tar.gz && tar -xf simgrid-4.1.tar.gz && cd simgrid-4.1 && cmake . && make -j8  && sudo make install && cd .. && rm -rf simgrid-4.1*
 #RUN git clone https://framagit.org/simgrid/simgrid.git && cd simgrid && git checkout 1f1b85861ea71dd27d362b70f268b580c1f8c7c4 && mkdir build && cd build && cmake .. && make && sudo make install
 
 # install SimGrid's FSMod
-RUN wget https://github.com/simgrid/file-system-module/archive/refs/tags/v0.4.tar.gz && tar -xf v0.4.tar.gz && cd file-system-module-0.4 && mkdir build && cd build && cmake .. && make  && sudo make install && cd ../.. && rm -rf v0.4.tar.gz file-system-module-v*
+RUN wget https://github.com/simgrid/file-system-module/archive/refs/tags/v0.4.tar.gz && tar -xf v0.4.tar.gz && cd file-system-module-0.4 && mkdir build && cd build && cmake .. && make -j8  && sudo make install && cd ../.. && rm -rf v0.4.tar.gz file-system-module-v*
 
 # install json for modern c++
-RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.tar.gz && tar -xf v3.11.3.tar.gz && cd json-3.11.3 && cmake . && make && $SUDO make install && cd .. && rm -rf v3.11.3* json-3.11.3
+RUN wget https://github.com/nlohmann/json/archive/refs/tags/v3.11.3.tar.gz && tar -xf v3.11.3.tar.gz && cd json-3.11.3 && cmake . && make -j8 && sudo make install && cd .. && rm -rf v3.11.3* json-3.11.3
 
 # install swagger-codegen stuff
 RUN apt-get install -y python3
@@ -44,7 +44,7 @@ RUN apt-get install -y libasio-dev
 
 # install WRENCH
 ENV WRENCH_VERSION="2.8"
-RUN wget https://github.com/wrench-project/wrench/archive/v${WRENCH_VERSION}.tar.gz && tar -zxf v${WRENCH_VERSION}.tar.gz && cd wrench-${WRENCH_VERSION} && mkdir build && cd build && cmake .. && make -j12 wrench-daemon examples && sudo make install && cd ../.. && /bin/rm -rf wrench-${WRENCH_VERSION}
+RUN wget https://github.com/wrench-project/wrench/archive/v${WRENCH_VERSION}.tar.gz && tar -zxf v${WRENCH_VERSION}.tar.gz && cd wrench-${WRENCH_VERSION} && mkdir build && cd build && cmake .. && make -j8 wrench-daemon examples && sudo make install && cd ../.. && /bin/rm -rf wrench-${WRENCH_VERSION}
 
 
 
@@ -54,7 +54,7 @@ RUN wget https://github.com/wrench-project/wrench/archive/v${WRENCH_VERSION}.tar
 #################################################
 
 # install PUGIXML
-RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz && tar -xf pugixml-1.12.1.tar.gz && cd pugixml-1.12 && cmake . && make -j12 && sudo make install && cd .. && rm -rf pugixml-1.12*
+RUN wget https://github.com/zeux/pugixml/releases/download/v1.12.1/pugixml-1.12.1.tar.gz && tar -xf pugixml-1.12.1.tar.gz && cd pugixml-1.12 && cmake . && make -j8 && sudo make install && cd .. && rm -rf pugixml-1.12*
 
 
 # install Gatsby client
