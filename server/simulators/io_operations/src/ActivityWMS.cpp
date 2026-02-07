@@ -86,7 +86,7 @@ namespace wrench {
      * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
      * @param event
      */
-    void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
+    void ActivityWMS::processEventStandardJobCompletion(const std::shared_ptr<StandardJobCompletedEvent> &event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         //WRENCH_INFO("Task %s has completed", (*standard_job->getTasks().begin())->getID().c_str());
@@ -120,11 +120,11 @@ namespace wrench {
         for (const auto &task : tasks_to_submit) {
 
             for (const auto &file : task->getInputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(this->storage_service)));
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(this->storage_service, file)));
             }
 
             for (const auto &file : task->getOutputFiles()) {
-                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(this->storage_service)));
+                file_locations.insert(std::make_pair(file, FileLocation::LOCATION(this->storage_service, file)));
             }
         }
         auto job = this->job_manager->createStandardJob(tasks_to_submit, file_locations);

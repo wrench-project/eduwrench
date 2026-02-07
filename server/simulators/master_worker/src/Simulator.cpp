@@ -67,8 +67,8 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, std::vector<st
 
     for (auto const &task : task_list) {
         auto current_task = workflow->addTask("Task #"+std::to_string(TASK_ID), std::get<1>(task)*GFLOP, MIN_CORES, MAX_CORES, 0);
-        current_task->addInputFile(workflow->addFile("input_" + std::to_string(TASK_ID), std::get<0>(task) * MB));
-        current_task->addOutputFile(workflow->addFile("output_" + std::to_string(TASK_ID), std::get<2>(task) * MB));
+        current_task->addInputFile(wrench::Simulation::addFile("input_" + std::to_string(TASK_ID), std::get<0>(task) * MB));
+        current_task->addOutputFile(wrench::Simulation::addFile("output_" + std::to_string(TASK_ID), std::get<2>(task) * MB));
         TASK_ID++;
     }
 }
@@ -597,7 +597,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     auto master_storage_service = simulation->add(
-            new wrench::SimpleStorageService(MASTER, {"/"},
+            wrench::SimpleStorageService::createSimpleStorageService(MASTER, {"/"},
                                              {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE,  "infinity"}}, {}));
     storage_services.insert(master_storage_service);
 
@@ -662,7 +662,7 @@ std::string run_simulation(std::vector<std::tuple<std::string, double, double>> 
 
     // stage the input files
     for (auto file : workflow->getInputFiles()) {
-        simulation->stageFile(file, master_storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(master_storage_service, file));
     }
 
     auto wms = simulation->add(new wrench::ActivityWMS(

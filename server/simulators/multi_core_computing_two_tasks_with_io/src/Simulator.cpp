@@ -46,7 +46,7 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow,
 
     // WorkflowTask specifications
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
-    const double MB = 1000.0 * 1000.0;
+    const size_t MB = 1000 * 1000;
 
     // Create tasks
     std::vector<std::tuple<std::shared_ptr<wrench::WorkflowTask>, std::shared_ptr<wrench::WorkflowTask>, std::shared_ptr<wrench::WorkflowTask>>> tasks;
@@ -61,12 +61,12 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow,
         // IO read task
         std::string io_read_task_id("io read task #" + std::to_string(count));
         auto io_read_task = workflow->addTask(io_read_task_id, 0, 1, 1, 0);
-        io_read_task->addInputFile(workflow->addFile(compute_task_id+"::in", std::get<0>(task_spec) * MB));
+        io_read_task->addInputFile(wrench::Simulation::addFile(compute_task_id+"::in", std::get<0>(task_spec) * MB));
 
         // IO write task
         std::string io_write_task_id("io write task #" + std::to_string(count));
         auto io_write_task = workflow->addTask(io_write_task_id, 0, 1, 1, 0);
-        io_write_task->addOutputFile(workflow->addFile(compute_task_id+"::out", std::get<1>(task_spec) * MB));
+        io_write_task->addOutputFile(wrench::Simulation::addFile(compute_task_id+"::out", std::get<1>(task_spec) * MB));
 
         // Add implicit control dependencies
         workflow->addControlDependency(io_read_task, compute_task);
@@ -212,7 +212,7 @@ int main(int argc, char **argv) {
     const std::string STORAGE_HOST("twocorehost");
 
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
-    auto io_storage_service = simulation->add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}, {}));
+    auto io_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(STORAGE_HOST, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"}}, {}));
     storage_services.insert(io_storage_service);
 
     std::set<std::shared_ptr<wrench::ComputeService>> compute_services;
@@ -243,7 +243,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto const &file : workflow->getInputFiles()) {
-        simulation->stageFile(file, io_storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(io_storage_service, file));
     }
 
     simulation->getOutput().enableDiskTimestamps(true);

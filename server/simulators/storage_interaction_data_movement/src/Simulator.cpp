@@ -86,7 +86,7 @@ int main(int argc, char **argv) {
     int SERVER_LINK_BANDWIDTH;
     int FILE_SIZE;
     int FILE_REGISTRY_OVERHEAD;
-    const double MB = 1000.0 * 1000.0;
+    const size_t MB = 1000 * 1000;
 
     try {
         if (argc != 4) {
@@ -124,7 +124,7 @@ int main(int argc, char **argv) {
 
     // create workflow
     auto workflow = wrench::Workflow::createWorkflow();
-    workflow->addFile("data_file", FILE_SIZE * MB);
+    wrench::Simulation::addFile("data_file", FILE_SIZE * MB);
 
     // read and instantiate the platform with the desired HPC specifications
     std::string platform_file_path = "/tmp/platform.xml";
@@ -136,10 +136,10 @@ int main(int argc, char **argv) {
     const std::string SERVER("StorageService");
 
     //adding and instantiating storage services and file registry
-    auto client_storage_service = simulation->add(new wrench::SimpleStorageService(
+    auto client_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(
             CLIENT, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
-    auto server_storage_service = simulation->add(new wrench::SimpleStorageService(
+    auto server_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(
             SERVER, {"/"},
             {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "50000000"}}));
 
@@ -155,8 +155,8 @@ int main(int argc, char **argv) {
     auto wms = simulation->add(new wrench::ActivityWMS({storage_services}, CLIENT, file_registry, workflow));
 
     //staging file to be copied on client storage service
-    auto file = workflow->getFileByID("data_file");
-    simulation->stageFile(file, client_storage_service);
+    auto file = wrench::Simulation::getFileByID("data_file");
+    wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(client_storage_service, file));
 
     simulation->getOutput().enableDiskTimestamps(true);
 

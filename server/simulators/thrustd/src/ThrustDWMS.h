@@ -41,8 +41,8 @@ private:
     std::set<std::string> cloud_tasks_set;
     std::string cloud_tasks;
     int main() override;
-    void processEventStandardJobFailure(std::shared_ptr<wrench::StandardJobFailedEvent> event) override;
-    void processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> event) override;
+    void processEventStandardJobFailure(const std::shared_ptr<wrench::StandardJobFailedEvent> &event) override;
+    void processEventStandardJobCompletion(const std::shared_ptr<wrench::StandardJobCompletedEvent> &event) override;
 };
 
 #endif //MY_SIMPLEWMS_H

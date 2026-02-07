@@ -3,6 +3,7 @@
 #  Usage  ./build.sh [-jX]
 #  Example: ./build.sh -j10 (make will run with 10 threads)
 #
+set -e
 
 # Get a numthreads argument (for parallel compilation)
 # example: 4
@@ -26,6 +27,7 @@ echo "COMPILING SIMULATORS"
 printf "${NC}\n"
 
 for  dir in `ls simulators/`; do
+    
     echo "Building in simulator/$dir ..."
     cd simulators/$dir
     rm -rf ./build CMakeCache.txt 

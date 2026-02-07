@@ -32,7 +32,7 @@ public:
 
 private:
     int main() override;
-    void processEventStandardJobCompletion(std::shared_ptr<wrench::StandardJobCompletedEvent> e) override;
+    void processEventStandardJobCompletion(const std::shared_ptr<wrench::StandardJobCompletedEvent> &e) override;
     void scheduleTasks(const std::set<std::shared_ptr<wrench::ComputeService>> &compute_services,
                                const std::vector<std::shared_ptr<wrench::WorkflowTask>> &tasks);
 

@@ -44,9 +44,8 @@ namespace wrench {
                 });
 
         for (auto const &file : this->workflow->getFileMap()) {
-            this->data_movement_manager->initiateAsynchronousFileCopy(file.second,
-                                                                      FileLocation::LOCATION(*storage_service_1, "/"),
-                                                                      FileLocation::LOCATION(*storage_service_2, "/"),
+            this->data_movement_manager->initiateAsynchronousFileCopy(FileLocation::LOCATION(*storage_service_1, "/", file.second),
+                                                                      FileLocation::LOCATION(*storage_service_2, "/", file.second),
                                                                       nullptr);
         }
 

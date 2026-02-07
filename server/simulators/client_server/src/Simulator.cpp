@@ -26,14 +26,15 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int file_size_
     }
 
     // WorkflowTask specifications
-    const double               GFLOP = 1000.0 * 1000.0 * 1000.0;
-    const unsigned long    MIN_CORES = 1;
-    const unsigned long    MAX_CORES = 1;
-    const double                  MB = 1000.0 * 1000.0;
-    const double                  GB = 1000.0 * 1000.0 * 1000.0;
+    const double                GFLOP = 1000.0 * 1000.0 * 1000.0;
+    const unsigned long         MIN_CORES = 1;
+    const unsigned long         MAX_CORES = 1;
+    const size_t                MB = 1000 * 1000;
+    const size_t                GB = 1000 * 1000 * 1000;
 
     auto single_task = workflow->addTask("slow_server_task", 1000 * GFLOP, MIN_CORES, MAX_CORES, 8 * GB);
-    single_task->addInputFile(workflow->addFile("file_copy", file_size_in_mb*MB));
+    auto input_file = wrench::Simulation::addFile("file_copy", file_size_in_mb * MB);
+    single_task->addInputFile(input_file);
 
 }
 
@@ -260,7 +261,7 @@ int main(int argc, char** argv) {
     std::set<std::shared_ptr<wrench::StorageService>> storage_services;
     std::shared_ptr<wrench::StorageService> client_storage_service;
 
-    client_storage_service = simulation->add(new wrench::SimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+    client_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(CLIENT, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
 
 
     storage_services.insert(client_storage_service);
@@ -278,7 +279,7 @@ int main(int argc, char** argv) {
                 )
         );
 
-        auto server_storage_service = simulation->add(new wrench::SimpleStorageService(SERVER1, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+        auto server_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(SERVER1, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
     } else {
         compute_service = simulation->add(
@@ -291,7 +292,7 @@ int main(int argc, char** argv) {
                         {}
                 )
         );
-        auto server_storage_service = simulation->add(new wrench::SimpleStorageService(SERVER2, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
+        auto server_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(SERVER2, {"/"}, {{wrench::SimpleStorageServiceProperty::BUFFER_SIZE, BUFFER_STRING}}));
         storage_services.insert(server_storage_service);
     }
 
@@ -308,7 +309,7 @@ int main(int argc, char** argv) {
     simulation->add(new wrench::FileRegistryService(CLIENT));
 
     for (auto const &file : workflow->getInputFiles()) {
-        simulation->stageFile(file, client_storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(client_storage_service, file));
     }
 
     simulation->getOutput().enableDiskTimestamps(true);

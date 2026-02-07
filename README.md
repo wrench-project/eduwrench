@@ -17,10 +17,10 @@ Edit/use one of the `.env-*` files to configure the deployment, and then:
 
 ```bash
 $ docker-compose --env-file <.env file> build  --no-cache
-$ docker-compose up [-d]
+$ docker-compose --env-file <.env file> up [-d]
 ```
 
-The above will not run any Nginx front-end. If you want to do so, you must add the `--profile with-my-own-nginx` argument to the `docker-compose` commands above. 
+The above will not run any Nginx front-end. You probably want to do so, so that it's possible to log in to the site as a user.  To do so you must add the `--profile with-my-own-nginx` argument to the `docker-compose` commands above.  This is left as an option for maximum flexibility. For instance, at our site we deploy everything as part of a rather complicated docker-compose setup that comes with its own nginx frontent. 
 
 ## Get in Touch
 

@@ -24,7 +24,7 @@ namespace wrench {
                     double compute_overhead,
                     const std::string &hostname);
 
-        void processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent>) override;
+        void processEventStandardJobCompletion(const std::shared_ptr<StandardJobCompletedEvent> &event) override;
 
     private:
         int main() override;

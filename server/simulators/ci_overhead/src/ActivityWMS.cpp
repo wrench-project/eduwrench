@@ -63,9 +63,10 @@ namespace wrench {
         //  Copy the file over to the server
         WRENCH_INFO("Sending the image file over to the server running on host %s",
                     server_storage_service->getHostname().c_str());
-        data_manager->doSynchronousFileCopy(file,
-                                            FileLocation::LOCATION(client_storage_service),
-                                            FileLocation::LOCATION(server_storage_service));WRENCH_INFO(
+        data_manager->doSynchronousFileCopy(
+                                            FileLocation::LOCATION(client_storage_service, file),
+                                            FileLocation::LOCATION(server_storage_service, file));
+        WRENCH_INFO(
                 "File sent, server can start computing");
 
         // Sleep to simulate the server overhead (should convert this simulator to Action API really)
@@ -73,7 +74,7 @@ namespace wrench {
 
         // Run the task
         std::map<std::shared_ptr<DataFile>, std::shared_ptr<FileLocation>> file_locations;
-        file_locations[file] = FileLocation::LOCATION(server_storage_service);
+        file_locations[file] = FileLocation::LOCATION(server_storage_service, file);
         auto job = job_manager->createStandardJob(task, file_locations);
         job_manager->submitJob(job, *(compute_services.begin()), {});
 
@@ -92,7 +93,7 @@ namespace wrench {
      * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
      * @param event
      */
-    void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
+    void ActivityWMS::processEventStandardJobCompletion(const std::shared_ptr<StandardJobCompletedEvent> &event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);WRENCH_INFO(
                 "Server has completed the task!");

@@ -18,17 +18,17 @@
  * @brief Generate the workflow for activity 1
  * @description Fork-Join
  */
-void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
+void generateWorkflow(const std::shared_ptr<wrench::Workflow>& workflow) {
 
     const double GFLOP = 1000.0 * 1000.0 * 1000.0;
-    const double MB = 1000.0 * 1000.0;
-    const double GB = MB * 1000.0;
+    const sg_size_t MB = 1000 * 1000;
+    const sg_size_t GB = MB * 1000;
 
-    auto data_file = workflow->addFile("data", 500  * MB);
+    auto data_file = wrench::Simulation::addFile("data", 500  * MB);
     auto task1 = workflow->addTask("task1", 500 * GFLOP, 1, 1, 12 * GB);
     task1->addInputFile(data_file);
     task1->setColor("#D4E8D4");
-    auto filtered_file = workflow->addFile("filtered", 400 *  MB);
+    auto filtered_file = wrench::Simulation::addFile("filtered", 400 *  MB);
     task1->addOutputFile(filtered_file);
 
     auto task2 = workflow->addTask("task2", 1000 * GFLOP, 1, 1, 15 * GB);
@@ -42,9 +42,9 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
     task4->addInputFile(filtered_file);
     task4->setColor("#DAE8FC");
 
-    auto finalA_file = workflow->addFile("finalA", 200 * MB);
-    auto finalB_file = workflow->addFile("finalB", 200 * MB);
-    auto finalC_file = workflow->addFile("finalC", 200 * MB);
+    auto finalA_file = wrench::Simulation::addFile("finalA", 200 * MB);
+    auto finalB_file = wrench::Simulation::addFile("finalB", 200 * MB);
+    auto finalC_file = wrench::Simulation::addFile("finalC", 200 * MB);
 
     task2->addOutputFile(finalA_file);
     task3->addOutputFile(finalB_file);
@@ -55,7 +55,7 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow) {
     task5->addInputFile(finalB_file);
     task5->addInputFile(finalC_file);
 
-    auto aggBC_file = workflow->addFile("aggBC", 200 * MB);
+    auto aggBC_file = wrench::Simulation::addFile("aggBC", 200 * MB);
     task5->addOutputFile(aggBC_file);
 
     auto task6 = workflow->addTask("task6", 200 * GFLOP, 1, 1, 4 * GB);
@@ -152,7 +152,7 @@ int main(int argc, char **argv) {
     simulation->instantiatePlatform(platform_file_path);
 
     // storage service
-    auto storage_service = simulation->add(new wrench::SimpleStorageService("the_host", {"/"},
+    auto storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService("the_host", {"/"},
             {
                     {wrench::SimpleStorageServiceProperty::BUFFER_SIZE, "infinity"},
         }, {}));
@@ -180,7 +180,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto file : workflow->getInputFiles()) {
-        simulation->stageFile(file, storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(storage_service, file));
     }
 
     // launch the simulation

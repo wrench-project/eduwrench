@@ -143,7 +143,7 @@ const ForTeachers = () => (
               <i className="table">Architecture</i>
             </Table.Cell>
             <Table.Cell>Power, Energy</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -191,7 +191,7 @@ const ForTeachers = () => (
               <i className="table">Programming</i>
             </Table.Cell>
             <Table.Cell>Parallel Scalability</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>A.2</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -206,8 +206,8 @@ const ForTeachers = () => (
             <Table.Cell>
               <i className="table">Programming</i>
             </Table.Cell>
-            <Table.Cell>Gustanfson’s Law</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>Gustafson’s Law</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -215,7 +215,7 @@ const ForTeachers = () => (
               <i className="table">Programming</i>
             </Table.Cell>
             <Table.Cell>Energy Efficiency vs. Load Balancing</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -223,7 +223,7 @@ const ForTeachers = () => (
               <i className="table">Programming</i>
             </Table.Cell>
             <Table.Cell>Power Consumption of Parallel Program</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -271,7 +271,7 @@ const ForTeachers = () => (
               <i className="table">Algorithms</i>
             </Table.Cell>
             <Table.Cell>Scalability</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -279,7 +279,7 @@ const ForTeachers = () => (
               <i className="table">Algorithms</i>
             </Table.Cell>
             <Table.Cell>Throughput</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -287,7 +287,7 @@ const ForTeachers = () => (
               <i className="table">Algorithms</i>
             </Table.Cell>
             <Table.Cell>Time vs. Space</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -295,7 +295,7 @@ const ForTeachers = () => (
               <i className="table">Algorithms</i>
             </Table.Cell>
             <Table.Cell>Power vs. Time</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -326,8 +326,8 @@ const ForTeachers = () => (
             <Table.Cell>
               <i className="table">Algorithms</i>
             </Table.Cell>
-            <Table.Cell>Energy Aware Scheduling</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>Aware Scheduling</Table.Cell>
+            <Table.Cell>D</Table.Cell>
           </Table.Row>
 
           <Table.Row>
@@ -335,7 +335,7 @@ const ForTeachers = () => (
               <i className="table">Algorithms</i>
             </Table.Cell>
             <Table.Cell>Load Balancing</Table.Cell>
-            <Table.Cell>Coming soon</Table.Cell>
+            <Table.Cell>n/a </Table.Cell>
           </Table.Row>
         </Table.Body>
       </Table>

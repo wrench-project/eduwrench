@@ -55,15 +55,15 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int task_read,
     const unsigned long MIN_CORES = 1;
     const unsigned long MAX_CORES = 1;
     const double IO_FLOPS = 0.0;
-    const double MEMORY_REQUIREMENT = 0.0;
-    const double MB = 1000.0 * 1000.0;
+    const size_t MEMORY_REQUIREMENT = 0;
+    const size_t MB = 1000 * 1000;
 
     // create the tasks, need to have computation tasks as well as R/W tasks. If overlaps, IO can run in separate tasks.
     if (io_overlap) {
         for (int i = 0; i < task_num; ++i) {
             std::string io_read_task_id("io read task #" + std::to_string(i));
             auto current_read_task = workflow->addTask(io_read_task_id, IO_FLOPS, MIN_CORES, MAX_CORES, MEMORY_REQUIREMENT);
-            current_read_task->addInputFile(workflow->addFile(io_read_task_id + "::0.in", task_read * MB));
+            current_read_task->addInputFile(wrench::Simulation::addFile(io_read_task_id + "::0.in", task_read * MB));
             if (i > 0) {
                 workflow->addControlDependency(workflow->getTaskByID("io read task #" + std::to_string(i - 1)),
                                                current_read_task);
@@ -75,15 +75,15 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int task_read,
 
             std::string io_write_task_id("io write task #" + std::to_string(i));
             auto current_write_task = workflow->addTask(io_write_task_id, IO_FLOPS, MIN_CORES, MAX_CORES, MEMORY_REQUIREMENT);
-            current_write_task->addOutputFile(workflow->addFile(io_write_task_id + "::0.out", task_write * MB));
+            current_write_task->addOutputFile(wrench::Simulation::addFile(io_write_task_id + "::0.out", task_write * MB));
             workflow->addControlDependency(current_compute_task, current_write_task);
         }
     } else {
         for (int i = 0; i < task_num; ++i) {
             std::string task_id("task #" + std::to_string(i));
             auto current_task = workflow->addTask(task_id, task_gflop * GFLOP, MIN_CORES, MAX_CORES, MEMORY_REQUIREMENT);
-            current_task->addInputFile(workflow->addFile(task_id + "::0.in", task_read * MB));
-            current_task->addOutputFile(workflow->addFile(task_id + "::0.out", task_write * MB));
+            current_task->addInputFile(wrench::Simulation::addFile(task_id + "::0.in", task_read * MB));
+            current_task->addOutputFile(wrench::Simulation::addFile(task_id + "::0.out", task_write * MB));
             if (i > 0) {
                 workflow->addControlDependency(workflow->getTaskByID("task #" + std::to_string(i - 1)), current_task);
             }
@@ -99,7 +99,7 @@ void generateWorkflow(std::shared_ptr<wrench::Workflow> workflow, int task_read,
  *
  * @throws std::invalid_argumemnt
  */
-void generatePlatform(std::string platform_file_path) {
+void generatePlatform(const std::string& platform_file_path) {
 
     if (platform_file_path.empty()) {
         throw std::invalid_argument("generatePlatform() platform_file_path cannot be empty");
@@ -219,7 +219,7 @@ int main(int argc, char **argv) {
     const std::string COMPUTE_HOST("thehost");
     const std::string STORAGE_HOST("thehost");
 
-    auto storage_service = simulation->add(new wrench::SimpleStorageService(STORAGE_HOST, {"/"}));
+    auto storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(STORAGE_HOST, {"/"}));
 
     auto compute_service = simulation->add(
             new wrench::BareMetalComputeService(
@@ -245,7 +245,7 @@ int main(int argc, char **argv) {
 
     // stage the input files
     for (auto const &file : workflow->getInputFiles()) {
-        simulation->stageFile(file, storage_service);
+        wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(storage_service, file));
     }
 
     simulation->getOutput().enableDiskTimestamps(true);

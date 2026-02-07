@@ -49,10 +49,10 @@ namespace wrench {
                 WRENCH_INFO("Starting task %s on a core", t->getID().c_str());
                 std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
                 for (auto const &f : t->getInputFiles()) {
-                    file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);
+                    file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service, f);
                 }
                 for (auto const &f : t->getOutputFiles()) {
-                    file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service);;
+                    file_locations[f] = wrench::FileLocation::LOCATION(this->storage_service, f);;
                 }
                 auto job = this->job_manager->createStandardJob(t, file_locations);
                 this->job_manager->submitJob(job, compute_service, {});

@@ -9,7 +9,9 @@
 
 import React, { Component } from "react"
 import { Button, Dropdown } from 'semantic-ui-react';
-import { GoogleLogin, GoogleLogout } from 'react-google-login';
+// import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import { jwtDecode } from 'jwt-decode';
 import { StaticImage } from 'gatsby-plugin-image';
 import { nanoid } from 'nanoid';
 import axios from 'axios';
@@ -39,7 +41,8 @@ class SignIn extends Component {
     this.state = {
       logged: false,
       loginType: "",
-      accessToken: ""
+      accessToken: "",
+      user: {}
     }
 
     this.googleLogin = this.googleLogin.bind(this)
@@ -70,63 +73,83 @@ class SignIn extends Component {
     const isBrowser = () => typeof window !== "undefined"
     if (isBrowser()) {
       axios.get(`${window.location.protocol}//${window.location.hostname}/backend/server_time`).then(
-        response => {
-          let serverTime = new Date(response.data.time)
-          let loginTime = new Date(localStorage.getItem("loginTime"))
-          // console.log(serverTime + "-" + loginTime);
-          if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
-            this.setState(state => ({
-              logged: false,
-              loginType: "",
-              accessToken: "",
-              user: {}
-            }))
-          }
-          else if (localStorage.getItem("login") === "true" && localStorage.getItem("loginType") === "CILogon") {
-            this.setState(state => ({
-              logged: true,
-              loginType: "CILogon",
-              accessToken: this.state.accessToken,
-              user: {
-                given: localStorage.getItem("givenName"),
-                name: localStorage.getItem("userName"),
-                email: localStorage.getItem("currentUser"),
-                // picture: response.profileObj.imageUrl
+          response => {
+            let serverTime = new Date(response.data.time)
+            let loginTime = new Date(localStorage.getItem("loginTime"))
+
+            if (!loginTime || loginTime.getTime() < serverTime.getTime()) {
+              // Session expired
+              this.setState(state => ({
+                logged: false,
+                loginType: "",
+                accessToken: "",
+                user: {}
+              }))
+            }
+            else if (localStorage.getItem("login") === "true") {
+              // Restore login state
+              const loginType = localStorage.getItem("loginType")
+
+              if (loginType === "Google") {
+                this.setState(state => ({
+                  logged: true,
+                  loginType: "Google",
+                  accessToken: localStorage.getItem("accessToken") || "",
+                  user: {
+                    given: localStorage.getItem("userName")?.split(' ')[0] || "",
+                    name: localStorage.getItem("userName") || "",
+                    email: localStorage.getItem("currentUser") || "",
+                    picture: localStorage.getItem("userPicture") || ""
+                  }
+                }))
               }
-            }))
+              else if (loginType === "CILogon") {
+                this.setState(state => ({
+                  logged: true,
+                  loginType: "CILogon",
+                  accessToken: this.state.accessToken,
+                  user: {
+                    given: localStorage.getItem("givenName") || "",
+                    name: localStorage.getItem("userName") || "",
+                    email: localStorage.getItem("currentUser") || "",
+                  }
+                }))
+              }
+            }
+          },
+          error => {
+            console.log(error)
+            alert("Error obtaining server time.")
           }
-        },
-        error => {
-          console.log(error)
-          alert("Error obtaining server time.")
-        }
       )
     }
 
-
   }
 
-  googleLogin(response) {
-    if (response.accessToken) {
+  googleLogin(credentialResponse) {
+    if (credentialResponse.credential) {
+      const decoded = jwtDecode(credentialResponse.credential);
+
       this.setState(state => ({
         logged: true,
         loginType: "Google",
-        accessToken: response.accessToken,
+        accessToken: credentialResponse.credential,
         user: {
-          given: response.profileObj.givenName,
-          name: response.profileObj.name,
-          email: response.profileObj.email,
-          picture: response.profileObj.imageUrl
+          given: decoded.given_name,
+          name: decoded.name,
+          email: decoded.email,
+          picture: decoded.picture
         }
       }))
       document.cookie = "eduwrench=eduWRENCH"
       localStorage.setItem("loginTime", new Date())
       localStorage.setItem("login", "true")
       localStorage.setItem("loginType", "Google")
+      localStorage.setItem("accessToken", credentialResponse.credential) // ADD THIS LINE
       localStorage.setItem("session_id", sessionStorage.getItem("SessionName"))
-      localStorage.setItem("currentUser", response.profileObj.email)
-      localStorage.setItem("userName", response.profileObj.name)
-      localStorage.setItem("userPicture", response.profileObj.imageUrl)
+      localStorage.setItem("currentUser", decoded.email)
+      localStorage.setItem("userName", decoded.name)
+      localStorage.setItem("userPicture", decoded.picture)
     }
   }
 
@@ -307,81 +330,59 @@ class SignIn extends Component {
 
   render() {
     return (
-      <>
-        {this.state.logged ? (
-
-          <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
-            <img className="thumbnail-image"
-                 src={this.state.user.picture}
-                 alt="user pic"
-            />
-          }>
-            <Dropdown.Menu>
-              <Dropdown.Item disabled>
-                <strong>{this.state.user.name}</strong><br/>
-                <small>{this.state.user.email}</small>
-              </Dropdown.Item>
-              <Dropdown.Item enabled>
-                <a href="/stats" className="grey-link">My EduWRENCH usage</a>
-              </Dropdown.Item>
-              <Dropdown.Divider/>
-
-
-              {this.state.loginType === "CILogon" ? (
-                <Button className="cilogon sign-out" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", padding: "10px", margin: 0, color: "#0000008A" }} onClick={this.cilogout}>Sign Out</Button>
-              ) : (
-                <GoogleLogout
-                  clientId={GOOGLE_CLIENT_ID}
-                  buttonText="Sign Out"
-                  onLogoutSuccess={this.googleLogout}
-                  onFailure={this.handleLogoutFailure}
-                  className="google sign-out"
-                  icon={false}
-                >
-                </GoogleLogout>
-              )}
-
-            </Dropdown.Menu>
-          </Dropdown>
-
-        ) : (
-
-          <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0, fontSize: '16px', fontFamily: "Roboto, sans-serif", fontWeight: 500 }} text="Sign In">
-            <Dropdown.Menu>
-              <Dropdown.Item style={{ backgroundColor: "#fff" }} className="sign-in">
-                <GoogleLogin
-                  clientId={GOOGLE_CLIENT_ID}
-                  buttonText="Sign In"
-                  onSuccess={this.googleLogin}
-                  onFailure={this.handleLoginFailure}
-                  cookiePolicy={"single_host_origin"}
-                  responseType="code,token"
-                  isSignedIn={true}
-                  className="google sign-out"
+        <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+          {this.state.logged ? (
+              <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0 }} trigger={
+                <img className="thumbnail-image"
+                     src={this.state.user.picture}
+                     alt="user pic"
                 />
-              </Dropdown.Item>
-              <Dropdown.Divider/>
-              <Dropdown.Item fluid style={{ backgroundColor: "#fff" }} className="sign-in">
-                <Button className="cilogon sign-out" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0000008A", textAlign: "center", paddingLeft: "10px" }} onClick={this.cilogin}>
-                  <StaticImage
-                    src="../images/cilogon.png"
-                    style={{
-                      width: 20,
-                      height: 20,
-                      // marginRight: "10px",
-                      // padding: "10px 10px 10px 10px",
-                    }}
-                    alt="CILogon"
-                  />
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  Sign In&nbsp;&nbsp;&nbsp;
-                </Button>
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
-        )}
-      </>
+              }>
+                <Dropdown.Menu>
+                  <Dropdown.Item disabled>
+                    <strong>{this.state.user.name}</strong><br/>
+                    <small>{this.state.user.email}</small>
+                  </Dropdown.Item>
+                  <Dropdown.Item enabled>
+                    <a href="/stats" className="grey-link">My EduWRENCH usage</a>
+                  </Dropdown.Item>
+                  <Dropdown.Divider/>
+                  {this.state.loginType === "CILogon" ? (
+                      <Button className="cilogon sign-out"
+                              style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", padding: "10px", margin: 0, color: "#0000008A" }}
+                              onClick={this.cilogout}>
+                        Sign Out
+                      </Button>
+                  ) : (
+                      <Button className="google sign-out"
+                              onClick={this.googleLogout}
+                              style={{ fontFamily: "Roboto, sans-serif", fontWeight: 500, fontSize: "14px", color: "#0000008A" }}>
+                        Sign Out
+                      </Button>
+                  )}
+                </Dropdown.Menu>
+              </Dropdown>
+          ) : (
+              <Dropdown item style={{ backgroundColor: "#fff", padding: 0, paddingRight: "1em", margin: 0, fontSize: '16px', fontFamily: "Roboto, sans-serif", fontWeight: 500 }} text="Sign In">
+                <Dropdown.Menu>
+                  <Dropdown.Item style={{ backgroundColor: "#fff" }} className="sign-in">
+                    <GoogleLogin
+                        onSuccess={this.googleLogin}
+                        onError={this.handleLoginFailure}
+                        useOneTap={false}  // Disable auto-signin for Firefox compatibility
+                        theme="outline"
+                        size="large"
+                        text="signin_with"
+                    />
+                  </Dropdown.Item>
+                  <Dropdown.Divider/>
+                  <Dropdown.Item fluid style={{ backgroundColor: "#fff" }} className="sign-in">
+                    {/* Your CILogon button stays the same */}
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+          )}
+        </GoogleOAuthProvider>
     )
   }
 

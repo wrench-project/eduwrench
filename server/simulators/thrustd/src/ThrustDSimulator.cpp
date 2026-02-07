@@ -241,7 +241,7 @@ int main(int argc, char **argv) {
     // in xml file, need storage_host w/ disk
     WRENCH_INFO("Instantiating a SimpleStorageService on %s", storage_host.c_str());
 
-    auto storage_service = simulation->add(new wrench::SimpleStorageService(storage_host, {"/"}, {},
+    auto storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(storage_host, {"/"}, {},
                                                                             {
                                                                                     {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD, 0.0},
                                                                                     {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
@@ -259,7 +259,7 @@ int main(int argc, char **argv) {
         std::string cloud_provider_host = "cloud_provider_host";
         // in xml file, need storage_host w/ disk
         WRENCH_INFO("Instantiating a SimpleStorageService on %s", cloud_provider_host.c_str());
-        cloud_storage_service = simulation->add(new wrench::SimpleStorageService(cloud_provider_host, {"/"}, {},
+        cloud_storage_service = simulation->add(wrench::SimpleStorageService::createSimpleStorageService(cloud_provider_host, {"/"}, {},
                                                                                  {
                                                                                          {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_ANSWER_MESSAGE_PAYLOAD,  0.0},
                                                                                          {wrench::SimpleStorageServiceMessagePayload::FILE_LOOKUP_REQUEST_MESSAGE_PAYLOAD, 0.0}
@@ -334,7 +334,7 @@ int main(int argc, char **argv) {
     auto input_files = workflow->getInputFiles();
     try {
         for (auto const &f : input_files) {
-            simulation->stageFile(f, storage_service);
+            wrench::StorageService::createFileAtLocation(wrench::FileLocation::LOCATION(storage_service, f));
         }
     } catch (std::runtime_error &e) {
         std::cerr << "Exception: " << e.what() << std::endl;

@@ -75,7 +75,7 @@ namespace wrench {
      * @brief Any time a standard job is completed, print to WRENCH_INFO in RED, the number of tasks in the job
      * @param events
      */
-    void ActivityWMS::processEventStandardJobCompletion(std::shared_ptr<StandardJobCompletedEvent> event) {
+    void ActivityWMS::processEventStandardJobCompletion(const std::shared_ptr<StandardJobCompletedEvent> &event) {
         auto standard_job = event->standard_job;
         TerminalOutput::setThisProcessLoggingColor(TerminalOutput::Color::COLOR_RED);
         WRENCH_INFO("Task %s has completed", standard_job->getTasks().at(0)->getID().c_str());
@@ -98,9 +98,9 @@ namespace wrench {
         losers["viz"] = {"viz", "plot"};
         losers["analyze"] = {"analyze", "summarize"};
         losers["stats"] = {"stats"};
-        int num_scheduled =  0;
 
         //  Schedule tasks
+	int num_scheduled = 0;
         while ((!ready_task_set.empty()) and (idle_core_count > 0)) {
 
             std::shared_ptr<WorkflowTask> lucky_winner;

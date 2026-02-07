@@ -201,24 +201,24 @@ void ThrustDJobScheduler::scheduleTasks(const std::shared_ptr<wrench::ComputeSer
         std::map<std::shared_ptr<wrench::DataFile>, std::shared_ptr<wrench::FileLocation>> file_locations;
         for (auto const &f : task->getInputFiles()) {
             if (isCloudTask(task->getID())) {
-                if (this->cloud_storage_service->lookupFile(f, wrench::FileLocation::LOCATION(this->cloud_storage_service))) {
-                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+                if (this->cloud_storage_service->lookupFile(f)) {
+                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service, f);
                 } else {
-                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service, f);
                 }
             } else {
-                if (this->default_storage_service->lookupFile(f, wrench::FileLocation::LOCATION(this->default_storage_service))) {
-                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+                if (this->default_storage_service->lookupFile(f)) {
+                    file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service, f);
                 } else {
-                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+                    file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service, f);
                 }
             }
         }
         for (auto const &f : task->getOutputFiles()) {
             if (isCloudTask(task->getID())) {
-                file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service);
+                file_locations[f] = wrench::FileLocation::LOCATION(cloud_storage_service, f);
             } else {
-                file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service);
+                file_locations[f] = wrench::FileLocation::LOCATION(default_storage_service, f);
             }
         }
 
