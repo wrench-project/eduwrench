@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-#FROM ubuntu:focal
-FROM node:14
-=======
 FROM ubuntu:latest
->>>>>>> upgrade_sqlite3
 
 USER root
 
